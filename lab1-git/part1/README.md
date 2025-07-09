@@ -685,4 +685,4 @@ git commit
 - [VS Code Git Integration](https://code.visualstudio.com/docs/editor/versioncontrol)
 - [Interactive Git Tutorial](https://learngitbranching.js.org/)
 
-**Next**: Continue to [Part 2: Team Collaboration & Advanced Workflow](./part2-team-collaboration.md)
+**Next**: Continue to [Part 2: Team Collaboration & Advanced Workflow](../part2/part2-team-collaboration.md)
