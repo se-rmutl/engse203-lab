@@ -331,6 +331,36 @@ git push origin feature/update-contact
 - [VS Code Git Integration](https://code.visualstudio.com/docs/editor/versioncontrol)
 - [Interactive Git Tutorial](https://learngitbranching.js.org/)
 
+## Resources & References
+
+### Git Commands Reference
+```bash
+# พื้นฐาน
+git init
+git clone <url>
+git add <file>
+git commit -m "message"
+git push
+git pull
+
+# Branching
+git branch
+git checkout -b <branch>
+git merge <branch>
+git branch -d <branch>
+
+# Remote
+git remote add origin <url>
+git remote -v
+git push -u origin <branch>
+
+# Advanced
+git rebase
+git cherry-pick
+git stash
+git tag
+```
+
 ## Rubric การให้คะแนน
 
 ### Part 1: Git Fundamentals (40 คะแนน)
