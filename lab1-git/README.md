@@ -2,7 +2,7 @@
 ## Part 1: Git Fundamentals & Local Development
 
 Lab 1.1-1.4: ครอบคลุมการสร้าง repository, เชื่อมต่อกับ GitHub, และ workflow พื้นฐาน
-ใช้โปรเจค Portfolio Website เป็นตัวอย่างที่นักเรียนสามารถพัฒนาและเห็นผลลัพธ์ได้จริง
+ใช้โปรเจค Portfolio Website เป็นตัวอย่างที่นักศึกษาสามารถพัฒนาและเห็นผลลัพธ์ได้จริง
 เน้นการเชื่อมต่อ local กับ remote ผ่านการทำ feature branch และ merge กลับ
 
 ## Part 2: Team Collaboration & Advanced Workflow (ยากและยังไม่ทำในตอนนี้)
