@@ -5,7 +5,7 @@ Lab 1.1-1.4: ครอบคลุมการสร้าง repository, เช
 ใช้โปรเจค Portfolio Website เป็นตัวอย่างที่นักเรียนสามารถพัฒนาและเห็นผลลัพธ์ได้จริง
 เน้นการเชื่อมต่อ local กับ remote ผ่านการทำ feature branch และ merge กลับ
 
-## Part 2: Team Collaboration & Advanced Workflow
+## Part 2: Team Collaboration & Advanced Workflow (ยากและยังไม่ทำในตอนนี้)
 
 Lab 2.1-2.7: จำลองการทำงานเป็นทีมด้วย E-commerce project
 ครอบคลุมหัวข้อสำคัญ: Pull Request, Code Review, Merge Conflicts, Revert commits
