@@ -1,22 +1,24 @@
 # การใช้งาน GitHub แบ่งเป็น 2 ส่วน
-## Part 1: Git Fundamentals & Local Development
+## Part 1: Git Fundamentals & Local Development (40 คะแนน)
 
-Lab 1.1-1.4: ครอบคลุมการสร้าง repository, เชื่อมต่อกับ GitHub, และ workflow พื้นฐาน
-ใช้โปรเจค Portfolio Website เป็นตัวอย่างที่นักศึกษาสามารถพัฒนาและเห็นผลลัพธ์ได้จริง
-เน้นการเชื่อมต่อ local กับ remote ผ่านการทำ feature branch และ merge กลับ
+เน้นการฝึกใช้งาน Git commands พื้นฐาน
+มีคำสั่งและโค้ดแบบ copy-paste ให้ครบถ้วน
+ครอบคลุมการสร้าง repository, branching, merging, และแก้ไข conflicts
+ใช้โปรเจกต์ portfolio website ที่เข้าใจง่าย
 
-## Part 2: Team Collaboration & Advanced Workflow (ยากและยังไม่ทำในตอนนี้)
+## Part 2: Advanced Workflow (60 คะแนน)
 
-Lab 2.1-2.7: จำลองการทำงานเป็นทีมด้วย E-commerce project
-ครอบคลุมหัวข้อสำคัญ: Pull Request, Code Review, Merge Conflicts, Revert commits
-สถานการณ์จริง: แต่ละ developer ทำงานส่วนต่างๆ (Frontend, Backend, UI/UX)
+โจทย์ที่ซับซ้อนขึ้นเป็นการทำงานเป็นทีมพัฒนา E-commerce website
+ให้นักศึกษาปรับประยุกต์และเลือกฟีเจอร์เพิ่มเติม
+เน้นการใช้ Git Flow, Code Review, และ Team Collaboration
+มีความต้องการพิเศษให้เลือก 2 จาก 5 ข้อ
 
 # จุดเด่นของแลปนี้:
 
-* Hands-on Learning: ทุกขั้นตอนมีโค้ดและไฟล์ตัวอย่างให้ทำจริง
-* Real-world Scenarios: ใช้โปรเจคที่สมจริงแทนการทำตัวอย่างที่เป็นนามธรรม
-* Progressive Complexity: เริ่มจากพื้นฐานไปสู่การทำงานทีม
-* Comprehensive Coverage: ครอบคลุมทั้ง technical skills และ soft skills
-* Assessment Ready: มีเกณฑ์การประเมินผลที่ชัดเจน
+* Progressive Learning: เริ่มจากพื้นฐานไปสู่ระดับสูง
+* Real-world Application: ใช้โปรเจกต์จริงที่เสมือนการทำงาน
+* Team Collaboration: ฝึกทักษะการทำงานเป็นทีม
+* Comprehensive Assessment: มี rubric ที่ครอบคลุมทุกด้าน
+* Practical Skills: เน้นทักษะที่ใช้ได้จริงในการทำงาน
 
-แลปนี้จะใช้เวลาประมาณ 4-6 ชั่วโมงและเหมาะสำหรับการเรียนรู้แบบ project-based learning 
+แลปนี้จะช่วยให้นักศึกษาเข้าใจและใช้งาน Git & GitHub ได้อย่างมีประสิทธิภาพ พร้อมสำหรับการทำงานจริงในอนาคต
