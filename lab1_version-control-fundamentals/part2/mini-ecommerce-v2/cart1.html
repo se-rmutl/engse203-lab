@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตะกร้าสินค้า - Mini E-commerce</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="preconnect" href="https://images.unsplash.com">
+</head>
+<body>
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Mini Store</h1>
+            </div>
+            <nav class="nav">
+                <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-list" id="nav-list">
+                    <li><a href="index.html" class="nav-link">หน้าแรก</a></li>
+                    <li><a href="products.html" class="nav-link">สินค้า</a></li>
+                    <li><a href="cart.html" class="nav-link active">ตะกร้า <span id="cart-count" class="cart-badge">0</span></a></li>
+                    <li><a href="about.html" class="nav-link">เกี่ยวกับเรา</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="page-header">
+                <h1>ตะกร้าสินค้า</h1>
+                <p>ตรวจสอบสินค้าก่อนสั่งซื้อ</p>
+            </div>
+            
+            <!-- Cart Progress -->
+            <div class="cart-progress">
+                <div class="progress-step active">
+                    <div class="step-number">1</div>
+                    <div class="step-label">ตะกร้าสินค้า</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step">
+                    <div class="step-number">2</div>
+                    <div class="step-label">ข้อมูลการสั่งซื้อ</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step">
+                    <div class="step-number">3</div>
+                    <div class="step-label">ชำระเงิน</div>
+                </div>
+            </div>
+
+            <!-- Cart Container -->
+            <div class="cart-container">
+                <div class="cart-main">
+                    <!-- Cart Items -->
+                    <div class="cart-items-section">
+                        <div class="section-header">
+                            <h2>สินค้าในตะกร้า</h2>
+                            <div class="cart-actions">
+                                <button id="select-all" class="btn btn-secondary btn-small">เลือกทั้งหมด</button>
+                                <button id="clear-cart" class="btn btn-danger btn-small">ล้างตะกร้า</button>
+                            </div>
+                        </div>
+                        
+                        <div class="cart-items" id="cart-items">
+                            <!-- Cart items จะถูกโหลดด้วย JavaScript -->
+                        </div>
+                        
+                        <!-- Empty cart message -->
+                        <div id="empty-cart" class="empty-cart" style="display: none;">
+                            <div class="empty-cart-content">
+                                <div class="empty-cart-icon">🛒</div>
+                                <h3>ตะกร้าสินค้าว่าง</h3>
+                                <p>ยังไม่มีสินค้าในตะกร้า เริ่มเลือกซื้อสินค้าได้เลย</p>
+                                <a href="products.html" class="btn btn-primary">เลือกซื้อสินค้า</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Products -->
+                    <div class="recommended-section">
+                        <h3>สินค้าแนะนำ</h3>
+                        <div class="recommended-products" id="recommended-products">
+                            <!-- Recommended products จะถูกโหลดด้วย JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-sidebar">
+                    <div class="cart-summary">
+                        <h3>สรุปการสั่งซื้อ</h3>
+                        
+                        <div class="summary-details">
+                            <div class="summary-row">
+                                <span>ราคาสินค้า:</span>
+                                <span id="subtotal">0 บาท</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>ค่าจัดส่ง:</span>
+                                <span id="shipping-cost">0 บาท</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>ส่วนลด:</span>
+                                <span id="discount" class="discount-amount">0 บาท</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>ภาษี (7%):</span>
+                                <span id="tax">0 บาท</span>
+                            </div>
+                            <div class="summary-divider"></div>
+                            <div class="summary-row total-row">
+                                <span>ยอดรวมทั้งหมด:</span>
+                                <span id="total-price">0 บาท</span>
+                            </div>
+                        </div>
+
+                        <!-- Coupon Section -->
+                        <div class="coupon-section">
+                            <h4>รหัสคูปอง</h4>
+                            <form id="coupon-form" class="coupon-
+<form>
+                                <input type="text" id="coupon-input" placeholder="ใส่รห้าคูปอง" class="coupon-input" autocomplete="off">
+                                <button type="submit" id="apply-coupon" class="btn btn-secondary">ใช้คูปอง</button>
+                            </form>
+                            <div id="coupon-message" class="coupon-message"></div>
+        </div>
+    <!-- Checkout Button -->
+    <div class="checkout-section">
+        <button id="checkout-btn" class="btn btn-primary btn-full">
+            <span class="btn-text">ดำเนินการสั่งซื้อ</span>
+            <span class="btn-loading" style="display: none;">กำลังดำเนินการ...</span>
+        </button>
+        <div class="checkout-info">
+            <small>✓ ปลอดภัย 100% ด้วยระบบการชำระเงินที่เข้ารหัส</small>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Mini Store</h4>
+                <p>ร้านค้าออนไลน์ที่คุณไว้วางใจ</p>
+            </div>
+            <div class="footer-section">
+                <h4>เมนูหลัก</h4>
+                <ul>
+                    <li><a href="index.html">หน้าแรก</a></li>
+                    <li><a href="products.html">สินค้า</a></li>
+                    <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>ติดต่อเรา</h4>
+                <ul>
+                    <li>📧 info@ministore.com</li>
+                    <li>📞 02-123-4567</li>
+                    <li>📍 กรุงเทพมหานคร</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Mini Store. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+<!-- Checkout Modal -->
+<div id="checkout-modal" class="modal">
+    <div class="modal-content modal-large">
+        <div class="modal-header">
+            <h3 class="modal-title">ข้อมูลการสั่งซื้อ</h3>
+            <button class="modal-close" id="checkout-modal-close" aria-label="ปิด">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="checkout-form" class="checkout-form">
+                <div class="form-section">
+                    <h4>ข้อมูลส่วนตัว</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first-name" class="form-label">ชื่อ *</label>
+                            <input type="text" id="first-name" name="firstName" class="form-input" required>
+                            <div class="form-error" id="first-name-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name" class="form-label">นามสกุล *</label>
+                            <input type="text" id="last-name" name="lastName" class="form-input" required>
+                            <div class="form-error" id="last-name-error"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email" class="form-label">อีเมล *</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                            <div class="form-error" id="email-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="form-label">เบอร์โทรศัพท์ *</label>
+                            <input type="tel" id="phone" name="phone" class="form-input" required>
+                            <div class="form-error" id="phone-error"></div>
+                        </div>
+                    </div>
+                </div>
+            <div class="form-section">
+                <h4>ที่อยู่จัดส่ง</h4>
+                <div class="form-group">
+                    <label for="address" class="form-label">ที่อยู่ *</label>
+                    <textarea id="address" name="address" class="form-input" rows="3" required></textarea>
+                    <div class="form-error" id="address-error"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city" class="form-label">จังหวัด *</label>
+                        <input type="text" id="city" name="city" class="form-input" required>
+                        <div class="form-error" id="city-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="postal-code" class="form-label">รหัสไปรษณีย์ *</label>
+                        <input type="text" id="postal-code" name="postalCode" class="form-input" required>
+                        <div class="form-error" id="postal-code-error"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h4>การชำระเงิน</h4>
+                <div class="payment-methods">
+                    <div class="payment-option">
+                        <input type="radio" id="credit-card" name="paymentMethod" value="credit" required>
+                        <label for="credit-card">💳 บัตรเครดิต/เดบิต</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="bank-transfer" name="paymentMethod" value="transfer" required>
+                        <label for="bank-transfer">🏦 โอนเงินผ่านธนาคาร</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="cash-on-delivery" name="paymentMethod" value="cod" required>
+                        <label for="cash-on-delivery">💵 เก็บเงินปลายทาง</label>
+                    </div>
+                </div>
+                <div class="form-error" id="payment-error"></div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="cancel-checkout" class="btn btn-secondary">ยกเลิก</button>
+                <button type="submit" id="confirm-order" class="btn btn-primary">
+                    <span class="btn-text">ยืนยันการสั่งซื้อ</span>
+                    <span class="btn-loading" style="display: none;">กำลังดำเนินการ...</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+<!-- Notification container -->
+<div id="notification-container" class="notification-container"></div>
+<script src="js/main.js"></script>
+<script src="js/cart.js"></script>
+</body>
+</html>
+
+

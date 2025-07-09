@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "สมาร์ทโฟน Samsung Galaxy",
+        "price": 15900,
+        "category": "electronics",
+        "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop",
+        "description": "สมาร์ทโฟนรุ่นใหม่ล่าสุด",
+        "featured": true
+    },
+    {
+        "id": 2,
+        "name": "เสื้อยืดผ้าคอตตอน",
+        "price": 399,
+        "category": "clothing",
+        "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=300&fit=crop",
+        "description": "เสื้อยืดผ้าคอตตอน 100%",
+        "featured": false
+    },
+    {
+        "id": 3,
+        "name": "หนังสือ JavaScript Guide",
+        "price": 590,
+        "category": "books",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop",
+        "description": "คู่มือการเขียนโปรแกรม JavaScript",
+        "featured": true
+    },
+    {
+        "id": 4,
+        "name": "หูฟัง Bluetooth",
+        "price": 2500,
+        "category": "electronics",
+        "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop",
+        "description": "หูฟังไร้สายคุณภาพเสียงดี",
+        "featured": false
+    }
+]
