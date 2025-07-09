@@ -1,6 +1,3 @@
-# การใช้งาน GitHub แบ่งเป็น 2 ส่วน
-## Part 1: Git Fundamentals & Local Development (40 คะแนน)
-
 # GitHub Lab Exercise: Version Control Fundamentals
 
 ## Overview
