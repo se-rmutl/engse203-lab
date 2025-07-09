@@ -1,6 +1,12 @@
 # การใช้งาน GitHub แบ่งเป็น 2 ส่วน
 ## Part 1: Git Fundamentals & Local Development (40 คะแนน)
 
+# GitHub Lab Exercise: Version Control Fundamentals
+
+## Overview
+แลปนี้ออกแบบมาเพื่อให้นักศึกษาเรียนรู้การใช้งาน Git และ GitHub ตั้งแต่ระดับพื้นฐานไปจนถึงระดับที่ซับซ้อนขึ้น โดยแบ่งเป็น 2 ส่วนหลัก
+
+
 * เน้นการฝึกใช้งาน Git commands พื้นฐาน
 * มีคำสั่งและโค้ดแบบ copy-paste ให้ครบถ้วน
 * ครอบคลุมการสร้าง repository, branching, merging, และแก้ไข conflicts

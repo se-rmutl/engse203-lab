@@ -1,194 +1,77 @@
-# Part 1: Git Fundamentals & Local Development
+## Part 1: Git Fundamentals & Local Development (40 คะแนน)
 
-## 🎯 Learning Objectives
-หลังจากจบ Lab นี้ นักศึกษาจะสามารถ:
-- สร้างและจัดการ Git repository
-- ใช้งาน Git commands พื้นฐาน
-- เชื่อมต่อ local repository กับ GitHub
-- ทำงานกับ branches และ merging
-- ใช้งาน Git GUI tools
+### วัตถุประสงค์
+- เรียนรู้การใช้งาน Git commands พื้นฐาน
+- สามารถเชื่อมต่อ Local Repository กับ GitHub
+- ฝึกการทำงานกับ branching และ merging
 
-## 📋 Prerequisites
-- Git installed on your machine
-- GitHub account
-- Text editor (VS Code recommended)
-- Terminal/Command Prompt access
-
-## 🕐 Time Required
-**3-4 hours** (including exercises)
-
----
-
-## Lab 1.1: Git Setup & Configuration (30 minutes)
-
-### Task 1.1.1: Install and Configure Git
-**Instructions:**
-1. Verify Git installation
-2. Configure user information
-3. Set up basic preferences
-
-**Steps to Follow:**
+### เตรียมตัวก่อนเริ่มทำแลป
+1. ติดตั้ง Git บนเครื่องคอมพิวเตอร์
+2. สร้างบัญชี GitHub
+3. ตั้งค่า Git configuration
 
 ```bash
-# Check Git version
-git --version
-
-# Configure global user information
-git config --global user.name "Your Full Name"
+# ตั้งค่าชื่อและอีเมล
+git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
 
-# Set default branch name
-git config --global init.defaultBranch main
-
-# Set default editor (optional)
-git config --global core.editor "code --wait"
-
-# View all configurations
+# ตรวจสอบการตั้งค่า
 git config --list
 ```
 
-**📝 Record your results:**
-- Git version: ________________
-- User name configured: ________________
-- Email configured: ________________
+### ขั้นตอนที่ 1: สร้าง Repository และเชื่อมต่อกับ GitHub
 
-### Task 1.1.2: Create GitHub Account & SSH Setup
-**Instructions:**
-1. Create GitHub account (if not already have)
-2. Generate SSH key
-3. Add SSH key to GitHub
-
-**Steps to Follow:**
-
+#### 1.1 สร้างโฟลเดอร์โปรเจกต์
 ```bash
-# Generate SSH key
-ssh-keygen -t ed25519 -C "your.email@example.com"
-
-# Start SSH agent
-eval "$(ssh-agent -s)"
-
-# Add SSH key to agent
-ssh-add ~/.ssh/id_ed25519
-
-# Display public key to copy
-cat ~/.ssh/id_ed25519.pub
-```
-
-**📝 Record your results:**
-- GitHub username: ________________
-- SSH key generated: ✅/❌
-- SSH key added to GitHub: ✅/❌
-
-**Test SSH connection:**
-```bash
-ssh -T git@github.com
-```
-
----
-
-## Lab 1.2: Repository Creation & Basic Operations (45 minutes)
-
-### Task 1.2.1: Create Local Repository
-**Instructions:**
-Create a portfolio website project from scratch
-
-**Steps to Follow:**
-
-```bash
-# Create project directory
+# สร้างโฟลเดอร์โปรเจกต์
 mkdir my-portfolio
 cd my-portfolio
 
-# Initialize Git repository
+# เริ่มต้น Git repository
 git init
-
-# Check repository status
-git status
 ```
 
-**📝 Record your results:**
-- Repository created: ✅/❌
-- Initial status output: ________________
-
-### Task 1.2.2: Create Project Structure
-**Instructions:**
-Create a basic website structure with the following files:
-
-```
-my-portfolio/
-├── index.html
-├── about.html
-├── css/
-│   └── style.css
-├── js/
-│   └── script.js
-├── images/
-│   └── profile.jpg (placeholder)
-└── README.md
-```
-
-**Create index.html:**
+#### 1.2 สร้างไฟล์พื้นฐาน
+สร้างไฟล์ `index.html`:
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Welcome to My Portfolio</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-        </nav>
+        <h1>สวัสดี! ฉันคือ [ชื่อของคุณ]</h1>
+        <p>นักพัฒนาเว็บไซต์มือใหม่</p>
     </header>
+    
     <main>
-        <section>
-            <h2>About Me</h2>
-            <p>I am a passionate developer learning Git and GitHub.</p>
+        <section id="about">
+            <h2>เกี่ยวกับฉัน</h2>
+            <p>ฉันกำลังเรียนรู้การพัฒนาเว็บไซต์และตื่นเต้นมากกับเทคโนโลยีใหม่ๆ</p>
+        </section>
+        
+        <section id="skills">
+            <h2>ทักษะ</h2>
+            <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript (เรียนรู้อยู่)</li>
+            </ul>
         </section>
     </main>
-    <script src="js/script.js"></script>
+    
+    <footer>
+        <p>&copy; 2024 My Portfolio</p>
+    </footer>
 </body>
 </html>
 ```
 
-**Create about.html:**
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - My Portfolio</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <header>
-        <h1>About Me</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>My Background</h2>
-            <p>I am currently learning version control with Git and GitHub.</p>
-        </section>
-    </main>
-</body>
-</html>
-```
-
-**Create css/style.css:**
+สร้างไฟล์ `style.css`:
 ```css
 * {
     margin: 0;
@@ -200,481 +83,244 @@ body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     color: #333;
+    background-color: #f4f4f4;
 }
 
 header {
-    background: #4CAF50;
+    background-color: #2c3e50;
     color: white;
-    padding: 1rem;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-}
-
-main {
+    text-align: center;
     padding: 2rem;
 }
 
+header h1 {
+    margin-bottom: 0.5rem;
+}
+
+main {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
 section {
+    background-color: white;
     margin-bottom: 2rem;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+section h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+ul li {
+    background-color: #3498db;
+    color: white;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}
+
+footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
 }
 ```
 
-**Create js/script.js:**
-```javascript
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Portfolio website loaded!');
-});
-```
-
-**Create README.md:**
-```markdown
-# My Portfolio Website
-
-A simple portfolio website built while learning Git and GitHub.
-
-## Features
-- Home page
-- About page
-- Responsive design
-- Clean CSS styling
-
-## Technologies Used
-- HTML5
-- CSS3
-- JavaScript
-- Git & GitHub
-
-## How to Run
-1. Clone the repository
-2. Open index.html in your browser
-```
-
-**📝 Record your results:**
-- All files created: ✅/❌
-- Website opens correctly: ✅/❌
-
-### Task 1.2.3: First Commit
-**Instructions:**
-Add all files and create your first commit
-
-**Steps to Follow:**
-
+#### 1.3 เพิ่มไฟล์ไปยัง Repository
 ```bash
-# Check current status
+# ตรวจสอบสถานะไฟล์
 git status
 
-# Add all files to staging area
+# เพิ่มไฟล์ทั้งหมดไปยัง staging area
 git add .
 
-# Check status again
+# ตรวจสอบสถานะอีกครั้ง
 git status
 
-# Create first commit
+# Commit ครั้งแรก
 git commit -m "Initial commit: Add basic portfolio structure"
-
-# View commit history
-git log --oneline
 ```
 
-**📝 Record your results:**
-- Files added to staging: ✅/❌
-- First commit created: ✅/❌
-- Commit hash: ________________
-
----
-
-## Lab 1.3: GitHub Integration (45 minutes)
-
-### Task 1.3.1: Create GitHub Repository
-**Instructions:**
-1. Go to GitHub.com
-2. Click "New repository"
-3. Name: "my-portfolio"
-4. Description: "My portfolio website built with HTML, CSS, and JavaScript"
-5. Public repository
-6. **Do not** initialize with README, .gitignore, or license
-
-**📝 Record your results:**
-- Repository created on GitHub: ✅/❌
-- Repository URL: ________________
-
-### Task 1.3.2: Connect Local to Remote
-**Instructions:**
-Connect your local repository to GitHub
-
-**Steps to Follow:**
+#### 1.4 สร้าง Repository บน GitHub และเชื่อมต่อ
+1. ไปที่ GitHub.com และล็อกอิน
+2. คลิก "New Repository"
+3. ตั้งชื่อ repository เป็น "my-portfolio"
+4. ไม่ต้องเลือก "Initialize with README"
+5. คลิก "Create Repository"
 
 ```bash
-# Add remote repository
-git remote add origin git@github.com:YOUR_USERNAME/my-portfolio.git
+# เชื่อมต่อกับ GitHub repository
+git remote add origin https://github.com/[your-username]/my-portfolio.git
 
-# Verify remote connection
+# ตรวจสอบการเชื่อมต่อ
 git remote -v
 
-# Push to GitHub
+# Push ไฟล์ไปยัง GitHub
 git push -u origin main
-
-# Check that files appeared on GitHub
 ```
 
-**📝 Record your results:**
-- Remote added successfully: ✅/❌
-- Push to GitHub successful: ✅/❌
-- Files visible on GitHub: ✅/❌
+### ขั้นตอนที่ 2: การทำงานกับ Branches
 
-### Task 1.3.3: Make Changes and Push
-**Instructions:**
-Make a change to your website and push it to GitHub
+#### 2.1 สร้าง Branch ใหม่สำหรับเพิ่มฟีเจอร์
+```bash
+# สร้าง branch ใหม่และเปลี่ยนไป
+git checkout -b feature/add-projects
 
-**Steps to Follow:**
+# ตรวจสอบ branch ปัจจุบัน
+git branch
+```
 
-1. Edit `index.html` - add a new section:
+#### 2.2 เพิ่มเนื้อหาใน Branch ใหม่
+แก้ไขไฟล์ `index.html` โดยเพิ่มส่วน projects หลัง section skills:
 ```html
-<section>
-    <h2>My Skills</h2>
-    <ul>
-        <li>HTML5</li>
-        <li>CSS3</li>
-        <li>JavaScript</li>
-        <li>Git & GitHub</li>
-    </ul>
-</section>
+        <section id="projects">
+            <h2>โปรเจกต์ของฉัน</h2>
+            <div class="project">
+                <h3>เว็บไซต์ Portfolio</h3>
+                <p>เว็บไซต์แสดงผลงานส่วนตัวที่สร้างด้วย HTML, CSS</p>
+                <a href="#" class="project-link">ดูโปรเจกต์</a>
+            </div>
+            <div class="project">
+                <h3>To-Do List App</h3>
+                <p>แอปพลิเคชันจดบันทึกรายการสิ่งที่ต้องทำ (กำลังพัฒนา)</p>
+                <a href="#" class="project-link">ดูโปรเจกต์</a>
+            </div>
+        </section>
 ```
 
-2. Commit and push the changes:
-```bash
-# Check what changed
-git diff
-
-# Add changes
-git add index.html
-
-# Commit changes
-git commit -m "Add skills section to homepage"
-
-# Push to GitHub
-git push origin main
-```
-
-**📝 Record your results:**
-- Changes committed: ✅/❌
-- Changes pushed to GitHub: ✅/❌
-- Changes visible on GitHub: ✅/❌
-
----
-
-## Lab 1.4: Working with Branches (60 minutes)
-
-### Task 1.4.1: Create and Switch Branches
-**Instructions:**
-Learn to work with branches for feature development
-
-**Steps to Follow:**
-
-```bash
-# View current branches
-git branch
-
-# Create new branch for navigation improvement
-git checkout -b feature/improve-navigation
-
-# Verify you're on the new branch
-git branch
-
-# Alternative way to create and switch
-git switch -c feature/contact-page
-git switch feature/improve-navigation
-```
-
-**📝 Record your results:**
-- New branch created: ✅/❌
-- Successfully switched branches: ✅/❌
-- Current branch: ________________
-
-### Task 1.4.2: Develop Feature in Branch
-**Instructions:**
-Improve the navigation in your feature branch
-
-**Steps to Follow:**
-
-1. Edit `css/style.css` - improve navigation styling:
+เพิ่ม CSS สำหรับ projects ในไฟล์ `style.css`:
 ```css
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
+.project {
+    border: 1px solid #ddd;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.project h3 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.project-link {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 4px;
     margin-top: 1rem;
 }
 
-nav a {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-nav a:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+.project-link:hover {
+    background-color: #2980b9;
 }
 ```
 
-2. Commit the changes:
+#### 2.3 Commit การเปลี่ยนแปลง
 ```bash
-# Add and commit changes
-git add css/style.css
-git commit -m "Improve navigation styling with hover effects"
-
-# Push feature branch to GitHub
-git push origin feature/improve-navigation
-```
-
-**📝 Record your results:**
-- Feature developed in branch: ✅/❌
-- Changes committed: ✅/❌
-- Feature branch pushed to GitHub: ✅/❌
-
-### Task 1.4.3: Merge Feature Branch
-**Instructions:**
-Merge your feature branch back to main
-
-**Steps to Follow:**
-
-```bash
-# Switch back to main branch
-git checkout main
-
-# Merge feature branch
-git merge feature/improve-navigation
-
-# Push updated main branch
-git push origin main
-
-# Delete feature branch (optional)
-git branch -d feature/improve-navigation
-git push origin --delete feature/improve-navigation
-```
-
-**📝 Record your results:**
-- Switched to main branch: ✅/❌
-- Feature merged successfully: ✅/❌
-- Main branch pushed to GitHub: ✅/❌
-
----
-
-## Lab 1.5: Git Tools & GUI (30 minutes)
-
-### Task 1.5.1: Using GitHub Desktop
-**Instructions:**
-If you have GitHub Desktop installed, try these tasks:
-
-1. Open GitHub Desktop
-2. Clone your repository (if not already cloned)
-3. Make a change to any file
-4. Use GitHub Desktop to commit and push
-5. Create a new branch using the GUI
-6. Switch between branches
-
-**📝 Record your results:**
-- GitHub Desktop used successfully: ✅/❌
-- Committed using GUI: ✅/❌
-- Branch created using GUI: ✅/❌
-
-### Task 1.5.2: Using VS Code Git Integration
-**Instructions:**
-Use VS Code's built-in Git features:
-
-1. Open your project in VS Code
-2. Make a change to any file
-3. Use the Source Control panel to:
-   - Stage changes
-   - Write commit message
-   - Commit changes
-   - Push to GitHub
-
-**📝 Record your results:**
-- VS Code Git integration used: ✅/❌
-- Committed using VS Code: ✅/❌
-- Pushed using VS Code: ✅/❌
-
----
-
-## Lab 1.6: Git Commands Practice (45 minutes)
-
-### Task 1.6.1: History and Logging
-**Instructions:**
-Practice viewing Git history and logs
-
-**Steps to Follow:**
-
-```bash
-# View commit history
-git log
-
-# View compact history
-git log --oneline
-
-# View history with graph
-git log --graph --oneline --all
-
-# View changes in last commit
-git show HEAD
-
-# View specific commit
-git show <commit-hash>
-```
-
-**📝 Record your results:**
-- Total commits in history: ________________
-- Latest commit message: ________________
-- First commit hash: ________________
-
-### Task 1.6.2: Differences and Status
-**Instructions:**
-Practice checking differences and repository status
-
-**Steps to Follow:**
-
-1. Make a change to `README.md` (don't commit yet)
-2. Run these commands:
-
-```bash
-# Check repository status
-git status
-
-# View differences
+# ตรวจสอบการเปลี่ยนแปลง
 git diff
 
-# View differences of specific file
-git diff README.md
+# เพิ่มไฟล์ที่แก้ไข
+git add .
 
-# Add file to staging
-git add README.md
+# Commit
+git commit -m "Add projects section with styling"
 
-# View staged differences
-git diff --cached
-
-# Reset file from staging
-git reset HEAD README.md
+# Push branch ใหม่ไปยัง GitHub
+git push -u origin feature/add-projects
 ```
 
-**📝 Record your results:**
-- Status command output: ________________
-- Differences shown correctly: ✅/❌
-- File staged and unstaged: ✅/❌
+### ขั้นตอนที่ 3: Merging และ Pull Request
 
-### Task 1.6.3: Undoing Changes
-**Instructions:**
-Practice undoing changes safely
+#### 3.1 สร้าง Pull Request บน GitHub
+1. ไปที่ repository บน GitHub
+2. คลิก "Compare & pull request"
+3. เขียนรายละเอียดการเปลี่ยนแปลง
+4. คลิก "Create pull request"
 
-**Steps to Follow:**
-
+#### 3.2 Merge กลับไปยัง Main Branch
 ```bash
-# Make a change to index.html
-# Add some text anywhere
+# เปลี่ยนกลับไปยัง main branch
+git checkout main
 
-# Undo changes to file (before adding)
-git checkout -- index.html
-
-# Make another change and add it
-git add index.html
-
-# Unstage the change
-git reset HEAD index.html
-
-# Verify file is back to original state
-git status
-```
-
-**📝 Record your results:**
-- Successfully undid unstaged changes: ✅/❌
-- Successfully unstaged changes: ✅/❌
-- Repository clean: ✅/❌
-
----
-
-## 📊 Part 1 Summary
-
-### What You've Accomplished:
-- ✅ Set up Git and GitHub
-- ✅ Created a portfolio website project
-- ✅ Connected local repository to GitHub
-- ✅ Worked with branches and merging
-- ✅ Used Git GUI tools
-- ✅ Practiced essential Git commands
-
-### Key Commands Mastered:
-```bash
-git init, git clone
-git add, git commit, git push, git pull
-git branch, git checkout, git merge
-git status, git log, git diff
-git reset, git checkout --
-```
-
-### Files Created:
-- Portfolio website with HTML, CSS, JavaScript
-- README.md with project documentation
-- Proper Git repository with history
-
-### Ready for Part 2?
-You should now be comfortable with:
-- Basic Git workflow
-- Repository management
-- Branch operations
-- GitHub integration
-- Git GUI tools
-
-**Continue to Part 2 for team collaboration and advanced workflows!**
-
----
-
-## 🔧 Troubleshooting
-
-### Common Issues and Solutions:
-
-**Issue: SSH connection failed**
-```bash
-# Generate new SSH key
-ssh-keygen -t ed25519 -C "your.email@example.com"
-# Add to GitHub settings
-```
-
-**Issue: Permission denied (publickey)**
-```bash
-# Check SSH agent
-ssh-add -l
-# Add key to agent
-ssh-add ~/.ssh/id_ed25519
-```
-
-**Issue: Push rejected**
-```bash
-# Pull latest changes first
+# Pull การเปลี่ยนแปลงล่าสุดจาก GitHub
 git pull origin main
-# Then push
+
+# Merge feature branch
+git merge feature/add-projects
+
+# Push การเปลี่ยนแปลงไปยัง GitHub
+git push origin main
+
+# ลบ branch ที่ไม่ใช้แล้ว
+git branch -d feature/add-projects
+```
+
+### ขั้นตอนที่ 4: การจัดการ Conflicts
+
+#### 4.1 สร้าง Conflict เพื่อฝึกแก้ไข
+```bash
+# สร้าง branch ใหม่
+git checkout -b feature/update-contact
+
+# แก้ไข footer ในไฟล์ index.html
+# เปลี่ยนจาก: <p>&copy; 2024 My Portfolio</p>
+# เป็น: <p>&copy; 2024 My Portfolio | Contact: myemail@example.com</p>
+
+git add .
+git commit -m "Add contact info to footer"
+git push -u origin feature/update-contact
+```
+
+#### 4.2 สร้างการเปลี่ยนแปลงใน Main Branch
+```bash
+# กลับไปยัง main
+git checkout main
+
+# แก้ไข footer เหมือนกัน แต่ต่างกัน
+# เปลี่ยนเป็น: <p>&copy; 2024 My Portfolio | Version 1.0</p>
+
+git add .
+git commit -m "Add version info to footer"
 git push origin main
 ```
 
-**Issue: Merge conflict**
+#### 4.3 แก้ไข Conflict
 ```bash
-# View conflicted files
-git status
-# Edit files to resolve conflicts
-# Add resolved files
+# เปลี่ยนกลับไปยัง feature branch
+git checkout feature/update-contact
+
+# พยายาม merge main เพื่อสร้าง conflict
+git merge main
+
+# แก้ไข conflict ในไฟล์
+# เลือกรวม: <p>&copy; 2024 My Portfolio | Version 1.0 | Contact: myemail@example.com</p>
+
 git add .
-# Complete merge
-git commit
+git commit -m "Resolve merge conflict in footer"
+git push origin feature/update-contact
 ```
+
+### งานที่ต้องส่ง Part 1
+1. ลิงก์ GitHub Repository
+2. Screenshot ของ commit history
+3. Screenshot ของ Pull Request ที่สร้าง
+4. ไฟล์ index.html และ style.css ที่สมบูรณ์
 
 ---
 
@@ -685,4 +331,15 @@ git commit
 - [VS Code Git Integration](https://code.visualstudio.com/docs/editor/versioncontrol)
 - [Interactive Git Tutorial](https://learngitbranching.js.org/)
 
-**Next**: Continue to [Part 2: Team Collaboration & Advanced Workflow](../part2/part2-team-collaboration.md)
+## Rubric การให้คะแนน
+
+### Part 1: Git Fundamentals (40 คะแนน)
+
+| หัวข้อ | ดีเยี่ยม (9-10) | ดี (7-8) | ปานกลาง (5-6) | ต้องปรับปรุง (1-4) |
+|--------|----------------|----------|----------------|-------------------|
+| **Repository Setup** (10 คะแนน) | Repository ตั้งค่าถูกต้อง มี commit history ที่ดี | Repository ตั้งค่าถูกต้อง มี commit เพียงพอ | Repository ตั้งค่าได้ แต่ commit ไม่เพียงพอ | Repository ไม่สมบูรณ์ |
+| **Branch Management** (10 คะแนน) | ใช้ branch ถูกต้อง merge สำเร็จ | ใช้ branch ได้ แต่ merge มีปัญหาเล็กน้อย | สร้าง branch ได้ แต่ merge ไม่สมบูรณ์ | ไม่สามารถใช้ branch ได้ |
+| **Code Quality** (10 คะแนน) | Code สะอาด ทำงานได้สมบูรณ์ | Code ทำงานได้ มีข้อผิดพลาดเล็กน้อย | Code ทำงานได้บางส่วน | Code ไม่ทำงาน |
+| **Git Commands** (10 คะแนน) | ใช้ commands ได้หลากหลาย และถูกต้อง | ใช้ commands พื้นฐานได้ดี | ใช้ commands ได้บางส่วน | ใช้ commands ไม่ถูกต้อง |
+
+**Next**: Continue to [Part 2: Advanced Git Workflow & Team Collaboration](../part2)
