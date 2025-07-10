@@ -65,7 +65,7 @@ git init
     </main>
     
     <footer>
-        <p>&copy; 2024 My Portfolio</p>
+        <p>&copy; 2025 My Portfolio</p>
     </footer>
 </body>
 </html>
@@ -279,8 +279,8 @@ git branch -d feature/add-projects
 git checkout -b feature/update-contact
 
 # แก้ไข footer ในไฟล์ index.html
-# เปลี่ยนจาก: <p>&copy; 2024 My Portfolio</p>
-# เป็น: <p>&copy; 2024 My Portfolio | Contact: myemail@example.com</p>
+# เปลี่ยนจาก: <p>&copy; 2025 My Portfolio</p>
+# เป็น: <p>&copy; 2025 My Portfolio | Contact: myemail@example.com</p>
 
 git add .
 git commit -m "Add contact info to footer"
@@ -293,7 +293,7 @@ git push -u origin feature/update-contact
 git checkout main
 
 # แก้ไข footer เหมือนกัน แต่ต่างกัน
-# เปลี่ยนเป็น: <p>&copy; 2024 My Portfolio | Version 1.0</p>
+# เปลี่ยนเป็น: <p>&copy; 2025 My Portfolio | Version 1.0</p>
 
 git add .
 git commit -m "Add version info to footer"
@@ -309,7 +309,7 @@ git checkout feature/update-contact
 git merge main
 
 # แก้ไข conflict ในไฟล์
-# เลือกรวม: <p>&copy; 2024 My Portfolio | Version 1.0 | Contact: myemail@example.com</p>
+# เลือกรวม: <p>&copy; 2025 My Portfolio | Version 1.0 | Contact: myemail@example.com</p>
 
 git add .
 git commit -m "Resolve merge conflict in footer"
