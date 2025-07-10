@@ -1,0 +1,15 @@
+
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "Smartphone",
+      "thumbnail": "https://dummyjson.com/image/i/products/1/thumbnail.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Laptop",
+      "thumbnail": "https://dummyjson.com/image/i/products/2/thumbnail.jpg"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+
+body {
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+}
+.product {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
