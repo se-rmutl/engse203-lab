@@ -1,4 +1,4 @@
-## Part 1: Git Fundamentals & Local Development (40 คะแนน)
+## Part 1: Git Fundamentals & Local Development - [งานเดี่ยว] (40 คะแนน)
 
 ### วัตถุประสงค์
 - เรียนรู้การใช้งาน Git commands พื้นฐาน
