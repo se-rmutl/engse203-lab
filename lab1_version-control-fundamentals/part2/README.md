@@ -1,4 +1,6 @@
-## Part 2:  GitHub Workflow & Team Collaboration 🚀
+## Part 2:  GitHub Workflow & Team Collaboration 🚀 (60 คะแนน)
+- Lab สำหรับนักศึกษา Software Engineer 2 คน เพื่อฝึกฝน GitHub Workflow และ Collaboration ตั้งแต่พื้นฐานจนถึงระดับกลาง โดยใช้โปรเจกต์ Mini-Ecommerce 
+- Lab นี้จะจำลองสถานการณ์จริงที่นักพัฒนา 2 คนต้องร่วมกันแก้ไขปัญหาและปรับปรุงโปรเจกต์ที่มีอยู่เดิมให้ดีขึ้น (จาก Version 1 ไปสู่ Version 2)
 
 ### วัตถุประสงค์:
 
@@ -31,20 +33,9 @@ mini-ecommerce/
 │   └── style.css
 └── README.md
 ```
-### ขั้นตอนที่ 1: สร้าง Repository และเชื่อมต่อกับ GitHub
 
-#### 1.1 สร้างโฟลเดอร์โปรเจกต์
-```bash
-# สร้างโฟลเดอร์โปรเจกต์
-mkdir mini-ecommerce
-cd mini-ecommerce
-
-# เริ่มต้น Git repository
-git init
-```
-
-#### 1.2 สร้างไฟล์พื้นฐาน
-สร้างไฟล์ `index.html`:
+#### ไฟล์พื้นฐาน
+ไฟล์ `index.html`:
 ```html
 <!DOCTYPE html>
 <html lang="th">
@@ -68,356 +59,202 @@ git init
 </html>
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Part 2: Advanced Git Workflow & Team Collaboration (60 คะแนน)
-
-### วัตถุประสงค์
-- พัฒนาความสามารถในการทำงานเป็นทีม (2 คน)
-- ฝึกการใช้งาน Git Workflow แบบมืออาชีพ
-- เรียนรู้การทำ Code Review และ Collaboration
-- ฝึกการแก้ไขปัญหาและพัฒนาฟีเจอร์ใหม่
-
-### โจทย์: ปรับปรุงและพัฒนาเว็บไซต์ E-commerce Mini
-
-คุณและคู่หู (2 คน) ได้รับมอบหมายให้ปรับปรุงเว็บไซต์ E-commerce ที่มีอยู่แล้ว โดยมีเวลา **1 สัปดาห์**
-
-#### โครงสร้างทีม:
-- **Developer A**: รับผิดชอบ Frontend และ UI/UX
-- **Developer B**: รับผิดชอบ Backend Logic และ Data Management
-
-### ขั้นตอนที่ 1: Setup Project (วันที่ 1)
-
-#### 1.1 อาจารย์จะให้ไฟล์เริ่มต้นมา - Mini E-commerce Starter
-
-**โครงสร้างไฟล์ที่ได้รับ:**
-```
-mini-ecommerce/
-├── index.html
-├── products.html
-├── cart.html
-├── about.html
-├── css/
-│   ├── style.css
-│   └── components.css
-├── js/
-│   ├── main.js
-│   └── cart.js
-├── data/
-│   └── products.json
-├── images/
-│   └── placeholder.jpg
-├── README.md
-└── .gitignore
+ไฟล์ `css/style.css`:
+```css
+body { font-family: sans-serif; margin: 0; background-color: #f4f4f4; }
+header { background: #333; color: #fff; padding: 1rem; text-align: center; }
+input[type="text"] { width: 60%; padding: 8px; }
+main {justify-content: center; padding: 1rem; }
+.product-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 15px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.product-card img { max-width: 100%; height: auto; }
+.product-card h3 { font-size: 1.1em; }
+.product-card p { color: #888; }
 ```
 
-#### 1.2 ตั้งค่าโปรเจกต์
-**Developer A (Team Leader) Tasks:**
+ไฟล์ `js/products.json:`:
+```JSON
+[
+    {"id": 1, "name": "Classic T-Shirt", "price": 499, "image": "https://placehold.co/150/FF0000/FFFFFF?text=T-Shirt"},
+    {"id": 2, "name": "Running Shoes", "price": 1200, "image": "https://placehold.co/150/0000FF/FFFFFF?text=Shoes"},
+    {"id": 3, "name": "Smart Watch", "price": 3500, "image": "https://placehold.co/150/00FF00/FFFFFF?text=Watch"},
+    {"id": 4, "name": "Denim Jeans", "price": 990, "image": "https:/placehold.co/150/FFFF00/000000?text=Jeans"}
+]
+```
+
+ไฟล์ `js/main.js:`:
+```JavaScript
+document.addEventListener('DOMContentLoaded', () => {
+    const productList = document.getElementById('product-list');
+    const searchInput = document.getElementById('searchInput');
+    let allProducts = [];
+
+    // Fetch products from JSON
+    fetch('js/products.json')
+        .then(response => response.json())
+        .then(data => {
+            allProducts = data;
+            displayProducts(allProducts);
+        });
+
+    function displayProducts(products) {
+        productList.innerHTML = ''; // Clear previous list
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p>ราคา: ${product.price} บาท</p>
+            `;
+            productList.appendChild(card);
+        });
+    }
+
+    // Inefficient Search
+    searchInput.addEventListener('keyup', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredProducts = allProducts.filter(product => {
+            // Simple search, not very efficient
+            return product.name.toLowerCase().includes(searchTerm);
+        });
+        displayProducts(filteredProducts);
+    });
+});
+```
+### ขั้นตอนการทำ Lab (GitHub Workflow)
+#### ส่วนที่ 1: Setup & Branching (15 นาที)
+1. สร้าง Repository (โดย Dev A):
+
+   * Dev A ไปที่ GitHub และสร้าง repository ใหม่ชื่อ `mini-ecommerce-collaboration`.
+
+   * เพิ่มโค้ด Version 1 ทั้งหมดเข้าไปในเครื่องของตัวเอง, ทำ `git init`, `git add .`, `git commit -m "Initial project version 1"`
+
+   * ไปที่ `Settings > Collaborators` และเชิญ Dev B เข้ามาในโปรเจกต์
+
+2. เข้าร่วมโปรเจกต์ (โดย Dev B):
+
+   * Dev B รับคำเชิญและ `git clone` repository ลงมาที่เครื่องของตัวเอง
+
+3. สร้าง Feature Branches:
+
+   * นักพัฒนาทั้งสองคนต้องสร้าง branch ของตัวเองจาก `main` เพื่อทำงานในส่วนของตนเอง
+
+   * Dev A (ใน Terminal): `git checkout -b feature/ui-ux-improvements`
+
+   * Dev B (ใน Terminal): `git checkout -b feature/search-and-validation`
+
+## ส่วนที่ 2: Development & Pull Request (45 นาที)
+ตอนนี้ทั้งสองคนจะทำงานบน branch ของตัวเองพร้อมกัน
+
+## งานของ Dev A (Branch: `feature/ui-ux-improvements`): 🎨
+
+1. เพิ่ม Loading State: ใน `index.html` เพิ่ม `<div id="loader" class="loader">Loading...</div> `และใน `main.js`ให้แสดง loader นี้ก่อน fetch ข้อมูล และซ่อนเมื่อข้อมูลแสดงผลเสร็จแล้ว
+
+2. ปรับปรุง UI/UX: ใน` style.css` เพิ่ม transition ให้ `.product-card` เพื่อให้เกิด animation ที่ smooth เวลา hover (`transform: scale(1.05);`)
+3. ปรับปรุง UI/UX: ใน` style.css` ให้สามารถแสดงผล แบบ responsive - Fixed grid columns เพื่อให้แสดงผลที่สวยงานและแปรผันตามขนาดหน้าจอ โดยแก้ไขที่  `#product-list` โดยต้องเพิ่ม `display: flex; flex-wrap: wrap;`
+
+4. ปรับปรุงไฟล์สินค้า ให้มีรูปและราคาที่ต้องมีเครื่องหมาย comma(,) สำหรับแยกหลักการแสดงผลค่าเงินให้อ่านง่ายเช่น `12600 บาท` เปลี่ยนเป็น `12,600 บาท`
+   
+ไฟล์ `js/products.json:` ใหม่:
+```JSON
+[
+    {"id": 1, "name": "Classic T-Shirt", "price": 499, "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&q=80"},
+    {"id": 2, "name": "Running Shoes", "price": 1200, "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80"},
+    {"id": 3, "name": "Smart Watch", "price": 3500, "image": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=500&q=80"},
+    {"id": 4, "name": "Denim Jeans", "price": 990, "image": "https://images.unsplash.com/photo-1602293589930-45aad59ba3ab?w=500&q=80"},
+    {"id": 5, "name": "Leather Backpack", "price": 1850, "image": "https://images.unsplash.com/photo-1561126135-b7a5dfadace6?q=80&w=500"},
+    {"id": 6, "name": "Sunglasses", "price": 750, "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500&q=80"}
+]
+```
+5. Commit & Push: เมื่อแก้ไขเสร็จ `git add .`, `git commit -m "feat: Add loading state and improve card UI"` และ `git push origin feature/ui-ux-improvements`
+
+## งานของ Dev B (Branch: `feature/search-and-validation`): 🔧
+
+1. ปรับปรุงการค้นหา: ใน `main.js` ปรับปรุง logic การค้นหาให้ดีขึ้น เช่น ตัดช่องว่างที่ไม่จำเป็นออก (`trim()`) ก่อนค้นหา
+
+2. เพิ่ม Validation (จำลอง): เพิ่มเงื่อนไขใน `main.js` ว่าถ้า `searchInput.value` ว่างเปล่า ให้แสดงสินค้าทั้งหมดแทนที่จะแสดงรายการว่าง
+
+3. Commit & Push: เมื่อแก้ไขเสร็จ `git add .`, `git commit -m "fix: Improve search logic and handle empty input"` และ `git push origin feature/search-and-validation`
+
+
+## ส่วนที่ 3: Code Review และ Merge (30 นาที)
+1. Dev A สร้าง Pull Request (PR):
+
+   * Dev A เข้าไปที่ GitHub และสร้าง Pull Request (PR) จาก branch `feature/ui-ux-improvements` ไปยัง `main`
+
+   * ในช่อง PR description ให้อธิบายว่าได้ทำอะไรไปบ้าง และ assign Dev B เป็น `Reviewer`
+
+2. Dev B ทำ Code Review:
+
+   * Dev B จะได้รับการแจ้งเตือน ให้เข้าไปดูโค้dใน PR
+
+   * Dev B ลองแสดงความเห็นในโค้ด เช่น "ตรงนี้เพิ่ม comment อธิบายหน่อยได้ไหม?" หรือ "อนิเมชั่นเร็วไปนิดนึง"
+
+   * Dev A แก้ไขตาม comment, commit และ push เพิ่มเข้าไปใน branch เดิม (PR จะอัปเดตอัตโนมัติ)
+
+เมื่อพอใจแล้ว Dev B กด Approve
+
+3. Merge PR แรก:
+
+   * Dev A กด Merge Pull Request และลบ branch `feature/ui-ux-improvements` ทิ้ง
+
+
+## ส่วนที่ 4: Handling Merge Conflict (ระดับกลาง - 30 นาที)
+1. Dev B สร้าง Pull Request ที่สอง:
+
+   * Dev B สร้าง PR จาก branch `feature/search-and-validation `ไปยัง `main`
+
+   * อุ๊ปส์! GitHub จะแจ้งเตือนว่า "Can't automatically merge" เพราะตอนนี้ `main` มีโค้ดใหม่จาก Dev A แล้ว (โดยเฉพาะไฟล์ `main.js`) ทำให้เกิด Merge Conflict
+
+2. แก้ไข Conflict (โดย Dev B):
+
+   * Dev B ต้องดึงโค้ดล่าสุดของ `main` มาที่เครื่องก่อน:
+
 ```bash
-# Fork repository จากอาจารย์
-# Clone repository
-git clone https://github.com/[your-username]/mini-ecommerce.git
-cd mini-ecommerce
-
-# เพิ่ม upstream remote
-git remote add upstream https://github.com/[teacher-username]/mini-ecommerce.git
-
-# สร้าง develop branch
-git checkout -b develop
-git push -u origin develop
-
-# เชิญ Developer B เข้า repository
-# Settings > Collaborators > Add Developer B
-```
-
-**Developer B Tasks:**
-```bash
-# Clone repository
-git clone https://github.com/[team-leader-username]/mini-ecommerce.git
-cd mini-ecommerce
-
-# เปลี่ยนไปยัง develop branch
-git checkout develop
-git pull origin develop
-```
-
-### ขั้นตอนที่ 2: ศึกษาและวิเคราะห์โค้ด (วันที่ 1-2)
-
-#### 2.1 ทำความเข้าใจโค้ดเดิม
-**ทั้งทีมต้องศึกษา:**
-- โครงสร้างไฟล์และการทำงาน
-- ฟีเจอร์ที่มีอยู่แล้ว
-- ปัญหาและข้อบกพร่องที่พบ
-- จุดที่ต้องปรับปรุง
-
-#### 2.2 วิเคราะห์ปัญหา
-**ปัญหาที่พบในโค้ดเดิม (ตัวอย่าง):**
-- การจัดการข้อมูลสินค้าไม่มีประสิทธิภาพ
-- UI/UX ไม่ responsive
-- ไม่มีระบบจัดการ cart ที่ดี
-- ไม่มีการ validation ข้อมูล
-- Performance ไม่ดี
-
-### ขั้นตอนที่ 3: วางแผนการพัฒนา (วันที่ 2)
-
-#### 3.1 สร้าง Issues บน GitHub
-**Developer A สร้าง Issues:**
-- Issue #1: Improve responsive design
-- Issue #2: Add product search functionality
-- Issue #3: Enhance cart UI/UX
-- Issue #4: Add loading states
-
-**Developer B สร้าง Issues:**
-- Issue #5: Implement product filtering
-- Issue #6: Add form validation
-- Issue #7: Improve cart functionality
-- Issue #8: Add local storage management
-
-#### 3.2 กำหนด Milestones
-- **Milestone 1**: Bug fixes และ improvements (วันที่ 2-3)
-- **Milestone 2**: New features (วันที่ 4-5)
-- **Milestone 3**: Testing และ final touches (วันที่ 6-7)
-
-### ขั้นตอนที่ 4: Development Phase (วันที่ 2-5)
-
-#### 4.1 การทำงานแบบ Parallel
-
-**Developer A Workflow:**
-```bash
-# สร้าง feature branch
-git checkout develop
-git pull origin develop
-git checkout -b feature/responsive-design
-
-# พัฒนา responsive design
-# ... code development ...
-
-# Commit regularly
-git add .
-git commit -m "Add responsive grid system"
-git commit -m "Improve mobile navigation"
-git commit -m "Add responsive product cards"
-
-# Push และสร้าง PR
-git push -u origin feature/responsive-design
-```
-
-**Developer B Workflow:**
-```bash
-# สร้าง feature branch
-git checkout develop
-git pull origin develop
-git checkout -b feature/product-filtering
-
-# พัฒนา filtering system
-# ... code development ...
-
-# Commit regularly
-git add .
-git commit -m "Add filter data structure"
-git commit -m "Implement filter UI components"
-git commit -m "Add filter functionality"
-
-# Push และสร้าง PR
-git push -u origin feature/product-filtering
-```
-
-#### 4.2 Code Review Process
-**สำหรับทุก Pull Request:**
-1. สร้าง PR พร้อมรายละเอียดชัดเจน
-2. คู่หูต้อง review และให้ comment
-3. แก้ไข feedback ก่อน merge
-4. ใช้ GitHub review tools
-5. Merge เมื่อได้ approval
-
-### ขั้นตอนที่ 5: โจทย์การพัฒนา (เลือก 3 จาก 6 ข้อ)
-
-#### **โจทย์ที่ 1: Search & Filter System**
-**ปัญหา:** ระบบค้นหาไม่มีประสิทธิภาพ
-**งานที่ต้องทำ:**
-```bash
-# Developer A: UI Components
-git checkout -b feature/search-ui
-# - สร้าง search bar component
-# - ออกแบบ filter dropdown
-# - เพิ่ม search results layout
-
-# Developer B: Logic Implementation
-git checkout -b feature/search-logic
-# - เขียนฟังก์ชันค้นหา
-# - สร้าง filter algorithm
-# - เชื่อมต่อ UI กับ logic
-```
-
-#### **โจทย์ที่ 2: Shopping Cart Enhancement**
-**ปัญหา:** Cart system ไม่มีฟีเจอร์ครบถ้วน
-**งานที่ต้องทำ:**
-```bash
-# Developer A: Cart UI
-git checkout -b feature/cart-ui
-# - ปรับปรุง cart layout
-# - เพิ่ม quantity controls
-# - สร้าง checkout summary
-
-# Developer B: Cart Logic
-git checkout -b feature/cart-logic
-# - เพิ่ม cart state management
-# - สร้าง local storage system
-# - เขียน cart calculations
-```
-
-#### **โจทย์ที่ 3: Product Management**
-**ปัญหา:** การจัดการสินค้าไม่ยืดหยุ่น
-**งานที่ต้องทำ:**
-```bash
-# Developer A: Product Display
-git checkout -b feature/product-display
-# - ปรับปรุง product cards
-# - เพิ่ม product detail modal
-# - สร้าง product image gallery
-
-# Developer B: Product Data
-git checkout -b feature/product-data
-# - เพิ่ม product categories
-# - สร้าง product rating system
-# - เขียน product management functions
-```
-
-#### **โจทย์ที่ 4: User Experience**
-**ปัญหา:** UX ไม่ smooth และขาด feedback
-**งานที่ต้องทำ:**
-```bash
-# Developer A: UI/UX
-git checkout -b feature/ux-improvements
-# - เพิ่ม loading animations
-# - สร้าง error states
-# - ปรับปรุง navigation
-
-# Developer B: Interactions
-git checkout -b feature/user-interactions
-# - เพิ่ม form validation
-# - สร้าง toast notifications
-# - เขียน user feedback system
-```
-
-#### **โจทย์ที่ 5: Performance Optimization**
-**ปัญหา:** Website โหลดช้าและไม่ smooth
-**งานที่ต้องทำ:**
-```bash
-# Developer A: Frontend Performance
-git checkout -b feature/frontend-optimization
-# - ปรับปรุง CSS performance
-# - เพิ่ม lazy loading
-# - optimize images
-
-# Developer B: JavaScript Performance
-git checkout -b feature/js-optimization
-# - refactor JavaScript code
-# - เพิ่ม debouncing
-# - optimize data structures
-```
-
-#### **โจทย์ที่ 6: Mobile Experience**
-**ปัญหา:** Mobile experience ไม่ดี
-**งานที่ต้องทำ:**
-```bash
-# Developer A: Mobile UI
-git checkout -b feature/mobile-ui
-# - ปรับปรุง mobile layout
-# - เพิ่ม touch gestures
-# - optimize for mobile
-
-# Developer B: Mobile Features
-git checkout -b feature/mobile-features
-# - เพิ่ม mobile-specific features
-# - optimize mobile performance
-# - add progressive web app features
-```
-
-### ขั้นตอนที่ 6: Integration & Testing (วันที่ 6-7)
-
-#### 6.1 Integration Process
-```bash
-# Developer A: Integration branch
-git checkout develop
-git pull origin develop
-git checkout -b integration/final-features
-
-# Merge completed features
-git merge feature/responsive-design
-git merge feature/search-ui
-git merge feature/cart-ui
-
-# Test integration
-# ... testing ...
-
-# Push integration branch
-git push -u origin integration/final-features
-```
-
-#### 6.2 Final Testing
-**ทดสอบที่ต้องทำ:**
-- Functionality testing
-- Cross-browser compatibility
-- Mobile responsiveness
-- Performance testing
-- User experience testing
-
-#### 6.3 Production Release
-```bash
-# สร้าง release branch
-git checkout develop
-git pull origin develop
-git checkout -b release/v1.0
-
-# Final testing และ bug fixes
-# ... final touches ...
-
-git add .
-git commit -m "Prepare release v1.0"
-
-# Merge ไปยัง main
+# สลับไปที่ main branch และดึงข้อมูลล่าสุด
 git checkout main
-git merge release/v1.0
-git tag -a v1.0 -m "Release version 1.0"
-git push origin main --tags
-
-# Merge กลับไปยัง develop
-git checkout develop
-git merge release/v1.0
-git push origin develop
+git pull origin main
 ```
 
-### ขั้นตอนที่ 7: Documentation & Deployment (วันที่ 7)
-
-#### 7.1 อัปเดต Documentation
-**README.md ต้องมี:**
-- Project description
-- Features implemented
-- Installation instructions
-- Usage guide
-- Team member contributions
-- Known issues และ future improvements
-
-#### 7.2 Deploy to GitHub Pages
+สลับกลับไปที่ branch ของตัวเองและทำการ rebase (หรือ merge ก็ได้ แต่ rebase ทำให้ประวัติสวยงามกว่า):
 ```bash
-# เปิดใช้งาน GitHub Pages
-# Settings > Pages > Source: main branch
-# URL: https://[username].github.io/mini-ecommerce
+git checkout feature/search-and-validation
+git rebase main
 ```
+   * Git จะแจ้งว่ามี conflict ในไฟล์ js/main.js
+
+   * เปิดไฟล์ js/main.js ใน VS Code จะเห็นส่วนที่ conflict แสดงแบบนี้:
+```bash
+<<<<<<< HEAD
+// โค้ดที่มาจาก main (ของ Dev A)
+=======
+// โค้ดของ Dev B
+>>>>>>> feature/search-and-validation
+```
+   * Dev B ต้องแก้ไขโค้ดตรงนี้โดยเลือกว่าจะเก็บส่วนไหนไว้ หรือรวมโค้ดทั้งสองส่วนเข้าด้วยกันอย่างถูกต้อง แล้วลบ `<<<<<<<,` `=======,` `>>>>>>>` ทิ้ง
+
+   * เมื่อแก้ไขเสร็จ ให้ `git add js/main.js` แล้วรัน `git rebase --continue`
+
+   * Push โค้ดที่แก้ไขแล้วขึ้นไปใหม่ (ต้องใช้ force push):
+`git push --force-with-lease origin feature/search-and-validation`
+
+3. Merge PR ที่สอง:
+
+   * ตอนนี้ PR ของ Dev B ใน GitHub จะไม่มี conflict แล้ว
+
+   * Dev A เข้าไป Review, Approve และ Merge PR ของ Dev B
+
+**Lab เสร็จสมบูรณ์!** 🎉 
+ทั้งสองคนได้ทำงานร่วมกันเพื่ออัปเกรดโปรเจกต์จาก Version 1 เป็น Version 2 ได้สำเร็จ
 
 ### การส่งงาน Part 2
 
@@ -426,7 +263,7 @@ git push origin develop
 2. **Repository**: GitHub repository พร้อม proper structure
 3. **Documentation**: README.md ที่อธิบายโปรเจกต์
 4. **Git History**: Commit history ที่เป็นระเบียบ
-5. **Pull Requests**: อย่างน้อย 5 PRs พร้อม reviews
+5. **Pull Requests**: อย่างน้อย 2 PRs พร้อม reviews
 6. **Team Report**: รายงานการทำงานเป็นทีม (2-3 หน้า)
 
 #### Team Report ต้องมี:
@@ -507,4 +344,3 @@ git tag
 - ทำ regular commits
 - Review code ก่อน merge
 - เขียน documentation ที่ดี
-
