@@ -17,9 +17,56 @@
 
 * Dev B (Backend/Logic Developer): รับผิดชอบการปรับปรุงประสิทธิภาพระบบค้นหาและเพิ่มการ Validation ข้อมูล
 
+### Version 1: The Initial Project (โค้ดเริ่มต้น)
+นี่คือโค้ดของโปรเจกต์ตั้งต้นที่ยังมีปัญหาอยู่
 
+### โครงสร้างไฟล์:
+```
+mini-ecommerce/
+├── index.html
+├── js/
+│   ├── main.js
+│   └── products.json
+├── css/
+│   └── style.css
+└── README.md
+```
+### ขั้นตอนที่ 1: สร้าง Repository และเชื่อมต่อกับ GitHub
 
+#### 1.1 สร้างโฟลเดอร์โปรเจกต์
+```bash
+# สร้างโฟลเดอร์โปรเจกต์
+mkdir mini-ecommerce
+cd mini-ecommerce
 
+# เริ่มต้น Git repository
+git init
+```
+
+#### 1.2 สร้างไฟล์พื้นฐาน
+สร้างไฟล์ `index.html`:
+```html
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini E-Commerce</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>My Simple Store</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="ค้นหาสินค้า...">
+        </div>
+    </header>
+    <main id="product-list">
+        </main>
+    <script src="js/main.js"></script>
+</body>
+</html>
+```
 
 
 
