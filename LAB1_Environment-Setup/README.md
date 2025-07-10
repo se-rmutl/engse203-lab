@@ -49,12 +49,12 @@
 ## 📚 เอกสารแนะนำ
 
 ### สำหรับผู้ใช้ Mac
-- [Development Environment Preparation (Mac)](Development%20Environment%20Preparation%20(Mac).md)
+- [Development Environment Preparation (Mac)](Development-Environment-Preparation-(Mac).md)
 - เหมาะสำหรับผู้ที่ใช้ macOS
 - ครอบคลุมการตั้งค่าแบบ native บน Mac
 
 ### สำหรับผู้ใช้ Windows
-- [Development Environment Preparation (Windows)](Development%20Environment%20Preparation%20(Windows).md)
+- [Development Environment Preparation (Windows)](Development-Environment-Preparation-(Windows).md)
 - เหมาะสำหรับผู้ที่ใช้ Windows 10/11
 - ใช้ WSL Ubuntu เป็นสภาพแวดล้อมการพัฒนาหลัก
 
