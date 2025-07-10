@@ -36,20 +36,20 @@ Testing:      Jest, Cypress, React Testing Library
 
 | Week | Todo | Topic | Duration | Type | Focus |
 |:-----:|:-----:|----------|------|-------|-------|
-| **1** | LAB1 | [Modern Software Development](#-lab-1-modern-software-development-intro) | 2 hrs | Workshop | Environment Setup |
-| **2** | TASK#1 | [Version Control with Git & GitHub](#-lab-2-version-control-with-git--github) | 3 hrs | Team Project | Collaboration |
-| **3** | LAB2 | [HTML5 & CSS3 Fundamentals](#-lab-3-html5--css3-fundamentals) | 3 hrs | Individual | Frontend Basics |
-| **4** | LAB3 | [JavaScript ES6+ & DOM](#-lab-4-javascript-es6--dom-manipulation) | 3 hrs | Individual | Interactivity |
-| **5** | LAB4 | [React.js Fundamentals](#-lab-5-reactjs-fundamentals) | 3 hrs | Individual | Component-based |
-| **6** | LAB5 | [Advanced React & State Management](#-lab-6-advanced-react--state-management) | 3 hrs | Individual | Complex Apps |
-| **7** | LAB6 | [Node.js & Backend Development](#-lab-7-nodejs--backend-development) | 3 hrs | Individual | Server-side |
-| **8** | LAB7 | [Database Integration](#-lab-8-database-integration--mongodb) | 3 hrs | Individual | Data Persistence |
-| **9** | LAB8 | [Authentication & Security](#-lab-9-authentication--security) | 3 hrs | Individual | Secure Apps |
-| **10** | TASK#2 | [Full-Stack Integration](#-lab-10-full-stack-integration) | 3 hrs | Team Project | Complete Apps |
-| **11** | LAB9 | [Cross-Platform Development](#-lab-11-cross-platform-development) | 3 hrs | Individual | Mobile/Desktop |
-| **12** | LAB10 | [Testing & Quality Assurance](#-lab-12-testing--quality-assurance) | 3 hrs | Individual | Code Quality |
-| **13** | LAB11 | [Performance & Deployment](#-lab-13-performance--deployment) | 3 hrs | Individual | Production |
-| **14** | TASK#3 | [Capstone Project](#-lab-14-capstone-project) | 3 hrs | Team Project | Portfolio |
+| **1** | LAB1 | [Modern Software Development](LAB1_Environment-Setup) | 2 hrs | Workshop | Environment Setup |
+| **2** | TASK#1 | [Version Control with Git & GitHub](TASK1_VersionControl-with-Git-GitHub) | 3 hrs | Team Project | Collaboration |
+| **3** | LAB2 | HTML5 & CSS3 Fundamentals | 3 hrs | Individual | Frontend Basics |
+| **4** | LAB3 | JavaScript ES6+ & DOM | 3 hrs | Individual | Interactivity |
+| **5** | LAB4 | React.js Fundamentals | 3 hrs | Individual | Component-based |
+| **6** | LAB5 | Advanced React & State Management | 3 hrs | Individual | Complex Apps |
+| **7** | LAB6 | Node.js & Backend Development | 3 hrs | Individual | Server-side |
+| **8** | LAB7 | Database Integration | 3 hrs | Individual | Data Persistence |
+| **9** | LAB8 | Authentication & Security | 3 hrs | Individual | Secure Apps |
+| **10** | TASK#2 | Full-Stack Integration | 3 hrs | Team Project | Complete Apps |
+| **11** | LAB9 | Cross-Platform Development | 3 hrs | Individual | Mobile/Desktop |
+| **12** | LAB10 | Testing & Quality Assurance | 3 hrs | Individual | Code Quality |
+| **13** | LAB11 | Performance & Deployment | 3 hrs | Individual | Production |
+| **14** | TASK#3 | Capstone Project | 3 hrs | Team Project | Portfolio |
 
 ---
 
