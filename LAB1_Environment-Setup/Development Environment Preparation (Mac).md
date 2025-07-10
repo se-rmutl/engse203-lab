@@ -1,168 +1,311 @@
-# การเตรียมสภาพแวดล้อมเพื่อการพัฒนา (Development Environment) สำหรับ macOS
+# การเตรียมสภาพแวดล้อมเพื่อการพัฒนา (Development Environment) สำหรับ MacOS
 
-[cite_start]เอกสารนี้สรุปขั้นตอนการติดตั้งและตั้งค่าเครื่องมือที่จำเป็นสำหรับวิชา ENGSE203 Computer Programming for Software Engineer บนระบบปฏิบัติการ macOS [cite: 358, 359]
+เอกสารนี้สรุปขั้นตอนการติดตั้งและตั้งค่าเครื่องมือที่จำเป็นสำหรับการเรียนวิชา ENGSE203 Computer Programming for Software Engineer on Local and VM บนระบบปฏิบัติการ MacOS
 
----
 
-## [cite_start]PART 1: การติดตั้งโปรแกรมสำหรับ Web Development [cite: 398]
+### 3-tier Architecture Overview
 
-### [cite_start]1. เครื่องมือพื้นฐาน (Development Environment Tools) [cite: 399]
+The development environment follows a 3-tier architecture pattern:
 
-| ประเภท | โปรแกรม | ลิงก์ดาวน์โหลด |
-| --- | --- | --- |
-| IDE | VSCode | [cite_start][https://code.visualstudio.com/](https://code.visualstudio.com/) [cite: 400] |
-| Remote Terminal | Terminus | [cite_start][https://termius.com/](https://termius.com/) [cite: 400] |
-| FTP | FileZilla | [cite_start][https://filezilla-project.org/](https://filezilla-project.org/) [cite: 400] |
-| Git | Git-scm | [cite_start][https://git-scm.com/downloads](https://git-scm.com/downloads) [cite: 400] |
-| Git GUI | Github Desktop | [cite_start][https://github.com/apps/desktop](https://github.com/apps/desktop) [cite: 400] |
+**Tier 1 (Frontend)**
+- Browser interfaces
+- Desktop applications
+- Apache/Nginx Web Server
 
-### [cite_start]2. โปรแกรมสำหรับ Front-end [cite: 401]
+**Tier 2 (Backend)**
+- API Services
+- Node.js applications
+- WebSocket connections
+- Agent Notification (Electron.js)
 
-| ประเภท | โปรแกรม | ลิงก์ดาวน์โหลด |
-| --- | --- | --- |
-| Web Browser | Chrome | [cite_start][https://www.google.com/intl/en_uk/chrome/](https://www.google.com/intl/en_uk/chrome/) [cite: 402] |
-| | Firefox | [cite_start][https://www.mozilla.org/en-US/firefox/new/](https://www.mozilla.org/en-US/firefox/new/) [cite: 402] |
-| | Edge | [cite_start][https://www.microsoft.com/th-th/edge/download](https://www.microsoft.com/th-th/edge/download) [cite: 402] |
+**Tier 3 (Database)**
+- Database servers
+- MSSQL
+- MongoDB
 
----
+### Development Team Structure
 
-## [cite_start]PART 2: โปรแกรมสำหรับ Diagram, Wireframe, UI Design และ Task Management [cite: 405]
-
-[cite_start]**ข้อแนะนำ:** ควรใช้อีเมลของมหาวิทยาลัยในการสมัครใช้งาน [cite: 406]
-
-| ประเภท | โปรแกรม | ลิงก์ |
-| --- | --- | --- |
-| Diagram | draw.io | [cite_start][https://app.diagrams.net/](https://app.diagrams.net/) [cite: 407] |
-| Wireframe | Moqups | [cite_start][https://moqups.com/](https://moqups.com/) [cite: 407] |
-| UI Design | Figma | [cite_start][https://www.figma.com/](https://www.figma.com/) [cite: 407] |
-| Task Management | Trello | [cite_start][https://trello.com/](https://trello.com/) [cite: 407] |
-| Teamwork collaboration | Miro | [cite_start][https://miro.com/](https://miro.com/) [cite: 407] |
-| API development platform | Postman | [cite_start][https://www.postman.com/](https://www.postman.com/) [cite: 407] |
+The architecture supports different developer roles:
+- **Frontend Developer**: Focuses on user interface and user experience
+- **Backend/Full-stack Developer**: Handles server-side logic and APIs
+- **Data Engineer/Database Admin**: Manages database design and optimization
 
 ---
 
-## [cite_start]PART 3: การตั้งค่า Git และสภาพแวดล้อมการพัฒนา [cite: 409]
+## PART 1: Web Development Software Installation
 
-### [cite_start]STEP 1: การตั้งค่า Git บนเครื่อง (Local Development) [cite: 410]
+### 1. Software Development Environment Tools
 
-1.  [cite_start]**ลงทะเบียน GitHub:** สมัครใช้งานที่ [www.github.com](https://www.github.com) [cite: 410]
-2.  [cite_start]**ตั้งค่า Git:** เปิดแอป Terminal และตั้งค่าชื่อผู้ใช้และอีเมล [cite: 449] [cite_start]อย่าลืมใส่เครื่องหมายคำพูด `"` ครอบชื่อและอีเมล [cite: 452]
-    ```bash
-    git config --global user.name "ชื่อที่จะใช้"
-    git config --global user.email "อีเมลที่จะใช้"
-    ```
-    [cite_start]**ตัวอย่าง:** [cite: 453]
-    ```bash
-    git config --global user.name "tkeatkaew"
-    git config --global user.email "thanit@emutl.ac.th"
-    ```
-3.  [cite_start]**ตรวจสอบการตั้งค่า:** [cite: 456]
-    ```bash
-    git config --list
-    ```
-4.  [cite_start]**สร้าง Directory สำหรับงาน:** [cite: 416]
-    ```bash
-    mkdir class
-    cd class
-    mkdir engse203
-    cd engse203
-    ```
+| Type | Application | Download Link |
+|------|-------------|---------------|
+| IDE | VSCode | https://code.visualstudio.com/ |
+| Remote Terminal | Terminus | https://termius.com/ |
+| FTP | FileZilla | https://filezilla-project.org/ |
+| Git | Git-scm | https://git-scm.com/downloads |
+| Git GUI | Github Desktop | https://github.com/apps/desktop |
 
-### [cite_start]STEP 2: การตั้งค่า Node.js (Node Development Environment) [cite: 465]
+### 2. Front-end Software
 
-1.  [cite_start]**ติดตั้ง NVM (Node Version Manager):** ใช้สำหรับจัดการและเปลี่ยนเวอร์ชันของ Node.js [cite: 466]
-    ```bash
-    curl -o- [https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh](https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh) | bash
-    source ~/.bashrc
-    ```
-2.  [cite_start]**ติดตั้ง Node.js:** ติดตั้งเวอร์ชัน 20 [cite: 471]
-    ```bash
-    nvm install 20
-    ```
-3.  **ตรวจสอบเวอร์ชัน:**
-    ```bash
-    [cite_start]node -v  # ควรแสดงเวอร์ชัน v20.x.x [cite: 472, 473]
-    [cite_start]npm -v   # ควรแสดงเวอร์ชัน 10.x.x [cite: 474, 475]
-    ```
-
-### [cite_start]STEP 3: การตั้งค่าการเชื่อมต่อ GitHub ด้วย SSH [cite: 477]
-
-1.  [cite_start]**สร้าง SSH Key:** (แก้ไขอีเมลให้เป็นของตนเอง) [cite: 477]
-    ```bash
-    cd ~/.ssh
-    ssh-keygen -t ed25519 -C "your.email@example.com"
-    ```
-    * [cite_start]เมื่อระบบถาม `Enter file in which to save the key`: ให้พิมพ์ **id_github** [cite: 483]
-    * [cite_start]เมื่อระบบถาม `Enter passphrase`: ให้กด Enter 2 ครั้ง (ไม่ต้องใส่รหัสผ่าน) [cite: 484]
-
-2.  **สร้างไฟล์ Config สำหรับ SSH:**
-    * [cite_start]ในโฟลเดอร์ `.ssh` ให้สร้างไฟล์ชื่อ `config` [cite: 512]
-        ```bash
-        nano config
-        ```
-    * [cite_start]เพิ่มเนื้อหา 4 บรรทัดนี้ลงไปในไฟล์ [cite: 514] [cite_start]แล้วบันทึก (กด `Ctrl+X` แล้วกด `Y` และ `Enter`) [cite: 520]
-        ```
-        Host github.com
-          HostName github.com
-          User git
-          IdentityFile ~/.ssh/id_github
-        ```
-
-3.  **คัดลอก Public Key:**
-    * [cite_start]แสดงเนื้อหาของ Public Key และคัดลอกข้อความทั้งหมดเก็บไว้ [cite: 523, 524, 525]
-        ```bash
-        cat id_github.pub
-        ```
-
-### [cite_start]STEP 4: การตั้งค่าบนเว็บไซต์ GitHub [cite: 557]
-
-1.  **เพิ่ม Public Key:**
-    * [cite_start]ไปที่ `GitHub Settings > SSH and GPG Keys` [cite: 559, 561]
-    * [cite_start]กด `New SSH key` [cite: 561]
-    * [cite_start]ตั้งชื่อในช่อง `Title` และนำ Public Key ที่คัดลอกไว้มาวางในช่อง `Key` จากนั้นกด `Add SSH Key` [cite: 562]
-
-2.  **สร้าง Repository:**
-    * [cite_start]ไปที่หน้า Repositories แล้วกด `New` [cite: 588]
-    * [cite_start]สร้าง Repository ชื่อ **engse203-1_68** และตั้งค่าเป็น **Public** [cite: 601, 603]
-
-3.  **Clone Repository:**
-    * [cite_start]ไปยัง Directory ที่ต้องการ (เช่น `class/engse203`) [cite: 687]
-    * [cite_start]คัดลอก URL แบบ **SSH** จากหน้า Repository ของคุณ [cite: 659]
-    * [cite_start]ใช้คำสั่ง `git clone` ใน Terminal [cite: 688]
-        ```bash
-        git clone git@github.com:YourUsername/engse203-1_68.git
-        ```
-    * [cite_start]เข้าไปยังโฟลเดอร์ของโปรเจกต์ที่เพิ่ง clone มา [cite: 705, 706]
-        ```bash
-        cd engse203-1_68
-        ```
-
-### [cite_start]STEP 5: การใช้งาน Git และ VSCode [cite: 714]
-
-1.  **ทดสอบ Git Workflow:**
-    * [cite_start]สร้างไฟล์ใหม่: `nano index.html` (ใส่ข้อความ "Hello, from engse203-1_68.") [cite: 711]
-    * [cite_start]ตรวจสอบสถานะ: `git status` [cite: 709]
-    * [cite_start]เพิ่มไฟล์เข้า Staging Area: `git add index.html` [cite: 711]
-    * [cite_start]Commit การเปลี่ยนแปลง: `git commit -m "1st index.html file added"` [cite: 711]
-    * [cite_start]Push ขึ้น GitHub: `git push` [cite: 712]
-
-2.  **เปิดโปรเจกต์ใน VSCode:**
-    * ใน Terminal ที่อยู่ในโฟลเดอร์โปรเจกต์ ให้รันคำสั่ง:
-        ```bash
-        code .
-        ```
-
-3.  **ใช้งานผ่าน Source Control:**
-    * [cite_start]เมื่อแก้ไขไฟล์ใน VSCode ให้ไปที่เมนู `Source Control` (ไอคอนรูปกิ่งไม้) [cite: 715]
-    * [cite_start]ใส่ข้อความ Commit ในช่อง Message แล้วกด `Commit` [cite: 715]
-    * [cite_start]กด `Sync Changes` เพื่อ Push การเปลี่ยนแปลงขึ้น GitHub [cite: 716]
+| Type | Application | Download Link |
+|------|-------------|---------------|
+| Web Browser | Chrome | https://www.google.com/intl/en_uk/chrome/ |
+| Web Browser | Firefox | https://www.mozilla.org/en-US/firefox/new/ |
+| Web Browser | Edge | https://www.microsoft.com/th-th/edge/download |
 
 ---
 
-## สรุปผลลัพธ์ที่ต้องทำได้
+## PART 2: Diagram, Wireframe, UI Design, and Task Management Software
 
-[cite_start]หลังจากทำตามขั้นตอนทั้งหมดแล้ว จะต้องสามารถ: [cite: 716]
-* [cite_start]ใช้ Node.js ในเวอร์ชันที่ต้องการผ่าน `nvm` [cite: 716]
-* [cite_start]เชื่อมต่อ Local Development กับ GitHub Repository ผ่าน SSH ได้ [cite: 716]
-* [cite_start]เชื่อมต่อ Local Development กับ Local VM ผ่าน SSH ได้ [cite: 716]
-* [cite_start]เชื่อมต่อ Local VM กับ GitHub Repository ผ่าน SSH ได้ [cite: 717]
+**Note: Register using your university email address**
+
+| Type | Application | Download Link |
+|------|-------------|---------------|
+| Diagram | draw.io | https://app.diagrams.net/ |
+| Wireframe | Moqups | https://moqups.com/ |
+| UI Design | Figma | https://www.figma.com/ |
+| Task Management | Trello | https://trello.com/ |
+| Teamwork collaboration | Miro | https://miro.com/ |
+| API development platform | Postman | https://www.postman.com/ |
+
+---
+
+## PART 3: Git - Version Control System
+
+### STEP 1: Local Development Setup
+
+1. **Register/Sign-in** at www.github.com
+2. **Study Git fundamentals** using these resources:
+   - https://blog.wu.ac.th/archives/1979
+   - https://www.borntodev.com/2020/03/30/git-พื้นฐานสุดๆ/
+   - https://www.devahoy.com/blog/2015/08/introduction-to-git-and-github
+   - https://medium.com/amiearth/git-จากติดตั้งจนเป็นงาน-16cc215c772b
+
+3. **Open Terminal** on Mac and create directory structure:
+
+```bash
+# Create class directory
+mkdir class
+cd class
+
+# Create engse203 directory
+mkdir engse203
+cd engse203
+```
+
+4. **Configure Git** with your information:
+
+```bash
+git config --global user.name "your-username"
+git config --global user.email "your-email@university.edu"
+```
+
+⚠️ **Important**: Don't forget to use double quotes around your name and email!
+
+Example:
+```bash
+git config --global user.name "tkeatkaew"
+git config --global user.email "thanit@emutl.ac.th"
+```
+
+5. **Verify configuration**:
+```bash
+git config --list
+```
+
+### STEP 2: Node.js Development Environment Setup
+
+Install NVM (Node Version Manager) to manage different Node.js versions:
+
+```bash
+# Install nvm (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+# Reload shell configuration
+source ~/.nvm/nvm.sh
+
+# Install Node.js version 20
+nvm install 20
+
+# Verify installation
+node -v
+# Should print: v20.19.3
+
+npm -v
+# Should print: 10.8.2
+```
+
+For more information, visit: https://nodejs.org/en/download/package-manager
+
+### STEP 3: SSH Setup for GitHub Connection
+
+Create SSH key for secure connection to GitHub:
+
+```bash
+# Navigate to home directory
+cd
+
+# Create .ssh directory
+mkdir .ssh
+cd .ssh
+
+# Generate SSH key (replace with your email)
+ssh-keygen -t ed25519 -C "your-email@university.edu"
+```
+
+**⚠️ Important**: When generating the key, name it `id_github` and don't set a passphrase (press Enter twice).
+
+Verify the key files were created:
+```bash
+pwd
+ls
+```
+
+You should see two files: `id_github` and `id_github.pub`
+
+Create SSH config file:
+```bash
+nano config
+```
+
+Add the following configuration:
+```
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_github
+```
+
+Save the file by pressing `Ctrl+X`, then `Y` to confirm.
+
+Verify files in .ssh directory:
+```bash
+ls -la
+```
+
+View your public key:
+```bash
+more id_github.pub
+```
+
+Copy the entire content of the public key for the next step.
+
+### STEP 4: Add Public Key to GitHub
+
+1. Go to GitHub Settings
+2. Select "SSH and GPG Keys"
+3. Click "New SSH Key"
+4. Paste the content from `id_github.pub`
+5. Click "Add SSH Key"
+
+### Create Repository and Clone
+
+1. Go to "Repositories" in GitHub
+2. Click "New"
+3. Create repository named `engse203-1_68` (make it Public)
+4. After creation, copy the SSH URL
+
+### STEP 5: Clone Repository and Initial Setup
+
+```bash
+# Navigate to your working directory
+cd ~/class/engse203
+
+# Clone the repository (replace with your actual SSH URL)
+git clone git@github.com:your-username/engse203-1_68.git
+
+# Navigate into the repository
+cd engse203-1_68
+
+# Check repository status
+git status
+```
+
+### Working with Files
+
+Create your first file:
+```bash
+nano index.html
+```
+
+Add content:
+```html
+Hello, from engse203-1_68.
+```
+
+Check status and add file:
+```bash
+git status
+git add index.html
+git status
+```
+
+If you need to unstage a file:
+```bash
+git restore --staged index.html
+```
+
+Commit your changes:
+```bash
+git add index.html
+git commit -m "1st index.html file added"
+```
+
+Push to GitHub:
+```bash
+git status
+git push
+```
+
+### STEP 6: VSCode Integration
+
+Open your project in VSCode:
+```bash
+code .
+```
+
+**Using VSCode for Git operations:**
+
+1. Make changes to `index.html`
+2. Go to Source Control panel
+3. Add commit message (e.g., "index.html updated")
+4. Click "Commit"
+5. Click "Sync Changes" to push to GitHub
+
+---
+
+## Summary
+
+After completing this setup, you should be able to:
+
+1. **Use Node.js** in different versions using NVM commands
+2. **Connect local development** to GitHub repository (private) via SSH
+3. **Connect local development** to Local VM via SSH
+4. **Connect Local VM** to GitHub repository via SSH
+
+### Key Commands Reference
+
+**Git Commands:**
+```bash
+git status          # Check repository status
+git add <file>      # Stage files for commit
+git commit -m "message"  # Commit changes
+git push           # Push to remote repository
+git config --list  # View configuration
+```
+
+**Node.js Commands:**
+```bash
+nvm install <version>  # Install Node.js version
+nvm use <version>      # Switch Node.js version
+node -v               # Check Node.js version
+npm -v                # Check npm version
+```
+
+**SSH Commands:**
+```bash
+ssh-keygen -t ed25519 -C "email"  # Generate SSH key
+ls ~/.ssh/                        # List SSH keys
+more ~/.ssh/id_github.pub         # View public key
+```
+
+This setup provides a complete development environment supporting the 3-tier architecture with proper version control and secure connections.
