@@ -1,0 +1,134 @@
+[
+    {
+        "id": 1,
+        "name": "สมาร์ทโฟน Samsung Galaxy S24",
+        "price": 25900,
+        "category": "electronics",
+        "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop",
+        "description": "สมาร์ทโฟนรุ่นใหม่ล่าสุด พร้อมคุณสมบัติครบครัน กล้องความละเอียดสูง",
+        "featured": true,
+        "stock": 15,
+        "rating": 4.5
+    },
+    {
+        "id": 2,
+        "name": "เสื้อยืดผ้าคอตตอน Premium",
+        "price": 599,
+        "category": "clothing",
+        "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=300&fit=crop",
+        "description": "เสื้อยืดผ้าคอตตอน 100% นุ่มสบาย ระบายอากาศดี",
+        "featured": false,
+        "stock": 50,
+        "rating": 4.2
+    },
+    {
+        "id": 3,
+        "name": "หนังสือ JavaScript สำหรับผู้เริ่มต้น",
+        "price": 690,
+        "category": "books",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop",
+        "description": "คู่มือการเขียนโปรแกรม JavaScript ฉบับสมบูรณ์ สำหรับมือใหม่",
+        "featured": true,
+        "stock": 30,
+        "rating": 4.8
+    },
+    {
+        "id": 4,
+        "name": "หูฟัง Bluetooth Sony WH-1000XM5",
+        "price": 12900,
+        "category": "electronics",
+        "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop",
+        "description": "หูฟังไร้สายระบบตัดเสียงรบกวน คุณภาพเสียงระดับพรีเมียม",
+        "featured": false,
+        "stock": 8,
+        "rating": 4.9
+    },
+    {
+        "id": 5,
+        "name": "กางเกงยีนส์ Slim Fit",
+        "price": 1790,
+        "category": "clothing",
+        "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=300&fit=crop",
+        "description": "กางเกงยีนส์ทรงสลิมฟิต ผ้าเด็นิมคุณภาพดี ทนทาน",
+        "featured": true,
+        "stock": 25,
+        "rating": 4.3
+    },
+    {
+        "id": 6,
+        "name": "หนังสือ HTML & CSS ฉบับสมบูรณ์",
+        "price": 550,
+        "category": "books",
+        "image": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop",
+        "description": "เรียนรู้การสร้างเว็บไซต์ด้วย HTML และ CSS จากพื้นฐานสู่ขั้นสูง",
+        "featured": false,
+        "stock": 40,
+        "rating": 4.6
+    },
+    {
+        "id": 7,
+        "name": "MacBook Air M2 13-inch",
+        "price": 39900,
+        "category": "electronics",
+        "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=400&h=300&fit=crop",
+        "description": "แล็ปท็อปสำหรับการทำงาน ประสิทธิภาพสูง แบตเตอรี่ทนทาน",
+        "featured": true,
+        "stock": 5,
+        "rating": 4.7
+    },
+    {
+        "id": 8,
+        "name": "เสื้อเชิ้ตลายสก็อต",
+        "price": 890,
+        "category": "clothing",
+        "image": "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=300&fit=crop",
+        "description": "เสื้อเชิ้ตแขนยาว ผ้าคอตตอน ลายสก็อตคลาสสิค",
+        "featured": false,
+        "stock": 20,
+        "rating": 4.1
+    },
+    {
+        "id": 9,
+        "name": "หนังสือ React.js Guide",
+        "price": 790,
+        "category": "books",
+        "image": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=300&fit=crop",
+        "description": "คู่มือการพัฒนาเว็บแอปพลิเคชันด้วย React.js",
+        "featured": true,
+        "stock": 35,
+        "rating": 4.4
+    },
+    {
+        "id": 10,
+        "name": "iPad Pro 11-inch",
+        "price": 28900,
+        "category": "electronics",
+        "image": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=300&fit=crop",
+        "description": "แท็บเล็ตสำหรับงานสร้างสรรค์ หน้าจอสีสันสวยงาม",
+        "featured": false,
+        "stock": 10,
+        "rating": 4.6
+    },
+    {
+        "id": 11,
+        "name": "กระโปรงยีนส์ A-Line",
+        "price": 1290,
+        "category": "clothing",
+        "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=300&fit=crop",
+        "description": "กระโปรงยีนส์ทรง A-Line สไตล์เกาหลี",
+        "featured": false,
+        "stock": 18,
+        "rating": 4.0
+    },
+    {
+        "id": 12,
+        "name": "หนังสือ Python Programming",
+        "price": 650,
+        "category": "books",
+        "image": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&h=300&fit=crop",
+        "description": "เรียนรู้การเขียนโปรแกรม Python ตั้งแต่เริ่มต้น",
+        "featured": true,
+        "stock": 45,
+        "rating": 4.7
+    }
+]

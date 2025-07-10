@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สินค้าทั้งหมด - Mini E-commerce</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="preconnect" href="https://images.unsplash.com">
+</head>
+<body>
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Mini Store</h1>
+            </div>
+            <nav class="nav">
+                <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-list" id="nav-list">
+                    <li><a href="index.html" class="nav-link">หน้าแรก</a></li>
+                    <li><a href="products.html" class="nav-link active">สินค้า</a></li>
+                    <li><a href="cart.html" class="nav-link">ตะกร้า <span id="cart-count" class="cart-badge">0</span></a></li>
+                    <li><a href="about.html" class="nav-link">เกี่ยวกับเรา</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="page-header">
+                <h1>สินค้าทั้งหมด</h1>
+                <p>ค้นหาสินค้าที่คุณต้องการ</p>
+            </div>
+            
+            <!-- Enhanced Search & Filter -->
+            <div class="search-filter-section">
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" 
+                               id="search-input" 
+                               placeholder="ค้นหาสินค้า..." 
+                               autocomplete="off"
+                               aria-label="ค้นหาสินค้า">
+                        <button id="search-btn" class="search-btn" aria-label="ค้นหา">
+                            <span class="search-icon">🔍</span>
+                        </button>
+                        <div id="search-suggestions" class="search-suggestions"></div>
+                    </div>
+                </div>
+                
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="category-filter">หมวดหมู่:</label>
+                        <select id="category-filter" class="filter-select">
+                            <option value="">ทุกหมวดหมู่</option>
+                            <option value="electronics">อิเล็กทรอนิกส์</option>
+                            <option value="clothing">เสื้อผ้า</option>
+                            <option value="books">หนังสือ</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="price-filter">ราคา:</label>
+                        <select id="price-filter" class="filter-select">
+                            <option value="">ทุกราคา</option>
+                            <option value="0-500">0 - 500 บาท</option>
+                            <option value="500-1000">500 - 1,000 บาท</option>
+                            <option value="1000-5000">1,000 - 5,000 บาท</option>
+                            <option value="5000+">5,000 บาท ขึ้นไป</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="sort-filter">เรียงตาม:</label>
+                        <select id="sort-filter" class="filter-select">
+                            <option value="default">เริ่มต้น</option>
+                            <option value="price-low">ราคาต่ำ - สูง</option>
+                            <option value="price-high">ราคาสูง - ต่ำ</option>
+                            <option value="name">ชื่อสินค้า</option>
+                            <option value="rating">คะแนนรีวิว</option>
+                        </select>
+                    </div>
+                    
+                    <button id="clear-filters" class="btn btn-secondary">ล้างตัวกรอง</button>
+                </div>
+            </div>
+
+            <!-- Results info -->
+            <div class="results-info">
+                <div class="results-count">
+                    <span id="results-count">กำลังโหลด...</span>
+                </div>
+                <div class="view-toggle">
+                    <button id="grid-view" class="view-btn active" aria-label="มุมมองตาราง">⊞</button>
+                    <button id="list-view" class="view-btn" aria-label="มุมมองรายการ">☰</button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-container">
+                <div class="products-grid" id="products-grid">
+                    <!-- Loading skeletons -->
+                    <div class="product-skeleton"></div>
+                    <div class="product-skeleton"></div>
+                    <div class="product-skeleton"></div>
+                    <div class="product-skeleton"></div>
+                    <div class="product-skeleton"></div>
+                    <div class="product-skeleton"></div>
+                </div>
+                
+                <!-- No results message -->
+                <div id="no-results" class="no-results" style="display: none;">
+                    <div class="no-results-content">
+                        <h3>ไม่พบสินค้าที่ค้นหา</h3>
+                        <p>ลองใช้คำค้นหาอื่น หรือลองค้นหาในหมวดหมู่อื่น</p>
+                        <button id="clear-search" class="btn btn-primary">ล้างการค้นหา</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-container">
+                <div class="pagination" id="pagination">
+                    <!-- Pagination จะถูกสร้างด้วย JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Mini Store</h4>
+                    <p>ร้านค้าออนไลน์ที่คุณไว้วางใจ</p>
+                </div>
+                <div class="footer-section">
+                    <h4>เมนูหลัก</h4>
+                    <ul>
+                        <li><a href="index.html">หน้าแรก</a></li>
+                        <li><a href="products.html">สินค้า</a></li>
+                        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>ติดต่อเรา</h4>
+                    <ul>
+                        <li>📧 info@ministore.com</li>
+                        <li>📞 02-123-4567</li>
+                        <li>📍 กรุงเทพมหานคร</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mini Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">รายละเอียดสินค้า</h3>
+                <button class="modal-close" id="modal-close" aria-label="ปิด">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Product details จะถูกโหลดด้วย JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification container -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

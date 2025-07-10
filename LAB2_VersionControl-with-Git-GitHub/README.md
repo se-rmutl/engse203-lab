@@ -1,4 +1,4 @@
-# LAB1: Version Control Fundamentals (GitHub Lab Exercise)
+# LAB2: Version Control Fundamentals (GitHub Lab Exercise)
 
 ## Overview
 แลปนี้ออกแบบมาเพื่อให้นักศึกษาเรียนรู้การใช้งาน Git และ GitHub ตั้งแต่ระดับพื้นฐานไปจนถึงระดับที่ซับซ้อนขึ้น โดยแบ่งเป็น 2 ส่วนหลัก
