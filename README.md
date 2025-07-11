@@ -38,18 +38,20 @@ Testing:      Jest, Cypress, React Testing Library
 |:-----:|:-----:|----------|------|-------|-------|
 | **1** | LAB1 | [Modern Software Development](LAB1_Environment-Setup) | 2 hrs | Workshop | Environment Setup |
 | **2** | TASK#1 | [Version Control with Git & GitHub](TASK1_VersionControl-with-Git-GitHub) | 3 hrs | Team Project | Collaboration |
-| **3** | LAB2 | HTML5 & CSS3 Fundamentals | 3 hrs | Individual | Frontend Basics |
-| **4** | LAB3 | JavaScript ES6+ & DOM | 3 hrs | Individual | Interactivity |
-| **5** | LAB4 | React.js Fundamentals | 3 hrs | Individual | Component-based |
-| **6** | LAB5 | Advanced React & State Management | 3 hrs | Individual | Complex Apps |
-| **7** | LAB6 | Node.js & Backend Development | 3 hrs | Individual | Server-side |
-| **8** | LAB7 | Database Integration | 3 hrs | Individual | Data Persistence |
-| **9** | LAB8 | Authentication & Security | 3 hrs | Individual | Secure Apps |
-| **10** | TASK#2 | Full-Stack Integration | 3 hrs | Team Project | Complete Apps |
-| **11** | LAB9 | Cross-Platform Development | 3 hrs | Individual | Mobile/Desktop |
-| **12** | LAB10 | Testing & Quality Assurance | 3 hrs | Individual | Code Quality |
-| **13** | LAB11 | Performance & Deployment | 3 hrs | Individual | Production |
-| **14** | TASK#3 | Capstone Project | 3 hrs | Team Project | Portfolio |
+| **3** | HTML5 & CSS3 Fundamentals | 3 hrs | Individual | Portfolio Website |
+| **4** | JavaScript ES6+ & DOM Manipulation | 3 hrs | Individual | Interactive App |
+| **5** | React.js Fundamentals | 3 hrs | Individual | Component Library |
+| **6** | Advanced React & State Management | 3 hrs | Individual | E-commerce Frontend |
+| **7** | Node.js & Backend Development | 3 hrs | Individual | REST API |
+| **🎯** | **MIDTERM INDIVIDUAL PROJECT** | **1 week** | **Individual** | **Full-Stack App** |
+| **8** | Database Integration & MongoDB | 3 hrs | Individual | Data Management |
+| **9** | Authentication & Security | 3 hrs | Individual | Secure System |
+| **10** | Full-Stack Integration | 3 hrs | Team Project | Real-time App |
+| **11** | Cross-Platform Development | 3 hrs | Individual | Multi-platform |
+| **12** | Testing & Quality Assurance | 3 hrs | Individual | Test Coverage |
+| **13** | Performance & Deployment | 3 hrs | Individual | Production Deploy |
+| **🏆** | **FINAL CAPSTONE PROJECT** | **2 weeks** | **Team Project** | **Professional App** |
+
 
 ---
 
@@ -145,14 +147,3 @@ https://www.mongodb.com/try/download/community
 - 💬 [GitHub Discussions](https://github.com/features/discussions) - Project discussions
 
 ---
-
-## 🤝 **Contributing Guidelines**
-
-### **Lab Submission Process**
-1. **Fork** the lab repository
-2. **Clone** your fork locally
-3. **Create** a feature branch: `git checkout -b lab-XX-yourname`
-4. **Complete** the lab requirements
-5. **Commit** your changes with descriptive messages
-6. **Push** to your fork: `git push origin lab-XX-yourname`
-7. **Submit**
