@@ -43,18 +43,17 @@ Testing:      Jest, Cypress, React Testing Library
 | **5** | LAB4 | React.js Fundamentals | 3 hrs | Individual | Component Library |
 | **6** | LAB5 | Advanced React & State Management | 3 hrs | Individual | E-commerce Frontend |
 | **7** | LAB6 | Node.js & Backend Development | 3 hrs | Individual | REST API |
-| **8** | **🎯** | **MIDTERM INDIVIDUAL PROJECT** | **1 week** | **Individual** | **Full-Stack App** |
+| **8** | **🎯** | **[MIDTERM INDIVIDUAL PROJECT](Midterm_Individual-Project)** | **1 week** | **Individual** | **Full-Stack App** |
 | **9** | LAB7 | Database Integration & MongoDB | 3 hrs | Individual | Data Management |
 | **10** | LAB8 | Authentication & Security | 3 hrs | Individual | Secure System |
 | **11** | TASK#2 | Full-Stack Integration | 3 hrs | Team Project | Real-time App |
 | **12** | LAB9 | Cross-Platform Development | 3 hrs | Individual | Multi-platform |
 | **13** | LAB10 | Testing & Quality Assurance | 3 hrs | Individual | Test Coverage |
 | **14** | LAB11 | Performance & Deployment | 3 hrs | Individual | Production Deploy |
-| **15** | **🏆** | **FINAL CAPSTONE PROJECT** | **2 weeks** | **Team Project** | **Professional App** |
+| **15** | **🏆** | **[FINAL CAPSTONE PROJECT](Final_Capstone-Project)** | **2 weeks** | **Team Project** | **Professional App** |
 
 
 ---
-
 
 ## 📊 **Assessment & Grading**
 
@@ -126,12 +125,12 @@ https://www.mongodb.com/try/download/community
 
 | CLO | Description | Midterm Assessment | Final Assessment | Lab Assessments | Weight |
 |-----|-------------|-------------------|------------------|-----------------|---------|
-| **CLO1** | อธิบายหลักการและสถาปัตยกรรมของการพัฒนาซอฟต์แวร์แบบ Frontend และ Backend | Architecture documentation, Code structure analysis | System design documentation, Technical presentation | Labs 1,2,7 | 15% |
-| **CLO2** | พัฒนาแอปพลิเคชันแบบ Full-stack โดยใช้เทคโนโลยีและเฟรมเวิร์กสมัยใหม่ | Working full-stack application, Technology integration | Complete professional application, Advanced features | Labs 3-13 | 35% |
-| **CLO3** | สร้างแอปพลิเคชันแบบ Cross-platform สำหรับอุปกรณ์หลากหลายแพลตฟอร์ม | Responsive design implementation | Multi-platform deployment, PWA features | Lab 11 | 15% |
-| **CLO4** | ออกแบบและพัฒนา User Interface ที่ตอบสนองและเป็นมิตรกับผู้ใช้ | UI/UX design quality, User experience | Professional design standards, Accessibility | Labs 3,5,6 | 15% |
-| **CLO5** | ประยุกต์ใช้เทคนิคการทดสอบซอฟต์แวร์และเครื่องมือพัฒนาต่างๆ | Testing implementation, Development tools usage | Comprehensive testing strategy, CI/CD pipeline | Labs 12,13 | 10% |
-| **CLO6** | ใช้ระบบควบคุมเวอร์ชันในการจัดการโค้ดและการทำงานเป็นทีม | Git workflow, Documentation quality | Team collaboration, Version control best practices | Labs 2,10,14 | 10% |
+| **CLO1** | อธิบายหลักการและสถาปัตยกรรมของการพัฒนาซอฟต์แวร์แบบ Frontend และ Backend | Architecture documentation, Code structure analysis | System design documentation, Technical presentation | Labs 1,6 and Task#1 | 15% |
+| **CLO2** | พัฒนาแอปพลิเคชันแบบ Full-stack โดยใช้เทคโนโลยีและเฟรมเวิร์กสมัยใหม่ | Working full-stack application, Technology integration | Complete professional application, Advanced features | Labs 2-11 | 35% |
+| **CLO3** | สร้างแอปพลิเคชันแบบ Cross-platform สำหรับอุปกรณ์หลากหลายแพลตฟอร์ม | Responsive design implementation | Multi-platform deployment, PWA features | Lab 9 | 15% |
+| **CLO4** | ออกแบบและพัฒนา User Interface ที่ตอบสนองและเป็นมิตรกับผู้ใช้ | UI/UX design quality, User experience | Professional design standards, Accessibility | Labs 2,4,5 | 15% |
+| **CLO5** | ประยุกต์ใช้เทคนิคการทดสอบซอฟต์แวร์และเครื่องมือพัฒนาต่างๆ | Testing implementation, Development tools usage | Comprehensive testing strategy, CI/CD pipeline | Labs 10,11 | 10% |
+| **CLO6** | ใช้ระบบควบคุมเวอร์ชันในการจัดการโค้ดและการทำงานเป็นทีม | Git workflow, Documentation quality | Team collaboration, Version control best practices | Task#1, Task#2, Final Project | 10% |
 
 ### **Assessment Methods by CLO**
 
