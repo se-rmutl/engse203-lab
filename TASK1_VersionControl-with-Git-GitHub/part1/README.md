@@ -162,7 +162,7 @@ git commit -m "Initial commit: Add basic portfolio structure"
 
 ```bash
 # เชื่อมต่อกับ GitHub repository
-git remote add origin https://github.com/[your-username]/my-portfolio.git
+git remote add origin git@github.com:[your-username]/my-portfolio.git
 
 # ตรวจสอบการเชื่อมต่อ
 git remote -v
