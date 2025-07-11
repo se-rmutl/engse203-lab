@@ -2,34 +2,6 @@
 
 เอกสารนี้สรุปขั้นตอนการติดตั้งและตั้งค่าเครื่องมือที่จำเป็นสำหรับการเรียนวิชา ENGSE203 Computer Programming for Software Engineer on Local and VM บนระบบปฏิบัติการ MacOS
 
-
-### 3-tier Architecture Overview
-
-The development environment follows a 3-tier architecture pattern:
-
-**Tier 1 (Frontend)**
-- Browser interfaces
-- Desktop applications
-- Apache/Nginx Web Server
-
-**Tier 2 (Backend)**
-- API Services
-- Node.js applications
-- WebSocket connections
-- Agent Notification (Electron.js)
-
-**Tier 3 (Database)**
-- Database servers
-- MSSQL
-- MongoDB
-
-### Development Team Structure
-
-The architecture supports different developer roles:
-- **Frontend Developer**: Focuses on user interface and user experience
-- **Backend/Full-stack Developer**: Handles server-side logic and APIs
-- **Data Engineer/Database Admin**: Manages database design and optimization
-
 ---
 
 ## PART 1: Web Development Software Installation

@@ -1,5 +1,33 @@
 # Development Environment Setup Overview
 
+### 3-tier Architecture Overview
+
+The development environment follows a 3-tier architecture pattern:
+
+**Tier 1 (Frontend)**
+- Browser interfaces
+- Desktop applications
+- Apache/Nginx Web Server
+
+**Tier 2 (Backend)**
+- API Services
+- Node.js applications
+- WebSocket connections
+- Agent Notification (Electron.js)
+
+**Tier 3 (Database)**
+- Database servers
+- MSSQL
+- MongoDB
+
+### Development Team Structure
+
+The architecture supports different developer roles:
+- **Frontend Developer**: Focuses on user interface and user experience
+- **Backend/Full-stack Developer**: Handles server-side logic and APIs
+- **Data Engineer/Database Admin**: Manages database design and optimization
+---
+
 ## ภาพรวมของการตั้งค่าสภาพแวดล้อมการพัฒนา
 
 เอกสารนี้เป็นคำแนะนำในการตั้งค่าสภาพแวดล้อมการพัฒนาสำหรับการเขียนโปรแกรม Web Development ที่สามารถทำงานได้ทั้งบน Local Machine และ Virtual Machine โดยมีคำแนะนำสำหรับทั้งระบบ Mac และ Windows
