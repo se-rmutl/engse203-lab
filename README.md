@@ -38,19 +38,19 @@ Testing:      Jest, Cypress, React Testing Library
 |:-----:|:-----:|----------|------|-------|-------|
 | **1** | LAB1 | [Modern Software Development](LAB1_Environment-Setup) | 2 hrs | Workshop | Environment Setup |
 | **2** | TASK#1 | [Version Control with Git & GitHub](TASK1_VersionControl-with-Git-GitHub) | 3 hrs | Team Project | Collaboration |
-| **3** | HTML5 & CSS3 Fundamentals | 3 hrs | Individual | Portfolio Website |
-| **4** | JavaScript ES6+ & DOM Manipulation | 3 hrs | Individual | Interactive App |
-| **5** | React.js Fundamentals | 3 hrs | Individual | Component Library |
-| **6** | Advanced React & State Management | 3 hrs | Individual | E-commerce Frontend |
-| **7** | Node.js & Backend Development | 3 hrs | Individual | REST API |
-| **🎯** | **MIDTERM INDIVIDUAL PROJECT** | **1 week** | **Individual** | **Full-Stack App** |
-| **8** | Database Integration & MongoDB | 3 hrs | Individual | Data Management |
-| **9** | Authentication & Security | 3 hrs | Individual | Secure System |
-| **10** | Full-Stack Integration | 3 hrs | Team Project | Real-time App |
-| **11** | Cross-Platform Development | 3 hrs | Individual | Multi-platform |
-| **12** | Testing & Quality Assurance | 3 hrs | Individual | Test Coverage |
-| **13** | Performance & Deployment | 3 hrs | Individual | Production Deploy |
-| **🏆** | **FINAL CAPSTONE PROJECT** | **2 weeks** | **Team Project** | **Professional App** |
+| **3** | LAB2 | HTML5 & CSS3 Fundamentals | 3 hrs | Individual | Portfolio Website |
+| **4** | LAB3 | JavaScript ES6+ & DOM Manipulation | 3 hrs | Individual | Interactive App |
+| **5** | LAB4 | React.js Fundamentals | 3 hrs | Individual | Component Library |
+| **6** | LAB5 | Advanced React & State Management | 3 hrs | Individual | E-commerce Frontend |
+| **7** | LAB6 | Node.js & Backend Development | 3 hrs | Individual | REST API |
+| **8** | **🎯** | **MIDTERM INDIVIDUAL PROJECT** | **1 week** | **Individual** | **Full-Stack App** |
+| **9** | LAB7 | Database Integration & MongoDB | 3 hrs | Individual | Data Management |
+| **10** | LAB8 | Authentication & Security | 3 hrs | Individual | Secure System |
+| **11** | TASK#2 | Full-Stack Integration | 3 hrs | Team Project | Real-time App |
+| **12** | LAB9 | Cross-Platform Development | 3 hrs | Individual | Multi-platform |
+| **13** | LAB10 | Testing & Quality Assurance | 3 hrs | Individual | Test Coverage |
+| **14** | LAB11 | Performance & Deployment | 3 hrs | Individual | Production Deploy |
+| **15** | **🏆** | **FINAL CAPSTONE PROJECT** | **2 weeks** | **Team Project** | **Professional App** |
 
 
 ---
