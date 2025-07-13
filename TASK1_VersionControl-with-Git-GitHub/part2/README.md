@@ -86,7 +86,7 @@ main {justify-content: center; padding: 1rem; }
     {"id": 1, "name": "Classic T-Shirt", "price": 499, "image": "https://placehold.co/150/FF0000/FFFFFF?text=T-Shirt"},
     {"id": 2, "name": "Running Shoes", "price": 1200, "image": "https://placehold.co/150/0000FF/FFFFFF?text=Shoes"},
     {"id": 3, "name": "Smart Watch", "price": 3500, "image": "https://placehold.co/150/00FF00/FFFFFF?text=Watch"},
-    {"id": 4, "name": "Denim Jeans", "price": 990, "image": "https:/placehold.co/150/FFFF00/000000?text=Jeans"}
+    {"id": 4, "name": "Denim Jeans", "price": 990, "image": "https://placehold.co/150/FFFF00/000000?text=Jeans"}
 ]
 ```
 
