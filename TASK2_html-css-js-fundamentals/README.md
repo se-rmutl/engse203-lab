@@ -1,4 +1,4 @@
-# LAB2: Portfolio Website Development
+# TASK#2: Portfolio Website Development
 ## HTML5 & CSS3 Fundamentals
 
 ### 🎯 Lab Objectives
