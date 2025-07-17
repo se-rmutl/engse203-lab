@@ -6,10 +6,8 @@
 - ใช้งาน CSS3 สำหรับ Layout และ Styling
 - สร้าง Responsive Design
 - ฝึกการใช้งาน Git สำหรับ Version Control
-- ทำงานร่วมกันเป็นคู่ (Pair Programming)
 
 ### ⏰ Time Allocation
-- **Total Time:** 3 hours
 - **Part 1:** 1.5 hours (Individual - Following Template)
 
 ## 🔧 Part 1: Template Implementation (1.5 ชั่วโมง)
@@ -18,6 +16,9 @@
 * ครอบคลุม HTML5 semantic structure, CSS3 modern features, responsive design
 * มีการใช้งาน Git เบื้องต้น
 * สร้างเว็บไซต์ Portfolio ที่สมบูรณ์
+* งานเพิ่ม:
+  - feature1: เพื่ม content ในรายละเอียดประกอบจริง
+  - feature2: เพิ่มเทคนิคการแสดงผลโดย css และ javascript พร้อมทั้งอธิบายว่าเพิ่มอะไรบ้าง และการทำงานเป็นอย่างไร
 
 ### **Step 1: Project Setup (15 minutes)**
 
@@ -57,7 +58,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Name - Portfolio</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="csss/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -256,11 +257,11 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Your Name. All rights reserved.</p>
+            <p>&copy; 2025 Your Name. Software Engineering, RMUTL. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
 ```
@@ -878,7 +879,7 @@ git push -u origin main
 ### **Tips:**
 - ใช้ Live Server extension ใน VS Code
 - ตรวจสอบ console ใน browser developer tools
-- ใช้ Git กระซิบๆ ตั้งแต่เริ่มต้น
+- ใช้ Git command ตั้งแต่เริ่มต้น
 - Comment code อย่างชัดเจน
 
 ---

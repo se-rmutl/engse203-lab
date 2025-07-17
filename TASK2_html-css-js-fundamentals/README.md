@@ -52,7 +52,7 @@
 ### **Tips:**
 - ใช้ Live Server extension ใน VS Code
 - ตรวจสอบ console ใน browser developer tools
-- ใช้ Git กระซิบๆ ตั้งแต่เริ่มต้น
+- ใช้ Git command ตั้งแต่เริ่มต้น
 - Comment code อย่างชัดเจน
 
 ---
