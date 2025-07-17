@@ -10,8 +10,8 @@
 
 ### ⏰ Time Allocation
 - **Total Time:** 3 hours
-- **Part 1:** 1.5 hours [(Individual - Following Template)](part1)
-- **Part 2:** 1.5 hours [(Pair Work - Adding Features)](part2)
+- **[Part 1:](part1)** 1.5 hours [(Individual - Following Template)](part1)
+- **[Part 2:](part2)** 1.5 hours [(Pair Work - Adding Features)](part2)
 
 ---
 
