@@ -15,6 +15,11 @@
 
 ---
 
+<figure class="video_container">
+  <iframe src="Portfolio_Website_Workshop_Video.mp4" frameborder="0" allowfullscreen="true"> 
+</iframe>
+</figure>
+
 ### **เตือนความจำเทคนิคการทำ version control:**
 - เมื่อสร้างโค้ดเสร็จใน local ครั้งแรก ให้ push ขึ้น git ก่อน เสมอ
 - เมื่อทดลองรันแล้วพบ error ให้ แตก branch ออกมา แก้ และ push จะค้น remote
