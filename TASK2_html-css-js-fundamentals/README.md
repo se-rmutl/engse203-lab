@@ -15,10 +15,15 @@
 
 ---
 
-<figure class="video_container">
-  <iframe src="Portfolio_Website_Workshop_Video.mp4" frameborder="0" allowfullscreen="true"> 
-</iframe>
-</figure>
+
+[![Video](file:Portfolio_Website_Workshop_Video.mp4)]
+
+https://github.com/se-rmutl/engse203-lab/blob/main/TASK2_html-css-js-fundamentals/Portfolio_Website_Workshop_Video.mp4
+
+<video src="Portfolio_Website_Workshop_Video.mp4" width="320" height="240" controls></video>
+
+<video src="[Portfolio_Website_Workshop_Video.mp4](https://github.com/se-rmutl/engse203-lab/blob/main/TASK2_html-css-js-fundamentals/Portfolio_Website_Workshop_Video.mp4)" width="320" height="240" controls></video>
+
 
 ### **เตือนความจำเทคนิคการทำ version control:**
 - เมื่อสร้างโค้ดเสร็จใน local ครั้งแรก ให้ push ขึ้น git ก่อน เสมอ
