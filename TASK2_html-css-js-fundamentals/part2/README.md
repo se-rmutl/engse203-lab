@@ -25,7 +25,7 @@
 
 ### **นักศึกษา 2 คนทำงานร่วมกันและแบ่งหน้าที่ Feature Distribution:**
 
-### [Interactive Guide สำหรับการพัฒนา Portfolio Website แบบ Pair Programming พร้อม Advanced Features](https://se-rmutl.github.io/task1/part2/)
+### [Interactive Guide สำหรับการพัฒนา Portfolio Website แบบ Pair Programming พร้อม Advanced Features](https://se-rmutl.github.io/task2/part2/)
 
 ### **นักศึกษา A:(45 minutes):**
 
