@@ -1,0 +1,2240 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Workshop Part 2 - Interactive Guide</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --student-a-color: #3498db;
+            --student-b-color: #e74c3c;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-color: #2c3e50;
+            --card-bg: #ffffff;
+            --border-radius: 15px;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-gradient);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 3rem 2rem;
+            background: rgba(255,255,255,0.95);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Progress Tracker */
+        .progress-tracker {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0.6;
+            border: 2px solid transparent;
+        }
+
+        .progress-step.active {
+            opacity: 1;
+            transform: scale(1.05);
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .progress-step.completed {
+            background: var(--success-color);
+            color: white;
+            opacity: 1;
+            border-color: var(--success-color);
+        }
+
+        .progress-step i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-section h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-section h3 i {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .nav-item {
+            display: block;
+            padding: 0.8rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+            border-color: var(--primary-color);
+        }
+
+        .nav-item.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .nav-item i {
+            margin-right: 0.5rem;
+            width: 16px;
+        }
+
+        /* Content Area */
+        .content-area {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            min-height: 600px;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .feature-card.student-a {
+            background: linear-gradient(135deg, var(--student-a-color) 0%, #2980b9 100%);
+        }
+
+        .feature-card.student-b {
+            background: linear-gradient(135deg, var(--student-b-color) 0%, #c0392b 100%);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-card h3 i {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        /* Team Assignment Cards */
+        .team-assignment {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .team-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .team-card.student-a {
+            border-left-color: var(--student-a-color);
+        }
+
+        .team-card.student-b {
+            border-left-color: var(--student-b-color);
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .team-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .team-card.student-a h3 {
+            color: var(--student-a-color);
+        }
+
+        .team-card.student-b h3 {
+            color: var(--student-b-color);
+        }
+
+        .team-card h3 i {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li::before {
+            content: '🎯';
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Video Container */
+        .video-container {
+            background: #000;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin: 2rem 0;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .video-placeholder {
+            aspect-ratio: 16/9;
+            background: linear-gradient(45deg, #333, #666);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .video-placeholder:hover {
+            background: linear-gradient(45deg, #444, #777);
+        }
+
+        .video-placeholder i {
+            font-size: 4rem;
+            margin-right: 1rem;
+        }
+
+        .video-info {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            background: rgba(0,0,0,0.7);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 1rem 0;
+            overflow-x: auto;
+            position: relative;
+            border: 1px solid #4a5568;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #4a5568;
+        }
+
+        .code-header span {
+            color: #a0aec0;
+            font-weight: 600;
+        }
+
+        .copy-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-btn:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+
+        .copy-btn.copied {
+            background: var(--success-color);
+        }
+
+        /* Step Cards */
+        .step-cards {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .step-card {
+            background: var(--card-bg);
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .step-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .step-title {
+            margin-left: 2rem;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .step-content {
+            margin-left: 2rem;
+        }
+
+        /* Feature Details */
+        .feature-details {
+            background: white;
+            border: 2px solid;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-top: 2rem;
+            animation: slideUp 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .feature-details.student-a {
+            border-color: var(--student-a-color);
+        }
+
+        .feature-details.student-b {
+            border-color: var(--student-b-color);
+        }
+
+        @keyframes slideUp {
+            from { 
+                transform: translateY(20px); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateY(0); 
+                opacity: 1; 
+            }
+        }
+
+        .feature-details h3 {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+        }
+
+        .feature-details.student-a h3 {
+            color: var(--student-a-color);
+        }
+
+        .feature-details.student-b h3 {
+            color: var(--student-b-color);
+        }
+
+        .feature-details h3 i {
+            margin-right: 0.5rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-steps h4,
+        .feature-code h4 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+
+        .feature-steps h4 i,
+        .feature-code h4 i {
+            margin-right: 0.5rem;
+        }
+
+        .feature-steps ol {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .feature-steps li {
+            margin-bottom: 0.75rem;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid;
+        }
+
+        .feature-details.student-a .feature-steps li {
+            border-left-color: var(--student-a-color);
+        }
+
+        .feature-details.student-b .feature-steps li {
+            border-left-color: var(--student-b-color);
+        }
+
+        .feature-tips {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        .feature-tips.student-a {
+            background: linear-gradient(135deg, var(--student-a-color) 0%, #2980b9 100%);
+        }
+
+        .feature-tips h4 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+
+        .feature-tips h4 i {
+            margin-right: 0.5rem;
+        }
+
+        .feature-tips ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-tips li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .feature-tips li::before {
+            content: '✓';
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+            color: #fff3cd;
+            font-weight: bold;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            margin-top: 2rem;
+            text-align: center;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .action-btn.primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .action-btn.primary:hover {
+            background: #2980b9;
+        }
+
+        .action-btn.secondary:hover {
+            background: #5a6268;
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            margin: 1rem 0;
+            padding: 0;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+        }
+
+        .checklist li:hover {
+            background: #f8f9fa;
+            border-color: var(--primary-color);
+        }
+
+        .checklist li.completed {
+            background: #d4edda;
+            color: #155724;
+            border-color: var(--success-color);
+        }
+
+        .checklist li::before {
+            content: '☐';
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .checklist li.completed::before {
+            content: '✅';
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+                margin-bottom: 2rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .progress-tracker {
+                justify-content: center;
+            }
+            
+            .progress-step {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .features-grid,
+            .team-assignment {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: var(--transition);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .fab.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: var(--success-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .success-message.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-laptop-code"></i> Portfolio Workshop Part 2</h1>
+            <p>Interactive Guide สำหรับการพัฒนา Portfolio Website แบบ Pair Programming พร้อม Advanced Features</p>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <div class="progress-step active" data-step="overview">
+                <i class="fas fa-info-circle"></i>
+                <span>ภาพรวม</span>
+            </div>
+            <div class="progress-step" data-step="setup">
+                <i class="fas fa-cog"></i>
+                <span>การเตรียมตัว</span>
+            </div>
+            <div class="progress-step" data-step="team-a">
+                <i class="fas fa-user"></i>
+                <span>นักศึกษา A</span>
+            </div>
+            <div class="progress-step" data-step="team-b">
+                <i class="fas fa-user"></i>
+                <span>นักศึกษา B</span>
+            </div>
+            <div class="progress-step" data-step="merge">
+                <i class="fas fa-code-branch"></i>
+                <span>รวม Code</span>
+            </div>
+            <div class="progress-step" data-step="testing">
+                <i class="fas fa-check-circle"></i>
+                <span>ทดสอบ</span>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar Navigation -->
+            <div class="sidebar">
+                <div class="nav-section">
+                    <h3><i class="fas fa-list"></i> เนื้อหาหลัก</h3>
+                    <a class="nav-item active" data-section="overview">
+                        <i class="fas fa-home"></i> ภาพรวม Workshop
+                    </a>
+                    <a class="nav-item" data-section="objectives">
+                        <i class="fas fa-bullseye"></i> เป้าหมายการเรียนรู้
+                    </a>
+                    <a class="nav-item" data-section="team-assignment">
+                        <i class="fas fa-users"></i> การแบ่งหน้าที่ทีม
+                    </a>
+                    <a class="nav-item" data-section="setup-guide">
+                        <i class="fas fa-rocket"></i> การเตรียมตัว
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <h3><i class="fas fa-code"></i> Implementation</h3>
+                    <a class="nav-item" data-section="student-a-features">
+                        <i class="fas fa-moon"></i> Features นักศึกษา A
+                    </a>
+                    <a class="nav-item" data-section="student-b-features">
+                        <i class="fas fa-filter"></i> Features นักศึกษา B
+                    </a>
+                    <a class="nav-item" data-section="merge-testing">
+                        <i class="fas fa-code-branch"></i> การรวม Code
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <h3><i class="fas fa-tools"></i> เครื่องมือ</h3>
+                    <a class="nav-item" data-section="troubleshooting">
+                        <i class="fas fa-bug"></i> แก้ปัญหา
+                    </a>
+                    <a class="nav-item" data-section="resources">
+                        <i class="fas fa-book"></i> แหล่งข้อมูล
+                    </a>
+                    <a class="nav-item" data-section="assessment">
+                        <i class="fas fa-chart-bar"></i> การประเมินผล
+                    </a>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Overview Section -->
+                <div class="content-section active" id="overview">
+                    <h2 class="section-title">
+                        <i class="fas fa-info-circle"></i> ภาพรวม Workshop
+                    </h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8;">
+                        Workshop นี้เป็นการต่อยอดจาก Part 1 โดยนักศึกษาจะทำงานเป็นคู่ (Pair Programming) 
+                        เพื่อเพิ่ม Features ขั้นสูงให้กับ Portfolio Website ที่สร้างไว้ใน Part 1
+                    </p>
+                    
+                    <div class="video-container">
+                        <div class="video-placeholder" onclick="playVideo('overview')">
+                            <i class="fas fa-play-circle"></i>
+                            <span>คลิกเพื่อดู Video แนะนำ Workshop</span>
+                            <div class="video-info">
+                                <strong>Workshop Overview Video</strong><br>
+                                Duration: 10 นาที | หัวข้อ: แนะนำ Pair Programming และ Advanced Features
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-card" onclick="showSection('team-assignment')">
+                            <h3><i class="fas fa-users"></i> Pair Programming</h3>
+                            <p>เรียนรู้การทำงานเป็นทีมแบบมืออาชีพ แบ่งหน้าที่และประสานงานกัน</p>
+                        </div>
+                        <div class="feature-card" onclick="showSection('student-a-features')">
+                            <h3><i class="fas fa-moon"></i> Interactive Features</h3>
+                            <p>สร้างฟีเจอร์ที่ทำให้เว็บไซต์มีชีวิตชีวาและน่าใช้งาน</p>
+                        </div>
+                        <div class="feature-card" onclick="showSection('setup-guide')">
+                            <h3><i class="fas fa-code-branch"></i> Git Collaboration</h3>
+                            <p>ฝึกใช้ Git สำหรับการทำงานร่วมกันและ merge code อย่างปลอดภัย</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Objectives Section -->
+                <div class="content-section" id="objectives">
+                    <h2 class="section-title">
+                        <i class="fas fa-bullseye"></i> เป้าหมายการเรียนรู้
+                    </h2>
+                    
+                    <div class="step-cards">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">ฝึกการทำงานเป็นทีมแบบ Pair Programming</h3>
+                            <div class="step-content">
+                                <p>เรียนรู้วิธีการแบ่งงาน ประสานงาน และรวม code ร่วมกัน พร้อมทั้งการแก้ไข conflicts ที่อาจเกิดขึ้น</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">เรียนรู้การใช้ JavaScript สำหรับ Interactive Features</h3>
+                            <div class="step-content">
+                                <p>สร้างฟีเจอร์ที่ทำให้เว็บไซต์มีการโต้ตอบกับผู้ใช้ เช่น Dark Mode, Animation, และ Dynamic Content</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <h3 class="step-title">พัฒนาทักษะการใช้ Git ในการทำงานร่วมกัน</h3>
+                            <div class="step-content">
+                                <p>ใช้ branch, merge, และ conflict resolution ในสถานการณ์จริง</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">4</div>
+                            <h3 class="step-title">สร้าง Modern Features สำหรับ Portfolio Website</h3>
+                            <div class="step-content">
+                                <p>เพิ่มฟีเจอร์ที่ทันสมัยและดูมืออาชีพ เพื่อเพิ่มมูลค่าให้กับ Portfolio</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Assignment Section -->
+                <div class="content-section" id="team-assignment">
+                    <h2 class="section-title">
+                        <i class="fas fa-users"></i> การแบ่งหน้าที่ในทีม
+                    </h2>
+                    
+                    <div class="video-container">
+                        <div class="video-placeholder" onclick="playVideo('team-assignment')">
+                            <i class="fas fa-play-circle"></i>
+                            <span>คลิกเพื่อดู Video การแบ่งหน้าที่</span>
+                            <div class="video-info">
+                                <strong>Team Assignment Guide</strong><br>
+                                Duration: 8 นาที | หัวข้อ: วิธีการแบ่งงานและประสานงาน
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="team-assignment">
+                        <div class="team-card student-a">
+                            <h3><i class="fas fa-user-graduate"></i> นักศึกษา A</h3>
+                            <ul class="feature-list">
+                                <li>🌙 Dark Mode Toggle - ระบบเปลี่ยนธีมมืด/สว่าง</li>
+                                <li>⏳ Loading Animation - หน้าจอโหลดแบบมืออาชีพ</li>
+                                <li>📊 Scroll Progress Indicator - แถบแสดงความคืบหน้า</li>
+                            </ul>
+                        </div>
+                        <div class="team-card student-b">
+                            <h3><i class="fas fa-user-graduate"></i> นักศึกษา B</h3>
+                            <ul class="feature-list">
+                                <li>🔍 Project Filter System - ระบบกรองโปรเจกต์</li>
+                                <li>⌨️ Typing Animation - เอฟเฟกต์พิมพ์ข้อความ</li>
+                                <li>🔝 Back to Top Button - ปุ่มกลับสู่ด้านบน</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Setup Guide Section -->
+                <div class="content-section" id="setup-guide">
+                    <h2 class="section-title">
+                        <i class="fas fa-rocket"></i> การเตรียมตัวและวางแผน
+                    </h2>
+                    
+                    <div class="video-container">
+                        <div class="video-placeholder" onclick="playVideo('setup')">
+                            <i class="fas fa-play-circle"></i>
+                            <span>คลิกเพื่อดู Video การเตรียมตัว</span>
+                            <div class="video-info">
+                                <strong>Setup Guide Video</strong><br>
+                                Duration: 12 นาที | หัวข้อ: Git Setup และ Project Structure
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-cards">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">Clone โปรเจคจาก Part 1</h3>
+                            <div class="step-content">
+                                <div class="code-block">
+                                    <div class="code-header">
+                                        <span><i class="fas fa-terminal"></i> Terminal Commands</span>
+                                        <button class="copy-btn" onclick="copyCode(this)">
+                                            <i class="fas fa-copy"></i> Copy
+                                        </button>
+                                    </div>
+                                    <pre><code># Clone repository
+git clone https://github.com/[username]/portfolio-website.git
+cd portfolio-website</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">สร้าง Branch สำหรับแต่ละคน</h3>
+                            <div class="step-content">
+                                <div class="code-block">
+                                    <div class="code-header">
+                                        <span><i class="fab fa-git-alt"></i> Git Branching</span>
+                                        <button class="copy-btn" onclick="copyCode(this)">
+                                            <i class="fas fa-copy"></i> Copy
+                                        </button>
+                                    </div>
+                                    <pre><code># นักศึกษา A
+git checkout -b feature/student-a-features
+
+# นักศึกษา B  
+git checkout -b feature/student-b-features</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <h3 class="step-title">วางแผนการทำงานร่วมกัน</h3>
+                            <div class="step-content">
+                                <ul class="checklist">
+                                    <li>กำหนดเวลาในการทำแต่ละ feature</li>
+                                    <li>ตกลงวิธีการ merge code</li>
+                                    <li>เตรียม communication channel</li>
+                                    <li>ทำความเข้าใจ code structure ร่วมกัน</li>
+                                    <li>กำหนดมาตรฐานการเขียน code</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student A Features Section -->
+                <div class="content-section" id="student-a-features">
+                    <h2 class="section-title">
+                        <i class="fas fa-moon"></i> Features สำหรับนักศึกษา A
+                    </h2>
+                    
+                    <div class="video-container">
+                        <div class="video-placeholder" onclick="playVideo('student-a')">
+                            <i class="fas fa-play-circle"></i>
+                            <span>คลิกเพื่อดู Video Tutorial นักศึกษา A</span>
+                            <div class="video-info">
+                                <strong>Student A Features Tutorial</strong><br>
+                                Duration: 25 นาที | หัวข้อ: Dark Mode, Loading, Scroll Progress
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-card student-a" onclick="showFeatureDetail('dark-mode', 'a')">
+                            <h3><i class="fas fa-moon"></i> Dark Mode Toggle</h3>
+                            <p>ระบบเปลี่ยนธีมมืด/สว่าง พร้อม Local Storage และ Animation</p>
+                        </div>
+                        <div class="feature-card student-a" onclick="showFeatureDetail('loading', 'a')">
+                            <h3><i class="fas fa-spinner"></i> Loading Animation</h3>
+                            <p>หน้าจอโหลดแบบมืออาชีพ พร้อม Progress Bar และ Fade Effect</p>
+                        </div>
+                        <div class="feature-card student-a" onclick="showFeatureDetail('scroll-progress', 'a')">
+                            <h3><i class="fas fa-chart-line"></i> Scroll Progress</h3>
+                            <p>แถบแสดงความคืบหน้าการเลื่อนหน้า พร้อม Active Section Highlight</p>
+                        </div>
+                    </div>
+
+                    <div id="feature-details-a"></div>
+                </div>
+
+                <!-- Student B Features Section -->
+                <div class="content-section" id="student-b-features">
+                    <h2 class="section-title">
+                        <i class="fas fa-filter"></i> Features สำหรับนักศึกษา B
+                    </h2>
+                    
+                    <div class="video-container">
+                        <div class="video-placeholder" onclick="playVideo('student-b')">
+                            <i class="fas fa-play-circle"></i>
+                            <span>คลิกเพื่อดู Video Tutorial นักศึกษา B</span>
+                            <div class="video-info">
+                                <strong>Student B Features Tutorial</strong><br>
+                                Duration: 23 นาที | หัวข้อ: Project Filter, Typing, Back to Top
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-card student-b" onclick="showFeatureDetail('project-filter', 'b')">
+                            <h3><i class="fas fa-filter"></i> Project Filter</h3>
+                            <p>ระบบกรองโปรเจกต์ตามหมวดหมู่ พร้อม Animation และ Counter</p>
+                        </div>
+                        <div class="feature-card student-b" onclick="showFeatureDetail('typing', 'b')">
+                            <h3><i class="fas fa-keyboard"></i> Typing Animation</h3>
+                            <p>เอฟเฟกต์พิมพ์ข้อความอัตโนมัติ พร้อม Cursor Animation</p>
+                        </div>
+                        <div class="feature-card student-b" onclick="showFeatureDetail('back-to-top', 'b')">
+                            <h3><i class="fas fa-arrow-up"></i> Back to Top</h3>
+                            <p>ปุ่มกลับสู่ด้านบนพร้อม Smooth Scroll และ Tooltip</p>
+                        </div>
+                    </div>
+
+                    <div id="feature-details-b"></div>
+                </div>
+
+                <!-- Merge & Testing Section -->
+                <div class="content-section" id="merge-testing">
+                    <h2 class="section-title">
+                        <i class="fas fa-code-branch"></i> การรวม Code และทดสอบ
+                    </h2>
+                    
+                    <div class="video-container">
+                        <div class="video-placeholder" onclick="playVideo('merge')">
+                            <i class="fas fa-play-circle"></i>
+                            <span>คลิกเพื่อดู Video การ Merge Code</span>
+                            <div class="video-info">
+                                <strong>Code Merging Tutorial</strong><br>
+                                Duration: 15 นาที | หัวข้อ: Git Merge และ Conflict Resolution
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-cards">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">Code Review</h3>
+                            <div class="step-content">
+                                <div class="code-block">
+                                    <div class="code-header">
+                                        <span><i class="fab fa-git-alt"></i> Git Commands</span>
+                                        <button class="copy-btn" onclick="copyCode(this)">
+                                            <i class="fas fa-copy"></i> Copy
+                                        </button>
+                                    </div>
+                                    <pre><code># Commit การเปลี่ยนแปลงทั้งหมด
+git add .
+git commit -m "feat: Add interactive features"
+git push origin feature/your-branch-name</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">Merge Code</h3>
+                            <div class="step-content">
+                                <div class="code-block">
+                                    <div class="code-header">
+                                        <span><i class="fas fa-code-branch"></i> Merge Process</span>
+                                        <button class="copy-btn" onclick="copyCode(this)">
+                                            <i class="fas fa-copy"></i> Copy
+                                        </button>
+                                    </div>
+                                    <pre><code># Switch to main branch
+git checkout main
+git pull origin main
+
+# Merge features
+git merge origin/feature/student-a-features
+git merge origin/feature/student-b-features
+
+# Push merged code
+git push origin main</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <h3 class="step-title">Final Testing</h3>
+                            <div class="step-content">
+                                <ul class="checklist">
+                                    <li>ทดสอบ Dark Mode ทำงานถูกต้อง</li>
+                                    <li>ตรวจสอบ Loading Animation</li>
+                                    <li>ทดสอบ Scroll Progress Bar</li>
+                                    <li>ทดสอบ Project Filter System</li>
+                                    <li>ตรวจสอบ Typing Animation</li>
+                                    <li>ทดสอบ Back to Top Button</li>
+                                    <li>ทดสอบ Responsive Design</li>
+                                    <li>ตรวจสอบ Cross-browser compatibility</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Troubleshooting Section -->
+                <div class="content-section" id="troubleshooting">
+                    <h2 class="section-title">
+                        <i class="fas fa-bug"></i> คู่มือแก้ปัญหา
+                    </h2>
+                    
+                    <div class="step-cards">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">Git Merge Conflicts</h3>
+                            <div class="step-content">
+                                <div class="code-block">
+                                    <div class="code-header">
+                                        <span><i class="fas fa-exclamation-triangle"></i> Conflict Resolution</span>
+                                        <button class="copy-btn" onclick="copyCode(this)">
+                                            <i class="fas fa-copy"></i> Copy
+                                        </button>
+                                    </div>
+                                    <pre><code># ตรวจสอบไฟล์ที่ conflict
+git status
+
+# แก้ไขไฟล์ที่ conflict (ลบ conflict markers)
+# <<<<<<< HEAD
+# your changes
+# =======
+# their changes
+# >>>>>>> branch-name
+
+# เมื่อแก้ไขเสร็จแล้ว
+git add .
+git commit -m "fix: Resolve merge conflicts"</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">JavaScript ไม่ทำงาน</h3>
+                            <div class="step-content">
+                                <ul class="checklist">
+                                    <li>ตรวจสอบ Console ใน Browser DevTools (F12)</li>
+                                    <li>ตรวจสอบว่าใส่ script tag ก่อนปิด body</li>
+                                    <li>ตรวจสอบ syntax errors</li>
+                                    <li>ตรวจสอบ DOM elements มีอยู่จริง</li>
+                                    <li>ใช้ console.log() เพื่อ debug</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <h3 class="step-title">CSS Variables ไม่ทำงาน</h3>
+                            <div class="step-content">
+                                <div class="code-block">
+                                    <div class="code-header">
+                                        <span><i class="fab fa-css3-alt"></i> CSS Variables Fix</span>
+                                        <button class="copy-btn" onclick="copyCode(this)">
+                                            <i class="fas fa-copy"></i> Copy
+                                        </button>
+                                    </div>
+                                    <pre><code>/* ตรวจสอบว่าใช้ var() function */
+background-color: var(--bg-color);  /* ✅ ถูกต้อง */
+background-color: --bg-color;       /* ❌ ผิด */
+
+/* ตรวจสอบว่าประกาศ variables ใน :root */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources Section -->
+                <div class="content-section" id="resources">
+                    <h2 class="section-title">
+                        <i class="fas fa-book"></i> แหล่งข้อมูลเพิ่มเติม
+                    </h2>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <h3><i class="fab fa-js-square"></i> JavaScript ES6+</h3>
+                            <p>Arrow Functions, Template Literals, Classes, Local Storage API, Event Listeners</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3><i class="fab fa-css3-alt"></i> Modern CSS</h3>
+                            <p>CSS Variables, CSS Grid & Flexbox, CSS Animations, Media Queries, CSS Transforms</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3><i class="fab fa-git-alt"></i> Git Commands</h3>
+                            <p>git status, git add, git commit, git push/pull, git merge, git branch</p>
+                        </div>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span><i class="fab fa-git-alt"></i> Essential Git Commands</span>
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                        <pre><code># ตรวจสอบสถานะ
+git status
+
+# เพิ่มไฟล์ทั้งหมด
+git add .
+
+# Commit พร้อม message
+git commit -m "feat: Add new feature"
+
+# Push ขึ้น remote
+git push origin branch-name
+
+# ดึงการเปลี่ยนแปลงล่าสุด
+git pull origin main
+
+# สร้าง branch ใหม่
+git checkout -b feature-name
+
+# เปลี่ยน branch
+git checkout branch-name
+
+# Merge branch
+git merge branch-name
+
+# ดู history
+git log --oneline</code></pre>
+                    </div>
+                </div>
+
+                <!-- Assessment Section -->
+                <div class="content-section" id="assessment">
+                    <h2 class="section-title">
+                        <i class="fas fa-chart-bar"></i> การประเมินผล
+                    </h2>
+                    
+                    <div class="step-cards">
+                        <div class="step-card">
+                            <div class="step-number">20</div>
+                            <h3 class="step-title">Repository Setup & Git Usage (20 คะแนน)</h3>
+                            <div class="step-content">
+                                <ul class="checklist">
+                                    <li>ใช้ branch ถูกต้อง</li>
+                                    <li>Commit messages ชัดเจน</li>
+                                    <li>Merge สำเร็จไม่มี conflict</li>
+                                    <li>Git workflow ถูกต้อง</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-number">60</div>
+                            <h3 class="step-title">Feature Implementation (60 คะแนน)</h3>
+                            <div class="step-content">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                                    <div style="background: #e3f2fd; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--student-a-color);">
+                                        <strong>นักศึกษา A (30 คะแนน)</strong>
+                                        <ul style="margin-top: 0.5rem; font-size: 0.9rem; list-style: none; padding: 0;">
+                                            <li>✓ Dark Mode (10 คะแนน)</li>
+                                            <li>✓ Loading Animation (10 คะแนน)</li>
+                                            <li>✓ Scroll Progress (10 คะแนน)</li>
+                                        </ul>
+                                    </div>
+                                    <div style="background: #ffebee; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--student-b-color);">
+                                        <strong>นักศึกษา B (30 คะแนน)</strong>
+                                        <ul style="margin-top: 0.5rem; font-size: 0.9rem; list-style: none; padding: 0;">
+                                            <li>✓ Project Filter (10 คะแนน)</li>
+                                            <li>✓ Typing Animation (10 คะแนน)</li>
+                                            <li>✓ Back to Top (10 คะแนน)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-number">10</div>
+                            <h3 class="step-title">Code Quality (10 คะแนน)</h3>
+                            <div class="step-content">
+                                <ul class="checklist">
+                                    <li>โค้ดสะอาด อ่านง่าย</li>
+                                    <li>มี comments อธิบาย</li>
+                                    <li>ตั้งชื่อตัวแปรดี</li>
+                                    <li>Structure ถูกต้อง</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-number">10</div>
+                            <h3 class="step-title">Teamwork & Collaboration (10 คะแนน)</h3>
+                            <div class="step-content">
+                                <ul class="checklist">
+                                    <li>แบ่งงานดี</li>
+                                    <li>ช่วยเหลือกัน</li>
+                                    <li>Merge smooth</li>
+                                    <li>ประสานงานดี</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 15px; margin-top: 2rem; text-align: center;">
+                        <h3><i class="fas fa-graduation-cap"></i> สิ่งที่ต้องส่ง</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                            <div>
+                                <i class="fab fa-github" style="font-size: 2rem; display: block; margin-bottom: 0.5rem;"></i>
+                                <strong>GitHub Repository</strong>
+                                <p style="font-size: 0.9rem; opacity: 0.9;">Complete source code with proper Git history</p>
+                            </div>
+                            <div>
+                                <i class="fas fa-globe" style="font-size: 2rem; display: block; margin-bottom: 0.5rem;"></i>
+                                <strong>Live Demo</strong>
+                                <p style="font-size: 0.9rem; opacity: 0.9;">GitHub Pages หรือ Netlify deployment</p>
+                            </div>
+                            <div>
+                                <i class="fas fa-file-alt" style="font-size: 2rem; display: block; margin-bottom: 0.5rem;"></i>
+                                <strong>README.md</strong>
+                                <p style="font-size: 0.9rem; opacity: 0.9;">Project overview และ setup instructions</p>
+                            </div>
+                            <div>
+                                <i class="fas fa-pencil-alt" style="font-size: 2rem; display: block; margin-bottom: 0.5rem;"></i>
+                                <strong>Reflection Report</strong>
+                                <p style="font-size: 0.9rem; opacity: 0.9;">สิ่งที่ได้เรียนรู้และประสบการณ์</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Global variables
+        let completedSections = JSON.parse(localStorage.getItem('workshop-progress') || '[]');
+        
+        // Navigation functionality
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const section = this.getAttribute('data-section');
+                showSection(section);
+                
+                // Update active nav item
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Progress tracker functionality
+        document.querySelectorAll('.progress-step').forEach(step => {
+            step.addEventListener('click', function() {
+                const stepName = this.getAttribute('data-step');
+                updateProgress(stepName);
+            });
+        });
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show target section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                // Mark section as completed
+                markSectionComplete(sectionId);
+                
+                // Scroll to top of content area
+                document.querySelector('.content-area').scrollTop = 0;
+            }
+        }
+
+        function updateProgress(stepName) {
+            const steps = ['overview', 'setup', 'team-a', 'team-b', 'merge', 'testing'];
+            const currentIndex = steps.indexOf(stepName);
+            
+            document.querySelectorAll('.progress-step').forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                if (index < currentIndex) {
+                    step.classList.add('completed');
+                } else if (index === currentIndex) {
+                    step.classList.add('active');
+                }
+            });
+
+            // Show corresponding section
+            const sectionMap = {
+                'overview': 'overview',
+                'setup': 'setup-guide',
+                'team-a': 'student-a-features',
+                'team-b': 'student-b-features',
+                'merge': 'merge-testing',
+                'testing': 'assessment'
+            };
+            
+            if (sectionMap[stepName]) {
+                showSection(sectionMap[stepName]);
+                
+                // Update nav
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                const targetNav = document.querySelector(`[data-section="${sectionMap[stepName]}"]`);
+                if (targetNav) targetNav.classList.add('active');
+            }
+        }
+
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block').querySelector('code');
+            const text = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                showSuccessMessage('Code copied to clipboard!');
+            });
+        }
+
+        function playVideo(videoType) {
+            const videoContent = {
+                'overview': {
+                    title: 'Workshop Overview',
+                    description: 'ภาพรวมของ Portfolio Workshop Part 2',
+                    duration: '10:30',
+                    topics: ['แนะนำ Workshop', 'เป้าหมายการเรียนรู้', 'การแบ่งหน้าที่', 'เครื่องมือที่ใช้']
+                },
+                'team-assignment': {
+                    title: 'Team Assignment Guide',
+                    description: 'การแบ่งหน้าที่และวางแผนการทำงาน',
+                    duration: '8:15',
+                    topics: ['Pair Programming', 'การแบ่งงาน', 'Communication', 'Timeline']
+                },
+                'setup': {
+                    title: 'Setup & Preparation',
+                    description: 'การเตรียมตัวและ Setup Environment',
+                    duration: '12:45',
+                    topics: ['Git Clone', 'Branch Creation', 'Project Structure', 'Dependencies']
+                },
+                'student-a': {
+                    title: 'Student A Features',
+                    description: 'Dark Mode, Loading Animation, Scroll Progress',
+                    duration: '25:30',
+                    topics: ['Dark Mode Toggle', 'Loading Animation', 'Scroll Progress Indicator']
+                },
+                'student-b': {
+                    title: 'Student B Features',
+                    description: 'Project Filter, Typing Animation, Back to Top',
+                    duration: '23:15',
+                    topics: ['Project Filter System', 'Typing Animation', 'Back to Top Button']
+                },
+                'merge': {
+                    title: 'Code Merge & Testing',
+                    description: 'การรวม Code และการทดสอบ',
+                    duration: '15:20',
+                    topics: ['Git Merge', 'Conflict Resolution', 'Testing Process']
+                }
+            };
+
+            const video = videoContent[videoType];
+            if (video) {
+                showSuccessMessage(`🎬 Video: ${video.title} (${video.duration})`);
+                // In a real implementation, this would open a video player
+                console.log('Playing video:', video);
+            }
+        }
+
+        function showFeatureDetail(featureType, studentType) {
+            const featureData = {
+                'dark-mode': {
+                    title: 'Dark Mode Toggle Implementation',
+                    steps: [
+                        'เพิ่ม HTML Toggle Button ใน Navigation',
+                        'สร้าง CSS Variables สำหรับ Light/Dark Theme',
+                        'เขียน JavaScript สำหรับ Toggle Function',
+                        'บันทึก Theme State ใน Local Storage'
+                    ],
+                    code: `// Dark Mode Toggle Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('theme-icon');
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    
+    // ตั้งค่า theme เริ่มต้น
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    updateThemeIcon(currentTheme);
+    
+    // Event listener สำหรับการคลิก
+    themeToggle.addEventListener('click', function() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // เปลี่ยน theme
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+        
+        // เพิ่ม animation effect
+        themeToggle.style.transform = 'rotate(360deg)';
+        setTimeout(() => {
+            themeToggle.style.transform = 'rotate(0deg)';
+        }, 300);
+    });
+    
+    function updateThemeIcon(theme) {
+        themeToggle.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+});`,
+                    tips: [
+                        'ใช้ CSS Variables เพื่อความยืดหยุ่น',
+                        'บันทึก preference ใน localStorage',
+                        'เพิ่ม transition effects สำหรับ smooth change',
+                        'รองรับ system preference (prefers-color-scheme)'
+                    ]
+                },
+                'loading': {
+                    title: 'Loading Animation Implementation',
+                    steps: [
+                        'สร้าง HTML Structure สำหรับ Loading Screen',
+                        'เพิ่ม CSS Animation สำหรับ Spinner และ Progress',
+                        'เขียน JavaScript สำหรับ Progress Bar Logic',
+                        'ทำ Fade Out Effect เมื่อ Loading เสร็จ'
+                    ],
+                    code: `// Loading Animation
+window.addEventListener('load', function() {
+    const loader = document.querySelector('.loader');
+    const progressBar = document.querySelector('.progress-fill');
+    
+    // จำลองการโหลด content
+    let progress = 0;
+    const loadingInterval = setInterval(() => {
+        progress += 10;
+        progressBar.style.width = progress + '%';
+        
+        if (progress >= 100) {
+            clearInterval(loadingInterval);
+            
+            // Fade out loader
+            setTimeout(() => {
+                loader.classList.add('fade-out');
+                
+                // Remove loader from DOM
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 500);
+            }, 500);
+        }
+    }, 150);
+});`,
+                    tips: [
+                        'ใช้ CSS keyframes สำหรับ spinner animation',
+                        'Progress bar ควรสะท้อนการโหลดจริง',
+                        'เพิ่ม loading text ที่เป็นมิตร',
+                        'ใช้ requestAnimationFrame สำหรับ smooth animation'
+                    ]
+                },
+                'scroll-progress': {
+                    title: 'Scroll Progress Indicator',
+                    steps: [
+                        'เพิ่ม HTML Element สำหรับ Progress Bar',
+                        'สร้าง CSS Styling และ Gradient Effects',
+                        'คำนวณ Scroll Percentage ด้วย JavaScript',
+                        'อัพเดท Width และ Highlight Active Section'
+                    ],
+                    code: `// Scroll Progress Indicator
+function updateScrollProgress() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrollPercent = (scrollTop / scrollHeight) * 100;
+    
+    const progressBar = document.querySelector('.progress-bar');
+    progressBar.style.width = scrollPercent + '%';
+    
+    // เพิ่ม effect เมื่อเลื่อนถึงจุดต่างๆ
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        
+        if (scrollTop >= sectionTop && scrollTop <= sectionBottom) {
+            // Highlight current section in navbar
+            const currentId = section.getAttribute('id');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === \`#\${currentId}\`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    });
+}
+
+// Event listeners
+window.addEventListener('scroll', updateScrollProgress);
+window.addEventListener('resize', updateScrollProgress);`,
+                    tips: [
+                        'ใช้ throttling สำหรับ scroll events',
+                        'เพิ่ม gradient colors สำหรับความสวยงาม',
+                        'รองรับ responsive design',
+                        'เพิ่ม glow effect สำหรับ progress bar'
+                    ]
+                },
+                'project-filter': {
+                    title: 'Project Filter System Implementation',
+                    steps: [
+                        'เพิ่ม HTML Filter Buttons และ Project Cards',
+                        'สร้าง CSS Styling สำหรับ Filter UI และ Animation',
+                        'เขียน JavaScript Filter Logic พร้อม Event Listeners',
+                        'เพิ่ม Animation Effects และ Project Counter'
+                    ],
+                    code: `// Project Filter System
+const filterButtons = document.querySelectorAll('.filter-btn');
+const projectCards = document.querySelectorAll('.project-card');
+const visibleCount = document.getElementById('visible-count');
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        
+        const filterValue = this.getAttribute('data-filter');
+        let visibleProjects = 0;
+        
+        // Filter projects with animation
+        projectCards.forEach((card, index) => {
+            setTimeout(() => {
+                if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                    card.classList.remove('hide');
+                    visibleProjects++;
+                } else {
+                    card.classList.add('hide');
+                }
+                
+                // Update visible count
+                visibleCount.textContent = visibleProjects;
+            }, index * 50); // Stagger animation
+        });
+        
+        // Add ripple effect to button
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+    });
+});`,
+                    tips: [
+                        'ใช้ data-attributes สำหรับ categorization',
+                        'Animation แบบ staggered สำหรับ smooth transition',
+                        'Real-time counter อัพเดทจำนวนโปรเจกต์',
+                        'เพิ่ม loading state สำหรับ large datasets'
+                    ]
+                },
+                'typing': {
+                    title: 'Typing Animation Implementation',
+                    steps: [
+                        'สร้าง HTML Container พร้อม Typing Text Element',
+                        'เพิ่ม CSS Animation สำหรับ Cursor Blinking',
+                        'สร้าง TypeWriter Class ด้วย JavaScript',
+                        'กำหนด Word Array และ Timing Configuration'
+                    ],
+                    code: `// Typing Animation
+class TypeWriter {
+    constructor(textElement, words, wait = 3000) {
+        this.textElement = textElement;
+        this.words = words;
+        this.text = '';
+        this.wordIndex = 0;
+        this.wait = parseInt(wait, 10);
+        this.isDeleting = false;
+        this.type();
+    }
+    
+    type() {
+        const current = this.wordIndex % this.words.length;
+        const fullText = this.words[current];
+        
+        if (this.isDeleting) {
+            this.text = fullText.substring(0, this.text.length - 1);
+        } else {
+            this.text = fullText.substring(0, this.text.length + 1);
+        }
+        
+        this.textElement.innerHTML = this.text;
+        
+        let typeSpeed = 150;
+        if (this.isDeleting) typeSpeed /= 2;
+        
+        if (!this.isDeleting && this.text === fullText) {
+            typeSpeed = this.wait;
+            this.isDeleting = true;
+        } else if (this.isDeleting && this.text === '') {
+            this.isDeleting = false;
+            this.wordIndex++;
+            typeSpeed = 500;
+        }
+        
+        setTimeout(() => this.type(), typeSpeed);
+    }
+}
+
+// Initialize typing effect
+const typingText = document.getElementById('typing-text');
+const words = ['Full Stack Developer', 'React Specialist', 'UI/UX Designer'];
+new TypeWriter(typingText, words, 2000);`,
+                    tips: [
+                        'ปรับ typing speed ให้เหมาะสมกับการอ่าน',
+                        'รองรับหลายภาษาและ special characters',
+                        'เพิ่ม pause ที่เหมาะสมระหว่างคำ',
+                        'ใช้ Web Animations API สำหรับ better performance'
+                    ]
+                },
+                'back-to-top': {
+                    title: 'Back to Top Button Implementation',
+                    steps: [
+                        'เพิ่ม HTML Button Element พร้อม Icon',
+                        'สร้าง CSS Styling, Animation และ Tooltip',
+                        'เขียน JavaScript Show/Hide Logic ตาม Scroll Position',
+                        'ทำ Smooth Scroll Function และ Click Animation'
+                    ],
+                    code: `// Back to Top Button
+const backToTopButton = document.getElementById('backToTop');
+
+function toggleBackToTop() {
+    if (window.pageYOffset > 300) {
+        backToTopButton.classList.add('show');
+    } else {
+        backToTopButton.classList.remove('show');
+    }
+}
+
+backToTopButton.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    
+    // Add click animation
+    this.style.transform = 'scale(0.9)';
+    setTimeout(() => {
+        this.style.transform = 'scale(1)';
+    }, 100);
+});
+
+// Throttle scroll event for performance
+let ticking = false;
+function requestTick() {
+    if (!ticking) {
+        window.requestAnimationFrame(toggleBackToTop);
+        ticking = true;
+    }
+}
+
+window.addEventListener('scroll', () => {
+    requestTick();
+    ticking = false;
+});`,
+                    tips: [
+                        'ใช้ requestAnimationFrame สำหรับ performance',
+                        'เพิ่ม tooltip พร้อม animation',
+                        'รองรับ keyboard accessibility',
+                        'เพิ่ม pulse effect เมื่อปุ่มปรากฏ'
+                    ]
+                }
+            };
+
+            const feature = featureData[featureType];
+            if (feature) {
+                const containerId = studentType === 'a' ? 'feature-details-a' : 'feature-details-b';
+                const container = document.getElementById(containerId);
+                const studentClass = studentType === 'a' ? 'student-a' : 'student-b';
+                
+                container.innerHTML = `
+                    <div class="feature-details ${studentClass}">
+                        <h3>
+                            <i class="fas fa-code"></i> ${feature.title}
+                        </h3>
+                        
+                        <div class="feature-grid">
+                            <div class="feature-steps">
+                                <h4>
+                                    <i class="fas fa-list-ol"></i>
+                                    ขั้นตอนการทำ:
+                                </h4>
+                                <ol>
+                                    ${feature.steps.map(step => `<li>${step}</li>`).join('')}
+                                </ol>
+                            </div>
+                            <div class="feature-code">
+                                <h4>
+                                    <i class="fas fa-code"></i>
+                                    Code Example:
+                                </h4>
+                                <div class="code-block">
+                                    <div class="code-header">
+                                        <span><i class="fab fa-js-square"></i> JavaScript</span>
+                                        <button class="copy-btn" onclick="copyCode(this)">
+                                            <i class="fas fa-copy"></i> Copy
+                                        </button>
+                                    </div>
+                                    <pre><code>${feature.code}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-tips ${studentClass}">
+                            <h4>
+                                <i class="fas fa-lightbulb"></i>
+                                เคล็ดลับและข้อควรรู้:
+                            </h4>
+                            <ul>
+                                ${feature.tips.map(tip => `<li>${tip}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="action-btn primary" onclick="downloadTemplate('${featureType}')">
+                                <i class="fas fa-download"></i> ดาวน์โหลด Template
+                            </button>
+                            <button class="action-btn secondary" onclick="showDemo('${featureType}')">
+                                <i class="fas fa-play"></i> ดู Demo
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Scroll to the feature details
+                container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function downloadTemplate(featureType) {
+            const templates = {
+                'dark-mode': `<!-- Dark Mode Template -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mode Template</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+        }
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="theme-toggle" id="theme-icon">
+            <i class="fas fa-moon"></i>
+        </div>
+    </nav>
+    <main>
+        <h1>Dark Mode Example</h1>
+        <p>This page supports dark mode!</p>
+    </main>
+</body>
+</html>`,
+                'loading': `<!-- Loading Animation Template -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Animation Template</title>
+    <style>
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <div class="spinner"></div>
+    </div>
+    <main>
+        <h1>Content loaded!</h1>
+    </main>
+</body>
+</html>`,
+                'project-filter': `<!-- Project Filter Template -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Filter Template</title>
+    <style>
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: #f0f0f0;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .filter-btn.active {
+            background: #3498db;
+            color: white;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        .project-card {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .project-card.hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="web">Web</button>
+        <button class="filter-btn" data-filter="mobile">Mobile</button>
+    </div>
+    <div class="projects-grid">
+        <div class="project-card" data-category="web">
+            <h3>Web Project</h3>
+        </div>
+        <div class="project-card" data-category="mobile">
+            <h3>Mobile Project</h3>
+        </div>
+    </div>
+</body>
+</html>`
+            };
+
+            const template = templates[featureType] || `<!-- ${featureType} template -->`;
+            const blob = new Blob([template], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${featureType}-template.html`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showSuccessMessage(`📁 Template downloaded: ${featureType}-template.html`);
+        }
+
+        function showDemo(featureType) {
+            showSuccessMessage(`🎮 Demo for ${featureType} feature coming soon!`);
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function markSectionComplete(sectionId) {
+            if (!completedSections.includes(sectionId)) {
+                completedSections.push(sectionId);
+                localStorage.setItem('workshop-progress', JSON.stringify(completedSections));
+            }
+        }
+
+        function showSuccessMessage(message) {
+            // Remove existing message
+            const existing = document.querySelector('.success-message');
+            if (existing) existing.remove();
+            
+            const successMsg = document.createElement('div');
+            successMsg.className = 'success-message';
+            successMsg.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(successMsg);
+            
+            // Animate in
+            setTimeout(() => successMsg.classList.add('show'), 100);
+            
+            // Animate out
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+                setTimeout(() => successMsg.remove(), 300);
+            }, 3000);
+        }
+
+        // Checklist functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.checklist li')) {
+                e.target.closest('.checklist li').classList.toggle('completed');
+            }
+        });
+
+        // Floating Action Button
+        window.addEventListener('scroll', function() {
+            const fab = document.querySelector('.fab');
+            if (window.pageYOffset > 300) {
+                fab.classList.add('show');
+            } else {
+                fab.classList.remove('show');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            // Show loading complete message
+            setTimeout(() => {
+                showSuccessMessage('🎯 Portfolio Workshop Guide พร้อมใช้งานแล้ว!');
+            }, 1000);
+            
+            console.log('🎓 Portfolio Workshop Guide loaded successfully!');
+        });
+    </script>
+</body>
+</html>

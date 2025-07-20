@@ -25,7 +25,7 @@
 
 ### **นักศึกษา 2 คนทำงานร่วมกันและแบ่งหน้าที่ Feature Distribution:**
 
-### [Interactive Guide สำหรับการพัฒนา Portfolio Website แบบ Pair Programming พร้อม Advanced Features](https://htmlpreview.github.io/?https://github.com/se-rmutl/engse203-lab/blob/main/TASK2_html-css-js-fundamentals/part2/portfolio_workshop_guide.html)
+### [Interactive Guide สำหรับการพัฒนา Portfolio Website แบบ Pair Programming พร้อม Advanced Features](https://se-rmutl.github.io/task1/part2/)
 
 ### **นักศึกษา A:(45 minutes):**
 
