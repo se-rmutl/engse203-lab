@@ -39,7 +39,7 @@ Testing:      Jest, Cypress, React Testing Library
 | **1** | LAB1 | [Modern Software Development](LAB1_Environment-Setup) | 2 hrs | Workshop | Environment Setup |
 | **2** | TASK#1 | [Version Control with Git & GitHub](TASK1_VersionControl-with-Git-GitHub) | 3 hrs | Pair Task | Collaboration |
 | **3** | TASK#2 | [HTML5 & CSS3 Fundamentals](TASK2_html-css-js-fundamentals) | 3 hrs | Pair Task | Portfolio Website |
-| **4** | LAB2 | JavaScript ES6+ & DOM Manipulation | 3 hrs | Individual | Interactive App |
+| **4** | LAB2 | [JavaScript ES6+ & DOM Manipulation](LAB2_JavaScript_ES6_DOM_Manipulation) | 3 hrs | Individual | Interactive App |
 | **5** | LAB3 | React.js Fundamentals | 3 hrs | Individual | Component Library |
 | **6** | LAB4 | Advanced React & State Management | 3 hrs | Individual | E-commerce Frontend |
 | **7** | LAB5 | Node.js & Backend Development | 3 hrs | Individual | REST API |
