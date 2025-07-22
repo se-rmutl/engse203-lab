@@ -1,0 +1,1295 @@
+/* 
+===========================================
+TechFlow Website - Starter CSS Template
+===========================================
+สำหรับ Workshop: Responsive Website Development
+วิชา ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์
+
+TODO: ให้นักศึกษากรอกโค้ด CSS ตามคำแนะนำ
+*/
+
+/* 
+TODO STEP 1: CSS Variables (20 นาที)
+กำหนด CSS Variables สำหรับ colors, typography, spacing
+*/
+:root {
+  /* Colors - กำหนดสีหลักของเว็บไซต์ */
+  --primary-color: /* TODO: สีหลัก เช่น #2c3e50 */;
+  --secondary-color: /* TODO: สีรอง เช่น #3498db */;
+  --success-color: /* TODO: สีเขียว เช่น #2ecc71 */;
+  --warning-color: /* TODO: สีเหลือง เช่น #f39c12 */;
+  --danger-color: /* TODO: สีแดง เช่น #e74c3c */;
+  
+  --text-color: /* TODO: สีข้อความหลัก เช่น #333 */;
+  --text-light: /* TODO: สีข้อความอ่อน เช่น #666 */;
+  --text-muted: /* TODO: สีข้อความจาง เช่น #999 */;
+  
+  --bg-color: /* TODO: สีพื้นหลัง เช่น #f8f9fa */;
+  --white: #ffffff;
+  --black: #000000;
+  
+  /* Typography - กำหนดฟอนต์และขนาด */
+  --font-primary: /* TODO: ฟอนต์หลัก เช่น 'Kanit', sans-serif */;
+  --font-secondary: /* TODO: ฟอนต์รอง เช่น 'Arial', sans-serif */;
+  
+  --font-size-xs: /* TODO: ขนาดเล็กสุด เช่น 0.75rem */;
+  --font-size-sm: /* TODO: ขนาดเล็ก เช่น 0.875rem */;
+  --font-size-base: /* TODO: ขนาดปกติ เช่น 1rem */;
+  --font-size-lg: /* TODO: ขนาดใหญ่ เช่น 1.125rem */;
+  --font-size-xl: /* TODO: ขนาดใหญ่มาก เช่น 1.25rem */;
+  --font-size-2xl: /* TODO: ขนาดใหญ่พิเศษ เช่น 1.5rem */;
+  --font-size-3xl: /* TODO: ขนาดหัวข้อ เช่น 2rem */;
+  --font-size-4xl: /* TODO: ขนาดหัวข้อใหญ่ เช่น 2.5rem */;
+  
+  /* Spacing - กำหนดระยะห่าง */
+  --spacing-xs: /* TODO: ระยะห่างเล็กสุด เช่น 0.25rem */;
+  --spacing-sm: /* TODO: ระยะห่างเล็ก เช่น 0.5rem */;
+  --spacing-md: /* TODO: ระยะห่างปกติ เช่น 1rem */;
+  --spacing-lg: /* TODO: ระยะห่างใหญ่ เช่น 1.5rem */;
+  --spacing-xl: /* TODO: ระยะห่างใหญ่มาก เช่น 2rem */;
+  --spacing-2xl: /* TODO: ระยะห่างใหญ่พิเศษ เช่น 3rem */;
+  --spacing-3xl: /* TODO: ระยะห่างใหญ่สุด เช่น 4rem */;
+  
+  /* Layout */
+  --container-max-width: /* TODO: ความกว้างสูงสุด เช่น 1200px */;
+  --border-radius: /* TODO: มุมโค้ง เช่น 8px */;
+  --border-radius-sm: /* TODO: มุมโค้งเล็ก เช่น 4px */;
+  --border-radius-lg: /* TODO: มุมโค้งใหญ่ เช่น 12px */;
+  
+  /* Shadow */
+  --shadow-sm: /* TODO: เงาเล็ก เช่น 0 1px 3px rgba(0,0,0,0.1) */;
+  --shadow-md: /* TODO: เงาปกติ เช่น 0 4px 6px rgba(0,0,0,0.1) */;
+  --shadow-lg: /* TODO: เงาใหญ่ เช่น 0 10px 15px rgba(0,0,0,0.1) */;
+  
+  /* Transitions */
+  --transition-fast: /* TODO: เปลี่ยนเร็ว เช่น 0.15s ease */;
+  --transition-normal: /* TODO: เปลี่ยนปกติ เช่น 0.3s ease */;
+  --transition-slow: /* TODO: เปลี่ยนช้า เช่น 0.5s ease */;
+}
+
+/* 
+TODO STEP 2: Reset และ Base Styles (15 นาที)
+สร้าง CSS Reset และ base styling
+*/
+
+/* CSS Reset */
+* {
+  /* TODO: กำหนด margin, padding, box-sizing */
+}
+
+html {
+  /* TODO: กำหนด font-size และ scroll-behavior */
+}
+
+body {
+  /* TODO: กำหนด font-family, line-height, color, background */
+}
+
+img {
+  /* TODO: ทำให้รูปภาพ responsive */
+}
+
+a {
+  /* TODO: กำหนด text-decoration และ color */
+}
+
+button {
+  /* TODO: reset button styles */
+}
+
+/* 
+TODO STEP 3: Typography (10 นาที)
+กำหนด heading และ text styles
+*/
+
+h1, h2, h3, h4, h5, h6 {
+  /* TODO: กำหนด margin, font-weight, line-height */
+}
+
+h1 { /* TODO: ขนาด font สำหรับ h1 */ }
+h2 { /* TODO: ขนาด font สำหรับ h2 */ }
+h3 { /* TODO: ขนาด font สำหรับ h3 */ }
+
+p {
+  /* TODO: กำหนด margin และ line-height */
+}
+
+/* 
+TODO STEP 4: Layout Utilities (15 นาที)
+สร้าง utility classes สำหรับ layout
+*/
+
+.container {
+  /* TODO: กำหนด max-width, margin, padding */
+}
+
+.section {
+  /* TODO: กำหนด padding สำหรับ section */
+}
+
+.section-title {
+  /* TODO: styling สำหรับหัวข้อ section */
+}
+
+.section-description {
+  /* TODO: styling สำหรับคำอธิบาย section */
+}
+
+/* Flexbox utilities */
+.flex {
+  /* TODO: display flex */
+}
+
+.flex-center {
+  /* TODO: จัดกึ่งกลางทั้ง 2 แกน */
+}
+
+.flex-between {
+  /* TODO: จัดแยกซ้าย-ขวา */
+}
+
+.flex-column {
+  /* TODO: flex direction column */
+}
+
+/* Grid utilities */
+.grid {
+  /* TODO: display grid */
+}
+
+.grid-2 {
+  /* TODO: grid 2 columns */
+}
+
+.grid-3 {
+  /* TODO: grid 3 columns */
+}
+
+/* 
+TODO STEP 5: Header & Navigation (20 นาที)
+สร้าง navigation ด้วย flexbox
+*/
+
+.header-container {
+  /* TODO: 
+  - position fixed/sticky
+  - background color
+  - box-shadow
+  - z-index
+  */
+}
+
+.nav-container {
+  /* TODO:
+  - display flex
+  - justify-content space-between
+  - align-items center
+  - padding
+  */
+}
+
+.logo-container {
+  /* TODO:
+  - display flex
+  - align-items center
+  - gap
+  */
+}
+
+.logo-container img {
+  /* TODO: ขนาดโลโก้ */
+}
+
+.logo-text {
+  /* TODO: 
+  - font-size
+  - font-weight
+  - color
+  */
+}
+
+.nav-menu {
+  /* TODO:
+  - display flex
+  - list-style none
+  - gap
+  - margin 0
+  - padding 0
+  */
+}
+
+.nav-link {
+  /* TODO:
+  - text-decoration none
+  - color
+  - padding
+  - transition
+  - hover effects
+  */
+}
+
+.nav-link:hover {
+  /* TODO: hover styling */
+}
+
+/* Hamburger Menu สำหรับมือถือ */
+.hamburger {
+  /* TODO:
+  - display none (แสดงเฉพาะมือถือ)
+  - background none
+  - border none
+  - cursor pointer
+  - flex-direction column
+  - gap
+  */
+}
+
+.hamburger-line {
+  /* TODO:
+  - width
+  - height
+  - background-color
+  - transition
+  */
+}
+
+/* 
+TODO STEP 6: Hero Section (20 นาที)
+สร้าง hero section ที่สวยงาม
+*/
+
+.hero {
+  /* TODO:
+  - min-height: 100vh
+  - background-image (ใช้ images/hero-bg.jpg)
+  - background-size: cover
+  - background-position: center
+  - display flex
+  - align-items center
+  - justify-content center
+  - text-align center
+  - position relative
+  */
+}
+
+/* Overlay สำหรับ hero */
+.hero::before {
+  /* TODO:
+  - content: ''
+  - position absolute
+  - top, left, right, bottom: 0
+  - background: rgba overlay
+  - z-index: 1
+  */
+}
+
+.hero-content {
+  /* TODO:
+  - position relative
+  - z-index: 2
+  - max-width
+  - color white
+  */
+}
+
+.hero-title {
+  /* TODO:
+  - font-size ใหญ่
+  - margin-bottom
+  - text-shadow
+  */
+}
+
+.hero-description {
+  /* TODO:
+  - font-size
+  - margin-bottom
+  - line-height
+  */
+}
+
+.cta-button {
+  /* TODO:
+  - display inline-block
+  - background-color
+  - color
+  - padding
+  - border-radius
+  - text-decoration none
+  - font-weight
+  - transition
+  - hover effects
+  */
+}
+
+.cta-button:hover {
+  /* TODO: hover effects */
+}
+
+/* 
+TODO STEP 7: About Section (15 นาที)
+สร้าง about section ด้วย CSS Grid
+*/
+
+.about {
+  /* TODO: section styling */
+}
+
+.about-grid {
+  /* TODO:
+  - display grid
+  - grid-template-columns: 1fr 1fr
+  - gap
+  - align-items center
+  */
+}
+
+.about-text {
+  /* TODO: text styling */
+}
+
+.about-subtitle {
+  /* TODO:
+  - font-size
+  - font-weight
+  - color
+  - margin-bottom
+  */
+}
+
+.about-image img {
+  /* TODO:
+  - width: 100%
+  - height: auto
+  - border-radius
+  - box-shadow
+  */
+}
+
+.stats {
+  /* TODO:
+  - display flex
+  - gap
+  - margin-top
+  */
+}
+
+.stat-item {
+  /* TODO:
+  - text-align center
+  - padding
+  */
+}
+
+.stat-number {
+  /* TODO:
+  - display block
+  - font-size ใหญ่
+  - font-weight bold
+  - color
+  */
+}
+
+.stat-label {
+  /* TODO:
+  - display block
+  - font-size เล็ก
+  - color
+  */
+}
+
+/* 
+TODO STEP 8: Services Section (25 นาที)
+สร้าง services grid และ card effects
+*/
+
+.services {
+  /* TODO: section styling */
+}
+
+.services-grid {
+  /* TODO:
+  - display grid
+  - grid-template-columns: repeat(3, 1fr)
+  - gap
+  */
+}
+
+.service-card {
+  /* TODO:
+  - background
+  - border-radius
+  - box-shadow
+  - padding
+  - transition
+  - overflow hidden
+  */
+}
+
+.service-card:hover {
+  /* TODO: hover effects */
+}
+
+.service-image {
+  /* TODO:
+  - width: 100%
+  - height: 200px
+  - overflow hidden
+  - border-radius
+  - margin-bottom
+  */
+}
+
+.service-image img {
+  /* TODO:
+  - width: 100%
+  - height: 100%
+  - object-fit: cover
+  - transition
+  */
+}
+
+.service-card:hover .service-image img {
+  /* TODO: hover scale effect */
+}
+
+.service-title {
+  /* TODO:
+  - font-size
+  - font-weight
+  - margin-bottom
+  - color
+  */
+}
+
+.service-description {
+  /* TODO:
+  - margin-bottom
+  - line-height
+  */
+}
+
+.service-features {
+  /* TODO:
+  - list-style: none
+  - padding: 0
+  */
+}
+
+.service-features li {
+  /* TODO:
+  - padding
+  - border-bottom
+  - position relative
+  */
+}
+
+.service-features li::before {
+  /* TODO: เพิ่ม checkmark icon */
+  content: '✓';
+  color: var(--success-color);
+  font-weight: bold;
+  margin-right: var(--spacing-sm);
+}
+
+/* 
+TODO STEP 9: Testimonials Section (20 นาที)
+สร้าง testimonial cards
+*/
+
+.testimonials {
+  /* TODO: section styling */
+}
+
+.testimonials-grid {
+  /* TODO:
+  - display grid
+  - grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
+  - gap
+  */
+}
+
+.testimonial-card {
+  /* TODO:
+  - background
+  - border-radius
+  - padding
+  - box-shadow
+  - transition
+  */
+}
+
+.testimonial-content {
+  /* TODO: margin-bottom */
+}
+
+.testimonial-text {
+  /* TODO:
+  - font-style italic
+  - line-height
+  - margin-bottom
+  - position relative
+  */
+}
+
+.testimonial-text::before {
+  /* TODO: เพิ่ม quote mark */
+  content: '"';
+  font-size: 3rem;
+  color: var(--primary-color);
+  position: absolute;
+  top: -1rem;
+  left: -1rem;
+}
+
+.testimonial-rating {
+  /* TODO: margin-bottom */
+}
+
+.star {
+  /* TODO:
+  - color: gold
+  - font-size
+  */
+}
+
+.testimonial-author {
+  /* TODO:
+  - display flex
+  - align-items center
+  - gap
+  */
+}
+
+.author-image {
+  /* TODO:
+  - width: 60px
+  - height: 60px
+  - border-radius: 50%
+  - overflow hidden
+  */
+}
+
+.author-image img {
+  /* TODO:
+  - width: 100%
+  - height: 100%
+  - object-fit: cover
+  */
+}
+
+.author-placeholder {
+  /* TODO:
+  - width: 60px
+  - height: 60px
+  - border-radius: 50%
+  - background: var(--primary-color)
+  - color: white
+  - display flex
+  - align-items center
+  - justify-content center
+  - font-weight bold
+  */
+}
+
+.author-name {
+  /* TODO:
+  - font-weight bold
+  - margin-bottom: 0.25rem
+  */
+}
+
+.author-position {
+  /* TODO:
+  - font-size smaller
+  - color muted
+  */
+}
+
+/* 
+TODO STEP 10: Contact Section (25 นาที)
+สร้าง contact form และ info
+*/
+
+.contact {
+  /* TODO: section styling */
+}
+
+.contact-grid {
+  /* TODO:
+  - display grid
+  - grid-template-columns: 1fr 1fr
+  - gap
+  */
+}
+
+.contact-subtitle {
+  /* TODO:
+  - font-size
+  - font-weight
+  - margin-bottom
+  */
+}
+
+.contact-item {
+  /* TODO:
+  - display flex
+  - align-items flex-start
+  - gap
+  - margin-bottom
+  */
+}
+
+.contact-icon {
+  /* TODO:
+  - font-size
+  - margin-top: 0.25rem
+  */
+}
+
+.contact-label {
+  /* TODO:
+  - font-weight bold
+  - margin-bottom: 0.25rem
+  */
+}
+
+.contact-value {
+  /* TODO: color */
+}
+
+/* Form Styles */
+.contact-form {
+  /* TODO:
+  - background
+  - padding
+  - border-radius
+  - box-shadow
+  */
+}
+
+.form-group {
+  /* TODO: margin-bottom */
+}
+
+.form-input {
+  /* TODO:
+  - width: 100%
+  - padding
+  - border
+  - border-radius
+  - font-size
+  - transition
+  */
+}
+
+.form-input:focus {
+  /* TODO:
+  - outline: none
+  - border-color
+  - box-shadow
+  */
+}
+
+.form-textarea {
+  /* TODO:
+  - resize: vertical
+  - min-height: 100px
+  */
+}
+
+.form-submit {
+  /* TODO:
+  - background
+  - color
+  - border: none
+  - padding
+  - border-radius
+  - cursor: pointer
+  - font-size
+  - font-weight
+  - transition
+  - width: 100%
+  */
+}
+
+.form-submit:hover {
+  /* TODO: hover effects */
+}
+
+/* 
+TODO STEP 11: Footer (15 นาที)
+สร้าง footer responsive
+*/
+
+.footer {
+  /* TODO:
+  - background
+  - color
+  - padding
+  */
+}
+
+.footer-content {
+  /* TODO:
+  - display grid
+  - grid-template-columns: repeat(4, 1fr)
+  - gap
+  - margin-bottom
+  */
+}
+
+.footer-section {
+  /* TODO: basic styling */
+}
+
+.footer-logo {
+  /* TODO:
+  - display flex
+  - align-items center
+  - gap
+  - margin-bottom
+  */
+}
+
+.footer-logo img {
+  /* TODO: ขนาดโลโก้ */
+}
+
+.footer-description {
+  /* TODO:
+  - line-height
+  - color lighter
+  */
+}
+
+.footer-title {
+  /* TODO:
+  - font-size
+  - font-weight
+  - margin-bottom
+  */
+}
+
+.footer-links {
+  /* TODO:
+  - list-style: none
+  - padding: 0
+  */
+}
+
+.footer-links li {
+  /* TODO: margin-bottom */
+}
+
+.footer-links a {
+  /* TODO:
+  - color
+  - text-decoration: none
+  - transition
+  */
+}
+
+.footer-links a:hover {
+  /* TODO: hover color */
+}
+
+.social-links {
+  /* TODO:
+  - display flex
+  - gap
+  */
+}
+
+.social-link {
+  /* TODO:
+  - display inline-block
+  - padding
+  - background
+  - border-radius
+  - text-decoration: none
+  - transition
+  */
+}
+
+.social-link:hover {
+  /* TODO: hover effects */
+}
+
+.footer-bottom {
+  /* TODO:
+  - border-top
+  - padding-top
+  - display flex
+  - justify-content space-between
+  - align-items center
+  */
+}
+
+.footer-bottom-links {
+  /* TODO:
+  - display flex
+  - gap
+  */
+}
+
+.footer-bottom-links a {
+  /* TODO:
+  - color
+  - text-decoration: none
+  - font-size smaller
+  */
+}
+
+/* 
+TODO STEP 12: Responsive Design - Mobile First (30 นาที)
+เริ่มจากมือถือก่อน แล้วขยายไปยังหน้าจอใหญ่
+*/
+
+/* Base Styles (Mobile First) - 320px+ */
+.container {
+  /* TODO: mobile padding */
+  padding: 0 var(--spacing-md);
+}
+
+/* Navigation - Mobile */
+.nav-menu {
+  /* TODO: ซ่อนเมนูในมือถือ */
+  display: none;
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  background: white;
+  flex-direction: column;
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+}
+
+.nav-menu.active {
+  /* TODO: แสดงเมนูเมื่อกด hamburger */
+  display: flex;
+}
+
+.hamburger {
+  /* TODO: แสดง hamburger ในมือถือ */
+  display: flex;
+}
+
+/* Grid adjustments for mobile */
+.about-grid,
+.contact-grid {
+  /* TODO: 1 column ในมือถือ */
+  grid-template-columns: 1fr;
+}
+
+.services-grid {
+  /* TODO: 1 column ในมือถือ */
+  grid-template-columns: 1fr;
+}
+
+.testimonials-grid {
+  /* TODO: 1 column ในมือถือ */
+  grid-template-columns: 1fr;
+}
+
+.footer-content {
+  /* TODO: 1 column ในมือถือ */
+  grid-template-columns: 1fr;
+  text-align: center;
+}
+
+.footer-bottom {
+  /* TODO: stack vertically ในมือถือ */
+  flex-direction: column;
+  gap: var(--spacing-md);
+  text-align: center;
+}
+
+/* 
+TODO: Small devices (landscape phones) - 576px+
+*/
+@media (min-width: 576px) {
+  .container {
+    /* TODO: เพิ่ม padding */
+  }
+  
+  .services-grid {
+    /* TODO: 2 columns สำหรับ tablet เล็ก */
+  }
+  
+  .hero-title {
+    /* TODO: เพิ่มขนาด font */
+  }
+}
+
+/* 
+TODO: Medium devices (tablets) - 768px+
+*/
+@media (min-width: 768px) {
+  .container {
+    /* TODO: เพิ่ม max-width และ center */
+  }
+  
+  .about-grid,
+  .contact-grid {
+    /* TODO: 2 columns สำหรับ tablet */
+  }
+  
+  .services-grid {
+    /* TODO: 2 columns สำหรับ tablet */
+  }
+  
+  .testimonials-grid {
+    /* TODO: 2 columns สำหรับ tablet */
+  }
+  
+  .footer-content {
+    /* TODO: 2 columns สำหรับ tablet */
+  }
+  
+  .footer-bottom {
+    /* TODO: กลับมาเป็น row */
+  }
+}
+
+/* 
+TODO: Large devices (desktops) - 992px+
+*/
+@media (min-width: 992px) {
+  .container {
+    /* TODO: max-width สำหรับ desktop */
+  }
+  
+  /* Navigation - Desktop */
+  .nav-menu {
+    /* TODO: แสดงเมนูปกติ */
+    position: static;
+    display: flex;
+    flex-direction: row;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    width: auto;
+  }
+  
+  .hamburger {
+    /* TODO: ซ่อน hamburger */
+  }
+  
+  .services-grid {
+    /* TODO: 3 columns สำหรับ desktop */
+  }
+  
+  .testimonials-grid {
+    /* TODO: 3 columns สำหรับ desktop */
+  }
+  
+  .footer-content {
+    /* TODO: 4 columns สำหรับ desktop */
+  }
+  
+  .hero-title {
+    /* TODO: ขนาด font ใหญ่สุด */
+  }
+}
+
+/* 
+TODO: Extra large devices - 1200px+
+*/
+@media (min-width: 1200px) {
+  .container {
+    /* TODO: max-width สำหรับหน้าจอใหญ่ */
+  }
+}
+
+/* 
+TODO STEP 13: Animations (25 นาที)
+เพิ่ม animations และ transitions
+*/
+
+/* Keyframe Animations */
+@keyframes fadeInUp {
+  /* TODO: fade in from bottom */
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  /* TODO: slide in from left */
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  /* TODO: slide in from right */
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  /* TODO: scale in animation */
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animation Classes */
+.animate-on-scroll {
+  /* TODO: เตรียมสำหรับ animation */
+  opacity: 0;
+}
+
+.animate-on-scroll.animated {
+  /* TODO: แสดงเมื่อ scroll ถึง */
+  opacity: 1;
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Apply animations to elements */
+.hero-content {
+  /* TODO: hero animation */
+}
+
+.service-card {
+  /* TODO: service card animation */
+}
+
+.service-card:nth-child(1) {
+  /* TODO: delay animation */
+}
+
+.service-card:nth-child(2) {
+  /* TODO: delay animation */
+}
+
+.service-card:nth-child(3) {
+  /* TODO: delay animation */
+}
+
+/* Hover Animations */
+.cta-button:hover {
+  /* TODO: button hover animation */
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.service-card:hover {
+  /* TODO: card hover animation */
+  transform: translateY(-5px);
+}
+
+.testimonial-card:hover {
+  /* TODO: testimonial hover animation */
+  transform: scale(1.02);
+}
+
+/* 
+TODO STEP 14: Loading States & Micro-interactions (15 นาที)
+เพิ่ม loading states และ micro-interactions
+*/
+
+/* Loading spinner */
+.loading {
+  /* TODO: loading spinner */
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Form states */
+.form-input:invalid {
+  /* TODO: invalid input styling */
+  border-color: var(--danger-color);
+}
+
+.form-input:valid {
+  /* TODO: valid input styling */
+  border-color: var(--success-color);
+}
+
+/* Button states */
+.cta-button:active {
+  /* TODO: active button state */
+  transform: translateY(0);
+}
+
+.form-submit:disabled {
+  /* TODO: disabled button state */
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 
+TODO STEP 15: Accessibility Improvements (10 นาที)
+เพิ่ม styles สำหรับ accessibility
+*/
+
+/* Focus states */
+*:focus {
+  /* TODO: focus outline */
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Skip link สำหรับ screen readers */
+.skip-link {
+  /* TODO: skip link styling */
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--primary-color);
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 9999;
+}
+
+.skip-link:focus {
+  /* TODO: แสดงเมื่อ focus */
+  top: 6px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  /* TODO: high contrast styles */
+  :root {
+    --primary-color: #000000;
+    --text-color: #000000;
+    --bg-color: #ffffff;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  /* TODO: ลด animation สำหรับคนที่ไม่ต้องการ */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  /* TODO: print styles */
+  .header-container,
+  .hamburger,
+  .cta-button,
+  .contact-form {
+    display: none;
+  }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+  
+  .hero {
+    background: none;
+    color: black;
+  }
+}
+
+/* 
+===========================================
+Utility Classes (เพิ่มเติม)
+===========================================
+*/
+
+/* Text utilities */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.text-primary { color: var(--primary-color); }
+.text-secondary { color: var(--secondary-color); }
+.text-muted { color: var(--text-muted); }
+
+/* Spacing utilities */
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--spacing-sm); }
+.mb-2 { margin-bottom: var(--spacing-md); }
+.mb-3 { margin-bottom: var(--spacing-lg); }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--spacing-sm); }
+.mt-2 { margin-top: var(--spacing-md); }
+.mt-3 { margin-top: var(--spacing-lg); }
+
+/* Display utilities */
+.d-none { display: none; }
+.d-block { display: block; }
+.d-flex { display: flex; }
+.d-grid { display: grid; }
+
+/* 
+===========================================
+ตัวอย่าง Complete Styles (สำหรับอ้างอิง)
+===========================================
+ใช้เป็นแนวทางเมื่อนักศึกษาติดขัด
+*/
+
+/*
+ตัวอย่าง CSS Variables ที่สมบูรณ์:
+
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #3498db;
+  --success-color: #2ecc71;
+  --text-color: #333333;
+  --bg-color: #f8f9fa;
+  --white: #ffffff;
+  
+  --font-primary: 'Kanit', sans-serif;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  --container-max-width: 1200px;
+  --border-radius: 8px;
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --transition-normal: 0.3s ease;
+}
+*/

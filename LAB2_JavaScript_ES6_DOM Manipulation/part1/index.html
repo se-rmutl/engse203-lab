@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechFlow - บริษัทเทคโนโลยีชั้นนำ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 
+    TODO: ให้นักศึกษาแทนที่ <div> ทั้งหมดด้วย semantic elements ที่เหมาะสม
+    คำแนะนำ: header, nav, main, section, article, aside, footer
+    -->
+    
+    <!-- Navigation Section -->
+    <div class="header-container">
+        <div class="nav-container">
+            <div class="logo-container">
+                <img src="images/logo.png" alt="TODO: เพิ่ม alt text ที่เหมาะสม">
+                <span class="logo-text">TechFlow</span>
+            </div>
+            
+            <!-- TODO: แทนที่ด้วย nav element -->
+            <div class="nav-menu-container">
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link">หน้าแรก</a></li>
+                    <li><a href="#about" class="nav-link">เกี่ยวกับเรา</a></li>
+                    <li><a href="#services" class="nav-link">บริการ</a></li>
+                    <li><a href="#testimonials" class="nav-link">รีวิว</a></li>
+                    <li><a href="#contact" class="nav-link">ติดต่อ</a></li>
+                </ul>
+                
+                <!-- Mobile hamburger menu -->
+                <button class="hamburger" aria-label="เปิดเมนู">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TODO: แทนที่ด้วย main element -->
+    <div class="main-content">
+        
+        <!-- Hero Section -->
+        <!-- TODO: แทนที่ด้วย section element -->
+        <div id="home" class="hero">
+            <div class="hero-content">
+                <!-- TODO: ตรวจสอบ heading hierarchy (h1, h2, h3...) -->
+                <h1 class="hero-title">นวัตกรรมเทคโนโลยี เพื่ออนาคตที่ดีกว่า</h1>
+                <p class="hero-description">เราเป็นบริษัทเทคโนโลยีที่มุ่งมั่นสร้างสรรค์โซลูชันดิจิทัลที่ตอบโจทย์ธุรกิจสมัยใหม่ ด้วยทีมงานมืออาชีพและเทคโนโลยีล้าสมัย</p>
+                <a href="#contact" class="cta-button">ติดต่อเราเลย</a>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <!-- TODO: แทนที่ด้วย section element -->
+        <div id="about" class="about">
+            <div class="container">
+                <!-- TODO: ใช้ heading ที่เหมาะสม -->
+                <div class="section-title">เกี่ยวกับเรา</div>
+                
+                <div class="about-grid">
+                    <div class="about-text">
+                        <!-- TODO: ใช้ heading ที่เหมาะสม -->
+                        <div class="about-subtitle">ประสบการณ์กว่า 10 ปี ในวงการเทคโนโลยี</div>
+                        <p>ด้วยประสบการณ์กว่า 10 ปีในวงการเทคโนโลยี เราได้พัฒนาโซลูชันดิจิทัลให้กับลูกค้ามากกว่า 500 ราย ตั้งแต่สตาร์ทอัพจนถึงบริษัทขนาดใหญ่</p>
+                        
+                        <p>ทีมงานของเราประกอบด้วยผู้เชี่ยวชาญในด้านต่างๆ ไม่ว่าจะเป็น Web Development, Mobile App Development, Cloud Computing และ AI/Machine Learning</p>
+                        
+                        <div class="stats">
+                            <div class="stat-item">
+                                <span class="stat-number">500+</span>
+                                <span class="stat-label">โปรเจค</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">10+</span>
+                                <span class="stat-label">ปีประสบการณ์</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">98%</span>
+                                <span class="stat-label">ลูกค้าพึงพอใจ</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-image">
+                        <!-- TODO: เพิ่ม alt text ที่ดี -->
+                        <img src="images/about-team.jpg" alt="TODO: เพิ่ม alt text">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Section -->
+        <!-- TODO: แทนที่ด้วย section element -->
+        <div id="services" class="services">
+            <div class="container">
+                <!-- TODO: ใช้ heading ที่เหมาะสม -->
+                <div class="section-title">บริการของเรา</div>
+                <p class="section-description">เราให้บริการด้านเทคโนโลยีครบวงจร เพื่อตอบสนองความต้องการของธุรกิจสมัยใหม่</p>
+                
+                <div class="services-grid">
+                    <!-- Service 1 -->
+                    <!-- TODO: ใช้ article หรือ div? -->
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-image">
+                            <!-- TODO: เพิ่ม alt text -->
+                            <img src="images/service-web.jpg" alt="TODO: เพิ่ม alt text">
+                        </div>
+                        <div class="service-content">
+                            <!-- TODO: ใช้ heading ที่เหมาะสม -->
+                            <div class="service-title">Web Development</div>
+                            <p class="service-description">พัฒนาเว็บไซต์และเว็บแอปพลิเคชันที่ทันสมัย responsive และมีประสิทธิภาพสูง พร้อมระบบจัดการเนื้อหาที่ใช้งานง่าย</p>
+                            <ul class="service-features">
+                                <li>Responsive Design</li>
+                                <li>SEO Optimized</li>
+                                <li>Fast Loading</li>
+                                <li>Cross-browser Compatible</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-image">
+                            <!-- TODO: เพิ่ม alt text -->
+                            <img src="images/service-mobile.jpg" alt="TODO: เพิ่ม alt text">
+                        </div>
+                        <div class="service-content">
+                            <div class="service-title">Mobile App Development</div>
+                            <p class="service-description">สร้างแอปพลิเคชันมือถือสำหรับ iOS และ Android ที่ใช้งานง่าย มีประสิทธิภาพสูง และตอบสนองความต้องการของผู้ใช้</p>
+                            <ul class="service-features">
+                                <li>Native & Cross-platform</li>
+                                <li>Push Notifications</li>
+                                <li>Offline Functionality</li>
+                                <li>App Store Optimization</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-image">
+                            <!-- TODO: เพิ่ม alt text -->
+                            <img src="images/service-cloud.jpg" alt="TODO: เพิ่ม alt text">
+                        </div>
+                        <div class="service-content">
+                            <div class="service-title">Cloud Solutions</div>
+                            <p class="service-description">บริการ cloud computing และการย้ายข้อมูลไปยัง cloud อย่างปลอดภัย พร้อมระบบสำรองข้อมูลและการจัดการที่มีประสิทธิภาพ</p>
+                            <ul class="service-features">
+                                <li>AWS & Azure Integration</li>
+                                <li>Data Migration</li>
+                                <li>24/7 Monitoring</li>
+                                <li>Scalable Infrastructure</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonials Section -->
+        <!-- TODO: แทนที่ด้วย section element -->
+        <div id="testimonials" class="testimonials">
+            <div class="container">
+                <!-- TODO: ใช้ heading ที่เหมาะสม -->
+                <div class="section-title">ความคิดเห็นจากลูกค้า</div>
+                <p class="section-description">ฟังเสียงจากลูกค้าที่ไว้วางใจให้เราดูแลโปรเจคสำคัญของพวกเขา</p>
+                
+                <div class="testimonials-grid">
+                    <!-- Testimonial 1 -->
+                    <!-- TODO: ใช้ article, blockquote, หรือ div? -->
+                    <div class="testimonial-card animate-on-scroll">
+                        <div class="testimonial-content">
+                            <!-- TODO: ใช้ blockquote element -->
+                            <div class="testimonial-text">
+                                "TechFlow ช่วยเราพัฒนาระบบจัดการลูกค้าที่ยอดเยี่ยม เพิ่มประสิทธิภาพงานขายได้ 40% และลดเวลาการทำงานลงอย่างมาก ทีมงานมีความเชี่ยวชาญสูงและให้คำปรึกษาที่เป็นประโยชน์"
+                            </div>
+                            <div class="testimonial-rating">
+                                <span class="star">★★★★★</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <!-- TODO: เพิ่ม alt text -->
+                                <img src="images/testimonial-1.jpg" alt="TODO: เพิ่ม alt text">
+                            </div>
+                            <div class="author-info">
+                                <div class="author-name">คุณสมชาย วงษ์ใหญ่</div>
+                                <div class="author-position">CEO บริษัท ABC Corporation</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card animate-on-scroll">
+                        <div class="testimonial-content">
+                            <div class="testimonial-text">
+                                "ประทับใจในการทำงานของ TechFlow มาก ส่งงานตรงเวลาทุกครั้ง คุณภาพงานเยี่ยม และทีมสนับสนุนให้ความช่วยเหลือหลังการส่งมอบอย่างดีเยี่ยม แนะนำเป็นอย่างยิ่ง"
+                            </div>
+                            <div class="testimonial-rating">
+                                <span class="star">★★★★★</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <!-- TODO: เพิ่ม alt text -->
+                                <img src="images/testimonial-2.jpg" alt="TODO: เพิ่ม alt text">
+                            </div>
+                            <div class="author-info">
+                                <div class="author-name">คุณนันทนา สุขใส</div>
+                                <div class="author-position">CTO บริษัท XYZ Technology</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 (Bonus) -->
+                    <div class="testimonial-card animate-on-scroll">
+                        <div class="testimonial-content">
+                            <div class="testimonial-text">
+                                "เราใช้บริการ cloud migration จาก TechFlow และประทับใจมาก การย้ายข้อมูลราบรื่น ไม่มีปัญหา downtime และได้ระบบที่เร็วขึ้นกว่าเดิมมาก"
+                            </div>
+                            <div class="testimonial-rating">
+                                <span class="star">★★★★★</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <!-- Placeholder for additional testimonial image -->
+                                <div class="author-placeholder">DR</div>
+                            </div>
+                            <div class="author-info">
+                                <div class="author-name">ดร.รัชดา เทคโนโลยี</div>
+                                <div class="author-position">ผู้อำนวยการ สถาบันวิจัยดิจิทัล</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <!-- TODO: แทนที่ด้วย section element -->
+        <div id="contact" class="contact">
+            <div class="container">
+                <!-- TODO: ใช้ heading ที่เหมาะสม -->
+                <div class="section-title">ติดต่อเรา</div>
+                <p class="section-description">พร้อมที่จะเริ่มต้นโปรเจคใหม่กับเราหรือยัง? ติดต่อเราวันนี้เพื่อปรึกษาฟรี</p>
+                
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <!-- TODO: ใช้ heading ที่เหมาะสม -->
+                        <div class="contact-subtitle">ช่องทางการติดต่อ</div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-details">
+                                <div class="contact-label">ที่อยู่</div>
+                                <div class="contact-value">123/45 ถนนเทคโนโลยี แขวงดิจิทัล เขตอินโนเวชั่น กรุงเทพฯ 10110</div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <div class="contact-details">
+                                <div class="contact-label">โทรศัพท์</div>
+                                <div class="contact-value">02-123-4567</div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-details">
+                                <div class="contact-label">อีเมล</div>
+                                <div class="contact-value">info@techflow.co.th</div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">🕒</div>
+                            <div class="contact-details">
+                                <div class="contact-label">เวลาทำการ</div>
+                                <div class="contact-value">จันทร์-ศุกร์ 9:00-18:00 น.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form-container">
+                        <!-- TODO: ใช้ form element และ label ที่เหมาะสม -->
+                        <div class="contact-form">
+                            <div class="contact-subtitle">ส่งข้อความถึงเรา</div>
+                            
+                            <!-- TODO: แทนที่ div ด้วย form element -->
+                            <div class="form">
+                                <div class="form-group">
+                                    <!-- TODO: เพิ่ม label -->
+                                    <input type="text" id="name" class="form-input" placeholder="ชื่อ-นามสกุล" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <!-- TODO: เพิ่ม label -->
+                                    <input type="email" id="email" class="form-input" placeholder="อีเมล" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <!-- TODO: เพิ่ม label -->
+                                    <input type="tel" id="phone" class="form-input" placeholder="เบอร์โทรศัพท์">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <!-- TODO: เพิ่ม label -->
+                                    <select id="service" class="form-input" required>
+                                        <option value="">เลือกบริการที่สนใจ</option>
+                                        <option value="web">Web Development</option>
+                                        <option value="mobile">Mobile App Development</option>
+                                        <option value="cloud">Cloud Solutions</option>
+                                        <option value="other">อื่นๆ</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <!-- TODO: เพิ่ม label -->
+                                    <textarea id="message" class="form-input form-textarea" placeholder="รายละเอียดโปรเจค" rows="5" required></textarea>
+                                </div>
+                                
+                                <button type="submit" class="form-submit">ส่งข้อความ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <!-- TODO: แทนที่ด้วย footer element -->
+    <div class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="images/logo.png" alt="TODO: เพิ่ม alt text">
+                        <span class="logo-text">TechFlow</span>
+                    </div>
+                    <p class="footer-description">
+                        นวัตกรรมเทคโนโลยีเพื่ออนาคตที่ดีกว่า<br>
+                        เราพร้อมเป็นพาร์ทเนอร์ในการพัฒนาดิจิทัลของคุณ
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <!-- TODO: ใช้ heading ที่เหมาะสม -->
+                    <div class="footer-title">บริการ</div>
+                    <ul class="footer-links">
+                        <li><a href="#services">Web Development</a></li>
+                        <li><a href="#services">Mobile App Development</a></li>
+                        <li><a href="#services">Cloud Solutions</a></li>
+                        <li><a href="#services">Digital Consulting</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <div class="footer-title">บริษัท</div>
+                    <ul class="footer-links">
+                        <li><a href="#about">เกี่ยวกับเรา</a></li>
+                        <li><a href="#testimonials">ผลงาน</a></li>
+                        <li><a href="#contact">ติดต่อเรา</a></li>
+                        <li><a href="#">ร่วมงานกับเรา</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <div class="footer-title">ติดตามเรา</div>
+                    <div class="social-links">
+                        <!-- TODO: เพิ่ม aria-label สำหรับ social links -->
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">Twitter</a>
+                        <a href="#" class="social-link">LinkedIn</a>
+                        <a href="#" class="social-link">Instagram</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 TechFlow Company Limited. สงวนลิขสิทธิ์</p>
+                <div class="footer-bottom-links">
+                    <a href="#">นโยบายความเป็นส่วนตัว</a>
+                    <a href="#">เงื่อนไขการใช้งาน</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    
+    <!-- 
+    TODO สำหรับนักศึกษา:
+    1. แทนที่ <div> ทั้งหมดด้วย semantic elements ที่เหมาะสม
+    2. เพิ่ม alt text ให้รูปภาพทั้งหมด
+    3. ใช้ heading hierarchy ที่ถูกต้อง (h1, h2, h3...)
+    4. เพิ่ม label สำหรับ form elements
+    5. เพิ่ม aria-label สำหรับ interactive elements
+    6. ตรวจสอบ accessibility ด้วย browser tools
+    -->
+</body>
+</html>

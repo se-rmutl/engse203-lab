@@ -1,0 +1,1501 @@
+/*
+===========================================
+TechFlow Website - SCSS Starter Template  
+===========================================
+สำหรับ Workshop: Responsive Website Development
+วิชา ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์
+
+TODO: ให้นักศึกษาเขียน SCSS ตามคำแนะนำ
+ใช้ในขั้นตอนสุดท้ายของ workshop
+*/
+
+//
+// TODO STEP 1: Variables (15 นาที)
+// กำหนด Sass variables แทน CSS custom properties
+//
+
+// Colors
+$colors: (
+  primary: /* TODO: สีหลัก เช่น #2c3e50 */,
+  secondary: /* TODO: สีรอง เช่น #3498db */,
+  success: /* TODO: สีเขียว เช่น #2ecc71 */,
+  warning: /* TODO: สีเหลือง เช่น #f39c12 */,
+  danger: /* TODO: สีแดง เช่น #e74c3c */,
+  text: /* TODO: สีข้อความ เช่น #333 */,
+  text-light: /* TODO: สีข้อความอ่อน เช่น #666 */,
+  text-muted: /* TODO: สีข้อความจาง เช่น #999 */,
+  bg: /* TODO: สีพื้นหลัง เช่น #f8f9fa */,
+  white: #ffffff,
+  black: #000000
+);
+
+// Typography
+$fonts: (
+  primary: /* TODO: ฟอนต์หลัก เช่น ('Kanit', sans-serif) */,
+  secondary: /* TODO: ฟอนต์รอง เช่น ('Arial', sans-serif) */
+);
+
+$font-sizes: (
+  xs: /* TODO: เช่น 0.75rem */,
+  sm: /* TODO: เช่น 0.875rem */,
+  base: /* TODO: เช่น 1rem */,
+  lg: /* TODO: เช่น 1.125rem */,
+  xl: /* TODO: เช่น 1.25rem */,
+  2xl: /* TODO: เช่น 1.5rem */,
+  3xl: /* TODO: เช่น 2rem */,
+  4xl: /* TODO: เช่น 2.5rem */
+);
+
+// Spacing
+$spacing: (
+  xs: /* TODO: เช่น 0.25rem */,
+  sm: /* TODO: เช่น 0.5rem */,
+  md: /* TODO: เช่น 1rem */,
+  lg: /* TODO: เช่น 1.5rem */,
+  xl: /* TODO: เช่น 2rem */,
+  2xl: /* TODO: เช่น 3rem */,
+  3xl: /* TODO: เช่น 4rem */
+);
+
+// Breakpoints
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  2xl: 1400px
+);
+
+// Layout
+$container-max-width: /* TODO: เช่น 1200px */;
+$border-radius: /* TODO: เช่น 8px */;
+$border-radius-sm: /* TODO: เช่น 4px */;
+$border-radius-lg: /* TODO: เช่น 12px */;
+
+// Shadows
+$shadows: (
+  sm: /* TODO: เช่น (0 1px 3px rgba(0,0,0,0.1)) */,
+  md: /* TODO: เช่น (0 4px 6px rgba(0,0,0,0.1)) */,
+  lg: /* TODO: เช่น (0 10px 15px rgba(0,0,0,0.1)) */
+);
+
+// Transitions
+$transitions: (
+  fast: /* TODO: เช่น 0.15s ease */,
+  normal: /* TODO: เช่น 0.3s ease */,
+  slow: /* TODO: เช่น 0.5s ease */
+);
+
+//
+// TODO STEP 2: Functions (10 นาที)
+// สร้าง Sass functions สำหรับดึงค่า
+//
+
+// TODO: Function สำหรับดึงสี
+@function color($name) {
+  /* TODO: return map-get($colors, $name) */
+}
+
+// TODO: Function สำหรับดึงฟอนต์
+@function font($name) {
+  /* TODO: return map-get($fonts, $name) */
+}
+
+// TODO: Function สำหรับดึงขนาดฟอนต์
+@function font-size($size) {
+  /* TODO: return map-get($font-sizes, $size) */
+}
+
+// TODO: Function สำหรับดึงระยะห่าง
+@function spacing($size) {
+  /* TODO: return map-get($spacing, $size) */
+}
+
+// TODO: Function สำหรับดึงเงา
+@function shadow($size) {
+  /* TODO: return map-get($shadows, $size) */
+}
+
+// TODO: Function สำหรับแปลง px เป็น rem
+@function rem($px) {
+  /* TODO: return $px / 16px * 1rem */
+}
+
+//
+// TODO STEP 3: Mixins (20 นาที)
+// สร้าง mixins สำหรับ reusable styles
+//
+
+// TODO: Responsive mixin
+@mixin respond-to($breakpoint) {
+  $breakpoint-value: map-get($breakpoints, $breakpoint);
+  
+  @if $breakpoint-value {
+    /* TODO: @media (min-width: $breakpoint-value) { @content; } */
+  } @else {
+    @warn "Breakpoint #{$breakpoint} not found";
+  }
+}
+
+// TODO: Flexbox center mixin
+@mixin flex-center($direction: row) {
+  /* TODO: 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+  */
+}
+
+// TODO: Button mixin
+@mixin button($bg-color: color(primary), $text-color: color(white), $padding: spacing(sm) spacing(lg)) {
+  /* TODO:
+  display: inline-block;
+  background-color: $bg-color;
+  color: $text-color;
+  padding: $padding;
+  border: none;
+  border-radius: $border-radius;
+  text-decoration: none;
+  cursor: pointer;
+  transition: map-get($transitions, normal);
+  font-weight: 500;
+  
+  &:hover {
+    background-color: darken($bg-color, 10%);
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  */
+}
+
+// TODO: Card mixin
+@mixin card($padding: spacing(lg), $shadow: shadow(md)) {
+  /* TODO:
+  background: color(white);
+  border-radius: $border-radius;
+  padding: $padding;
+  box-shadow: $shadow;
+  transition: map-get($transitions, normal);
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: shadow(lg);
+  }
+  */
+}
+
+// TODO: Text truncate mixin
+@mixin text-truncate {
+  /* TODO:
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  */
+}
+
+// TODO: Visually hidden mixin (สำหรับ accessibility)
+@mixin visually-hidden {
+  /* TODO:
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  */
+}
+
+// TODO: Animation mixin
+@mixin animate($name, $duration: map-get($transitions, normal), $timing: ease) {
+  /* TODO:
+  animation: $name $duration $timing;
+  */
+}
+
+//
+// TODO STEP 4: Base Styles (15 นาที)
+// เขียน base styles ด้วย SCSS
+//
+
+// Reset
+* {
+  /* TODO: 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  */
+}
+
+html {
+  /* TODO:
+  font-size: font-size(base);
+  scroll-behavior: smooth;
+  */
+}
+
+body {
+  /* TODO:
+  font-family: font(primary);
+  line-height: 1.6;
+  color: color(text);
+  background-color: color(bg);
+  */
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  /* TODO:
+  margin-bottom: spacing(md);
+  font-weight: 600;
+  line-height: 1.2;
+  */
+}
+
+@each $heading, $size in (h1: 4xl, h2: 3xl, h3: 2xl, h4: xl, h5: lg, h6: base) {
+  #{$heading} {
+    /* TODO: font-size: font-size($size); */
+  }
+}
+
+p {
+  /* TODO:
+  margin-bottom: spacing(md);
+  line-height: 1.6;
+  */
+}
+
+a {
+  /* TODO:
+  color: color(primary);
+  text-decoration: none;
+  transition: map-get($transitions, fast);
+  
+  &:hover {
+    color: darken(color(primary), 15%);
+  }
+  */
+}
+
+img {
+  /* TODO:
+  max-width: 100%;
+  height: auto;
+  */
+}
+
+//
+// TODO STEP 5: Layout Components (20 นาที)
+// สร้าง layout components ด้วย SCSS
+//
+
+.container {
+  /* TODO:
+  width: 100%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 spacing(md);
+  
+  @include respond-to(lg) {
+    padding: 0 spacing(lg);
+  }
+  */
+}
+
+.section {
+  /* TODO:
+  padding: spacing(3xl) 0;
+  
+  @include respond-to(md) {
+    padding: spacing(4xl) 0;
+  }
+  */
+  
+  &__title {
+    /* TODO:
+    text-align: center;
+    margin-bottom: spacing(lg);
+    font-size: font-size(3xl);
+    font-weight: 700;
+    color: color(primary);
+    
+    @include respond-to(md) {
+      font-size: font-size(4xl);
+    }
+    */
+  }
+  
+  &__description {
+    /* TODO:
+    text-align: center;
+    margin-bottom: spacing(2xl);
+    font-size: font-size(lg);
+    color: color(text-light);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    */
+  }
+}
+
+//
+// TODO STEP 6: Header & Navigation (15 นาที)
+// เขียน navigation ด้วย SCSS nesting
+//
+
+.header {
+  /* TODO:
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(color(white), 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: shadow(sm);
+  z-index: 1000;
+  transition: map-get($transitions, normal);
+  */
+  
+  &.scrolled {
+    /* TODO:
+    background: color(white);
+    box-shadow: shadow(md);
+    */
+  }
+  
+  &__container {
+    /* TODO:
+    @include flex-center;
+    justify-content: space-between;
+    padding: spacing(md) 0;
+    */
+  }
+  
+  &__logo {
+    @include flex-center;
+    gap: spacing(sm);
+    
+    img {
+      /* TODO: height: 40px; */
+    }
+    
+    &-text {
+      /* TODO:
+      font-size: font-size(xl);
+      font-weight: 700;
+      color: color(primary);
+      */
+    }
+  }
+}
+
+.nav {
+  &__menu {
+    /* TODO:
+    display: none;
+    list-style: none;
+    
+    @include respond-to(lg) {
+      display: flex;
+      gap: spacing(lg);
+    }
+    */
+    
+    &.active {
+      /* TODO:
+      display: flex;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      width: 100%;
+      background: color(white);
+      flex-direction: column;
+      padding: spacing(lg);
+      box-shadow: shadow(lg);
+      */
+    }
+  }
+  
+  &__link {
+    /* TODO:
+    color: color(text);
+    font-weight: 500;
+    padding: spacing(sm) 0;
+    transition: map-get($transitions, fast);
+    
+    &:hover {
+      color: color(primary);
+    }
+    
+    @include respond-to(lg) {
+      padding: spacing(sm) spacing(md);
+    }
+    */
+  }
+}
+
+.hamburger {
+  /* TODO:
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: spacing(sm);
+  
+  @include respond-to(lg) {
+    display: none;
+  }
+  */
+  
+  &__line {
+    /* TODO:
+    width: 25px;
+    height: 3px;
+    background: color(primary);
+    transition: map-get($transitions, normal);
+    */
+  }
+  
+  &.active {
+    .hamburger__line {
+      &:nth-child(1) {
+        /* TODO: transform: rotate(45deg) translate(6px, 6px); */
+      }
+      
+      &:nth-child(2) {
+        /* TODO: opacity: 0; */
+      }
+      
+      &:nth-child(3) {
+        /* TODO: transform: rotate(-45deg) translate(6px, -6px); */
+      }
+    }
+  }
+}
+
+//
+// TODO STEP 7: Hero Section (15 นาที)
+//
+
+.hero {
+  /* TODO:
+  min-height: 100vh;
+  background: linear-gradient(rgba(color(primary), 0.7), rgba(color(secondary), 0.7)),
+              url('../images/hero-bg.jpg') center/cover;
+  @include flex-center;
+  text-align: center;
+  color: color(white);
+  */
+  
+  &__content {
+    /* TODO:
+    max-width: 800px;
+    padding: 0 spacing(md);
+    */
+  }
+  
+  &__title {
+    /* TODO:
+    font-size: font-size(3xl);
+    margin-bottom: spacing(lg);
+    text-shadow: 2px 2px 4px rgba(color(black), 0.3);
+    
+    @include respond-to(md) {
+      font-size: font-size(4xl);
+    }
+    */
+  }
+  
+  &__description {
+    /* TODO:
+    font-size: font-size(lg);
+    margin-bottom: spacing(xl);
+    line-height: 1.8;
+    */
+  }
+  
+  &__cta {
+    /* TODO: @include button(color(secondary), color(white), spacing(md) spacing(2xl)); */
+  }
+}
+
+//
+// TODO STEP 8: Components (25 นาที)
+// สร้าง reusable components
+//
+
+// Button component
+.btn {
+  /* TODO: @include button; */
+  
+  &--primary {
+    /* TODO: @include button(color(primary)); */
+  }
+  
+  &--secondary {
+    /* TODO: @include button(color(secondary)); */
+  }
+  
+  &--success {
+    /* TODO: @include button(color(success)); */
+  }
+  
+  &--outline {
+    /* TODO:
+    background: transparent;
+    border: 2px solid color(primary);
+    color: color(primary);
+    
+    &:hover {
+      background: color(primary);
+      color: color(white);
+    }
+    */
+  }
+  
+  &--large {
+    /* TODO:
+    padding: spacing(lg) spacing(2xl);
+    font-size: font-size(lg);
+    */
+  }
+  
+  &--small {
+    /* TODO:
+    padding: spacing(xs) spacing(md);
+    font-size: font-size(sm);
+    */
+  }
+}
+
+// Card component
+.card {
+  /* TODO: @include card; */
+  
+  &__image {
+    /* TODO:
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: $border-radius $border-radius 0 0;
+    margin: (-spacing(lg)) (-spacing(lg)) spacing(lg) (-spacing(lg));
+    */
+    
+    img {
+      /* TODO:
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: map-get($transitions, normal);
+      */
+    }
+  }
+  
+  &:hover &__image img {
+    /* TODO: transform: scale(1.1); */
+  }
+  
+  &__title {
+    /* TODO:
+    font-size: font-size(xl);
+    font-weight: 600;
+    margin-bottom: spacing(sm);
+    color: color(primary);
+    */
+  }
+  
+  &__description {
+    /* TODO:
+    margin-bottom: spacing(lg);
+    line-height: 1.6;
+    color: color(text-light);
+    */
+  }
+  
+  &__features {
+    /* TODO:
+    list-style: none;
+    
+    li {
+      padding: spacing(xs) 0;
+      border-bottom: 1px solid rgba(color(text-muted), 0.2);
+      position: relative;
+      padding-left: spacing(lg);
+      
+      &::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: color(success);
+        font-weight: bold;
+      }
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    */
+  }
+}
+
+//
+// TODO STEP 9: Grid Layouts (20 นาที)
+//
+
+.grid {
+  /* TODO: display: grid; */
+  
+  &--2 {
+    /* TODO:
+    grid-template-columns: 1fr;
+    gap: spacing(lg);
+    
+    @include respond-to(md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    */
+  }
+  
+  &--3 {
+    /* TODO:
+    grid-template-columns: 1fr;
+    gap: spacing(lg);
+    
+    @include respond-to(sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @include respond-to(lg) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    */
+  }
+  
+  &--auto {
+    /* TODO:
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: spacing(lg);
+    */
+  }
+}
+
+// About section
+.about {
+  /* TODO:
+  &__grid {
+    @extend .grid--2;
+    align-items: center;
+  }
+  
+  &__text {
+    order: 2;
+    
+    @include respond-to(md) {
+      order: 1;
+    }
+  }
+  
+  &__image {
+    order: 1;
+    
+    @include respond-to(md) {
+      order: 2;
+    }
+    
+    img {
+      border-radius: $border-radius-lg;
+      box-shadow: shadow(lg);
+    }
+  }
+  
+  &__stats {
+    display: flex;
+    gap: spacing(lg);
+    margin-top: spacing(xl);
+    flex-wrap: wrap;
+    justify-content: center;
+    
+    @include respond-to(md) {
+      justify-content: flex-start;
+    }
+  }
+  */
+}
+
+.stat {
+  /* TODO:
+  text-align: center;
+  
+  &__number {
+    display: block;
+    font-size: font-size(3xl);
+    font-weight: 700;
+    color: color(primary);
+    margin-bottom: spacing(xs);
+  }
+  
+  &__label {
+    font-size: font-size(sm);
+    color: color(text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  */
+}
+
+// Services section
+.services {
+  /* TODO:
+  background: color(bg);
+  
+  &__grid {
+    @extend .grid--3;
+  }
+  */
+}
+
+.service {
+  /* TODO:
+  @extend .card;
+  height: 100%;
+  
+  &__card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  &__features {
+    margin-top: auto;
+  }
+  */
+}
+
+//
+// TODO STEP 10: Testimonials (15 นาที)
+//
+
+.testimonials {
+  /* TODO:
+  &__grid {
+    @extend .grid--auto;
+  }
+  */
+}
+
+.testimonial {
+  /* TODO:
+  @extend .card;
+  text-align: center;
+  
+  &__content {
+    margin-bottom: spacing(lg);
+  }
+  
+  &__text {
+    font-style: italic;
+    font-size: font-size(lg);
+    line-height: 1.8;
+    margin-bottom: spacing(md);
+    position: relative;
+    
+    &::before {
+      content: '"';
+      position: absolute;
+      top: -spacing(md);
+      left: -spacing(sm);
+      font-size: font-size(4xl);
+      color: color(primary);
+      opacity: 0.3;
+    }
+  }
+  
+  &__rating {
+    margin-bottom: spacing(lg);
+    
+    .star {
+      color: #ffd700;
+      font-size: font-size(lg);
+    }
+  }
+  
+  &__author {
+    @include flex-center;
+    gap: spacing(md);
+  }
+  
+  &__image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  
+  &__placeholder {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: color(primary);
+    color: color(white);
+    @include flex-center;
+    font-weight: 700;
+    font-size: font-size(lg);
+  }
+  
+  &__info {
+    text-align: left;
+  }
+  
+  &__name {
+    font-weight: 600;
+    margin-bottom: spacing(xs);
+  }
+  
+  &__position {
+    font-size: font-size(sm);
+    color: color(text-muted);
+  }
+  */
+}
+
+//
+// TODO STEP 11: Contact Section (20 นาที)
+//
+
+.contact {
+  /* TODO:
+  background: linear-gradient(135deg, color(primary), color(secondary));
+  color: color(white);
+  
+  .section__title,
+  .section__description {
+    color: color(white);
+  }
+  
+  &__grid {
+    @extend .grid--2;
+  }
+  
+  &__info {
+    margin-bottom: spacing(xl);
+    
+    @include respond-to(md) {
+      margin-bottom: 0;
+    }
+  }
+  
+  &__item {
+    @include flex-center;
+    align-items: flex-start;
+    gap: spacing(md);
+    margin-bottom: spacing(lg);
+  }
+  
+  &__icon {
+    font-size: font-size(xl);
+    margin-top: spacing(xs);
+  }
+  
+  &__details {
+    flex: 1;
+  }
+  
+  &__label {
+    font-weight: 600;
+    margin-bottom: spacing(xs);
+  }
+  
+  &__value {
+    opacity: 0.9;
+    line-height: 1.6;
+  }
+  */
+}
+
+.form {
+  /* TODO:
+  background: rgba(color(white), 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: $border-radius-lg;
+  padding: spacing(2xl);
+  
+  &__group {
+    margin-bottom: spacing(lg);
+  }
+  
+  &__label {
+    display: block;
+    margin-bottom: spacing(sm);
+    font-weight: 500;
+    color: color(white);
+  }
+  
+  &__input {
+    width: 100%;
+    padding: spacing(md);
+    border: 2px solid rgba(color(white), 0.2);
+    border-radius: $border-radius;
+    background: rgba(color(white), 0.1);
+    color: color(white);
+    font-size: font-size(base);
+    transition: map-get($transitions, normal);
+    
+    &::placeholder {
+      color: rgba(color(white), 0.7);
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: rgba(color(white), 0.5);
+      background: rgba(color(white), 0.2);
+    }
+    
+    &:invalid {
+      border-color: color(danger);
+    }
+    
+    &:valid {
+      border-color: color(success);
+    }
+  }
+  
+  &__textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  
+  &__submit {
+    @include button(color(white), color(primary), spacing(md) spacing(2xl));
+    width: 100%;
+    font-weight: 600;
+    
+    &:hover {
+      background: rgba(color(white), 0.9);
+    }
+    
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+  */
+}
+
+//
+// TODO STEP 12: Footer (15 นาที)
+//
+
+.footer {
+  /* TODO:
+  background: color(primary);
+  color: color(white);
+  padding: spacing(3xl) 0 spacing(lg);
+  
+  &__content {
+    @extend .grid;
+    grid-template-columns: 1fr;
+    gap: spacing(xl);
+    margin-bottom: spacing(2xl);
+    
+    @include respond-to(sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @include respond-to(lg) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  &__section {
+    text-align: center;
+    
+    @include respond-to(lg) {
+      text-align: left;
+    }
+  }
+  
+  &__logo {
+    @include flex-center;
+    gap: spacing(sm);
+    margin-bottom: spacing(md);
+    justify-content: center;
+    
+    @include respond-to(lg) {
+      justify-content: flex-start;
+    }
+    
+    img {
+      height: 40px;
+      filter: brightness(0) invert(1);
+    }
+  }
+  
+  &__description {
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+  
+  &__title {
+    font-size: font-size(lg);
+    font-weight: 600;
+    margin-bottom: spacing(lg);
+  }
+  
+  &__links {
+    list-style: none;
+    
+    li {
+      margin-bottom: spacing(sm);
+    }
+    
+    a {
+      color: rgba(color(white), 0.8);
+      transition: map-get($transitions, fast);
+      
+      &:hover {
+        color: color(white);
+      }
+    }
+  }
+  
+  &__bottom {
+    border-top: 1px solid rgba(color(white), 0.2);
+    padding-top: spacing(lg);
+    @include flex-center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: spacing(md);
+    text-align: center;
+    
+    @include respond-to(md) {
+      flex-direction: row;
+      text-align: left;
+    }
+  }
+  
+  &__bottom-links {
+    display: flex;
+    gap: spacing(lg);
+    
+    a {
+      color: rgba(color(white), 0.8);
+      font-size: font-size(sm);
+      
+      &:hover {
+        color: color(white);
+      }
+    }
+  }
+  */
+}
+
+.social {
+  /* TODO:
+  &__links {
+    display: flex;
+    gap: spacing(md);
+    justify-content: center;
+    
+    @include respond-to(lg) {
+      justify-content: flex-start;
+    }
+  }
+  
+  &__link {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    background: rgba(color(white), 0.1);
+    border-radius: 50%;
+    @include flex-center;
+    color: color(white);
+    transition: map-get($transitions, normal);
+    
+    &:hover {
+      background: rgba(color(white), 0.2);
+      transform: translateY(-2px);
+    }
+  }
+  */
+}
+
+//
+// TODO STEP 13: Animations (15 นาที)
+//
+
+// Keyframes
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Animation classes
+.animate {
+  /* TODO:
+  &-on-scroll {
+    opacity: 0;
+    
+    &.animated {
+      opacity: 1;
+      @include animate(fadeInUp, 0.6s);
+    }
+  }
+  
+  &-slide-left {
+    @include animate(slideInLeft, 0.6s);
+  }
+  
+  &-slide-right {
+    @include animate(slideInRight, 0.6s);
+  }
+  
+  &-scale {
+    @include animate(scaleIn, 0.6s);
+  }
+  
+  &-pulse {
+    @include animate(pulse, 2s, infinite);
+  }
+  */
+}
+
+// Loading spinner
+.loading {
+  /* TODO:
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(color(white), 0.3);
+  border-radius: 50%;
+  border-top-color: color(white);
+  @include animate(spin, 1s, linear infinite);
+  */
+}
+
+//
+// TODO STEP 14: Utility Classes (10 นาที)
+//
+
+// Text utilities
+.text {
+  &-center { text-align: center; }
+  &-left { text-align: left; }
+  &-right { text-align: right; }
+  
+  &-primary { color: color(primary); }
+  &-secondary { color: color(secondary); }
+  &-success { color: color(success); }
+  &-warning { color: color(warning); }
+  &-danger { color: color(danger); }
+  &-muted { color: color(text-muted); }
+  
+  &-truncate { @include text-truncate; }
+}
+
+// Spacing utilities
+@each $name, $value in $spacing {
+  .m-#{$name} { margin: $value; }
+  .mt-#{$name} { margin-top: $value; }
+  .mr-#{$name} { margin-right: $value; }
+  .mb-#{$name} { margin-bottom: $value; }
+  .ml-#{$name} { margin-left: $value; }
+  .mx-#{$name} { margin-left: $value; margin-right: $value; }
+  .my-#{$name} { margin-top: $value; margin-bottom: $value; }
+  
+  .p-#{$name} { padding: $value; }
+  .pt-#{$name} { padding-top: $value; }
+  .pr-#{$name} { padding-right: $value; }
+  .pb-#{$name} { padding-bottom: $value; }
+  .pl-#{$name} { padding-left: $value; }
+  .px-#{$name} { padding-left: $value; padding-right: $value; }
+  .py-#{$name} { padding-top: $value; padding-bottom: $value; }
+}
+
+// Display utilities
+.d {
+  &-none { display: none; }
+  &-block { display: block; }
+  &-inline { display: inline; }
+  &-inline-block { display: inline-block; }
+  &-flex { display: flex; }
+  &-inline-flex { display: inline-flex; }
+  &-grid { display: grid; }
+}
+
+// Flexbox utilities
+.flex {
+  &-center { @include flex-center; }
+  &-between { justify-content: space-between; }
+  &-around { justify-content: space-around; }
+  &-evenly { justify-content: space-evenly; }
+  &-column { flex-direction: column; }
+  &-wrap { flex-wrap: wrap; }
+  &-nowrap { flex-wrap: nowrap; }
+  &-grow { flex-grow: 1; }
+  &-shrink { flex-shrink: 1; }
+}
+
+// Visibility utilities
+.sr-only {
+  @include visually-hidden;
+}
+
+.visible {
+  @each $breakpoint in map-keys($breakpoints) {
+    &-#{$breakpoint} {
+      @include respond-to($breakpoint) {
+        display: block !important;
+      }
+    }
+  }
+}
+
+.hidden {
+  @each $breakpoint in map-keys($breakpoints) {
+    &-#{$breakpoint} {
+      @include respond-to($breakpoint) {
+        display: none !important;
+      }
+    }
+  }
+}
+
+//
+// TODO STEP 15: Dark Mode Support (10 นาที) - Bonus
+//
+
+.dark-mode {
+  /* TODO:
+  --bg-color: #{color(black)};
+  --text-color: #{color(white)};
+  --text-light: #ccc;
+  --text-muted: #999;
+  
+  .header {
+    background: rgba(color(black), 0.9);
+    
+    &.scrolled {
+      background: color(black);
+    }
+  }
+  
+  .card {
+    background: #1a1a1a;
+    color: color(white);
+  }
+  
+  .form__input {
+    background: #2a2a2a;
+    color: color(white);
+    border-color: #444;
+    
+    &::placeholder {
+      color: #999;
+    }
+  }
+  */
+}
+
+//
+// TODO STEP 16: Print Styles (5 นาที)
+//
+
+@media print {
+  /* TODO:
+  .header,
+  .hamburger,
+  .btn,
+  .form,
+  .social__links {
+    display: none !important;
+  }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: color(black) !important;
+    background: color(white) !important;
+  }
+  
+  .hero {
+    background: none !important;
+    color: color(black) !important;
+    min-height: auto;
+    padding: spacing(lg) 0;
+  }
+  
+  .section {
+    padding: spacing(lg) 0;
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  */
+}
+
+//
+// TODO STEP 17: Accessibility & Focus States (10 นาที)
+//
+
+// Focus states
+*:focus {
+  /* TODO:
+  outline: 2px solid color(primary);
+  outline-offset: 2px;
+  */
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  /* TODO:
+  * {
+    border-color: color(black) !important;
+    color: color(black) !important;
+    background-color: color(white) !important;
+  }
+  
+  .btn {
+    border: 2px solid color(black) !important;
+  }
+  */
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  /* TODO:
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  */
+}
+
+// Skip link
+.skip-link {
+  /* TODO:
+  position: absolute;
+  top: -40px;
+  left: spacing(sm);
+  background: color(primary);
+  color: color(white);
+  padding: spacing(sm) spacing(md);
+  text-decoration: none;
+  z-index: 10000;
+  border-radius: 0 0 $border-radius $border-radius;
+  
+  &:focus {
+    top: 0;
+  }
+  */
+}
+
+/*
+===========================================
+Workshop Completion Checklist
+===========================================
+
+เมื่อเสร็จสิ้น SCSS workshop ให้ตรวจสอบว่า:
+
+✅ Variables ถูกแปลงจาก CSS custom properties
+✅ Functions ทำงานได้ (color, spacing, font-size)
+✅ Mixins ทำงานได้ (respond-to, flex-center, button, card)
+✅ Nesting ใช้งานได้ถูกต้อง
+✅ Components เขียนด้วย BEM methodology
+✅ Grid layouts ใช้ @extend ได้
+✅ Utility classes สร้างด้วย @each loop
+✅ Animations ทำงานได้
+✅ Responsive design ใช้ mixin
+✅ Dark mode support
+✅ Accessibility features
+✅ Compile เป็น CSS ได้สำเร็จ
+
+Advanced Features (ถ้ามีเวลา):
+⭐ Custom functions สำหรับ calculations
+⭐ Advanced mixins สำหรับ complex layouts
+⭐ Conditional styles ด้วย @if/@else
+⭐ Dynamic class generation
+⭐ Integration กับ build tools
+
+===========================================
+*/
