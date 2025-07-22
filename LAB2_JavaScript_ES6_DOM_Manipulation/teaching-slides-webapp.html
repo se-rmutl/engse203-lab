@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สัปดาห์ที่ 3: HTML5, CSS3 & Responsive Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --dark-color: #1a252f;
+            --light-color: #ecf0f1;
+            --text-color: #333;
+            --bg-color: #ffffff;
+            --code-bg: #f8f9fa;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--primary-color);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .slide-counter {
+            color: white;
+            font-size: 1rem;
+        }
+
+        .nav-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+
+        .nav-btn:disabled {
+            background: #7f8c8d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Main Content */
+        .container {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Slide Styles */
+        .slide {
+            display: none;
+            min-height: calc(100vh - 120px);
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 1rem;
+        }
+
+        .slide-subtitle {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin: 2rem 0 1rem 0;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 1rem;
+        }
+
+        .slide-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Code Examples */
+        .code-example {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1rem;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-body {
+            padding: 1.5rem;
+        }
+
+        .code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            margin: 1rem 0;
+            line-height: 1.4;
+        }
+
+        .html-code { border-left: 4px solid #e67e22; }
+        .css-code { border-left: 4px solid #3498db; }
+        .js-code { border-left: 4px solid #f1c40f; }
+
+        /* Interactive Demo */
+        .demo-container {
+            background: #f8f9fa;
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .demo-title {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Responsive Demo */
+        .responsive-demo {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .device-frame {
+            border: 3px solid var(--primary-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .device-mobile {
+            width: 320px;
+            height: 200px;
+        }
+
+        .device-tablet {
+            width: 480px;
+            height: 200px;
+        }
+
+        .device-desktop {
+            width: 600px;
+            height: 200px;
+        }
+
+        .device-content {
+            background: linear-gradient(135deg, var(--secondary-color), var(--success-color));
+            color: white;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            position: relative;
+        }
+
+        /* Grid Demo */
+        .grid-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .grid-item {
+            background: var(--secondary-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Flexbox Demo */
+        .flex-demo {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: var(--light-color);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .flex-item {
+            background: var(--warning-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        /* Animation Demo */
+        .animation-demo {
+            margin: 2rem 0;
+        }
+
+        .animated-box {
+            width: 100px;
+            height: 100px;
+            background: var(--danger-color);
+            margin: 2rem auto;
+            border-radius: 10px;
+            animation: bounce 2s infinite;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .animated-box:hover {
+            animation-play-state: paused;
+            transform: scale(1.2);
+        }
+
+        /* Lists */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            background: var(--light-color);
+            margin: 0.5rem 0;
+            padding: 1rem;
+            border-left: 4px solid var(--success-color);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-list li:hover {
+            background: #d5dbdb;
+            transform: translateX(5px);
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: var(--success-color);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .comparison-table tr:hover {
+            background: var(--light-color);
+        }
+
+        .check { color: var(--success-color); font-weight: bold; }
+        .cross { color: var(--danger-color); font-weight: bold; }
+
+        /* Interactive Controls */
+        .interactive-controls {
+            background: var(--light-color);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .control-group {
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .control-label {
+            font-weight: 500;
+            min-width: 120px;
+        }
+
+        .control-input {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .control-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: #2980b9;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--light-color);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-color), var(--success-color));
+            transition: width 0.3s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .slide-title {
+                font-size: 2rem;
+            }
+
+            .slide-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .responsive-demo {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .grid-demo {
+                grid-template-columns: 1fr;
+            }
+
+            .flex-demo {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <h1 class="nav-title">ENGSE203: HTML5, CSS3 & Responsive Design</h1>
+            <div class="nav-controls">
+                <span class="slide-counter">
+                    <span id="current-slide">1</span> / <span id="total-slides">30</span>
+                </span>
+                <button class="nav-btn" id="prev-btn" onclick="previousSlide()">← ก่อนหน้า</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSlide()">ถัดไป →</button>
+                <button class="nav-btn" onclick="toggleFullscreen()">เต็มจอ</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Slide 1: Title -->
+        <section class="slide active">
+            <h1 class="slide-title">สัปดาห์ที่ 3: HTML5, CSS3 & Responsive Design</h1>
+            <div class="slide-content">
+                <div style="text-align: center; margin: 3rem 0;">
+                    <h2 style="color: var(--secondary-color); margin-bottom: 2rem;">ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์</h2>
+                    <h3 style="color: var(--primary-color);">Computer Programming for Software Engineer</h3>
+                </div>
+                
+                <div class="demo-container">
+                    <div class="animated-box"></div>
+                    <p style="margin-top: 1rem;">กดที่กล่องเพื่อหยุดภาพเคลื่อนไหว</p>
+                </div>
+
+                <ul class="feature-list">
+                    <li>HTML5 Semantic Elements และ Accessibility</li>
+                    <li>CSS3 Advanced Features (Flexbox, Grid, Animations)</li>
+                    <li>Responsive Web Design Principles</li>
+                    <li>CSS Preprocessors (Sass/SCSS)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 2: Learning Objectives -->
+        <section class="slide">
+            <h1 class="slide-title">เป้าหมายการเรียนรู้</h1>
+            <div class="slide-content">
+                <h2 class="slide-subtitle">หลังจากเรียนจบสัปดาห์นี้ นักศึกษาจะสามารถ:</h2>
+                
+                <ul class="feature-list">
+                    <li>เข้าใจและใช้งาน HTML5 Semantic Elements ได้อย่างถูกต้อง</li>
+                    <li>สร้างเว็บไซต์ที่เป็นมิตรกับผู้พิการ (Accessible)</li>
+                    <li>ใช้ CSS3 Features ขั้นสูง เช่น Flexbox และ Grid</li>
+                    <li>สร้าง Animations และ Transitions ที่สวยงาม</li>
+                    <li>ออกแบบเว็บไซต์แบบ Responsive ด้วย Mobile-First Approach</li>
+                    <li>เขียน CSS ด้วย Sass/SCSS เพื่อการจัดการที่ดีขึ้น</li>
+                </ul>
+
+                <div class="demo-container">
+                    <h3 class="demo-title">🎯 Workshop Goal</h3>
+                    <p>สร้างเว็บไซต์ Responsive สำหรับบริษัทเทคโนโลยี</p>
+                    <p>ระยะเวลา: 3 ชั่วโมง</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: HTML5 Semantic Elements -->
+        <section class="slide">
+            <h1 class="slide-title">HTML5 Semantic Elements</h1>
+            <div class="slide-content">
+                <h2 class="slide-subtitle">ความหมายของ Semantic HTML</h2>
+                <p><strong>Semantic HTML</strong> คือการใช้ HTML elements ที่มีความหมายชัดเจนเพื่ออธิบายเนื้อหา</p>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span>❌ Non-semantic Elements</span>
+                    </div>
+                    <div class="code-body">
+                        <div class="code html-code">&lt;div class="header"&gt;
+  &lt;div class="navigation"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="main-content"&gt;
+  &lt;div class="article"&gt;...&lt;/div&gt;
+&lt;/div&gt;</div>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span>✅ Semantic Elements</span>
+                    </div>
+                    <div class="code-body">
+                        <div class="code html-code">&lt;header&gt;
+  &lt;nav&gt;...&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;article&gt;...&lt;/article&gt;
+&lt;/main&gt;</div>
+                    </div>
+                </div>
+
+                <ul class="feature-list">
+                    <li>ช่วยให้ Search Engines เข้าใจเนื้อหาดีขึ้น</li>
+                    <li>เพิ่มการเข้าถึงสำหรับผู้พิการ</li>
+                    <li>โค้ดอ่านง่าย และ maintain ง่าย</li>
+                    <li>มาตรฐาน HTML5</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 4: HTML5 Elements Overview -->
+        <section class="slide">
+            <h1 class="slide-title">HTML5 Semantic Elements หลัก</h1>
+            <div class="slide-content">
+                <div class="grid-demo">
+                    <div class="grid-item">
+                        <h3>&lt;header&gt;</h3>
+                        <p>ส่วนหัวของเว็บไซต์หรือ section</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>&lt;nav&gt;</h3>
+                        <p>เมนูนำทางหลัก</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>&lt;main&gt;</h3>
+                        <p>เนื้อหาหลักของหน้า</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>&lt;section&gt;</h3>
+                        <p>ส่วนของเอกสารที่มีหัวข้อ</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>&lt;article&gt;</h3>
+                        <p>เนื้อหาที่สมบูรณ์อิสระ</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>&lt;aside&gt;</h3>
+                        <p>เนื้อหาด้านข้าง sidebar</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>&lt;footer&gt;</h3>
+                        <p>ส่วนท้ายของเว็บไซต์</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>&lt;address&gt;</h3>
+                        <p>ข้อมูลติดต่อ</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>&lt;time&gt;</h3>
+                        <p>วันที่และเวลา</p>
+                    </div>
+                </div>
+
+                <div class="demo-container">
+                    <h3 class="demo-title">💡 เคล็ดลับ</h3>
+                    <p>ใช้ semantic elements ตามความหมายจริง ไม่ใช่ตามรูปลักษณ์</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: HTML Structure Example -->
+        <section class="slide">
+            <h1 class="slide-title">โครงสร้าง HTML5 ที่ถูกต้อง</h1>
+            <div class="slide-content">
+                <div class="code-example">
+                    <div class="code-header">
+                        <span>HTML5 Document Structure</span>
+                    </div>
+                    <div class="code-body">
+                        <div class="code html-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="th"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;ชื่อหน้าเว็บ&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;nav&gt;เมนูนำทาง&lt;/nav&gt;
+  &lt;/header&gt;
+  
+  &lt;main&gt;
+    &lt;section&gt;
+      &lt;h1&gt;หัวข้อหลัก&lt;/h1&gt;
+      &lt;article&gt;เนื้อหาบทความ&lt;/article&gt;
+    &lt;/section&gt;
+    
+    &lt;aside&gt;เนื้อหาด้านข้าง&lt;/aside&gt;
+  &lt;/main&gt;
+  
+  &lt;footer&gt;ส่วนท้าย&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+                    </div>
+                </div>
+
+                <h2 class="slide-subtitle">กฎสำคัญ:</h2>
+                <ul class="feature-list">
+                    <li>ใช้ &lt;h1&gt; เพียงอันเดียวในหน้า</li>
+                    <li>Heading hierarchy: h1 → h2 → h3 → h4 → h5 → h6</li>
+                    <li>&lt;main&gt; ใช้เพียงอันเดียวในหน้า</li>
+                    <li>เขียน alt text ที่มีความหมายสำหรับรูปภาพ</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 6: Accessibility -->
+        <section class="slide">
+            <h1 class="slide-title">Web Accessibility</h1>
+            <div class="slide-content">
+                <h2 class="slide-subtitle">ทำไมต้องสนใจ Accessibility?</h2>
+                
+                <ul class="feature-list">
+                    <li>ช่วยให้คนพิการเข้าถึงเว็บไซต์ได้</li>
+                    <li>ปรับปรุง SEO และ search rankings</li>
+                    <li>เพิ่มผู้ใช้และลูกค้า</li>
+                    <li>กฎหมายในหลายประเทศกำหนดให้ปฏิบัติ</li>
+                    <li>เป็นการออกแบบที่ดีสำหรับทุกคน</li>
+                </ul>
+
+                <h2 class="slide-subtitle">หลักการพื้นฐาน</h2>
+                
+                <div class="code-example">
+                    <div class="code-header">
+                        <span>Accessibility Best Practices</span>
+                    </div>
+                    <div class="code-body">
+                        <div class="code html-code">&lt;!-- ✅ Alt text ที่มีความหมาย --&gt;
+&lt;img src="chart.png" alt="กราฟแสดงยอดขายเพิ่มขึ้น 25% ในปี 2024"&gt;
+
+&lt;!-- ✅ Form labels --&gt;
+&lt;label for="email"&gt;อีเมล&lt;/label&gt;
+&lt;input type="email" id="email" name="email" required&gt;
+
+&lt;!-- ✅ ARIA attributes --&gt;
+&lt;button aria-label="ปิดหน้าต่าง"&gt;×&lt;/button&gt;</div>
+                    </div>
+                </div>
+
+                <div class="demo-container">
+                    <h3 class="demo-title">🔧 Tools สำหรับทดสอบ</h3>
+                    <p>• Browser DevTools → Accessibility Tab</p>
+                    <p>• WAVE Web Accessibility Evaluation Tool</p>
+                    <p>• Screen readers (NVDA, JAWS, VoiceOver)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: CSS3 Introduction -->
+        <section class="slide">
+            <h1 class="slide-title">CSS3 Advanced Features</h1>
+            <div class="slide-content">
+                <h2 class="slide-subtitle">การพัฒนาของ CSS</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Version</th>
+                            <th>Year</th>
+                            <th>Key Features</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CSS1</td>
+                            <td>1996</td>
+                            <td>Basic styling, fonts, colors</td>
+                        </tr>
+                        <tr>
+                            <td>CSS2</td>
+                            <td>1998</td>
+                            <td>Positioning, media types</td>
+                        </tr>
+                        <tr>
+                            <td>CSS3</td>
+                            <td>1999-now</td>
+                            <td>Modules, animations, layouts</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2 class="slide-subtitle">CSS3 Features หลัก</h2>
+                
+                <div class="grid-demo">
+                    <div class="grid-item">
+                        <h3>Flexbox</h3>
+                        <p>จัดวางแบบยืดหยุ่น 1D</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Grid</h3>
+                        <p>ระบบตารางแบบ 2D</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Animations</h3>
+                        <p>การเคลื่อนไหวและเอฟเฟค</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Variables</h3>
+                        <p>ตัวแปรใน CSS</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Media Queries</h3>
+                        <p>Responsive design</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Transforms</h3>
+                        <p>การแปลงรูปร่าง</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: CSS Flexbox -->
+        <section class="slide">
+            <h1 class="slide-title">CSS Flexbox</h1>
+            <div class="slide-content">
+                <h2 class="slide-subtitle">แนวคิดพื้นฐาน</h2>
+                
+                <div class="demo-container">
+                    <h3 class="demo-title">Flexbox Demo</h3>
+                    <div class="flex-demo">
+                        <div class="flex-item">Item 1</div>
+                        <div class="flex-item">Item 2</div>
+                        <div class="flex-item">Item 3</div>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span>Flexbox Basic Setup</span>
+                    </div>
+                    <div class="code-body">
+                        <div class="code css-code">.container {
+  display: flex;
+  justify-content: space-between;  /* จัดแนวแกนหลัก */
+  align-items: center;             /* จัดแนวแกนตั้งฉาก */
+  gap: 1rem;                       /* ระยะห่างระหว่าง items */
+}
+
+.item {
+  flex: 1;        /* ขยายเต็มพื้นที่ */
+  flex-shrink: 0; /* ไม่หดตัว */
+}</div>
+                    </div>
+                </div>
+
+                <ul class="feature-list">
+                    <li><strong>Main Axis:</strong> แกนหลัก (horizontal หรือ vertical)</li>
+                    <li><strong>Cross Axis:</strong> แกนตั้งฉาก</li>
+                    <li><strong>Flex Container:</strong> parent element</li>
+                    <li><strong>Flex Items:</strong> child elements</li>
+                </ul>
+
+                <div class="interactive-controls">
+                    <h3>ทดลอง Flexbox:</h3>
+                    <div class="control-group">
+                        <span class="control-label">Justify Content:</span>
+                        <select class="control-input" id="justify-content">
+                            <option value="space-between">space-between</option>
+                            <option value="center">center</option>
+                            <option value="flex-start">flex-start</option>
+                            <option value="flex-end">flex-end</option>
+                            <option value="space-around">space-around</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <span class="control-label">Align Items:</span>
+                        <select class="control-input" id="align-items">
+                            <option value="center">center</option>
+                            <option value="flex-start">flex-start</option>
+                            <option value="flex-end">flex-end</option>
+                            <option value="stretch">stretch</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9: CSS Grid -->
+        <section class="slide">
+            <h1 class="slide-title">CSS Grid</h1>
+            <div class="slide-content">
+                <h2 class="slide-subtitle">ระบบ Layout 2 มิติ</h2>
+                
+                <div class="code-example">
+                    <div class="code-header">
+                        <span>CSS Grid Basic</span>
+                    </div>
+                    <div class="code-body">
+                        <div class="code css-code">.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;  /* 3 columns */
+  grid-template-rows: auto 1fr auto;    /* 3 rows */
+  gap: 20px;
+  grid-template-areas: 
+    "header header header"
+    "sidebar main aside"
+    "footer footer footer";
+}
+
+.header { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main { grid-area: main; }
+.aside { grid-area: aside; }
+.footer { grid-area: footer; }</div>
+                    </div>
+                </div>
+
+                <div class="demo-container">
+                    <h3 class="demo-title">Grid Layout Demo</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1rem 0;">
+                        <div style="background: #3498db; color: white; padding: 1rem; text-align: center; border-radius: 5px;">Header</div>
+                        <div style="background: #3498db; color: white; padding: 1rem; text-align: center; border-radius: 5px; grid-column: 2 / 4;">Content</div>
+                        <div style="background: #e74c3c; color: white; padding: 1rem; text-align: center; border-radius: 5px;">Sidebar</div>
+                        <div style="background: #2ecc71; color: white; padding: 1rem; text-align: center; border-radius: 5px;">Main</div>
+                        <div style="background: #f39c12; color: white; padding: 1rem; text-align: center; border-radius: 5px;">Aside</div>
+                        <div style="background: #9b59b6; color: white; padding: 1rem; text-align: center; border-radius: 5px; grid-column: 1 / 4;">Footer</div>
+                    </div>
+                </div>
+
+                <h2 class="slide-subtitle">Flexbox vs Grid</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Flexbox</th>
+                            <th>Grid</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dimension</td>
+                            <td>1D (แถวหรือคอลัมน์)</td>
+                            <td>2D (แถวและคอลัมน์)</td>
+                        </tr>
+                        <tr>
+                            <td>Use Case</td>
+                            <td>Navigation, centering</td>
+                            <td>Page layouts, grids</td>
+                        </tr>
+                        <tr>
+                            <td>Item Control</td>
+                            <td>Content-based</td>
+                            <td>Layout-based</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Slide 10: CSS Animations -->
+        <section class="slide">
+            <h1 class="slide-title">CSS Animations</h1>
+            <div class="slide-content">
+                <h2 class="slide-subtitle">Transitions vs Animations</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span>CSS Transitions</span>
+                        </div>
+                        <div class="code-body">
+                            <div class="code css-code">.button {
+  background: blue;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background: red;
+  transform: scale(1.1);
+}</div>
+                        </div>
+                    </div>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span>CSS Keyframes</span>
+                        </div>
+                        <div class="code-body">
+                            <div class="code css-code">@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.element {
+  animation: slideIn 0.5s ease-out;
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="animation-demo">
+                    <h3 class="demo-title">Animation Demo (hover เพื่อหยุด)</h3>
+                    <div class="animated-box"></div>
+                </div>
+
+                <ul class="feature-list">
+                    <li><strong>Transitions:</strong> สำหรับการเปลี่ยนแปลง 2 สถานะ</li>
+                    <li><strong>Animations:</strong> สำหรับการเคลื่อนไหวที่ซับซ้อน</li>
+                    <li><strong>Performance:</strong> ใช้ transform และ opacity</li>
+                    <li><strong>Timing:</strong> ease, linear, cubic-bezier</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 11: Responsive Web Design -->
+        <section class="slide">
+            <h1 class="slide-title">Responsive Web Design</h1>
+            <div class="slide-content">
+                <h2 class="slide-subtitle">Mobile-First Approach</h2>
+                
+                <div class="responsive-demo">
+                    <div class="device-frame device-mobile">
+                        <div class="device-content">
+                            📱 Mobile<br>320px
+                        </div>
+                    </div>
+                    <div class="device-frame device-tablet">
+                        <div class="device-content">
+                            📊 Tablet<br>768px
+                        </div>
+                    </div>
+                    <div class="device-frame device-desktop">
+                        <div class="device-content">
+                            💻 Desktop<br>1024px+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-header">
+                        <span>Mobile-First Media Queries</span>
+                    </div>
+                    <div class="code-body">
+                        <div class="code css-code">/* Mobile First (320px+) */
+.container {
+  width: 100%;
+  padding: 1rem;
+}
+
+/* Tablet (768px+) */
+@media (min-width: 768px) {
+  .container {
+    max-width: 750px;
+    margin: 0 auto;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1200px;
+    padding: 2rem;
+  }
+}</div>
+                    </div>
+                </div>
+
+                <h2 class="slide-subtitle">เทคนิคสำคัญ</h2>
+                <ul class="feature-list">
+                    <li><strong>Viewport Meta Tag:</strong> &lt;meta name="viewport" content="width=device-width"&gt;</li>
+                    <li><strong>Flexible Images:</strong> max-width: 100%</li>
+                    <li><strong>Fluid Grids:</strong> ใช้ % แทน px</li>
+                    <li><strong>Breakpoints:</strong> 576px, 768px, 992px, 1200px</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 12: CSS Preprocessors -->
+        <section class="slide">
+            <h1 class="slide-title">CSS Preprocessors (Sass/SCSS)</h1>
+            <div class="slide-content">
+                <h2 class="slide-subtitle">ทำไมต้องใช้ Preprocessors?</h2>
+                
+                <ul class="feature-list">
+                    <li>Variables สำหรับค่าที่ใช้ซ้ำ</li>
+                    <li>Nesting เพื่อโครงสร้างที่ชัดเจน</li>
+                    <li>Mixins สำหรับโค้ดที่ใช้ซ้ำ</li>
+                    <li>Functions และ Operations</li>
+                    <li>Modular CSS ด้วย Partials</li>
+                </ul>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span>SCSS Variables & Nesting</span>
+                        </div>
+                        <div class="code-body">
+                            <div class="code css-code">$primary-color: #3498db;
+$font-size-base: 1rem;
+
+.navbar {
+  background: $primary-color;
+  padding: 1rem;
+  
+  ul {
+    list-style: none;
+    
+    li {
+      display: inline-block;
+      
+      a {
+        color: white;
+        text-decoration: none;
+        
+        &:hover {
+          color: lighten($primary-color, 20%);
+        }
+      }
+    }
+  }
+}</div>
+                        </div>
+                    </div>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span>SCSS Mixins</span>
+                        </div>
+                        <div class="code-body">
+                            <div class="code css-code">@mixin button($bg-color, $text-color: white) {
+  background: $bg-color;
+  color: $text-color;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  &:hover {
+    background: darken($bg-color, 10%);
+  }
+}
+
+.btn-primary {
+  @include button($primary-color);
+}
+
+.btn-secondary {
+  @include button(#6c757d);
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-container">
+                    <h3 class="demo-title">🔧 Compilation</h3>
+                    <p><code>sass --watch style.scss:style.css</code></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 13: Workshop Overview -->
+        <section class="slide">
+            <h1 class="slide-title">Workshop: สร้างเว็บไซต์ Responsive</h1>
+            <div class="slide-content">
+                <h2 class="slide-subtitle">ขั้นตอนการทำงาน (3 ชั่วโมง)</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 2rem 0;">
+                    <div style="background: #3498db; color: white; padding: 1.5rem; border-radius: 10px; text-align: center;">
+                        <h3>ชั่วโมงที่ 1</h3>
+                        <h4>HTML5 Structure</h4>
+                        <ul style="text-align: left; margin-top: 1rem;">
+                            <li>Semantic elements</li>
+                            <li>Accessibility</li>
+                            <li>Content structure</li>
+                        </ul>
+                    </div>
+                    <div style="background: #2ecc71; color: white; padding: 1.5rem; border-radius: 10px; text-align: center;">
+                        <h3>ชั่วโมงที่ 2</h3>
+                        <h4>CSS3 Styling</h4>
+                        <ul style="text-align: left; margin-top: 1rem;">
+                            <li>Flexbox layout</li>
+                            <li>Grid systems</li>
+                            <li>Animations</li>
+                        </ul>
+                    </div>
+                    <div style="background: #e74c3c; color: white; padding: 1.5rem; border-radius: 10px; text-align: center;">
+                        <h3>ชั่วโมงที่ 3</h3>
+                        <h4>Responsive & SCSS</h4>
+                        <ul style="text-align: left; margin-top: 1rem;">
+                            <li>Media queries</li>
+                            <li>Mobile-first</li>
+                            <li>SCSS preprocessing</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2 class="slide-subtitle">เป้าหมายสุดท้าย</h2>
+                <div class="demo-container">
+                    <h3 class="demo-title">🎯 TechFlow Company Website</h3>
+                    <p>เว็บไซต์ Responsive สำหรับบริษัทเทคโนโลยี</p>
+                    <ul class="feature-list">
+                        <li>HTML5 semantic structure</li>
+                        <li>CSS3 modern layouts</li>
+                        <li>Responsive design</li>
+                        <li>SCSS preprocessing</li>
+                        <li>Accessibility features</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 14: Best Practices -->
+        <section class="slide">
+            <h1 class="slide-title">Best Practices</h1>
+            <div class="slide-content">
+                <h2 class="slide-subtitle">HTML Best Practices</h2>
+                <ul class="feature-list">
+                    <li>ใช้ semantic elements ตามความหมาย</li>
+                    <li>เขียน alt text ที่อธิบายเนื้อหา</li>
+                    <li>รักษา heading hierarchy</li>
+                    <li>ใส่ form labels ทุกตัว</li>
+                    <li>Validate HTML markup</li>
+                </ul>
+
+                <h2 class="slide-subtitle">CSS Best Practices</h2>
+                <ul class="feature-list">
+                    <li>Mobile-first responsive design</li>
+                    <li>ใช้ Flexbox สำหรับ 1D layouts</li>
+                    <li>ใช้ Grid สำหรับ 2D layouts</li>
+                    <li>Optimize animations (transform, opacity)</li>
+                    <li>ใช้ CSS variables สำหรับ theming</li>
+                </ul>
+
+                <h2 class="slide-subtitle">Performance Tips</h2>
+                <ul class="feature-list">
+                    <li>Minimize CSS file size</li>
+                    <li>ใช้ lazy loading สำหรับรูปภาพ</li>
+                    <li>Critical CSS inlining</li>
+                    <li>Avoid layout-triggering properties</li>
+                    <li>Use hardware acceleration</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 15: Tools & Resources -->
+        <section class="slide">
+            <h1 class="slide-title">Tools & Resources</h1>
+            <div class="slide-content">
+                <h2 class="slide-subtitle">Development Tools</h2>
+                <div class="grid-demo">
+                    <div class="grid-item">
+                        <h3>VS Code</h3>
+                        <p>Code editor + extensions</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Browser DevTools</h3>
+                        <p>Inspect, debug, test</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Sass Compiler</h3>
+                        <p>SCSS to CSS conversion</p>
+                    </div>
+                </div>
+
+                <h2 class="slide-subtitle">Testing Tools</h2>
+                <ul class="feature-list">
+                    <li><strong>Responsive:</strong> Browser DevTools, ResponsiveDesignChecker</li>
+                    <li><strong>Accessibility:</strong> WAVE, axe, Lighthouse</li>
+                    <li><strong>Performance:</strong> PageSpeed Insights, GTmetrix</li>
+                    <li><strong>Validation:</strong> W3C Markup Validator</li>
+                </ul>
+
+                <h2 class="slide-subtitle">Learning Resources</h2>
+                <ul class="feature-list">
+                    <li><strong>MDN Web Docs:</strong> developer.mozilla.org</li>
+                    <li><strong>CSS-Tricks:</strong> css-tricks.com</li>
+                    <li><strong>Can I Use:</strong> caniuse.com</li>
+                    <li><strong>Flexbox Froggy:</strong> flexboxfroggy.com</li>
+                    <li><strong>Grid Garden:</strong> cssgridgarden.com</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Final Slide -->
+        <section class="slide">
+            <h1 class="slide-title">สรุป</h1>
+            <div class="slide-content">
+                <h2 class="slide-subtitle">สิ่งที่เราได้เรียนรู้วันนี้</h2>
+                
+                <div class="grid-demo">
+                    <div class="grid-item">
+                        <h3>HTML5</h3>
+                        <p>Semantic elements & Accessibility</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>CSS3</h3>
+                        <p>Flexbox, Grid & Animations</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Responsive</h3>
+                        <p>Mobile-first design</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>SCSS</h3>
+                        <p>CSS preprocessing</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Workshop</h3>
+                        <p>Hands-on practice</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Best Practices</h3>
+                        <p>Industry standards</p>
+                    </div>
+                </div>
+
+                <div class="demo-container" style="margin-top: 3rem;">
+                    <h3 class="demo-title">🚀 ขั้นตอนต่อไป</h3>
+                    <p>เริ่มทำ Workshop: สร้างเว็บไซต์ TechFlow</p>
+                    <p>ระยะเวลา: 3 ชั่วโมง</p>
+                    <p><strong>พร้อมที่จะเริ่มต้นแล้วหรือยัง?</strong></p>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem; font-size: 1.2rem; color: var(--primary-color);">
+                    <p><strong>ขอบคุณสำหรับความสนใจ!</strong></p>
+                    <p>มีคำถามอะไรไหม?</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        // Update slide counter
+        document.getElementById('total-slides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[n].classList.add('active');
+            
+            // Update counter
+            document.getElementById('current-slide').textContent = n + 1;
+            
+            // Update progress bar
+            const progress = ((n + 1) / totalSlides) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = n === 0;
+            document.getElementById('next-btn').disabled = n === totalSlides - 1;
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+        
+        function previousSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+        
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousSlide();
+            } else if (e.key === 'F11') {
+                e.preventDefault();
+                toggleFullscreen();
+            }
+        });
+        
+        // Interactive controls for Flexbox demo
+        document.getElementById('justify-content')?.addEventListener('change', function(e) {
+            const flexDemo = document.querySelector('.flex-demo');
+            if (flexDemo) {
+                flexDemo.style.justifyContent = e.target.value;
+            }
+        });
+        
+        document.getElementById('align-items')?.addEventListener('change', function(e) {
+            const flexDemo = document.querySelector('.flex-demo');
+            if (flexDemo) {
+                flexDemo.style.alignItems = e.target.value;
+            }
+        });
+        
+        // Initialize
+        showSlide(0);
+        
+        // Auto-advance slides (optional - uncomment for demo mode)
+        // setInterval(() => {
+        //     if (currentSlide < totalSlides - 1) {
+        //         nextSlide();
+        //     } else {
+        //         currentSlide = 0;
+        //         showSlide(0);
+        //     }
+        // }, 10000); // Change slide every 10 seconds
+    </script>
+</body>
+</html>
