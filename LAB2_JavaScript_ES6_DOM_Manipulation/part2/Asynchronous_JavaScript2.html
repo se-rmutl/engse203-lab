@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: เจาะลึก Asynchronous JavaScript</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .section-marker {
+            background-color: #fefce8;
+            color: #a16207;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .code-block {
+            background-color: #1e293b;
+            color: #cbd5e1;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            white-space: pre-wrap;
+            position: relative;
+            margin-top: 1rem;
+            height: 100%;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background-color: #334155;
+            color: #94a3b8;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover { background-color: #475569; color: #e2e8f0; }
+        .interactive-card {
+            background: linear-gradient(145deg, #ffffff, #f7f9fc);
+            border: 1px solid #e2e8f0;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+        }
+        .interactive-output {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            min-height: 80px;
+            font-family: monospace;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .status-pending { background-color: #fef9c3; color: #854d0e; }
+        .status-fulfilled { background-color: #dcfce7; color: #166534; }
+        .status-rejected { background-color: #fee2e2; color: #991b1b; }
+        .comparison-table td, .comparison-table th {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f1f5f9;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="text-center p-8 md:p-16 bg-yellow-50">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-yellow-900">เจาะลึก Asynchronous JavaScript</h1>
+        <p class="mt-4 text-xl text-yellow-700 max-w-3xl mx-auto">เรียนรู้การจัดการกับงานที่ต้องรอ ตั้งแต่ Callback Hell สู่ความสง่างามของ Async/Await</p>
+    </header>
+
+    <main class="container mx-auto px-4 py-12 md:px-8 md:py-20 space-y-20">
+
+        <!-- 1. The Problem Section -->
+        <section id="problem">
+            <div class="text-center mb-12"><span class="section-marker">บทที่ 1: ปัญหา</span><h2 class="text-3xl md:text-4xl font-bold mt-4">ทำไมเราต้องใช้ Async?</h2><p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">JavaScript โดยพื้นฐานทำงานทีละคำสั่ง (Synchronous) แต่ถ้ามีงานที่ใช้เวลานาน เช่น การดึงข้อมูลจากอินเทอร์เน็ต มันจะ "บล็อก" การทำงานทั้งหมด ทำให้หน้าเว็บค้าง</p></div>
+            <div class="interactive-card"><h3 class="text-2xl font-bold">จาก Callback สู่ "Callback Hell"</h3><p class="mt-2 text-slate-600">ในอดีต เราใช้ฟังก์ชันที่ถูกเรียกกลับ (Callback) เพื่อจัดการกับงาน async ที่เสร็จสิ้น แต่เมื่อมีการทำงานที่ต้องรอต่อกันหลายชั้น จะเกิดโค้ดที่ซ้อนกันลึกเหมือนพีระมิด หรือที่เรียกว่า "Callback Hell" ซึ่งอ่านและแก้ไขได้ยากมาก</p><div class="code-block"><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>// 😱 Pyramid of Doom (Callback Hell)
+downloadImage('/photo.jpg', function(image) {
+  console.log('Image downloaded');
+  applyFilter(image, 'sepia', function(filteredImage) {
+    console.log('Filter applied');
+    uploadImage(filteredImage, function(response) {
+      console.log('Image uploaded:', response.url);
+      // And it could go on...
+    });
+  });
+});</code></pre></div></div>
+        </section>
+
+        <!-- 2. Promises Section -->
+        <section id="promises">
+            <div class="text-center mb-12"><span class="section-marker">บทที่ 2: ทางออก</span><h2 class="text-3xl md:text-4xl font-bold mt-4">Promises: คำสัญญาแห่งอนาคต</h2><p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">ES6 ได้แนะนำ `Promise` object ซึ่งเป็นตัวแทนของค่าที่จะเกิดขึ้นในอนาคต (อาจจะสำเร็จหรือล้มเหลวก็ได้) เพื่อแก้ปัญหา Callback Hell</p></div>
+            <div class="interactive-card space-y-8">
+                <div><h3 class="text-2xl font-bold">สถานะของ Promise</h3><p class="mt-2 text-slate-600">Promise มี 3 สถานะที่ไม่สามารถย้อนกลับได้:</p><ul class="list-none mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-center"><li class="p-4 rounded-lg status-pending"><span class="font-bold">Pending</span><br>สถานะเริ่มต้น, ยังไม่รู้ผล</li><li class="p-4 rounded-lg status-fulfilled"><span class="font-bold">Fulfilled</span><br>การทำงานสำเร็จ, มีค่าส่งกลับมา</li><li class="p-4 rounded-lg status-rejected"><span class="font-bold">Rejected</span><br>การทำงานล้มเหลว, มีเหตุผล(error)ส่งกลับมา</li></ul></div>
+                <div class="pt-8 border-t">
+                    <h3 class="text-2xl font-bold">Interactive Demo: การทำงานของ Promise</h3>
+                    <p class="mt-2 text-slate-600">คลิกปุ่มด้านล่างเพื่อจำลองการดึงข้อมูล ซึ่งจะใช้เวลา 1.5 วินาที และมีโอกาสสำเร็จหรือล้มเหลวเท่าๆ กัน สังเกตการเปลี่ยนแปลงของสถานะ</p>
+                    <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                        <div class="p-4 bg-slate-100 rounded-lg h-full flex flex-col justify-center">
+                            <button id="promise-demo-btn" class="p-3 bg-purple-500 text-white rounded-lg shadow-md hover:bg-purple-600 w-full">จำลองการทำงานของ Promise</button>
+                            <div id="promise-output" class="interactive-output">กดปุ่มเพื่อเริ่ม...</div>
+                        </div>
+                        <div class="code-block text-sm"><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>const btn = document.getElementById('promise-demo-btn');
+const output = document.getElementById('promise-output');
+btn.addEventListener('click', () => {
+  output.innerHTML = `สถานะ: <span class="font-bold">Pending</span>...`;
+  output.className = 'interactive-output status-pending';
+  
+  const myPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      Math.random() > 0.5 
+        ? resolve("สำเร็จ! ได้รับข้อมูล Data-123") 
+        : reject(new Error("ล้มเหลว! Server มีปัญหา"));
+    }, 1500);
+  });
+
+  myPromise
+    .then(result => {
+      output.innerHTML = `สถานะ: <span class="font-bold">Fulfilled ✅</span><br>ผลลัพธ์: ${result}`;
+      output.className = 'interactive-output status-fulfilled';
+    })
+    .catch(error => {
+      output.innerHTML = `สถานะ: <span class="font-bold">Rejected ❌</span><br>เหตุผล: ${error.message}`;
+      output.className = 'interactive-output status-rejected';
+    });
+});</code></pre></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Async/Await Section -->
+        <section id="async-await">
+            <div class="text-center mb-12"><span class="section-marker">บทที่ 3: วิธีที่ทันสมัยที่สุด</span><h2 class="text-3xl md:text-4xl font-bold mt-4">Async/Await: เขียน Async ให้เหมือน Sync</h2><p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">ES2017 ได้นำเสนอ `async` และ `await` ซึ่งเป็น "Syntactic Sugar" (รูปแบบการเขียนที่สวยงาม) บน Promises ที่ทำให้การเขียนโค้ด async อ่านง่ายเหมือนโค้ด synchronous ปกติ</p></div>
+            <div class="interactive-card">
+                 <h3 class="text-2xl font-bold">Interactive Demo: ดึงข้อมูลจริงด้วย Async/Await</h3>
+                 <p class="mt-2 text-slate-600">คลิกปุ่มเพื่อดึงข้อมูลผู้ใช้แบบสุ่มจาก API `jsonplaceholder.typicode.com` จริงๆ และจัดการข้อผิดพลาดด้วย `try...catch` ซึ่งเป็นรูปแบบที่แนะนำในปัจจุบัน</p>
+                 <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                     <div class="p-4 bg-slate-100 rounded-lg h-full flex flex-col justify-center">
+                         <button id="fetch-user-btn" class="p-3 bg-teal-500 text-white rounded-lg shadow-md hover:bg-teal-600 w-full">ดึงข้อมูล User สุ่มจาก API จริง</button>
+                         <div id="fetch-output" class="interactive-output text-left text-sm whitespace-pre-wrap">กดปุ่มเพื่อเริ่มดึงข้อมูล...</div>
+                     </div>
+                     <div class="code-block text-sm"><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>const btn = document.getElementById('fetch-user-btn');
+const output = document.getElementById('fetch-output');
+btn.addEventListener('click', async () => {
+  output.textContent = 'กำลังดึงข้อมูล...';
+  output.className = 'interactive-output status-pending';
+  
+  try {
+    const randomId = Math.floor(Math.random() * 10) + 1;
+    // 'await' จะหยุดรอจนกว่า fetch() จะคืน Promise และ resolve
+    const response = await fetch(`https://jsonplaceholder.typicode.com/users/${randomId}`);
+    
+    // ตรวจสอบสถานะของ HTTP response
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.status}`);
+    }
+    
+    const user = await response.json();
+    
+    output.textContent = JSON.stringify(user, null, 2);
+    output.className = 'interactive-output status-fulfilled text-left';
+
+  } catch (error) { // 'catch' จะดักจับ error ทั้งจาก network และการทำงานอื่นๆ
+    output.textContent = `เกิดข้อผิดพลาด: ${error.message}`;
+    output.className = 'interactive-output status-rejected';
+  }
+});</code></pre></div>
+                 </div>
+            </div>
+        </section>
+        
+        <!-- 4. Comparison Section -->
+        <section id="comparison">
+            <div class="text-center mb-12"><span class="section-marker">บทที่ 4: การตัดสินใจ</span><h2 class="text-3xl md:text-4xl font-bold mt-4">Promises vs. Async/Await: เมื่อไหร่ควรใช้อะไร?</h2><p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">ทั้งสองวิธีคือเครื่องมือจัดการ Asynchronous ที่ดี แต่มีจุดเด่นต่างกันไปในแต่ละสถานการณ์</p></div>
+            <div class="interactive-card">
+                <table class="w-full border-collapse comparison-table">
+                    <thead><tr><th>คุณสมบัติ</th><th>Promises (.then/.catch)</th><th>Async/Await</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>การอ่านโค้ด</strong></td><td>เป็นแบบลูกโซ่ (Chaining) อาจซับซ้อนเมื่อมีหลายขั้นตอน</td><td class="bg-green-50">✅ อ่านง่ายเหมือนโค้ดปกติ (Linear)</td></tr>
+                        <tr><td><strong>การจัดการ Error</strong></td><td>ใช้ `.catch()` ต่อท้ายเพื่อดักจับ Error ทั้งหมดใน Chain</td><td class="bg-green-50">✅ ใช้ `try...catch` block ซึ่งคุ้นเคยและยืดหยุ่นกว่า</td></tr>
+                        <tr><td><strong>เงื่อนไข/Logic</strong></td><td>การใช้ `if/else` ภายใน `.then()` อาจทำให้โค้ดซ้อนกัน</td><td class="bg-green-50">✅ ใช้ `if/else` และ loop ได้ตามปกติ ทำให้ Logic ชัดเจน</td></tr>
+                        <tr><td><strong>การ Debug</strong></td><td>ยากกว่า เพราะการ Step-through debugger จะกระโดดข้ามไปมาระหว่าง Callback</td><td class="bg-green-50">✅ ง่ายกว่า สามารถ "Step over" `await` ได้เหมือนฟังก์ชันปกติ</td></tr>
+                    </tbody>
+                </table>
+                <div class="mt-8 pt-8 border-t">
+                    <h3 class="text-2xl font-bold">สรุปและแนวทางการเลือกใช้</h3>
+                    <p class="mt-4 text-slate-700">โดยทั่วไปแล้ว <strong class="text-teal-600">ควรเลือกใช้ Async/Await เป็นอันดับแรก</strong> เพราะทำให้โค้ดสะอาด อ่านง่าย และจัดการข้อผิดพลาดได้ดีกว่ามาก ซึ่งเป็นมาตรฐานการพัฒนาในปัจจุบัน</p>
+                    <p class="mt-4 text-slate-700">อย่างไรก็ตาม การใช้ <strong class="text-purple-600">Promises (.then) โดยตรง</strong> ยังมีประโยชน์ในบางกรณี เช่น:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-2 text-slate-600">
+                        <li>เมื่อต้องการรันโค้ดแบบ "fire and forget" ที่ไม่จำเป็นต้องรอผลลัพธ์ (แม้จะไม่ใช่ best practice)</li>
+                        <li>เมื่อต้องทำงานกับ Library เก่าๆ ที่ยังไม่รองรับ Async/Await อย่างสมบูรณ์</li>
+                        <li>เมื่อต้องการเขียนโค้ดที่สั้นมากๆ สำหรับงานที่ไม่ซับซ้อน (แต่ต้องระวังเรื่องความสามารถในการบำรุงรักษา)</li>
+                    </ul>
+                    <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <p class="font-bold text-blue-800">💡 สิ่งสำคัญที่สุด:</p>
+                        <p class="text-blue-700">`async/await` ไม่ได้มาแทนที่ Promises แต่เป็นวิธีที่ดีกว่าในการ "ใช้งาน" Promises เบื้องหลัง `await` ก็ยังคงเป็น Promise อยู่ดี ความเข้าใจใน Promises จึงยังเป็นพื้นฐานที่สำคัญอย่างยิ่ง</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="text-center p-8 mt-12 border-t border-slate-200"><p class="text-slate-500">&copy; 2025 - ENGSE203</p></footer>
+
+    <script>
+        function copyCode(button) {
+            const pre = button.closest('.code-block').querySelector('pre');
+            navigator.clipboard.writeText(pre.innerText).then(() => {
+                button.innerText = 'คัดลอกแล้ว!';
+                setTimeout(() => { button.innerText = 'คัดลอก'; }, 2000);
+            });
+        }
+
+        // Promise Demo
+        (function() {
+            const btn = document.getElementById('promise-demo-btn');
+            const output = document.getElementById('promise-output');
+            btn.addEventListener('click', () => {
+                output.innerHTML = `สถานะ: <span class="font-bold">Pending</span>...`;
+                output.className = 'interactive-output status-pending';
+                
+                const myPromise = new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        Math.random() > 0.5 
+                            ? resolve("สำเร็จ! ได้รับข้อมูล Data-123") 
+                            : reject(new Error("ล้มเหลว! Server มีปัญหา"));
+                    }, 1500);
+                });
+
+                myPromise
+                    .then(result => {
+                        output.innerHTML = `สถานะ: <span class="font-bold">Fulfilled ✅</span><br>ผลลัพธ์: ${result}`;
+                        output.className = 'interactive-output status-fulfilled';
+                    })
+                    .catch(error => {
+                        output.innerHTML = `สถานะ: <span class="font-bold">Rejected ❌</span><br>เหตุผล: ${error.message}`;
+                        output.className = 'interactive-output status-rejected';
+                    });
+            });
+        })();
+        
+        // Fetch API with Async/Await Demo
+        (function() {
+            const btn = document.getElementById('fetch-user-btn');
+            const output = document.getElementById('fetch-output');
+            btn.addEventListener('click', async () => {
+                output.textContent = 'กำลังดึงข้อมูล...';
+                output.className = 'interactive-output status-pending';
+                
+                try {
+                    const randomId = Math.floor(Math.random() * 10) + 1;
+                    const response = await fetch(`https://jsonplaceholder.typicode.com/users/${randomId}`);
+                    
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${response.status}`);
+                    }
+                    
+                    const user = await response.json();
+                    
+                    output.textContent = JSON.stringify(user, null, 2);
+                    output.className = 'interactive-output status-fulfilled text-left';
+
+                } catch (error) {
+                    output.textContent = `เกิดข้อผิดพลาด: ${error.message}`;
+                    output.className = 'interactive-output status-rejected';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

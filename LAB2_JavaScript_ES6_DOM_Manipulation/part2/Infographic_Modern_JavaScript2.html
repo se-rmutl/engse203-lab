@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: JavaScript ES6+ & DOM Manipulation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .section-marker {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .code-block {
+            background-color: #1e293b;
+            color: #cbd5e1;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            white-space: pre-wrap;
+            position: relative;
+            margin-top: 1rem;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background-color: #334155;
+            color: #94a3b8;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover { background-color: #475569; color: #e2e8f0; }
+        .interactive-card {
+            background: linear-gradient(145deg, #ffffff, #f7f9fc);
+            border: 1px solid #e2e8f0;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .js-logo-spin {
+            animation: spin 8s linear infinite;
+        }
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: #93c5fd;
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 1rem 2rem;
+        }
+        .timeline-item:nth-child(odd) { left: 0; padding-right: 4rem; }
+        .timeline-item:nth-child(even) { left: 50%; padding-left: 4rem; }
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+        }
+        .timeline-dot {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 4px solid #3b82f6;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        .timeline-item:nth-child(odd) .timeline-dot { right: -10px; }
+        .timeline-item:nth-child(even) .timeline-dot { left: -10px; }
+        .interactive-output {
+            padding: 1rem;
+            background-color: #f1f5f9;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            min-height: 60px;
+            font-family: monospace;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Slide 1: หน้าปก -->
+    <section class="min-h-screen flex flex-col justify-center items-center text-center p-8 bg-slate-100">
+        <div class="relative w-32 h-32 mb-8">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" alt="JavaScript Logo" class="js-logo-spin absolute inset-0 w-full h-full">
+        </div>
+        <p class="text-lg font-semibold text-sky-600">ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์</p>
+        <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 mt-2">สัปดาห์ที่ 4: JavaScript ES6+ & DOM</h1>
+        <p class="mt-4 text-xl text-slate-600 max-w-2xl">ปลดล็อกศักยภาพของเว็บแอปพลิเคชันด้วย JavaScript สมัยใหม่</p>
+    </section>
+
+    <div class="container mx-auto px-4 py-12 md:px-8 md:py-20 space-y-20">
+
+        <!-- Slide 2: เป้าหมายการเรียนรู้ -->
+        <section>
+            <div class="text-center">
+                <span class="section-marker">เป้าหมายการเรียนรู้</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-4">สิ่งที่เราจะเชี่ยวชาญในวันนี้</h2>
+            </div>
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold text-sky-700">ES6+ Features</h3>
+                    <p class="mt-2 text-slate-600">ใช้งานฟีเจอร์ใหม่ๆ เช่น `let`/`const`, Arrow Functions, Destructuring อย่างคล่องแคล่ว</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold text-sky-700">Asynchronous</h3>
+                    <p class="mt-2 text-slate-600">เข้าใจและเขียนโค้ดแบบไม่รอด้วย Promises และ cú pháp ที่สวยงามอย่าง Async/Await</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold text-sky-700">DOM & Events</h3>
+                    <p class="mt-2 text-slate-600">ควบคุมและเปลี่ยนแปลงหน้าเว็บ (DOM) และตอบสนองต่อการกระทำของผู้ใช้อย่างมีประสิทธิภาพ</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold text-sky-700">Fetch API & JSON</h3>
+                    <p class="mt-2 text-slate-600">เชื่อมต่อกับ API ภายนอกเพื่อดึงและส่งข้อมูลในรูปแบบมาตรฐานสากลอย่าง JSON</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold text-sky-700">Debugging Skills</h3>
+                    <p class="mt-2 text-slate-600">ใช้ Browser DevTools เพื่อค้นหาและแก้ไขข้อผิดพลาดในโค้ดอย่างมืออาชีพ</p>
+                </div>
+                <div class="bg-blue-600 text-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold">Workshop Goal</h3>
+                    <p class="mt-2">สร้าง Weather App ที่ดึงข้อมูลสดๆ จาก API มาแสดงผลได้จริง</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: JavaScript Evolution Timeline -->
+        <section>
+            <div class="text-center">
+                <span class="section-marker">วิวัฒนาการ</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-4">JavaScript Evolution Timeline</h2>
+            </div>
+            <div class="timeline max-w-3xl mx-auto mt-12">
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3 class="text-xl font-bold">ES5 (2009)</h3><p class="text-slate-600">มาตรฐานที่ใช้กันมาอย่างยาวนาน มี `var`, `function`, และ `Array.prototype` methods พื้นฐาน</p></div></div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3 class="text-xl font-bold text-blue-600">ES6 / ES2015</h3><p class="text-slate-600">การเปลี่ยนแปลงครั้งใหญ่! เพิ่ม `let`, `const`, Arrow Functions, Classes, Promises, Modules และอื่นๆ อีกมากมาย</p></div></div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3 class="text-xl font-bold">ES2017</h3><p class="text-slate-600">มาพร้อมกับ `Async/Await` ที่ทำให้การเขียนโค้ด Asynchronous ง่ายเหมือนโค้ดปกติ</p></div></div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3 class="text-xl font-bold">ES2018+</h3><p class="text-slate-600">มีการพัฒนาอย่างต่อเนื่อง เพิ่มฟีเจอร์ใหม่ๆ ทุกปี เช่น Rest/Spread for Objects, `Promise.finally()`, Optional Chaining (`?.`)</p></div></div>
+            </div>
+        </section>
+        
+        <!-- Slides 4-10: ES6+ Features -->
+        <section>
+             <div class="text-center"><span class="section-marker">ES6+ Features</span><h2 class="text-3xl md:text-4xl font-bold mt-4">เครื่องมือใหม่ในกล่องเครื่องมือ</h2></div>
+            <div class="mt-12 space-y-12">
+                <!-- Variables -->
+                <div class="interactive-card p-8 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-bold">Variables: `let`, `const` vs `var`</h3>
+                    <p class="mt-2 text-slate-600">ES6 แนะนำ `let` และ `const` ที่มี Block Scope (`{...}`) มาแทน `var` ที่มี Function Scope ซึ่งช่วยลดข้อผิดพลาดและทำให้โค้ดคาดเดาได้ง่ายขึ้น</p>
+                    <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>// ❌ Old way (Function scope, can be redeclared)
+var name = "John";
+if (true) { var name = "Jane"; }
+console.log(name); // "Jane"
+
+// ✅ ES6+ (Block scope)
+let age = 25;
+if (true) { let age = 26; console.log("Inner age:", age); } // Inner age: 26
+console.log("Outer age:", age); // Outer age: 25
+
+// Best Practice: ใช้ const เป็นหลัก, ถ้าต้องเปลี่ยนค่าค่อยใช้ let</code></pre></div>
+                    <div class="mt-4 p-4 border-t-2 border-slate-200">
+                        <h4 class="font-semibold text-lg mb-2">🧠 ทฤษฎีเพิ่มเติม: Hoisting & TDZ</h4>
+                        <p class="text-slate-600 text-sm">`var` จะถูก "ดึง" (hoist) ไปบนสุดของ scope และมีค่าเป็น `undefined` ก่อนถูกประกาศจริง ส่วน `let` และ `const` ก็ถูก hoist แต่จะอยู่ในสถานะที่เรียกว่า "Temporal Dead Zone" (TDZ) ซึ่งจะทำให้เกิด `ReferenceError` หากพยายามเข้าถึงก่อนการประกาศ</p>
+                    </div>
+                </div>
+
+                <!-- Destructuring & Literals -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="interactive-card p-8 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold">Template Literals</h3>
+                        <p class="mt-2 text-slate-600">วิธีสร้าง String ที่ง่ายและทรงพลังด้วย backticks (`` ` ``) รองรับการแทรกตัวแปร, การเรียกฟังก์ชัน, และการเขียนหลายบรรทัดได้</p>
+                        <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>const user = { name: "Alice", items: 3 };
+const message = `Hello, ${user.name}!
+You have ${user.items * 2} items in your cart.`;
+</code></pre></div>
+                    </div>
+                    <div class="interactive-card p-8 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold">Destructuring</h3>
+                        <p class="mt-2 text-slate-600">"แกะ" ข้อมูลออกจาก Array หรือ Object มาใส่ในตัวแปรได้โดยตรง ทำให้โค้ดสั้นและชัดเจน</p>
+                         <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>const user = { id: 1, name: "Bob", city: "NYC" };
+// ดึงค่าและเปลี่ยนชื่อตัวแปร
+const { name: userName, city } = user;
+console.log(userName); // "Bob"
+
+// กำหนดค่าเริ่มต้น
+const { country = "USA" } = user;
+console.log(country); // "USA"
+</code></pre></div>
+                    </div>
+                </div>
+
+                <!-- Arrow Functions & `this` -->
+                <div class="interactive-card p-8 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-bold">Arrow Functions & Lexical `this`</h3>
+                    <p class="mt-2 text-slate-600">Arrow Function (`=>`) ไม่ได้สร้าง `this` ของตัวเอง แต่จะใช้ `this` จาก scope ที่อยู่ล้อมรอบ (Lexical Scoping) ซึ่งเป็นประโยชน์อย่างมากใน event handlers หรือ callback ที่ต้องการอ้างถึง `this` ของ object หลัก</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>function Counter() {
+  this.count = 0;
+
+  // Regular function: `this` จะเป็นของ setInterval
+  // setInterval(function() {
+  //   this.count++; // `this` is not Counter
+  // }, 1000);
+
+  // Arrow function: `this` คือ Counter instance
+  setInterval(() => {
+    this.count++;
+    // console.log(this.count);
+  }, 1000);
+}
+const myCounter = new Counter();
+</code></pre></div>
+                        <div class="p-4 bg-slate-100 rounded-lg">
+                            <h4 class="font-bold text-center mb-2">🧠 ควรใช้เมื่อไหร่?</h4>
+                            <ul class="list-disc list-inside text-sm text-slate-700 space-y-1">
+                                <li><b>ใช้ Arrow Function:</b> ใน callback ของ array methods (`.map`, `.filter`), event listeners, หรือที่ใดก็ตามที่ต้องการ `this` จาก context ภายนอก</li>
+                                <li><b>ใช้ Regular Function:</b> เมื่อต้องการให้ `this` ถูกกำหนดโดยผู้เรียก เช่น ใน object methods หรือ constructor functions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Classes & Modules -->
+                <div class="interactive-card p-8 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-bold">Classes & Modules</h3>
+                    <p class="mt-2 text-slate-600">ES6 นำเสนอ `class` syntax ที่เป็นมิตรสำหรับการสร้าง Object-Oriented code และระบบ `import`/`export` ที่เป็นมาตรฐานสำหรับการจัดระเบียบโค้ดเป็นไฟล์ย่อย (Modules)</p>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="code-block"><h4 class="text-amber-300 font-semibold">// user.js</h4><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>export class User {
+  constructor(name) { this.name = name; }
+  greet() { return `Hello, I'm ${this.name}`; }
+}</code></pre></div>
+                        <div class="code-block"><h4 class="text-amber-300 font-semibold">// main.js</h4><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>import { User } from './user.js';
+const user = new User('Admin');
+console.log(user.greet());
+</code></pre></div>
+                    </div>
+                </div>
+
+                <!-- Array Methods Interactive Demo -->
+                <div class="interactive-card p-8 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-bold">Interactive Demo: Array Methods</h3>
+                    <p class="mt-2 text-slate-600">ทดลองใช้ `map`, `filter`, `reduce` กับข้อมูลสินค้าด้านล่าง</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4">
+                        <button id="demo-map" class="bg-blue-500 text-white p-3 rounded-lg font-bold hover:bg-blue-600 transition-transform hover:scale-105">แสดงชื่อสินค้า (map)</button>
+                        <button id="demo-filter" class="bg-green-500 text-white p-3 rounded-lg font-bold hover:bg-green-600 transition-transform hover:scale-105">สินค้าราคา > 25000 (filter)</button>
+                        <button id="demo-reduce" class="bg-orange-500 text-white p-3 rounded-lg font-bold hover:bg-orange-600 transition-transform hover:scale-105">คำนวณราคารวม (reduce)</button>
+                    </div>
+                    <div id="array-demo-output" class="interactive-output">กดปุ่มเพื่อดูผลลัพธ์</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slides 11-14: Asynchronous -->
+        <section>
+            <div class="text-center"><span class="section-marker">Asynchronous</span><h2 class="text-3xl md:text-4xl font-bold mt-4">จัดการกับงานที่ต้องรอ</h2></div>
+            <div class="mt-12 space-y-12">
+                 <div class="interactive-card p-8 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-bold">Promises: คำสัญญาแห่งอนาคต</h3>
+                    <p class="mt-2 text-slate-600">Promise คือ object ที่แทนผลลัพธ์ของงาน async มี 3 สถานะ: <span class="font-bold text-yellow-600">pending</span> (รอดำเนินการ), <span class="font-bold text-green-600">fulfilled</span> (สำเร็จ), และ <span class="font-bold text-red-600">rejected</span> (ล้มเหลว) เราสามารถใช้ `.then()` สำหรับ `fulfilled` และ `.catch()` สำหรับ `rejected`</p>
+                    <div class="mt-4 p-6 bg-slate-100 rounded-lg text-center">
+                        <button id="promise-demo-btn" class="p-3 bg-purple-500 text-white rounded-lg shadow-md hover:bg-purple-600">จำลองการดึงข้อมูล (Promise)</button>
+                        <div id="promise-output" class="interactive-output">กดปุ่มเพื่อเริ่ม...</div>
+                    </div>
+                </div>
+                 <div class="interactive-card p-8 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-bold">Async/Await: เขียน Async ให้เหมือน Sync</h3>
+                    <p class="mt-2 text-slate-600">เป็นวิธีที่ทันสมัยที่สุดในการจัดการ Promises ทำให้โค้ดอ่านง่ายเหมือนการทำงานตามลำดับปกติ และใช้ `try...catch` เพื่อจัดการข้อผิดพลาดได้อย่างสวยงาม</p>
+                    <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>// ใช้ Async/Await เพื่อรอผลลัพธ์จาก Promise
+async function displayUser(userId) {
+  try {
+    console.log('Fetching user...');
+    const response = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`);
+    if (!response.ok) { // ตรวจสอบ HTTP status
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const user = await response.json();
+    console.log(user);
+    return user;
+  } catch (error) {
+    console.error('ไม่สามารถดึงข้อมูลผู้ใช้ได้:', error);
+  }
+}</code></pre></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slides 15-18: DOM -->
+         <section>
+            <div class="text-center"><span class="section-marker">DOM & Events</span><h2 class="text-3xl md:text-4xl font-bold mt-4">ทำให้เว็บเพจมีชีวิต</h2></div>
+            <div class="mt-12 space-y-12">
+                 <div class="interactive-card p-8 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-bold">DOM Manipulation & Event Handling</h3>
+                    <p class="mt-2 text-slate-600">เราสามารถใช้ JavaScript เพื่อสร้าง HTML elements ใหม่, เพิ่มเข้าไปในหน้าเว็บ, และตอบสนองต่อการกระทำของผู้ใช้ได้</p>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                        <div class="bg-slate-100 p-4 rounded-lg">
+                            <h4 class="font-bold text-center mb-2">Live Demo: Todo List</h4>
+                            <form id="todo-form" class="flex gap-2">
+                                <input id="todo-input" type="text" class="flex-grow p-2 border rounded" placeholder="Add a new task...">
+                                <button type="submit" class="bg-blue-500 text-white px-4 rounded font-bold">+</button>
+                            </form>
+                            <ul id="todo-list-demo" class="mt-4 space-y-2 text-left">
+                                <!-- Items will be added here by JS -->
+                            </ul>
+                        </div>
+                        <div>
+                             <h4 class="font-bold mb-2">🧠 ทฤษฎีเพิ่มเติม: Event Delegation</h4>
+                             <p class="text-sm text-slate-600 mb-2">แทนที่จะผูก event listener ให้กับทุกปุ่มลบ (ซึ่งอาจมีเป็นร้อยปุ่ม) เราสามารถผูก listener เพียงอันเดียวไว้ที่ `<ul>` (parent) แล้วตรวจสอบว่า element ที่ถูกคลิก (`event.target`) คือปุ่มลบหรือไม่ วิธีนี้มีประสิทธิภาพมากกว่า</p>
+                             <div class="code-block text-sm"><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>const todoList = document.querySelector('#todo-list-demo');
+todoList.addEventListener('click', (e) => {
+  // ตรวจสอบว่าที่คลิกคือปุ่มลบหรือไม่
+  if (e.target.classList.contains('delete-btn')) {
+    // หา li ที่เป็น parent แล้วลบออก
+    e.target.closest('li').remove();
+  }
+});</code></pre></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slides 19-25: API & Beyond -->
+        <section>
+             <div class="text-center"><span class="section-marker">API & Workshop</span><h2 class="text-3xl md:text-4xl font-bold mt-4">เชื่อมต่อโลกภายนอกและลงมือทำ</h2></div>
+             <div class="mt-12 space-y-12">
+                <div class="interactive-card p-8 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-bold">Interactive Demo: Fetch API</h3>
+                     <p class="mt-2 text-slate-600">`fetch` คือฟังก์ชันมาตรฐานสำหรับส่ง HTTP Request เพื่อดึงข้อมูล (GET) หรือส่งข้อมูล (POST) ไปยังเซิร์ฟเวอร์ โดยส่วนใหญ่จะทำงานกับข้อมูลในรูปแบบ JSON</p>
+                    <div class="mt-4 p-6 bg-slate-100 rounded-lg text-center">
+                        <button id="fetch-user-btn" class="p-3 bg-teal-500 text-white rounded-lg shadow-md hover:bg-teal-600">ดึงข้อมูล User สุ่ม</button>
+                        <div id="fetch-output" class="interactive-output text-left text-sm whitespace-pre-wrap"></div>
+                    </div>
+                </div>
+
+                <div class="interactive-card p-8 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-bold">Debugging with DevTools</h3>
+                     <p class="mt-2 text-slate-600">Browser DevTools (F12) คือเพื่อนแท้ของนักพัฒนา ใช้แท็บ `Console` เพื่อดู log, `Debugger` เพื่อหยุดโค้ด, และ `Network` เพื่อดูการสื่อสารกับ API</p>
+                    <img src="https://i.imgur.com/L136iH6.png" alt="Browser DevTools Screenshot" class="mt-4 rounded-lg shadow-lg w-full">
+                </div>
+
+                <div class="p-8 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-center shadow-2xl">
+                    <h3 class="text-3xl font-extrabold">Workshop Preview: Weather App</h3>
+                     <p class="mt-4 text-lg max-w-2xl mx-auto">ถึงเวลานำความรู้ทั้งหมดมาใช้จริง! เราจะสร้างแอปพลิเคชันสภาพอากาศที่สามารถค้นหาเมือง, แสดงอุณหภูมิปัจจุบัน, และพยากรณ์อากาศล่วงหน้าได้ โดยใช้ OpenWeatherMap API</p>
+                    <a href="#" class="mt-8 inline-block bg-white text-indigo-600 font-bold py-3 px-8 rounded-lg hover:bg-slate-100 transition-transform hover:scale-105">เริ่ม Workshop (3 ชั่วโมง)</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="text-center p-8 mt-12 border-t border-slate-200"><p class="text-slate-500">&copy; 2025 - ENGSE203</p></footer>
+
+    <script>
+        // --- UTILITY FUNCTIONS ---
+        function copyCode(button) {
+            const codeBlock = button.parentElement;
+            const codeToCopy = codeBlock.querySelector('pre').innerText;
+            navigator.clipboard.writeText(codeToCopy).then(() => {
+                button.innerText = 'คัดลอกแล้ว!';
+                setTimeout(() => { button.innerText = 'คัดลอก'; }, 2000);
+            });
+        }
+
+        // --- DEMO LOGIC ---
+
+        // Array Methods Demo
+        (function() {
+            const products = [{ name: "iPhone", price: 30000 }, { name: "iPad", price: 25000 }, { name: "MacBook", price: 50000 }];
+            const demoOutput = document.getElementById('array-demo-output');
+            document.getElementById('demo-map').addEventListener('click', () => {
+                const names = products.map(p => p.name);
+                demoOutput.textContent = JSON.stringify(names);
+            });
+            document.getElementById('demo-filter').addEventListener('click', () => {
+                const expensive = products.filter(p => p.price > 25000);
+                demoOutput.textContent = JSON.stringify(expensive, null, 2);
+            });
+            document.getElementById('demo-reduce').addEventListener('click', () => {
+                const total = products.reduce((sum, p) => sum + p.price, 0);
+                demoOutput.textContent = `Total Price: ${total.toLocaleString()}`;
+            });
+        })();
+
+        // Promise Demo
+        (function() {
+            const btn = document.getElementById('promise-demo-btn');
+            const output = document.getElementById('promise-output');
+            btn.addEventListener('click', () => {
+                output.textContent = 'สถานะ: pending... (กำลังรอ)';
+                output.className = 'interactive-output text-yellow-700 bg-yellow-100';
+                
+                const myPromise = new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        Math.random() > 0.5 ? resolve("สำเร็จ! ได้รับข้อมูลแล้ว") : reject("ล้มเหลว! เกิดข้อผิดพลาด");
+                    }, 1500);
+                });
+
+                myPromise
+                    .then(result => {
+                        output.textContent = `สถานะ: fulfilled ✅\nผลลัพธ์: ${result}`;
+                        output.className = 'interactive-output text-green-700 bg-green-100';
+                    })
+                    .catch(error => {
+                        output.textContent = `สถานะ: rejected ❌\nข้อผิดพลาด: ${error}`;
+                        output.className = 'interactive-output text-red-700 bg-red-100';
+                    });
+            });
+        })();
+        
+        // Todo List Demo
+        (function() {
+            const form = document.getElementById('todo-form');
+            const input = document.getElementById('todo-input');
+            const list = document.getElementById('todo-list-demo');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const text = input.value.trim();
+                if (text) {
+                    addTodoItem(text);
+                    input.value = '';
+                    input.focus();
+                }
+            });
+
+            list.addEventListener('click', (e) => {
+                if (e.target.classList.contains('delete-btn')) {
+                    e.target.closest('li').remove();
+                }
+            });
+
+            function addTodoItem(text) {
+                 const li = document.createElement('li');
+                 li.className = 'p-2 bg-white rounded shadow-sm flex justify-between items-center transition-all duration-300';
+                 li.innerHTML = `<span>${text}</span><button class="delete-btn text-red-500 font-bold px-2 hover:bg-red-100 rounded">X</button>`;
+                 list.appendChild(li);
+            }
+            // Add initial items
+            addTodoItem('Finish report');
+            addTodoItem('Buy milk');
+        })();
+
+        // Fetch API Demo
+        (function() {
+            const btn = document.getElementById('fetch-user-btn');
+            const output = document.getElementById('fetch-output');
+            btn.addEventListener('click', async () => {
+                output.textContent = 'กำลังดึงข้อมูล...';
+                try {
+                    const randomId = Math.floor(Math.random() * 10) + 1;
+                    const response = await fetch(`https://jsonplaceholder.typicode.com/users/${randomId}`);
+                    if (!response.ok) throw new Error(`Network response was not ok: ${response.status}`);
+                    const user = await response.json();
+                    output.textContent = JSON.stringify(user, null, 2);
+                } catch (error) {
+                    output.textContent = `เกิดข้อผิดพลาด: ${error.message}`;
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

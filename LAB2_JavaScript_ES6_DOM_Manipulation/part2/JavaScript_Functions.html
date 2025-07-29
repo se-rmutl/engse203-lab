@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: เจาะลึก JavaScript Functions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .section-marker {
+            background-color: #eef2ff;
+            color: #312e81;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            position: relative;
+            margin-top: 1rem;
+            min-width: 0;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background-color: #334155;
+            color: #94a3b8;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover { background-color: #475569; color: #e2e8f0; }
+        .interactive-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+        }
+        .demo-area {
+            padding: 1.5rem;
+            border: 2px dashed #cbd5e0;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            min-height: 80px;
+        }
+        .demo-output {
+            font-family: monospace;
+            background-color: #f1f5f9;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            min-height: 60px;
+            overflow-wrap: break-word;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="text-center p-8 md:p-16 bg-indigo-50">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-indigo-800">เจาะลึก JavaScript Functions</h1>
+        <p class="mt-4 text-xl text-indigo-700 max-w-3xl mx-auto">หัวใจสำคัญของการเขียนโปรแกรมที่นำกลับมาใช้ใหม่ได้</p>
+    </header>
+
+    <main class="container mx-auto px-4 py-12 md:px-8 md:py-20 space-y-20">
+
+        <!-- Introduction to Array Methods -->
+        <section id="array-methods-intro">
+            <div class="text-center mb-12">
+                <span class="section-marker">บทนำ</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-4">เครื่องมือคู่ใจ: Array Methods</h2>
+                <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">ก่อนจะเจาะลึกเรื่องฟังก์ชัน เรามาทำความรู้จักกับเมธอดของ Array ที่สำคัญอย่าง `.map()` และ `.filter()` กันก่อน เพราะมันเป็นเครื่องมือที่เราจะใช้ร่วมกับฟังก์ชันบ่อยที่สุด</p>
+            </div>
+
+            <!-- .map() -->
+            <div class="interactive-card mb-12">
+                <h3 class="text-2xl font-bold">1. `.map()`: แปลงร่างข้อมูลทุกตัว</h3>
+                <p class="mt-2 text-slate-600">`.map()` จะวนลูปทำงานกับสมาชิกทุกตัวใน Array แล้วส่งคืน <strong>Array ใหม่</strong> ที่มีจำนวนสมาชิกเท่าเดิม แต่ละตัวถูก "แปลงร่าง" ไปตามฟังก์ชันที่เรากำหนด</p>
+                <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                    <div>
+                        <h4 class="font-bold">Interactive Demo: ลองใช้ .map()</h4>
+                        <p class="text-sm text-slate-500">ใส่ชุดตัวเลข แล้วกดปุ่มเพื่อแปลงข้อมูล (คูณ 2)</p>
+                        <div class="demo-area">
+                            <label>ตัวเลข (คั่นด้วย comma):</label>
+                            <input type="text" id="map-input" value="10, 20, 30, 40" class="w-full p-2 border border-gray-300 rounded-md mt-1">
+                            <button id="map-run-btn" class="w-full mt-2 p-2 bg-sky-500 text-white rounded-md">แปลงข้อมูล</button>
+                            <div id="map-output" class="demo-output"></div>
+                        </div>
+                    </div>
+                    <div class="code-block text-sm">
+                        <pre><code>const originalArray = [10, 20, 30, 40];
+
+// ใช้ .map() เพื่อคูณทุกตัวด้วย 2
+const newArray = originalArray.map(number => {
+  return number * 2;
+});
+
+// newArray คือ [20, 40, 60, 80]
+// **ข้อสำคัญ:** originalArray ยังคงเหมือนเดิม
+console.log(originalArray); // [10, 20, 30, 40]</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- .filter() -->
+            <div class="interactive-card">
+                <h3 class="text-2xl font-bold">2. `.filter()`: คัดกรองข้อมูลที่ต้องการ</h3>
+                <p class="mt-2 text-slate-600">`.filter()` จะสร้าง <strong>Array ใหม่</strong> โดยบรรจุเฉพาะสมาชิกจาก Array เดิมที่ "ผ่านเงื่อนไข" ที่เรากำหนดในฟังก์ชันเท่านั้น (ฟังก์ชันต้อง return `true`)</p>
+                <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                    <div>
+                        <h4 class="font-bold">Interactive Demo: ลองใช้ .filter()</h4>
+                        <p class="text-sm text-slate-500">ใส่ชุดตัวเลข แล้วคัดกรองเฉพาะตัวเลขที่มากกว่า 25</p>
+                        <div class="demo-area">
+                            <label>ตัวเลข (คั่นด้วย comma):</label>
+                            <input type="text" id="filter-input" value="15, 30, 5, 45, 20" class="w-full p-2 border border-gray-300 rounded-md mt-1">
+                            <button id="filter-run-btn" class="w-full mt-2 p-2 bg-emerald-500 text-white rounded-md">คัดกรอง</button>
+                            <div id="filter-output" class="demo-output"></div>
+                        </div>
+                    </div>
+                    <div class="code-block text-sm">
+                        <pre><code>const originalArray = [15, 30, 5, 45, 20];
+
+// ใช้ .filter() เพื่อเอาเฉพาะตัวที่มากกว่า 25
+const filteredArray = originalArray.filter(number => {
+  return number > 25; // คืนค่า true หรือ false
+});
+
+// filteredArray คือ [30, 45]
+console.log(filteredArray);</code></pre>
+                    </div>
+                </div>
+            </div>
+             <div class="mt-12 pt-8 border-t border-dashed">
+                <h3 class="text-2xl font-bold text-center">ทำไมเรื่องนี้ถึงสำคัญ?</h3>
+                <p class="mt-4 text-center text-slate-600 max-w-2xl mx-auto">`.map()` และ `.filter()` ถูกใช้อย่างแพร่หลายในการจัดการข้อมูลที่ได้มาจาก API เรามักจะใช้ `.map()` เพื่อแปลงข้อมูลดิบให้กลายเป็น Component ที่แสดงผลบนหน้าจอ และใช้ `.filter()` เพื่อสร้างระบบค้นหาหรือคัดกรองข้อมูลตามที่ผู้ใช้ต้องการ การใช้เมธอดเหล่านี้ร่วมกับ <strong>Arrow Functions</strong> จะทำให้โค้ดสั้นและอ่านเข้าใจง่ายมาก ซึ่งเป็นสิ่งที่เราจะเรียนรู้ในบทต่อไป</p>
+            </div>
+        </section>
+
+
+        <!-- 1. Function Basics -->
+        <section id="function-basics">
+            <div class="text-center mb-12"><span class="section-marker">บทที่ 1</span><h2 class="text-3xl md:text-4xl font-bold mt-4">ฟังก์ชันคืออะไร?</h2></div>
+            <div class="interactive-card">
+                <h3 class="text-2xl font-bold">ชุดคำสั่งที่ใช้ซ้ำได้</h3>
+                <p class="mt-2 text-slate-600">ฟังก์ชันคือบล็อกของโค้ดที่ถูกออกแบบมาเพื่อทำงานอย่างใดอย่างหนึ่ง เราสามารถเรียกใช้ฟังก์ชันนี้ซ้ำๆ ได้จากส่วนต่างๆ ของโปรแกรม ทำให้โค้ดของเราสั้นลง, จัดการง่ายขึ้น, และลดความซ้ำซ้อน</p>
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold">Function Declaration (การประกาศฟังก์ชัน)</h4>
+                        <div class="code-block text-sm"><pre><code>function greet(name) {
+  return `สวัสดี, ${name}!`;
+}
+
+// การเรียกใช้
+console.log(greet('สมชาย'));</code></pre></div>
+                    </div>
+                     <div>
+                        <h4 class="font-bold">Function Expression (นิพจน์ฟังก์ชัน)</h4>
+                        <div class="code-block text-sm"><pre><code>const greet = function(name) {
+  return `สวัสดี, ${name}!`;
+};
+
+// การเรียกใช้
+console.log(greet('สมหญิง'));</code></pre></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Arrow Functions -->
+        <section id="arrow-functions">
+            <div class="text-center mb-12"><span class="section-marker">บทที่ 2</span><h2 class="text-3xl md:text-4xl font-bold mt-4">Arrow Functions (=>)</h2></div>
+            <div class="interactive-card">
+                 <h3 class="text-2xl font-bold">รูปแบบการเขียนที่ทันสมัย</h3>
+                 <p class="mt-2 text-slate-600">Arrow Function ถูกนำเสนอใน ES6 เป็นวิธีเขียนฟังก์ชันที่สั้นและกระชับกว่าเดิม มีประโยชน์อย่างยิ่งเมื่อใช้กับเมธอดของ Array ที่เราเรียนไป เช่น `.map()` หรือ `.filter()`</p>
+                <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                    <div>
+                         <h4 class="font-bold">Interactive Demo: ลองใช้ Arrow Function</h4>
+                         <p class="text-sm text-slate-500">แปลงตัวเลขในช่องด้านล่างให้เป็นสองเท่าด้วย Arrow Function</p>
+                         <div class="demo-area">
+                            <label for="arrow-input">ตัวเลข (คั่นด้วย comma):</label>
+                            <input type="text" id="arrow-input" placeholder="1, 2, 3, 4, 5" value="1, 2, 3, 4, 5" class="w-full p-2 border border-gray-300 rounded-md mt-1">
+                            <button id="arrow-run-btn" class="w-full mt-2 p-2 bg-purple-500 text-white rounded-md">ประมวลผล</button>
+                            <div id="arrow-output" class="demo-output"></div>
+                         </div>
+                    </div>
+                     <div class="code-block text-sm"><pre><code>// รับ Input จากผู้ใช้
+const numbers = [1, 2, 3, 4, 5];
+
+// ❌ Regular Function with .map()
+const doubled1 = numbers.map(function(n) {
+  return n * 2;
+});
+
+// ✅ Arrow Function with .map()
+const doubled2 = numbers.map(n => n * 2);
+
+// ผลลัพธ์: [2, 4, 6, 8, 10]</code></pre></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Passing Parameters -->
+        <section id="parameters">
+            <div class="text-center mb-12"><span class="section-marker">บทที่ 3</span><h2 class="text-3xl md:text-4xl font-bold mt-4">เทคนิคการส่ง Parameter</h2></div>
+             <div class="interactive-card space-y-12">
+                <!-- Default Parameters -->
+                <div>
+                     <h3 class="text-2xl font-bold">1. Default Parameters (ค่าเริ่มต้น)</h3>
+                     <p class="mt-2 text-slate-600">กำหนดค่าเริ่มต้นให้กับ Parameter ในกรณีที่ไม่มีการส่งค่าเข้ามาตอนเรียกใช้ฟังก์ชัน</p>
+                     <div class="code-block text-sm">
+                         <pre><code>function createMessage(text, from = 'ผู้ส่งนิรนาม') {
+  return `ข้อความ: "${text}" จาก ${from}`;
+}
+
+createMessage('สวัสดี'); 
+// ผลลัพธ์: "ข้อความ: "สวัสดี" จาก ผู้ส่งนิรนาม"
+
+createMessage('เรียนรู้ JavaScript', 'อ.สมศักดิ์');
+// ผลลัพธ์: "ข้อความ: "เรียนรู้ JavaScript" จาก อ.สมศักดิ์"</code></pre>
+                     </div>
+                </div>
+
+                <!-- Rest Parameters -->
+                 <div>
+                     <h3 class="text-2xl font-bold">2. Rest Parameters (...)</h3>
+                     <p class="mt-2 text-slate-600">รวบรวม Parameter ที่เหลือทั้งหมดมาเก็บไว้ในรูปแบบของ Array ทำให้ฟังก์ชันสามารถรับจำนวน Argument ได้ไม่จำกัด</p>
+                     <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                         <div>
+                             <h4 class="font-bold">Demo: คำนวณผลรวม</h4>
+                             <p class="text-sm text-slate-500">ใส่ตัวเลขกี่ตัวก็ได้ แล้วฟังก์ชันจะรวมให้ทั้งหมด</p>
+                             <div class="demo-area">
+                                 <input type="text" id="rest-input" placeholder="5, 10, 15, 20" value="5, 10, 15, 20" class="w-full p-2 border border-gray-300 rounded-md mt-1">
+                                 <button id="rest-run-btn" class="w-full mt-2 p-2 bg-green-500 text-white rounded-md">คำนวณผลรวม</button>
+                                 <div id="rest-output" class="demo-output"></div>
+                             </div>
+                         </div>
+                         <div class="code-block text-sm"><pre><code>function sum(...numbers) {
+  // 'numbers' จะเป็น Array เช่น [5, 10, 15, 20]
+  return numbers.reduce((total, num) => total + num, 0);
+}
+
+sum(5, 10); // 15
+sum(5, 10, 15, 20); // 50</code></pre></div>
+                     </div>
+                 </div>
+
+                 <!-- Destructuring Parameters -->
+                 <div>
+                     <h3 class="text-2xl font-bold">3. Destructuring Parameters</h3>
+                     <p class="mt-2 text-slate-600">"แกะ" หรือ "ดึง" ค่า Property จาก Object หรือ Array ที่ส่งเข้ามาเป็น Parameter ได้โดยตรง ทำให้โค้ดสะอาดและเข้าถึงข้อมูลง่ายขึ้น</p>
+                     <div class="code-block text-sm">
+                         <pre><code>const user = {
+  id: 101,
+  name: 'John Doe',
+  email: 'john.d@example.com'
+};
+
+// แกะเอาเฉพาะ name กับ email
+function displayUserInfo({ name, email }) {
+  console.log(`ชื่อ: ${name}, อีเมล: ${email}`);
+}
+
+displayUserInfo(user);
+// ผลลัพธ์: "ชื่อ: John Doe, อีเมล: john.d@example.com"</code></pre>
+                     </div>
+                 </div>
+             </div>
+        </section>
+        
+        <!-- 4. Use Cases -->
+        <section id="use-cases">
+             <div class="text-center mb-12"><span class="section-marker">บทที่ 4</span><h2 class="text-3xl md:text-4xl font-bold mt-4">การนำไปใช้งานจริง</h2></div>
+             <div class="space-y-12">
+                <!-- Use Case 1: UI Component Creator -->
+                <div class="interactive-card">
+                     <h3 class="text-2xl font-bold">กรณีศึกษา #1: ฟังก์ชันสร้างปุ่ม (Button Component)</h3>
+                     <p class="mt-2 text-slate-600">สร้างฟังก์ชันที่รับ Object ของ options เพื่อสร้างปุ่ม HTML แบบไดนามิก ใช้เทคนิค <strong>Destructuring</strong> และ <strong>Default Parameters</strong> เพื่อความยืดหยุ่น</p>
+                     <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-4 bg-gray-100 rounded-lg">
+                             <h4 class="text-lg font-bold text-center">ผลลัพธ์</h4>
+                             <div id="use-case-1-output" class="demo-area flex flex-col items-center justify-center gap-4">
+                                 <!-- Buttons will be rendered here -->
+                             </div>
+                        </div>
+                        <div class="code-block text-xs"><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>function createButton({
+  text = 'Click Me',
+  bgColor = 'bg-gray-500',
+  textColor = 'text-white',
+  onClick = () => alert('Default Click!')
+}) {
+  const button = document.createElement('button');
+  button.textContent = text;
+  button.className = `p-2 rounded ${bgColor} ${textColor}`;
+  button.addEventListener('click', onClick);
+  return button;
+}
+
+const container = document.getElementById('use-case-1-output');
+
+// 1. ปุ่มพื้นฐาน (ใช้ค่า default ทั้งหมด)
+container.appendChild(createButton({}));
+
+// 2. ปุ่ม Primary
+const primaryBtn = createButton({
+    text: 'ยืนยัน',
+    bgColor: 'bg-blue-600',
+    onClick: () => alert('ยืนยันแล้ว!')
+});
+container.appendChild(primaryBtn);
+
+// 3. ปุ่ม Danger
+const dangerBtn = createButton({
+    text: 'ลบ',
+    bgColor: 'bg-red-600',
+    onClick: () => alert('ทำการลบ!')
+});
+container.appendChild(dangerBtn);</code></pre></div>
+                     </div>
+                </div>
+                 <!-- Use Case 2: Simple Math Utility -->
+                <div class="interactive-card">
+                     <h3 class="text-2xl font-bold">กรณีศึกษา #2: เครื่องมือคำนวณทางคณิตศาสตร์</h3>
+                     <p class="mt-2 text-slate-600">สร้าง Object ที่รวบรวมฟังก์ชันคำนวณต่างๆ โดยใช้ <strong>Arrow Functions</strong> เพื่อความกระชับ และ <strong>Rest Parameters</strong> เพื่อรับตัวเลขได้ไม่จำกัด</p>
+                     <div class="mt-6 p-4 bg-gray-100 rounded-lg">
+                        <div id="use-case-2-output" class="demo-output whitespace-pre-wrap text-left"></div>
+                        <div class="code-block text-xs"><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>const MathUtil = {
+  add: (...nums) => nums.reduce((sum, n) => sum + n, 0),
+  multiply: (...nums) => nums.reduce((prod, n) => prod * n, 1),
+  average: (...nums) => {
+    if (nums.length === 0) return 0;
+    const sum = MathUtil.add(...nums);
+    return sum / nums.length;
+  }
+};
+
+const output = document.getElementById('use-case-2-output');
+let resultText = '';
+
+resultText += `ผลบวก 1,2,3: ${MathUtil.add(1, 2, 3)}\n`;
+resultText += `ผลคูณ 2,3,4: ${MathUtil.multiply(2, 3, 4)}\n`;
+resultText += `ค่าเฉลี่ย 10,20,30,40: ${MathUtil.average(10,20,30,40)}`;
+
+output.textContent = resultText;
+</code></pre></div>
+                     </div>
+                </div>
+             </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center p-8 mt-12 border-t border-slate-200">
+        <p class="text-slate-500">&copy; 2025 - ENGSE203</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Utility Functions ---
+            function copyCode(button) {
+                const pre = button.closest('.code-block').querySelector('pre');
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.innerText = 'คัดลอกแล้ว!';
+                    setTimeout(() => { button.innerText = 'คัดลอก'; }, 2000);
+                });
+            }
+            
+            // Make all copy buttons work
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', () => copyCode(btn));
+            });
+
+            // --- Demo Initializations ---
+
+            // .map() Demo
+            (function initMapDemo() {
+                try {
+                    const input = document.getElementById('map-input');
+                    const runBtn = document.getElementById('map-run-btn');
+                    const output = document.getElementById('map-output');
+                    
+                    if (!input || !runBtn || !output) return;
+
+                    const process = () => {
+                        const numbers = input.value.split(',')
+                            .map(s => parseFloat(s.trim()))
+                            .filter(n => !isNaN(n));
+                        
+                        if (numbers.length === 0) {
+                             output.textContent = 'กรุณาใส่ตัวเลขที่ถูกต้อง';
+                             return;
+                        }
+                        const transformed = numbers.map(n => n * 2);
+                        output.textContent = `Array ใหม่: [${transformed.join(', ')}]`;
+                    };
+
+                    runBtn.addEventListener('click', process);
+                    process(); 
+                } catch(e) {
+                    console.error("Map Demo Error:", e);
+                }
+            })();
+
+            // .filter() Demo
+            (function initFilterDemo() {
+                try {
+                    const input = document.getElementById('filter-input');
+                    const runBtn = document.getElementById('filter-run-btn');
+                    const output = document.getElementById('filter-output');
+                    
+                    if (!input || !runBtn || !output) return;
+
+                    const process = () => {
+                        const numbers = input.value.split(',')
+                            .map(s => parseFloat(s.trim()))
+                            .filter(n => !isNaN(n));
+                        
+                        if (numbers.length === 0) {
+                             output.textContent = 'กรุณาใส่ตัวเลขที่ถูกต้อง';
+                             return;
+                        }
+                        const filtered = numbers.filter(n => n > 25);
+                        output.textContent = `Array ที่กรองแล้ว: [${filtered.join(', ')}]`;
+                    };
+
+                    runBtn.addEventListener('click', process);
+                    process(); 
+                } catch(e) {
+                    console.error("Filter Demo Error:", e);
+                }
+            })();
+
+
+            // Arrow Function Demo
+            (function initArrowDemo() {
+                try {
+                    const input = document.getElementById('arrow-input');
+                    const runBtn = document.getElementById('arrow-run-btn');
+                    const output = document.getElementById('arrow-output');
+                    
+                    if (!input || !runBtn || !output) return;
+
+                    const process = () => {
+                        const numbers = input.value.split(',')
+                            .map(s => parseFloat(s.trim()))
+                            .filter(n => !isNaN(n));
+                        
+                        if (numbers.length === 0) {
+                             output.textContent = 'กรุณาใส่ตัวเลขที่ถูกต้อง';
+                             return;
+                        }
+                        const doubled = numbers.map(n => n * 2);
+                        output.textContent = `ผลลัพธ์: [${doubled.join(', ')}]`;
+                    };
+
+                    runBtn.addEventListener('click', process);
+                    process(); 
+                } catch(e) {
+                    console.error("Arrow Demo Error:", e);
+                }
+            })();
+
+            // Rest Parameters Demo
+            (function initRestDemo() {
+                try {
+                     const input = document.getElementById('rest-input');
+                     const runBtn = document.getElementById('rest-run-btn');
+                     const output = document.getElementById('rest-output');
+                     
+                     if (!input || !runBtn || !output) return;
+
+                     const sum = (...numbers) => {
+                        return numbers.reduce((total, num) => total + num, 0);
+                     }
+
+                     const process = () => {
+                         const numbers = input.value.split(',')
+                            .map(s => parseFloat(s.trim()))
+                            .filter(n => !isNaN(n));
+                         
+                         if (numbers.length === 0) {
+                             output.textContent = 'กรุณาใส่ตัวเลขที่ถูกต้อง';
+                             return;
+                        }
+                         const total = sum(...numbers);
+                         output.textContent = `ผลรวมของ ${numbers.join(', ')} คือ ${total}`;
+                     };
+                     
+                     runBtn.addEventListener('click', process);
+                     process(); 
+                } catch(e) {
+                    console.error("Rest Demo Error:", e);
+                }
+            })();
+            
+            // Use Case 1: Button Creator
+            (function initButtonCreator() {
+                try {
+                    const container = document.getElementById('use-case-1-output');
+                    if (!container) return;
+
+                    function createButton({
+                      text = 'Click Me',
+                      bgColor = 'bg-gray-500',
+                      textColor = 'text-white',
+                      onClick = () => alert('Default Click!')
+                    }) {
+                      const button = document.createElement('button');
+                      button.textContent = text;
+                      button.className = `p-2 rounded ${bgColor} ${textColor} hover:opacity-80`;
+                      button.addEventListener('click', onClick);
+                      return button;
+                    }
+
+                    container.innerHTML = ''; 
+
+                    container.appendChild(createButton({}));
+
+                    const primaryBtn = createButton({
+                        text: 'ยืนยัน',
+                        bgColor: 'bg-blue-600',
+                        onClick: () => alert('ยืนยันแล้ว!')
+                    });
+                    container.appendChild(primaryBtn);
+
+                    const dangerBtn = createButton({
+                        text: 'ลบ',
+                        bgColor: 'bg-red-600',
+                        onClick: () => alert('ทำการลบ!')
+                    });
+                    container.appendChild(dangerBtn);
+                } catch(e) {
+                    console.error("Button Creator Error:", e);
+                }
+            })();
+
+            // Use Case 2: Math Util
+            (function initMathUtil() {
+                try {
+                    const output = document.getElementById('use-case-2-output');
+                    if (!output) return;
+
+                    const MathUtil = {
+                      add: (...nums) => nums.reduce((sum, n) => sum + n, 0),
+                      multiply: (...nums) => nums.reduce((prod, n) => prod * n, 1),
+                      average: (...nums) => {
+                        if (nums.length === 0) return 0;
+                        const sum = MathUtil.add(...nums);
+                        return sum / nums.length;
+                      }
+                    };
+
+                    let resultText = '';
+                    resultText += `ผลบวก 1,2,3: ${MathUtil.add(1, 2, 3)}\n`;
+                    resultText += `ผลคูณ 2,3,4: ${MathUtil.multiply(2, 3, 4)}\n`;
+                    resultText += `ค่าเฉลี่ย 10,20,30,40: ${MathUtil.average(10,20,30,40)}`;
+
+                    output.textContent = resultText;
+                } catch(e) {
+                    console.error("Math Util Error:", e);
+                }
+            })();
+        });
+    </script>
+</body>
+</html>

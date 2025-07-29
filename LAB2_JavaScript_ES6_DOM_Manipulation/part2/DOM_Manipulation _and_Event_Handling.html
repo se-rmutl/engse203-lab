@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: การจัดการ DOM และ Event Handling</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f7fafc;
+            color: #2d3748;
+        }
+        .section-marker {
+            background-color: #e6fffa;
+            color: #234e52;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .code-block {
+            background-color: #1a202c;
+            color: #e2e8f0;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            position: relative;
+            margin-top: 1rem;
+            min-width: 0; /* Fix for flex/grid overflow */
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background-color: #2d3748;
+            color: #a0aec0;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover { background-color: #4a5568; color: #e2e8f0; }
+        .interactive-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+        }
+        .demo-area {
+            padding: 1.5rem;
+            border: 2px dashed #cbd5e0;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+        .highlight-demo {
+            box-shadow: 0 0 0 3px #63b3ed;
+            background-color: #ebf8ff;
+        }
+        .todo-item {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             padding: 0.75rem;
+             background-color: #f7fafc;
+             border: 1px solid #e2e8f0;
+             border-radius: 0.375rem;
+             margin-top: 0.5rem;
+             cursor: pointer;
+        }
+        .todo-item.completed {
+            text-decoration: line-through;
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="text-center p-8 md:p-16 bg-teal-50">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-teal-800">DOM Manipulation & Event Handling</h1>
+        <p class="mt-4 text-xl text-teal-700 max-w-3xl mx-auto">เรียนรู้วิธีการทำให้หน้าเว็บมีชีวิตชีวาด้วย JavaScript</p>
+    </header>
+
+    <main class="container mx-auto px-4 py-12 md:px-8 md:py-20 space-y-20">
+
+        <!-- 1. What is the DOM? -->
+        <section id="what-is-dom">
+            <div class="text-center mb-12"><span class="section-marker">บทที่ 1</span><h2 class="text-3xl md:text-4xl font-bold mt-4">DOM คืออะไร?</h2></div>
+            <div class="interactive-card grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold">Document Object Model</h3>
+                    <p class="mt-2 text-slate-600">DOM คือโครงสร้างของหน้าเว็บในรูปแบบ Object ที่ Browser สร้างขึ้นมาจากโค้ด HTML ของเรา มันมีลักษณะเหมือนต้นไม้ (Tree Structure) ที่ทำให้ JavaScript สามารถเข้าถึงและจัดการกับทุกส่วนของหน้าเว็บได้ ตั้งแต่การเปลี่ยนข้อความ, สี, ไปจนถึงการสร้างหรือลบ Element ทั้งหมด</p>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-lg font-mono text-sm">
+                    <div class="ml-0">&lt;html&gt;</div>
+                    <div class="ml-4">&lt;head&gt;</div>
+                    <div class="ml-8">&lt;title&gt;My Page&lt;/title&gt;</div>
+                    <div class="ml-4">&lt;/head&gt;</div>
+                    <div class="ml-4">&lt;body&gt;</div>
+                    <div class="ml-8">&lt;h1&gt;Welcome&lt;/h1&gt;</div>
+                    <div class="ml-8">&lt;p&gt;This is a paragraph.&lt;/p&gt;</div>
+                    <div class="ml-4">&lt;/body&gt;</div>
+                    <div class="ml-0">&lt;/html&gt;</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Selecting Elements -->
+        <section id="selecting">
+            <div class="text-center mb-12"><span class="section-marker">บทที่ 2</span><h2 class="text-3xl md:text-4xl font-bold mt-4">การเลือก Elements</h2></div>
+            <div class="interactive-card">
+                 <h3 class="text-2xl font-bold">Interactive Demo: ลองเลือก Element</h3>
+                 <p class="mt-2 text-slate-600">พิมพ์ CSS Selector (เช่น <code>#main-title</code>, <code>.card</code>, <code>p</code>) ในช่องด้านล่าง แล้วดูผลลัพธ์ที่เกิดขึ้นกับกล่องตัวอย่าง</p>
+                <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                    <div>
+                         <input type="text" id="selector-input" placeholder="พิมพ์ CSS Selector ที่นี่..." class="w-full p-2 border border-gray-300 rounded-md">
+                         <div class="demo-area" id="selection-demo-area">
+                             <h3 id="main-title">หัวข้อหลัก</h3>
+                             <p class="card">นี่คือการ์ดใบแรก</p>
+                             <p class="card highlight">นี่คือการ์ดใบที่สอง</p>
+                         </div>
+                    </div>
+                     <div class="code-block text-sm"><pre><code>// ลองใช้คำสั่งเหล่านี้
+const title = document.querySelector('#main-title');
+
+// querySelectorAll จะคืนค่าเป็น NodeList
+const allCards = document.querySelectorAll('.card');
+
+// เปลี่ยนสีข้อความของ title
+title.style.color = 'blue';
+
+// วนลูปเพื่อเปลี่ยนพื้นหลังของทุกการ์ด
+allCards.forEach(card => {
+    card.style.backgroundColor = '#f0f8ff';
+});
+</code></pre></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Manipulating Elements -->
+        <section id="manipulating">
+            <div class="text-center mb-12"><span class="section-marker">บทที่ 3</span><h2 class="text-3xl md:text-4xl font-bold mt-4">การแก้ไข Elements</h2></div>
+             <div class="interactive-card">
+                 <h3 class="text-2xl font-bold">Interactive Demo: Control Panel</h3>
+                 <p class="mt-2 text-slate-600">ใช้ Control Panel เพื่อแก้ไขกล่องข้อความด้านล่าง และดูโค้ดที่ทำงานเบื้องหลัง</p>
+                <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="p-4 bg-gray-100 rounded-lg">
+                        <div class="space-y-4">
+                            <div>
+                                <label for="text-content-input" class="font-semibold">Text Content:</label>
+                                <input type="text" id="text-content-input" class="w-full p-2 border border-gray-300 rounded-md mt-1">
+                            </div>
+                             <div>
+                                <label for="color-input" class="font-semibold">Text Color:</label>
+                                <input type="color" id="color-input" value="#2d3748" class="w-full h-10 p-1 border border-gray-300 rounded-md mt-1">
+                            </div>
+                            <button id="toggle-class-btn" class="w-full p-2 bg-blue-500 text-white rounded-md">Toggle Highlight Class</button>
+                        </div>
+                        <div class="demo-area mt-4 text-center">
+                            <p id="manipulation-target">แก้ไขฉันสิ!</p>
+                        </div>
+                    </div>
+                     <div class="code-block text-sm">
+                        <pre id="manipulation-code-output"><code>// โค้ดจะแสดงที่นี่เมื่อคุณแก้ไข
+const target = document.querySelector('#manipulation-target');
+
+// เปลี่ยน Text Content
+target.textContent = 'ข้อความใหม่';
+
+// เปลี่ยนสี
+target.style.color = '#ff0000';
+
+// เพิ่ม/ลบ Class
+target.classList.toggle('highlight-demo');
+</code></pre>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Creating & Removing -->
+        <section id="creating-removing">
+            <div class="text-center mb-12"><span class="section-marker">บทที่ 4</span><h2 class="text-3xl md:text-4xl font-bold mt-4">การสร้างและลบ Elements</h2></div>
+             <div class="interactive-card">
+                 <h3 class="text-2xl font-bold">Interactive Demo: Dynamic List</h3>
+                 <p class="mt-2 text-slate-600">เพิ่มรายการใหม่เข้าไปในลิสต์ หรือคลิกที่รายการเพื่อลบออก</p>
+                 <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="p-4 bg-gray-100 rounded-lg">
+                        <div class="flex gap-2">
+                             <input type="text" id="new-item-input" placeholder="เพิ่มรายการใหม่" class="flex-grow p-2 border border-gray-300 rounded-md">
+                             <button id="add-item-btn" class="p-2 bg-green-500 text-white rounded-md">เพิ่ม</button>
+                        </div>
+                        <div id="dynamic-list-container" class="mt-4 space-y-2">
+                            <!-- Items will be added here -->
+                        </div>
+                    </div>
+                     <div class="code-block text-sm">
+                        <pre><code>// การสร้าง Element
+const newItem = document.createElement('div');
+newItem.textContent = 'รายการใหม่';
+newItem.className = 'todo-item';
+
+// การเพิ่ม Element เข้าไปใน DOM
+const container = document.querySelector('#dynamic-list-container');
+container.appendChild(newItem);
+
+// การลบ Element
+newItem.addEventListener('click', () => {
+    newItem.remove();
+    // หรือใช้ parentNode.removeChild(newItem)
+});
+</code></pre>
+                     </div>
+                 </div>
+             </div>
+        </section>
+        
+        <!-- 5. Event Handling -->
+        <section id="events">
+            <div class="text-center mb-12"><span class="section-marker">บทที่ 5</span><h2 class="text-3xl md:text-4xl font-bold mt-4">การจัดการ Events</h2></div>
+             <div class="interactive-card">
+                 <h3 class="text-2xl font-bold">Event คืออะไร?</h3>
+                 <p class="mt-2 text-slate-600">Event คือการกระทำต่างๆ ที่เกิดขึ้นบนหน้าเว็บ เช่น การคลิกเมาส์ (`click`), การเลื่อนเมาส์ไปทับ (`mouseover`), การกดปุ่มบนคีย์บอร์ด (`keydown`) เราสามารถใช้ `addEventListener` เพื่อ "ดักฟัง" และเขียนโค้ดเพื่อตอบสนองต่อ Event เหล่านั้นได้</p>
+                 <div class="mt-6 p-4 bg-gray-100 rounded-lg text-center">
+                     <button id="event-demo-btn" class="p-4 bg-orange-500 text-white rounded-lg">คลิกฉันสิ!</button>
+                     <div id="event-output" class="mt-4 p-2 bg-white rounded">ผลลัพธ์ของ Event จะแสดงที่นี่</div>
+                 </div>
+             </div>
+        </section>
+
+        <!-- 6. Use Cases -->
+        <section id="use-cases">
+             <div class="text-center mb-12"><span class="section-marker">กรณีศึกษา</span><h2 class="text-3xl md:text-4xl font-bold mt-4">การนำไปใช้งานจริง</h2></div>
+             <div class="space-y-12">
+                <!-- Use Case 1: To-Do List -->
+                <div class="interactive-card">
+                     <h3 class="text-2xl font-bold">กรณีศึกษา #1: To-Do List App</h3>
+                     <p class="mt-2 text-slate-600">แอปพลิเคชันที่ให้ผู้ใช้เพิ่ม, ลบ, และทำเครื่องหมายว่าทำเสร็จแล้ว เป็นตัวอย่างที่ดีของการใช้ DOM Manipulation และ Event Handling ร่วมกัน</p>
+                     <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div id="todo-app-container" class="p-4 bg-gray-100 rounded-lg">
+                             <h4 class="text-lg font-bold text-center">My To-Do List</h4>
+                            <div class="flex gap-2 mt-4">
+                                <input type="text" id="todo-input" placeholder="เพิ่มงานที่ต้องทำ" class="flex-grow p-2 border border-gray-300 rounded-md">
+                                <button id="add-todo-btn" class="p-2 bg-blue-500 text-white rounded-md">เพิ่ม</button>
+                            </div>
+                            <div id="todo-list" class="mt-4"></div>
+                        </div>
+                        <div class="code-block text-xs"><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>// โค้ดสำหรับ To-Do List
+const input = document.querySelector('#todo-input');
+const addBtn = document.querySelector('#add-todo-btn');
+const list = document.querySelector('#todo-list');
+
+addBtn.addEventListener('click', () => {
+    const taskText = input.value.trim();
+    if (taskText !== '') {
+        const newItem = document.createElement('div');
+        newItem.className = 'todo-item';
+        
+        const textSpan = document.createElement('span');
+        textSpan.textContent = taskText;
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'ลบ';
+        deleteBtn.className = 'px-2 py-1 bg-red-500 text-white text-xs rounded';
+
+        newItem.appendChild(textSpan);
+        newItem.appendChild(deleteBtn);
+        list.appendChild(newItem);
+        
+        input.value = '';
+        
+        // Mark as completed
+        textSpan.addEventListener('click', () => {
+             newItem.classList.toggle('completed');
+        });
+
+        // Delete item
+        deleteBtn.addEventListener('click', () => {
+            newItem.remove();
+        });
+    }
+});</code></pre></div>
+                     </div>
+                </div>
+                 <!-- Use Case 2: Image Gallery -->
+                <div class="interactive-card">
+                     <h3 class="text-2xl font-bold">กรณีศึกษา #2: Image Gallery</h3>
+                     <p class="mt-2 text-slate-600">การสร้างแกลเลอรี่รูปภาพที่คลิกรูปเล็กแล้วแสดงรูปใหญ่ เป็นตัวอย่างที่ดีของการใช้ Event Delegation ซึ่งมีประสิทธิภาพสูง</p>
+                     <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                         <div id="gallery-container" class="p-4 bg-gray-100 rounded-lg">
+                            <div id="main-image-container" class="mb-4">
+                                 <img id="main-image" src="https://placehold.co/600x400/000000/FFFFFF?text=เลือกรูปภาพ" alt="Main image" class="w-full h-auto rounded-md">
+                            </div>
+                             <div id="thumbnail-container" class="grid grid-cols-4 gap-2">
+                                <img src="https://placehold.co/100x100/31C48D/FFFFFF?text=1" alt="Thumb 1" class="w-full h-auto cursor-pointer rounded">
+                                <img src="https://placehold.co/100x100/FDBA8C/FFFFFF?text=2" alt="Thumb 2" class="w-full h-auto cursor-pointer rounded">
+                                <img src="https://placehold.co/100x100/1E40AF/FFFFFF?text=3" alt="Thumb 3" class="w-full h-auto cursor-pointer rounded">
+                                <img src="https://placehold.co/100x100/D946EF/FFFFFF?text=4" alt="Thumb 4" class="w-full h-auto cursor-pointer rounded">
+                             </div>
+                         </div>
+                         <div class="code-block text-xs"><button class="copy-btn" onclick="copyCode(this)">คัดลอก</button><pre><code>// โค้ดสำหรับ Image Gallery
+const mainImage = document.querySelector('#main-image');
+const thumbnailContainer = document.querySelector('#thumbnail-container');
+
+// Event Delegation: เพิ่ม Listener ที่ตัวครอบอันเดียว
+thumbnailContainer.addEventListener('click', (event) => {
+    // เช็คว่าสิ่งที่ถูกคลิกคือ IMG หรือไม่
+    if (event.target.tagName === 'IMG') {
+        const newSrc = event.target.src.replace('100x100', '600x400');
+        mainImage.src = newSrc;
+        mainImage.alt = event.target.alt;
+    }
+});
+</code></pre></div>
+                     </div>
+                </div>
+             </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center p-8 mt-12 border-t border-slate-200">
+        <p class="text-slate-500">&copy; 2025 - ENGSE203</p>
+    </footer>
+
+    <script>
+        function copyCode(button) {
+            const pre = button.closest('.code-block').querySelector('pre');
+            navigator.clipboard.writeText(pre.innerText).then(() => {
+                button.innerText = 'คัดลอกแล้ว!';
+                setTimeout(() => { button.innerText = 'คัดลอก'; }, 2000);
+            });
+        }
+        
+        // --- Scripts for Demos ---
+
+        // 2. Selecting Elements Demo
+        (function() {
+            const input = document.querySelector('#selector-input');
+            const demoArea = document.querySelector('#selection-demo-area');
+            let lastHighlighted = [];
+            
+            input.addEventListener('input', () => {
+                // Clear previous highlights
+                lastHighlighted.forEach(el => el.classList.remove('highlight-demo'));
+                lastHighlighted = [];
+
+                const selector = input.value.trim();
+                if (selector) {
+                    try {
+                        const elements = demoArea.querySelectorAll(selector);
+                        elements.forEach(el => {
+                            el.classList.add('highlight-demo');
+                            lastHighlighted.push(el);
+                        });
+                    } catch (e) {
+                        // Invalid selector, do nothing
+                    }
+                }
+            });
+        })();
+
+        // 3. Manipulating Elements Demo
+        (function() {
+            const target = document.querySelector('#manipulation-target');
+            const textInput = document.querySelector('#text-content-input');
+            const colorInput = document.querySelector('#color-input');
+            const toggleBtn = document.querySelector('#toggle-class-btn');
+
+            textInput.addEventListener('input', () => {
+                target.textContent = textInput.value || 'แก้ไขฉันสิ!';
+            });
+            colorInput.addEventListener('input', () => {
+                target.style.color = colorInput.value;
+            });
+            toggleBtn.addEventListener('click', () => {
+                target.classList.toggle('highlight-demo');
+            });
+        })();
+
+        // 4. Creating & Removing Demo
+        (function() {
+             const input = document.querySelector('#new-item-input');
+             const addBtn = document.querySelector('#add-item-btn');
+             const container = document.querySelector('#dynamic-list-container');
+             addBtn.addEventListener('click', () => {
+                 const text = input.value.trim();
+                 if (text) {
+                     const newItem = document.createElement('div');
+                     newItem.textContent = text;
+                     newItem.className = 'p-2 bg-white border rounded cursor-pointer hover:bg-red-100';
+                     container.appendChild(newItem);
+                     input.value = '';
+                     newItem.addEventListener('click', () => {
+                         newItem.remove();
+                     });
+                 }
+             });
+        })();
+        
+        // 5. Event Handling Demo
+        (function() {
+            const btn = document.querySelector('#event-demo-btn');
+            const output = document.querySelector('#event-output');
+            btn.addEventListener('click', (event) => {
+                output.innerHTML = `
+                    <strong>Event Type:</strong> ${event.type}<br>
+                    <strong>Target Tag:</strong> ${event.target.tagName}<br>
+                    <strong>Timestamp:</strong> ${event.timeStamp.toFixed(2)}
+                `;
+            });
+        })();
+
+        // 6. To-Do List App
+        (function() {
+            const input = document.querySelector('#todo-input');
+            const addBtn = document.querySelector('#add-todo-btn');
+            const list = document.querySelector('#todo-list');
+
+            addBtn.addEventListener('click', () => {
+                const taskText = input.value.trim();
+                if (taskText !== '') {
+                    const newItem = document.createElement('div');
+                    newItem.className = 'todo-item';
+                    
+                    const textSpan = document.createElement('span');
+                    textSpan.textContent = taskText;
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'ลบ';
+                    deleteBtn.className = 'px-2 py-1 bg-red-500 text-white text-xs rounded hover:bg-red-600';
+
+                    newItem.appendChild(textSpan);
+                    newItem.appendChild(deleteBtn);
+                    list.appendChild(newItem);
+                    
+                    input.value = '';
+                    input.focus();
+                    
+                    textSpan.addEventListener('click', () => {
+                         newItem.classList.toggle('completed');
+                    });
+
+                    deleteBtn.addEventListener('click', () => {
+                        newItem.remove();
+                    });
+                }
+            });
+            
+             input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    addBtn.click();
+                }
+            });
+        })();
+
+        // 7. Image Gallery
+        (function() {
+            const mainImage = document.querySelector('#main-image');
+            const thumbnailContainer = document.querySelector('#thumbnail-container');
+
+            thumbnailContainer.addEventListener('click', (event) => {
+                if (event.target.tagName === 'IMG') {
+                    const newSrc = event.target.src.replace('100x100', '600x400');
+                    mainImage.src = newSrc;
+                    mainImage.alt = event.target.alt;
+                }
+            });
+        })();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Lab: Weather App Workshop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm & Assuring -->
+    <!-- Application Structure Plan: A task-oriented SPA with a tab-based navigation for '1: Setup', '2: API Key', '3: JavaScript', and '4: Bonus'. This non-linear structure allows students to focus on one part of the lab at a time. The core interaction is a 'build-along' live preview in the JavaScript section, where the embedded weather app becomes functional as the student adds each code snippet. This provides immediate feedback and enhances learning. -->
+    <!-- Visualization & Content Choices: Report Info: Git Commands -> Goal: Inform/Organize -> Viz: Styled code blocks with copy buttons -> Justification: Simplifies a technical step. Report Info: JS Code Snippets -> Goal: Instruct/Demonstrate -> Viz: Copyable code blocks paired with a live, interactive preview of the weather app -> Justification: Creates an active learning environment where students see the immediate effect of their code. Report Info: Project Steps -> Goal: Organize -> Viz: Numbered, sequential cards/sections -> Justification: Maintains the clear, step-by-step nature of the original lab instructions. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f4f7f9;
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            border-color: #3b82f6;
+            color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: #475569;
+            color: #e2e8f0;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+        .copy-btn:hover {
+            background-color: #64748b;
+        }
+        .step-card {
+            border-left: 4px solid #93c5fd;
+        }
+        
+        /* --- Styles for Live Preview --- */
+        .preview-app-container {
+            background: #003554;
+            color: #E0E1DD;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin: 0 auto;
+        }
+        .preview-app-container h1 { color: #00A6FB; }
+        .preview-app-container form {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        .preview-app-container input {
+            flex-grow: 1;
+            padding: 0.75rem;
+            border: 1px solid #006494;
+            border-radius: 0.5rem;
+            background: #051923;
+            color: #E0E1DD;
+            font-size: 1rem;
+        }
+        .preview-app-container button {
+            padding: 0.75rem 1rem;
+            background-color: #00A6FB;
+            color: #051923;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .preview-app-container button:hover { background-color: #0582CA; }
+        .preview-weather-info {
+            margin-top: 1.5rem;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+         .preview-weather-info .temp {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        .preview-weather-info .error { color: #ff4d4d; font-weight: bold; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-blue-600">Interactive Lab Workshop</h1>
+            <p class="text-xl text-slate-600 mt-2">สร้างแอปพลิเคชันค้นหาสภาพอากาศ (Weather App)</p>
+        </header>
+
+        <!-- Tabs Navigation -->
+        <div id="tabs" class="mb-8 flex flex-wrap justify-center border-b border-slate-200">
+            <button data-tab="setup" class="tab-button active text-slate-600 py-3 px-6 border-b-2 border-transparent font-medium">1: การตั้งค่าโปรเจกต์</button>
+            <button data-tab="api" class="tab-button text-slate-600 py-3 px-6 border-b-2 border-transparent font-medium">2: API Key</button>
+            <button data-tab="javascript" class="tab-button text-slate-600 py-3 px-6 border-b-2 border-transparent font-medium">3: เขียน JavaScript</button>
+            <button data-tab="bonus" class="tab-button text-slate-600 py-3 px-6 border-b-2 border-transparent font-medium">4: ความท้าทายเพิ่มเติม</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-contents">
+            <!-- Setup Tab -->
+            <div id="setup" class="tab-content active">
+                <h2 class="text-2xl font-bold mb-6">1. การตั้งค่าโปรเจกต์และ Git</h2>
+                <p class="mb-8 text-slate-600">ในส่วนนี้ เราจะสร้างโปรเจกต์ของเราบน GitHub, Clone ลงมาที่เครื่อง, และเตรียมไฟล์เริ่มต้นให้พร้อมสำหรับเขียนโค้ด</p>
+                
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm step-card">
+                        <h3 class="text-lg font-semibold mb-2">ขั้นตอน 1.1: สร้าง Repository บน GitHub</h3>
+                        <ol class="list-decimal list-inside text-slate-600 space-y-1">
+                            <li>ไปที่ <a href="https://github.com" target="_blank" class="text-blue-500 hover:underline">GitHub.com</a> และล็อกอิน</li>
+                            <li>คลิก `New repository` และตั้งชื่อ (เช่น `my-weather-app`)</li>
+                            <li>ตั้งค่าเป็น `Public` และคลิก `Create repository`</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm step-card">
+                        <h3 class="text-lg font-semibold mb-2">ขั้นตอน 1.2: Clone Repository และสร้างไฟล์</h3>
+                        <p class="text-slate-600 mb-4">เปิด Terminal (หรือ Git Bash) แล้วทำตามคำสั่งต่อไปนี้:</p>
+                        <div class="code-block mb-4">git clone https://github.com/YOUR_USERNAME/my-weather-app.git
+cd my-weather-app
+<button class="copy-btn" onclick="copyCode(this)">คัดลอก</button></div>
+                        <p class="text-slate-600">จากนั้นสร้างไฟล์เปล่า 3 ไฟล์ในโฟลเดอร์นี้: `index.html`, `style.css`, `script.js`</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm step-card">
+                        <h3 class="text-lg font-semibold mb-2">ขั้นตอน 1.4: เพิ่มโค้ดเริ่มต้น (Starter Code)</h3>
+                        <p class="text-slate-600 mb-4">คัดลอกโค้ดด้านล่างไปวางในไฟล์ `index.html` และ `style.css` ของคุณ</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-medium mb-2">index.html</h4>
+                                <div class="code-block text-sm h-64 overflow-y-auto"><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="th"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Weather App&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="app-container"&gt;
+        &lt;h1&gt;Weather App&lt;/h1&gt;
+        &lt;form id="search-form"&gt;
+            &lt;input type="text" id="city-input" placeholder="ค้นหาชื่อเมือง..." required&gt;
+            &lt;button type="submit"&gt;ค้นหา&lt;/button&gt;
+        &lt;/form&gt;
+        &lt;div id="weather-info-container" class="weather-info"&gt;
+            &lt;!-- ข้อมูลสภาพอากาศจะแสดงที่นี่ --&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre><button class="copy-btn" onclick="copyCode(this, true)">คัดลอก</button></div>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-2">style.css</h4>
+                                <div class="code-block text-sm h-64 overflow-y-auto"><pre>body {
+    background: #051923;
+    color: #E0E1DD;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+.app-container {
+    background: #003554;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+h1 { color: #00A6FB; }
+#search-form { display: flex; gap: 0.5rem; margin: 1.5rem 0; }
+#city-input {
+    flex-grow: 1; padding: 0.75rem; border: 1px solid #006494;
+    border-radius: 0.5rem; background: #051923; color: #E0E1DD;
+    font-size: 1rem;
+}
+#search-form button {
+    padding: 0.75rem 1rem; background-color: #00A6FB; color: #051923;
+    border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: bold;
+    cursor: pointer; transition: background-color 0.2s;
+}
+#search-form button:hover { background-color: #0582CA; }
+.weather-info { margin-top: 1.5rem; min-height: 150px; }
+.weather-info .temp { font-size: 3rem; font-weight: bold; margin: 0.5rem 0; }
+.error { color: #ff4d4d; font-weight: bold; }</pre><button class="copy-btn" onclick="copyCode(this, true)">คัดลอก</button></div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-sm step-card">
+                        <h3 class="text-lg font-semibold mb-2">ขั้นตอน 1.5: Commit แรกของคุณ</h3>
+                        <p class="text-slate-600 mb-4">บันทึกไฟล์ทั้งหมดและ Push ขึ้น GitHub เพื่อสร้าง Snapshot แรกของโปรเจกต์</p>
+                        <div class="code-block">git add .
+git commit -m "Initial project setup with HTML and CSS"
+git push origin main
+<button class="copy-btn" onclick="copyCode(this)">คัดลอก</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Key Tab -->
+            <div id="api" class="tab-content">
+                <h2 class="text-2xl font-bold mb-6">2. การสมัครและเตรียม API Key</h2>
+                <p class="mb-8 text-slate-600">แอปของเราจะดึงข้อมูลจาก <a href="https://openweathermap.org/" target="_blank" class="text-blue-500 hover:underline">OpenWeatherMap</a> ซึ่งเป็นบริการฟรี เราจึงต้องสมัครเพื่อขอ API Key มาใช้งาน</p>
+                <div class="bg-white p-6 rounded-lg shadow-sm step-card">
+                    <h3 class="text-lg font-semibold mb-2">ขั้นตอนการรับ API Key</h3>
+                    <ol class="list-decimal list-inside text-slate-600 space-y-2">
+                        <li>ไปที่ <a href="https://openweathermap.org/home/sign_up" target="_blank" class="text-blue-500 hover:underline">หน้าสมัครสมาชิกของ OpenWeatherMap</a> และสร้างบัญชีใหม่</li>
+                        <li>หลังจากล็อกอิน ให้ไปที่หน้า API keys โดยคลิกที่ชื่อของคุณที่มุมขวาบน > `My API keys`</li>
+                        <li>คุณจะเห็น Default API Key ที่ระบบสร้างให้ ให้คัดลอก Key นั้นเก็บไว้</li>
+                        <li class="text-sm text-amber-700">หมายเหตุ: Key ใหม่อาจใช้เวลา 5-10 นาทีจึงจะพร้อมใช้งาน</li>
+                    </ol>
+                    <div class="mt-6">
+                        <label for="api-key-input" class="block font-medium mb-2">ทดลองวาง API Key ของคุณที่นี่:</label>
+                        <input id="api-key-input" type="text" placeholder="วาง API Key ที่คัดลอกมา..." class="w-full p-2 border border-slate-300 rounded-md">
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript Tab -->
+            <div id="javascript" class="tab-content">
+                <h2 class="text-2xl font-bold mb-6">3. เขียน JavaScript Logic</h2>
+                <p class="mb-8 text-slate-600">ถึงเวลาเขียนโค้ดเพื่อให้แอปของเราทำงาน! เปิดไฟล์ `script.js` ของคุณและทำตามขั้นตอนด้านล่างนี้ คุณสามารถดูผลลัพธ์จำลองได้จาก Live Preview ทางด้านขวา</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <!-- Step 3.1 -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm step-card">
+                            <h3 class="text-lg font-semibold mb-2">ขั้นตอน 3.1: เลือก DOM Elements และตั้งค่า API Key</h3>
+                            <p class="text-slate-600 mb-4">สร้างตัวแปรเพื่ออ้างอิงถึง Element ต่างๆ ใน HTML และวาง API Key ของคุณ</p>
+                            <div class="code-block text-sm"><pre>const apiKey = 'YOUR_API_KEY';
+
+const searchForm = document.querySelector('#search-form');
+const cityInput = document.querySelector('#city-input');
+const weatherInfoContainer = document.querySelector('#weather-info-container');</pre><button class="copy-btn" onclick="copyCode(this, true)">คัดลอก</button></div>
+                        </div>
+                        <!-- Step 3.2 -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm step-card">
+                            <h3 class="text-lg font-semibold mb-2">ขั้นตอน 3.2: เพิ่ม Event Listener ให้กับฟอร์ม</h3>
+                            <p class="text-slate-600 mb-4">ดักจับเหตุการณ์ `submit` ของฟอร์ม เพื่อเริ่มกระบวนการค้นหาเมื่อผู้ใช้กดปุ่ม</p>
+                            <div class="code-block text-sm"><pre>searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const cityName = cityInput.value.trim();
+
+    if (cityName) {
+        getWeather(cityName);
+    } else {
+        alert('กรุณาป้อนชื่อเมือง');
+    }
+});</pre><button class="copy-btn" onclick="copyCode(this, true)">คัดลอก</button></div>
+                        </div>
+                        <!-- Step 3.3 -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm step-card">
+                            <h3 class="text-lg font-semibold mb-2">ขั้นตอน 3.3: สร้างฟังก์ชัน `getWeather`</h3>
+                            <p class="text-slate-600 mb-4">สร้าง `async function` เพื่อส่ง Request ไปยัง API ของ OpenWeatherMap พร้อมจัดการ Error</p>
+                            <div class="code-block text-sm"><pre>async function getWeather(city) {
+    weatherInfoContainer.innerHTML = `&lt;p&gt;กำลังโหลดข้อมูล...&lt;/p&gt;`;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&amp;appid=${apiKey}&amp;units=metric&amp;lang=th`;
+
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error('ไม่พบข้อมูลเมืองนี้');
+        }
+        const data = await response.json();
+        displayWeather(data);
+    } catch (error) {
+        weatherInfoContainer.innerHTML = `&lt;p class="error"&gt;${error.message}&lt;/p&gt;`;
+    }
+}</pre><button class="copy-btn" onclick="copyCode(this, true)">คัดลอก</button></div>
+                        </div>
+                        <!-- Step 3.4 -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm step-card">
+                            <h3 class="text-lg font-semibold mb-2">ขั้นตอน 3.4: สร้างฟังก์ชัน `displayWeather`</h3>
+                            <p class="text-slate-600 mb-4">ฟังก์ชันนี้จะรับข้อมูล JSON มาแปลงเป็น HTML เพื่อแสดงผลบนหน้าเว็บ</p>
+                            <div class="code-block text-sm"><pre>function displayWeather(data) {
+    const { name, main, weather } = data;
+    const { temp, humidity } = main;
+    const { description, icon } = weather[0];
+
+    const weatherHtml = `
+        &lt;h2 class="text-2xl font-bold"&gt;${name}&lt;/h2&gt;
+        &lt;img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"&gt;
+        &lt;p class="temp"&gt;${temp.toFixed(1)}°C&lt;/p&gt;
+        &lt;p&gt;${description}&lt;/p&gt;
+        &lt;p&gt;ความชื้น: ${humidity}%&lt;/p&gt;
+    `;
+    weatherInfoContainer.innerHTML = weatherHtml;
+}</pre><button class="copy-btn" onclick="copyCode(this, true)">คัดลอก</button></div>
+                        </div>
+                    </div>
+                    <!-- Live Preview -->
+                    <div>
+                        <div class="sticky top-8">
+                            <h3 class="text-xl font-bold mb-4 text-center">Live Preview</h3>
+                            <div class="preview-app-container">
+                                <h1>Weather App</h1>
+                                <form id="preview-search-form">
+                                    <input type="text" id="preview-city-input" placeholder="ค้นหาชื่อเมือง..." required>
+                                    <button type="submit">ค้นหา</button>
+                                </form>
+                                <div id="preview-weather-info-container" class="preview-weather-info">
+                                    <p class="text-slate-400">ผลลัพธ์จำลองจะแสดงที่นี่</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bonus Tab -->
+            <div id="bonus" class="tab-content">
+                <h2 class="text-2xl font-bold mb-6">4. ความท้าทายเพิ่มเติม (Bonus Challenges)</h2>
+                <p class="mb-8 text-slate-600">หากคุณทำ Lab เสร็จแล้ว ลองท้าทายตัวเองด้วยฟีเจอร์เพิ่มเติมเหล่านี้เพื่อฝึกฝนทักษะของคุณ</p>
+                <div class="space-y-4">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-semibold text-blue-600">1. ปรับปรุง UI/UX</h3>
+                        <p class="text-slate-600">ทำให้หน้าตาแอปสวยงามขึ้น อาจเพิ่ม Animation หรือเปลี่ยนสีพื้นหลังตามสภาพอากาศ (เช่น กลางวัน/กลางคืน, ร้อน/หนาว)</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-semibold text-blue-600">2. บันทึกการค้นหาล่าสุด</h3>
+                        <p class="text-slate-600">ใช้ `localStorage` เพื่อบันทึกชื่อเมืองล่าสุดที่ค้นหา และเมื่อเปิดหน้าเว็บใหม่ ให้แสดงข้อมูลของเมืองนั้นโดยอัตโนมัติ</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-semibold text-blue-600">3. พยากรณ์อากาศล่วงหน้า</h3>
+                        <p class="text-slate-600">ศึกษาเอกสารของ OpenWeatherMap และลองใช้ API สำหรับพยากรณ์อากาศล่วงหน้า (5-day forecast) มาแสดงผลเพิ่มเติม</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-semibold text-blue-600">4. Deploy ขึ้น GitHub Pages</h3>
+                        <p class="text-slate-600">ทำให้เว็บแอปของคุณออนไลน์ให้คนอื่นเข้ามาเล่นได้! (ไปที่หน้า Settings > Pages ของ Repository แล้วเลือก branch `main`)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.dataset.tab;
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    tabContents.forEach(content => {
+                        if (content.id === target) {
+                            content.classList.add('active');
+                        } else {
+                            content.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            window.copyCode = function(button, isPre = false) {
+                const codeBlock = button.parentElement;
+                const code = isPre ? codeBlock.querySelector('pre').innerText : codeBlock.innerText.replace('คัดลอก', '').trim();
+                const textarea = document.createElement('textarea');
+                textarea.value = code;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                button.innerText = 'คัดลอกแล้ว!';
+                setTimeout(() => { button.innerText = 'คัดลอก'; }, 2000);
+            }
+
+            // --- Live Preview Logic ---
+            const previewForm = document.getElementById('preview-search-form');
+            const previewCityInput = document.getElementById('preview-city-input');
+            const previewWeatherContainer = document.getElementById('preview-weather-info-container');
+            const apiKeyInput = document.getElementById('api-key-input');
+
+            previewForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const city = previewCityInput.value.trim();
+                const apiKey = apiKeyInput.value.trim();
+
+                if (!apiKey) {
+                    alert('กรุณาวาง API Key ของคุณในแท็บ "2: API Key" ก่อน');
+                    return;
+                }
+                
+                if (!city) {
+                    alert('กรุณาป้อนชื่อเมืองในช่องค้นหาของ Live Preview');
+                    return;
+                }
+
+                previewWeatherContainer.innerHTML = `<p>กำลังโหลดข้อมูล...</p>`;
+                const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=th`;
+
+                try {
+                    const response = await fetch(apiUrl);
+                    if (!response.ok) {
+                        throw new Error('ไม่พบข้อมูลเมืองนี้ (หรือ API Key ไม่ถูกต้อง)');
+                    }
+                    const data = await response.json();
+                    
+                    const { name, main, weather } = data;
+                    const { temp, humidity } = main;
+                    const { description, icon } = weather[0];
+
+                    const weatherHtml = `
+                        <h2 class="text-2xl font-bold">${name}</h2>
+                        <img class="mx-auto" src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}">
+                        <p class="temp">${temp.toFixed(1)}°C</p>
+                        <p class="capitalize">${description}</p>
+                        <p>ความชื้น: ${humidity}%</p>
+                    `;
+                    previewWeatherContainer.innerHTML = weatherHtml;
+
+                } catch (error) {
+                    previewWeatherContainer.innerHTML = `<p class="error">${error.message}</p>`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

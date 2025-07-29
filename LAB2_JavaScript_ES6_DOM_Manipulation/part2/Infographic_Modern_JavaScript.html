@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: เส้นทางสู่ Modern JavaScript ES6+</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Brilliant Blues -->
+    <!-- Application Structure Plan: A single, scrollable narrative infographic. The user journey starts with a "Course Breakdown" donut chart, flows through thematic sections for each learning module (ES6+, Async, DOM, Fetch), and culminates in a practical project flowchart. This linear storytelling approach guides the student logically from theory to practice, making it more engaging than a simple slide deck. A sticky navigation bar enhances usability by allowing jumps between key learning milestones. -->
+    <!-- Visualization & Content Choices: Report Info: Course Structure -> Goal: Inform -> Viz: Donut Chart (Chart.js) -> Justification: Provides a quick overview of topic weights. Report Info: Async Concepts -> Goal: Compare/Explain -> Viz: CSS Animation (Sync vs. Async) & State-change simulation (Promises) -> Interaction: 'Run' button -> Justification: Makes abstract concepts tangible. Report Info: DOM -> Goal: Demonstrate -> Viz: Interactive Sandbox -> Interaction: Buttons change a live element -> Justification: Active learning is more effective. Report Info: Project Steps -> Goal: Organize -> Viz: HTML/CSS Flowchart -> Justification: Clearly visualizes the development process. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #051923;
+            color: #E0E1DD;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .sticky-nav {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .flowchart-step {
+            position: relative;
+            padding-left: 3rem;
+        }
+        .flowchart-step::before {
+            content: '';
+            position: absolute;
+            left: 1.25rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #006494;
+        }
+        .flowchart-step:last-child::before {
+            display: none;
+        }
+        .flowchart-step::after {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background-color: #00A6FB;
+            color: #051923;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border: 2px solid #006494;
+        }
+        .code-block {
+            background-color: #020f16;
+            color: #E0E1DD;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+            border: 1px solid #003554;
+        }
+        .simulated-console {
+            background: #020f16;
+            color: #94a3b8;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-family: monospace;
+            min-height: 4rem;
+            border: 1px solid #003554;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Sticky Header -->
+    <header class="sticky-nav bg-black bg-opacity-50 backdrop-blur-lg shadow-lg">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-center items-center py-3 text-sm">
+                <a href="#intro" class="px-3 py-2 hover:text-cyan-400 transition-colors">ภาพรวม</a>
+                <a href="#es6" class="px-3 py-2 hover:text-cyan-400 transition-colors">ES6+</a>
+                <a href="#async" class="px-3 py-2 hover:text-cyan-400 transition-colors">Async</a>
+                <a href="#dom" class="px-3 py-2 hover:text-cyan-400 transition-colors">DOM</a>
+                <a href="#project" class="px-3 py-2 hover:text-cyan-400 transition-colors">Project</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <!-- Section 1: Introduction -->
+        <section id="intro" class="text-center py-16">
+            <h1 class="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">เส้นทางสู่ Modern JavaScript</h1>
+            <p class="mt-4 text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">Infographic นี้จะสรุปเนื้อหาการเรียนรู้สัปดาห์ที่ 4 ตั้งแต่พื้นฐาน JavaScript สมัยใหม่ไปจนถึงการสร้างเว็บแอปพลิเคชันแบบไดนามิกที่โต้ตอบกับผู้ใช้ได้</p>
+            
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold mb-4">ภาพรวมเนื้อหาการสอน</h2>
+                <p class="text-slate-400 mb-6">สัดส่วนของหัวข้อต่างๆ ที่เราจะเรียนรู้ในสัปดาห์นี้</p>
+                <div class="chart-container">
+                    <canvas id="courseBreakdownChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: ES6+ -->
+        <section id="es6" class="py-16">
+            <div class="text-center mb-12">
+                <span class="text-cyan-400 font-semibold">MILESTONE 1</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">เครื่องมือในโลก JavaScript สมัยใหม่ (ES6+)</h2>
+                <p class="mt-4 text-slate-400 max-w-2xl mx-auto">ฟีเจอร์ที่ทำให้โค้ดของคุณสั้นลง, อ่านง่ายขึ้น, และมีประสิทธิภาพมากขึ้น ทดลองเล่นกับตัวอย่างโค้ดเพื่อทำความเข้าใจ</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- let & const -->
+                <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
+                    <h3 class="text-xl font-bold text-cyan-400">`let` & `const`</h3>
+                    <p class="mt-2 mb-4 text-sm text-slate-300">`const` ไม่สามารถกำหนดค่าใหม่ได้ ลองคลิกปุ่มเพื่อดู Error</p>
+                    <div class="code-block">const year = 2025;<br><span id="const-error" class="text-red-500 transition-opacity duration-300 opacity-0">year = 2026; // TypeError!</span></div>
+                    <button id="run-const-test" class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded">ทดลอง Reassign `const`</button>
+                </div>
+                <!-- Arrow Functions -->
+                <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
+                    <h3 class="text-xl font-bold text-cyan-400">Arrow Functions & `this`</h3>
+                    <p class="mt-2 mb-4 text-sm text-slate-300">Arrow Function แก้ปัญหา `this` ใน callback ได้อย่างไร? ดูผลลัพธ์ด้านล่าง</p>
+                    <div class="simulated-console" id="arrow-func-console">> คลิกปุ่มเพื่อดูผลลัพธ์...</div>
+                    <button id="run-arrow-test" class="mt-4 w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded">Run `this` Test</button>
+                </div>
+                <!-- Template Literals -->
+                <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
+                    <h3 class="text-xl font-bold text-cyan-400">Template Literals</h3>
+                    <p class="mt-2 mb-4 text-sm text-slate-300">สร้างสตริงที่ซับซ้อนได้ง่ายๆ ลองพิมพ์ชื่อของคุณ</p>
+                    <input id="template-name-input" type="text" placeholder="พิมพ์ชื่อของคุณ..." class="w-full p-2 rounded bg-slate-700 border border-slate-600 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+                    <div class="code-block mt-4" id="template-output">`สวัสดี, !`</div>
+                </div>
+                <!-- Destructuring -->
+                <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
+                    <h3 class="text-xl font-bold text-cyan-400">Destructuring</h3>
+                    <p class="mt-2 mb-4 text-sm text-slate-300">ดึงค่าจาก Object ได้อย่างง่ายดาย คลิกที่ property เพื่อดึงค่า</p>
+                    <div class="flex gap-4">
+                        <div class="code-block flex-1 text-center cursor-pointer" id="destructure-source">
+                            <p>{ user: "Jane", id: 101 }</p>
+                            <span class="text-xs text-slate-400">(คลิกที่นี่)</span>
+                        </div>
+                        <div class="text-3xl self-center text-cyan-400 transition-transform duration-500" id="destructure-arrow">→</div>
+                        <div class="code-block flex-1" id="destructure-target">const { user, id } = ?</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Asynchronous JavaScript -->
+        <section id="async" class="py-16">
+            <div class="text-center mb-12">
+                <span class="text-cyan-400 font-semibold">MILESTONE 2</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">การทำงานแบบไม่รอ (Asynchronous)</h2>
+                <p class="mt-4 text-slate-400 max-w-2xl mx-auto">หัวใจของการสร้างเว็บที่ลื่นไหล คือการจัดการงานที่ใช้เวลานานโดยไม่ทำให้หน้าเว็บค้าง</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
+                    <h3 class="text-2xl font-bold mb-4">Promises: "คำสัญญา" แห่งอนาคต</h3>
+                    <p class="mb-6 text-slate-300">Promise คือ Object ที่เป็นตัวแทนของผลลัพธ์ (สำเร็จหรือล้มเหลว) ที่จะเกิดขึ้นในอนาคต ลองคลิกเพื่อจำลองการทำงานของ Promise</p>
+                    <div id="promise-status-box" class="p-6 rounded-md text-center text-xl font-bold transition-all duration-500 border-2 border-dashed">
+                        สถานะ: ว่าง
+                    </div>
+                    <button id="start-promise-btn" class="mt-6 w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-4 rounded-lg transition-colors">
+                        เริ่ม Promise
+                    </button>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
+                    <h3 class="text-2xl font-bold mb-4">Async/Await Simulation</h3>
+                    <p class="mb-6 text-slate-300">`await` จะ "หยุดรอ" ให้ Promise ทำงานเสร็จก่อนไปต่อ คลิกเพื่อดูการทำงานทีละขั้น</p>
+                    <div class="code-block">
+                        <div id="line1">async function getUser() {</div>
+                        <div id="line2" class="pl-4">console.log("Fetching user...");</div>
+                        <div id="line3" class="pl-4">const user = <span class="text-yellow-400">await</span> fakeFetch();</div>
+                        <div id="line4" class="pl-4">console.log(user);</div>
+                        <div id="line5">}</div>
+                    </div>
+                    <button id="run-async-await" class="mt-6 w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-4 rounded-lg transition-colors">
+                        Run Async Function
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 4: DOM Manipulation -->
+        <section id="dom" class="py-16">
+            <div class="text-center mb-12">
+                <span class="text-cyan-400 font-semibold">MILESTONE 3</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">ควบคุมหน้าเว็บ (DOM & Events)</h2>
+                <p class="mt-4 text-slate-400 max-w-2xl mx-auto">ใช้ JavaScript เพื่อเปลี่ยนแปลงหน้าเว็บและตอบสนองต่อการกระทำของผู้ใช้ ลองสร้าง Profile Card ของคุณเอง</p>
+            </div>
+            <div class="bg-slate-800 p-6 md:p-8 rounded-lg border border-slate-700 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Control Panel</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="profile-name" class="text-sm font-medium text-slate-300">ชื่อ:</label>
+                            <input type="text" id="profile-name" value="Your Name" class="mt-1 w-full p-2 rounded bg-slate-700 border border-slate-600 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label for="profile-desc" class="text-sm font-medium text-slate-300">คำอธิบาย:</label>
+                            <input type="text" id="profile-desc" value="Frontend Developer" class="mt-1 w-full p-2 rounded bg-slate-700 border border-slate-600 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+                        </div>
+                         <div>
+                            <label class="text-sm font-medium text-slate-300">Theme:</label>
+                            <div class="mt-1 flex gap-2">
+                                <button data-theme="light" class="theme-btn flex-1 bg-white text-black py-1 rounded">Light</button>
+                                <button data-theme="dark" class="theme-btn flex-1 bg-slate-900 text-white py-1 rounded border-2 border-cyan-500">Dark</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                     <h3 class="text-2xl font-bold mb-6">Live Preview</h3>
+                     <div id="profile-card" class="p-6 rounded-lg transition-colors duration-300 bg-slate-900 border border-slate-700">
+                         <div class="text-center">
+                            <div class="w-24 h-24 rounded-full bg-cyan-500 mx-auto mb-4 flex items-center justify-center text-4xl font-bold text-slate-900" id="profile-avatar"></div>
+                            <h4 id="profile-name-output" class="text-xl font-bold text-white">Your Name</h4>
+                            <p id="profile-desc-output" class="text-cyan-300">Frontend Developer</p>
+                         </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Project Flowchart & Demo -->
+        <section id="project" class="py-16">
+            <div class="text-center mb-12">
+                <span class="text-cyan-400 font-semibold">FINAL MILESTONE</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">สร้าง Dynamic Web App!</h2>
+                <p class="mt-4 text-slate-400 max-w-2xl mx-auto">นำความรู้ทั้งหมดมาสร้าง "Random Quote Generator" ตามขั้นตอนต่อไปนี้</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div class="max-w-2xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-6">ขั้นตอนการพัฒนา</h3>
+                    <div class="space-y-8">
+                        <div class="flowchart-step" data-step="1">
+                            <h4 class="text-xl font-bold text-cyan-400">สร้างโครงสร้าง HTML</h4>
+                            <p class="text-slate-300">วางโครงสร้างสำหรับแสดงคำคม, ชื่อผู้พูด, และปุ่ม</p>
+                        </div>
+                        <div class="flowchart-step" data-step="2">
+                            <h4 class="text-xl font-bold text-cyan-400">ตกแต่งด้วย CSS</h4>
+                            <p class="text-slate-300">จัดหน้าตาให้สวยงาม, จัดวางองค์ประกอบ, และซ่อนสถานะ Loading</p>
+                        </div>
+                        <div class="flowchart-step" data-step="3">
+                            <h4 class="text-xl font-bold text-cyan-400">เขียน Logic ด้วย JS</h4>
+                            <p class="text-slate-300">เขียน `async function` เพื่อ `fetch` ข้อมูล, เพิ่ม `addEventListener` ให้ปุ่ม, และนำข้อมูลมาแสดงผลใน DOM</p>
+                        </div>
+                        <div class="flowchart-step" data-step="4">
+                            <h4 class="text-xl font-bold text-cyan-400">Debug และทดสอบ</h4>
+                            <p class="text-slate-300">ใช้ Browser DevTools ตรวจสอบการทำงาน, หาข้อผิดพลาด, และทดสอบแอปพลิเคชัน</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
+                    <h3 class="text-2xl font-bold mb-6 text-center">Live Project Demo</h3>
+                    <div id="quote-loading" class="hidden text-center text-slate-400 mb-4">กำลังโหลด...</div>
+                    <blockquote id="quote-display" class="text-lg italic text-slate-300 min-h-[10rem]">
+                        <p id="quote-content">กดปุ่มเพื่อเริ่มสุ่มคำคม</p>
+                        <footer id="quote-author" class="text-right text-base not-italic text-cyan-400 mt-2"></footer>
+                    </blockquote>
+                    <button id="new-quote-btn" class="mt-6 w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-4 rounded-lg transition-colors">
+                        New Quote
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-8 border-t border-slate-800">
+        <p class="text-slate-500">Infographic by an Expert Frontend Developer. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tooltipCallback = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            const wrapLabel = (label) => {
+                if (label.length > 16) {
+                    const words = label.split(' ');
+                    const lines = [];
+                    let currentLine = '';
+                    for (const word of words) {
+                        if ((currentLine + word).length > 16) {
+                            lines.push(currentLine.trim());
+                            currentLine = '';
+                        }
+                        currentLine += word + ' ';
+                    }
+                    lines.push(currentLine.trim());
+                    return lines;
+                }
+                return label;
+            };
+
+            // Chart.js: Course Breakdown
+            const ctx = document.getElementById('courseBreakdownChart').getContext('2d');
+            const originalLabels = ['Modern JS (ES6+)', 'Asynchronous Programming', 'DOM & Event Handling', 'Fetch API & Project Labs'];
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: originalLabels.map(wrapLabel),
+                    datasets: [{
+                        label: 'สัดส่วนเนื้อหา',
+                        data: [25, 25, 30, 20],
+                        backgroundColor: ['#00A6FB', '#0582CA', '#006494', '#003554'],
+                        borderColor: '#051923',
+                        borderWidth: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        ...tooltipCallback.plugins,
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#E0E1DD',
+                                font: { family: "'Sarabun', sans-serif" }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // ES6+ Interactivity
+            document.getElementById('run-const-test').addEventListener('click', (e) => {
+                const errorSpan = document.getElementById('const-error');
+                errorSpan.style.opacity = 1;
+                e.target.disabled = true;
+                setTimeout(() => { 
+                    errorSpan.style.opacity = 0;
+                    e.target.disabled = false;
+                }, 3000);
+            });
+
+            document.getElementById('run-arrow-test').addEventListener('click', (e) => {
+                const consoleEl = document.getElementById('arrow-func-console');
+                const obj = {
+                  name: 'Test Object',
+                  regularFunc: function() {
+                    setTimeout(function() {
+                      consoleEl.innerHTML = `> Regular Func: 'this.name' is <span class="text-red-500">${this.name}</span> (wrong context!)`;
+                    }, 500);
+                  },
+                  arrowFunc: function() {
+                    setTimeout(() => {
+                       consoleEl.innerHTML += `<br>> Arrow Func: 'this.name' is <span class="text-green-500">${this.name}</span> (correct context!)`;
+                    }, 1000);
+                  }
+                };
+                obj.regularFunc();
+                obj.arrowFunc();
+            });
+            
+            const templateInput = document.getElementById('template-name-input');
+            const templateOutput = document.getElementById('template-output');
+            templateInput.addEventListener('input', (e) => {
+                const name = e.target.value || '...';
+                templateOutput.textContent = `\`สวัสดี, ${name}!\``;
+            });
+
+            document.getElementById('destructure-source').addEventListener('click', () => {
+                const target = document.getElementById('destructure-target');
+                const arrow = document.getElementById('destructure-arrow');
+                target.innerHTML = 'const { <span class="text-cyan-400">user</span>, <span class="text-cyan-400">id</span> } = obj;';
+                arrow.style.transform = 'scale(1.5)';
+                setTimeout(() => { arrow.style.transform = 'scale(1)'; }, 300);
+            });
+
+            // Promise Simulation
+            const promiseBtn = document.getElementById('start-promise-btn');
+            const promiseBox = document.getElementById('promise-status-box');
+            promiseBtn.addEventListener('click', (e) => {
+                e.target.disabled = true;
+                promiseBox.textContent = 'สถานะ: Pending...';
+                promiseBox.className = 'p-6 rounded-md text-center text-xl font-bold transition-all duration-500 border-2 border-dashed border-yellow-400 text-yellow-400';
+                
+                new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        if (Math.random() > 0.5) resolve('สำเร็จ!');
+                        else reject('ล้มเหลว!');
+                    }, 1500);
+                }).then(result => {
+                    promiseBox.textContent = `สถานะ: Fulfilled (${result})`;
+                    promiseBox.className = 'p-6 rounded-md text-center text-xl font-bold transition-all duration-500 border-2 border-solid border-green-400 text-green-400 bg-green-900 bg-opacity-20';
+                }).catch(error => {
+                    promiseBox.textContent = `สถานะ: Rejected (${error})`;
+                    promiseBox.className = 'p-6 rounded-md text-center text-xl font-bold transition-all duration-500 border-2 border-solid border-red-400 text-red-400 bg-red-900 bg-opacity-20';
+                }).finally(() => {
+                    e.target.disabled = false;
+                });
+            });
+
+            // Async/Await Simulation
+            const asyncBtn = document.getElementById('run-async-await');
+            const lines = [1,2,3,4,5].map(i => document.getElementById(`line${i}`));
+            asyncBtn.addEventListener('click', async (e) => {
+                e.target.disabled = true;
+                const highlight = (el, duration) => {
+                    return new Promise(resolve => {
+                        el.classList.add('bg-cyan-900');
+                        setTimeout(() => {
+                            el.classList.remove('bg-cyan-900');
+                            resolve();
+                        }, duration);
+                    });
+                };
+                for(const line of lines) line.classList.remove('bg-cyan-900', 'text-yellow-400');
+
+                await highlight(lines[0], 500);
+                await highlight(lines[1], 500);
+                lines[2].querySelector('span').classList.add('text-yellow-400');
+                await highlight(lines[2], 1500); // Wait for await
+                lines[2].querySelector('span').classList.remove('text-yellow-400');
+                await highlight(lines[3], 500);
+                await highlight(lines[4], 500);
+                e.target.disabled = false;
+            });
+
+            // DOM Profile Card
+            const profileNameInput = document.getElementById('profile-name');
+            const profileDescInput = document.getElementById('profile-desc');
+            const profileCard = document.getElementById('profile-card');
+            const profileNameOutput = document.getElementById('profile-name-output');
+            const profileDescOutput = document.getElementById('profile-desc-output');
+            const profileAvatar = document.getElementById('profile-avatar');
+
+            profileNameInput.addEventListener('input', e => {
+                const name = e.target.value;
+                profileNameOutput.textContent = name;
+                profileAvatar.textContent = name.substring(0, 2) || ':)';
+            });
+             profileDescInput.addEventListener('input', e => {
+                profileDescOutput.textContent = e.target.value;
+            });
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const theme = e.target.dataset.theme;
+                    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('border-2', 'border-cyan-500'));
+                    e.target.classList.add('border-2', 'border-cyan-500');
+
+                    if(theme === 'light') {
+                        profileCard.classList.remove('bg-slate-900', 'border-slate-700');
+                        profileCard.classList.add('bg-white', 'border-slate-200');
+                        profileNameOutput.classList.remove('text-white');
+                        profileNameOutput.classList.add('text-slate-900');
+                    } else {
+                        profileCard.classList.add('bg-slate-900', 'border-slate-700');
+                        profileCard.classList.remove('bg-white', 'border-slate-200');
+                        profileNameOutput.classList.add('text-white');
+                        profileNameOutput.classList.remove('text-slate-900');
+                    }
+                });
+            });
+
+            // Project Demo
+            const newQuoteBtn = document.getElementById('new-quote-btn');
+            const quoteContent = document.getElementById('quote-content');
+            const quoteAuthor = document.getElementById('quote-author');
+            const quoteLoading = document.getElementById('quote-loading');
+            
+            async function getNewQuote() {
+                newQuoteBtn.disabled = true;
+                quoteContent.textContent = '';
+                quoteAuthor.textContent = '';
+                quoteLoading.style.display = 'block';
+                try {
+                    const response = await fetch('https://api.quotable.io/random');
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const data = await response.json();
+                    quoteContent.textContent = `“${data.content}”`;
+                    quoteAuthor.textContent = `— ${data.author}`;
+                } catch (error) {
+                    quoteContent.textContent = 'ขออภัย, ไม่สามารถดึงคำคมได้ในขณะนี้';
+                } finally {
+                    quoteLoading.style.display = 'none';
+                    newQuoteBtn.disabled = false;
+                }
+            }
+            newQuoteBtn.addEventListener('click', getNewQuote);
+        });
+    </script>
+</body>
+</html>
