@@ -1,26 +1,25 @@
-# Personal Portfolio Website - Complete LAB Guide
+# React.js Fundamentals - คู่มือฝึกปฏิบัติ
+## สำหรับนักศึกษาวิศวกรรมซอฟต์แวร์ ชั้นปีที่ 2
 
-## React.js Assignment with Git Workflow
+### 📋 Overview
+ในสัปดาห์นี้เราจะเรียนรู้พื้นฐาน React.js ตั้งแต่การสร้าง Component พื้นฐานไปจนถึงการจัดการ State และ Event Handling พร้อมสร้างโปรเจ็กต์เล็กๆ เพื่อรวมทุกเนื้อหาเข้าด้วยกัน
+
+---
+
+## 🎯 Learning Objectives
+หลังจากจบสัปดาห์นี้ นักศึกษาจะสามารถ:
+- เข้าใจและเขียน JSX syntax ได้อย่างถูกต้อง
+- สร้างและใช้งาน React Components
+- จัดการ State และ Props ในแอปพลิเคชัน
+- ใช้งาน React Hooks พื้นฐาน (useState, useEffect, useContext)
+- Handle Events ใน React อย่างเหมาะสม
+- ออกแบบ Component patterns ที่มีประสิทธิภาพ
 
 ---
 
-## 📋 Project Overview
+## 📚 เนื้อหาและการฝึกปฏิบัติ
 
-สร้าง Personal Portfolio Website ด้วย React.js โดยใช้ Git workflow ในการพัฒนา feature ทีละส่วน
-
-### 🎯 Learning Objectives
-
-- เรียนรู้ Git workflow และ feature branching
-- ฝึกใช้ React Components, Props, State, และ Context API
-- เรียนรู้การ Build และ Deploy React Application
-- พัฒนาทักษะการออกแบบ UI/UX
-
-### 📊 งานแบ่งตามสัดส่วน
-
-- **50% - Complete Starter Code** (โครงหลัก + Header + About + Theme Switcher)
-- **50% - Feature Development** (Projects + Contact + Enhancements)
-
----
+### **Day 1: React Components และ JSX Syntax**
 
 ## 🚀 Initial Setup & Complete Starter Code
 
@@ -28,669 +27,1417 @@
 
 ```bash
 # สร้างโปรเจค
-npm create vite@latest my-portfolio -- --template react
-cd my-portfolio
+npm create vite@latest lab3-experiment -- --template react
+cd lab3-experiment
 npm install
 
-# เพิ่ม dependencies ที่จำเป็น
-npm install lucide-react
+# run first time 
+npm run dev
 ```
 
-### Step 2: Complete Project Structure
 
-```
-src/
-├── components/
-│   ├── Header/
-│   │   ├── Header.jsx          ✅ Complete
-│   │   └── Header.css          ✅ Complete
-│   ├── About/
-│   │   ├── About.jsx           ✅ Complete
-│   │   └── About.css           ✅ Complete
-│   ├── Projects/
-│   │   ├── Projects.jsx        🔄 Template only
-│   │   ├── ProjectCard.jsx     🔄 Template only
-│   │   └── Projects.css        🔄 Basic styles
-│   ├── Contact/
-│   │   ├── Contact.jsx         🔄 Template only
-│   │   └── Contact.css         🔄 Basic styles
-│   └── ThemeToggle/
-│       ├── ThemeToggle.jsx     ✅ Complete
-│       └── ThemeToggle.css     ✅ Complete
-├── contexts/
-│   └── ThemeContext.jsx        ✅ Complete
-├── data/
-│   └── portfolioData.js        🔄 Template data
-├── styles/
-│   └── global.css              ✅ Complete
-├── assets/
-│   └── images/                 📁 Empty folder
-├── App.jsx                     ✅ Complete
-└── main.jsx                    ✅ Complete
-```
+#### 🎓 ทฤษฎี: JSX และ Components
+JSX (JavaScript XML) เป็น syntax extension ของ JavaScript ที่ช่วยให้เราเขียน UI ได้อย่างง่ายดาย คล้ายกับ HTML แต่มีพลังของ JavaScript
 
-### Step 3: Complete ThemeContext (ให้สมบูรณ์)
+**Key Points:**
+- JSX คือการรวม HTML กับ JavaScript
+- Component คือ building block ของ React app
+- Component สามารถเป็น Function หรือ Class
+- Modern React แนะนำใช้ Function Components
+
+#### 🛠️ Practice 1.1: สร้าง Component แรก
 
 ```jsx
-// src/contexts/ThemeContext.jsx
-import { createContext, useContext, useState, useEffect } from 'react';
+// App.js
+import React from 'react';
 
-const ThemeContext = createContext();
-
-export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() => {
-    // โหลด theme จาก localStorage
-    const saved = localStorage.getItem('portfolio-theme');
-    return saved || 'light';
-  });
-
-  useEffect(() => {
-    // บันทึก theme ลง localStorage
-    localStorage.setItem('portfolio-theme', theme);
-    // อัพเดท CSS custom properties
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
-  };
-
+// Function Component
+function Welcome() {
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
+    <div>
+      <h1>Welcome to React!</h1>
+      <p>This is my first React component</p>
+    </div>
   );
 }
 
-export function useTheme() {
+function App() {
+  return (
+    <div className="App">
+      <Welcome />
+    </div>
+  );
+}
+
+export default App;
+```
+
+#### 🛠️ Practice 1.2: JSX Rules และ Best Practices
+
+```jsx
+// UserCard.js
+import React from 'react';
+
+function UserCard() {
+  const user = {
+    name: "สมชาย ใจดี",
+    age: 20,
+    university: "มหาวิทยาลัยเทคโนโลยี"
+  };
+
+  return (
+    <div className="user-card">
+      {/* JSX Comment */}
+      <h2>{user.name}</h2>
+      <p>อายุ: {user.age} ปี</p>
+      <p>จาก: {user.university}</p>
+      
+      {/* Conditional Rendering */}
+      {user.age >= 18 && <span className="adult-badge">ผู้ใหญ่</span>}
+      
+      {/* List Rendering */}
+      <div className="skills">
+        <h3>ทักษะ:</h3>
+        <ul>
+          {['JavaScript', 'React', 'CSS'].map((skill, index) => (
+            <li key={index}>{skill}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default UserCard;
+```
+
+#### 📝 Exercise 1: สร้าง ProfileCard Component
+สร้าง Component ที่แสดงข้อมูลโปรไฟล์ของตัวเอง ประกอบด้วย:
+- รูปภาพ (ใช้ placeholder ได้)
+- ชื่อ-นามสกุล
+- สาขาวิชา
+- ปีการศึกษา
+- งานอดิเรก (แสดงเป็น list)
+
+---
+
+### **Day 2: Props - การส่งข้อมูลระหว่าง Components**
+
+#### 🎓 ทฤษฎี: Props
+Props (Properties) เป็นวิธีการส่งข้อมูลจาก Parent Component ไปยัง Child Component
+
+**Key Points:**
+- Props เป็น read-only
+- ใช้สำหรับทำให้ Component reusable
+- สามารถส่งได้ทั้ง primitive values และ objects
+- รองรับ default props และ prop validation
+
+#### 🛠️ Practice 2.1: Basic Props
+
+```jsx
+// StudentCard.js
+import React from 'react';
+
+function StudentCard({ name, studentId, major, year, gpa }) {
+  return (
+    <div className="student-card">
+      <h3>{name}</h3>
+      <div className="student-info">
+        <p><strong>รหัสนักศึกษา:</strong> {studentId}</p>
+        <p><strong>สาขา:</strong> {major}</p>
+        <p><strong>ชั้นปี:</strong> {year}</p>
+        <p><strong>เกรดเฉลี่ย:</strong> {gpa}</p>
+        
+        {/* Conditional styling based on GPA */}
+        <div className={`grade-status ${gpa >= 3.0 ? 'good' : 'needs-improvement'}`}>
+          {gpa >= 3.0 ? '🎉 เกรดดี' : '📚 ต้องพยายามเพิ่ม'}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Default Props
+StudentCard.defaultProps = {
+  gpa: 0.0,
+  year: 1
+};
+
+export default StudentCard;
+```
+
+#### 🛠️ Practice 2.2: Props with Objects และ Functions
+
+```jsx
+// CourseList.js
+import React from 'react';
+
+function CourseItem({ course, onEnroll }) {
+  return (
+    <div className="course-item">
+      <h4>{course.name}</h4>
+      <p>{course.description}</p>
+      <div className="course-details">
+        <span>เครดิต: {course.credits}</span>
+        <span>อาจารย์: {course.instructor}</span>
+      </div>
+      <button onClick={() => onEnroll(course.id)} className="enroll-btn">
+        ลงทะเบียน
+      </button>
+    </div>
+  );
+}
+
+function CourseList({ courses, onCourseEnroll }) {
+  return (
+    <div className="course-list">
+      <h2>รายวิชาที่เปิดสอน</h2>
+      {courses.map(course => (
+        <CourseItem 
+          key={course.id} 
+          course={course} 
+          onEnroll={onCourseEnroll}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Usage in App.js
+function App() {
+  const courses = [
+    {
+      id: 1,
+      name: "Software Engineering",
+      description: "หลักการพัฒนาซอฟต์แวร์",
+      credits: 3,
+      instructor: "อ.สมหญิง"
+    },
+    {
+      id: 2,
+      name: "Database Systems",
+      description: "ระบบฐานข้อมูล",
+      credits: 3,
+      instructor: "อ.สมศักดิ์"
+    }
+  ];
+
+  const handleCourseEnroll = (courseId) => {
+    alert(`ลงทะเบียนวิชารหัส ${courseId} เรียบร้อย!`);
+  };
+
+  return (
+    <CourseList courses={courses} onCourseEnroll={handleCourseEnroll} />
+  );
+}
+```
+
+#### 📝 Exercise 2: Product Catalog
+สร้าง Component hierarchy สำหรับแสดงสินค้า:
+- `ProductCatalog` (Parent)
+- `ProductCard` (Child)
+- แสดงรายการสินค้าพร้อมรูป, ชื่อ, ราคา, และปุ่ม "เพิ่มในตะกร้า"
+
+---
+
+### **Day 3: State Management และ useState Hook**
+
+#### 🎓 ทฤษฎี: State และ useState
+State เป็นข้อมูลที่เปลี่ยนแปลงได้ใน Component และจะทำให้ Component re-render เมื่อมีการเปลี่ยนแปลง
+
+**Key Points:**
+- State เป็น local data ของ Component
+- ใช้ useState Hook ใน Function Components
+- State updates เป็น asynchronous
+- อย่า mutate state โดยตรง
+
+#### 🛠️ Practice 3.1: Basic useState
+
+```jsx
+// Counter.js
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  const [step, setStep] = useState(1);
+
+  const increment = () => {
+    setCount(count + step);
+  };
+
+  const decrement = () => {
+    setCount(count - step);
+  };
+
+  const reset = () => {
+    setCount(0);
+  };
+
+  return (
+    <div className="counter">
+      <h2>เครื่องนับ</h2>
+      <div className="count-display">
+        <span className="count-value">{count}</span>
+      </div>
+      
+      <div className="step-control">
+        <label>ขั้น: </label>
+        <input 
+          type="number" 
+          value={step} 
+          onChange={(e) => setStep(parseInt(e.target.value) || 1)}
+          min="1"
+        />
+      </div>
+      
+      <div className="buttons">
+        <button onClick={decrement}>- ลด</button>
+        <button onClick={reset}>รีเซ็ต</button>
+        <button onClick={increment}>+ เพิ่ม</button>
+      </div>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+#### 🛠️ Practice 3.2: Complex State with Objects
+
+```jsx
+// StudentForm.js
+import React, { useState } from 'react';
+
+function StudentForm() {
+  const [student, setStudent] = useState({
+    name: '',
+    studentId: '',
+    major: '',
+    year: 1,
+    gpa: 0.0
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleInputChange = (e) => {
+    const { name, value, type } = e.target;
+    setStudent(prev => ({
+      ...prev,
+      [name]: type === 'number' ? parseFloat(value) || 0 : value
+    }));
+    
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!student.name.trim()) newErrors.name = 'กรุณากรอกชื่อ';
+    if (!student.studentId.trim()) newErrors.studentId = 'กรุณากรอกรหัสนักศึกษา';
+    if (!student.major.trim()) newErrors.major = 'กรุณาเลือกสาขา';
+    if (student.gpa < 0 || student.gpa > 4) newErrors.gpa = 'เกรดเฉลี่ยต้องอยู่ระหว่าง 0-4';
+    
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = validateForm();
+    
+    if (Object.keys(newErrors).length === 0) {
+      console.log('Student Data:', student);
+      alert('บันทึกข้อมูลเรียบร้อย!');
+      // Reset form
+      setStudent({
+        name: '',
+        studentId: '',
+        major: '',
+        year: 1,
+        gpa: 0.0
+      });
+    } else {
+      setErrors(newErrors);
+    }
+  };
+
+  return (
+    <div className="student-form">
+      <h2>ลงทะเบียนข้อมูลนักศึกษา</h2>
+      
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>ชื่อ-นามสกุล:</label>
+          <input
+            type="text"
+            name="name"
+            value={student.name}
+            onChange={handleInputChange}
+            className={errors.name ? 'error' : ''}
+          />
+          {errors.name && <span className="error-message">{errors.name}</span>}
+        </div>
+
+        <div className="form-group">
+          <label>รหัสนักศึกษา:</label>
+          <input
+            type="text"
+            name="studentId"
+            value={student.studentId}
+            onChange={handleInputChange}
+            className={errors.studentId ? 'error' : ''}
+          />
+          {errors.studentId && <span className="error-message">{errors.studentId}</span>}
+        </div>
+
+        <div className="form-group">
+          <label>สาขา:</label>
+          <select
+            name="major"
+            value={student.major}
+            onChange={handleInputChange}
+            className={errors.major ? 'error' : ''}
+          >
+            <option value="">เลือกสาขา</option>
+            <option value="วิศวกรรมซอฟต์แวร์">วิศวกรรมซอฟต์แวร์</option>
+            <option value="วิศวกรรมคอมพิวเตอร์">วิศวกรรมคอมพิวเตอร์</option>
+            <option value="เทคโนโลยีสารสนเทศ">เทคโนโลยีสารสนเทศ</option>
+          </select>
+          {errors.major && <span className="error-message">{errors.major}</span>}
+        </div>
+
+        <div className="form-group">
+          <label>ชั้นปี:</label>
+          <select
+            name="year"
+            value={student.year}
+            onChange={handleInputChange}
+          >
+            <option value={1}>ปี 1</option>
+            <option value={2}>ปี 2</option>
+            <option value={3}>ปี 3</option>
+            <option value={4}>ปี 4</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>เกรดเฉลี่ย:</label>
+          <input
+            type="number"
+            name="gpa"
+            value={student.gpa}
+            onChange={handleInputChange}
+            min="0"
+            max="4"
+            step="0.01"
+            className={errors.gpa ? 'error' : ''}
+          />
+          {errors.gpa && <span className="error-message">{errors.gpa}</span>}
+        </div>
+
+        <button type="submit" className="submit-btn">บันทึกข้อมูล</button>
+      </form>
+      
+      {/* Preview */}
+      <div className="preview">
+        <h3>ตัวอย่างข้อมูล:</h3>
+        <pre>{JSON.stringify(student, null, 2)}</pre>
+      </div>
+    </div>
+  );
+}
+
+export default StudentForm;
+```
+
+#### 📝 Exercise 3: Todo List
+สร้าง Todo List application ที่มีความสามารถ:
+- เพิ่ม task ใหม่
+- ทำเครื่องหมาย task ว่าเสร็จแล้ว
+- ลบ task
+- แสดงจำนวน task ที่เหลือ
+
+---
+
+### **Day 4: useEffect Hook และ Side Effects**
+
+#### 🎓 ทฤษฎี: useEffect
+useEffect ใช้สำหรับจัดการ side effects เช่น API calls, subscriptions, หรือการเปลี่ยนแปลง DOM
+
+**Key Points:**
+- ทำงานหลังจาก render เสร็จ
+- สามารถมี dependency array
+- รองรับ cleanup function
+- แทนที่ lifecycle methods ใน Class Components
+
+#### 🛠️ Practice 4.1: Basic useEffect
+
+```jsx
+// Timer.js
+import React, { useState, useEffect } from 'react';
+
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+
+  useEffect(() => {
+    let interval = null;
+    
+    if (isRunning) {
+      interval = setInterval(() => {
+        setSeconds(seconds => seconds + 1);
+      }, 1000);
+    } else if (!isRunning && seconds !== 0) {
+      clearInterval(interval);
+    }
+    
+    // Cleanup function
+    return () => clearInterval(interval);
+  }, [isRunning, seconds]);
+
+  const reset = () => {
+    setSeconds(0);
+    setIsRunning(false);
+  };
+
+  const formatTime = (totalSeconds) => {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const secs = totalSeconds % 60;
+    
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  return (
+    <div className="timer">
+      <h2>เครื่องจับเวลา</h2>
+      <div className="time-display">
+        {formatTime(seconds)}
+      </div>
+      <div className="timer-controls">
+        <button onClick={() => setIsRunning(!isRunning)}>
+          {isRunning ? 'หยุด' : 'เริ่ม'}
+        </button>
+        <button onClick={reset}>รีเซ็ต</button>
+      </div>
+    </div>
+  );
+}
+
+export default Timer;
+```
+
+#### 🛠️ Practice 4.2: Data Fetching with useEffect
+
+```jsx
+// WeatherApp.js
+import React, { useState, useEffect } from 'react';
+
+function WeatherApp() {
+  const [weather, setWeather] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [city, setCity] = useState('Bangkok');
+
+  // Simulated weather API call
+  const fetchWeather = async (cityName) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Mock weather data
+      const mockWeatherData = {
+        Bangkok: { temp: 32, condition: 'Sunny', humidity: 75 },
+        'Chiang Mai': { temp: 28, condition: 'Cloudy', humidity: 68 },
+        Phuket: { temp: 30, condition: 'Rainy', humidity: 85 }
+      };
+      
+      const data = mockWeatherData[cityName];
+      if (data) {
+        setWeather({
+          city: cityName,
+          temperature: data.temp,
+          condition: data.condition,
+          humidity: data.humidity
+        });
+      } else {
+        throw new Error('ไม่พบข้อมูลสภาพอากาศของเมืองนี้');
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchWeather(city);
+  }, [city]);
+
+  const handleCityChange = (e) => {
+    setCity(e.target.value);
+  };
+
+  if (loading) {
+    return (
+      <div className="weather-app loading">
+        <h2>กำลังโหลดข้อมูลสภาพอากาศ...</h2>
+        <div className="spinner"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="weather-app error">
+        <h2>เกิดข้อผิดพลาด</h2>
+        <p>{error}</p>
+        <button onClick={() => fetchWeather(city)}>ลองใหม่</button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="weather-app">
+      <h2>สภาพอากาศ</h2>
+      
+      <div className="city-selector">
+        <label>เลือกเมือง: </label>
+        <select value={city} onChange={handleCityChange}>
+          <option value="Bangkok">กรุงเทพฯ</option>
+          <option value="Chiang Mai">เชียงใหม่</option>
+          <option value="Phuket">ภูเก็ต</option>
+        </select>
+      </div>
+
+      {weather && (
+        <div className="weather-info">
+          <h3>{weather.city}</h3>
+          <div className="temperature">{weather.temperature}°C</div>
+          <div className="condition">{weather.condition}</div>
+          <div className="humidity">ความชื้น: {weather.humidity}%</div>
+        </div>
+      )}
+      
+      <button onClick={() => fetchWeather(city)} className="refresh-btn">
+        รีเฟรช
+      </button>
+    </div>
+  );
+}
+
+export default WeatherApp;
+```
+
+#### 📝 Exercise 4: User Profile Dashboard
+สร้าง Dashboard ที่:
+- โหลดข้อมูล user จาก mock API
+- แสดง loading state
+- Handle error states
+- มีการ refresh ข้อมูล
+
+---
+
+### **Day 5: useContext Hook และ Event Handling**
+
+#### 🎓 ทฤษฎี: useContext และ Event Handling
+useContext ช่วยในการแชร์ state ระหว่าง Components โดยไม่ต้องส่ง props ลงไปทีละชั้น
+
+#### 🛠️ Practice 5.1: Theme Context
+
+```jsx
+// ThemeContext.js
+import React, { createContext, useContext, useState } from 'react';
+
+const ThemeContext = createContext();
+
+export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {
     throw new Error('useTheme must be used within ThemeProvider');
   }
   return context;
-}
-```
+};
 
-### Step 4: Complete Global Styles
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState('light');
 
-```css
-/* src/styles/global.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
 
-/* CSS Variables for Theming */
-:root[data-theme="light"] {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #e2e8f0;
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  --text-tertiary: #94a3b8;
-  --accent-primary: #3b82f6;
-  --accent-secondary: #1d4ed8;
-  --accent-tertiary: #dbeafe;
-  --border-color: #e2e8f0;
-  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-}
-
-:root[data-theme="dark"] {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --text-tertiary: #94a3b8;
-  --accent-primary: #60a5fa;
-  --accent-secondary: #3b82f6;
-  --accent-tertiary: #1e3a8a;
-  --border-color: #334155;
-  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3);
-}
-
-/* Reset และ Base Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.6;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.App {
-  min-height: 100vh;
-}
-
-/* Utility Classes */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.section {
-  padding: 5rem 0;
-}
-
-.btn-primary {
-  background: var(--accent-primary);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.btn-primary:hover {
-  background: var(--accent-secondary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--accent-primary);
-  border: 2px solid var(--accent-primary);
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.btn-secondary:hover {
-  background: var(--accent-primary);
-  color: white;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .container {
-    padding: 0 1rem;
-  }
-  
-  .section {
-    padding: 3rem 0;
-  }
-}
-```
-
-### Step 5: Complete Header Component
-
-```jsx
-// src/components/Header/Header.jsx
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
-import ThemeToggle from '../ThemeToggle/ThemeToggle';
-import './Header.css';
-
-function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false);
-    }
+  const value = {
+    theme,
+    toggleTheme
   };
 
   return (
-    <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
-      <div className="container">
-        <div className="header-content">
-          <div className="logo">
-            <h2>Your Name</h2>
-          </div>
+    <ThemeContext.Provider value={value}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+```
 
-          <nav className={`nav ${isMenuOpen ? 'nav-open' : ''}`}>
-            <ul className="nav-list">
-              <li><button onClick={() => scrollToSection('about')}>About</button></li>
-              <li><button onClick={() => scrollToSection('projects')}>Projects</button></li>
-              <li><button onClick={() => scrollToSection('contact')}>Contact</button></li>
-            </ul>
-          </nav>
+```jsx
+// ThemedComponent.js
+import React from 'react';
+import { useTheme } from './ThemeContext';
 
-          <div className="header-actions">
-            <ThemeToggle />
-            <button 
-              className="mobile-menu-btn"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-      </div>
+function Header() {
+  const { theme, toggleTheme } = useTheme();
+  
+  return (
+    <header className={`header ${theme}`}>
+      <h1>My App</h1>
+      <button onClick={toggleTheme}>
+        {theme === 'light' ? '🌙' : '☀️'} Switch to {theme === 'light' ? 'Dark' : 'Light'}
+      </button>
     </header>
   );
 }
 
-export default Header;
-```
-
-```css
-/* src/components/Header/Header.css */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: var(--bg-primary);
-  border-bottom: 1px solid var(--border-color);
-  z-index: 1000;
-  transition: all 0.3s ease;
-}
-
-.header.scrolled {
-  background: rgba(var(--bg-primary-rgb), 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: var(--shadow);
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 0;
-}
-
-.logo h2 {
-  color: var(--accent-primary);
-  font-weight: 600;
-}
-
-.nav-list {
-  display: flex;
-  list-style: none;
-  gap: 2rem;
-}
-
-.nav-list button {
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  font-weight: 500;
-  cursor: pointer;
-  transition: color 0.3s ease;
-  font-size: 1rem;
-}
-
-.nav-list button:hover {
-  color: var(--accent-primary);
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.mobile-menu-btn {
-  display: none;
-  background: none;
-  border: none;
-  color: var(--text-primary);
-  cursor: pointer;
-}
-
-/* Mobile Styles */
-@media (max-width: 768px) {
-  .mobile-menu-btn {
-    display: block;
-  }
-
-  .nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--bg-primary);
-    border-bottom: 1px solid var(--border-color);
-    transform: translateY(-100%);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-  }
-
-  .nav-open {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .nav-list {
-    flex-direction: column;
-    padding: 2rem;
-    gap: 1rem;
-  }
-
-  .nav-list button {
-    text-align: left;
-    padding: 0.5rem 0;
-    font-size: 1.1rem;
-  }
-}
-```
-
-### Step 6: Complete ThemeToggle Component
-
-```jsx
-// src/components/ThemeToggle/ThemeToggle.jsx
-import { Sun, Moon } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
-import './ThemeToggle.css';
-
-function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
-
+function MainContent() {
+  const { theme } = useTheme();
+  
   return (
-    <button 
-      className="theme-toggle"
-      onClick={toggleTheme}
-      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-    >
-      {theme === 'light' ? (
-        <Moon size={20} />
-      ) : (
-        <Sun size={20} />
-      )}
-    </button>
+    <main className={`main-content ${theme}`}>
+      <h2>Welcome to our app!</h2>
+      <p>Current theme: {theme}</p>
+    </main>
   );
 }
 
-export default ThemeToggle;
-```
-
-```css
-/* src/components/ThemeToggle/ThemeToggle.css */
-.theme-toggle {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  cursor: pointer;
-  color: var(--text-primary);
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.theme-toggle:hover {
-  background: var(--bg-tertiary);
-  transform: scale(1.05);
-}
-
-.theme-toggle:active {
-  transform: scale(0.95);
+function App() {
+  return (
+    <ThemeProvider>
+      <div className="app">
+        <Header />
+        <MainContent />
+      </div>
+    </ThemeProvider>
+  );
 }
 ```
 
-### Step 7: Complete About Component
+#### 🛠️ Practice 5.2: Advanced Event Handling
 
 ```jsx
-// src/components/About/About.jsx
-import { Code, Palette, Zap, Heart } from 'lucide-react';
-import './About.css';
+// InteractiveCard.js
+import React, { useState, useRef } from 'react';
 
-function About() {
-  const skills = [
-    { name: 'Frontend Development', icon: <Code size={24} />, color: '#3b82f6' },
-    { name: 'UI/UX Design', icon: <Palette size={24} />, color: '#10b981' },
-    { name: 'Performance Optimization', icon: <Zap size={24} />, color: '#f59e0b' },
-    { name: 'Problem Solving', icon: <Heart size={24} />, color: '#ef4444' }
-  ];
+function InteractiveCard() {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+  const cardRef = useRef(null);
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    const rect = cardRef.current.getBoundingClientRect();
+    setPosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    
+    e.preventDefault();
+    setPosition({
+      x: e.clientX - position.x,
+      y: e.clientY - position.y
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleClick = () => {
+    setClickCount(prev => prev + 1);
+  };
+
+  const handleDoubleClick = () => {
+    setPosition({ x: 0, y: 0 });
+    setClickCount(0);
+  };
+
+  const handleKeyDown = (e) => {
+    const step = 10;
+    switch(e.key) {
+      case 'ArrowUp':
+        setPosition(prev => ({ ...prev, y: prev.y - step }));
+        break;
+      case 'ArrowDown':
+        setPosition(prev => ({ ...prev, y: prev.y + step }));
+        break;
+      case 'ArrowLeft':
+        setPosition(prev => ({ ...prev, x: prev.x - step }));
+        break;
+      case 'ArrowRight':
+        setPosition(prev => ({ ...prev, x: prev.x + step }));
+        break;
+      case 'Enter':
+        handleClick();
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
-    <section id="about" className="about section">
-      <div className="container">
-        <div className="about-content">
-          <div className="about-text">
-            <h2 className="section-title">About Me</h2>
-            <p className="about-description">
-              Hello! I'm a passionate web developer with a love for creating 
-              beautiful and functional user experiences. I enjoy turning complex 
-              problems into simple, elegant solutions.
-            </p>
-            <p className="about-description">
-              When I'm not coding, you can find me exploring new technologies, 
-              reading tech blogs, or working on personal projects that challenge 
-              my creativity and technical skills.
-            </p>
-            
-            <div className="skills-grid">
-              {skills.map((skill, index) => (
-                <div key={index} className="skill-item">
-                  <div 
-                    className="skill-icon"
-                    style={{ backgroundColor: skill.color + '20', color: skill.color }}
-                  >
-                    {skill.icon}
-                  </div>
-                  <span className="skill-name">{skill.name}</span>
-                </div>
-              ))}
-            </div>
+    <div 
+      className="interactive-container"
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+    >
+      <div
+        ref={cardRef}
+        className={`interactive-card ${isDragging ? 'dragging' : ''}`}
+        style={{
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          cursor: isDragging ? 'grabbing' : 'grab'
+        }}
+        onMouseDown={handleMouseDown}
+        onClick={handleClick}
+        onDoubleClick={handleDoubleClick}
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+      >
+        <h3>Interactive Card</h3>
+        <p>คลิก: {clickCount} ครั้ง</p>
+        <p>ตำแหน่ง: ({Math.round(position.x)}, {Math.round(position.y)})</p>
+        <div className="instructions">
+          <p>🖱️ ลากเพื่อย้าย</p>
+          <p>👆 คลิกเพื่อนับ</p>
+          <p>👆👆 ดับเบิลคลิกเพื่อรีเซ็ต</p>
+          <p>⌨️ ใช้ลูกศรเพื่อย้าย</p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-            <div className="about-actions">
-              <a href="/resume.pdf" className="btn-primary" download>
-                Download Resume
-              </a>
-              <button 
-                className="btn-secondary"
-                onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
-              >
-                Get In Touch
-              </button>
+export default InteractiveCard;
+```
+
+#### 📝 Exercise 5: Shopping Cart Context
+สร้าง Shopping Cart ที่ใช้ Context เพื่อ:
+- เพิ่ม/ลดสินค้าในตะกร้า
+- คำนวณราคารวม
+- แสดงจำนวนสินค้าใน header
+
+---
+
+## 🎯 Final Project: Student Course Management System
+
+### Project Overview
+สร้างระบบจัดการรายวิชาสำหรับนักศึกษา ที่รวมทุกเนื้อหาที่เรียนมา
+
+### Features Required:
+1. **Student Profile Management**
+   - แสดงและแก้ไขข้อมูลนักศึกษา
+   - ใช้ useState สำหรับจัดการ form
+
+2. **Course Catalog**
+   - แสดงรายการวิชาที่เปิดสอน
+   - กรองตามภาคเรียน/ปีการศึกษา
+   - ใช้ Props สำหรับส่งข้อมูล
+
+3. **Enrollment System**
+   - ลงทะเบียนเรียน/ถอนวิชา
+   - ตรวจสอบเงื่อนไขการลงทะเบียน
+   - ใช้ useContext สำหรับ global state
+
+4. **Grade Tracking**
+   - แสดงเกรดรายวิชา
+   - คำนวณเกรดเฉลี่ย
+   - ใช้ useEffect สำหรับการคำนวณ
+
+5. **Theme & UI Controls**
+   - เปลี่ยน theme (light/dark)
+   - Responsive design
+   - Event handling ที่หลากหลาย
+
+### Project Structure:
+```
+src/
+├── components/
+│   ├── StudentProfile.js
+│   ├── CourseCard.js
+│   ├── CourseCatalog.js
+│   ├── EnrollmentForm.js
+│   └── GradeTracker.js
+├── contexts/
+│   ├── StudentContext.js
+│   ├── CourseContext.js
+│   └── ThemeContext.js
+├── utils/
+│   └── gradeCalculator.js
+├── styles/
+│   └── App.css
+└── App.js
+```
+
+### Implementation Guide:
+
+#### Step 1: Setup Context Providers
+
+```jsx
+// contexts/StudentContext.js
+import React, { createContext, useContext, useState, useEffect } from 'react';
+
+const StudentContext = createContext();
+
+export const useStudent = () => {
+  const context = useContext(StudentContext);
+  if (!context) {
+    throw new Error('useStudent must be used within StudentProvider');
+  }
+  return context;
+};
+
+export const StudentProvider = ({ children }) => {
+  const [student, setStudent] = useState({
+    id: '64001234',
+    name: '',
+    major: 'วิศวกรรมซอฟต์แวร์',
+    year: 2,
+    gpa: 0.0,
+    enrolledCourses: [],
+    completedCourses: []
+  });
+
+  const [courses, setCourses] = useState([
+    {
+      id: 'CS201',
+      name: 'Data Structures and Algorithms',
+      credits: 3,
+      semester: 1,
+      year: 2025,
+      instructor: 'อ.ดร.สมชาย ใจดี',
+      maxStudents: 40,
+      enrolled: 25,
+      prerequisites: ['CS101'],
+      description: 'ศึกษาโครงสร้างข้อมูลและอัลกอริทึมพื้นฐาน'
+    },
+    {
+      id: 'CS202',
+      name: 'Object-Oriented Programming',
+      credits: 3,
+      semester: 1,
+      year: 2025,
+      instructor: 'อ.ดร.สมหญิง รักเรียน',
+      maxStudents: 35,
+      enrolled: 30,
+      prerequisites: ['CS101'],
+      description: 'หลักการเขียนโปรแกรมเชิงวัตถุ'
+    },
+    {
+      id: 'CS203',
+      name: 'Database Systems',
+      credits: 3,
+      semester: 1,
+      year: 2025,
+      instructor: 'อ.ดร.สมศักดิ์ วิชาการ',
+      maxStudents: 45,
+      enrolled: 20,
+      prerequisites: [],
+      description: 'ระบบฐานข้อมูลและการออกแบบ'
+    }
+  ]);
+
+  const updateStudent = (updates) => {
+    setStudent(prev => ({ ...prev, ...updates }));
+  };
+
+  const enrollCourse = (courseId) => {
+    const course = courses.find(c => c.id === courseId);
+    if (!course) return { success: false, message: 'ไม่พบรายวิชานี้' };
+    
+    if (student.enrolledCourses.includes(courseId)) {
+      return { success: false, message: 'ลงทะเบียนวิชานี้แล้ว' };
+    }
+    
+    if (course.enrolled >= course.maxStudents) {
+      return { success: false, message: 'รายวิชาเต็มแล้ว' };
+    }
+
+    setStudent(prev => ({
+      ...prev,
+      enrolledCourses: [...prev.enrolledCourses, courseId]
+    }));
+
+    setCourses(prev => prev.map(c => 
+      c.id === courseId ? { ...c, enrolled: c.enrolled + 1 } : c
+    ));
+
+    return { success: true, message: 'ลงทะเบียนสำเร็จ' };
+  };
+
+  const withdrawCourse = (courseId) => {
+    setStudent(prev => ({
+      ...prev,
+      enrolledCourses: prev.enrolledCourses.filter(id => id !== courseId)
+    }));
+
+    setCourses(prev => prev.map(c => 
+      c.id === courseId ? { ...c, enrolled: Math.max(0, c.enrolled - 1) } : c
+    ));
+
+    return { success: true, message: 'ถอนรายวิชาสำเร็จ' };
+  };
+
+  const value = {
+    student,
+    courses,
+    updateStudent,
+    enrollCourse,
+    withdrawCourse
+  };
+
+  return (
+    <StudentContext.Provider value={value}>
+      {children}
+    </StudentContext.Provider>
+  );
+};
+```
+
+#### Step 2: Student Profile Component
+
+```jsx
+// components/StudentProfile.js
+import React, { useState } from 'react';
+import { useStudent } from '../contexts/StudentContext';
+
+function StudentProfile() {
+  const { student, updateStudent } = useStudent();
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    name: student.name,
+    major: student.major,
+    year: student.year
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === 'year' ? parseInt(value) : value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateStudent(formData);
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setFormData({
+      name: student.name,
+      major: student.major,
+      year: student.year
+    });
+    setIsEditing(false);
+  };
+
+  return (
+    <div className="student-profile">
+      <div className="profile-header">
+        <h2>ข้อมูลนักศึกษา</h2>
+        {!isEditing && (
+          <button onClick={() => setIsEditing(true)} className="edit-btn">
+            ✏️ แก้ไข
+          </button>
+        )}
+      </div>
+
+      {isEditing ? (
+        <form onSubmit={handleSubmit} className="profile-form">
+          <div className="form-group">
+            <label>ชื่อ-นามสกุล:</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>สาขา:</label>
+            <select
+              name="major"
+              value={formData.major}
+              onChange={handleInputChange}
+            >
+              <option value="วิศวกรรมซอฟต์แวร์">วิศวกรรมซอฟต์แวร์</option>
+              <option value="วิศวกรรมคอมพิวเตอร์">วิศวกรรมคอมพิวเตอร์</option>
+              <option value="เทคโนโลยีสารสนเทศ">เทคโนโลยีสารสนเทศ</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>ชั้นปี:</label>
+            <select
+              name="year"
+              value={formData.year}
+              onChange={handleInputChange}
+            >
+              <option value={1}>ปี 1</option>
+              <option value={2}>ปี 2</option>
+              <option value={3}>ปี 3</option>
+              <option value={4}>ปี 4</option>
+            </select>
+          </div>
+
+          <div className="form-actions">
+            <button type="submit" className="save-btn">บันทึก</button>
+            <button type="button" onClick={handleCancel} className="cancel-btn">
+              ยกเลิก
+            </button>
+          </div>
+        </form>
+      ) : (
+        <div className="profile-display">
+          <div className="profile-info">
+            <div className="info-item">
+              <span className="label">รหัสนักศึกษา:</span>
+              <span className="value">{student.id}</span>
+            </div>
+            <div className="info-item">
+              <span className="label">ชื่อ-นามสกุล:</span>
+              <span className="value">{student.name || 'ยังไม่ได้กรอก'}</span>
+            </div>
+            <div className="info-item">
+              <span className="label">สาขา:</span>
+              <span className="value">{student.major}</span>
+            </div>
+            <div className="info-item">
+              <span className="label">ชั้นปี:</span>
+              <span className="value">ปี {student.year}</span>
+            </div>
+            <div className="info-item">
+              <span className="label">เกรดเฉลี่ย:</span>
+              <span className="value gpa">{student.gpa.toFixed(2)}</span>
             </div>
           </div>
 
-          <div className="about-image">
-            <div className="image-placeholder">
-              <div className="placeholder-content">
-                <p>Your Photo Here</p>
-                <small>Add your profile picture</small>
+          <div className="enrollment-summary">
+            <h3>สรุปการลงทะเบียน</h3>
+            <div className="summary-stats">
+              <div className="stat">
+                <span className="stat-number">{student.enrolledCourses.length}</span>
+                <span className="stat-label">วิชาที่ลงทะเบียน</span>
+              </div>
+              <div className="stat">
+                <span className="stat-number">{student.completedCourses.length}</span>
+                <span className="stat-label">วิชาที่เรียนจบ</span>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      )}
+    </div>
   );
 }
 
-export default About;
+export default StudentProfile;
 ```
 
-```css
-/* src/components/About/About.css */
-.about {
-  background: var(--bg-secondary);
-}
-
-.about-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.about-description {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-  line-height: 1.7;
-}
-
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin: 2rem 0;
-}
-
-.skill-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1rem;
-  background: var(--bg-primary);
-  border-radius: 0.75rem;
-  border: 1px solid var(--border-color);
-  transition: transform 0.3s ease;
-}
-
-.skill-item:hover {
-  transform: translateY(-2px);
-}
-
-.skill-icon {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.skill-name {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.about-actions {
-  display: flex;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.about-image {
-  display: flex;
-  justify-content: center;
-}
-
-.image-placeholder {
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  background: var(--bg-tertiary);
-  border: 3px solid var(--accent-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.placeholder-content {
-  text-align: center;
-  color: var(--text-tertiary);
-}
-
-.placeholder-content p {
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-
-/* Mobile Styles */
-@media (max-width: 768px) {
-  .about-content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    text-align: center;
-  }
-
-  .section-title {
-    font-size: 2rem;
-  }
-
-  .skills-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .about-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .image-placeholder {
-    width: 250px;
-    height: 250px;
-  }
-}
-```
-
-### Step 8: Complete Main App
+#### Step 3: Course Catalog Component
 
 ```jsx
-// src/App.jsx
-import { useEffect } from 'react';
-import { ThemeProvider } from './contexts/ThemeContext';
-import Header from './components/Header/Header';
-import About from './components/About/About';
-import Projects from './components/Projects/Projects';
-import Contact from './components/Contact/Contact';
-import './styles/global.css';
+// components/CourseCatalog.js
+import React, { useState, useEffect } from 'react';
+import { useStudent } from '../contexts/StudentContext';
+import CourseCard from './CourseCard';
 
-function App() {
+function CourseCatalog() {
+  const { courses, student, enrollCourse, withdrawCourse } = useStudent();
+  const [filteredCourses, setFilteredCourses] = useState(courses);
+  const [filters, setFilters] = useState({
+    semester: 'all',
+    year: 'all',
+    enrolled: 'all'
+  });
+  const [searchTerm, setSearchTerm] = useState('');
+
   useEffect(() => {
-    // Smooth scrolling offset for fixed header
-    const style = document.createElement('style');
-    style.innerHTML = `
-      html {
-        scroll-padding-top: 80px;
-      }
-    `;
-    document.head.appendChild(style);
+    let filtered = courses;
+
+    // Filter by search term
+    if (searchTerm) {
+      filtered = filtered.filter(course =>
+        course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.instructor.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Filter by semester
+    if (filters.semester !== 'all') {
+      filtered = filtered.filter(course =>
+        course.semester === parseInt(filters.semester)
+      );
+    }
+
+    // Filter by year
+    if (filters.year !== 'all') {
+      filtered = filtered.filter(course =>
+        course.year === parseInt(filters.year)
+      );
+    }
+
+    // Filter by enrollment status
+    if (filters.enrolled === 'enrolled') {
+      filtered = filtered.filter(course =>
+        student.enrolledCourses.includes(course.id)
+      );
+    } else if (filters.enrolled === 'available') {
+      filtered = filtered.filter(course =>
+        !student.enrolledCourses.includes(course.id)
+      );
+    }
+
+    setFilteredCourses(filtered);
+  }, [courses, filters, searchTerm, student.enrolledCourses]);
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleEnrollment = async (courseId, action) => {
+    const result = action === 'enroll' ? 
+      enrollCourse(courseId) : 
+      withdrawCourse(courseId);
     
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
+    // You could add a toast notification here
+    console.log(result.message);
+  };
 
   return (
-    <ThemeProvider>
-      <div className="App">
-        <Header />
-        <main>
-          <About />
-          <Projects />
-          <Contact />
-        </main>
+    <div className="course-catalog">
+      <div className="catalog-header">
+        <h2>รายวิชาที่เปิดสอน</h2>
+        
+        <div className="search-filters">
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="ค้นหารายวิชา..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+          </div>
+
+          <div className="filters">
+            <select
+              name="semester"
+              value={filters.semester}
+              onChange={handleFilterChange}
+            >
+              <option value="all">ภาคเรียนทั้งหมด</option>
+              <option value="1">ภาคเรียนที่ 1</option>
+              <option value="2">ภาคเรียนที่ 2</option>
+            </select>
+
+            <select
+              name="year"
+              value={filters.year}
+              onChange={handleFilterChange}
+            >
+              <option value="all">ปีการศึกษาทั้งหมด</option>
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+            </select>
+
+            <select
+              name="enrolled"
+              value={filters.enrolled}
+              onChange={handleFilterChange}
+            >
+              <option value="all">ทั้งหมด</option>
+              <option value="enrolled">ลงทะเบียนแล้ว</option>
+              <option value="available">ยังไม่ลงทะเบียน</option>
+            </select>
+          </div>
+        </div>
       </div>
+
+      <div className="course-stats">
+        <div className="stat">
+          <span className="stat-number">{filteredCourses.length}</span>
+          <span className="stat-label">รายวิชาที่แสดง</span>
+        </div>
+        <div className="stat">
+          <span className="stat-number">{student.enrolledCourses.length}</span>
+          <span className="stat-label">ลงทะเบียนแล้ว</span>
+        </div>
+      </div>
+
+      <div className="course-grid">
+        {filteredCourses.length > 0 ? (
+          filteredCourses.map(course => (
+            <CourseCard
+              key={course.id}
+              course={course}
+              isEnrolled={student.enrolledCourses.includes(course.id)}
+              onEnrollment={handleEnrollment}
+            />
+          ))
+        ) : (
+          <div className="no-courses">
+            <p>ไม่พบรายวิชาที่ตรงกับเงื่อนไขการค้นหา</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default CourseCatalog;
+```
+
+#### Step 4: Course Card Component
+
+```jsx
+// components/CourseCard.js
+import React, { useState } from 'react';
+
+function CourseCard({ course, isEnrolled, onEnrollment }) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleEnrollmentAction = async (action) => {
+    setIsLoading(true);
+    await onEnrollment(course.id, action);
+    setIsLoading(false);
+  };
+
+  const getAvailabilityStatus = () => {
+    const available = course.maxStudents - course.enrolled;
+    if (available === 0) return { status: 'full', text: 'เต็มแล้ว', color: 'red' };
+    if (available <= 5) return { status: 'limited', text: `เหลือ ${available} ที่`, color: 'orange' };
+    return { status: 'available', text: `ว่าง ${available} ที่`, color: 'green' };
+  };
+
+  const availability = getAvailabilityStatus();
+
+  return (
+    <div className={`course-card ${isEnrolled ? 'enrolled' : ''}`}>
+      <div className="course-header">
+        <div className="course-code">{course.id}</div>
+        <div className={`availability ${availability.status}`}>
+          {availability.text}
+        </div>
+      </div>
+
+      <div className="course-info">
+        <h3 className="course-name">{course.name}</h3>
+        <p className="course-description">{course.description}</p>
+        
+        <div className="course-details">
+          <div className="detail-item">
+            <span className="label">อาจารย์:</span>
+            <span className="value">{course.instructor}</span>
+          </div>
+          <div className="detail-item">
+            <span className="label">หน่วยกิต:</span>
+            <span className="value">{course.credits}</span>
+          </div>
+          <div className="detail-item">
+            <span className="label">ภาคเรียน:</span>
+            <span className="value">{course.semester}/{course.year}</span>
+          </div>
+          <div className="detail-item">
+            <span className="label">นักศึกษา:</span>
+            <span className="value">{course.enrolled}/{course.maxStudents}</span>
+          </div>
+        </div>
+
+        {course.prerequisites.length > 0 && (
+          <div className="prerequisites">
+            <span className="label">วิชาบังคับก่อน:</span>
+            <div className="prereq-list">
+              {course.prerequisites.map(prereq => (
+                <span key={prereq} className="prereq-item">{prereq}</span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="course-actions">
+        {isEnrolled ? (
+          <button
+            onClick={() => handleEnrollmentAction('withdraw')}
+            disabled={isLoading}
+            className="withdraw-btn"
+          >
+            {isLoading ? '⏳ กำลังประมวลผล...' : '🗑️ ถอนรายวิชา'}
+          </button>
+        ) : (
+          <button
+            onClick={() => handleEnrollmentAction('enroll')}
+            disabled={isLoading || availability.status === 'full'}
+            className="enroll-btn"
+          >
+            {isLoading ? '⏳ กำลังประมวลผล...' : 
+             availability.status === 'full' ? '❌ เต็มแล้ว' : '✅ ลงทะเบียน'}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default CourseCard;
+```
+
+#### Step 5: Main App Component
+
+```jsx
+// App.js
+import React from 'react';
+import { StudentProvider } from './contexts/StudentContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import StudentProfile from './components/StudentProfile';
+import CourseCatalog from './components/CourseCatalog';
+import Header from './components/Header';
+import './styles/App.css';
+
+function App() {
+  return (
+    <ThemeProvider>
+      <StudentProvider>
+        <div className="app">
+          <Header />
+          <main className="main-content">
+            <div className="container">
+              <StudentProfile />
+              <CourseCatalog />
+            </div>
+          </main>
+        </div>
+      </StudentProvider>
     </ThemeProvider>
   );
 }
@@ -698,1016 +1445,170 @@ function App() {
 export default App;
 ```
 
-### Step 9: Template Components (สำหรับให้นักศึกษาทำต่อ)
+### CSS Styles (App.css) - Key Highlights:
 
-```jsx
-// src/components/Projects/Projects.jsx - Template
-import './Projects.css';
-
-function Projects() {
-  return (
-    <section id="projects" className="projects section">
-      <div className="container">
-        <h2 className="section-title">My Projects</h2>
-        <p className="section-subtitle">
-          Here are some of the projects I've worked on recently.
-        </p>
-        
-        {/* TODO: นักศึกษาเพิ่ม project list ที่นี่ */}
-        <div className="projects-grid">
-          <div className="project-placeholder">
-            <p>Add your projects here</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+```css
+/* Theme Variables */
+:root {
+  --primary-color: #2563eb;
+  --secondary-color: #64748b;
+  --success-color: #059669;
+  --warning-color: #d97706;
+  --error-color: #dc2626;
+  --bg-color: #ffffff;
+  --card-bg: #f8fafc;
+  --text-color: #1f2937;
+  --border-color: #e5e7eb;
 }
 
-export default Projects;
-```
-
-```jsx
-// src/components/Contact/Contact.jsx - Template
-import './Contact.css';
-
-function Contact() {
-  return (
-    <section id="contact" className="contact section">
-      <div className="container">
-        <h2 className="section-title">Get In Touch</h2>
-        <p className="section-subtitle">
-          Have a project in mind? Let's work together!
-        </p>
-        
-        {/* TODO: นักศึกษาเพิ่ม contact form ที่นี่ */}
-        <div className="contact-placeholder">
-          <p>Add contact form here</p>
-        </div>
-      </div>
-    </section>
-  );
+[data-theme="dark"] {
+  --bg-color: #1f2937;
+  --card-bg: #374151;
+  --text-color: #f9fafb;
+  --border-color: #4b5563;
 }
 
-export default Contact;
-```
+/* Responsive Design */
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
 
----
-
-## 🌟 Git Workflow Development Process
-
-### Phase 1: Initial Setup และ Repository Creation
-
-```bash
-# 1. Initialize Git repository
-git init
-
-# 2. Create .gitignore
-echo "node_modules/
-dist/
-.env
-.env.local
-.DS_Store
-*.log" > .gitignore
-
-# 3. Initial commit
-git add .
-git commit -m "feat: initial project setup with complete starter code
-
-- Complete ThemeContext with localStorage persistence
-- Complete Header component with mobile navigation
-- Complete About section with skills showcase
-- Complete ThemeToggle with smooth animations
-- Complete global styles with CSS variables
-- Template structure for Projects and Contact components"
-
-# 4. Create GitHub repository และ push
-git branch -M main
-git remote add origin https://github.com/[username]/portfolio-website.git
-git push -u origin main
-```
-
-### Phase 2: Feature Development (นักศึกษาทำ)
-
-#### Feature 1: Projects Section
-
-```bash
-# สร้าง feature branch
-git checkout -b feature/projects-section
-
-# TODO: นักศึกษาพัฒนา Projects component
-# - สร้าง projects data structure
-# - สร้าง ProjectCard component
-# - เพิ่ม project filtering (optional)
-# - เพิ่ม project images และ links
-
-# เมื่อเสร็จแล้ว
-git add .
-git commit -m "feat: implement projects section
-
-- Add projects data structure with sample projects
-- Create ProjectCard component with hover effects
-- Add project filtering by technology
-- Implement responsive grid layout
-- Add external links to GitHub and live demos"
-
-git push origin feature/projects-section
-```
-
-#### Feature 2: Contact Form
-
-```bash
-# สร้าง feature branch
-git checkout main
-git pull origin main
-git checkout -b feature/contact-form
-
-# TODO: นักศึกษาพัฒนา Contact component
-# - สร้าง contact form with validation
-# - เพิ่ม form submission handling
-# - เพิ่ม social media links
-# - เพิ่ม contact information
-
-# เมื่อเสร็จแล้ว
-git add .
-git commit -m "feat: implement contact form with validation
-
-- Add contact form with name, email, message fields
-- Implement form validation with error messages
-- Add form submission handling with success feedback
-- Add social media links (GitHub, LinkedIn, etc.)
-- Add contact information section"
-
-git push origin feature/contact-form
-```
-
-#### Feature 3: Enhancements และ Polish
-
-```bash
-# สร้าง feature branch
-git checkout main
-git pull origin main
-git checkout -b feature/enhancements
-
-# TODO: นักศึกษาเพิ่ม enhancements
-# - เพิ่ม animations และ micro-interactions
-# - ปรับปรุง responsive design
-# - เพิ่ม loading states
-# - เพิ่ม SEO meta tags
-# - เพิ่ม favicon
-
-# เมื่อเสร็จแล้ว
-git add .
-git commit -m "feat: add enhancements and polish
-
-- Add smooth animations and micro-interactions
-- Improve responsive design for all screen sizes
-- Add loading states for better UX
-- Implement SEO optimization with meta tags
-- Add custom favicon and app icons
-- Add scroll-to-top functionality"
-
-git push origin feature/enhancements
-```
-
-### Phase 3: Integration และ Final Polish
-
-```bash
-# Merge ทุก feature กลับไป main
-git checkout main
-
-# Merge feature branches (หรือใช้ GitHub Pull Requests)
-git merge feature/projects-section
-git merge feature/contact-form  
-git merge feature/enhancements
-
-# Final commit
-git add .
-git commit -m "feat: final integration and polish
-
-- Integrate all features into cohesive portfolio
-- Add final touches and bug fixes
-- Optimize performance and accessibility
-- Update documentation"
-
-git push origin main
-```
-
----
-
-## 🚀 Build และ Deployment Guide
-
-### Step 1: Pre-deployment Preparation
-
-```bash
-# 1. ทดสอบ build locally
-npm run build
-
-# 2. ทดสอบ preview
-npm run preview
-
-# 3. ตรวจสอบ console errors
-# เปิด browser dev tools และตรวจสอบ errors
-
-# 4. ตรวจสอบ responsive design
-# ทดสอบใน mobile, tablet, desktop
-```
-
-### Step 2: Environment Configuration
-
-```javascript
-// vite.config.js - ปรับแต่งสำหรับ deployment
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-export default defineConfig({
-  plugins: [react()],
-  base: '/', // สำหรับ GitHub Pages ใช้ '/<repository-name>/'
-  build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    sourcemap: false, // ปิดสำหรับ production
-  }
-})
-```
-
-### Step 3: Deployment Options
-
-#### Option 1: Netlify (แนะนำ - ง่ายที่สุด)
-
-```bash
-# Method 1: Drag & Drop
-1. Build project: npm run build
-2. ไปที่ https://netlify.com
-3. Drag folder 'dist' ไปใส่ในหน้า deploy
-
-# Method 2: Git Integration (แนะนำ)
-1. Push code ไป GitHub
-2. ไปที่ https://netlify.com
-3. คลิก "New site from Git"
-4. เชื่อมต่อ GitHub account
-5. เลือก repository
-6. Build settings:
-   - Build command: npm run build
-   - Publish directory: dist
-7. คลิก "Deploy site"
-
-# Auto-deploy setup
-# ทุกครั้งที่ push ไป main branch จะ auto-deploy
-```
-
-#### Option 2: Vercel
-
-```bash
-# Method 1: Vercel CLI
-npm i -g vercel
-vercel login
-vercel --prod
-
-# Method 2: Git Integration
-1. ไปที่ https://vercel.com
-2. Import from GitHub
-3. เลือก repository
-4. Deploy (auto-detect React settings)
-```
-
-#### Option 3: GitHub Pages
-
-```bash
-# 1. Install gh-pages
-npm install --save-dev gh-pages
-
-# 2. เพิ่มใน package.json
-{
-  "homepage": "https://[username].github.io/[repository-name]",
-  "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+@media (max-width: 768px) {
+  .course-grid {
+    grid-template-columns: 1fr;
   }
 }
-
-# 3. Deploy
-npm run deploy
-
-# 4. ตั้งค่าใน GitHub repository
-# Settings > Pages > Source: gh-pages branch
-```
-
-#### Option 4: Firebase Hosting
-
-```bash
-# 1. Install Firebase CLI
-npm install -g firebase-tools
-
-# 2. Login และ initialize
-firebase login
-firebase init hosting
-
-# 3. Configuration
-# Public directory: dist
-# Single-page app: Yes
-# Overwrite index.html: No
-
-# 4. Build และ deploy
-npm run build
-firebase deploy
-```
-
-### Step 4: Custom Domain Setup (Optional)
-
-```bash
-# Netlify
-1. Domain settings > Add custom domain
-2. Configure DNS records ที่ domain provider
-
-# Vercel  
-1. Project settings > Domains
-2. Add domain และ configure DNS
-
-# GitHub Pages
-1. Settings > Pages > Custom domain
-2. Add CNAME record ใน DNS
-```
-
-### Step 5: Performance Optimization
-
-```javascript
-// src/main.jsx - Add performance monitoring
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-
-// Performance measurement
-if (process.env.NODE_ENV === 'production') {
-  // Web Vitals measurement
-  import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-    getCLS(console.log);
-    getFID(console.log);
-    getFCP(console.log);
-    getLCP(console.log);
-    getTTFB(console.log);
-  });
-}
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
-```
-
-### Step 6: SEO Optimization
-
-```html
-<!-- public/index.html - Update meta tags -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="Personal portfolio of [Your Name] - Web Developer specializing in React.js and modern frontend technologies" />
-  <meta name="keywords" content="web developer, react, javascript, frontend, portfolio" />
-  <meta name="author" content="Your Name" />
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://your-portfolio-url.com/" />
-  <meta property="og:title" content="Your Name - Web Developer Portfolio" />
-  <meta property="og:description" content="Personal portfolio showcasing web development projects and skills" />
-  <meta property="og:image" content="https://your-portfolio-url.com/og-image.jpg" />
-  
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://your-portfolio-url.com/" />
-  <meta property="twitter:title" content="Your Name - Web Developer Portfolio" />
-  <meta property="twitter:description" content="Personal portfolio showcasing web development projects and skills" />
-  <meta property="twitter:image" content="https://your-portfolio-url.com/og-image.jpg" />
-  
-  <title>Your Name - Web Developer Portfolio</title>
-</head>
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
-</body>
-</html>
 ```
 
 ---
 
-## 📊 Development Phases และ Timeline
+## 🎯 Assessment Criteria
 
-### Phase 1: Setup & Initial Commit (15 นาที)
+### การประเมินผล (100 คะแนน):
 
-- [ ] Clone starter code
-- [ ] Install dependencies
-- [ ] Test run locally
-- [ ] Create GitHub repository
-- [ ] Initial commit
+1. **Component Structure & JSX (20 คะแนน)**
+   - การเขียน JSX syntax ที่ถูกต้อง
+   - การแบ่ง Components อย่างเหมาะสม
+   - การใช้ Props ถูกต้อง
 
-### Phase 2: Projects Section Development (60 นาที)
+2. **State Management (25 คะแนน)**
+   - การใช้ useState อย่างมีประสิทธิภาพ
+   - การจัดการ complex state
+   - การ update state ที่ถูกต้อง
 
-- [ ] Create branch `feature/projects-section`
-- [ ] Design projects data structure
-- [ ] Build ProjectCard component
-- [ ] Implement projects grid layout
-- [ ] Add hover effects และ animations
-- [ ] Test responsive design
-- [ ] Commit และ push
+3. **React Hooks (20 คะแนน)**
+   - การใช้ useEffect อย่างเหมาะสม
+   - การใช้ useContext สำหรับ global state
+   - การ cleanup effects
 
-**Expected Output:**
+4. **Event Handling (15 คะแนน)**
+   - การ handle events หลากหลายรูปแบบ
+   - การ prevent default behaviors
+   - การ validate user inputs
 
+5. **Code Quality & Best Practices (10 คะแนน)**
+   - Code organization และ readability
+   - การใช้ modern JavaScript features
+   - การ handle errors และ edge cases
+
+6. **UI/UX & Responsive Design (10 คะแนน)**
+   - ความสวยงามและใช้งานง่าย
+   - Responsive design
+   - Accessibility considerations
+
+---
+
+## 📝 Homework Assignments
+
+### Week 5 Assignments:
+
+1. **Individual Assignment**: Complete the Student Course Management System
+   - ต้องมี features ครบตามที่กำหนด
+   - เพิ่มความสามารถในการ export/import ข้อมูล
+   - **Due**: สัปดาห์หน้า
+
+2. **Group Project** (3-4 คน): Library Management System
+   - ระบบจัดการหนังสือห้องสมุด
+   - มี features: ค้นหาหนังสือ, ยืม-คืน, จองหนังสือ
+   - ใช้ Context API สำหรับ state management
+   - **Due**: 2 สัปดาห์
+
+3. **Extra Credit**: Component Library
+   - สร้าง reusable components (Button, Modal, Table, etc.)
+   - เขียน documentation และ examples
+   - Deploy บน GitHub Pages
+
+---
+
+## 🔍 Troubleshooting Common Issues
+
+### 1. useState Updates ไม่ทำงาน
 ```jsx
-// src/data/portfolioData.js - ตัวอย่างที่นักศึกษาต้องทำ
-export const projects = [
-  {
-    id: 1,
-    title: "E-commerce Website",
-    description: "A full-featured online store built with React and Node.js",
-    image: "/images/ecommerce-project.jpg",
-    technologies: ["React", "Node.js", "MongoDB", "Express"],
-    demoUrl: "https://my-ecommerce-demo.netlify.app",
-    githubUrl: "https://github.com/username/ecommerce-project",
-    featured: true
-  },
-  {
-    id: 2,
-    title: "Weather App",
-    description: "Real-time weather application with location-based forecasts",
-    image: "/images/weather-app.jpg",
-    technologies: ["React", "OpenWeather API", "CSS3"],
-    demoUrl: "https://my-weather-app.netlify.app",
-    githubUrl: "https://github.com/username/weather-app",
-    featured: false
-  },
-  // นักศึกษาเพิ่มอย่างน้อย 3 projects
-];
+// ❌ Wrong
+const [count, setCount] = useState(0);
+setCount(count + 1);
+setCount(count + 1); // Still 1, not 2
+
+// ✅ Correct
+setCount(prev => prev + 1);
+setCount(prev => prev + 1); // Now it's 2
 ```
 
-### Phase 3: Contact Form Development (45 นาที)
-
-- [ ] Create branch `feature/contact-form`
-- [ ] Build contact form with validation
-- [ ] Add form submission handling
-- [ ] Create social media links section
-- [ ] Add contact information
-- [ ] Test form functionality
-- [ ] Commit และ push
-
-**Expected Features:**
-
-- Name, Email, Message fields with validation
-- Success/Error messages
-- Social media icons with links
-- Contact information (email, phone, location)
-
-### Phase 4: Enhancements และ Polish (30 นาที)
-
-- [ ] Create branch `feature/enhancements`
-- [ ] Add animations และ micro-interactions
-- [ ] Improve responsive design
-- [ ] Add loading states
-- [ ] Optimize images
-- [ ] Add scroll-to-top button
-- [ ] Final testing
-- [ ] Commit และ push
-
-### Phase 5: Integration และ Deployment (30 นาที)
-
-- [ ] Merge all features to main
-- [ ] Final testing
-- [ ] Build optimization
-- [ ] Deploy to chosen platform
-- [ ] Test live website
-- [ ] Update README.md
-
----
-
-## 🎯 Feature Development Guidelines
-
-### Projects Section Requirements
-
+### 2. useEffect Infinite Loop
 ```jsx
-// src/components/Projects/Projects.jsx - ตัวอย่างที่ต้องทำ
-import { useState } from 'react';
-import { ExternalLink, Github, Filter } from 'lucide-react';
-import ProjectCard from './ProjectCard';
-import { projects } from '../../data/portfolioData';
-import './Projects.css';
+// ❌ Wrong - infinite loop
+useEffect(() => {
+  setData(newData);
+}); // No dependency array
 
-function Projects() {
-  const [filter, setFilter] = useState('all');
-  
-  // Get unique technologies for filter
-  const technologies = ['all', ...new Set(
-    projects.flatMap(project => project.technologies)
-  )];
-  
-  // Filter projects based on selected technology
-  const filteredProjects = filter === 'all' 
-    ? projects 
-    : projects.filter(project => 
-        project.technologies.includes(filter)
-      );
-  
-  return (
-    <section id="projects" className="projects section">
-      <div className="container">
-        <h2 className="section-title">My Projects</h2>
-        <p className="section-subtitle">
-          Here are some of the projects I've worked on recently.
-        </p>
-        
-        {/* Filter Buttons */}
-        <div className="project-filters">
-          {technologies.map(tech => (
-            <button
-              key={tech}
-              className={`filter-btn ${filter === tech ? 'active' : ''}`}
-              onClick={() => setFilter(tech)}
-            >
-              {tech.charAt(0).toUpperCase() + tech.slice(1)}
-            </button>
-          ))}
-        </div>
-        
-        {/* Projects Grid */}
-        <div className="projects-grid">
-          {filteredProjects.map(project => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-        
-        {filteredProjects.length === 0 && (
-          <div className="no-projects">
-            <p>No projects found for this technology.</p>
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
-
-export default Projects;
+// ✅ Correct
+useEffect(() => {
+  setData(newData);
+}, []); // Empty dependency array
 ```
 
-### Contact Form Requirements
-
+### 3. Context Value Updates
 ```jsx
-// src/components/Contact/Contact.jsx - ตัวอย่างที่ต้องทำ
-import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react';
-import './Contact.css';
+// ❌ Wrong - creates new object every render
+<MyContext.Provider value={{ user, setUser }}>
 
-function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
-    
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!validateForm()) return;
-    
-    setIsSubmitting(true);
-    
-    try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-      
-      setTimeout(() => setSubmitStatus(null), 5000);
-    } catch (error) {
-      setSubmitStatus('error');
-      setTimeout(() => setSubmitStatus(null), 5000);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
-  };
-
-  return (
-    <section id="contact" className="contact section">
-      <div className="container">
-        <h2 className="section-title">Get In Touch</h2>
-        <p className="section-subtitle">
-          Have a project in mind? Let's work together!
-        </p>
-        
-        <div className="contact-content">
-          {/* Contact Form */}
-          <div className="contact-form-wrapper">
-            <form className="contact-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className={errors.name ? 'error' : ''}
-                />
-                {errors.name && <span className="error-message">{errors.name}</span>}
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={errors.email ? 'error' : ''}
-                />
-                {errors.email && <span className="error-message">{errors.email}</span>}
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="message">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="5"
-                  value={formData.message}
-                  onChange={handleChange}
-                  className={errors.message ? 'error' : ''}
-                ></textarea>
-                {errors.message && <span className="error-message">{errors.message}</span>}
-              </div>
-              
-              <button 
-                type="submit" 
-                className="btn-primary"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  'Sending...'
-                ) : (
-                  <>
-                    <Send size={18} />
-                    Send Message
-                  </>
-                )}
-              </button>
-              
-              {submitStatus === 'success' && (
-                <div className="success-message">
-                  Message sent successfully! I'll get back to you soon.
-                </div>
-              )}
-              
-              {submitStatus === 'error' && (
-                <div className="error-message">
-                  Something went wrong. Please try again.
-                </div>
-              )}
-            </form>
-          </div>
-          
-          {/* Contact Information */}
-          <div className="contact-info">
-            <div className="contact-item">
-              <Mail size={24} />
-              <div>
-                <h4>Email</h4>
-                <p>your.email@example.com</p>
-              </div>
-            </div>
-            
-            <div className="contact-item">
-              <Phone size={24} />
-              <div>
-                <h4>Phone</h4>
-                <p>+66 XX XXX XXXX</p>
-              </div>
-            </div>
-            
-            <div className="contact-item">
-              <MapPin size={24} />
-              <div>
-                <h4>Location</h4>
-                <p>Bangkok, Thailand</p>
-              </div>
-            </div>
-            
-            {/* Social Media Links */}
-            <div className="social-links">
-              <h4>Follow Me</h4>
-              <div className="social-icons">
-                <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
-                  <Github size={24} />
-                </a>
-                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
-                  <Linkedin size={24} />
-                </a>
-                <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer">
-                  <Twitter size={24} />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export default Contact;
+// ✅ Correct - memoize the value
+const value = useMemo(() => ({ user, setUser }), [user]);
+<MyContext.Provider value={value}>
 ```
 
 ---
 
-## 📋 Submission Checklist
+## 🚀 Next Steps
 
-### 📂 Required Deliverables
-
-- [ ] **GitHub Repository URL** - Public repository with complete source code
-- [ ] **Live Website URL** - Deployed website accessible online
-- [ ] **Project Documentation** - README.md with project details
-
-### ✅ Technical Requirements
-
-- [ ] React application runs without errors
-- [ ] All components render correctly
-- [ ] Theme switcher works in both light/dark modes
-- [ ] Projects section displays at least 3 projects
-- [ ] Contact form has working validation
-- [ ] Website is responsive (mobile, tablet, desktop)
-- [ ] Clean, readable code with proper structure
-- [ ] Git history shows feature development process
-
-### 🎨 Design Requirements
-
-- [ ] Professional and cohesive visual design
-- [ ] Consistent color scheme and typography
-- [ ] Smooth animations and transitions
-- [ ] Intuitive navigation and user experience
-- [ ] Personal branding and content
-
-### 🚀 Deployment Requirements
-
-- [ ] Successfully deployed to free hosting platform
-- [ ] Custom domain or subdomain configured
-- [ ] Website loads quickly and without errors
-- [ ] All images and assets load correctly
-- [ ] SEO meta tags implemented
-
-### 📄 Documentation Requirements
-
-```markdown
-# Portfolio Website
-
-## Description
-Brief description of your portfolio website and its purpose.
-
-## Technologies Used
-- React 18
-- Vite
-- CSS3
-- Lucide React Icons
-- [Other technologies you added]
-
-## Features
-- Responsive design
-- Dark/Light theme switcher
-- Project showcase with filtering
-- Contact form with validation
-- Smooth scrolling navigation
-- [Additional features you implemented]
-
-## Live Demo
-[Your deployed website URL]
-
-## Local Development
-```bash
-npm install
-npm run dev
-```
-
-## Deployment
-
-Deployed using [Netlify/Vercel/etc.] with automatic deployments from the main branch.
-
-## Screenshots
-
-[Add screenshots of your website]
-
-## What I Learned
-
-[Brief reflection on what you learned during this project]
-
-```
+หลังจบสัปดาห์นี้ นักศึกษาจะพร้อมสำหรับ:
+- Advanced React Patterns (Higher-Order Components, Render Props)
+- State Management Libraries (Redux, Zustand)
+- React Router สำหรับ Single Page Applications
+- Testing React Components
+- Performance Optimization
 
 ---
 
-## 🏆 Grading Rubric (100 points)
+## 📚 Additional Resources
 
-### Technical Implementation (40 points)
-- **React Components & Structure (15 points)**
-  - Proper component organization
-  - Effective use of props and state
-  - Clean component architecture
+### Documentation:
+- [React Official Docs](https://react.dev/)
+- [React Hooks Reference](https://react.dev/reference/react)
 
-- **Functionality (15 points)**
-  - Theme switcher works correctly
-  - Contact form validation functions
-  - Navigation and user interactions work
-  - No console errors
+### Practice Platforms:
+- [React Challenges](https://react-challenges.netlify.app/)
+- [Scrimba React Course](https://scrimba.com/learn/learnreact)
 
-- **Code Quality (10 points)**
-  - Clean, readable code
-  - Proper naming conventions
-  - Comments where necessary
-  - Git commit history shows good practices
-
-### Design & User Experience (25 points)
-- **Visual Design (15 points)**
-  - Professional appearance
-  - Consistent color scheme and typography
-  - Good use of spacing and layout
-  - Creative and personal branding
-
-- **Responsive Design (10 points)**
-  - Works well on mobile devices
-  - Tablet compatibility
-  - Desktop optimization
-
-### Content & Features (20 points)
-- **Personal Content (10 points)**
-  - Complete About section with personal information
-  - At least 3 meaningful projects
-  - Professional contact information
-
-- **Feature Implementation (10 points)**
-  - Projects filtering/sorting
-  - Form validation and feedback
-  - Additional creative features
-
-### Deployment & Documentation (15 points)
-- **Successful Deployment (10 points)**
-  - Website accessible online
-  - All features work in production
-  - Fast loading times
-
-- **Documentation (5 points)**
-  - Complete README.md
-  - Clear project description
-  - Setup and deployment instructions
+### Community:
+- [React Thailand Facebook Group](https://www.facebook.com/groups/react.th)
+- [Stack Overflow React Tag](https://stackoverflow.com/questions/tagged/reactjs)
 
 ---
 
-## 💡 Enhancement Ideas (Bonus Points)
+**หมายเหตุ**: คู่มือนี้ออกแบบมาให้ฝึกปฏิบัติแบบ hands-on เน้นการเรียนรู้จริงและการประยุกต์ใช้ในโปรเจ็กต์จริง นักศึกษาควรทำตามทุก step และไม่ลังเลที่จะทดลองและปรับแต่งโค้ดเพื่อความเข้าใจที่ลึกซึ้งยิ่งขึ้น
 
-### Level 1 Enhancements (+5 points each)
-- [ ] **Loading Animations** - Skeleton screens or loading spinners
-- [ ] **Scroll Animations** - Elements animate as they come into view
-- [ ] **Custom Cursor** - Interactive cursor effects
-- [ ] **Back to Top Button** - Smooth scroll to top functionality
-
-### Level 2 Enhancements (+10 points each)
-- [ ] **Blog Section** - Additional section with blog posts
-- [ ] **Skills Progress Bars** - Animated skill level indicators
-- [ ] **Timeline Component** - Education/experience timeline
-- [ ] **Image Gallery** - Lightbox for project images
-
-### Level 3 Enhancements (+15 points each)
-- [ ] **TypeScript Migration** - Convert entire project to TypeScript
-- [ ] **Progressive Web App** - Add PWA capabilities
-- [ ] **Performance Optimization** - Implement code splitting and lazy loading
-- [ ] **Accessibility Compliance** - WCAG 2.1 AA compliance
-
----
-
-## 🆘 Troubleshooting Guide
-
-### Common Issues และ Solutions
-
-#### Build Errors
-```bash
-# Clear node_modules and reinstall
-rm -rf node_modules package-lock.json
-npm install
-
-# Clear Vite cache
-npm run dev -- --force
-```
-
-#### Deployment Issues
-
-```bash
-# Check build output
-npm run build
-npm run preview
-
-# Verify all imports are correct
-# Check that all image paths are correct
-# Ensure no console errors
-```
-
-#### Git Issues
-
-```bash
-# Reset to previous commit
-git reset --hard HEAD~1
-
-# Create new branch from main
-git checkout main
-git pull origin main
-git checkout -b feature/new-feature
-```
-
-#### Theme Not Working
-
-- Check ThemeContext is wrapped around App
-- Verify CSS custom properties are defined
-- Check localStorage permissions
-
----
-
-## 📞 Support และ Resources
-
-### Getting Help
-
-- **Office Hours:** [ระบุเวลาที่สามารถปรึกษาได้]
-- **Email:** [อีเมลอาจารย์]
-- **Discussion Forum:** [Link ถ้ามี]
-
-### Useful Resources
-
-- [React Documentation](https://react.dev)
-- [Vite Documentation](https://vitejs.dev)
-- [Lucide Icons](https://lucide.dev)
-- [CSS Grid Guide](https://css-tricks.com/snippets/css/complete-guide-grid/)
-- [Flexbox Guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
-
-### Design Inspiration
-
-- [Personal Portfolio Examples](https://dribbble.com/search/portfolio-website)
-- [Color Palette Tools](https://coolors.co)
-- [Typography Pairing](https://fontpair.co)
-
----
-
-## 📅 Important Dates
-
-- **Project Release:** [5,6 สิงหาคม 2568]
-- **Checkpoint 1:** [วันตรวจ setup และ basic structure]
-- **Checkpoint 2:** [วันตรวจ projects section]
-- **Final Submission:** [4,5 สิงหาคม 2568] - 23:59 น.
-
----
-
-## 🌟 Success Tips
-
-1. **Start Early** - อย่าทิ้งงานไว้นาทีสุดท้าย
-2. **Test Frequently** - ทดสอบใน browser หลายตัว
-3. **Use Git Properly** - Commit บ่อยๆ พร้อม clear messages
-4. **Ask for Help** - อย่าติดค้างนาน ถามเมื่อมีปัญหา
-5. **Be Creative** - แสดงความคิดสร้างสรรค์และความเป็นตัวตน
-6. **Focus on UX** - คิดจากมุมมองผู้ใช้งาน
-7. **Test Mobile** - อย่าลืมทดสอบใน mobile device
-
-**Good luck with your portfolio development! 🚀**
+**Happy Coding! 🎉**
