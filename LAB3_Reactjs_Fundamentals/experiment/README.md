@@ -1,18 +1,22 @@
 # Personal Portfolio Website - Complete LAB Guide
+
 ## React.js Assignment with Git Workflow
 
 ---
 
 ## 📋 Project Overview
+
 สร้าง Personal Portfolio Website ด้วย React.js โดยใช้ Git workflow ในการพัฒนา feature ทีละส่วน
 
 ### 🎯 Learning Objectives
+
 - เรียนรู้ Git workflow และ feature branching
 - ฝึกใช้ React Components, Props, State, และ Context API
 - เรียนรู้การ Build และ Deploy React Application
 - พัฒนาทักษะการออกแบบ UI/UX
 
 ### 📊 งานแบ่งตามสัดส่วน
+
 - **50% - Complete Starter Code** (โครงหลัก + Header + About + Theme Switcher)
 - **50% - Feature Development** (Projects + Contact + Enhancements)
 
@@ -21,6 +25,7 @@
 ## 🚀 Initial Setup & Complete Starter Code
 
 ### Step 1: Create Project
+
 ```bash
 # สร้างโปรเจค
 npm create vite@latest my-portfolio -- --template react
@@ -32,6 +37,7 @@ npm install lucide-react
 ```
 
 ### Step 2: Complete Project Structure
+
 ```
 src/
 ├── components/
@@ -64,6 +70,7 @@ src/
 ```
 
 ### Step 3: Complete ThemeContext (ให้สมบูรณ์)
+
 ```jsx
 // src/contexts/ThemeContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
@@ -105,6 +112,7 @@ export function useTheme() {
 ```
 
 ### Step 4: Complete Global Styles
+
 ```css
 /* src/styles/global.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -220,6 +228,7 @@ body {
 ```
 
 ### Step 5: Complete Header Component
+
 ```jsx
 // src/components/Header/Header.jsx
 import { useState, useEffect } from 'react';
@@ -388,6 +397,7 @@ export default Header;
 ```
 
 ### Step 6: Complete ThemeToggle Component
+
 ```jsx
 // src/components/ThemeToggle/ThemeToggle.jsx
 import { Sun, Moon } from 'lucide-react';
@@ -441,6 +451,7 @@ export default ThemeToggle;
 ```
 
 ### Step 7: Complete About Component
+
 ```jsx
 // src/components/About/About.jsx
 import { Code, Palette, Zap, Heart } from 'lucide-react';
@@ -643,6 +654,7 @@ export default About;
 ```
 
 ### Step 8: Complete Main App
+
 ```jsx
 // src/App.jsx
 import { useEffect } from 'react';
@@ -745,6 +757,7 @@ export default Contact;
 ## 🌟 Git Workflow Development Process
 
 ### Phase 1: Initial Setup และ Repository Creation
+
 ```bash
 # 1. Initialize Git repository
 git init
@@ -777,6 +790,7 @@ git push -u origin main
 ### Phase 2: Feature Development (นักศึกษาทำ)
 
 #### Feature 1: Projects Section
+
 ```bash
 # สร้าง feature branch
 git checkout -b feature/projects-section
@@ -801,6 +815,7 @@ git push origin feature/projects-section
 ```
 
 #### Feature 2: Contact Form
+
 ```bash
 # สร้าง feature branch
 git checkout main
@@ -827,6 +842,7 @@ git push origin feature/contact-form
 ```
 
 #### Feature 3: Enhancements และ Polish
+
 ```bash
 # สร้าง feature branch
 git checkout main
@@ -855,6 +871,7 @@ git push origin feature/enhancements
 ```
 
 ### Phase 3: Integration และ Final Polish
+
 ```bash
 # Merge ทุก feature กลับไป main
 git checkout main
@@ -881,6 +898,7 @@ git push origin main
 ## 🚀 Build และ Deployment Guide
 
 ### Step 1: Pre-deployment Preparation
+
 ```bash
 # 1. ทดสอบ build locally
 npm run build
@@ -896,6 +914,7 @@ npm run preview
 ```
 
 ### Step 2: Environment Configuration
+
 ```javascript
 // vite.config.js - ปรับแต่งสำหรับ deployment
 import { defineConfig } from 'vite'
@@ -915,6 +934,7 @@ export default defineConfig({
 ### Step 3: Deployment Options
 
 #### Option 1: Netlify (แนะนำ - ง่ายที่สุด)
+
 ```bash
 # Method 1: Drag & Drop
 1. Build project: npm run build
@@ -937,6 +957,7 @@ export default defineConfig({
 ```
 
 #### Option 2: Vercel
+
 ```bash
 # Method 1: Vercel CLI
 npm i -g vercel
@@ -951,6 +972,7 @@ vercel --prod
 ```
 
 #### Option 3: GitHub Pages
+
 ```bash
 # 1. Install gh-pages
 npm install --save-dev gh-pages
@@ -972,6 +994,7 @@ npm run deploy
 ```
 
 #### Option 4: Firebase Hosting
+
 ```bash
 # 1. Install Firebase CLI
 npm install -g firebase-tools
@@ -991,6 +1014,7 @@ firebase deploy
 ```
 
 ### Step 4: Custom Domain Setup (Optional)
+
 ```bash
 # Netlify
 1. Domain settings > Add custom domain
@@ -1006,6 +1030,7 @@ firebase deploy
 ```
 
 ### Step 5: Performance Optimization
+
 ```javascript
 // src/main.jsx - Add performance monitoring
 import React from 'react'
@@ -1032,6 +1057,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 ```
 
 ### Step 6: SEO Optimization
+
 ```html
 <!-- public/index.html - Update meta tags -->
 <!DOCTYPE html>
@@ -1074,6 +1100,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 ## 📊 Development Phases และ Timeline
 
 ### Phase 1: Setup & Initial Commit (15 นาที)
+
 - [ ] Clone starter code
 - [ ] Install dependencies
 - [ ] Test run locally
@@ -1081,6 +1108,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 - [ ] Initial commit
 
 ### Phase 2: Projects Section Development (60 นาที)
+
 - [ ] Create branch `feature/projects-section`
 - [ ] Design projects data structure
 - [ ] Build ProjectCard component
@@ -1090,6 +1118,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 - [ ] Commit และ push
 
 **Expected Output:**
+
 ```jsx
 // src/data/portfolioData.js - ตัวอย่างที่นักศึกษาต้องทำ
 export const projects = [
@@ -1118,6 +1147,7 @@ export const projects = [
 ```
 
 ### Phase 3: Contact Form Development (45 นาที)
+
 - [ ] Create branch `feature/contact-form`
 - [ ] Build contact form with validation
 - [ ] Add form submission handling
@@ -1127,12 +1157,14 @@ export const projects = [
 - [ ] Commit และ push
 
 **Expected Features:**
+
 - Name, Email, Message fields with validation
 - Success/Error messages
 - Social media icons with links
 - Contact information (email, phone, location)
 
 ### Phase 4: Enhancements และ Polish (30 นาที)
+
 - [ ] Create branch `feature/enhancements`
 - [ ] Add animations และ micro-interactions
 - [ ] Improve responsive design
@@ -1143,6 +1175,7 @@ export const projects = [
 - [ ] Commit และ push
 
 ### Phase 5: Integration และ Deployment (30 นาที)
+
 - [ ] Merge all features to main
 - [ ] Final testing
 - [ ] Build optimization
@@ -1155,6 +1188,7 @@ export const projects = [
 ## 🎯 Feature Development Guidelines
 
 ### Projects Section Requirements
+
 ```jsx
 // src/components/Projects/Projects.jsx - ตัวอย่างที่ต้องทำ
 import { useState } from 'react';
@@ -1220,6 +1254,7 @@ export default Projects;
 ```
 
 ### Contact Form Requirements
+
 ```jsx
 // src/components/Contact/Contact.jsx - ตัวอย่างที่ต้องทำ
 import { useState } from 'react';
@@ -1428,11 +1463,13 @@ export default Contact;
 ## 📋 Submission Checklist
 
 ### 📂 Required Deliverables
+
 - [ ] **GitHub Repository URL** - Public repository with complete source code
 - [ ] **Live Website URL** - Deployed website accessible online
 - [ ] **Project Documentation** - README.md with project details
 
 ### ✅ Technical Requirements
+
 - [ ] React application runs without errors
 - [ ] All components render correctly
 - [ ] Theme switcher works in both light/dark modes
@@ -1443,6 +1480,7 @@ export default Contact;
 - [ ] Git history shows feature development process
 
 ### 🎨 Design Requirements
+
 - [ ] Professional and cohesive visual design
 - [ ] Consistent color scheme and typography
 - [ ] Smooth animations and transitions
@@ -1450,6 +1488,7 @@ export default Contact;
 - [ ] Personal branding and content
 
 ### 🚀 Deployment Requirements
+
 - [ ] Successfully deployed to free hosting platform
 - [ ] Custom domain or subdomain configured
 - [ ] Website loads quickly and without errors
@@ -1457,6 +1496,7 @@ export default Contact;
 - [ ] SEO meta tags implemented
 
 ### 📄 Documentation Requirements
+
 ```markdown
 # Portfolio Website
 
@@ -1488,13 +1528,17 @@ npm run dev
 ```
 
 ## Deployment
+
 Deployed using [Netlify/Vercel/etc.] with automatic deployments from the main branch.
 
 ## Screenshots
+
 [Add screenshots of your website]
 
 ## What I Learned
+
 [Brief reflection on what you learned during this project]
+
 ```
 
 ---
@@ -1592,6 +1636,7 @@ npm run dev -- --force
 ```
 
 #### Deployment Issues
+
 ```bash
 # Check build output
 npm run build
@@ -1603,6 +1648,7 @@ npm run preview
 ```
 
 #### Git Issues
+
 ```bash
 # Reset to previous commit
 git reset --hard HEAD~1
@@ -1614,6 +1660,7 @@ git checkout -b feature/new-feature
 ```
 
 #### Theme Not Working
+
 - Check ThemeContext is wrapped around App
 - Verify CSS custom properties are defined
 - Check localStorage permissions
@@ -1623,11 +1670,13 @@ git checkout -b feature/new-feature
 ## 📞 Support และ Resources
 
 ### Getting Help
+
 - **Office Hours:** [ระบุเวลาที่สามารถปรึกษาได้]
 - **Email:** [อีเมลอาจารย์]
 - **Discussion Forum:** [Link ถ้ามี]
 
 ### Useful Resources
+
 - [React Documentation](https://react.dev)
 - [Vite Documentation](https://vitejs.dev)
 - [Lucide Icons](https://lucide.dev)
@@ -1635,6 +1684,7 @@ git checkout -b feature/new-feature
 - [Flexbox Guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 
 ### Design Inspiration
+
 - [Personal Portfolio Examples](https://dribbble.com/search/portfolio-website)
 - [Color Palette Tools](https://coolors.co)
 - [Typography Pairing](https://fontpair.co)
@@ -1643,11 +1693,10 @@ git checkout -b feature/new-feature
 
 ## 📅 Important Dates
 
-- **Project Release:** [วันที่ให้โจทย์]
+- **Project Release:** [5,6 สิงหาคม 2568]
 - **Checkpoint 1:** [วันตรวจ setup และ basic structure]
 - **Checkpoint 2:** [วันตรวจ projects section]
-- **Final Submission:** [วันส่งงานสุดท้าย] - 23:59 น.
-- **Presentation Day:** [วันนำเสนอ] - 5 นาทีต่อคน
+- **Final Submission:** [4,5 สิงหาคม 2568] - 23:59 น.
 
 ---
 
