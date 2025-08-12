@@ -4,10 +4,12 @@
 **หัวข้อ:** Advanced React & State Management  
 **ระดับ:** ปานกลาง
 
+### Live Demo: [Lab 4: Mini E-commerce Application](https://se-rmutl.github.io/engse203/week6/mini-ecommerce/)
 ---
 
 ## Table of Contents
 - [Lab 4: Mini E-commerce Application](#lab-4-mini-e-commerce-application)
+    - [Live Demo: Lab 4: Mini E-commerce Application](#live-demo-lab-4-mini-e-commerce-application)
   - [Table of Contents](#table-of-contents)
   - [เป้าหมายการเรียนรู้ (Learning Objectives)](#เป้าหมายการเรียนรู้-learning-objectives)
   - [ภาพรวมของแอปพลิเคชัน (Application Overview)](#ภาพรวมของแอปพลิเคชัน-application-overview)
