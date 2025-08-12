@@ -1,53 +1,50 @@
-# Exercises: Advanced React & State Management
+# Lab Exercises: Advanced React & State Management
+
 ### สัปดาห์ที่ 6 | ENGSE203
 
----
+เอกสารนี้จะแนะนำการทำโจทย์เพื่อฝึกฝนแนวคิดขั้นสูงใน React ทั้ง 5 หัวข้อ ได้แก่ Custom Hooks, Context API, Redux Toolkit, React Router และ Performance Optimization
 
-## ขั้นตอนที่ 1: การตั้งค่าโปรเจค (Vite + React + Tailwind CSS)
-เริ่มต้นด้วยการสร้างโปรเจค React ใหม่ด้วย Vite และจัดโครงสร้างโฟลเดอร์ตามแนวทางปฏิบัติที่ดี
-และการตั้งค่าโปรเจคให้ถูกต้องเป็นขั้นตอนที่สำคัญที่สุดครับ Error ที่เจอบ่อยครั้งมักเกิดจากขั้นตอนนี้
+-----
 
-**1.1 สร้างโปรเจคด้วย Vite**
-เปิด Terminal แล้วรันคำสั่งนี้เพื่อสร้างโปรเจค React ใหม่:
+## ขั้นตอนที่ 1: การตั้งค่าโปรเจค
+
+เริ่มต้นด้วยการสร้างโปรเจคและติดตั้งเครื่องมือที่จำเป็นทั้งหมด
+
+**1.1 สร้างโปรเจคด้วย Vite และติดตั้ง Dependencies**
+เปิด Terminal แล้วรันคำสั่งตามลำดับ:
 
 ```bash
-# สร้างโปรเจคชื่อ react-lab-w6
+# 1. สร้างโปรเจค React ใหม่
 npm create vite@latest react-lab-w6 -- --template react
-```
 
-**1.2 เข้าไปในโฟลเดอร์และติดตั้ง Dependencies หลัก**
-
-```bash
-# เข้าไปในโฟลเดอร์โปรเจค
+# 2. เข้าไปในโฟลเดอร์โปรเจค
 cd react-lab-w6
 
-# ติดตั้ง dependencies หลักสำหรับ Lab นี้
-npm install react-router-dom @reduxjs/toolkit react-redux axios
+# 3. ติดตั้ง dependencies ที่จำเป็นสำหรับ Lab
+npm install react-router-dom @reduxjs/toolkit react-redux
 ```
 
-**1.3 ติดตั้งและตั้งค่า Tailwind CSS (สำคัญมาก)**
-นี่คือขั้นตอนที่มักเกิดปัญหา เราจะทำตามวิธีที่แนะนำอย่างเป็นทางการครับ
+**1.2 ติดตั้งและตั้งค่า Tailwind CSS**
 
 ```bash
 # 1. ติดตั้ง Tailwind CSS และ dependencies ที่เกี่ยวข้อง
-npm install -D tailwindcss postcss autoprefixer
+npm install -D tailwindcss@3.4.4 postcss@8.4.38 
+npm install -D autoprefixer
 
-# 2. สร้างไฟล์ config ของ Tailwind และ PostCSS
+# 2. สร้างไฟล์ config ของ Tailwind และ PostCSS (คำสั่งนี้จะสร้าง tailwind.config.js และ postcss.config.js)
 npx tailwindcss init -p
 ```
 
-การตรวจสอบ: หลังจากรันคำสั่งนี้ คุณควรจะเห็นไฟล์ใหม่ 2 ไฟล์ในโปรเจค: `tailwind.config.js` และ `postcss.config.js` หากคำสั่งนี้ error ให้ลองลบ `node_modules` และ `package-lock.json` แล้ว `npm install` ใหม่อีกครั้ง
+**1.3 แก้ไขไฟล์ `tailwind.config.js`**
+เปิดไฟล์ `tailwind.config.js` และกำหนดค่า `content` เพื่อให้ Tailwind รู้ว่าจะสแกนหา class ในไฟล์ไหนบ้าง:
 
-**1.4 แก้ไขไฟล์ Config ของ Tailwind**
-เปิดไฟล์ `tailwind.config.js` และแก้ไขส่วน content เพื่อให้ Tailwind รู้ว่าจะต้องสแกนหา class ในไฟล์ไหนบ้าง:
-
-```bash
+```javascript
 // tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}", // เพิ่มบรรทัดนี้
+    "./src/**/*.{js,ts,jsx,tsx}", // สำคัญมาก
   ],
   theme: {
     extend: {},
@@ -56,39 +53,160 @@ export default {
 }
 ```
 
-**1.5 เพิ่ม Tailwind Directives ไปยัง CSS**
-เปิดไฟล์ src/index.css ลบโค้ดเก่าทั้งหมดออก และใส่ 3 บรรทัดนี้เข้าไปแทน:
+**1.4 เพิ่ม Tailwind Directives ไปยัง `index.css`**
+เปิดไฟล์ `src/index.css` ลบโค้ดเก่าทั้งหมด และใส่ 3 บรรทัดนี้เข้าไปแทน:
 
-```bash
+```css
 /* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 ```
 
-**1.6 สร้างโครงสร้างโฟลเดอร์และรันโปรเจค**
+**1.5 สร้างโครงสร้างโฟลเดอร์ทั้งหมด**
+รันคำสั่งนี้เพื่อสร้างโฟลเดอร์ทั้งหมดที่เราจะใช้ใน Lab นี้:
 
 ```bash
-# สร้างโฟลเดอร์สำหรับ Lab
-mkdir -p src/components src/hooks src/features/cart src/pages
-
-# รัน development server
-npm run dev
+mkdir -p src/components src/contexts src/hooks src/features/cart src/pages src/store
 ```
 
-เมื่อทำครบทุกขั้นตอนแล้ว โปรเจคของคุณจะพร้อมสำหรับ Lab ในหัวข้อถัดไป และ Tailwind CSS จะทำงานได้อย่างถูกต้องครับ
+สร้างไฟล์ทั้งหมด ที่ระบุในขั้นตอนถัดไปให้ครบทุกไฟล์ตามตำแหน่งที่ถูกต้อง แต่ยังไม่ต้องใส่โค้ดก็ได้ (สร้างเป็นไฟล์เปล่าๆ ไว้ก่อน)
 
----
+> src/hooks/useLocalStorage.js
+> src/components/NameSaver.jsx
+> src/contexts/AuthContext.jsx
+> src/components/LoginComponent.jsx
+> src/features/cart/cartSlice.js
+> src/components/ShoppingCart.jsx
+> src/pages/ProductListPage.jsx
+> src/pages/ProductDetailPage.jsx
+> src/components/ParentComponent.jsx
 
-## หัวข้อที่ 1: Custom Hooks
+เมื่อทำครบทุกขั้นตอน โปรเจคของคุณจะพร้อมสำหรับขั้นตอนถัดไป
 
-### คำอธิบาย
+-----
 
-สร้าง Custom Hook ชื่อ `useLocalStorage` ที่ทำหน้าที่เหมือน `useState` แต่จะทำการบันทึกข้อมูลลงใน Local Storage ของเบราว์เซอร์โดยอัตโนมัติ
+## ขั้นตอนที่ 2: การสร้างไฟล์หลักของแอปพลิเคชัน
 
-### ตัวอย่างโค้ด (Redux Toolkit)
+เราจะสร้างไฟล์ที่เป็นศูนย์กลาง 3 ไฟล์ เพื่อให้แอปพลิเคชันของเราทำงานร่วมกับ Redux และ React Router ได้อย่างสมบูรณ์
 
-```jsx
+**2.1 สร้าง Redux Store (`store.js`)**
+สร้างไฟล์ใหม่ที่ `src/store/store.js` เพื่อตั้งค่า Redux store ของเรา
+
+```javascript
+// src/store/store.js
+import { configureStore } from '@reduxjs/toolkit';
+import cartReducer from '../features/cart/cartSlice';
+
+export const store = configureStore({
+  reducer: {
+    cart: cartReducer, // กำหนดให้ cart reducer จัดการ state ในส่วนของ cart
+  },
+});
+```
+
+**2.2 สร้าง Entry Point ของแอป (`main.jsx`)**
+แก้ไขไฟล์ `src/main.jsx` ทั้งหมดให้เป็นดังนี้ เพื่อครอบแอปด้วย Provider ที่จำเป็น
+
+```javascript
+// src/main.jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import './index.css'; // Import Tailwind CSS
+
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './store/store.js';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    {/* Provider ของ Redux ทำให้ทุก component เข้าถึง store ได้ */}
+    <Provider store={store}>
+      {/* BrowserRouter เปิดใช้งาน React Router */}
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>
+);
+```
+
+**2.3 สร้าง Main App Component (`App.jsx`)**
+แก้ไขไฟล์ `src/App.jsx` ทั้งหมดให้เป็นศูนย์กลางที่ควบคุม Layout, Navigation และการสลับหน้าของโจทย์แต่ละข้อ
+
+```javascript
+// src/App.jsx
+import { Routes, Route, NavLink } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+
+// Import หน้าและ Component ของโจทย์แต่ละข้อ
+import { NameSaver } from './components/NameSaver';
+import { LoginComponent } from './components/LoginComponent';
+import { ShoppingCart } from './components/ShoppingCart';
+import { ProductListPage } from './pages/ProductListPage';
+import { ProductDetailPage } from './pages/ProductDetailPage';
+import ParentComponent from './components/ParentComponent';
+
+function App() {
+  const activeLinkStyle = {
+    color: '#0ea5e9', // sky-500
+    textDecorationLine: 'underline',
+  };
+
+  return (
+    <AuthProvider>
+      <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
+        <header className="bg-white shadow-md sticky top-0 z-10">
+          <nav className="container mx-auto px-6 py-3">
+            <div className="flex justify-between items-center">
+              <div className="text-xl font-bold">W6 Lab: Advanced React</div>
+              <div className="flex space-x-6 text-gray-600 font-medium">
+                <NavLink to="/" style={({ isActive }) => isActive ? activeLinkStyle : undefined}>Hook</NavLink>
+                <NavLink to="/context" style={({ isActive }) => isActive ? activeLinkStyle : undefined}>Context</NavLink>
+                <NavLink to="/redux" style={({ isActive }) => isActive ? activeLinkStyle : undefined}>Redux</NavLink>
+                <NavLink to="/router" style={({ isActive }) => isActive ? activeLinkStyle : undefined}>Router</NavLink>
+                <NavLink to="/performance" style={({ isActive }) => isActive ? activeLinkStyle : undefined}>Performance</NavLink>
+              </div>
+            </div>
+          </nav>
+        </header>
+
+        <main className="container mx-auto p-6">
+          <div className="bg-white p-6 rounded-xl shadow-lg">
+            <Routes>
+              <Route path="/" element={<NameSaver />} />
+              <Route path="/context" element={<LoginComponent />} />
+              <Route path="/redux" element={<ShoppingCart />} />
+              <Route path="/router" element={<ProductListPage />} />
+              <Route path="/products/:productId" element={<ProductDetailPage />} />
+              <Route path="/performance" element={<ParentComponent />} />
+            </Routes>
+          </div>
+        </main>
+      </div>
+    </AuthProvider>
+  );
+}
+
+export default App;
+```
+
+**รันโปรเจค:** ตอนนี้คุณสามารถรัน `npm run dev` ได้แล้ว จะเห็นหน้าเว็บพร้อม Navbar สำหรับกดสลับไปดูโจทย์แต่ละข้อ
+
+-----
+
+## ขั้นตอนที่ 3: เริ่มทำโจทย์ Lab (หัวข้อที่ 1-5)
+
+ให้นักศึกษาสร้างไฟล์และเขียนโค้ดตามโจทย์ในแต่ละหัวข้อ
+
+### หัวข้อที่ 1: Custom Hooks
+
+  - **ไฟล์ที่ต้องสร้าง:** `src/hooks/useLocalStorage.js` และ `src/components/NameSaver.jsx`
+
+<!-- end list -->
+
+```javascript
 // src/hooks/useLocalStorage.js
 import { useState, useEffect } from 'react';
 
@@ -105,46 +223,42 @@ export function useLocalStorage(key, initialValue) {
 
   return [value, setValue];
 }
+```
 
+```javascript
 // src/components/NameSaver.jsx
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export function NameSaver() {
   const [name, setName] = useLocalStorage('username', '');
-
   return (
     <div>
+      <h2 className="text-2xl font-bold mb-4">Topic 1: Custom Hook</h2>
       <input 
-        className="border p-2 rounded"
-        value={name} 
+        className="border p-2 rounded w-full"
+        value={name || ''} 
         onChange={e => setName(e.target.value)}
         placeholder="Enter your name"
       />
-      <h2>Hello, {name || 'Guest'}!</h2>
-      <p>(ลองรีเฟรชหน้าเว็บดูสิ!)</p>
+      <h3 className="text-xl mt-4">Hello, <span className="font-semibold text-blue-600">{name || 'Guest'}</span>!</h3>
+      <p className="text-gray-500 mt-2">(ลองพิมพ์ชื่อแล้วรีเฟรชหน้าเว็บ)</p>
     </div>
   );
 }
 ```
 
 > **โจทย์สำหรับฝึกฝน 🎯**
+> เมื่อผู้ใช้ลบชื่อใน input จนหมดแล้วรีเฟรชหน้า, ค่าใน state อาจกลายเป็น `undefined` หรือ `null` ซึ่งทำให้เกิด error ได้ จงแก้ไข `useEffect` ใน `useLocalStorage` เพื่อจัดการกรณีนี้: ถ้า `value` เป็น `undefined` ให้ลบ item นั้นออกจาก Local Storage แทน
 >
-> เมื่อผู้ใช้ลบชื่อใน input จนหมด (กลายเป็น string ว่าง) แล้วรีเฟรชหน้า, ค่าใน state จะกลายเป็น `undefined` ทำให้เกิด error. จงแก้ไข `useEffect` ใน `useLocalStorage` เพื่อจัดการกรณีนี้ให้ถูกต้อง โดยถ้า `value` เป็น `undefined` ให้ลบ item นั้นออกจาก Local Storage แทน
+> **คำใบ้:** เพิ่มเงื่อนไข `if (value !== undefined)` ก่อน `localStorage.setItem` และเพิ่ม `else` เพื่อเรียก `localStorage.removeItem(key)`
 
-**คำใบ้:**
-เพิ่มเงื่อนไข `if (value !== undefined)` ก่อน `localStorage.setItem` และเพิ่ม `else` เพื่อเรียก `localStorage.removeItem(key)`
+### หัวข้อที่ 2: Context API
 
----
+  - **ไฟล์ที่ต้องสร้าง:** `src/contexts/AuthContext.jsx` และ `src/components/LoginComponent.jsx`
 
-## หัวข้อที่ 2: Context API
+<!-- end list -->
 
-### คำอธิบาย
-
-สร้างระบบ User Authentication แบบง่ายๆ โดยใช้ Context API เพื่อส่งข้อมูลผู้ใช้ที่ login อยู่ไปยังทุก Component โดยไม่ต้องทำ Prop Drilling
-
-### ตัวอย่างโค้ดเริ่มต้น
-
-```jsx
+```javascript
 // src/contexts/AuthContext.jsx
 import { createContext, useState, useContext } from 'react';
 
@@ -152,7 +266,6 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null); // null means logged out
-
   const login = (username) => setUser({ name: username });
   const logout = () => setUser(null);
 
@@ -165,38 +278,41 @@ export function AuthProvider({ children }) {
 export const useAuth = () => useContext(AuthContext);
 ```
 
-```jsx
+```javascript
 // src/components/LoginComponent.jsx
 import { useAuth } from '../contexts/AuthContext';
 
 export function LoginComponent() {
-  const { user, login, logout } = useAuth();
+  const { user, login, logout } = useAuth(); // จะเกิด Error เพราะ login, logout เป็น undefined
 
-  if (user) {
-    return <div>Welcome, {user.name}! <button onClick={logout}>Logout</button></div>;
-  }
-  return <button onClick={() => login('Somsak')}>Login</button>;
+  return (
+    <div>
+      <h2 className="text-2xl font-bold mb-4">Topic 2: Context API</h2>
+      {user ? (
+        <div className="flex items-center space-x-4">
+          <p>Welcome, <span className="font-semibold text-green-600">{user.name}</span>!</p>
+          <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" onClick={logout}>Logout</button>
+        </div>
+      ) : (
+        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={() => login('Somsak')}>Login</button>
+      )}
+    </div>
+  );
 }
 ```
 
 > **โจทย์สำหรับฝึกฝน 🎯**
->
 > โค้ดข้างบนจะเกิด error เพราะ `LoginComponent` พยายามจะเรียกใช้ `login` และ `logout` ซึ่งไม่มีอยู่ใน context. จงแก้ไข `value` ที่ถูกส่งจาก `AuthProvider` ให้มีฟังก์ชัน `login` และ `logout` รวมอยู่ด้วย
+>
+> **คำใบ้:** แก้ไขบรรทัด `const value = { user };` ให้เป็น `const value = { user, login, logout };`
 
-**คำใบ้:**
-แก้ไขบรรทัด `const value = { user };` ให้เป็น `const value = { user, login, logout };`
+### หัวข้อที่ 3: Redux Toolkit
 
----
+  - **ไฟล์ที่ต้องสร้าง:** `src/features/cart/cartSlice.js` และ `src/components/ShoppingCart.jsx`
 
-## หัวข้อที่ 3: Redux Toolkit
+<!-- end list -->
 
-### คำอธิบาย
-
-สร้างระบบตะกร้าสินค้า (Shopping Cart) โดยใช้ Redux Toolkit เพื่อจัดการ state ของสินค้าในตะกร้า
-
-### ตัวอย่างโค้ดเริ่มต้น
-
-```jsx
+```javascript
 // src/features/cart/cartSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -211,7 +327,7 @@ const cartSlice = createSlice({
       const existingItem = state.items.find(item => item.id === newItem.id);
       state.totalQuantity++;
       if (!existingItem) {
-        state.items.push({ ...newItem, quantity: 1 });
+        state.items.push({ ...newItem, quantity: 1, price: 1500 }); // สมมติราคา
       } else {
         existingItem.quantity++;
       }
@@ -223,111 +339,107 @@ export const { addItem } = cartSlice.actions;
 export default cartSlice.reducer;
 ```
 
-```jsx
+```javascript
 // src/components/ShoppingCart.jsx
 import { useSelector, useDispatch } from 'react-redux';
 import { addItem } from '../features/cart/cartSlice';
 
 export function ShoppingCart() {
-  const totalQuantity = useSelector(state => state.cart.totalQuantity);
+  const { items, totalQuantity } = useSelector(state => state.cart);
   const dispatch = useDispatch();
-
-  const handleAddItem = () => {
-    dispatch(addItem({ id: 'p1', name: 'Laptop' }));
+  const handleAddItem = () => dispatch(addItem({ id: 'p1', name: 'Laptop' }));
+  const handleRemoveItem = () => {
+    // ฟังก์ชันนี้ยังทำงานไม่ได้เพราะ action ยังไม่มี
+    // dispatch(removeItem({ id: 'p1' })); 
+    alert('Funtion not implemented yet!');
   };
 
   return (
     <div>
-      <h2>Cart Items: {totalQuantity}</h2>
-      <button onClick={handleAddItem}>Add Laptop</button>
-      <button>Remove Laptop (Not working)</button>
+      <h2 className="text-2xl font-bold mb-4">Topic 3: Redux Toolkit</h2>
+      <div className="bg-gray-100 p-4 rounded-lg">
+        <h3 className="text-lg font-semibold">Cart ({totalQuantity} items)</h3>
+        <ul className="list-disc pl-5 mt-2">
+          {items.map(item => <li key={item.id}>{item.name} (x{item.quantity})</li>)}
+        </ul>
+      </div>
+      <div className="flex space-x-4 mt-4">
+        <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={handleAddItem}>Add Laptop</button>
+        <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600" onClick={handleRemoveItem}>Remove Laptop (Not working)</button>
+      </div>
     </div>
   );
 }
 ```
 
 > **โจทย์สำหรับฝึกฝน 🎯**
+> ปุ่ม "Remove Laptop" ยังทำงานไม่ได้. จงเพิ่ม reducer ใหม่ชื่อ `removeItem` ใน `cartSlice` ที่รับ `id` ของสินค้า และทำการลบสินค้านั้นออกจากตะกร้า พร้อมลด `totalQuantity` (อย่าลืม export action ใหม่ด้วย)
 >
-> ปุ่ม "Remove Laptop" ยังทำงานไม่ได้. จงเพิ่ม reducer ใหม่ชื่อ `removeItem` เข้าไปใน `cartSlice` ที่รับ `action.payload` เป็น `id` ของสินค้าที่ต้องการลบ และทำการลบสินค้านั้นออกจากตะกร้า พร้อมทั้งลด `totalQuantity` ลง (อย่าลืม export action ใหม่ด้วย\!)
+> **คำใบ้:** เพิ่ม `removeItem(state, action) { ... }` ใน `reducers`. ข้างในให้หา `existingItem` ถ้ามีของชิ้นเดียวให้ `filter` ออก ถ้ามีหลายชิ้นให้ลด `quantity` ลง และอย่าลืม `state.totalQuantity--`
 
-**คำใบ้: **
-เพิ่ม `removeItem(state, action) { ... }` ใน `reducers.` ใช้ .`filter()` เพื่อสร้าง array ใหม่ที่ไม่มี item ที่ต้องการลบ และอย่าลืม `state.totalQuantity--`
+### หัวข้อที่ 4: React Router
 
----
+  - **ไฟล์ที่ต้องสร้าง:** `src/pages/ProductListPage.jsx` และ `src/pages/ProductDetailPage.jsx`
 
-## หัวข้อที่ 4: React Router
+<!-- end list -->
 
-### คำอธิบาย
-
-สร้างหน้าสำหรับแสดงข้อมูลสินค้าแต่ละชิ้น โดยใช้ Dynamic Route (`/products/:productId`)
-
-### ตัวอย่างโค้ดเริ่มต้น
-
-```jsx
+```javascript
 // src/pages/ProductListPage.jsx
 import { Link } from 'react-router-dom';
 const products = [{id: 'p1', name: 'Laptop'}, {id: 'p2', name: 'Mouse'}];
 
 export function ProductListPage() {
   return (
-    <ul>
-      {products.map(p => (
-        // BUG: Link ที่สร้างขึ้นมี path ไม่ถูกต้อง
-        <li key={p.id}><Link to={`/product/${p.id}`}>{p.name}</Link></li>
-      ))}
-    </ul>
+    <div>
+      <h2 className="text-2xl font-bold mb-4">Topic 4: React Router</h2>
+      <p>Select a product:</p>
+      <ul className="list-disc pl-5 mt-2 space-y-2">
+        {products.map(p => (
+          // BUG: Link ที่สร้างขึ้นมี path ไม่ถูกต้อง
+          <li key={p.id} className="text-blue-600 hover:underline">
+            <Link to={`/product/${p.id}`}>{p.name}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 ```
 
-```jsx
+```javascript
 // src/pages/ProductDetailPage.jsx
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 export function ProductDetailPage() {
   const { productId } = useParams();
-  return <h1>Details for Product {productId}</h1>;
-}
-```
-
-```jsx
-// src/App.jsx
-import { Routes, Route } from 'react-router-dom';
-// ... import components
-function App() {
   return (
-    <Routes>
-      <Route path="/products" element={<ProductListPage />} />
-      <Route path="/products/:productId" element={<ProductDetailPage />} />
-    </Routes>
+    <div>
+      <Link to="/router" className="text-blue-600 hover:underline mb-4 block">&larr; Back to Products</Link>
+      <h1 className="text-2xl font-bold">Details for Product: {productId}</h1>
+    </div>
   );
 }
 ```
 
 > **โจทย์สำหรับฝึกฝน 🎯**
+> เมื่อคลิกลิงก์สินค้าในหน้า `ProductListPage` มันจะไม่ไปที่หน้า Product Detail เพราะ path ใน `<Link>` (`/product/...`) ไม่ตรงกับที่กำหนดไว้ใน `App.jsx` (`/products/...`). จงแก้ไข `to` prop ใน `<Link>` ให้ถูกต้อง
 >
-> เมื่อคลิกลิงก์สินค้าในหน้า `ProductListPage` มันจะไม่ไปที่หน้า Product Detail เพราะ path ใน `<Link>` ไม่ตรงกับที่กำหนดไว้ใน `<Route>`. จงแก้ไข `to` prop ใน `<Link>` ให้ถูกต้อง
+> **คำใบ้:** Path ที่ถูกต้องคือ `/products/...` ไม่ใช่ `/product/...`
 
-**คำใบ้:**
-Path ที่ถูกต้องคือ `/products/...` ไม่ใช่ `/product/...`
+### หัวข้อที่ 5: Performance Optimization
 
----
+  - **ไฟล์ที่ต้องสร้าง:** `src/components/ParentComponent.jsx`
 
-## หัวข้อที่ 5: Performance Optimization
+<!-- end list -->
 
-### คำอธิบาย
-
-แก้ไขปัญหาการ re-render ที่ไม่จำเป็นใน Component ลูก โดยใช้ `React.memo` และ `useCallback`
-
-### ตัวอย่างโค้ดเริ่มต้น
-
-```jsx
-import React, { useState, memo } from 'react';
+```javascript
+// src/components/ParentComponent.jsx
+import React, { useState, useCallback } from 'react';
 
 // Component ลูกที่รับ props เป็นฟังก์ชัน
-function HeavyCalculationComponent({ onCalculate }) {
+const HeavyCalculationComponent = ({ onCalculate }) => {
   console.log('HeavyCalculationComponent is rendering!');
-  return <button onClick={onCalculate}>Perform Heavy Calculation</button>;
-}
+  return <button className="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600" onClick={onCalculate}>Perform Heavy Calculation</button>;
+};
 
 // BUG: HeavyCalculationComponent ถูก re-render ทุกครั้งที่ parent state เปลี่ยน
 // แม้ว่า props ของมันจะไม่ได้เปลี่ยนเลย
@@ -342,20 +454,22 @@ function ParentComponent() {
 
   return (
     <div>
-      <h2>Unrelated Counter: {count}</h2>
-      <button onClick={() => setCount(c => c + 1)}>Increment</button>
+      <h2 className="text-2xl font-bold mb-4">Topic 5: Performance Optimization</h2>
+      <div className="mb-4">
+        <p className="text-lg">Unrelated Counter: <span className="font-bold">{count}</span></p>
+        <button className="mt-2 bg-gray-200 px-4 py-2 rounded hover:bg-gray-300" onClick={() => setCount(c => c + 1)}>Increment</button>
+      </div>
       <hr className="my-4" />
+      <p className="mb-2">This button's component should not re-render when the counter changes:</p>
       <HeavyCalculationComponent onCalculate={performCalculation} />
     </div>
   );
 }
+
+export default ParentComponent;
 ```
 
 > **โจทย์สำหรับฝึกฝน 🎯**
->
 > ทุกครั้งที่กดปุ่ม "Increment", `HeavyCalculationComponent` จะถูก re-render ใหม่ (สังเกตจาก console.log) ซึ่งไม่ควรจะเกิดขึ้น. จงใช้ `React.memo` และ `useCallback` เพื่อป้องกันการ re-render ที่ไม่จำเป็นนี้
-
-**คำใบ้:**
-
-1. ครอบ `HeavyCalculationComponent` ด้วย `memo()` ตอน export.
-2. ใน `ParentComponent`, ครอบฟังก์ชัน `performCalculation` ด้วย `useCallback` พร้อม dependency array ที่ว่างเปล่า `[]`
+>
+> **คำใบ้:** 1. ครอบ `HeavyCalculationComponent` ด้วย `React.memo()`. 2. ใน `ParentComponent`, ครอบฟังก์ชัน `performCalculation` ด้วย `useCallback` พร้อม dependency array ที่ว่างเปล่า `[]`

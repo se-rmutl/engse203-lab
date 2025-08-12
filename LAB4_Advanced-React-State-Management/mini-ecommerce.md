@@ -1,4 +1,4 @@
-# Lab 3: Mini E-commerce Application (ฉบับปรับปรุง)
+# Lab 4: Mini E-commerce Application 
 
 **วิชา:** ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์  
 **หัวข้อ:** Advanced React & State Management  
@@ -7,7 +7,7 @@
 ---
 
 ## Table of Contents
-- [Lab 3: Mini E-commerce Application (ฉบับปรับปรุง)](#lab-3-mini-e-commerce-application-ฉบับปรับปรุง)
+- [Lab 4: Mini E-commerce Application](#lab-4-mini-e-commerce-application)
   - [Table of Contents](#table-of-contents)
   - [เป้าหมายการเรียนรู้ (Learning Objectives)](#เป้าหมายการเรียนรู้-learning-objectives)
   - [ภาพรวมของแอปพลิเคชัน (Application Overview)](#ภาพรวมของแอปพลิเคชัน-application-overview)
@@ -46,7 +46,7 @@
 2. **Create Branch**
 
    ```bash
-   git checkout -b lab3-development
+   git checkout -b lab4-development
    ```
 
 3. **Commit Regularly:**
@@ -57,7 +57,7 @@
 4. **Push to Origin:**
 
    ```bash
-   git push origin lab3-feature-ecommerce
+   git push origin lab4-feature-ecommerce
    ```
 5. **Create Pull Request:** ส่งงานผ่าน Pull Request
 
@@ -77,14 +77,17 @@ cd mini-ecommerce
 # 3. ติดตั้ง dependencies
 npm install react-router-dom @reduxjs/toolkit react-redux axios
 
-# 4. ติดตั้ง Tailwind CSS
-npm install -D tailwindcss postcss autoprefixer
+# 4. ติดตั้ง Tailwind CSS dependencies ที่เกี่ยวข้อง
+npm install -D tailwindcss@3.4.4 postcss@8.4.38 
+npm install -D autoprefixer
+
+# 5. สร้างไฟล์ config ของ Tailwind และ PostCSS
 npx tailwindcss init -p
 
-# 5. สร้างโครงสร้างโฟลเดอร์
+# 6. สร้างโครงสร้างโฟลเดอร์
 mkdir -p src/components src/features/cart src/pages src/api
 
-# 6. รันโปรเจค
+# 7. รันโปรเจค
 npm run dev
 ```
 
