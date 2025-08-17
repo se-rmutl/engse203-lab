@@ -280,7 +280,7 @@ git tag part-1-complete
 5.  **ส่งงานใน google sheet ของวิชา**:
       * ส่ง **URL ของ GitHub Repository** (Private) ของคุณ
       * ทำ README.md ข้อมูลการสอบ กลางภาคของวิชาและข้อมูลนักศึกษาต่างๆ โดยมี URL ของ Live App อยู่ด้วย
-      * ส่ง **URL ของ Live App ที่ Deploy แล้ว** (เช่น `https://your-recipe-app.netlify.app`)
+      * ส่ง **URL ของ Live App ที่ Deploy แล้ว** (เช่น `https://6712345678-recipe-finder.netlify.app`)
   
 ### **จากนั้นวันสอบจริงเพื่อพัฒนาต่อเป็น Version2 **
 - SEC1: สอบวันที่ 19 สิงหาคม 2568 เวลา 8:00
