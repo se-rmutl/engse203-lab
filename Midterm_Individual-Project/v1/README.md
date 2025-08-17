@@ -1,5 +1,5 @@
 ## **ข้อสอบปฏิบัติกลางภาค (Midterm Practical Examination)**
-
+### Version 1 - แบบฝึกหัดทบทวน (Take-Home Practice)
 **รายวิชา:** ENGSE203 - Computer Programming for Software Engineer  
 **หัวข้อ:** API Integration, DOM Manipulation, and React.js Application Development  
 **เวลา:** 4 ชั่วโมง (240 นาที)  
@@ -268,11 +268,16 @@ git tag part-1-complete
     git commit -m "feat: Complete Part 2 and deploy to production"
     ```
 2.  **สร้าง GitHub Repository**: สร้าง **Private Repository** บน GitHub และเชื่อมต่อ Local repository ของคุณ
-3.  **เพิ่มผู้สอนเป็น Collaborator**: ที่หน้า Settings \> Collaborators เพิ่ม Username ของผู้สอน (`instructor_github_username`)
+3.  **เพิ่มผู้สอนเป็น Collaborator**: ที่หน้า Settings \> Collaborators เพิ่ม Username ของผู้สอน (`tkeatkaew`)
 4.  **Push to GitHub**: Push โค้ดและ Tags ทั้งหมดขึ้น Repository
     ```bash
     git push origin main --tags
     ```
-5.  **ส่งงานในระบบ LMS**:
+5.  **ส่งงานใน google sheet ของวิชา**:
       * ส่ง **URL ของ GitHub Repository** (Private) ของคุณ
+      * ทำ README.md ข้อมูลการสอบ กลางภาคของวิชาและข้อมูลนักศึกษาต่างๆ โดยมี URL ของ Live App อยู่ด้วย
       * ส่ง **URL ของ Live App ที่ Deploy แล้ว** (เช่น `https://your-recipe-app.netlify.app`)
+  
+### **จากนั้นวันสอบจริงเพื่อพัฒนาต่อเป็น Version2 **
+- SEC1: สอบวันที่ 19 สิงหาคม 2568 เวลา 8:00
+- SEC1: สอบวันที่ 20 สิงหาคม 2568 เวลา 8:00
