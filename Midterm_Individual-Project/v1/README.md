@@ -1,9 +1,6 @@
 ## **ข้อสอบปฏิบัติกลางภาค (Midterm Practical Examination)**
 
-[![Course](https://img.shields.io/badge/Course-ENGSE203-blue)](https://github.com)
-[![Language](https://img.shields.io/badge/Language-JavaScript-yellow)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![Framework](https://img.shields.io/badge/Framework-React-61DAFB)](https://reactjs.org/)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![Course](https://img.shields.io/badge/Course-ENGSE203-blue)](https://github.com) [![Language](https://img.shields.io/badge/Language-JavaScript-yellow)](https://developer.mozilla.org/en-US/docs/Web/JavaScript) [![Framework](https://img.shields.io/badge/Framework-React-61DAFB)](https://reactjs.org/) [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 
 ### Version 1 - แบบฝึกหัดทบทวน (Take-Home Practice)
