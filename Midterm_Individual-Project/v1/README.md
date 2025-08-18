@@ -346,9 +346,9 @@ part2-react/
     ```
 5.  **ส่งงานใน google sheet ของวิชา**:
       * ส่ง **URL ของ GitHub Repository** (Private) ของคุณ
-      * ทำ README.md ใส่ข้อมูลการสอบ Midterm ของวิชาและข้อมูลนักศึกษาต่างๆ โดยมี URL ของ Live App ทั้ง 2 part (เฉพาะ version 2) อยู่ด้วย
-      * ส่ง **URL ของ Live App Part1 ที่ Deploy แล้ว** (เช่น `https://6712345678-recipe-finder-part1.netlify.app`)
-      * ส่ง **URL ของ Live App Part2 ที่ Deploy แล้ว** (เช่น `https://6712345678-recipe-finder-part2.netlify.app`)
+      * ทำ README.md ใส่ข้อมูลการสอบ Midterm ของวิชาและข้อมูลนักศึกษาต่างๆ โดยมี URL ของ Live App ทั้ง 2 part อยู่ด้วย
+      * ส่ง **URL ของ Live App Part1 ที่ Deploy แล้ว** (เช่น `https://6712345678-midterm-v1-part1.netlify.app`)
+      * ส่ง **URL ของ Live App Part2 ที่ Deploy แล้ว** (เช่น `https://6712345678-midterm-v1-part2.netlify.app`)
 -----
 
 ### **วันสอบจริงเพื่อพัฒนาต่อเป็น Version 2  กำหนดดังนี้**
