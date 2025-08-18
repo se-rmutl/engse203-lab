@@ -42,7 +42,7 @@
 
 ### **คำแนะนำการใช้ TheMealDB API**
 
-เพื่อดึงข้อมูลจาก TheMealDB API
+เพื่อดึงข้อมูลจาก TheMealDB API (https://www.themealdb.com)
 
 **1. EndpointAPI Endpoint ค้นหาตาม KEYWORD**: `https://www.themealdb.com/api/json/v1/1/search.php?s=KEYWORD`
       * แทนที่ `KEYWORD` ด้วยคำที่ผู้ใช้ค้นหา
