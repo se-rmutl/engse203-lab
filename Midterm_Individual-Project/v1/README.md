@@ -206,6 +206,21 @@ git commit -m "feat: Complete all features for Part 1"
 git tag part-1-complete
 ```
 
+### **เกณฑ์การให้คะแนน (สรุป)**
+
+| ส่วน | ข้อ | รายละเอียด | Status |
+| :--- | :--- | :--- | :--- |
+| **Part 1** | 1.1 | Git Setup | - [ ] |
+| | 1.2 | Search & API Fetching | - [ ] |
+| | 1.3 | Display Results | - [ ] |
+| | 1.4 | Error/Loading State | - [ ] |
+
+| Task         | Status    |
+|--------------|-----------|
+| Task 1       | [ ]       |
+| Task 2       | [x]       |
+| Task 3       | [ ]       |
+
 📤 **จบ Part 1 เสร็จสมบูรณ์**
 
 -----
