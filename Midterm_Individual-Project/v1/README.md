@@ -209,10 +209,10 @@ git tag part-1-complete
 
 ### **เช็คความสมบูรณ์ของ Part 1**
 
-- [ ] 1.1 | Git Setup
-- [ ] 1.2 | Search & API Fetching
-- [ ] 1.3 | Display Results
-- [ ] 1.4 | Error/Loading State
+- [x] 1.1 | Git Setup
+- [x] 1.2 | Search & API Fetching
+- [x] 1.3 | Display Results
+- [x] 1.4 | Error/Loading State
 
 📤 **จบ Part 1 เสร็จสมบูรณ์**
 
@@ -335,10 +335,10 @@ part2-react/
 
 ### **เช็คความสมบูรณ์ของ Part 2**
 
-- [ ] 2.1 | Project Setup & Components
-- [ ] 2.2 | State & API Hooks
-- [ ] 2.3 | Conditional Rendering
-- [ ] 2.4 | Build & Deploy 
+- [x] 2.1 | Project Setup & Components
+- [x] 2.2 | State & API Hooks
+- [x] 2.3 | Conditional Rendering
+- [x] 2.4 | Build & Deploy 
 
 -----
 
