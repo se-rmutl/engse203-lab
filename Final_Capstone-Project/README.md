@@ -1,390 +1,325 @@
-# 🏆 **FINAL CAPSTONE PROJECT**
-## **Weeks 14-15 | Duration: 2 Weeks | Weight: 30%**
+# โครงงาน Capstone Project
 
-### 📋 **Project Overview**
-ทีมละ 4-5 คนจะร่วมกันสร้าง **Professional-Grade Web Application** ที่แก้ปัญหาจริงในชุมชนหรือมหาวิทยาลัย โดยใช้เทคโนโลยีและความรู้ทั้งหมดที่เรียนมาตลอดเทอม
+## Agent Wallboard System <br> ระบบติดตามและสื่อสาร call center agents แบบ real-time
 
-### 🎯 **Project Objectives**
-- สร้างแอปพลิเคชันที่มีคุณภาพระดับมืออาชีพ
-- แสดงความสามารถในการทำงานเป็นทีม
-- ประยุกต์ใช้เทคโนโลยีสมัยใหม่ในการแก้ปัญหาจริง
-- พัฒนาทักษะการนำเสนอและการเขียนเอกสารทางเทคนิค
+## เอกสารมาตรฐาน IEEE 830
 
----
+**เวอร์ชัน:** 1.0  
+**วันที่:** สิงหาคม 2025
+**ทีม:** นักศึกษาวิศวกรรมซอฟต์แวร์
 
-## 🚀 **Project Categories**
+### โครงสร้างเอกสารทั้ง 4 ฉบับตามมาตรฐาน:
 
-### **Category A: Community Solutions**
-แก้ปัญหาในชุมชนหรือสังคม
-
-#### **A1: Local Business Management System**
-- 🏪 **For**: ร้านค้าท้องถิ่น, SMEs
-- 🎯 **Purpose**: ระบบจัดการคำสั่งซื้อ, สต็อก, ลูกค้า
-- 🔧 **Features**: POS system, inventory management, customer CRM
-
-#### **A2: Community Event Platform**
-- 🎪 **For**: ชุมชนในพื้นที่
-- 🎯 **Purpose**: จัดการและประชาสัมพันธ์กิจกรรม
-- 🔧 **Features**: Event creation, registration, notification system
-
-#### **A3: Local Transportation System**
-- 🚗 **For**: รถร่วม, สองแถว ในพื้นที่
-- 🎯 **Purpose**: ระบบจองและติดตามรถ
-- 🔧 **Features**: Route planning, real-time tracking, booking system
-
-### **Category B: Educational Solutions**
-เน้นการศึกษาและการเรียนรู้
-
-#### **B1: Smart Learning Management System**
-- 🎓 **For**: โรงเรียน, มหาวิทยาลัย
-- 🎯 **Purpose**: ระบบการเรียนการสอนออนไลน์
-- 🔧 **Features**: Course management, live streaming, assessment tools
-
-#### **B2: Student Collaboration Platform**
-- 👥 **For**: นักศึกษา
-- 🎯 **Purpose**: แพลตฟอร์มทำงานกลุ่มและแชร์ความรู้
-- 🔧 **Features**: Project collaboration, knowledge sharing, peer review
-
-#### **B3: Skill Development Tracker**
-- 📈 **For**: ผู้เรียนทุกระดับ
-- 🎯 **Purpose**: ติดตามและพัฒนาทักษะ
-- 🔧 **Features**: Skill assessment, learning path, progress tracking
-
-### **Category C: Health & Lifestyle**
-เน้นสุขภาพและการดูแลตนเอง
-
-#### **C1: Personal Health Dashboard**
-- 🏥 **For**: บุคคลทั่วไป
-- 🎯 **Purpose**: ติดตามสุขภาพส่วนบุคคล
-- 🔧 **Features**: Health metrics, appointment scheduling, medication reminders
-
-#### **C2: Fitness & Nutrition Tracker**
-- 💪 **For**: คนรักสุขภาพ
-- 🎯 **Purpose**: จัดการการออกกำลังกายและโภชนาการ
-- 🔧 **Features**: Workout planning, nutrition tracking, progress analytics
-
-#### **C3: Mental Health Support Platform**
-- 🧠 **For**: คนทั่วไปที่ต้องการดูแลสุขภาพจิต
-- 🎯 **Purpose**: แพลตฟอร์มสนับสนุนสุขภาพจิต
-- 🔧 **Features**: Mood tracking, meditation guides, peer support
-
-### **Category D: Custom Innovation**
-โปรเจกต์ที่นักศึกษาเสนอเอง
-
-#### **Requirements for Custom Projects:**
-- 📋 **Proposal Required**: เสนอโครงการพร้อมเหตุผล
-- 🎯 **Problem Statement**: ระบุปัญหาที่แก้ไขได้ชัดเจน
-- 👥 **Target Users**: กำหนดกลุ่มผู้ใช้งานเป้าหมาย
-- 🔧 **Technical Complexity**: ความซับซ้อนเทียบเท่าตัวอย่างอื่น
-
----
-
-## 🛠️ **Technical Requirements**
-
-### **Mandatory Technology Stack**
-```javascript
-Frontend:
-✅ React.js with hooks and context
-✅ React Router for navigation
-✅ CSS framework (Tailwind CSS recommended)
-✅ Responsive design (mobile-first)
-✅ State management (Context API or Redux)
-
-Backend:
-✅ Node.js with Express.js
-✅ RESTful API design
-✅ MongoDB with Mongoose ODM
-✅ JWT authentication
-✅ Input validation and error handling
-
-DevOps & Tools:
-✅ Git version control with GitHub
-✅ Environment variables (.env)
-✅ API documentation (Postman or Swagger)
-✅ Testing (Jest for backend, React Testing Library)
-✅ Deployment (Vercel/Netlify + MongoDB Atlas)
+```
+Project Documents/
+├── 1. เอกสาร SRS (SRS Document)
+│   ├── เฉพาะข้อกำหนด (Requirements only)
+│   ├── Use cases
+│   └── เกณฑ์การยอมรับ (Acceptance criteria)
+│
+├── 2. เอกสารการออกแบบ (Design Documents)
+│   ├── การออกแบบสถาปัตยกรรม (Architecture Design)
+│   ├── การออกแบบฐานข้อมูล (Database Design)
+│   └── การออกแบบ API (API Design)
+│
+├── 3. คู่มือการพัฒนา (Implementation Guide)
+│   ├── คำแนะนำในการติดตั้ง (Setup instructions)
+│   ├── ตัวอย่างโค้ด (Code examples)
+│   └── แนวทางปฏิบัติที่ดีที่สุด (Best practices)
+│
+└── 4. เอกสารการทดสอบ (Test Documents)
+    ├── แผนการทดสอบ (Test plan)
+    ├── กรณีทดสอบ (Test cases)
+    └── ผลการทดสอบ (Test results)
 ```
 
-### **Optional Advanced Features** (Bonus Points)
-```javascript
-Advanced Technologies:
-🌟 WebSocket for real-time features
-🌟 Progressive Web App (PWA)
-🌟 Payment integration (Stripe/PayPal sandbox)
-🌟 File upload with cloud storage
-🌟 Email notifications
-🌟 Social media authentication
-🌟 Push notifications
-🌟 Data visualization with D3.js or Chart.js
-🌟 Mobile app with React Native
-🌟 CI/CD pipeline with GitHub Actions
-```
+## สรุปเอกสารทั้ง 4 ฉบับ
 
----
+### 📄 **1. เอกสารข้อกำหนดซอฟต์แวร์ (Software Requirements Specification - SRS)**
 
-## 👥 **Team Structure & Roles**
+  - **เนื้อหา:** เฉพาะข้อกำหนด (`Requirements only`) ตามมาตรฐาน IEEE 830
+  - **ประกอบด้วย:** `Functional requirements`, `Non-functional requirements`, `Use cases`
+  - **ไม่มี:** รายละเอียดทางเทคนิค (`Technical details`), การออกแบบฐานข้อมูล (`Database design`), โค้ด
 
-### **Team Size**: 4-5 members per team
+### 📄 **2. เอกสารการออกแบบซอฟต์แวร์ (Software Design Document - SDD)**
 
-### **Required Roles**
-1. **🎯 Project Manager / Product Owner**
-   - Requirements gathering and project coordination
-   - Timeline management and team communication
-   - User story creation and acceptance criteria
+  - **เนื้อหา:** สถาปัตยกรรม (`Architecture`), การออกแบบฐานข้อมูล (`Database design`), การออกแบบ `API`, การออกแบบ `UI`
+  - **ประกอบด้วย:** `System architecture`, `ER diagram`, `API endpoints`, `Security design`
+  - **ไม่มี:** การ `implementation` โค้ด
 
-2. **🎨 Frontend Developer / UI-UX Designer**
-   - React.js development and component architecture
-   - User interface design and user experience
-   - Responsive design and accessibility
+### 📄 **3. คู่มือการพัฒนา (Implementation Guide)**
 
-3. **⚙️ Backend Developer / API Architect**
-   - Express.js API development
-   - Database design and implementation
-   - Authentication and security implementation
+  - **เนื้อหา:** คำแนะนำในการติดตั้ง (`Setup instructions`), ตัวอย่างโค้ด (`Code examples`), แนวทางปฏิบัติที่ดีที่สุด (`Best practices`)
+  - **ประกอบด้วย:** การตั้งค่า `Environment`, โครงสร้างโปรเจกต์ (`Project structure`), ตัวอย่างโค้ด (`Code samples`) ทุกส่วน
+  - **เหมาะสำหรับ:** นักศึกษาใช้เป็นคู่มือในการพัฒนา
 
-4. **🗄️ Database Administrator / DevOps Engineer**
-   - MongoDB schema design and optimization
-   - Deployment and CI/CD setup
-   - Performance monitoring and optimization
+### 📄 **4. เอกสารการทดสอบ (Test Document)**
 
-5. **🧪 Quality Assurance / Testing Specialist** (for 5-member teams)
-   - Test strategy and implementation
-   - Quality assurance and bug tracking
-   - Documentation and user manual creation
+  - **เนื้อหา:** กลยุทธ์การทดสอบ (`Test strategy`), กรณีทดสอบ (`Test cases`), `template` สำหรับรายงาน `bug`
+  - **ประกอบด้วย:** 15 `test cases`, ข้อมูลทดสอบ (`Test data`), คู่มือการดำเนินการทดสอบ (`Test execution guide`)
+  - **ผลลัพธ์:** รายงานสรุปผลการทดสอบ (`Test summary report`)
 
-### **Team Formation Process**
-```
-Week 13: Team formation and project selection
-- Students submit preferred teammates and project categories
-- Instructors finalize teams ensuring skill diversity
-- Teams submit project proposal (1-page)
+## 🎯 ข้อดีของการแยกเอกสาร:
 
-Week 14-15: Development sprints
-- Sprint 1 (Week 14): Core functionality development
-- Sprint 2 (Week 15): Advanced features and polish
+1.  **ชัดเจนตามมาตรฐาน** - แต่ละเอกสารมีจุดประสงค์ที่แตกต่างกัน
+2.  **ง่ายต่อการอ้างอิง** - ค้นหาข้อมูลได้ง่ายเมื่อต้องการ
+3.  **เหมาะกับการทำงานเป็นทีม** - แต่ละคนสามารถรับผิดชอบเอกสารต่างกันได้
+4.  **ความเป็นมืออาชีพ (Professional)** - เป็นแนวทางที่ใช้ในอุตสาหกรรมจริง
 
-Week 16: Presentation and evaluation
-```
+## 💡 คำแนะนำสำหรับนักศึกษา:
 
----
+### การใช้เอกสาร:
 
-## 📊 **Assessment Criteria & Detailed Rubric**
+1.  **Phase 1 (สัปดาห์ที่ 1):** อ่านเอกสาร `SRS` เพื่อทำความเข้าใจ `requirements`
+2.  **Phase 2 (สัปดาห์ที่ 1-2):** ศึกษาเอกสาร `SDD` เพื่อทำความเข้าใจการออกแบบ
+3.  **Phase 3 (สัปดาห์ที่ 2-3):** ใช้ `Implementation Guide` ในการ `coding`
+4.  **Phase 4 (สัปดาห์ที่ 4):** ใช้ `Test Document` ในการทดสอบ
 
-### **CLO Mapping**
-| CLO | Description | Assessment Component | Weight |
+### เคล็ดลับ (Tips):
+
+  - ✅ ทำตามลำดับ อย่ารีบ `coding` ก่อนที่จะเข้าใจ `design`
+  - ✅ อ้างอิง (`Reference`) กลับไปที่เอกสาร `SRS` เสมอเมื่อมีข้อสงสัย
+  - ✅ ใช้ `code examples` เป็นแนวทาง ไม่ใช่คัดลอกทั้งหมด
+  - ✅ ทดสอบตาม `test cases` ที่กำหนด
+
+เอกสารทั้ง 4 ฉบับนี้จะช่วยให้นักศึกษาเข้าใจกระบวนการพัฒนา `software` แบบมืออาชีพ 🚀
+
+-----
+
+## 📊 **เกณฑ์การประเมินและ Rubric โดยละเอียด (Assessment Criteria & Detailed Rubric)**
+
+### **การจับคู่กับ CLO (CLO Mapping)**
+
+| CLO | คำอธิบาย | องค์ประกอบการประเมิน | น้ำหนัก |
 |-----|-------------|---------------------|---------|
-| **CLO1** | อธิบายหลักการ Frontend/Backend architecture | System architecture documentation | 10% |
-| **CLO2** | พัฒนาแอปพลิเคชัน Full-stack ด้วยเทคโนโลยีสมัยใหม่ | Technical implementation | 40% |
-| **CLO3** | สร้าง Cross-platform applications | Application functionality | 15% |
-| **CLO4** | ออกแบบ User Interface ที่ตอบสนอง | UI/UX design and implementation | 15% |
-| **CLO5** | ประยุกต์ใช้เทคนิคการทดสอบและเครื่องมือพัฒนา | Testing and development practices | 10% |
-| **CLO6** | ใช้ระบบควบคุมเวอร์ชันและ collaboration | Team collaboration and Git workflow | 10% |
+| **CLO1** | อธิบายหลักการ `Frontend/Backend architecture` | เอกสาร `System architecture` | 10% |
+| **CLO2** | พัฒนาแอปพลิเคชัน `Full-stack` ด้วยเทคโนโลยีสมัยใหม่ | การพัฒนาทางเทคนิค (`Technical implementation`) | 40% |
+| **CLO3** | สร้างแอปพลิเคชัน `Cross-platform` | ฟังก์ชันการทำงานของแอปพลิเคชัน (`Application functionality`) | 15% |
+| **CLO4** | ออกแบบ `User Interface` ที่ตอบสนอง | การออกแบบและการพัฒนา `UI/UX` | 15% |
+| **CLO5** | ประยุกต์ใช้เทคนิคการทดสอบและเครื่องมือพัฒนา | การทดสอบและแนวทางการพัฒนา (`Testing and development practices`) | 10% |
+| **CLO6** | ใช้ระบบควบคุมเวอร์ชันและการทำงานร่วมกัน (`collaboration`) | การทำงานร่วมกันเป็นทีมและ `Git workflow` | 10% |
 
-### **Comprehensive Rubric (100 points total)**
+### **Rubric ฉบับสมบูรณ์ (100 คะแนน)**
 
-#### **🏗️ Technical Implementation (40 points)**
+#### **🏗️ การพัฒนาทางเทคนิค (Technical Implementation) (40 คะแนน)**
 
-| Criteria | Excellent (36-40) | Good (32-35) | Satisfactory (28-31) | Needs Improvement (0-27) |
-|----------|-------------------|--------------|----------------------|---------------------------|
-| **Architecture Design** | Well-structured, scalable architecture with clear separation of concerns | Good architecture with minor structural issues | Basic architecture that works but could be improved | Poor or confusing architecture |
-| **Frontend Development** | Advanced React patterns, excellent state management, optimized performance | Good React implementation with proper hooks usage | Basic React functionality working correctly | Limited React features or poor implementation |
-| **Backend Development** | Robust API design, comprehensive error handling, security best practices | Well-implemented API with good error handling | Functional API with basic error handling | Limited API functionality or poor error handling |
-| **Database Design** | Efficient schema design, proper indexing, optimized queries | Good database structure with some optimization | Basic database functionality working | Poor database design or implementation |
-| **Integration Quality** | Seamless full-stack integration, efficient data flow | Good integration with minor sync issues | Basic integration working with some delays | Poor integration or frequent failures |
+| เกณฑ์ | ยอดเยี่ยม (36-40) | ดี (32-35) | พอใช้ (28-31) | ต้องปรับปรุง (0-27) |
+|---|---|---|---|---|
+| **การออกแบบ Architecture** | `Architecture` มีโครงสร้างดี, `scalable`, และแบ่งส่วนชัดเจน | `Architecture` ดี มีปัญโครงสร้างเล็กน้อย | `Architecture` พื้นฐานที่ทำงานได้ แต่ควรปรับปรุง | `Architecture` ไม่ดีหรือสับสน |
+| **การพัฒนา Frontend** | ใช้ `React patterns` ขั้นสูง, จัดการ `state` ยอดเยี่ยม, `performance` ดี | `React implementation` ดี ใช้ `hooks` เหมาะสม | ฟังก์ชัน `React` พื้นฐานทำงานถูกต้อง | มีฟีเจอร์ `React` จำกัด หรือ `implementation` ไม่ดี |
+| **การพัฒนา Backend** | `API design` แข็งแกร่ง, จัดการ `error` ครอบคลุม, `security best practices` | `API` ที่ `implement` ดี จัดการ `error` ได้ดี | `API` ทำงานได้ จัดการ `error` พื้นฐาน | `API` มีฟังก์ชันจำกัด หรือจัดการ `error` ไม่ดี |
+| **การออกแบบ Database** | `Schema design` มีประสิทธิภาพ, `indexing` เหมาะสม, `queries` ดี | โครงสร้าง `database` ดี มีการ `optimization` บ้าง | ฟังก์ชัน `database` พื้นฐานทำงานได้ | `Database design` หรือ `implementation` ไม่ดี |
+| **คุณภาพการ Integration** | `Full-stack integration` ราบรื่น, `data flow` มีประสิทธิภาพ | `Integration` ดี มีปัญหา `sync` เล็กน้อย | `Integration` พื้นฐานทำงานได้ แต่มี `delay` | `Integration` ไม่ดี หรือล้มเหลวบ่อย |
 
-#### **🎨 User Experience & Design (20 points)**
+#### **🎨 ประสบการณ์ผู้ใช้และการออกแบบ (User Experience & Design) (20 คะแนน)**
 
-| Criteria | Excellent (18-20) | Good (16-17) | Satisfactory (14-15) | Needs Improvement (0-13) |
-|----------|-------------------|--------------|----------------------|---------------------------|
-| **UI Design Quality** | Professional, modern, consistent design following design principles | Good design with minor inconsistencies | Acceptable design that serves its purpose | Poor design that hinders usability |
-| **User Experience** | Intuitive navigation, smooth user flows, excellent usability | Good UX with clear navigation and minimal friction | Basic UX that allows users to complete tasks | Confusing or frustrating user experience |
-| **Responsive Design** | Perfect responsiveness across all devices and screen sizes | Good responsive design with minor issues | Basic responsive features working | Poor or no responsive design |
-| **Accessibility** | WCAG compliant, keyboard navigation, screen reader support | Good accessibility features implemented | Basic accessibility considerations | Limited or no accessibility features |
+| เกณฑ์ | ยอดเยี่ยม (18-20) | ดี (16-17) | พอใช้ (14-15) | ต้องปรับปรุง (0-13) |
+|---|---|---|---|---|
+| **คุณภาพ UI Design** | ดูเป็นมืออาชีพ, ทันสมัย, สอดคล้องกันตามหลักการออกแบบ | `Design` ดี มีความไม่สอดคล้องกันเล็กน้อย | `Design` พอใช้ได้ตามวัตถุประสงค์ | `Design` ไม่ดี เป็นอุปสรรคต่อการใช้งาน |
+| **ประสบการณ์ผู้ใช้ (UX)** | `Navigation` เข้าใจง่าย, `user flows` ราบรื่น, `usability` ยอดเยี่ยม | `UX` ดี `navigation` ชัดเจน มีอุปสรรคน้อย | `UX` พื้นฐานที่ผู้ใช้ทำงานได้สำเร็จ | `UX` สับสนหรือน่าหงุดหงิด |
+| **Responsive Design** | ตอบสนองสมบูรณ์แบบในทุกอุปกรณ์และขนาดหน้าจอ | `Responsive design` ดี มีปัญหาเล็กน้อย | ฟีเจอร์ `responsive` พื้นฐานทำงานได้ | `Responsive design` ไม่ดีหรือไม่มีเลย |
+| **การเข้าถึง (Accessibility)** | สอดคล้องกับ `WCAG`, `keyboard navigation`, รองรับ `screen reader` | มีฟีเจอร์ `accessibility` ที่ดี | คำนึงถึง `accessibility` พื้นฐาน | มีฟีเจอร์ `accessibility` จำกัดหรือไม่มีเลย |
 
-#### **💡 Innovation & Problem Solving (15 points)**
+#### **💡 นวัตกรรมและการแก้ปัญหา (Innovation & Problem Solving) (15 คะแนน)**
 
-| Criteria | Excellent (14-15) | Good (12-13) | Satisfactory (10-11) | Needs Improvement (0-9) |
-|----------|-------------------|--------------|----------------------|---------------------------|
-| **Problem Definition** | Clear, well-researched problem with validated user needs | Good problem identification with some validation | Basic problem statement that makes sense | Unclear or poorly defined problem |
-| **Solution Innovation** | Creative, innovative solution with unique features | Good solution with some innovative elements | Standard solution that solves the problem | Limited innovation or generic solution |
-| **Technical Challenges** | Successfully tackles complex technical challenges | Handles moderate technical complexity well | Addresses basic technical requirements | Avoids technical challenges or poor execution |
-| **Feature Completeness** | All planned features implemented plus extras | Most features implemented with good quality | Core features working as expected | Missing key features or poor implementation |
+| เกณฑ์ | ยอดเยี่ยม (14-15) | ดี (12-13) | พอใช้ (10-11) | ต้องปรับปรุง (0-9) |
+|---|---|---|---|---|
+| **การนิยามปัญหา** | ปัญหาชัดเจน, ค้นคว้ามาดี, `user needs` ได้รับการตรวจสอบ | ระบุปัญหาได้ดี มีการตรวจสอบบ้าง | คำชี้แจงปัญหาพื้นฐานที่สมเหตุสมผล | ปัญหาไม่ชัดเจนหรือนิยามไม่ดี |
+| **นวัตกรรมของ Solution** | `Solution` สร้างสรรค์, มีนวัตกรรม, และฟีเจอร์ที่เป็นเอกลักษณ์ | `Solution` ดี มีองค์ประกอบของนวัตกรรม | `Solution` มาตรฐานที่แก้ปัญหาได้ | นวัตกรรมมีจำกัด หรือ `solution` ทั่วไป |
+| **ความท้าทายทางเทคนิค** | รับมือความท้าทายทางเทคนิคที่ซับซ้อนได้สำเร็จ | จัดการความซับซ้อนทางเทคนิคระดับปานกลางได้ดี | ตอบสนอง `technical requirements` พื้นฐาน | หลีกเลี่ยงความท้าทายทางเทคนิค หรือทำได้ไม่ดี |
+| **ความสมบูรณ์ของ Feature** | `Implement` ฟีเจอร์ทั้งหมดตามแผนและมีเพิ่มเติม | `Implement` ฟีเจอร์ส่วนใหญ่ได้คุณภาพดี | ฟีเจอร์หลักทำงานได้ตามคาด | ขาดฟีเจอร์สำคัญ หรือ `implementation` ไม่ดี |
 
-#### **🔧 Development Practices (15 points)**
+#### **🔧 แนวทางการพัฒนา (Development Practices) (15 คะแนน)**
 
-| Criteria | Excellent (14-15) | Good (12-13) | Satisfactory (10-11) | Needs Improvement (0-9) |
-|----------|-------------------|--------------|----------------------|---------------------------|
-| **Code Quality** | Clean, maintainable code following best practices | Good code structure with proper organization | Readable code with basic organization | Poor code quality or organization |
-| **Testing Implementation** | Comprehensive test suite with high coverage | Good testing with decent coverage | Basic testing implemented | Limited or no testing |
-| **Documentation** | Excellent documentation including API docs, README, and code comments | Good documentation covering most aspects | Basic documentation with setup instructions | Poor or missing documentation |
-| **Version Control** | Excellent Git workflow with meaningful commits and branching | Good Git practices with regular commits | Basic Git usage with clear history | Poor Git practices or unclear history |
+| เกณฑ์ | ยอดเยี่ยม (14-15) | ดี (12-13) | พอใช้ (10-11) | ต้องปรับปรุง (0-9) |
+|---|---|---|---|---|
+| **คุณภาพของ Code** | โค้ดสะอาด, `maintainable`, ตาม `best practices` | โครงสร้างโค้ดดี มีการจัดระเบียบเหมาะสม | โค้ดอ่านได้ มีการจัดระเบียบพื้นฐาน | คุณภาพโค้ดหรือการจัดระเบียบไม่ดี |
+| **การทำ Testing** | มี `test suite` ครอบคลุม `coverage` สูง | `Testing` ดี `coverage` พอใช้ | มีการทำ `testing` พื้นฐาน | `Testing` จำกัดหรือไม่มีเลย |
+| **เอกสาร (Documentation)** | `Documentation` ยอดเยี่ยม รวมถึง `API docs`, `README`, และ `code comments` | `Documentation` ดี ครอบคลุมส่วนใหญ่ | `Documentation` พื้นฐานพร้อมคำแนะนำ `setup` | `Documentation` ไม่ดีหรือขาดหาย |
+| **Version Control** | `Git workflow` ยอดเยี่ยม, `commits` มีความหมาย, `branching` ดี | `Git practices` ดี `commit` สม่ำเสมอ | ใช้ `Git` พื้นฐาน `history` ชัดเจน | `Git practices` ไม่ดี หรือ `history` ไม่ชัดเจน |
 
-#### **🤝 Team Collaboration (10 points)**
+#### **🤝 การทำงานร่วมกันเป็นทีม (Team Collaboration) (10 คะแนน)**
 
-| Criteria | Excellent (9-10) | Good (8) | Satisfactory (6-7) | Needs Improvement (0-5) |
-|----------|------------------|----------|-------------------|-------------------------|
-| **Teamwork Quality** | Excellent collaboration, clear role distribution, effective communication | Good teamwork with clear roles and regular communication | Basic teamwork with some coordination | Poor teamwork or communication issues |
-| **Project Management** | Well-organized project with clear milestones and timeline management | Good project organization with mostly met deadlines | Basic project organization with some delays | Poor project management or missed deadlines |
-| **Individual Contributions** | All members contribute significantly and equally | Most members contribute well with minor variations | Some variation in contribution but all participate | Significant variation in contribution or non-participation |
-| **Conflict Resolution** | Team handles conflicts professionally and constructively | Minor conflicts resolved effectively | Some conflicts but team works through them | Unresolved conflicts affecting project quality |
+| เกณฑ์ | ยอดเยี่ยม (9-10) | ดี (8) | พอใช้ (6-7) | ต้องปรับปรุง (0-5) |
+|---|---|---|---|---|
+| **คุณภาพ Teamwork** | `Collaboration` ยอดเยี่ยม, แบ่งบทบาทชัดเจน, สื่อสารมีประสิทธิภาพ | `Teamwork` ดี บทบาทชัดเจน สื่อสารสม่ำเสมอ | `Teamwork` พื้นฐาน มีการประสานงานบ้าง | `Teamwork` ไม่ดี หรือมีปัญหาการสื่อสาร |
+| **การจัดการ Project** | `Project` มีการจัดระเบียบดี, `milestones` ชัดเจน, จัดการ `timeline` ได้ | จัดระเบียบ `project` ดี ส่วนใหญ่ทัน `deadlines` | จัดระเบียบ `project` พื้นฐาน มีความล่าช้าบ้าง | จัดการ `project` ไม่ดี หรือไม่ทัน `deadlines` |
+| **การมีส่วนร่วมรายบุคคล** | สมาชิกทุกคนมีส่วนร่วมอย่างมากและเท่าเทียมกัน | สมาชิกส่วนใหญ่มีส่วนร่วมดี มีความแตกต่างเล็กน้อย | มีความแตกต่างในการมีส่วนร่วม แต่ทุกคนเข้าร่วม | ความแตกต่างในการมีส่วนร่วมสูง หรือไม่เข้าร่วม |
+| **การแก้ไขข้อขัดแย้ง** | ทีมจัดการข้อขัดแย้งอย่างมืออาชีพและสร้างสรรค์ | ข้อขัดแย้งเล็กน้อยได้รับการแก้ไขอย่างมีประสิทธิภาพ | มีข้อขัดแย้งบ้าง แต่ทีมจัดการได้ | ข้อขัดแย้งที่ไม่ได้รับการแก้ไขส่งผลต่อคุณภาพ |
 
----
+-----
 
-## 📋 **Deliverables & Submission**
+## 📋 **ผลงานที่ต้องส่งและกำหนดการ (Deliverables & Submission)**
 
-### **Required Deliverables**
+### **ผลงานที่ต้องส่ง (Required Deliverables)**
 
-#### **1. Source Code & Documentation (40%)**
+#### **1. Source Code และเอกสารประกอบ (40%)**
+
 ```
-📁 Final Project Repository Structure:
-├── 📄 README.md (Comprehensive project overview)
-├── 📄 ARCHITECTURE.md (System architecture documentation)
-├── 📄 API-DOCUMENTATION.md (Complete API reference)
-├── 📄 USER-MANUAL.md (End-user guide)
-├── 📄 DEVELOPMENT-GUIDE.md (Setup and development instructions)
-├── 📁 frontend/ (React.js application)
-├── 📁 backend/ (Node.js API server)
-├── 📁 database/ (MongoDB schemas and seed data)
-├── 📁 tests/ (Test suites and coverage reports)
-├── 📁 deployment/ (Deployment configurations)
-├── 📁 docs/ (Additional documentation and diagrams)
-└── 📁 presentation/ (Presentation materials)
-```
-
-#### **2. Working Application (30%)**
-- 🌐 **Live Demo**: Deployed application accessible via URL
-- 📱 **Responsive Design**: Working on desktop, tablet, and mobile
-- 🔐 **User Accounts**: Registration and authentication system
-- 📊 **Data Management**: Full CRUD operations
-- ⚡ **Performance**: Fast loading and responsive interactions
-
-#### **3. Presentation & Demo (20%)**
-- 🎤 **Team Presentation**: 20-minute presentation + 10-minute Q&A
-- 💻 **Live Demo**: Working demonstration of all features
-- 📊 **Technical Deep-dive**: Architecture and implementation details
-- 🎯 **Problem & Solution**: Clear problem statement and solution explanation
-
-#### **4. Individual Reflection (10%)**
-Each team member submits a 3-page individual reflection covering:
-- Personal contributions to the project
-- Technical challenges faced and solutions implemented
-- Learning outcomes and skill development
-- Team collaboration experience
-- Future improvements and scalability considerations
-
-### **Submission Timeline**
-```
-📅 Week 13 (Monday): Team formation and project proposal due
-📅 Week 14 (Friday): Sprint 1 demo and progress report
-📅 Week 15 (Friday): Final submission deadline (23:59)
-📅 Week 16 (Lab time): Final presentations and live demos
-📅 Week 16 (Friday): Individual reflection reports due
+📁 โครงสร้าง Final Project Repository:
+├── 📄 README.md (ภาพรวม project ที่ครอบคลุม)
+├── 📄 ARCHITECTURE.md (เอกสาร System architecture)
+├── 📄 API-DOCUMENTATION.md (เอกสารอ้างอิง API ฉบับสมบูรณ์)
+├── 📄 USER-MANUAL.md (คู่มือสำหรับผู้ใช้)
+├── 📄 DEVELOPMENT-GUIDE.md (คำแนะนำในการ Setup และพัฒนา)
+├── 📁 frontend/ (แอปพลิเคชัน React.js)
+├── 📁 backend/ (เซิร์ฟเวอร์ Node.js API)
+├── 📁 database/ (MongoDB schemas และ seed data)
+├── 📁 tests/ (Test suites และ coverage reports)
+├── 📁 deployment/ (Configurations สำหรับการ Deployment)
+├── 📁 docs/ (เอกสารและ diagrams เพิ่มเติม)
+└── 📁 presentation/ (สื่อสำหรับการนำเสนอ)
 ```
 
----
+#### **2. แอปพลิเคชันที่ทำงานได้ (30%)**
 
-### **Final Project Schedule**
+  - 🌐 **Live Demo**: แอปพลิเคชันที่ `Deploy` แล้วและเข้าถึงได้ผ่าน `URL`
+  - 📱 **Responsive Design**: ทำงานได้บน `desktop`, `tablet`, และ `mobile`
+  - 🔐 **User Accounts**: ระบบลงทะเบียนและยืนยันตัวตน (`authentication`)
+  - 📊 **Data Management**: การทำงาน `CRUD operations` เต็มรูปแบบ
+  - ⚡ **Performance**: โหลดเร็วและมีการโต้ตอบที่รวดเร็ว
+
+#### **3. การนำเสนอและ Demo (20%)**
+
+  - 🎤 **Team Presentation**: นำเสนอ 20 นาที + ถาม-ตอบ 10 นาที
+  - 💻 **Live Demo**: สาธิตการทำงานของทุก `features`
+  - 📊 **Technical Deep-dive**: รายละเอียด `Architecture` และ `implementation`
+  - 🎯 **Problem & Solution**: คำชี้แจงปัญหาและคำอธิบาย `solution` ที่ชัดเจน
+
+#### **4. รายงานสะท้อนผลรายบุคคล (10%)**
+
+สมาชิกแต่ละคนส่งรายงานสะท้อนผลรายบุคคล 3 หน้า ครอบคลุม:
+
+  - การมีส่วนร่วมส่วนตัวในโปรเจกต์
+  - ความท้าทายทางเทคนิคที่พบและ `solution` ที่ใช้
+  - ผลลัพธ์การเรียนรู้และการพัฒนาทักษะ
+  - ประสบการณ์การทำงานร่วมกันเป็นทีม (`collaboration`)
+  - การปรับปรุงในอนาคตและข้อควรพิจารณาด้าน `scalability`
+
+### **ไทม์ไลน์การส่งงาน (Submission Timeline)**
+
 ```
-📅 Capstone Project Timeline:
-
-Week 13 (Monday):
-├── 👥 Team formation process begins
-├── 📋 Project category selection
-└── 🎯 Initial team meetings and role assignment
-
-Week 13 (Wednesday):
-├── 📝 Project proposal submission (1-page)
-├── 🔍 Proposal review and approval process
-└── 🛠️ Development environment setup
-
-Week 13 (Friday):
-├── ✅ Proposal approval and feedback
-├── 📊 Project planning and sprint organization
-└── 🎯 Sprint 1 goals and timeline establishment
-
-Week 14 (Sprint 1 - Core Development):
-├── Monday: Sprint 1 kickoff and task assignment
-├── Wednesday: Mid-sprint progress review
-├── Friday: Sprint 1 demo and retrospective
-
-Week 15 (Sprint 2 - Enhancement & Polish):
-├── Monday: Sprint 2 planning and advanced features
-├── Wednesday: Final integration and testing
-├── Friday: Final submission and presentation preparation
-
-Week 16 (Presentations & Evaluation):
-├── Monday-Wednesday: Final presentations (20 min each team)
-├── Thursday: Peer evaluation and awards ceremony
-└── Friday: Individual reflection submissions due
+📅 สัปดาห์ที่ 13 (วันจันทร์): กำหนดส่งการจัดตั้งทีมและ project proposal
+📅 สัปดาห์ที่ 14 (วันศุกร์): Sprint 1 demo และรายงานความคืบหน้า
+📅 สัปดาห์ที่ 15 (วันศุกร์): กำหนดส่งงานสุดท้าย (23:59)
+📅 สัปดาห์ที่ 16 (เวลา Lab): การนำเสนอสุดท้ายและ live demos
+📅 สัปดาห์ที่ 16 (วันศุกร์): กำหนดส่งรายงานสะท้อนผลรายบุคคล
 ```
 
+-----
+
+### **ตารางเวลาโครงงาน (Final Project Schedule)**
+
+```
+📅 ไทม์ไลน์ Capstone Project:
+
+สัปดาห์ที่ 13 (วันจันทร์):
+├── 👥 เริ่มกระบวนการจัดตั้งทีม
+├── 📋 การเลือกหมวดหมู่โปรเจกต์
+└── 🎯 ประชุมทีมเบื้องต้นและมอบหมายบทบาท
+
+สัปดาห์ที่ 13 (วันพุธ):
+├── 📝 ส่ง Project proposal (1 หน้า)
+├── 🔍 กระบวนการตรวจสอบและอนุมัติ Proposal
+└── 🛠️ การตั้งค่า Development environment
+
+สัปดาห์ที่ 13 (วันศุกร์):
+├── ✅ การอนุมัติ Proposal และ feedback
+├── 📊 การวางแผนโปรเจกต์และการจัด Sprint
+└── 🎯 การกำหนดเป้าหมายและไทม์ไลน์ของ Sprint 1
+
+สัปดาห์ที่ 14 (Sprint 1 - การพัฒนาหลัก):
+├── วันจันทร์: Sprint 1 kickoff และการมอบหมายงาน
+├── วันพุธ: การตรวจสอบความคืบหน้ากลาง sprint
+├── วันศุกร์: Sprint 1 demo และ retrospective
+
+สัปดาห์ที่ 15 (Sprint 2 - การปรับปรุงและขัดเกลา):
+├── วันจันทร์: การวางแผน Sprint 2 และ features ขั้นสูง
+├── วันพุธ: การ integration และ testing ครั้งสุดท้าย
+├── วันศุกร์: การส่งงานสุดท้ายและการเตรียมนำเสนอ
+
+สัปดาห์ที่ 16 (การนำเสนอและการประเมินผล):
+├── จันทร์-พุธ: การนำเสนอสุดท้าย (ทีมละ 20 นาที)
+├── พฤหัสบดี: Peer evaluation และพิธีมอบรางวัล
+└── วันศุกร์: กำหนดส่งรายงานสะท้อนผลรายบุคคล
+```
+
+-----
+
+## 🏆 **โอกาสในการได้คะแนนพิเศษ (Bonus Opportunities)**
+
+### **รางวัลยอดเยี่ยม (Extra Credit)**
+
+  - 🥇 **รางวัลนวัตกรรมยอดเยี่ยม (Best Innovation Award)**: `Solution` ที่สร้างสรรค์และมีนวัตกรรมมากที่สุด (+5 คะแนน)
+  - 🎨 **รางวัลการออกแบบยอดเยี่ยม (Best Design Award)**: `UI/UX design` ที่โดดเด่น (+3 คะแนน)
+  - 🔧 **รางวัลการพัฒนาทางเทคนิคยอดเยี่ยม (Best Technical Implementation)**: การดำเนินการทางเทคนิคที่เหนือกว่า (+3 คะแนน)
+  - 🤝 **รางวัลทีมเวิร์คยอดเยี่ยม (Best Teamwork Award)**: `Collaboration` และการสื่อสารที่เป็นแบบอย่าง (+2 คะแนน)
+  - 🌟 **รางวัลขวัญใจมหาชน (People's Choice Award)**: โหวตโดยทีมเพื่อน (+2 คะแนน)
+
+### **โอกาสในการเป็นที่ยอมรับในวงการอุตสาหกรรม (Industry Recognition Opportunities)**
+
+  - 📢 **งานแสดงผลงาน (Showcase Event)**: โปรเจกต์ที่ดีที่สุดจะได้นำเสนอต่อผู้เชี่ยวชาญในอุตสาหกรรม
+  - 💼 **โอกาสในการฝึกงาน (Internship Opportunities)**: ทีมชั้นนำอาจได้รับข้อเสนอฝึกงาน
+  - 🏆 **การส่งเข้าประกวด (Competition Entry)**: โปรเจกต์ที่โดดเด่นจะถูกส่งเข้าประกวดระดับชาติ
+  - 📰 **การนำเสนอผ่านสื่อ (Media Coverage)**: โปรเจกต์ที่ดีที่สุดจะได้รับการนำเสนอในสื่อสิ่งพิมพ์ของมหาวิทยาลัย
+
+-----
+
+## 📞 **การสนับสนุนและทรัพยากร (Support & Resources)**
+
+### **การสนับสนุนด้าน Mentoring**
+
+  - 👨‍🏫 **Faculty Mentors**: `Check-in` รายสัปดาห์กับอาจารย์ที่ได้รับมอบหมาย
+  - 👩‍💼 **Industry Mentors**: `Mentor` รับเชิญจากบริษัทซอฟต์แวร์
+  - 👥 **Peer Mentoring**: `Collaboration` และการแบ่งปันความรู้ระหว่างทีม
+
+### **ทรัพยากรทางเทคนิค**
+
+  - 🔧 **เครื่องมือพัฒนา (Development Tools)**: สิทธิ์เข้าถึงเครื่องมือพัฒนาระดับมืออาชีพฟรี
+  - ☁️ **Cloud Credits**: `Credits` สำหรับ `AWS`, `MongoDB Atlas`, และ `Vercel`
+  - 📚 **สื่อการเรียนรู้ (Learning Materials)**: แหล่งข้อมูลและ `tutorials` ที่คัดสรรมา
+  - 🎥 **Video Tutorials**: วิดีโอที่บันทึกไว้ในหัวข้อขั้นสูง
+
+### **การสนับสนุนฉุกเฉิน**
+
+  - 🚨 **Technical Helpdesk**: พร้อมให้บริการในช่วงสัปดาห์ของโปรเจกต์
+  - 📞 **การสนับสนุนช่วงสุดสัปดาห์ (Weekend Support)**: การสนับสนุนที่จำกัดสำหรับปัญหาร้ายแรง
+  - 💬 **ช่อง Discord (Discord Channel)**: การสนับสนุนและการสนทนาจากเพื่อนตลอด 24/7
+
+-----
+
+## 📈 **ตัวชี้วัดความสำเร็จและผลลัพธ์ (Success Metrics & Outcomes)**
+
+### **ผลลัพธ์การเรียนรู้ที่คาดหวัง (Expected Learning Outcomes)**
+
+หลังจากเสร็จสิ้นการประเมินทั้งสองส่วน นักศึกษาจะแสดงให้เห็นถึง:
+
+1.  **ความสามารถทางเทคนิค (Technical Proficiency)**
+
+      - ความสามารถในการพัฒนาแบบ `Full-stack`
+      - ความเชี่ยวชาญ `JavaScript` และ `React.js` สมัยใหม่
+      - ทักษะการออกแบบ `API` และการจัดการ `database`
+      - ความรู้ด้าน `Testing` และ `deployment`
+
+2.  **ทักษะทางวิชาชีพ (Professional Skills)**
+
+      - การจัดการโปรเจกต์และ `teamwork`
+      - การสื่อสารทางเทคนิคและ `documentation`
+      - การแก้ปัญหาและการคิดเชิงวิพากษ์
+      - คุณภาพของโค้ดและ `best practices`
+
+3.  **ความพร้อมสำหรับอุตสาหกรรม (Industry Readiness)**
+
+      - โปรเจกต์คุณภาพระดับ `Portfolio` สำหรับการสมัครงาน
+      - ประสบการณ์กับ `workflows` การพัฒนาระดับมืออาชีพ
+      - ความเข้าใจใน `software development lifecycle`
+      - ทักษะ `Collaboration` สำหรับสภาพแวดล้อมการทำงานเป็นทีม
+
+### **ผลกระทบต่ออาชีพ (Career Impact)**
+
+  - 💼 **ความพร้อมในการทำงาน (Job Readiness)**: โปรเจกต์ใช้เป็น `portfolio` สำหรับการสมัครงาน
+  - 🎓 **การรับรองทักษะ (Skill Certification)**: แสดงให้เห็นถึงความสามารถในการพัฒนาเว็บสมัยใหม่
+  - 🌐 **การสร้างเครือข่าย (Network Building)**: การเชื่อมต่อกับ `mentor` ในอุตสาหกรรมและเพื่อนร่วมงาน
+  - 🚀 **การเป็นผู้ประกอบการ (Entrepreneurship)**: รากฐานสำหรับแนวคิด `startup` และธุรกิจ
+
 ---
-
-## 🏆 **Bonus Opportunities**
-
-### **Excellence Awards (Extra Credit)**
-- 🥇 **Best Innovation Award**: Most creative and innovative solution (+5 points)
-- 🎨 **Best Design Award**: Outstanding UI/UX design (+3 points)
-- 🔧 **Best Technical Implementation**: Superior technical execution (+3 points)
-- 🤝 **Best Teamwork Award**: Exemplary collaboration and communication (+2 points)
-- 🌟 **People's Choice Award**: Voted by peer teams (+2 points)
-
-### **Industry Recognition Opportunities**
-- 📢 **Showcase Event**: Best projects presented to industry professionals
-- 💼 **Internship Opportunities**: Top teams may receive internship offers
-- 🏆 **Competition Entry**: Outstanding projects entered in national competitions
-- 📰 **Media Coverage**: Best projects featured in university publications
-
----
-
-## 📞 **Support & Resources**
-
-### **Mentoring Support**
-- 👨‍🏫 **Faculty Mentors**: Weekly check-ins with assigned instructors
-- 👩‍💼 **Industry Mentors**: Guest mentors from software companies
-- 👥 **Peer Mentoring**: Cross-team collaboration and knowledge sharing
-
-### **Technical Resources**
-- 🔧 **Development Tools**: Free access to professional development tools
-- ☁️ **Cloud Credits**: AWS, MongoDB Atlas, and Vercel credits provided
-- 📚 **Learning Materials**: Curated resources and tutorials
-- 🎥 **Video Tutorials**: Recorded sessions on advanced topics
-
-### **Emergency Support**
-- 🚨 **Technical Helpdesk**: Available during project weeks
-- 📞 **Weekend Support**: Limited support for critical issues
-- 💬 **Discord Channel**: 24/7 peer support and discussion
-
----
-
-## 📈 **Success Metrics & Outcomes**
-
-### **Expected Learning Outcomes**
-After completing both assessments, students will demonstrate:
-
-1. **Technical Proficiency**
-   - Full-stack development capabilities
-   - Modern JavaScript and React.js expertise
-   - API design and database management skills
-   - Testing and deployment knowledge
-
-2. **Professional Skills**
-   - Project management and teamwork
-   - Technical communication and documentation
-   - Problem-solving and critical thinking
-   - Code quality and best practices
-
-3. **Industry Readiness**
-   - Portfolio-quality projects for job applications
-   - Experience with professional development workflows
-   - Understanding of software development lifecycle
-   - Collaboration skills for team environments
-
-### **Career Impact**
-- 💼 **Job Readiness**: Projects serve as portfolio pieces for job applications
-- 🎓 **Skill Certification**: Demonstrated competency in modern web development
-- 🌐 **Network Building**: Connections with industry mentors and peers
-- 🚀 **Entrepreneurship**: Foundation for startup ideas and business ventures
-
----
-
