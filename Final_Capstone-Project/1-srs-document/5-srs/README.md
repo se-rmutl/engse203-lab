@@ -4,7 +4,7 @@
 **เวอร์ชัน**: 1.0  
 **วันที่**: มกราคม 2025  
 **มาตรฐาน**: IEEE Std 830-1998  
-**ผู้จัดทำ**: ทีมพัฒนา ENGCE301  
+**ผู้จัดทำ**: ทีมพัฒนา ENGSE206  
 
 ---
 
@@ -26,7 +26,7 @@
 - **ทีมพัฒนา (Development Team)**: วิศวกรซอฟต์แวร์ที่ทำการ implement ระบบ
 - **ทีมทดสอบ (Testing Team)**: วิศวกร Quality Assurance ที่ทำการตรวจสอบระบบ
 - **ผู้มีส่วนได้ส่วนเสียในโครงการ (Project Stakeholders)**: Supervisors, Managers และ Administrators ที่จะใช้งานระบบ
-- **การประเมินผลทางวิชาการ (Academic Review)**: อาจารย์ผู้สอนและเพื่อนร่วมชั้นในการประเมินโครงการวิชา ENGCE301
+- **การประเมินผลทางวิชาการ (Academic Review)**: อาจารย์ผู้สอนและเพื่อนร่วมชั้นในการประเมินโครงการวิชา ENGSE206
 
 ระบบให้ความสามารถในการติดตาม real-time และการสื่อสารสำหรับการดำเนินงาน call center โดยใช้การ implement แบบ 3-tier architecture
 
@@ -87,8 +87,7 @@
 - IEEE Std 830-1998 - IEEE Recommended Practice for Software Requirements Specifications
 - RFC 6455 - The WebSocket Protocol  
 - RFC 7519 - JSON Web Token (JWT)
-- ENGCE301 Course Materials - Software Design and Development
-- LAB 5-7 Implementation Guides - 3-Tier Architecture
+- ENGSE206 Course Materials - Software Requirements Specification and Design
 
 **เอกสารที่เกี่ยวข้อง**:
 - Overall Context Analysis - Agent Wallboard System
