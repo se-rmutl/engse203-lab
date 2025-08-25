@@ -1,0 +1,172 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.6 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36" version="28.0.6">
+  <diagram name="Page-1" id="UDnz91DTxsZyhy_A5Ue5">
+    <mxGraphModel dx="2095" dy="1247" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="system-boundary" value="Agent Wallboard System" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=16;fontStyle=1;startSize=30;" parent="1" vertex="1">
+          <mxGeometry x="170" y="85" width="480" height="1000" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-login" value="UC-01&#xa;Login to System" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="79" y="295" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-manage-status" value="UC-02&#xa;Manage Agent Status" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="79" y="170" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-receive-notification" value="UC-05&#xa;Receive&#xa;Notification" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="79" y="75" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-view-dashboard" value="UC-06&#xa;View Team&#xa;Dashboard" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="79" y="705" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-track-attendance" value="UC-07&#xa;Track Agent&#xa;Attendance" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="89" y="605" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-view-reports" value="UC-08&#xa;View Statistical&#xa;Reports" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="79" y="815" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="include1" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" parent="system-boundary" source="uc-manage-status" target="uc-login" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="199" y="375" as="sourcePoint" />
+            <mxPoint x="359" y="375" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uc-monitor-agents" value="UC-03&#xa;Monitor Agents&#xa;Real-time" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="79" y="405" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-send-message" value="UC-04&#xa;Send Message&#xa;to Agent" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="79" y="505" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-manage-database" value="UC-09&#xa;Manage Database&#xa;Configuration" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="299" y="885" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-manage-api" value="UC-10&#xa;Manage API&#xa;Endpoints" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="299" y="685" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-manage-websocket" value="UC-11&#xa;Manage WebSocket&#xa;Connections" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="299" y="459" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-deploy-application" value="UC-12&#xa;Deploy Desktop&#xa;Application" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="289" y="585" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-configure-system" value="UC-13&#xa;Configure System&#xa;Environment" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="system-boundary" vertex="1">
+          <mxGeometry x="299" y="785" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="include2" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" parent="system-boundary" source="uc-monitor-agents" target="uc-manage-websocket" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="369" y="315" as="sourcePoint" />
+            <mxPoint x="269" y="415" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="include3" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" parent="system-boundary" source="uc-send-message" target="uc-manage-websocket" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="419" y="315" as="sourcePoint" />
+            <mxPoint x="289" y="415" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actor-admin" value="System&#xa;Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="system-boundary" vertex="1">
+          <mxGeometry x="549" y="645" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-admin-database" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-admin" target="uc-manage-database" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="839" y="965" as="sourcePoint" />
+            <mxPoint x="109" y="965" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-admin-api" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-admin" target="uc-manage-api" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="809" y="685" as="sourcePoint" />
+            <mxPoint x="249" y="685" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-admin-websocket" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-admin" target="uc-manage-websocket" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="809" y="685" as="sourcePoint" />
+            <mxPoint x="429" y="685" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-admin-deploy" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-admin" target="uc-deploy-application" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="809" y="685" as="sourcePoint" />
+            <mxPoint x="579" y="685" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-admin-configure" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-admin" target="uc-configure-system" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="809" y="685" as="sourcePoint" />
+            <mxPoint x="329" y="805" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actor-agent" value="Agent" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="system-boundary" vertex="1">
+          <mxGeometry x="-81" y="135" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-agent-login" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;" parent="system-boundary" source="actor-agent" target="uc-login" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-81" y="305" as="sourcePoint" />
+            <mxPoint x="49" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-agent-status" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-agent" target="uc-manage-status" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-81" y="305" as="sourcePoint" />
+            <mxPoint x="219" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-agent-notification" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-agent" target="uc-receive-notification" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-81" y="305" as="sourcePoint" />
+            <mxPoint x="49" y="385" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actor-manager" value="Operations&#xa;Manager" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="system-boundary" vertex="1">
+          <mxGeometry x="-81" y="745" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-manager-dashboard" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-manager" target="uc-view-dashboard" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-81" y="605" as="sourcePoint" />
+            <mxPoint x="219" y="385" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-manager-reports" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-manager" target="uc-view-reports" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-81" y="605" as="sourcePoint" />
+            <mxPoint x="549" y="385" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actor-supervisor" value="Supervisor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="system-boundary" vertex="1">
+          <mxGeometry x="-91" y="475" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-supervisor-login" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-supervisor" target="uc-login" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-81" y="455" as="sourcePoint" />
+            <mxPoint x="49" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-supervisor-monitor" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-supervisor" target="uc-monitor-agents" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-81" y="455" as="sourcePoint" />
+            <mxPoint x="399" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-supervisor-message" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-supervisor" target="uc-send-message" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-81" y="455" as="sourcePoint" />
+            <mxPoint x="549" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-supervisor-dashboard" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-supervisor" target="uc-view-dashboard" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-81" y="455" as="sourcePoint" />
+            <mxPoint x="219" y="385" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-supervisor-attendance" value="" style="endArrow=none;html=1;rounded=0;" parent="system-boundary" source="actor-supervisor" target="uc-track-attendance" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-81" y="455" as="sourcePoint" />
+            <mxPoint x="399" y="385" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
