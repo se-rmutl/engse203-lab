@@ -5,9 +5,13 @@
 **รายวิชา:** ENGSE203 - Computer Programming for Software Engineer  
 **หัวข้อ:** Advanced API Interaction, DOM, and React Routing  
 **เวลา:** 4 ชั่วโมง (240 นาที)  
-**คะแนนเต็ม:** 100 คะแนน
+#### - ส่วนหลัก คะแนนเต็ม 60 คะแนน
 
------
+#### - งานเพิ่มเติม [Additional Challenges สำหรับ SEC1](additional-sec1.md) 40 คะแนน
+
+#### **คะแนนรวม:** 100 คะแนน
+
+---
 
 ### **คำชี้แจงทั่วไป**
 
