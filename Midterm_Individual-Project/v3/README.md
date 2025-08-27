@@ -27,7 +27,7 @@
 | :--- | :--- | :--- |
 | **Part 1** | **Core Task - Vanilla JS Application** (ทำตามขั้นตอนได้ครบ) | **30** |
 | **Part 2** | **Core Task - React.js Application** (ทำตามขั้นตอนได้ครบ) | **30** |
-| **สPart 3** | **Additional Challenges** (เลือกทำเพื่อเก็บคะแนนเพิ่ม) | **40** |
+| **Part 3** | **Additional Challenges** (เลือกทำเพื่อเก็บคะแนนเพิ่ม) | **40** |
 | **รวม** | | **100** |
 
 -----
