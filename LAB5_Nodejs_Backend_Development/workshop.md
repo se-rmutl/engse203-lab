@@ -1,7 +1,9 @@
-# Workshop: Agent Wallboard System Backend Development
-## ENGSE203 สัปดาห์ที่ 7 - Practical Session (4 ชั่วโมง)
+# LAB5:	Node.js & Backend Development
+
+### ENGSE203 สัปดาห์ที่ 7 - Practical Session (4 ชั่วโมง)
 
 ---
+## Workshop: Agent Wallboard System Backend Development (งานกลุ่ม)
 
 ## 🎯 Workshop Overview
 
@@ -35,6 +37,19 @@ npm --version
 # - REST Client
 # - Thunder Client (optional)
 ```
+
+
+### สร้าง git repository:
+
+* สร้าง git repository ชื่อ+ทีม: `agent-wallboard-teamxx`,  (`xx`=กลุ่ม, เช่น `agent-wallboard-team03`)
+
+* clone repository ลงมาทำงานที่ local
+
+* เข้าไปทำงานที่ repository เช่น `agent-wallboard-team03` (*ตัวอย่างเท่านั้น, ให้ใช้ชื่อของทีมตัวเอง)
+```bash
+cd agent-wallboard-team03
+```
+
 
 ### สร้าง Project Directory:
 ```bash
@@ -2053,7 +2068,9 @@ PUT /api/notifications/:id/acknowledge // รับทราบ notification
 - Input sanitization
 - Request logging และ monitoring
 
-### Submission Guidelines
+---
+
+## 📌 การส่งงาน Submission Guidelines
 
 **ที่ต้องส่ง:**
 1. **Source Code** - Complete project with new features
@@ -2061,9 +2078,9 @@ PUT /api/notifications/:id/acknowledge // รับทราบ notification
 3. **Demo Video** - 5-10 นาทีแสดงการทำงาน
 4. **README.md** - Setup instructions และ feature descriptions
 
-**Format:**
-- ZIP file ชื่อ `StudentID_AgentWallboard_Week7.zip`
-- Upload ผ่าน LMS
+**วิธีการส่งงาน:**
+- ส่ง git repository url ที่ Trello
+- ปรับสถานะของ Card
 - **Due Date:** ก่อนเรียนสัปดาห์หน้า
 
 **Grading Criteria:**
