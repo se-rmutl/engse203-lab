@@ -2077,6 +2077,10 @@ PUT /api/notifications/:id/acknowledge // รับทราบ notification
 2. **API Documentation** - Updated Postman collection
 3. **Demo Video** - 5-10 นาทีแสดงการทำงาน
 4. **README.md** - Setup instructions และ feature descriptions
+   - รายละเอียดกลุ่มและสมาชิก/role
+   - git url งาน [pre-workshop](pre-workshop.md) ของแต่ละคน (คะแนนรายบุคคล)
+   - คำอธิบายงาน
+   - Setup instructions และ feature descriptions
 
 **วิธีการส่งงาน:**
 - ส่ง git repository url ที่ Trello
