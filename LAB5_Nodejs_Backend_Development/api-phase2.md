@@ -66,7 +66,7 @@ mongoose.connect('mongodb+srv://username:password@cluster.mongodb.net/agentdb')
 
 #### 🗂️ **Simple Agent Schema (20 นาที)**
 ```javascript
-// เพิ่มใน server.js (ไม่แยกไฟล์ยัง)
+// เพิ่มใน server.js (ยังไม่แยกไฟล์)
 const agentSchema = new mongoose.Schema({
   agentCode: { type: String, required: true, unique: true },
   name: { type: String, required: true },
@@ -591,3 +591,4 @@ app.get('/api/docs', (req, res) => {
 2. **Phase 2**: lready completed and working great! ✅
 3. **Phase 3**: Focused on practical authentication + deployment
 
+**Happy Coding! 💻✨**
