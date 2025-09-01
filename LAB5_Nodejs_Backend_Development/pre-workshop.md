@@ -65,7 +65,7 @@ npm --version
 ### 2.1 สร้าง Directory และ Initialize Project
 
 ```bash
-# สร้างโฟลเดอร์สำหรับโปรเจกต์
+# เข้าไปที่โฟลเดอร์หลักสำหรับโปรเจกต์
 cd engse203-backend
 
 # สร้างไฟล์ package.json เพื่อจัดการโปรเจกต์
