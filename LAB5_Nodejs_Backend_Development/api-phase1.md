@@ -57,7 +57,9 @@ npm install --save-dev nodemon
 # 4. สร้าง folder structure
 mkdir controllers middleware models routes utils
 touch server.js .env .gitignore README.md
-````
+```
+
+---
 
 ### 📁 **Step 2: Professional Project Structure (15 นาที)**
 
@@ -82,6 +84,8 @@ agent-wallboard-api/
 ├── 📄 .env.example        # Environment template
 └── 📄 README.md          # Documentation
 ```
+
+---
 
 ### ⚙️ **Step 3: Environment Configuration (10 นาที)**
 
@@ -119,6 +123,8 @@ logs/
 dist/
 ```
 
+---
+
 ### 📦 **Step 4: Package.json Scripts (10 นาที)**
 
 **อัพเดท `package.json`:**
@@ -150,6 +156,8 @@ dist/
   }
 }
 ```
+
+---
 
 ### 🔧 **Step 5: Core Constants (20 นาที)**
 
@@ -379,6 +387,8 @@ initializeSampleData();
 module.exports = { Agent, agents };
 
 ```
+
+---
 
 ### 🎮 **Step 7: Controllers - นักศึกษาทำเอง (30 นาที)**
 
@@ -1110,6 +1120,8 @@ router.use('/agents', agentRoutes);
 module.exports = router;
 ```
 
+---
+
 ### 🖥️ **Step 11: Main Server (15 นาที - ให้ code สำเร็จ)**
 
 **สร้างไฟล์ `server.js`:**
@@ -1337,6 +1349,8 @@ Content-Type: application/json
 }
 ```
 
+---
+
 ### 📊 **Step 13: Status Management Testing (20 นาที)**
 
 #### **Test Status Update - Valid Transition:**
@@ -1385,11 +1399,13 @@ Content-Type: application/json
 }
 ```
 
+---
+
 ### 📚 **Step 14: Documentation Creation (15 นาที)**
 
 **สร้างไฟล์ `README.md`:**
 
-````markdown
+```markdown
 # Agent Wallboard API - Enhanced Phase 1
 
 > Professional Node.js API สำหรับจัดการ Call Center Agents แบบ Real-time
@@ -1416,7 +1432,7 @@ npm run dev
 
 # 4. Test API
 curl http://localhost:3001/api/health
-````
+```
 
 ## 🔗 API Endpoints
 
