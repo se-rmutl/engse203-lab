@@ -35,7 +35,7 @@ Phase 3: server.js + Auth + Deploy ← Production ready
 ## 🏆 **Benefits of Plan**
 
 ### ✅ **For Students:**
-- เรียนรู้แบบ progressive (ไม่ shock จากความซับซ้อน)
+- เรียนรู้แบบ progressive 
 - ได้ working system จริงๆ ในแต่ละ Phase
 - มีความมั่นใจจากการทำสำเร็จ
 - พร้อมสำหรับการทำงานจริง
@@ -46,6 +46,7 @@ Phase 3: server.js + Auth + Deploy ← Production ready
 - ประสบการณ์ deployment และ production
 - Mindset ในการแก้ปัญหาแบบ systematic
 
+---
 ---
 
 ## 🗄️ **Phase 1: Agent Wallboard Basic API Foundation**
