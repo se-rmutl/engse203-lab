@@ -700,6 +700,179 @@ module.exports = {
 };
 ```
 
+---
+
+โค้ดนี้คือ **middleware สำหรับตรวจสอบความถูกต้องของข้อมูล (Validation) โดยใช้ Joi**
+ซึ่งทำให้ API ของเราปลอดภัยและป้องกันข้อมูลผิดรูปแบบเข้าสู่ระบบ
+
+---
+
+## 📌 อธิบายโค้ดทีละส่วน
+
+### 1) import modules
+
+```javascript
+const Joi = require('joi');
+const { AGENT_STATUS, DEPARTMENTS } = require('../utils/constants');
+const { sendError } = require('../utils/apiResponse');
+```
+
+* `Joi` → ไลบรารีสำหรับ validation ข้อมูลตาม schema
+* `AGENT_STATUS, DEPARTMENTS` → constants ที่เรากำหนดไว้ เช่น รายชื่อสถานะ และแผนกที่ถูกต้อง
+* `sendError` → helper function สำหรับส่ง response เมื่อ validation ล้มเหลว
+
+---
+
+### 2) สร้าง **schemas** (แม่แบบ validation)
+
+```javascript
+const schemas = {
+  agent: Joi.object({
+    agentCode: Joi.string()
+      .pattern(/^[A-Z]\d{3}$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'Agent code must be in format A001 (letter + 3 digits)',
+        'any.required': 'Agent code is required'
+      }),
+    
+    name: Joi.string()
+      .min(2)
+      .max(100)
+      .required()
+      .messages({
+        'string.min': 'Name must be at least 2 characters',
+        'string.max': 'Name cannot exceed 100 characters',
+        'any.required': 'Name is required'
+      }),
+    
+    email: Joi.string()
+      .email()
+      .required()
+      .messages({
+        'string.email': 'Please provide a valid email address',
+        'any.required': 'Email is required'
+      }),
+    
+    department: Joi.string()
+      .valid(...DEPARTMENTS)
+      .default('General')
+      .messages({
+        'any.only': `Department must be one of: ${DEPARTMENTS.join(', ')}`
+      }),
+    
+    skills: Joi.array()
+      .items(Joi.string().min(2).max(50))
+      .default([])
+      .messages({
+        'array.base': 'Skills must be an array of strings'
+      })
+  }),
+```
+
+📖 ความหมาย:
+
+* `agentCode` → ต้องตรงรูปแบบ เช่น `A001` (ตัวอักษร 1 ตัว + ตัวเลข 3 หลัก) และห้ามว่าง
+* `name` → ต้องมีอย่างน้อย 2 ตัวอักษร และไม่เกิน 100 ตัวอักษร
+* `email` → ต้องเป็นอีเมลที่ถูกต้อง
+* `department` → ต้องอยู่ในรายการที่กำหนด (`Sales`, `Support`, ฯลฯ) ถ้าไม่ใส่ default = `General`
+* `skills` → ต้องเป็น array ของ string เช่น `["Thai","English"]`
+
+---
+
+### 3) Schema สำหรับ **update status** (ยังเป็น TODO)
+
+```javascript
+statusUpdate: Joi.object({
+  // TODO: ต้องตรวจสอบว่า status อยู่ใน AGENT_STATUS และ reason ไม่เกิน 200 ตัวอักษร
+})
+```
+
+👉 ตรงนี้นักศึกษาจะต้องทำเอง:
+
+* `status`: ต้องเป็นหนึ่งในค่าของ `AGENT_STATUS` และ required
+* `reason`: เป็น optional string ยาวไม่เกิน 200 ตัวอักษร
+
+---
+
+### 4) Middleware function: **validateAgent**
+
+```javascript
+const validateAgent = (req, res, next) => {
+  const { error, value } = schemas.agent.validate(req.body, {
+    abortEarly: false,
+    stripUnknown: true
+  });
+```
+
+📖 ความหมาย:
+
+* `schemas.agent.validate(req.body)` → ตรวจสอบข้อมูลที่ client ส่งเข้ามา
+* `abortEarly: false` → ตรวจสอบจนหมดทุก field (ไม่หยุดทันทีที่เจอ error แรก)
+* `stripUnknown: true` → ตัด field แปลก ๆ ที่ไม่ได้อยู่ใน schema ทิ้ง
+
+---
+
+### 5) การจัดการ error
+
+```javascript
+  if (error) {
+    const validationErrors = error.details.map(detail => ({
+      field: detail.path[0],
+      message: detail.message
+    }));
+
+    console.log('❌ Validation failed:', validationErrors);
+    return sendError(res, 'Validation failed', 400, validationErrors);
+  }
+```
+
+📖 ความหมาย:
+
+* ถ้ามี error จะเก็บรายละเอียด field และ message
+* ส่ง response กลับไปยัง client โดยใช้ `sendError`
+* ตัวอย่าง response:
+
+```json
+{
+  "success": false,
+  "message": "Validation failed",
+  "errors": [
+    { "field": "email", "message": "Please provide a valid email address" }
+  ]
+}
+```
+
+---
+
+### 6) กรณีผ่าน validation
+
+```javascript
+  req.body = value;
+  next();
+};
+```
+
+* ถ้าข้อมูลถูกต้อง จะ replace `req.body` ด้วยค่าที่ Joi ตรวจสอบแล้ว
+* จากนั้นเรียก `next()` เพื่อส่งต่อไปยัง controller
+
+---
+
+### 7) Middleware: **validateStatusUpdate** (ยังไม่ทำ)
+
+```javascript
+const validateStatusUpdate = (req, res, next) => {
+  return sendError(res, 'TODO: Implement validateStatusUpdate middleware', 501);
+};
+```
+
+📖 ความหมาย:
+
+* ยังไม่ได้ implement → ส่ง error 501 (Not Implemented) กลับไป
+* นักศึกษาต้องทำเอง โดยใช้ `schemas.statusUpdate` ตรวจสอบเหมือนกับ `validateAgent`
+
+---
+
 ### ⚠️ **Step 9: Error Handling (20 นาที - ให้ code สำเร็จ)**
 
 **สร้างไฟล์ `middleware/errorHandler.js`:**
