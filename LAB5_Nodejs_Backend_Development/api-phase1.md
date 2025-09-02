@@ -940,6 +940,81 @@ module.exports = { globalErrorHandler, notFoundHandler, performanceMonitor };
 
 ### 🛤️ **Step 10: Routes Setup (15 นาที - ให้ code สำเร็จ)**
 
+### 🔎 ทำไมต้องมี Step 10: Routes Setup?
+
+ใน Express.js เราจะใช้ **Routes** เพื่อแยกการทำงานของ API ตาม URL และ HTTP Method  
+ข้อดีของการทำแบบนี้ คือ:
+
+1. **Separation of Concerns (แยกความรับผิดชอบ)**  
+   - `server.js` ไม่ต้องมีโค้ดยาว ๆ ทุกอย่าง แต่แค่เชื่อม router เข้ามา  
+   - routes = จุดรับ request  
+   - controllers = logic การทำงาน  
+   - models = จัดการข้อมูล  
+
+2. **โครงสร้างชัดเจนและขยายง่าย**  
+   - ถ้ามี module ใหม่ เช่น `/tickets` → แค่สร้าง `ticketRoutes.js`  
+   - ไม่ต้องแก้ไฟล์ใหญ่ทั้งไฟล์  
+
+3. **ใช้ Middleware ได้สะดวก**  
+   - ใส่ validation หรือ authentication เฉพาะบาง route ได้  
+
+4. **อ่านง่ายและทดสอบง่าย**  
+   - แต่ละ endpoint ถูก mapping ชัดเจน → รู้ว่าต้องไป controller ไหน
+
+---
+
+### ⚡ Flow ของการทำงาน (Client → API → Response)
+
+```
+┌─────────────┐
+│   Client    │
+│ (Frontend)  │
+└──────┬──────┘
+       │ 1. ส่ง Request เช่น
+       │    POST /agents
+       ▼
+┌───────────────────────┐
+│        Routes         │
+│  (จับคู่ URL + Method).  │
+│   /agents → POST      │
+└──────┬────────────────┘
+       │ 2. ตรวจเจอ route
+       ▼
+┌───────────────────────┐
+│      Middleware       │
+│  (validateAgent,      │
+│   validateStatus...)  │
+└──────┬────────────────┘
+       │ 3. ตรวจสอบข้อมูล
+       │    ❌ ถ้าผิด → ส่ง error กลับ
+       ▼
+┌───────────────────────┐
+│      Controller       │
+│  (agentController)    │
+│  จัดการ logic เช่น      │
+│  createAgent()        │
+└──────┬────────────────┘
+       │ 4. ดึง/บันทึกข้อมูล
+       ▼
+┌───────────────────────┐
+│        Model          │
+│   (Agent.js / DB)     │
+│  จัดการข้อมูลจริง         │
+└──────┬────────────────┘
+       │ 5. ส่งผลลัพธ์กลับ
+       ▼
+┌───────────────────────┐
+│       Response        │
+│ ส่ง JSON → Client      │
+└───────────────────────┘
+```
+
+---
+
+📖 **สรุป:**  
+Step 10: Routes Setup ช่วยทำให้ API ของเรามีโครงสร้างที่ชัดเจน แยกเป็น layer  
+ดูแลและขยายระบบได้ง่าย และเป็นไปตามหลักการ RESTful API ที่เป็นมาตรฐานสากล
+
 **สร้างไฟล์ `routes/agents.js`:**
 
 ```javascript
