@@ -11,8 +11,8 @@
 | Phase | Focus | Duration | Complexity | Key Learning |
 |-------|-------|----------|------------|-------------|
 | **[Phase 1](api-phase1.md)** | **Basic API + CRUD** | **4 hrs** | ⭐ **Beginner** | **Express.js, RESTful API, In-memory storage**|
-| Phase 2 | Database + Simple WebSocket | 4 hrs | ⭐⭐ Intermediate | MongoDB basics, Real-time updates |
-| Phase 3 | Authentication + Production | 4 hrs | ⭐⭐⭐ Advanced | JWT basics, Deployment ready |
+| [Phase 2](api-phase2.md) | Database + Simple WebSocket | 4 hrs | ⭐⭐ Intermediate | MongoDB basics, Real-time updates |
+| [Phase 3](api-phase3.md) | Authentication + Production | 4 hrs | ⭐⭐⭐ Advanced | JWT basics, Deployment ready |
 
 
 ### 📈 **Complexity Progression:**
