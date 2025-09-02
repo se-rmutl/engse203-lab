@@ -4,6 +4,56 @@
 
 ---
 
+# Agent Wallboard System - 3 Phase Plan
+
+## 📋 **Phase Distribution**
+
+| Phase | Focus | Duration | Complexity | Key Learning |
+|-------|-------|----------|------------|-------------|
+| **[Phase 1](api-phase1.md)** | **Basic API + CRUD** | **4 hrs** | ⭐ **Beginner** | **Express.js, RESTful API, In-memory storage**|
+| Phase 2 | Database + Simple WebSocket | 4 hrs | ⭐⭐ Intermediate | MongoDB basics, Real-time updates |
+| Phase 3 | Authentication + Production | 4 hrs | ⭐⭐⭐ Advanced | JWT basics, Deployment ready |
+
+
+### 📈 **Complexity Progression:**
+
+```
+Phase 1: Single file (server.js) ← Start here
+    ↓
+Phase 2: server.js + MongoDB ← Add persistence  
+    ↓
+Phase 3: server.js + Auth + Deploy ← Production ready
+```
+
+### 🎓 **Learning Outcomes:**
+
+หลังจบทั้ง 3 Phase นักศึกษาจะสามารถ:
+
+1. **สร้าง REST API** ที่สมบูรณ์
+2. **จัดการ Database** พื้นฐาน
+3. **ทำ Real-time Features** ด้วย WebSocket
+4. **Authentication System** แบบ JWT
+5. **Deploy Production** บน cloud platform
+6. **API Documentation** สำหรับผู้ใช้งาน
+
+---
+
+## 🏆 **Benefits of Plan**
+
+### ✅ **For Students:**
+- เรียนรู้แบบ progressive 
+- ได้ working system จริงๆ ในแต่ละ Phase
+- มีความมั่นใจจากการทำสำเร็จ
+- พร้อมสำหรับการทำงานจริง
+
+### ✅ **For Industry:**
+- นักศึกษาจบมามีทักษะที่ใช้งานได้จริง
+- เข้าใจ full-stack development workflow
+- ประสบการณ์ deployment และ production
+- Mindset ในการแก้ปัญหาแบบ systematic
+
+---
+
 ## Slide 1: Course Progression Overview
 ### จาก Frontend สู่ Full-Stack Development
 
