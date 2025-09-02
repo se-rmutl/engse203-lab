@@ -594,7 +594,7 @@ getAllAgents: (req, res) => {
 
 -----
 
-## ⏰ **HOUR 3: Validation & Error Handling (70 นาที)**
+## ⏰ **HOUR 3: Validation & Error Handling (70 นาที) มีคำอธิบายด้านล่าง**
 
 ### ✅ **Step 8: Joi Validation - ผสมระหว่างให้ code และให้ทำเอง (35 นาที)**
 
