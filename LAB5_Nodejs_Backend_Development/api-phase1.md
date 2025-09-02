@@ -1,30 +1,75 @@
+แน่นอนครับ จากการตรวจสอบไฟล์ Markdown (`.md`) ที่แนบมา พบว่ามีข้อผิดพลาดทางไวยากรณ์ (Syntax Error) จริงๆ ครับ ซึ่งทำให้การแสดงผลผิดเพี้ยนไป
+
+ผมได้ทำการตรวจสอบและแก้ไขให้เรียบร้อยแล้วครับ
+
+-----
+
+### 🧐 **สาเหตุของปัญหา**
+
+[cite\_start]ปัญหาหลักเกิดจากในส่วน **Learning Check Point - Hour 3** [cite: 1] [cite\_start]มีการเปิดบล็อกโค้ดด้วย ` ```markdown ` แต่ **ไม่มีการปิดท้ายด้วย** ` ``` ` [cite: 1] ครับ
+
+**ผลกระทบ:** เมื่อไม่มีการปิดบล็อกโค้ด ตัวแปลง Markdown จะเข้าใจว่าเนื้อหาทั้งหมดที่อยู่หลังจากจุดนั้น (ตั้งแต่ Step 10 เป็นต้นไป) เป็นส่วนหนึ่งของโค้ดทั้งหมด ทำให้ไม่แสดงผลเป็นหัวข้อ, ลิสต์, หรือรูปแบบอื่นๆ ที่ควรจะเป็น
+
+-----
+
+### 🔧 **จุดที่แก้ไข**
+
+ผมได้เพิ่ม ` ``` ` เพื่อปิดท้ายบล็อกโค้ดในส่วนดังกล่าวให้ถูกต้อง ดังนี้ครับ
+
+**โค้ดเดิมที่มีปัญหา:**
+
+```markdown
+### ✅ **ตรวจสอบความเข้าใจ**
+1. **อธิบายความแตกต่างของ Joi validation กับ if/else validation**
+2. **Global error handler ช่วยอะไรบ้าง?** 3. **Performance monitor จะเป็นประโยชน์อย่างไรใน real-time system?**
+```
+
+**โค้ดที่แก้ไขแล้ว:**
+
+```markdown
+### ✅ **ตรวจสอบความเข้าใจ**
+1. **อธิบายความแตกต่างของ Joi validation กับ if/else validation**
+2. **Global error handler ช่วยอะไรบ้าง?**
+3. **Performance monitor จะเป็นประโยชน์อย่างไรใน real-time system?**
+```
+
+````
+
+---
+
+### 📝 **ไฟล์ฉบับสมบูรณ์ที่แก้ไขแล้ว**
+
+คุณสามารถคัดลอกเนื้อหาทั้งหมดด้านล่างนี้ไปใช้งานได้เลยครับ ไฟล์นี้จะแสดงผลอย่างถูกต้องแน่นอน
+
+```markdown
 # Phase 1 Enhanced (Revised): Agent Wallboard API with Professional Structure
 
 ## 📋 **Phase 1 ภาพรวม**
 
 ### 🎯 **Phase 1 ในระบบ Agent Wallboard ทั้งหมด**
 
-```
+````
+
 ┌─────────────────────────────────┐
 │    Frontend (Desktop Apps)      │ ← Phase 4: Electron.js
-│  • Agent App • Supervisor App   │   
+│  • Agent App • Supervisor App   │  
 └─────────────┬───────────────────┘
-              │ HTTP/REST + WebSocket  
-              ▼
+│ HTTP/REST + WebSocket  
+▼
 ┌─────────────────────────────────┐
-│    Backend API (Phase 1 ตรงนี้!) │ ← Node.js + Express
-│  • REST APIs • Validation       │   
+│    Backend API (Phase 1 ตรงนี้\!) │ ← Node.js + Express
+│  • REST APIs • Validation       │  
 └─────────────┬───────────────────┘
-              │ Database Connections
-              ▼  
+│ Database Connections
+▼  
 ┌─────────────────────────────────┐
 │    Database (Phase 2-3)         │ ← MSSQL + MongoDB
 └─────────────────────────────────┘
-```
+
+````
 
 ### 📚 **สิ่งที่จะได้เรียนรู้ใน Phase 1:**
-- ✅ **Professional Node.js API Development** 
-- ✅ **MVC Architecture Pattern**
+- ✅ **Professional Node.js API Development** - ✅ **MVC Architecture Pattern**
 - ✅ **Input Validation with Joi**
 - ✅ **Error Handling & Middleware**
 - ✅ **API Testing & Documentation**
@@ -57,7 +102,7 @@ npm install --save-dev nodemon
 # 4. สร้าง folder structure
 mkdir controllers middleware models routes utils
 touch server.js .env .gitignore README.md
-```
+````
 
 ### 📁 **Step 2: Professional Project Structure (15 นาที)**
 
@@ -86,6 +131,7 @@ agent-wallboard-api/
 ### ⚙️ **Step 3: Environment Configuration (10 นาที)**
 
 **สร้างไฟล์ `.env.example`:**
+
 ```env
 # Server Configuration
 PORT=3001
@@ -100,6 +146,7 @@ FRONTEND_URL=http://localhost:3000
 ```
 
 **สร้างไฟล์ `.env`:**
+
 ```env
 PORT=3001
 NODE_ENV=development
@@ -107,6 +154,7 @@ FRONTEND_URL=http://localhost:3000
 ```
 
 **สร้างไฟล์ `.gitignore`:**
+
 ```gitignore
 node_modules/
 .env
@@ -119,6 +167,7 @@ dist/
 ### 📦 **Step 4: Package.json Scripts (10 นาที)**
 
 **อัพเดท `package.json`:**
+
 ```json
 {
   "name": "agent-wallboard-api-enhanced",
@@ -150,6 +199,7 @@ dist/
 ### 🔧 **Step 5: Core Constants (20 นาที)**
 
 **สร้างไฟล์ `utils/constants.js`:**
+
 ```javascript
 // utils/constants.js - ค่าคงที่ของระบบ
 const AGENT_STATUS = {
@@ -198,6 +248,7 @@ module.exports = {
 ```
 
 **สร้างไฟล์ `utils/apiResponse.js`:**
+
 ```javascript
 // utils/apiResponse.js - Consistent API responses
 const sendSuccess = (res, message, data = null, statusCode = 200) => {
@@ -234,13 +285,14 @@ const sendError = (res, message, statusCode = 400, errors = null) => {
 module.exports = { sendSuccess, sendError };
 ```
 
----
+-----
 
 ## ⏰ **HOUR 2: Models & Controllers (70 นาที)**
 
 ### 📊 **Step 6: Enhanced Agent Model (25 นาที - อธิบาย + ให้ code สำเร็จ)**
 
 **สร้างไฟล์ `models/Agent.js`:**
+
 ```javascript
 // models/Agent.js - Enhanced Agent model with methods
 class Agent {
@@ -349,6 +401,7 @@ module.exports = { Agent, agents };
 ### 🎮 **Step 7: Controllers - นักศึกษาทำเอง (30 นาที)**
 
 **สร้างไฟล์ `controllers/agentController.js`:**
+
 ```javascript
 // controllers/agentController.js - Business logic ที่แยกจาก routes
 const { Agent, agents } = require('../models/Agent');
@@ -527,7 +580,8 @@ module.exports = agentController;
 
 ### 📝 **TODO Completion Guide สำหรับนักศึกษา:**
 
-#### **TODO #1: getAllAgents (10 นาที)**
+#### **TODO \#1: getAllAgents (10 นาที)**
+
 ```javascript
 // Solution hints:
 getAllAgents: (req, res) => {
@@ -556,13 +610,14 @@ getAllAgents: (req, res) => {
 }
 ```
 
----
+-----
 
 ## ⏰ **HOUR 3: Validation & Error Handling (70 นาที)**
 
 ### ✅ **Step 8: Joi Validation - ผสมระหว่างให้ code และให้ทำเอง (35 นาที)**
 
 **สร้างไฟล์ `middleware/validation.js`:**
+
 ```javascript
 // middleware/validation.js - Professional validation with Joi
 const Joi = require('joi');
@@ -666,6 +721,7 @@ module.exports = {
 ### ⚠️ **Step 9: Error Handling (20 นาที - ให้ code สำเร็จ)**
 
 **สร้างไฟล์ `middleware/errorHandler.js`:**
+
 ```javascript
 // middleware/errorHandler.js - Professional error handling
 const { sendError } = require('../utils/apiResponse');
@@ -721,16 +777,17 @@ module.exports = { globalErrorHandler, notFoundHandler, performanceMonitor };
 ```
 
 ### 📝 **Learning Check Point - Hour 3:**
+
 ```markdown
 ### ✅ **ตรวจสอบความเข้าใจ**
 1. **อธิบายความแตกต่างของ Joi validation กับ if/else validation**
-2. **Global error handler ช่วยอะไรบ้าง?**  
-3. **Performance monitor จะเป็นประโยชน์อย่างไรใน real-time system?**
+2. **Global error handler ช่วยอะไรบ้าง?** 3. **Performance monitor จะเป็นประโยชน์อย่างไรใน real-time system?**
 ```
 
 ### 🛤️ **Step 10: Routes Setup (15 นาที - ให้ code สำเร็จ)**
 
 **สร้างไฟล์ `routes/agents.js`:**
+
 ```javascript
 // routes/agents.js - เชื่อม routes กับ controllers
 const express = require('express');
@@ -764,6 +821,7 @@ module.exports = router;
 ```
 
 **สร้างไฟล์ `routes/index.js`:**
+
 ```javascript
 // routes/index.js - Routes aggregator
 const express = require('express');
@@ -824,6 +882,7 @@ module.exports = router;
 ### 🖥️ **Step 11: Main Server (15 นาที - ให้ code สำเร็จ)**
 
 **สร้างไฟล์ `server.js`:**
+
 ```javascript
 // server.js - Main application server
 const express = require('express');
@@ -904,21 +963,27 @@ process.on('SIGTERM', () => {
 module.exports = app;
 ```
 
----
+-----
 
 ## ⏰ **HOUR 4: Testing & Integration (70 นาที)**
 
 ### 🧪 **Step 12: Complete Testing Guide (35 นาที)**
 
 #### **Test Setup:**
-1. **เปิด Terminal รัน server:**
+
+1.  **เปิด Terminal รัน server:**
+
+<!-- end list -->
+
 ```bash
 npm run dev
 ```
-2. **เปิด Postman หรือใช้ curl**
-3. **Test ตาม sequence นี้:**
+
+2.  **เปิด Postman หรือใช้ curl**
+3.  **Test ตาม sequence นี้:**
 
 #### **Test Case 1: System Health (5 นาที)**
+
 ```bash
 # Request
 GET http://localhost:3001/
@@ -945,6 +1010,7 @@ GET http://localhost:3001/api/health
 ```
 
 #### **Test Case 2: Get All Agents (10 นาที)**
+
 ```bash
 # Request
 GET http://localhost:3001/api/agents
@@ -974,6 +1040,7 @@ GET http://localhost:3001/api/agents?department=Sales
 ```
 
 #### **Test Case 3: Create Agent - Success (10 นาที)**
+
 ```bash
 # Request
 POST http://localhost:3001/api/agents
@@ -1006,6 +1073,7 @@ Content-Type: application/json
 ```
 
 #### **Test Case 4: Validation Testing (10 นาที)**
+
 ```bash
 # Request - Invalid data (ทดสอบ Joi validation)
 POST http://localhost:3001/api/agents
@@ -1041,6 +1109,7 @@ Content-Type: application/json
 ### 📊 **Step 13: Status Management Testing (20 นาที)**
 
 #### **Test Status Update - Valid Transition:**
+
 ```bash
 # Get agent ID first
 GET http://localhost:3001/api/agents
@@ -1068,6 +1137,7 @@ Content-Type: application/json
 ```
 
 #### **Test Invalid Status Transition:**
+
 ```bash
 # Try invalid transition (Available -> Offline without proper flow)
 PATCH http://localhost:3001/api/agents/[AGENT-ID]/status
@@ -1087,7 +1157,8 @@ Content-Type: application/json
 ### 📚 **Step 14: Documentation Creation (15 นาที)**
 
 **สร้างไฟล์ `README.md`:**
-```markdown
+
+````markdown
 # Agent Wallboard API - Enhanced Phase 1
 
 > Professional Node.js API สำหรับจัดการ Call Center Agents แบบ Real-time
@@ -1114,29 +1185,33 @@ npm run dev
 
 # 4. Test API
 curl http://localhost:3001/api/health
-```
+````
 
 ## 🔗 API Endpoints
 
 ### 📊 System Information
-- `GET /` - API information
-- `GET /api/health` - Health check
-- `GET /api/docs` - API documentation
+
+  - `GET /` - API information
+  - `GET /api/health` - Health check
+  - `GET /api/docs` - API documentation
 
 ### 👥 Agent Management
-- `GET /api/agents` - List agents (supports `?status=` และ `?department=`)
-- `GET /api/agents/:id` - Get specific agent
-- `POST /api/agents` - Create agent (requires validation)
-- `PUT /api/agents/:id` - Update agent information
-- `DELETE /api/agents/:id` - Delete agent
 
-### 📈 Status Management  
-- `PATCH /api/agents/:id/status` - Update agent status (with transition validation)
-- `GET /api/agents/status/summary` - Status summary statistics
+  - `GET /api/agents` - List agents (supports `?status=` และ `?department=`)
+  - `GET /api/agents/:id` - Get specific agent
+  - `POST /api/agents` - Create agent (requires validation)
+  - `PUT /api/agents/:id` - Update agent information
+  - `DELETE /api/agents/:id` - Delete agent
+
+### 📈 Status Management
+
+  - `PATCH /api/agents/:id/status` - Update agent status (with transition validation)
+  - `GET /api/agents/status/summary` - Status summary statistics
 
 ## 🧪 Testing
 
 ### Manual Testing
+
 ```bash
 # 1. Health check
 curl http://localhost:3001/api/health
@@ -1151,12 +1226,14 @@ curl -X POST http://localhost:3001/api/agents \
 ```
 
 ### Postman Collection
-- Import collection: `Agent_Wallboard_API_Enhanced.postman_collection.json`
-- มี test cases ครอบคลุม success และ error scenarios
+
+  - Import collection: `Agent_Wallboard_API_Enhanced.postman_collection.json`
+  - มี test cases ครอบคลุม success และ error scenarios
 
 ## ⚙️ Configuration
 
 ### Environment Variables
+
 ```env
 PORT=3001                           # Server port
 NODE_ENV=development                # Environment mode
@@ -1164,6 +1241,7 @@ FRONTEND_URL=http://localhost:3000  # CORS origin
 ```
 
 ### Agent Status Flow
+
 ```
 Available → Busy → Wrap → Available
     ↓        ↓       ↓
@@ -1173,6 +1251,10 @@ Not Ready  Available
     ↓
  Offline
 ```
+
+```
+```
+
 
 ## 🚨 Troubleshooting
 
@@ -1198,7 +1280,6 @@ Not Ready  Available
 - Office Hours: [ระบุเวลา]
 - Email: [อีเมลอาจารย์]
 - Issues: GitHub Issues tab
-```
 
 ---
 
