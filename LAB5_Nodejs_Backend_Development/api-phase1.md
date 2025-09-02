@@ -935,7 +935,8 @@ module.exports = { globalErrorHandler, notFoundHandler, performanceMonitor };
 
 ### ✅ **ตรวจสอบความเข้าใจ**
 1. **อธิบายความแตกต่างของ Joi validation กับ if/else validation**
-2. **Global error handler ช่วยอะไรบ้าง?** 3. **Performance monitor จะเป็นประโยชน์อย่างไรใน real-time system?**
+2. **Global error handler ช่วยอะไรบ้าง?** 
+3. **Performance monitor จะเป็นประโยชน์อย่างไรใน real-time system?**
 
 ### 🛤️ **Step 10: Routes Setup (15 นาที - ให้ code สำเร็จ)**
 
