@@ -38,15 +38,15 @@
 3. คลิก **Download**
 
 **⚙️ การติดตั้ง**
-1. **เรียกใช้ไฟล์** `mongodb-windows-x86_64-7.0.x.msi`
+1. **เรียกใช้ไฟล์** `mongodb-windows-x86_64-8.0.x.msi`
 2. **Welcome Screen:** คลิก `Next`
 3. **License Agreement:** เลือก `I accept` และคลิก `Next`
 4. **Choose Setup Type:** เลือก `Complete`
 5. **Service Configuration:**
    - ✅ เลือก `Install MongoDB as a Service`
    - **Service Name:** `MongoDB`
-   - **Data Directory:** `C:\Program Files\MongoDB\Server\7.0\data\`
-   - **Log Directory:** `C:\Program Files\MongoDB\Server\7.0\log\`
+   - **Data Directory:** `C:\Program Files\MongoDB\Server\8.0\data\`
+   - **Log Directory:** `C:\Program Files\MongoDB\Server\8.0\log\`
    - ✅ เลือก `Run service as Network Service user`
 6. **Install MongoDB Compass:** ✅ เลือก `Install MongoDB Compass`
 7. คลิก `Install`
@@ -302,12 +302,12 @@ sudo apt update && sudo apt upgrade -y
 **📦 เพิ่ม MongoDB repository**
 ```bash
 # Import MongoDB public GPG Key
-curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
-   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
+curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | \
+   sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg \
    --dearmor
 
 # เพิ่ม MongoDB repository
-echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
 
 # อัพเดท package list
 sudo apt update
