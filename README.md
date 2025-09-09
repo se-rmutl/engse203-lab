@@ -44,7 +44,7 @@ Testing:      Jest, Cypress, React Testing Library
 | **6** | LAB4 | [Advanced React & State Management](LAB4_Advanced-React-State-Management) | 3 hrs | Individual | E-commerce Frontend |
 | **7** | LAB5 | [Node.js & Backend Development](LAB5_Nodejs_Backend_Development) | 3 hrs | Individual | REST API |
 | **8** | **🎯** | **[MIDTERM INDIVIDUAL PROJECT](Midterm_Individual-Project)** | **1 week** | **Individual** | **Full-Stack App** |
-| **9** | LAB6 | Database Integration & MongoDB | 3 hrs | Individual | Data Management |
+| **9** | LAB6 | [Database Integration & MongoDB](LAB6_Database_Integration) | 3 hrs | Individual | Data Management |
 | **10** | LAB7 | Authentication & Security | 3 hrs | Individual | Secure System |
 | **11** | TASK#3 | Full-Stack Integration | 3 hrs | Pair Task | Real-time App |
 | **12** | LAB8 | Cross-Platform Development | 3 hrs | Individual | Multi-platform |
