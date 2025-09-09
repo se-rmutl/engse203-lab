@@ -1,17 +1,17 @@
-# สัปดาห์ที่ 7: Backend Development with Node.js
-## ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์ (ทฤษฎี 1 ชั่วโมง)
+# สัปดาห์ที่ 8: Backend Development with Node.js (Phase 2)
+## ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์
 ### Case Study: Agent Wallboard System
 
 ---
 
-# Agent Wallboard System - 3 Phase Plan
+# Agent Wallboard System - 3 Phase Plan (ทำ Phase 2)
 
 ## 📋 **Phase Distribution**
 
 | Phase | Focus | Duration | Complexity | Key Learning |
 |-------|-------|----------|------------|-------------|
-| **[Phase 1](api-phase1.md)** | **Basic API + CRUD** | **4 hrs** | ⭐ **Beginner** | **Express.js, RESTful API, In-memory storage**|
-| [Phase 2](api-phase2.md) | Database + Simple WebSocket | 4 hrs | ⭐⭐ Intermediate | MongoDB basics, Real-time updates |
+| [Phase 1](api-phase1.md) | Basic API + CRUD | 4 hrs | ⭐ Beginner | Express.js, RESTful API, In-memory storage|
+| **[Phase 2](api-phase2.md)** | **Database + Simple WebSocket** | **4 hrs** | ⭐⭐ **Intermediate** | **MongoDB basics, Real-time updates** |
 | [Phase 3](api-phase3.md) | Authentication + Production | 4 hrs | ⭐⭐⭐ Advanced | JWT basics, Deployment ready |
 
 
@@ -25,6 +25,18 @@ Phase 2: server.js + MongoDB ← Add persistence
 Phase 3: server.js + Auth + Deploy ← Production ready
 ```
 
+---
+
+### ✅ **สิ่งที่ต้องทำก่อนเริ่ม Phase 2**
+
+**[1. คู่มือติดตั้ง Database สำหรับ Database Integration](db-installation.md)**
+
+**[2. Pre-Lab6: เรียนรู้ Node.js กับ Database (MSSQL & MongoDB)](pre-lab6.md)**
+
+**[3. อธิบายการทำงานในแต่ละขั้นตอน Pre-LAB 6](pre-lab6-explain.md)**
+
+---
+
 ### 🎓 **Learning Outcomes:**
 
 หลังจบทั้ง 3 Phase นักศึกษาจะสามารถ:
@@ -36,21 +48,6 @@ Phase 3: server.js + Auth + Deploy ← Production ready
 5. **Deploy Production** บน cloud platform
 6. **API Documentation** สำหรับผู้ใช้งาน
 
----
-
-## 🏆 **Benefits of Plan**
-
-### ✅ **For Students:**
-- เรียนรู้แบบ progressive 
-- ได้ working system จริงๆ ในแต่ละ Phase
-- มีความมั่นใจจากการทำสำเร็จ
-- พร้อมสำหรับการทำงานจริง
-
-### ✅ **For Industry:**
-- นักศึกษาจบมามีทักษะที่ใช้งานได้จริง
-- เข้าใจ full-stack development workflow
-- ประสบการณ์ deployment และ production
-- Mindset ในการแก้ปัญหาแบบ systematic
 
 ---
 
