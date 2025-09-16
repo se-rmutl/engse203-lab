@@ -496,7 +496,7 @@ wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/
 
 **📦 เพิ่ม Repository**
 ```bash
-sudo curl -fsSL https://packages.microsoft.com/config/ubuntu/24.04/mssql-server-2025.list -o /etc/apt/sources.list.d/mssql-server-2025.list
+sudo curl -fsSL https://packages.microsoft.com/config/ubuntu/22.04/mssql-server-2022.list -o /etc/apt/sources.list.d/mssql-server-2022.list
 sudo apt update
 ```
 
