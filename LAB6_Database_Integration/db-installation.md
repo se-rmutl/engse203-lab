@@ -476,7 +476,7 @@ SELECT * FROM TestTable;
 
 ---
 
-### 2.2 MS SQL Server for Ubuntu 24.04 Linux
+### 2.2 MS SQL Server 2022 for Ubuntu 24.04 Linux
 
 #### Step 1: Update System Packages
 
@@ -492,7 +492,7 @@ sudo apt update && sudo apt upgrade -y
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
 ```
 
-#### Step 3: Add the Microsoft SQL Server Repository (using Ubuntu 24.04 repository)
+#### Step 3: Add the Microsoft SQL Server 2022 Repository (using Ubuntu 22.04 repository)
 
 **📦 เพิ่ม Repository**
 ```bash
