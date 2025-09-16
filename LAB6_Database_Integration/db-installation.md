@@ -39,13 +39,13 @@ localhostForwarding=true
 
 ```
 
-**🔧 Save, then restart WSL โดยเปิด powershell:**
+**🔧 Save, then restart WSL โดยเปิด powershell แล้วพิมพ์คำสั่ง:**
 ```powershell
 wsl --shutdown
 
 ```
 
-**🔧 ปิดและเปิด Tab ของ Ubuntu และเปิดใหม่อีกครั้ง:**
+**🔧 จากนั้นให้ ปิดและเปิด Tab ของ Ubuntu และเปิด Tab ใหม่อีกครั้ง**
 
 ---
 
