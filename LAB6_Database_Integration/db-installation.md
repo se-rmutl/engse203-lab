@@ -21,6 +21,33 @@
 - **SQL Server Management Studio (SSMS)** - GUI Tool สำหรับจัดการ MS SQL Server
 
 ---
+## 🍃 จัดการ Memory ของ WSL (Windows Subsystem for Linux)
+
+**🔧 Open Notepad and Create/Edit .wslconfig ที่นี่**
+```cmd
+C:\Users\<YourWindowsUser>\.wslconfig
+
+```
+
+**🔧 เพิ่มข้อมูลตามนี้:**
+```cmd
+[wsl2]
+memory=2GB        # Limit WSL to 2 GB RAM
+processors=2      # Limit number of CPU cores
+swap=2GB          # Set swap size
+localhostForwarding=true
+
+```
+
+**🔧 Save, then restart WSL โดยเปิด powershell:**
+```powershell
+wsl --shutdown
+
+```
+
+**🔧 ปิดและเปิด Tab ของ Ubuntu และเปิดใหม่อีกครั้ง:**
+
+---
 
 ## 🍃 ส่วนที่ 1: MongoDB และ MongoDB Compass
 
