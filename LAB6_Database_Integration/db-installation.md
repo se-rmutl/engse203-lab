@@ -7,7 +7,7 @@
   - [1.3 MongoDB สำหรับ Ubuntu on WSL2 Installation](#13-mongodb-สำหรับ-ubuntu-on-wsl2-installation)
 - [🗄️ ส่วนที่ 2: MS SQL Server](#-ส่วนที่-2-ms-sql-server)
   - [2.1 MS SQL Server Express for Windows](#21-ms-sql-server-express-for-windows)
-  - [2.2 MS SQL Server for Ubuntu 2404 Linux](#22-ms-sql-server-for-ubuntu-2404-linux)
+  - [2.2 MS SQL Server for Ubuntu 24.04 Linux](#22-ms-sql-server-for-ubuntu-2404-linux)
 - [🧪 การทดสอบความพร้อม](#-การทดสอบความพร้อม)
 - [❗ Troubleshooting](#-troubleshooting)
 - [✅ Checklist ก่อนทำ Pre-Lab6](#-checklist-ก่อนทำ-pre-lab6)
@@ -496,7 +496,7 @@ wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/
 
 **📦 เพิ่ม Repository**
 ```bash
-sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/22.04/mssql-server-2022.list)"
+sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/24.04/mssql-server-2025.list)"
 sudo apt update
 ```
 
