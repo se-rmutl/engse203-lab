@@ -478,42 +478,31 @@ SELECT * FROM TestTable;
 
 ### 2.2 MS SQL Server for Ubuntu 24.04 Linux
 
-#### Step 1: Update System Packages
-
-**🔑 Update System Packages**
-```bash
-sudo apt update && sudo apt upgrade -y
-```
-
-#### Step 2: เพิ่ม Microsoft Repository
+#### Step 1: เพิ่ม Microsoft Repository
 
 **🔑 Import Microsoft GPG Key**
 ```bash
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
+# Download และ import GPG key
+curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
 ```
-
-#### Step 3: Add the Microsoft SQL Server Repository (using Ubuntu 24.04 repository)
 
 **📦 เพิ่ม Repository**
 ```bash
-sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/22.04/mssql-server-2022.list)"
+# เพิ่ม Microsoft repository
+sudo curl -fsSL https://packages.microsoft.com/config/ubuntu/24.04/mssql-server-2022.list -o /etc/apt/sources.list.d/mssql-server-2022.list
+
+# อัพเดท package list
 sudo apt update
 ```
 
-#### Step 4: ติดตั้ง Dependency ของ SQL Server เพิ่ม สำหรับ Ubuntu 24.04
+#### Step 2: ติดตั้ง SQL Server
 
 **⚙️ ติดตั้ง**
 ```bash
-wget http://archive.ubuntu.com/ubuntu/pool/main/o/openldap/libldap-2.5-0_2.5.11+dfsg-1~exp1ubuntu3_amd64.deb
-sudo dpkg -i libldap-2.5-0_2.5.11+dfsg-1~exp1ubuntu3_amd64.deb
-sudo apt install -y libcurl4 libssl-dev libgnutls30
-```
-
-#### Step 5: ติดตั้ง SQL Server
-
-**⚙️ ติดตั้ง**
-```bash
+# ติดตั้ง SQL Server
 sudo apt install -y mssql-server
+
+# รัน setup script
 sudo /opt/mssql/bin/mssql-conf setup
 ```
 
@@ -523,7 +512,7 @@ sudo /opt/mssql/bin/mssql-conf setup
 3. **SA Password:** ใส่รหัสผ่านที่แข็งแรง (ต้องมีอย่างน้อย 8 ตัวอักษร, ตัวพิมพ์ใหญ่, ตัวพิมพ์เล็ก, ตัวเลข, และอักขระพิเศษ)
 4. **Confirm Password:** ยืนยันรหัสผ่าน
 
-#### Step 6: ตรวจสอบสถานะ
+**✅ ตรวจสอบสถานะ**
 ```bash
 # ตรวจสอบสถานะ SQL Server
 sudo systemctl status mssql-server
@@ -532,7 +521,7 @@ sudo systemctl status mssql-server
 sudo systemctl enable mssql-server
 ```
 
-#### Step 7: ติดตั้ง SQL Server Command Line Tools
+#### Step 3: ติดตั้ง SQL Server Command Line Tools
 
 **📦 เพิ่ม Tools Repository**
 ```bash
@@ -553,7 +542,7 @@ echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-#### Step 8: ทดสอบการเชื่อมต่อ
+#### Step 4: ทดสอบการเชื่อมต่อ
 
 **🔌 เชื่อมต่อด้วย sqlcmd**
 ```bash
@@ -597,7 +586,7 @@ sqlcmd -S localhost -U sa -C
 1> EXIT
 ```
 
-#### Step 9: กำหนดค่าสำหรับเชื่อมต่อจากภายนอก (Optional)
+#### Step 5: กำหนดค่าสำหรับเชื่อมต่อจากภายนอก (Optional)
 
 **🌐 เปิดใช้งาน TCP/IP**
 ```bash
@@ -620,7 +609,7 @@ sudo ufw status
 
 ---
 
-## 🧪 การทดสอบความพร้อมทั้ง MongoDB และ MSSQL Server
+## 🧪 การทดสอบความพร้อม
 
 ### ตรวจสอบ MongoDB
 
