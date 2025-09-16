@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Desktop - Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <div class="login-header">
+            <img src="../assets/icon.png" alt="Logo" class="logo">
+            <h1>Agent Desktop</h1>
+            <p class="subtitle">Phase 2 - MongoDB + WebSocket API</p>
+            <p class="version">Version 2.0.0</p>
+        </div>
+        
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="agentCode">รหัสเอเย่นต์ (Agent Code):</label>
+                <input type="text" id="agentCode" name="agentCode" required 
+                       placeholder="เช่น A001" maxlength="10"
+                       pattern="[A-Z]\d{3}"
+                       title="รูปแบบ: A001 (ตัวอักษร 1 ตัว + ตัวเลข 3 ตัว)">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">รหัสผ่าน:</label>
+                <input type="password" id="password" name="password" required 
+                       placeholder="รหัสผ่าน" minlength="6">
+            </div>
+            
+            <div class="form-group">
+                <label for="serverUrl">API Server URL:</label>
+                <input type="text" id="serverUrl" name="serverUrl" 
+                       value="http://localhost:3001" 
+                       placeholder="http://localhost:3001">
+            </div>
+            
+            <div class="form-group">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="rememberMe">
+                    <span class="checkmark"></span>
+                    จดจำการเข้าสู่ระบบ
+                </label>
+            </div>
+            
+            <button type="submit" id="loginBtn" class="btn-primary">
+                <span class="btn-text">เข้าสู่ระบบ</span>
+                <span class="btn-loader" style="display: none;">
+                    <span class="spinner"></span>
+                    กำลังเข้าสู่ระบบ...
+                </span>
+            </button>
+            
+            <div id="loginStatus" class="status-message"></div>
+        </form>
+        
+        <div class="login-footer">
+            <div class="connection-status">
+                <span id="connectionIndicator" class="connection-dot offline"></span>
+                <span id="connectionText">ไม่ได้เชื่อมต่อ</span>
+            </div>
+            <div class="api-info">
+                <small>API Version: Phase 2 (MongoDB + WebSocket)</small>
+            </div>
+            <p class="copyright">© 2024 Agent Wallboard System</p>
+        </div>
+    </div>
+    
+    <script src="js/api-client.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

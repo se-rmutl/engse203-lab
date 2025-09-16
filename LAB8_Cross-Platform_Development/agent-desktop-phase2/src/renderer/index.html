@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Desktop - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-left">
+            <img src="../assets/icon.png" alt="Logo" class="header-logo">
+            <div class="header-info">
+                <h1>Agent Dashboard</h1>
+                <span class="api-version">Phase 2 - MongoDB + WebSocket</span>
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <div class="agent-info">
+                <span class="agent-name" id="agentName">Loading...</span>
+                <span class="agent-code" id="agentCode">---</span>
+            </div>
+            <button id="logoutBtn" class="btn-secondary">ออกจากระบบ</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Status Management Panel -->
+        <section class="panel status-panel">
+            <h2>🔄 การจัดการสถานะ</h2>
+            
+            <div class="current-status">
+                <span class="status-label">สถานะปัจจุบัน:</span>
+                <span id="currentStatus" class="status-badge status-offline">Offline</span>
+                <small class="status-time">อัพเดทล่าสุด: <span id="lastStatusUpdate">--:--:--</span></small>
+            </div>
+            
+            <div class="status-controls">
+                <button class="status-btn" data-status="Available" title="พร้อมรับงาน">
+                    🟢 Available
+                </button>
+                <button class="status-btn" data-status="Busy" title="ไม่ว่าง">
+                    🔴 Busy
+                </button>
+                <button class="status-btn" data-status="Break" title="พักเบรก">
+                    🟡 Break
+                </button>
+                <button class="status-btn" data-status="Not Ready" title="ไม่พร้อม">
+                    ⚫ Not Ready
+                </button>
+            </div>
+            
+            <div class="status-reason">
+                <input type="text" id="statusReason" placeholder="เหตุผล (ไม่บังคับ)" maxlength="200">
+            </div>
+            
+            <div class="login-time">
+                <span>เข้าสู่ระบบเมื่อ: </span>
+                <span id="loginTime">--:--:--</span>
+            </div>
+        </section>
+
+        <!-- Messages Panel -->
+        <section class="panel messages-panel">
+            <h2>💬 ข้อความ</h2>
+            
+            <div class="messages-header">
+                <div class="message-tabs">
+                    <button class="tab-btn active" data-tab="received">
+                        ได้รับ (<span id="receivedCount">0</span>)
+                    </button>
+                    <button class="tab-btn" data-tab="sent">
+                        ส่งแล้ว (<span id="sentCount">0</span>)
+                    </button>
+                </div>
+                <button id="composeBtn" class="btn-primary btn-small">เขียนข้อความ</button>
+            </div>
+            
+            <div class="message-content">
+                <div id="receivedMessages" class="tab-content active">
+                    <div class="message-list" id="receivedMessageList">
+                        <div class="no-messages">ยังไม่มีข้อความที่ได้รับ</div>
+                    </div>
+                </div>
+                
+                <div id="sentMessages" class="tab-content">
+                    <div class="message-list" id="sentMessageList">
+                        <div class="no-messages">ยังไม่มีข้อความที่ส่ง</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Connection Status Panel -->
+        <section class="panel connection-panel">
+            <h2>🌐 สถานะการเชื่อมต่อ</h2>
+            
+            <div class="connection-status-item">
+                <span class="connection-label">API Server:</span>
+                <span id="apiStatus" class="connection-indicator offline">Disconnected</span>
+            </div>
+            
+            <div class="connection-status-item">
+                <span class="connection-label">WebSocket:</span>
+                <span id="wsStatus" class="connection-indicator offline">Disconnected</span>
+            </div>
+            
+            <div class="connection-status-item">
+                <span class="connection-label">Database:</span>
+                <span id="dbStatus" class="connection-indicator offline">Unknown</span>
+            </div>
+            
+            <div class="connection-actions">
+                <button id="reconnectBtn" class="btn-secondary btn-small">เชื่อมต่อใหม่</button>
+                <button id="testConnectionBtn" class="btn-secondary btn-small">ทดสอบการเชื่อมต่อ</button>
+            </div>
+        </section>
+
+        <!-- Statistics Panel -->
+        <section class="panel stats-panel">
+            <h2>📊 สถิติวันนี้</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalCalls">0</div>
+                    <div class="stat-label">สายทั้งหมด</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="onlineTime">00:00:00</div>
+                    <div class="stat-label">เวลาออนไลน์</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="messagesCount">0</div>
+                    <div class="stat-label">ข้อความ</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="statusChanges">0</div>
+                    <div class="stat-label">เปลี่ยนสถานะ</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions Panel -->
+        <section class="panel actions-panel">
+            <h2>⚡ การดำเนินการ</h2>
+            
+            <div class="action-buttons">
+                <button class="action-btn" id="refreshBtn" title="รีเฟรชข้อมูล">
+                    🔄 รีเฟรช
+                </button>
+                <button class="action-btn" id="settingsBtn" title="ตั้งค่า">
+                    ⚙️ ตั้งค่า
+                </button>
+                <button class="action-btn" id="helpBtn" title="ช่วยเหลือ">
+                    ❓ ช่วยเหลือ
+                </button>
+                <button class="action-btn" id="soundToggleBtn" title="เปิด/ปิดเสียง">
+                    🔊 เสียง
+                </button>
+            </div>
+            
+            <div class="system-info">
+                <small>
+                    <div>Version: 2.0.0</div>
+                    <div>Agent ID: <span id="systemAgentId">---</span></div>
+                    <div>Session: <span id="sessionId">---</span></div>
+                </small>
+            </div>
+        </section>
+
+        <!-- Real-time Updates Panel -->
+        <section class="panel realtime-panel">
+            <h2>⚡ อัพเดทสด</h2>
+            
+            <div class="realtime-feed" id="realtimeFeed">
+                <div class="feed-item welcome">
+                    <span class="feed-time">--:--:--</span>
+                    <span class="feed-message">ยินดีต้อนรับสู่ระบบ Agent Desktop</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Message Compose Modal -->
+    <div id="composeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>เขียนข้อความ</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="composeForm">
+                    <div class="form-group">
+                        <label for="recipientSelect">ส่งถึง:</label>
+                        <select id="recipientSelect" required>
+                            <option value="">เลือกผู้รับ</option>
+                            <option value="ALL">ทุกคน (Broadcast)</option>
+                            <option value="supervisor">Supervisor</option>
+                            <option value="manager">Manager</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="messageType">ประเภทข้อความ:</label>
+                        <select id="messageType">
+                            <option value="message">ข้อความทั่วไป</option>
+                            <option value="alert">แจ้งเตือน</option>
+                            <option value="broadcast">ประกาศ</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="messagePriority">ความสำคัญ:</label>
+                        <select id="messagePriority">
+                            <option value="normal">ปกติ</option>
+                            <option value="high">สูง</option>
+                            <option value="urgent">เร่งด่วน</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="messageText">ข้อความ:</label>
+                        <textarea id="messageText" rows="4" required 
+                                  placeholder="พิมพ์ข้อความของคุณ..." 
+                                  maxlength="1000"></textarea>
+                        <small class="char-counter">0/1000 ตัวอักษร</small>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelBtn">ยกเลิก</button>
+                        <button type="submit" class="btn-primary">ส่งข้อความ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api-client.js"></script>
+    <script src="js/websocket-manager.js"></script>
+    <script src="js/message-manager.js"></script>
+    <script src="js/notification-manager.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
