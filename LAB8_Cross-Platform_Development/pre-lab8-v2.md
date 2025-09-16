@@ -4513,9 +4513,6 @@ class MenuManager {
                     { type: 'separator' },
                     { label: 'ตัด', accelerator: 'CmdOrCtrl+X', role: 'cut' },
                     { label: 'คัดลอก', accelerator: 'CmdOrCtrl+C', role: 'copy' },
-ต่อจากส่วน Menu Configuration:
-
-```javascript
                     { label: 'วาง', accelerator: 'CmdOrCtrl+V', role: 'paste' },
                     { label: 'เลือกทั้งหมด', accelerator: 'CmdOrCtrl+A', role: 'selectall' }
                 ]
