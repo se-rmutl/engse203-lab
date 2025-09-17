@@ -1,11 +1,11 @@
-// middleware/validation.js - Professional validation with Joi
+// middleware/validation.js - Enhanced validation with message validation
 const Joi = require('joi');
 const { AGENT_STATUS, DEPARTMENTS } = require('../utils/constants');
 const { sendError } = require('../utils/apiResponse');
 
 // Validation schemas
 const schemas = {
-  // ✅ ให้ code สำเร็จเป็นตัวอย่าง
+  // Agent validation (existing)
   agent: Joi.object({
     agentCode: Joi.string()
       .pattern(/^[A-Z]\d{3}$/)
@@ -14,7 +14,7 @@ const schemas = {
         'string.pattern.base': 'Agent code must be in format A001 (letter + 3 digits)',
         'any.required': 'Agent code is required'
       }),
-
+    
     name: Joi.string()
       .min(2)
       .max(100)
@@ -24,7 +24,7 @@ const schemas = {
         'string.max': 'Name cannot exceed 100 characters',
         'any.required': 'Name is required'
       }),
-
+    
     email: Joi.string()
       .email()
       .required()
@@ -32,14 +32,14 @@ const schemas = {
         'string.email': 'Please provide a valid email address',
         'any.required': 'Email is required'
       }),
-
+    
     department: Joi.string()
       .valid(...DEPARTMENTS)
       .default('General')
       .messages({
         'any.only': `Department must be one of: ${DEPARTMENTS.join(', ')}`
       }),
-
+    
     skills: Joi.array()
       .items(Joi.string().min(2).max(50))
       .default([])
@@ -48,17 +48,8 @@ const schemas = {
       })
   }),
 
-  // 🔄 TODO #4: นักศึกษาทำเอง (15 นาที)
+  // Status update validation (existing)
   statusUpdate: Joi.object({
-    // TODO: สร้าง validation สำหรับ status update
-    // Requirements:
-    // 1. status ต้องเป็น valid AGENT_STATUS
-    // 2. reason เป็น optional string ไม่เกิน 200 ตัวอักษร
-    // 3. ใส่ error messages ที่เหมาะสม
-
-    // Hint structure:
-    // status: Joi.string().valid(...).required().messages({...}),
-    // reason: Joi.string().max(200).optional().messages({...})
     status: Joi.string()
       .valid(...Object.values(AGENT_STATUS))
       .required()
@@ -66,14 +57,60 @@ const schemas = {
         'any.only': `Status must be one of: ${Object.values(AGENT_STATUS).join(', ')}`,
         'any.required': 'Status is required'
       }),
-
+    
     reason: Joi.string()
       .max(200)
       .optional()
       .messages({
         'string.max': 'Reason cannot exceed 200 characters'
       })
+  }),
 
+  // Message validation (ใหม่)
+  message: Joi.object({
+    from: Joi.string()
+      .min(2)
+      .max(100)
+      .required()
+      .messages({
+        'string.min': 'From must be at least 2 characters',
+        'string.max': 'From cannot exceed 100 characters',
+        'any.required': 'From is required'
+      }),
+    
+    to: Joi.string()
+      .min(1)
+      .max(100)
+      .required()
+      .messages({
+        'string.min': 'To must be at least 1 character',
+        'string.max': 'To cannot exceed 100 characters',
+        'any.required': 'To is required'
+      }),
+    
+    message: Joi.string()
+      .min(1)
+      .max(1000)
+      .required()
+      .messages({
+        'string.min': 'Message cannot be empty',
+        'string.max': 'Message cannot exceed 1000 characters',
+        'any.required': 'Message is required'
+      }),
+    
+    type: Joi.string()
+      .valid('message', 'broadcast', 'alert', 'system')
+      .default('message')
+      .messages({
+        'any.only': 'Type must be one of: message, broadcast, alert, system'
+      }),
+    
+    priority: Joi.string()
+      .valid('low', 'normal', 'high', 'urgent')
+      .default('normal')
+      .messages({
+        'any.only': 'Priority must be one of: low, normal, high, urgent'
+      })
   })
 };
 
@@ -90,7 +127,7 @@ const validateAgent = (req, res, next) => {
       message: detail.message
     }));
 
-    console.log('❌ Validation failed:', validationErrors);
+    console.log('⚠️ Agent validation failed:', validationErrors);
     return sendError(res, 'Validation failed', 400, validationErrors);
   }
 
@@ -98,11 +135,7 @@ const validateAgent = (req, res, next) => {
   next();
 };
 
-// 🔄 TODO #5: นักศึกษาทำเอง (10 นาที)
 const validateStatusUpdate = (req, res, next) => {
-  // TODO: implement ตาม pattern ของ validateAgent
-  // Hint: ใช้ schemas.statusUpdate แทน schemas.agent
-
   const { error, value } = schemas.statusUpdate.validate(req.body, {
     abortEarly: false,
     stripUnknown: true
@@ -114,16 +147,37 @@ const validateStatusUpdate = (req, res, next) => {
       message: detail.message
     }));
 
+    console.log('⚠️ Status validation failed:', validationErrors);
     return sendError(res, 'Status validation failed', 400, validationErrors);
   }
 
   req.body = value;
   next();
+};
 
-  //return sendError(res, 'TODO: Implement validateStatusUpdate middleware', 501);
+// Message validation (ใหม่)
+const validateMessage = (req, res, next) => {
+  const { error, value } = schemas.message.validate(req.body, {
+    abortEarly: false,
+    stripUnknown: true
+  });
+
+  if (error) {
+    const validationErrors = error.details.map(detail => ({
+      field: detail.path[0],
+      message: detail.message
+    }));
+
+    console.log('⚠️ Message validation failed:', validationErrors);
+    return sendError(res, 'Message validation failed', 400, validationErrors);
+  }
+
+  req.body = value;
+  next();
 };
 
 module.exports = {
   validateAgent,
-  validateStatusUpdate
+  validateStatusUpdate,
+  validateMessage
 };

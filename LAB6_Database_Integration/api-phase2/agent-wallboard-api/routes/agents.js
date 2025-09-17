@@ -1,6 +1,6 @@
 // routes/agents.js - เชื่อม routes กับ controllers
 const express = require('express');
-const agentController = require('../controllers/agentController');
+const agentController = require('../controllers/agentControllerMongo');
 const { validateAgent, validateStatusUpdate } = require('../middleware/validation');
 
 const router = express.Router();
