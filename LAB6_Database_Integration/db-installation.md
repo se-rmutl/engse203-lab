@@ -7,7 +7,7 @@
   - [1.3 MongoDB สำหรับ Ubuntu on WSL2 Installation](#13-mongodb-สำหรับ-ubuntu-on-wsl2-installation)
 - [🗄️ ส่วนที่ 2: MS SQL Server](#-ส่วนที่-2-ms-sql-server)
   - [2.1 MS SQL Server Express for Windows](#21-ms-sql-server-express-for-windows)
-  - [2.2 MS SQL Server for Ubuntu 2404 Linux](#22-ms-sql-server-for-ubuntu-2404-linux)
+  - [2.2 MS SQL Server for Ubuntu 24.04 Linux](#22-ms-sql-server-for-ubuntu-2404-linux)
 - [🧪 การทดสอบความพร้อม](#-การทดสอบความพร้อม)
 - [❗ Troubleshooting](#-troubleshooting)
 - [✅ Checklist ก่อนทำ Pre-Lab6](#-checklist-ก่อนทำ-pre-lab6)
@@ -19,6 +19,33 @@
 - **MS SQL Server Express** - Relational Database (Windows)
 - **MS SQL Server** - Relational Database (Linux)
 - **SQL Server Management Studio (SSMS)** - GUI Tool สำหรับจัดการ MS SQL Server
+
+---
+## 🍃 จัดการ Memory ของ WSL (Windows Subsystem for Linux)
+
+**🔧 Open Notepad and Create/Edit .wslconfig ที่นี่**
+```cmd
+C:\Users\<YourWindowsUser>\.wslconfig
+
+```
+
+**🔧 เพิ่มข้อมูลตามนี้:**
+```cmd
+[wsl2]
+memory=2GB        # Limit WSL to 2 GB RAM
+processors=2      # Limit number of CPU cores
+swap=2GB          # Set swap size
+localhostForwarding=true
+
+```
+
+**🔧 Save, then restart WSL โดยเปิด powershell แล้วพิมพ์คำสั่ง:**
+```powershell
+wsl --shutdown
+
+```
+
+**🔧 จากนั้นให้ ปิดและเปิด Tab ของ Ubuntu และเปิด Tab ใหม่อีกครั้ง**
 
 ---
 
@@ -476,33 +503,44 @@ SELECT * FROM TestTable;
 
 ---
 
-### 2.2 MS SQL Server for Ubuntu 24.04 Linux
+### 2.2 MS SQL Server 2022 for Ubuntu 24.04 Linux
 
-#### Step 1: เพิ่ม Microsoft Repository
+#### Step 1: Update System Packages
+
+**🔑 Update System Packages**
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+#### Step 2: เพิ่ม Microsoft Repository
 
 **🔑 Import Microsoft GPG Key**
 ```bash
-# Download และ import GPG key
-curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
 ```
+
+#### Step 3: Add the Microsoft SQL Server 2022 Repository (using Ubuntu 22.04 repository)
 
 **📦 เพิ่ม Repository**
 ```bash
-# เพิ่ม Microsoft repository
-sudo curl -fsSL https://packages.microsoft.com/config/ubuntu/24.04/mssql-server-2022.list -o /etc/apt/sources.list.d/mssql-server-2022.list
-
-# อัพเดท package list
+sudo curl -fsSL https://packages.microsoft.com/config/ubuntu/22.04/mssql-server-2022.list -o /etc/apt/sources.list.d/mssql-server-2022.list
 sudo apt update
 ```
 
-#### Step 2: ติดตั้ง SQL Server
+#### Step 4: ติดตั้ง Dependency ของ SQL Server เพิ่ม สำหรับ Ubuntu 24.04
 
 **⚙️ ติดตั้ง**
 ```bash
-# ติดตั้ง SQL Server
-sudo apt install -y mssql-server
+wget http://archive.ubuntu.com/ubuntu/pool/main/o/openldap/libldap-2.5-0_2.5.11+dfsg-1~exp1ubuntu3_amd64.deb
+sudo dpkg -i libldap-2.5-0_2.5.11+dfsg-1~exp1ubuntu3_amd64.deb
+sudo apt install -y libcurl4 libssl-dev libgnutls30
+```
 
-# รัน setup script
+#### Step 5: ติดตั้ง SQL Server
+
+**⚙️ ติดตั้ง**
+```bash
+sudo apt install -y mssql-server
 sudo /opt/mssql/bin/mssql-conf setup
 ```
 
@@ -512,7 +550,7 @@ sudo /opt/mssql/bin/mssql-conf setup
 3. **SA Password:** ใส่รหัสผ่านที่แข็งแรง (ต้องมีอย่างน้อย 8 ตัวอักษร, ตัวพิมพ์ใหญ่, ตัวพิมพ์เล็ก, ตัวเลข, และอักขระพิเศษ)
 4. **Confirm Password:** ยืนยันรหัสผ่าน
 
-**✅ ตรวจสอบสถานะ**
+#### Step 6: ตรวจสอบสถานะ
 ```bash
 # ตรวจสอบสถานะ SQL Server
 sudo systemctl status mssql-server
@@ -521,7 +559,7 @@ sudo systemctl status mssql-server
 sudo systemctl enable mssql-server
 ```
 
-#### Step 3: ติดตั้ง SQL Server Command Line Tools
+#### Step 7: ติดตั้ง SQL Server Command Line Tools
 
 **📦 เพิ่ม Tools Repository**
 ```bash
@@ -542,7 +580,7 @@ echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-#### Step 4: ทดสอบการเชื่อมต่อ
+#### Step 8: ทดสอบการเชื่อมต่อ
 
 **🔌 เชื่อมต่อด้วย sqlcmd**
 ```bash
@@ -586,7 +624,7 @@ sqlcmd -S localhost -U sa -C
 1> EXIT
 ```
 
-#### Step 5: กำหนดค่าสำหรับเชื่อมต่อจากภายนอก (Optional)
+#### Step 9: กำหนดค่าสำหรับเชื่อมต่อจากภายนอก (Optional)
 
 **🌐 เปิดใช้งาน TCP/IP**
 ```bash
@@ -609,7 +647,7 @@ sudo ufw status
 
 ---
 
-## 🧪 การทดสอบความพร้อม
+## 🧪 การทดสอบความพร้อมทั้ง MongoDB และ MSSQL Server
 
 ### ตรวจสอบ MongoDB
 
