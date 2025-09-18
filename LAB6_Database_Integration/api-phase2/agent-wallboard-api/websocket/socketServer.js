@@ -11,8 +11,8 @@ class SocketServer {
   initialize(server) {
     this.io = socketIo(server, {
       cors: {
-        //origin: process.env.FRONTEND_URL || "http://localhost:3000",
-        origin: process.env.FRONTEND_URL || 'http://127.0.0.1:5500',
+        //origin: process.env.FRONTEND_URL || "http://localhost:3000", // For Front-end App
+        origin: process.env.FRONTEND_URL || 'http://127.0.0.1:5500', // For Live Server in VS Code
         methods: ["GET", "POST"],
         credentials: true
       },
@@ -28,24 +28,24 @@ class SocketServer {
   setupEventHandlers() {
     this.io.on('connection', (socket) => {
       console.log(`👤 Client connected: ${socket.id}`);
-      
+
       // Agent login
       socket.on('agent-login', async (data) => {
         try {
           const { agentCode, agentName } = data;
           console.log(`🔐 Agent login: ${agentCode}`);
-          
+
           // Update agent online status
           const agent = await AgentMongo.findOneAndUpdate(
             { agentCode },
-            { 
-              isOnline: true, 
+            {
+              isOnline: true,
               socketId: socket.id,
               loginTime: new Date()
             },
             { new: true }
           );
-          
+
           if (agent) {
             // Store client info
             this.connectedClients.set(socket.id, {
@@ -54,23 +54,23 @@ class SocketServer {
               agentId: agent._id,
               loginTime: new Date()
             });
-            
+
             // Join agent to their room
             socket.join(`agent-${agentCode}`);
-            
+
             // Notify others
             socket.broadcast.emit('agent-online', {
               agentCode,
               agentName,
               timestamp: new Date()
             });
-            
+
             // Send welcome message
             socket.emit('login-success', {
               agent: agent,
               message: 'Successfully connected to Agent Wallboard System'
             });
-            
+
             console.log(`✅ Agent ${agentCode} logged in successfully`);
           } else {
             socket.emit('login-error', {
@@ -101,7 +101,7 @@ class SocketServer {
       socket.on('join-dashboard', () => {
         socket.join('dashboard');
         console.log(`📊 Client joined dashboard room: ${socket.id}`);
-        
+
         // Send current stats
         this.sendDashboardUpdate();
       });
@@ -122,30 +122,30 @@ class SocketServer {
   async handleAgentDisconnect(socketId) {
     try {
       const clientInfo = this.connectedClients.get(socketId);
-      
+
       if (clientInfo) {
         const { agentCode, agentName } = clientInfo;
-        
+
         // Update agent offline status
         await AgentMongo.findOneAndUpdate(
           { agentCode },
-          { 
-            isOnline: false, 
+          {
+            isOnline: false,
             socketId: null,
             status: 'Offline'
           }
         );
-        
+
         // Remove from connected clients
         this.connectedClients.delete(socketId);
-        
+
         // Notify others
         this.io.emit('agent-offline', {
           agentCode,
           agentName,
           timestamp: new Date()
         });
-        
+
         console.log(`🔌 Agent ${agentCode} disconnected and marked offline`);
       }
     } catch (error) {
@@ -157,16 +157,16 @@ class SocketServer {
     try {
       // Get current statistics
       const totalAgents = await AgentMongo.countDocuments({ isActive: true });
-      const onlineAgents = await AgentMongo.countDocuments({ 
-        isActive: true, 
-        isOnline: true 
+      const onlineAgents = await AgentMongo.countDocuments({
+        isActive: true,
+        isOnline: true
       });
-      
+
       const statusCounts = await AgentMongo.aggregate([
         { $match: { isActive: true, isOnline: true } },
         { $group: { _id: '$status', count: { $sum: 1 } } }
       ]);
-      
+
       const stats = {
         totalAgents,
         onlineAgents,
@@ -177,7 +177,7 @@ class SocketServer {
         }, {}),
         timestamp: new Date()
       };
-      
+
       // Send to dashboard room
       this.io.to('dashboard').emit('dashboardUpdate', stats);
     } catch (error) {

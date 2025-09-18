@@ -903,7 +903,8 @@ class SocketServer {
   initialize(server) {
     this.io = socketIo(server, {
       cors: {
-        origin: process.env.FRONTEND_URL || "http://localhost:3000",
+        //origin: process.env.FRONTEND_URL || "http://localhost:3000", // For Front-end App
+        origin: process.env.FRONTEND_URL || 'http://127.0.0.1:5500', // For Live Server in VS Code
         methods: ["GET", "POST"],
         credentials: true
       },
@@ -919,24 +920,24 @@ class SocketServer {
   setupEventHandlers() {
     this.io.on('connection', (socket) => {
       console.log(`👤 Client connected: ${socket.id}`);
-      
+
       // Agent login
       socket.on('agent-login', async (data) => {
         try {
           const { agentCode, agentName } = data;
           console.log(`🔐 Agent login: ${agentCode}`);
-          
+
           // Update agent online status
           const agent = await AgentMongo.findOneAndUpdate(
             { agentCode },
-            { 
-              isOnline: true, 
+            {
+              isOnline: true,
               socketId: socket.id,
               loginTime: new Date()
             },
             { new: true }
           );
-          
+
           if (agent) {
             // Store client info
             this.connectedClients.set(socket.id, {
@@ -945,23 +946,23 @@ class SocketServer {
               agentId: agent._id,
               loginTime: new Date()
             });
-            
+
             // Join agent to their room
             socket.join(`agent-${agentCode}`);
-            
+
             // Notify others
             socket.broadcast.emit('agent-online', {
               agentCode,
               agentName,
               timestamp: new Date()
             });
-            
+
             // Send welcome message
             socket.emit('login-success', {
               agent: agent,
               message: 'Successfully connected to Agent Wallboard System'
             });
-            
+
             console.log(`✅ Agent ${agentCode} logged in successfully`);
           } else {
             socket.emit('login-error', {
@@ -992,7 +993,7 @@ class SocketServer {
       socket.on('join-dashboard', () => {
         socket.join('dashboard');
         console.log(`📊 Client joined dashboard room: ${socket.id}`);
-        
+
         // Send current stats
         this.sendDashboardUpdate();
       });
@@ -1013,30 +1014,30 @@ class SocketServer {
   async handleAgentDisconnect(socketId) {
     try {
       const clientInfo = this.connectedClients.get(socketId);
-      
+
       if (clientInfo) {
         const { agentCode, agentName } = clientInfo;
-        
+
         // Update agent offline status
         await AgentMongo.findOneAndUpdate(
           { agentCode },
-          { 
-            isOnline: false, 
+          {
+            isOnline: false,
             socketId: null,
             status: 'Offline'
           }
         );
-        
+
         // Remove from connected clients
         this.connectedClients.delete(socketId);
-        
+
         // Notify others
         this.io.emit('agent-offline', {
           agentCode,
           agentName,
           timestamp: new Date()
         });
-        
+
         console.log(`🔌 Agent ${agentCode} disconnected and marked offline`);
       }
     } catch (error) {
@@ -1048,16 +1049,16 @@ class SocketServer {
     try {
       // Get current statistics
       const totalAgents = await AgentMongo.countDocuments({ isActive: true });
-      const onlineAgents = await AgentMongo.countDocuments({ 
-        isActive: true, 
-        isOnline: true 
+      const onlineAgents = await AgentMongo.countDocuments({
+        isActive: true,
+        isOnline: true
       });
-      
+
       const statusCounts = await AgentMongo.aggregate([
         { $match: { isActive: true, isOnline: true } },
         { $group: { _id: '$status', count: { $sum: 1 } } }
       ]);
-      
+
       const stats = {
         totalAgents,
         onlineAgents,
@@ -1068,7 +1069,7 @@ class SocketServer {
         }, {}),
         timestamp: new Date()
       };
-      
+
       // Send to dashboard room
       this.io.to('dashboard').emit('dashboardUpdate', stats);
     } catch (error) {
@@ -1671,32 +1672,84 @@ module.exports = { app, server, io };
 
 ## 🧪 Step 11: Testing Phase 2
 
-### test-websocket.html (ใหม่)
+### test-websocket.html (ใหม่) 
+
+**ให้ RUN ใน Live Server ใน VS Code และกำหนด port ที่ใช้ให้ตรง**
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agent Wallboard WebSocket Test</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .container { max-width: 800px; margin: 0 auto; }
-        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
-        .log { background: #f5f5f5; padding: 10px; border-radius: 5px; height: 200px; overflow-y: scroll; margin: 10px 0; }
-        input, button, select { margin: 5px; padding: 8px; }
-        .online { color: green; }
-        .offline { color: red; }
-        .status { padding: 5px; margin: 5px; border-radius: 3px; }
-        .Available { background-color: #d4edda; }
-        .Busy { background-color: #f8d7da; }
-        .Break { background-color: #fff3cd; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .log {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            height: 200px;
+            overflow-y: scroll;
+            margin: 10px 0;
+        }
+
+        input,
+        button,
+        select {
+            margin: 5px;
+            padding: 8px;
+        }
+
+        .online {
+            color: green;
+        }
+
+        .offline {
+            color: red;
+        }
+
+        .status {
+            padding: 5px;
+            margin: 5px;
+            border-radius: 3px;
+        }
+
+        .Available {
+            background-color: #d4edda;
+        }
+
+        .Busy {
+            background-color: #f8d7da;
+        }
+
+        .Break {
+            background-color: #fff3cd;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>🌐 Agent Wallboard WebSocket Test</h1>
-        
+
         <!-- Connection Status -->
         <div class="section">
             <h3>Connection Status</h3>
@@ -1761,122 +1814,122 @@ module.exports = { app, server, io };
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
     <script>
         let socket = null;
-        
+
         function log(message) {
             const eventLog = document.getElementById('eventLog');
             const timestamp = new Date().toLocaleTimeString();
             eventLog.innerHTML += `<div>[${timestamp}] ${message}</div>`;
             eventLog.scrollTop = eventLog.scrollHeight;
         }
-        
+
         function updateConnectionStatus(status) {
             const statusEl = document.getElementById('connectionStatus');
             statusEl.textContent = status;
             statusEl.className = status === 'Connected' ? 'online' : 'offline';
         }
-        
+
         function connect() {
             if (socket) {
                 socket.disconnect();
             }
-            
-            socket = io('http://172.21.91.53:3001');
-            
+
+            socket = io('http://172.21.91.53:3001'); // Must changed to WSL IP Address.
+
             socket.on('connect', () => {
                 log('✅ Connected to WebSocket server');
                 updateConnectionStatus('Connected');
             });
-            
+
             socket.on('disconnect', () => {
                 log('❌ Disconnected from WebSocket server');
                 updateConnectionStatus('Disconnected');
             });
-            
+
             socket.on('login-success', (data) => {
                 log(`🔐 Login successful: ${JSON.stringify(data)}`);
             });
-            
+
             socket.on('login-error', (data) => {
                 log(`❌ Login error: ${data.message}`);
             });
-            
+
             socket.on('agentStatusChanged', (data) => {
                 log(`🔄 Status changed: ${data.agentCode} ${data.previousStatus} → ${data.newStatus}`);
             });
-            
+
             socket.on('newMessage', (data) => {
                 log(`💬 New message: From ${data.from} to ${data.to}: ${data.message}`);
             });
-            
+
             socket.on('agent-online', (data) => {
                 log(`🟢 Agent online: ${data.agentCode} - ${data.agentName}`);
             });
-            
+
             socket.on('agent-offline', (data) => {
                 log(`🔴 Agent offline: ${data.agentCode} - ${data.agentName}`);
             });
-            
+
             socket.on('dashboardUpdate', (data) => {
                 log(`📊 Dashboard update: ${data.onlineAgents}/${data.totalAgents} agents online`);
                 updateDashboard(data);
             });
         }
-        
+
         function disconnect() {
             if (socket) {
                 socket.disconnect();
                 socket = null;
             }
         }
-        
+
         function agentLogin() {
             if (!socket) {
                 log('❌ Not connected to server');
                 return;
             }
-            
+
             const agentCode = document.getElementById('agentCode').value;
             const agentName = document.getElementById('agentName').value;
-            
+
             socket.emit('agent-login', { agentCode, agentName });
             log(`🔐 Attempting login: ${agentCode}`);
         }
-        
+
         function agentLogout() {
             if (!socket) {
                 log('❌ Not connected to server');
                 return;
             }
-            
+
             socket.emit('agent-logout');
             log('🔐 Logging out...');
         }
-        
+
         async function updateStatus() {
             const agentCode = document.getElementById('agentCode').value;
             const status = document.getElementById('statusSelect').value;
             const reason = document.getElementById('statusReason').value;
-            
+
             try {
                 // Get agent ID first
                 const agentsResponse = await fetch('/api/agents');
                 const agentsData = await agentsResponse.json();
                 const agent = agentsData.data.find(a => a.agentCode === agentCode);
-                
+
                 if (!agent) {
                     log(`❌ Agent ${agentCode} not found`);
                     return;
                 }
-                
+
                 // Update status
                 const response = await fetch(`/api/agents/${agent._id}/status`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status, reason })
                 });
-                
+
                 const result = await response.json();
-                
+
                 if (result.success) {
                     log(`✅ Status updated successfully: ${status}`);
                 } else {
@@ -1886,22 +1939,22 @@ module.exports = { app, server, io };
                 log(`❌ Error updating status: ${error.message}`);
             }
         }
-        
+
         async function sendMessage() {
             const from = document.getElementById('agentName').value || 'Test Supervisor';
             const to = document.getElementById('messageTo').value;
             const message = document.getElementById('messageText').value;
             const type = document.getElementById('messageType').value;
-            
+
             try {
                 const response = await fetch('/api/messages', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ from, to, message, type })
                 });
-                
+
                 const result = await response.json();
-                
+
                 if (result.success) {
                     log(`✅ Message sent successfully`);
                     document.getElementById('messageText').value = '';
@@ -1912,17 +1965,17 @@ module.exports = { app, server, io };
                 log(`❌ Error sending message: ${error.message}`);
             }
         }
-        
+
         function joinDashboard() {
             if (!socket) {
                 log('❌ Not connected to server');
                 return;
             }
-            
+
             socket.emit('join-dashboard');
             log('📊 Joined dashboard room');
         }
-        
+
         function updateDashboard(data) {
             const dashboardEl = document.getElementById('dashboardStats');
             dashboardEl.innerHTML = `
@@ -1933,18 +1986,19 @@ module.exports = { app, server, io };
                 <div>Last Updated: ${new Date(data.timestamp).toLocaleTimeString()}</div>
             `;
         }
-        
+
         function clearLog() {
             document.getElementById('eventLog').innerHTML = '';
         }
-        
+
         // Auto-connect on page load
-        window.onload = function() {
+        window.onload = function () {
             log('🌐 WebSocket Test Client loaded');
             log('Click "Connect" to start testing');
         };
     </script>
 </body>
+
 </html>
 ```
 
