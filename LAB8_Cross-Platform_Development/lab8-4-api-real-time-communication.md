@@ -93,7 +93,7 @@ Copy API Key ที่ x-rapidapi-key จากตัวอย่างด้า
 curl --request GET \
 	--url https://world-time-api3.p.rapidapi.com/ip.txt \
 	--header 'x-rapidapi-host: world-time-api3.p.rapidapi.com' \
-	--header 'x-rapidapi-key: 01234567890'
+	--header 'x-rapidapi-key: YOUR_API_KEY_HERE'
 
 ```
 
