@@ -203,8 +203,38 @@ ipcMain.handle('save-file', async (event, { content, fileName = 'export.txt' }) 
   }
 });
 
-app.whenReady().then(createWindow);
+/*
+อธิบาย
 
+app.whenReady().then(createWindow)
+→ ใช้สำหรับสร้าง BrowserWindow ครั้งแรก ตอน Electron พร้อมแล้ว
+→ ใช้ได้ทั้ง Windows และ macOS
+
+app.on('activate', …)
+→ เป็น พิเศษสำหรับ macOS
+→ เวลาผู้ใช้กด icon แอปใน Dock หรือเปิด Spotlight หาแอปขึ้นมา
+→ ถ้าไม่มี window → ต้อง createWindow() ใหม่
+→ ถ้ามี window อยู่แล้ว (แค่ถูก hide) → mainWindow.show()
+
+บน Windows ไม่มี event activate แบบนี้ แต่ใส่ไว้ก็ไม่เสียหาย
+*/
+
+//ใช้ได้ทั้ง Windows และ macOS + Tray
+app.whenReady().then(() => {
+  createWindow();
+
+  // macOS: สร้าง window ใหม่เมื่อกด Dock icon ถ้าไม่มี window
+  app.on('activate', () => {
+    if (mainWindow === null) {
+      createWindow();
+    } else {
+      mainWindow.show();
+    }
+  });
+});
+
+
+// ปิด app จริง ๆ เฉพาะ Windows/Linux
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
@@ -798,15 +828,41 @@ function createTray() {
   console.log('🖱️ [MAIN] สร้าง system tray...');
   
   try {
+
     // สร้าง icon (ใช้ built-in icon ถ้าไม่มีไฟล์)
     let trayIcon;
     try {
-      trayIcon = nativeImage.createFromPath(path.join(__dirname, 'assets', 'icon.png'));
-      if (trayIcon.isEmpty()) throw new Error('Icon file not found');
+        trayIcon = nativeImage.createFromPath(path.join(__dirname, 'assets', 'icon.png'));
+        if (trayIcon.isEmpty()) throw new Error('Icon file not found');
     } catch {
-      // ใช้ built-in icon ถ้าไม่มีไฟล์
-      trayIcon = nativeImage.createEmpty();
+        // ใช้ built-in icon ถ้าไม่มีไฟล์
+        trayIcon = nativeImage.createEmpty();
     }
+
+    // สำหรับ macOS
+    if (process.platform === 'darwin') {
+        trayIcon = trayIcon.resize({ width: 16, height: 16 });
+        trayIcon.setTemplateImage(true); // monochrome บน macOS
+    }
+
+    /*
+    1. process.platform === 'darwin'
+    ใช้ตรวจว่ากำลังรันบน macOS (darwin = ชื่อ kernel ของ macOS)
+    ถ้าเป็น Windows/Linux จะไม่เข้ามาโค้ดนี้
+
+    2. trayIcon.resize({ width: 16, height: 16 })
+    บน macOS menubar tray icon ควรเป็นขนาดเล็ก (16×16 px หรือ 22×22 px)
+    ถ้าใช้ icon PNG 256×256 โดยตรง → จะใหญ่เกินและเบลอ
+    เลยต้อง resize ลงมาให้พอดีกับ menubar
+
+    3. trayIcon.setTemplateImage(true)
+    บอก Electron ว่า icon นี้เป็น “Template Image” ของ macOS
+    macOS จะ:
+    แสดงเป็น monochrome (ขาว/ดำ) อัตโนมัติ
+    ปรับสี icon ตาม theme (Light / Dark Mode)
+    ทำให้ดู native เหมือน app อื่น ๆ
+    ถ้าไม่ใส่ → icon จะโชว์เป็นรูปสีเต็ม ๆ ซึ่งดู “ไม่เข้ากับ macOS”
+    */
     
     tray = new Tray(trayIcon);
     
@@ -916,6 +972,27 @@ function createWindow() {
   });
 }
 
+// IPC Events ซ่อนไป Tray ---
+ipcMain.on('hide-to-tray', () => {
+  if (mainWindow) {
+    mainWindow.hide();
+    if (process.platform === 'win32') {
+      new Notification({
+        title: 'Agent Wallboard',
+        body: 'App is still running in the system tray'
+      }).show();
+    }
+  }
+});
+
+// IPC Events แสดงเมื่อกดที่ Tray ---
+ipcMain.on('show-app', () => {
+  if (mainWindow) {
+    mainWindow.show();
+    mainWindow.focus();
+  }
+});
+
 // ป้องกันการปิด app เมื่อปิด window สุดท้าย
 app.on('window-all-closed', () => {
   // ไม่ quit เพื่อให้ app ทำงานใน tray ต่อไป
@@ -939,7 +1016,9 @@ contextBridge.exposeInMainWorld('nativeAPI', {
   onStatusChangedFromTray: (callback) => {
     console.log('🖱️ [PRELOAD] ลงทะเบียน tray status listener');
     ipcRenderer.on('status-changed-from-tray', (event, data) => callback(data));
-  }
+  },
+  hideToTray: () => ipcRenderer.send('hide-to-tray'),
+  showApp: () => ipcRenderer.send('show-app')
 });
 ```
 
@@ -977,14 +1056,25 @@ function testHideToTray() {
     console.log('👁️ [RENDERER] ซ่อนไป tray...');
     showResult('trayResult', '👁️ กำลังซ่อนไป system tray...', 'loading');
     
-    setTimeout(() => {
-      window.close(); // จะไปเรียก event handler ที่ซ่อน window
+    setTimeout(() => { // หน่วงเวลา 1 sec.
+      // รับ event ซ่อน system tray
+      window.nativeAPI.hideToTray();
     }, 1000);
     
   } catch (error) {
     console.error('❌ [RENDERER] Error:', error);
     showResult('trayResult', `❌ Error: ${error.message}`, 'error');
   }
+}
+
+// แสดง tray
+function testShowApp() {
+  console.log('👁️ [RENDERER] แสดงจาก tray...');
+  
+    setTimeout(() => { // หน่วงเวลา 1 sec.
+      // รับ event แสดง system tray
+      window.nativeAPI.showApp();
+    }, 1000);
 }
 
 // ทดสอบ notification จาก tray action
