@@ -619,7 +619,11 @@ const { Notification } = require('electron');
 // 🔔 สร้าง notification
 ipcMain.handle('show-notification', (event, { title, body, urgent = false }) => {
   console.log('🔔 [MAIN] แสดง notification:', title);
-  
+
+    // Check the icon path for correctness
+  const iconPath = path.join(__dirname, 'assets', 'notification.png');
+  console.log('Notification icon path:', iconPath);
+
   try {
     const notification = new Notification({
       title: title,
