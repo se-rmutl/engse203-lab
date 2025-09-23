@@ -83,14 +83,31 @@ lab8-4-realtime/
 }
 ```
 
+### **🕒 สมัคร World Time API ที่ https://rapidapi.com/sleeyax/api/world-time-api3**
+```
+ไปที่เว็ป: https://rapidapi.com/sleeyax/api/world-time-api3
+สมัครแบบ BASIC Free plan.
+เข้าเมนูด้านซ้าย Open playground
+Copy API Key ที่ x-rapidapi-key จากตัวอย่างด้านล่าง
+
+curl --request GET \
+	--url https://world-time-api3.p.rapidapi.com/ip.txt \
+	--header 'x-rapidapi-host: world-time-api3.p.rapidapi.com' \
+	--header 'x-rapidapi-key: b90cbdbe05msh59545428395405cp1e02efjsn46971c89499a'
+
+```
+
 ### **⚙️ api-config.js**
 ```javascript
 // api-config.js - การตั้งค่า APIs ที่ใช้
 
 module.exports = {
   // 🕒 World Time API (ฟรี)
-  timeAPI: 'https://worldtimeapi.org/api/timezone/Asia/Bangkok',
-  
+  timeAPI: 'https://world-time-api3.p.rapidapi.com/timezone/Asia/Bangkok',
+  timeHost: 'world-time-api3.p.rapidapi.com',
+  timeKey: 'YOUR_API_KEY_HERE', // แทนที่ด้วย API key จริง
+
+
   // 📊 JSONPlaceholder (ฟรี - สำหรับทดสอบ HTTP requests)
   usersAPI: 'https://jsonplaceholder.typicode.com/users',
   postsAPI: 'https://jsonplaceholder.typicode.com/posts',
@@ -221,29 +238,67 @@ function callAPI(url) {
   });
 }
 
+function fetchTimeWithAPIKey(url) {
+    return new Promise((resolve, reject) => {
+        console.log('🌐 [MAIN] เรียก API:', url);
+
+        // Define the headers, including the X-RapidAPI-Key
+        const options = {
+            headers: {
+                'X-RapidAPI-Key': config.timeKey,  // Replace with your RapidAPI key
+                'X-RapidAPI-Host': config.timeHost,  // This is the RapidAPI host for the WorldTimeAPI
+            }
+        };
+
+        // Use https.get with the options to include the headers
+        https.get(url, options, (response) => {
+            let data = '';
+
+            response.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            response.on('end', () => {
+                try {
+                    const jsonData = JSON.parse(data);
+                    console.log('✅ [MAIN] API สำเร็จ');
+                    resolve(jsonData);
+                } catch (error) {
+                    console.error('❌ [MAIN] Parse error:', error);
+                    reject(error);
+                }
+            });
+
+        }).on('error', (error) => {
+            console.error('❌ [MAIN] API error:', error);
+            reject(error);
+        });
+    });
+}
+
 // ===== IPC HANDLERS =====
 
 // 🕒 ดึงเวลาจาก World Time API
 ipcMain.handle('get-world-time', async () => {
-  try {
-    console.log('🕒 [MAIN] ดึงเวลาจาก API...');
-    const timeData = await callAPI(config.timeAPI);
-    
-    return {
-      success: true,
-      datetime: timeData.datetime,
-      timezone: timeData.timezone,
-      formatted: new Date(timeData.datetime).toLocaleString('th-TH')
-    };
-    
-  } catch (error) {
-    console.error('❌ [MAIN] Time API error:', error);
-    return {
-      success: false,
-      error: error.message,
-      fallback: new Date().toLocaleString('th-TH')
-    };
-  }
+    try {
+        console.log('🕒 [MAIN] ดึงเวลาจาก API...');
+        const timeData = await fetchTimeWithAPIKey(config.timeAPI);
+
+        return {
+            success: true,
+            datetime: timeData.datetime,
+            timezone: timeData.timezone,
+            formatted: new Date(timeData.datetime).toLocaleString('th-TH')
+        };
+
+    } catch (error) {
+        console.error('❌ [MAIN] Time API error:', error);
+        return {
+            success: false,
+            error: error.message,
+            fallback: new Date().toLocaleString('th-TH')
+        };
+    }
 });
 
 // 📊 ดึงข้อมูล mock users (จำลอง agents)
