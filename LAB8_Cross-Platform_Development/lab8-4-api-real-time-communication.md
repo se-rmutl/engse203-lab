@@ -78,7 +78,7 @@ lab8-4-realtime/
     "start": "electron ."
   },
   "devDependencies": {
-    "electron": "^27.0.0"
+    "electron": "^38.1.2"
   }
 }
 ```

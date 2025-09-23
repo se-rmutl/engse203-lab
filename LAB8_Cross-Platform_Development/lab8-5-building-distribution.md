@@ -95,7 +95,7 @@ npm install electron-builder --save-dev
     "pack": "electron-builder --dir"
   },
   "devDependencies": {
-    "electron": "^27.0.0",
+    "electron": "^38.1.2",
     "electron-builder": "^24.6.4"
   },
   "dependencies": {},

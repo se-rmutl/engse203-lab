@@ -80,7 +80,7 @@ npm install electron --save-dev
   "author": "Your Name",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^27.0.0"
+    "electron": "^38.1.2"
   }
 }
 ```
