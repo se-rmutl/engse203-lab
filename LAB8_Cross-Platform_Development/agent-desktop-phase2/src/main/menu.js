@@ -286,7 +286,7 @@ Agent ในระบบ Call Center
 • MongoDB - Database
 • Socket.io - WebSocket Communication
 
-© 2024 Agent Wallboard System`,
+© 2025 Agent Wallboard System`,
             buttons: ['ตกลง']
         });
     }

@@ -1,6 +1,6 @@
 /*!
  * Socket.IO v4.7.5
- * (c) 2014-2024 Guillermo Rauch
+ * (c) 2014-2025 Guillermo Rauch
  * Released under the MIT License.
  */
 (function (global, factory) {

@@ -478,22 +478,7 @@ npm install
 npm start
 ```
 
-### **4. Build สำหรับ Production**
-```bash
-# Build installer
-npm run build
-
-# Build portable version
-npm run pack
-```
-
-### **5. ผลลัพธ์ที่ได้**
-```
-dist/
-├── Agent Wallboard Setup 1.0.0.exe    # Installer
-├── win-unpacked/                       # Portable folder
-└── latest.yml                          # Auto-updater info
-```
+### **ตอนนี้งานพร้อมทำการ Build สำหรับ Production แล้ว**
 
 ---
 
@@ -519,7 +504,7 @@ dist/
 - ✅ Ready to distribute
 
 ---
-## **งาน Phase ที่ 2: Building**
+## **งาน Phase ที่ 2: Building สำหรับ Production**
 ---
 ## 🚀 Step 1: เตรียม Project สำหรับ Building
 
@@ -574,7 +559,7 @@ npm install electron-builder --save-dev
   "build": {
     "appId": "com.yourcompany.agent-wallboard",
     "productName": "Agent Wallboard",
-    "copyright": "Copyright © 2024 Your Name",
+    "copyright": "Copyright © 2025 Your Name",
     "directories": {
       "output": "dist",
       "buildResources": "build"
@@ -820,7 +805,7 @@ GitHub: https://github.com/your-username/agent-wallboard
 📅 CHANGELOG
 ============
 
-v1.0.0 (2024-01-15)
+v1.0.0 (2025-09-24)
 ------------------
 🎉 Initial Release
 

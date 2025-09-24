@@ -2442,7 +2442,7 @@ jobs:
 {
   "appId": "com.company.agent-wallboard",
   "productName": "Agent Wallboard Pro",
-  "copyright": "Copyright © 2024 Your Company",
+  "copyright": "Copyright © 2025 Your Company",
   
   "directories": {
     "output": "dist",

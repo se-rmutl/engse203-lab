@@ -2130,7 +2130,7 @@ git branch -d feature/form-integration
     <div class="certification-item">
         <h4>Web Development Bootcamp</h4>
         <p>Completed comprehensive full-stack development course</p>
-        <span class="year">2024</span>
+        <span class="year">2025</span>
     </div>
 </div>
 ```
