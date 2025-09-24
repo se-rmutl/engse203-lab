@@ -64,7 +64,7 @@ lab8-4-realtime/
 ├── index.html
 ├── package.json
 ├── api-config.js      (การตั้งค่า APIs)
-└── mock-data.json     (ข้อมูลจำลอง)
+└── mock-data.json     (ข้อมูลจำลองกรณี API เรียกใช้งานไม่ได้)
 ```
 
 ### **📝 package.json**
@@ -334,7 +334,7 @@ ipcMain.handle('get-mock-agents', async () => {
   } catch (error) {
     console.error('❌ [MAIN] Mock agents error:', error);
     
-    // Fallback ข้อมูล
+     // Fallback ข้อมูล กรณีที่ API ที่เรียกใช้งานไม่ได้ ก็จะมาอ่านที่ไฟล์แทน
     const mockData = await fs.readFile('mock-data.json', 'utf8');
     const fallbackData = JSON.parse(mockData);
     
