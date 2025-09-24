@@ -564,7 +564,7 @@ ipcMain.handle('dialog:saveFile', async (event, data) => {
 ```mermaid
 graph TD
     APP[Application Event] --> MP[Main Process]
-    MP --> NOT[new Notification()]
+    MP --> NOT["new Notification()"]
     NOT --> OS[Operating System]
     
     subgraph "Notification Features"
