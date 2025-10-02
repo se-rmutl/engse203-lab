@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 8.3 - Native APIs Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background: white;
+            color: #4CAF50;
+            transform: translateY(-2px);
+        }
+
+        .result-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .file-content {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        .loading {
+            color: #FFD700;
+        }
+
+        .success {
+            color: #90EE90;
+        }
+
+        .error {
+            color: #FF6B6B;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖥️ Native APIs Demo</h1>
+            <p>การใช้ Native APIs ของ Operating System</p>
+        </div>
+
+        <!-- File Operations Section -->
+        <div class="section">
+            <h3>📁 File Operations</h3>
+            <p>เปิดและบันทึกไฟล์ด้วย OS dialogs</p>
+
+            <button class="button" onclick="openFile()">📂 เปิดไฟล์</button>
+            <button class="button" onclick="exportAgentData()">📊 Export Agent Data</button>
+            <button class="button" onclick="saveCurrentContent()">💾 บันทึกเนื้อหา</button>
+
+            <div class="result-box" id="fileResult">กดปุ่มเพื่อทดสอบ file operations</div>
+
+            <div id="fileContent" class="file-content" style="display: none;"></div>
+        </div>
+
+        <!-- Notifications Section -->
+        <div class="section">
+            <h3>🔔 Desktop Notifications</h3>
+            <p>แจ้งเตือนแบบ Operating System</p>
+
+            <button class="button" onclick="testBasicNotification()">🔔 ทดสอบ Notification</button>
+            <button class="button" onclick="testAgentLogin()">🟢 Agent Login</button>
+            <button class="button" onclick="testCallReceived()">📞 Call Received</button>
+            <button class="button" onclick="testUrgentAlert()">🚨 Urgent Alert</button>
+
+            <div class="result-box" id="notificationResult">กดปุ่มเพื่อทดสอบ notifications</div>
+        </div>
+
+        <!-- Text Editor Section -->
+        <div class="section">
+            <h3>📝 Text Editor</h3>
+            <p>เขียนข้อความและบันทึกเป็นไฟล์</p>
+
+            <textarea id="textEditor" placeholder="เขียนข้อความที่นี่... จะสามารถบันทึกเป็นไฟล์ได้">
+# Agent Report
+วันที่: ${new Date().toLocaleDateString('th-TH')}
+
+## สรุปข้อมูล Agents
+- Agent ID: AG001
+- ชื่อ: Alice Johnson  
+- สถานะ: Available
+- จำนวนสาย: 15 calls
+- เวลาเฉลี่ย: 245 วินาที
+
+## สถิติวันนี้
+- Total Calls: 35
+- Avg Wait Time: 45 วินาที
+- Available Agents: 1 คน
+- Busy Agents: 1 คน
+      </textarea>
+        </div>
+
+        <!-- System Tray Section -->
+        <div class="section">
+            <h3>🖱️ System Tray Integration</h3>
+            <p>ควบคุม app ผ่าน system tray (ถาดระบบ)</p>
+
+            <button class="button" onclick="testHideToTray()">👁️ ซ่อนไป Tray</button>
+            <button class="button" onclick="testTrayNotification()">🔔 แจ้งเตือนจาก Tray</button>
+
+            <div class="result-box" id="trayResult">
+                ℹ️ System Tray Features:
+                • คลิกขวาที่ icon ใน taskbar เพื่อเปิดเมนู
+                • เปลี่ยนสถานะ agent ได้จาก tray menu
+                • ซ่อน/แสดง app ได้จาก tray
+                • ปิดโปรแกรมได้จาก tray menu
+
+                💡 ลองปิด window นี้ - แอปจะซ่อนไปใน system tray!
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        console.log('🎨 [RENDERER] Native APIs Demo โหลดแล้ว');
+
+        // ตรวจสอบ API
+        if (window.nativeAPI) {
+            console.log('✅ [RENDERER] Native APIs พร้อมใช้งาน');
+        } else {
+            console.error('❌ [RENDERER] Native APIs ไม่พร้อม');
+        }
+
+        // ฟังก์ชันแสดงผลลัพธ์
+        function showResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            const timestamp = new Date().toLocaleTimeString('th-TH');
+
+            element.innerHTML = `[${timestamp}] ${message}`;
+            element.className = `result-box ${type}`;
+        }
+
+        // ฟังก์ชันเปิดไฟล์
+        async function openFile() {
+            try {
+                console.log('📂 [RENDERER] เปิดไฟล์...');
+                showResult('fileResult', 'กำลังเปิด file dialog...', 'loading');
+
+                const result = await window.nativeAPI.openFile();
+
+                if (result.success) {
+                    console.log('✅ [RENDERER] เปิดไฟล์สำเร็จ:', result.fileName);
+
+                    showResult('fileResult',
+                        `✅ เปิดไฟล์สำเร็จ!\n\n` +
+                        `📄 ชื่อไฟล์: ${result.fileName}\n` +
+                        `📁 ที่อยู่: ${result.filePath}\n` +
+                        `📊 ขนาด: ${result.size} characters`,
+                        'success'
+                    );
+
+                    // แสดงเนื้อหาไฟล์
+                    const contentDiv = document.getElementById('fileContent');
+                    contentDiv.style.display = 'block';
+                    contentDiv.innerHTML = `<strong>📄 เนื้อหาไฟล์ ${result.fileName}:</strong>\n\n${result.content}`;
+
+                    // ใส่เนื้อหาใน text editor
+                    document.getElementById('textEditor').value = result.content;
+
+                } else if (result.cancelled) {
+                    showResult('fileResult', '⏹️ ยกเลิกการเปิดไฟล์', 'info');
+                } else {
+                    throw new Error(result.error);
+                }
+
+            } catch (error) {
+                console.error('❌ [RENDERER] Error:', error);
+                showResult('fileResult', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // ฟังก์ชันส่งออกข้อมูล Agent
+        async function exportAgentData() {
+            try {
+                console.log('📊 [RENDERER] ส่งออกข้อมูล Agent...');
+                showResult('fileResult', 'กำลังสร้างรายงาน Agent...', 'loading');
+
+                // สร้างข้อมูล CSV
+                const agentData = [
+                    'Agent ID,Name,Status,Extension,Department,Total Calls,Avg Call Time',
+                    'AG001,Alice Johnson,Available,1001,Sales,15,245',
+                    'AG002,Bob Smith,Busy,1002,Support,8,312',
+                    'AG003,Carol Lee,Break,1003,Sales,12,198'
+                ].join('\n');
+
+                const fileName = `agent-report-${new Date().toISOString().split('T')[0]}.csv`;
+
+                const result = await window.nativeAPI.saveFile(agentData, fileName);
+
+                if (result.success) {
+                    console.log('✅ [RENDERER] ส่งออกสำเร็จ:', result.fileName);
+
+                    showResult('fileResult',
+                        `📊 ส่งออกข้อมูล Agent สำเร็จ!\n\n` +
+                        `📄 ชื่อไฟล์: ${result.fileName}\n` +
+                        `📁 ตำแหน่ง: ${result.filePath}\n` +
+                        `📈 ข้อมูล: 3 agents ใน CSV format`,
+                        'success'
+                    );
+
+                } else if (result.cancelled) {
+                    showResult('fileResult', '⏹️ ยกเลิกการส่งออก', 'info');
+                } else {
+                    throw new Error(result.error);
+                }
+
+            } catch (error) {
+                console.error('❌ [RENDERER] Error:', error);
+                showResult('fileResult', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // ฟังก์ชันบันทึกเนื้อหาปัจจุบัน
+        async function saveCurrentContent() {
+            const content = document.getElementById('textEditor').value;
+
+            if (!content.trim()) {
+                showResult('fileResult', '❌ ไม่มีเนื้อหาให้บันทึก', 'error');
+                return;
+            }
+
+            try {
+                console.log('💾 [RENDERER] บันทึกเนื้อหา...');
+                showResult('fileResult', 'กำลังบันทึกไฟล์...', 'loading');
+
+                const fileName = `my-document-${Date.now()}.txt`;
+                const result = await window.nativeAPI.saveFile(content, fileName);
+
+                if (result.success) {
+                    console.log('✅ [RENDERER] บันทึกสำเร็จ:', result.fileName);
+
+                    showResult('fileResult',
+                        `💾 บันทึกเนื้อหาสำเร็จ!\n\n` +
+                        `📄 ชื่อไฟล์: ${result.fileName}\n` +
+                        `📁 ตำแหน่ง: ${result.filePath}\n` +
+                        `📊 ขนาด: ${content.length} characters`,
+                        'success'
+                    );
+
+                } else if (result.cancelled) {
+                    showResult('fileResult', '⏹️ ยกเลิกการบันทึก', 'info');
+                } else {
+                    throw new Error(result.error);
+                }
+
+            } catch (error) {
+                console.error('❌ [RENDERER] Error:', error);
+                showResult('fileResult', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // ทดสอบ notification พื้นฐาน
+        async function testBasicNotification() {
+            try {
+                console.log('🔔 [RENDERER] ทดสอบ notification...');
+                showResult('notificationResult', 'กำลังแสดง notification...', 'loading');
+
+                const result = await window.nativeAPI.showNotification(
+                    'Agent Wallboard',
+                    'นี่คือ desktop notification ทดสอบ! 🎉'
+                );
+
+                if (result.success) {
+                    showResult('notificationResult', '✅ แสดง notification สำเร็จ\n\nดู notification ที่มุมจอของคุณ', 'success');
+                } else {
+                    throw new Error(result.error);
+                }
+
+            } catch (error) {
+                console.error('❌ [RENDERER] Error:', error);
+                showResult('notificationResult', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // ทดสอบ Agent Login notification
+        async function testAgentLogin() {
+            try {
+                console.log('🟢 [RENDERER] Agent login notification...');
+                showResult('notificationResult', 'แจ้งเตือน Agent เข้าสู่ระบบ...', 'loading');
+
+                const result = await window.nativeAPI.notifyAgentEvent(
+                    'Alice Johnson',
+                    'login',
+                    { time: new Date().toLocaleTimeString('th-TH') }
+                );
+
+                if (result.success) {
+                    showResult('notificationResult', '🟢 แจ้งเตือน Agent Login สำเร็จ\n\nAgent Alice Johnson เข้าสู่ระบบแล้ว', 'success');
+                } else {
+                    throw new Error(result.error);
+                }
+
+            } catch (error) {
+                console.error('❌ [RENDERER] Error:', error);
+                showResult('notificationResult', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // ทดสอบ Call Received notification
+        async function testCallReceived() {
+            try {
+                console.log('📞 [RENDERER] Call received notification...');
+                showResult('notificationResult', 'แจ้งเตือนสายเข้า...', 'loading');
+
+                const result = await window.nativeAPI.notifyAgentEvent(
+                    'Bob Smith',
+                    'call_received',
+                    {
+                        callerNumber: '02-123-4567',
+                        queue: 'Support Queue'
+                    }
+                );
+
+                if (result.success) {
+                    showResult('notificationResult', '📞 แจ้งเตือนสายเข้าสำเร็จ\n\nAgent Bob Smith มีสายเข้าใหม่', 'success');
+                }
+
+            } catch (error) {
+                console.error('❌ [RENDERER] Error:', error);
+                showResult('notificationResult', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // ทดสอบ Urgent Alert
+        async function testUrgentAlert() {
+            try {
+                console.log('🚨 [RENDERER] Urgent alert...');
+                showResult('notificationResult', 'แจ้งเตือนด่วน...', 'loading');
+
+                const result = await window.nativeAPI.showNotification(
+                    '🚨 แจ้งเตือนด่วน!',
+                    'ระบบโทรศัพท์มีปัญหา กรุณาตรวจสอบด่วน!',
+                    true // urgent = true
+                );
+
+                if (result.success) {
+                    showResult('notificationResult', '🚨 แจ้งเตือนด่วนสำเร็จ\n\nนี่คือ notification แบบ urgent', 'success');
+                }
+
+            } catch (error) {
+                console.error('❌ [RENDERER] Error:', error);
+                showResult('notificationResult', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // ทดสอบซ่อนไป tray
+        function testHideToTray() {
+            try {
+                console.log('👁️ [RENDERER] ซ่อนไป tray...');
+                showResult('trayResult', '👁️ กำลังซ่อนไป system tray...', 'loading');
+
+                setTimeout(() => { // หน่วงเวลา 1 sec.
+                    // รับ event ซ่อน system tray
+                    window.nativeAPI.hideToTray();
+                }, 1000);
+
+            } catch (error) {
+                console.error('❌ [RENDERER] Error:', error);
+                showResult('trayResult', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // แสดง tray
+        function testShowApp() {
+            console.log('👁️ [RENDERER] แสดงจาก tray...');
+
+            setTimeout(() => { // หน่วงเวลา 1 sec.
+                // รับ event แสดง system tray
+                window.nativeAPI.showApp();
+            }, 1000);
+        }
+
+        // ทดสอบ notification จาก tray action
+        function testTrayNotification() {
+            try {
+                console.log('🔔 [RENDERER] ทดสอบ notification จาก tray...');
+                showResult('trayResult',
+                    '✅ ทดสอบ System Tray สำเร็จ!\n\n' +
+                    '🖱️ คลิกขวาที่ icon ใน taskbar/menubar\n' +
+                    '📋 ลองเลือกเมนูต่างๆ\n' +
+                    '🔄 ทดสอบเปลี่ยนสถานะจาก tray menu',
+                    'success'
+                );
+
+            } catch (error) {
+                console.error('❌ [RENDERER] Error:', error);
+                showResult('trayResult', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // รับ event เมื่อเปลี่ยนสถานะจาก tray
+        window.nativeAPI.onStatusChangedFromTray((data) => {
+            console.log('🔄 [RENDERER] ได้รับ status change จาก tray:', data);
+
+            showResult('trayResult',
+                `🔄 เปลี่ยนสถานะจาก System Tray!\n\n` +
+                `📊 สถานะใหม่: ${data.newStatus}\n` +
+                `⏰ เวลา: ${new Date(data.timestamp).toLocaleString('th-TH')}\n\n` +
+                `✅ นี่คือ communication จาก Main → Renderer`,
+                'success'
+            );
+        });
+
+
+        // Event listeners
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 [RENDERER] DOM พร้อมแล้ว');
+            showResult('fileResult', '✅ Native APIs Demo พร้อมใช้งาน\n\nกดปุ่มเพื่อทดสอบ file operations', 'success');
+        });
+    </script>
+</body>
+
+</html>

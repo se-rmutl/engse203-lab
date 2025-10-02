@@ -1,0 +1,12 @@
+{
+  "name": "lab8-2-ipc",
+  "version": "1.0.0",
+  "description": "Learning IPC Communication for Agent Wallboard",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^38.1.2"
+  }
+}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanit's Electron App</title>
+    <style>
+        /* CSS สำหรับตกแต่ง */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+        }
+
+        .title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .button:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .info {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .process-info {
+            text-align: left;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title">🚀 Hello Electron!</h1>
+        <p class="subtitle">นี่คือ Desktop App แรกของเรา</p>
+
+        <button class="button" onclick="showAlert()">🎉 Click Me!</button>
+        <button class="button" onclick="showTime()">⏰ Show Time</button>
+        <button class="button" onclick="changeColor()">🎨 Change Color</button>
+
+        <div class="info">
+            <strong>🖥️ System Information:</strong>
+            <div class="process-info" id="systemInfo">Loading...</div>
+        </div>
+
+        <div class="info">
+            <strong>📊 Process Information:</strong>
+            <div class="process-info">
+                <div>🎨 <strong>Renderer Process:</strong> แสดง UI นี้</div>
+                <div>🖥️ <strong>Main Process:</strong> ควบคุม window และ app</div>
+                <div>🌐 <strong>Technology:</strong> HTML + CSS + JavaScript</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('🎨 Renderer Process เริ่มทำงาน');
+
+        // ฟังก์ชันแสดง alert
+        function showAlert() {
+            alert('🎉 สวัสดี! นี่คือ Desktop App ที่สร้างด้วย Electron\n\n' +
+                '✨ เราใช้ HTML, CSS, JavaScript เหมือน web\n' +
+                '🖥️ แต่รันเป็น desktop application!');
+        }
+
+        // ฟังก์ชันแสดงเวลา
+        function showTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('th-TH');
+            alert(`⏰ เวลาปัจจุบัน:\n${timeString}`);
+        }
+
+        // ฟังก์ชันเปลี่ยนสี background
+        const colors = [
+            'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+            'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+            'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+        ];
+
+        let currentColorIndex = 0;
+
+        function changeColor() {
+            currentColorIndex = (currentColorIndex + 1) % colors.length;
+            document.body.style.background = colors[currentColorIndex];
+            console.log('🎨 เปลี่ยนสีพื้นหลัง:', currentColorIndex);
+        }
+
+        // แสดงข้อมูล system
+        function displaySystemInfo() {
+            const info = document.getElementById('systemInfo');
+            info.innerHTML = `
+        <div>🌐 Platform: ${navigator.platform}</div>
+        <div>🔧 User Agent: ${navigator.userAgent.split(' ')[0]}</div>
+        <div>📱 Screen: ${screen.width} x ${screen.height}</div>
+        <div>🌍 Language: ${navigator.language}</div>
+      `;
+        }
+
+        // เรียกใช้เมื่อ page โหลดเสร็จ
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 HTML โหลดเสร็จแล้ว');
+            displaySystemInfo();
+        });
+
+        // แสดงข้อความเมื่อ page โหลดเสร็จสมบูรณ์
+        window.addEventListener('load', () => {
+            console.log('✅ ทุกอย่างโหลดเสร็จแล้ว - พร้อมใช้งาน!');
+        });
+    </script>
+</body>
+
+</html>

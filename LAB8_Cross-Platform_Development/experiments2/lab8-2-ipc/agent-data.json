@@ -1,0 +1,42 @@
+{
+  "agents": [
+    {
+      "id": "AG001",
+      "name": "Alice Johnson",
+      "status": "Available",
+      "extension": "1001",
+      "department": "Sales",
+      "loginTime": "2024-01-15T08:00:00Z",
+      "totalCalls": 15,
+      "avgCallTime": 245
+    },
+    {
+      "id": "AG002", 
+      "name": "Bob Smith",
+      "status": "Busy",
+      "extension": "1002",
+      "department": "Support",
+      "loginTime": "2024-01-15T08:30:00Z",
+      "totalCalls": 8,
+      "avgCallTime": 312
+    },
+    {
+      "id": "AG003",
+      "name": "Carol Lee",
+      "status": "Break",
+      "extension": "1003", 
+      "department": "Sales",
+      "loginTime": "2024-01-15T09:00:00Z",
+      "totalCalls": 12,
+      "avgCallTime": 198
+    }
+  ],
+  "statistics": {
+    "totalAgents": 3,
+    "availableAgents": 1,
+    "busyAgents": 1,
+    "onBreakAgents": 1,
+    "totalCallsToday": 35,
+    "avgWaitTime": 45
+  }
+}

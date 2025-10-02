@@ -1,0 +1,14 @@
+{
+  "name": "my-first-electron-app",
+  "version": "1.0.0",
+  "description": "My first Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^38.1.2"
+  }
+}
