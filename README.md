@@ -1,327 +1,141 @@
-# 🚀 ENGSE203 - Computer Programming for Software Engineer
-## Laboratory Sessions Repository
+# ENGSE203 LAB Repository
 
-[![Course](https://img.shields.io/badge/Course-ENGSE203-blue)](https://github.com)
-[![Language](https://img.shields.io/badge/Language-JavaScript-yellow)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![Framework](https://img.shields.io/badge/Framework-React-61DAFB)](https://reactjs.org/)
-[![Backend](https://img.shields.io/badge/Backend-Node.js-339933)](https://nodejs.org/)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+> **ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์**  
+> *Computer Programming for Software Engineer*  
+> หลักสูตรวิศวกรรมศาสตรบัณฑิต สาขาวิชาวิศวกรรมซอฟต์แวร์
 
----
+Repository นี้เป็นพื้นที่รวมเอกสารปฏิบัติการ (LAB), starter files, แบบฟอร์มการส่งงาน และแนวทางพัฒนาโครงงานของรายวิชา ENGSE203 โดยออกแบบให้ผู้เรียนต่อยอดจากพื้นฐานในรายวิชา **ENGCC304 การเขียนโปรแกรมคอมพิวเตอร์** ไปสู่การพัฒนาโปรแกรมแบบ **Full-Stack** ที่มี Front-end, Back-end, RESTful API, ฐานข้อมูล, การทดสอบ และการทำงานร่วมกันด้วย Git/GitHub
 
-## 📚 Course Overview
+## ผลลัพธ์ปลายทางของรายวิชา
 
-**ENGSE203 - การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์** เป็นรายวิชาที่มุ่งเน้นการพัฒนาทักษะการเขียนโปรแกรมสมัยใหม่ ครอบคลุมการพัฒนาทั้ง Frontend และ Backend รวมถึงเทคโนโลยีการพัฒนาแบบ Cross-platform
+เมื่อจบรายวิชา นักศึกษาควรสามารถสร้างโปรแกรมขนาดย่อมที่มีคุณลักษณะต่อไปนี้ได้
 
-### 🎯 **Course Objectives**
-- เข้าใจหลักการและเทคโนโลยีการพัฒนาซอฟต์แวร์สมัยใหม่
-- พัฒนาแอปพลิเคชันแบบ Full-stack และ Cross-platform
-- มีทักษะการเขียนโปรแกรมเชิงลึกด้วยภาษาและเฟรมเวิร์กที่ทันสมัย
-- สามารถออกแบบและพัฒนา User Interface ที่มีประสิทธิภาพ
-- เข้าใจการทดสอบซอฟต์แวร์และการใช้เครื่องมือพัฒนา
-- ใช้ระบบควบคุมเวอร์ชันในการพัฒนาซอฟต์แวร์
+- Front-end แบบ Responsive และ Interactive ด้วย **React.js**
+- Back-end และ **RESTful API** ด้วย **Node.js / Express**
+- การจัดเก็บข้อมูลด้วย **SQLite** หรือ **MongoDB**
+- การทดสอบระดับหน่วย การแก้ไขข้อผิดพลาด และการตรวจสอบคุณภาพพื้นฐาน
+- README, Git history, branch, pull request และหลักฐานการทำงานที่ตรวจสอบได้
+- โครงงานกลุ่ม Full-Stack พร้อมการสาธิตในช่วงท้ายรายวิชา
 
-### 📖 **Technology Stack**
-```
-Frontend:     HTML5, CSS3, JavaScript ES6+, React.js
-Backend:      Node.js, Express.js, MongoDB
-Tools:        Git, GitHub, VS Code, Postman
-Deployment:   Vercel, Netlify, AWS, Docker
-Testing:      Jest, Cypress, React Testing Library
-```
+## การใช้ Repository นี้
 
----
+Repository นี้เป็น **Course Repository** สำหรับอ่านใบงานและคัดลอก starter files เท่านั้น เว้นแต่ผู้สอนประกาศให้ส่งงานผ่าน GitHub Classroom โดยตรง
 
-## 🧪 **Laboratory Sessions Overview**
+1. Clone หรือดาวน์โหลด repository นี้ไว้ในเครื่อง
+2. เปิด README ของ LAB ที่กำลังเรียนจากตารางด้านล่าง
+3. สร้าง repository ส่งงานของตนเองตามชื่อที่ LAB กำหนด
+4. คัดลอก starter files เฉพาะเมื่อใบงานระบุให้ใช้
+5. Commit และ push งานของตนเอง แล้วส่ง URL ผ่าน LMS/Google Classroom
 
-| Week | Todo | Topic | Duration | Type | Focus |
-|:-----:|:-----:|----------|------|-------|-------|
-| **1** | LAB1 | [Modern Software Development](LAB1_Environment-Setup) | 2 hrs | Workshop | Environment Setup |
-| **2** | TASK#1 | [Version Control with Git & GitHub](TASK1_VersionControl-with-Git-GitHub) | 3 hrs | Pair Task | Collaboration |
-| **3** | TASK#2 | [HTML5 & CSS3 Fundamentals](TASK2_html-css-js-fundamentals) | 3 hrs | Pair Task | Portfolio Website |
-| **4** | LAB2 | [JavaScript ES6+ & DOM Manipulation](LAB2_JavaScript_ES6_DOM_Manipulation) | 3 hrs | Individual | Interactive App |
-| **5** | LAB3 | [React.js Fundamentals](LAB3_Reactjs_Fundamentals) | 3 hrs | Individual | Component Library |
-| **6** | LAB4 | [Advanced React & State Management](LAB4_Advanced-React-State-Management) | 3 hrs | Individual | E-commerce Frontend |
-| **7** | LAB5 | [Node.js & Backend Development](LAB5_Nodejs_Backend_Development) | 3 hrs | Individual | REST API |
-| **8** | **🎯** | **[MIDTERM INDIVIDUAL PROJECT](Midterm_Individual-Project)** | **1 week** | **Individual** | **Full-Stack App** |
-| **9** | LAB6 | [Database Integration & MongoDB](LAB6_Database_Integration) | 3 hrs | Individual | Data Management |
-| **10** | LAB7 | Authentication & Security | 3 hrs | Individual | Secure System |
-| **11** | TASK#3 | Full-Stack Integration | 3 hrs | Pair Task | Real-time App |
-| **12** | LAB8 | Cross-Platform Development | 3 hrs | Individual | Multi-platform |
-| **13** | LAB9 | Testing & Quality Assurance | 3 hrs | Individual | Test Coverage |
-| **14** | LAB10 | Performance & Deployment | 3 hrs | Individual | Production Deploy |
-| **15** | **🏆** | **[FINAL CAPSTONE PROJECT](Final_Capstone-Project)** | **2 weeks** | **Team Project** | **Professional App** |
+> **สำคัญ:** ไม่ควร commit รหัสผ่าน, token, ไฟล์ `.env` หรือข้อมูลส่วนบุคคลที่ไม่จำเป็นขึ้น GitHub
 
+## เริ่มต้นใช้งาน Course Repository บน GitHub
 
----
+หลังแตกไฟล์ ZIP นี้ Repository ถูกจัดเตรียมเป็น local Git repository พร้อม initial commit แล้ว ให้เปลี่ยน URL ด้านล่างเป็น repository ของรายวิชาจริงก่อน push
 
-## 📊 **Assessment & Grading**
-
-### **Grade Distribution**
-| Component | Weight | Description |
-|-----------|--------|-------------|
-| **Laboratory Work** | 45% | Weekly lab submissions และ projects |
-| **Midterm Project** | 20% | Individual full-stack application |
-| **Final Project** | 25% | Team capstone project |
-| **Participation** | 10% | Class participation และ code reviews |
-
-### **Laboratory Assessment Criteria**
-- **Functionality (40%)**: Code works as expected
-- **Code Quality (25%)**: Clean, readable, well-documented code
-- **Innovation (20%)**: Creative solutions และ extra features
-- **Documentation (15%)**: Clear README และ technical documentation
-
-### **Late Submission Policy**
-- **Within 24 hours**: -10% penalty
-- **Within 48 hours**: -25% penalty
-- **Beyond 48 hours**: -50% penalty
-- **Beyond 1 week**: 0 points (except with prior approval)
-
----
-
-## 🛠️ **Prerequisites & Setup**
-
-### **Required Software**
 ```bash
-# Node.js (LTS version)
-https://nodejs.org/
-
-# Git
-https://git-scm.com/
-
-# Visual Studio Code
-https://code.visualstudio.com/
-
-# MongoDB Community Edition
-https://www.mongodb.com/try/download/community
+git remote add origin https://github.com/<organization-or-user>/engse203-labs-2569.git
+git push -u origin main
 ```
 
-### **Recommended VS Code Extensions**
-```json
-{
-  "recommendations": [
-    "bradlc.vscode-tailwindcss",
-    "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint",
-    "ms-vscode.vscode-json",
-    "formulahendry.auto-rename-tag",
-    "christian-kohler.path-intellisense",
-    "ms-vscode.vscode-typescript-next",
-    "github.vscode-pull-request-github"
-  ]
-}
+## เครื่องมือหลัก
+
+| เครื่องมือ | ใช้ทำอะไร | หมายเหตุ |
+|---|---|---|
+| Visual Studio Code | เขียนโค้ดและเปิด Integrated Terminal | ใช้ได้ทั้ง macOS และ Windows |
+| Node.js (LTS) + npm | รัน JavaScript และจัดการ package/script | ใช้รุ่นที่ผู้สอนกำหนด |
+| Git + GitHub | จัดการเวอร์ชัน ส่งงาน และทำงานร่วมกัน | ตรวจสอบ commit history ทุกงาน |
+| Browser DevTools | ตรวจสอบหน้าเว็บและแก้ไขข้อผิดพลาด | Chrome, Edge, Safari หรือ Firefox |
+| Postman / Thunder Client | ทดสอบ RESTful API | ใช้ตาม LAB ที่กำหนด |
+| SQLite / MongoDB tools | ตรวจสอบและจัดการฐานข้อมูล | ใช้ตามประเภทฐานข้อมูลของ LAB |
+
+รายละเอียดการเตรียมเครื่องทั้ง iMac M1/macOS และ Windows ดูที่ [คู่มือ Cross-platform Setup](./docs/cross-platform-setup.md)
+
+## เส้นทาง LAB ตลอดรายวิชา
+
+| สัปดาห์ | หน่วยเรียน / งาน | รูปแบบ | หลักฐานสำคัญ | ลิงก์ |
+|---:|---|---|---|---|
+| 1 | LAB 01 — Developer Environment & GitHub Repository Setup | รายบุคคล | Node/npm/Git, `hello.js`, README, GitHub repository | [เปิด LAB 01](./labs/week-01-developer-environment-git-github/) |
+| 2 | LAB 02 — Modern JavaScript, Modules & Async Data | รายบุคคล | ES6+, module, async/await, error handling, branch/PR | [เปิด LAB 02](./labs/week-02-modern-javascript/) |
+| 3 | LAB 03 — Responsive Web UI & Form Interaction | รายบุคคล | HTML/CSS, responsive UI, form validation, DOM/event | [เปิด LAB 03](./labs/week-03-responsive-ui/) |
+| 4 | LAB 04 — React Components, Props & State | รายบุคคล | React component, props, state, event handling | [เปิด LAB 04](./labs/week-04-react-components-state/) |
+| 5 | LAB 05 — React Routing, Data Fetching & Front-end Mini App | รายบุคคล | routing, form, local state, fetch/mock data | [เปิด LAB 05](./labs/week-05-react-mini-app/) |
+| 6 | LAB 06 — Node.js / Express API Foundation | รายบุคคล | Express app, route, middleware, controller/service | [เปิด LAB 06](./labs/week-06-express-api-foundation/) |
+| 7 | LAB 07 — RESTful API, Validation & Error Handling | รายบุคคล | REST design, HTTP status, validation, errors | [เปิด LAB 07](./labs/week-07-rest-validation/) |
+| 8 | LAB 08 — API Contract, CORS & Front-end Integration | รายบุคคล | API contract, API test, CORS/configuration, integration | [เปิด LAB 08](./labs/week-08-api-integration/) |
+| 9 | สอบกลางภาค | รายบุคคล | ทฤษฎีและปฏิบัติ JavaScript, React, REST API | [รายละเอียดขอบเขต](./labs/week-09-midterm/) |
+| 10 | LAB 09 — SQLite & SQL CRUD with Node.js | รายบุคคล | data model, SQLite, SQL CRUD, parameterized query | [เปิด LAB 09](./labs/week-10-sqlite-crud/) |
+| 11 | LAB 10 — MongoDB, Mongoose & NoSQL CRUD | รายบุคคล | collection/document, schema, model, CRUD | [เปิด LAB 10](./labs/week-11-mongodb-mongoose/) |
+| 12 | LAB 11 — Individual Full-Stack Integration | รายบุคคล | React + API + Database working end-to-end | [เปิด LAB 11](./labs/week-12-fullstack-integration/) |
+| 13 | LAB 12 — Unit Testing & Debugging Report | รายบุคคล | test case, unit test, debugging/logging evidence | [เปิด LAB 12](./labs/week-13-testing-debugging/) |
+| 14 | LAB 13 — Quality, Security & Delivery Readiness | รายบุคคล | validation, `.env`, security checklist, documentation | [เปิด LAB 13](./labs/week-14-quality-security/) |
+| 15 | LAB 14 — Cross-platform Product Sprint 1 | กลุ่ม | team plan, issue, branch, PR, cross-platform plan | [เปิด LAB 14](./labs/week-15-team-sprint-1/) |
+| 16 | LAB 15 — Team Full-Stack Sprint 2 & Demo | กลุ่ม | code review, test, README, demo, peer evaluation | [เปิด LAB 15](./labs/week-16-team-sprint-2-demo/) |
+| 17 | ทบทวนบทเรียน | รายบุคคล | checkpoint, error clinic, final preparation | [แนวทางทบทวน](./labs/week-17-review/) |
+| 18 | สอบปลายภาค | รายบุคคล | วิเคราะห์/ประยุกต์/ปรับปรุงระบบจากโจทย์ | [รายละเอียดขอบเขต](./labs/week-18-final/) |
+
+## แผนผังหน่วยเรียน
+
+```text
+หน่วยที่ 1  พื้นฐานการพัฒนาโปรแกรมสมัยใหม่และการทำงานร่วมกัน
+            └─ Week 1–2: JavaScript, Node/npm, Git/GitHub
+
+หน่วยที่ 2  การพัฒนาส่วนติดต่อผู้ใช้ด้วย React.js
+            └─ Week 3–5: Responsive UI, React Components, Routing
+
+หน่วยที่ 3  การพัฒนาส่วนหลังและ RESTful API ด้วย Node.js
+            └─ Week 6–8: Express, REST API, Validation, API Integration
+
+หน่วยที่ 4  ฐานข้อมูลและการบูรณาการระบบ Full-Stack
+            └─ Week 10–12: SQLite, MongoDB, Full-Stack Integration
+
+หน่วยที่ 5  คุณภาพซอฟต์แวร์ การทดสอบ และความพร้อมก่อนใช้งาน
+            └─ Week 13–14: Unit Test, Debugging, Security, Documentation
+
+หน่วยที่ 6  การพัฒนาแบบข้ามแพลตฟอร์มและโครงงานบูรณาการ
+            └─ Week 15–16: Team Sprint, Git Collaboration, Demo
 ```
 
-### **Hardware Requirements**
-- **Minimum**: 8GB RAM, 256GB SSD, Intel i5 or equivalent
-- **Recommended**: 16GB RAM, 512GB SSD, Intel i7 or equivalent
-- **Operating System**: Windows 10/11, macOS 10.15+, or Ubuntu 20.04+
+## การประเมินผลที่เชื่อมกับงานใน Repository
+
+| กิจกรรม | สัดส่วน | หลักฐานจาก Repository |
+|---|---:|---|
+| A1 ความรับผิดชอบทางวิชาชีพ | 5% | แหล่งอ้างอิง, AI disclosure, ความครบถ้วน, Git history |
+| A2 Weekly LAB รายบุคคล | 25% | งาน LAB 01–10 และ LAB 12 ที่กำหนด |
+| A3 สอบกลางภาค | 15% | ตามข้อสอบและชิ้นงานในสัปดาห์ที่ 9 |
+| A4 งานบูรณาการ Full-Stack รายบุคคล | 15% | LAB 11: React + API + Database |
+| A5 งานคุณภาพและความปลอดภัย | 10% | LAB 13: test, validation, `.env`, documentation |
+| A6 Team Mini Project & Demo | 15% | LAB 14–15: issue, branch, PR, peer review, demo |
+| A7 สอบปลายภาค | 15% | ตามข้อสอบและชิ้นงานในสัปดาห์ที่ 18 |
+| **รวม** | **100%** | |
+
+## กติกาการส่งงานมาตรฐาน
+
+- ส่ง **URL ของ GitHub repository** ผ่าน LMS/Google Classroom ภายในเวลาที่กำหนด
+- `main` branch ต้องรันได้ตาม README
+- ทุกงานต้องมี README ที่อธิบายวิธีติดตั้ง วิธีรัน และหลักฐานผลลัพธ์ตามที่ใบงานกำหนด
+- งานกลุ่มต้องแสดงการมีส่วนร่วมของสมาชิกผ่าน issue, branch, commit และ pull request
+- การใช้ AI หรือแหล่งตัวอย่างภายนอกทำได้เมื่อผู้สอนอนุญาต แต่ต้องเปิดเผยแหล่งอ้างอิงและอธิบายส่วนที่นักศึกษาปรับ/เข้าใจด้วยตนเอง
+
+อ่านรายละเอียดที่ [คู่มือการส่งงาน](./docs/submission-guide.md) และ [แนวปฏิบัติด้านความซื่อสัตย์ทางวิชาการและ AI](./docs/academic-integrity-ai.md)
+
+## โครงสร้าง Repository
+
+```text
+ENGSE203-Labs-2569/
+├── README.md
+├── docs/
+├── templates/
+├── labs/
+│   ├── week-01-developer-environment-git-github/
+│   ├── week-02-modern-javascript/
+│   ├── ...
+│   └── week-18-final/
+└── .github/
+```
 
 ---
 
-## 🎯 **CLO Assessment Mapping Detail**
-
-### **Course Learning Outcomes (CLOs) Assessment Matrix**
-
-| CLO | Description | Midterm Assessment | Final Assessment | Lab Assessments | Weight |
-|-----|-------------|-------------------|------------------|-----------------|---------|
-| **CLO1** | อธิบายหลักการและสถาปัตยกรรมของการพัฒนาซอฟต์แวร์แบบ Frontend และ Backend | Architecture documentation, Code structure analysis | System design documentation, Technical presentation | Labs 1,6 and Task#1 | 15% |
-| **CLO2** | พัฒนาแอปพลิเคชันแบบ Full-stack โดยใช้เทคโนโลยีและเฟรมเวิร์กสมัยใหม่ | Working full-stack application, Technology integration | Complete professional application, Advanced features | Labs 2-11 | 35% |
-| **CLO3** | สร้างแอปพลิเคชันแบบ Cross-platform สำหรับอุปกรณ์หลากหลายแพลตฟอร์ม | Responsive design implementation | Multi-platform deployment, PWA features | Lab 9 | 15% |
-| **CLO4** | ออกแบบและพัฒนา User Interface ที่ตอบสนองและเป็นมิตรกับผู้ใช้ | UI/UX design quality, User experience | Professional design standards, Accessibility | Labs 2,4,5 | 15% |
-| **CLO5** | ประยุกต์ใช้เทคนิคการทดสอบซอฟต์แวร์และเครื่องมือพัฒนาต่างๆ | Testing implementation, Development tools usage | Comprehensive testing strategy, CI/CD pipeline | Labs 10,11 | 10% |
-| **CLO6** | ใช้ระบบควบคุมเวอร์ชันในการจัดการโค้ดและการทำงานเป็นทีม | Git workflow, Documentation quality | Team collaboration, Version control best practices | Task#1, Task#2, Final Project | 10% |
-
-### **Assessment Methods by CLO**
-
-#### **CLO1: Architecture Understanding**
-**Assessment Methods:**
-- 📋 **System Design Documents**: Architecture diagrams and explanations
-- 🎤 **Technical Presentations**: Explaining design decisions
-- 💻 **Code Structure Analysis**: Evaluation of code organization
-- 📝 **Written Reflections**: Understanding of concepts
-
-**Rubric Criteria:**
-- **Excellent (4)**: Demonstrates deep understanding of full-stack architecture
-- **Good (3)**: Shows good grasp of frontend/backend separation
-- **Satisfactory (2)**: Basic understanding with minor gaps
-- **Needs Improvement (1)**: Limited understanding of architectural concepts
-
-#### **CLO2: Full-Stack Development**
-**Assessment Methods:**
-- 🚀 **Working Applications**: Functional full-stack implementations
-- 🔧 **Feature Completeness**: All required functionality working
-- 🔗 **Integration Quality**: Seamless frontend-backend communication
-- 📊 **Code Quality**: Clean, maintainable, well-structured code
-
-**Rubric Criteria:**
-- **Excellent (4)**: Professional-quality full-stack application
-- **Good (3)**: Well-implemented app with minor issues
-- **Satisfactory (2)**: Basic functionality working correctly
-- **Needs Improvement (1)**: Limited or non-functional implementation
-
-#### **CLO3: Cross-Platform Development**
-**Assessment Methods:**
-- 📱 **Responsive Design**: Works across all device types
-- 🌐 **PWA Implementation**: Progressive Web App features
-- 🔄 **Platform Testing**: Verified functionality on multiple platforms
-- 📊 **Performance Analysis**: Optimization for different devices
-
-**Rubric Criteria:**
-- **Excellent (4)**: Perfect cross-platform functionality and performance
-- **Good (3)**: Good responsiveness with minor platform issues
-- **Satisfactory (2)**: Basic responsive design working
-- **Needs Improvement (1)**: Limited or poor cross-platform support
-
-#### **CLO4: UI/UX Design**
-**Assessment Methods:**
-- 🎨 **Visual Design Quality**: Aesthetic and professional appearance
-- 🤝 **User Experience**: Intuitive navigation and workflows
-- ♿ **Accessibility**: WCAG compliance and inclusive design
-- 📱 **Responsive Layout**: Effective design across screen sizes
-
-**Rubric Criteria:**
-- **Excellent (4)**: Professional, accessible, highly usable design
-- **Good (3)**: Good design with minor usability issues
-- **Satisfactory (2)**: Acceptable design that serves its purpose
-- **Needs Improvement (1)**: Poor design hindering user experience
-
-#### **CLO5: Testing & Development Tools**
-**Assessment Methods:**
-- 🧪 **Test Coverage**: Comprehensive unit and integration tests
-- 🔧 **Tool Usage**: Effective use of development tools
-- 📊 **Quality Metrics**: Code quality and performance measurements
-- 🚀 **CI/CD Implementation**: Automated testing and deployment
-
-**Rubric Criteria:**
-- **Excellent (4)**: Comprehensive testing strategy with high coverage
-- **Good (3)**: Good testing implementation with most scenarios covered
-- **Satisfactory (2)**: Basic testing with core functionality covered
-- **Needs Improvement (1)**: Limited or ineffective testing approach
-
-#### **CLO6: Version Control & Collaboration**
-**Assessment Methods:**
-- 📊 **Git Workflow**: Proper branching, merging, and commit practices
-- 🤝 **Team Collaboration**: Effective teamwork and communication
-- 📝 **Documentation**: Clear, comprehensive project documentation
-- 👀 **Code Review**: Quality of peer review and feedback
-
-**Rubric Criteria:**
-- **Excellent (4)**: Exemplary Git practices and team collaboration
-- **Good (3)**: Good version control with effective teamwork
-- **Satisfactory (2)**: Basic Git usage with adequate collaboration
-- **Needs Improvement (1)**: Poor version control or team coordination
-
----
-
-## 📚 **Learning Resources**
-
-### **Official Documentation**
-- [MDN Web Docs](https://developer.mozilla.org/) - Web technologies reference
-- [React Documentation](https://reactjs.org/docs/) - React.js official guide
-- [Node.js Documentation](https://nodejs.org/docs/) - Node.js API reference
-- [MongoDB Manual](https://docs.mongodb.com/) - MongoDB official documentation
-
-### **Recommended Books**
-- 📖 **"You Don't Know JS" series** by Kyle Simpson
-- 📖 **"Eloquent JavaScript"** by Marijn Haverbeke
-- 📖 **"React: The Complete Guide"** by Maximilian Schwarzmüller
-- 📖 **"Node.js Design Patterns"** by Mario Casciaro
-
-### **Online Platforms**
-- 🎓 [freeCodeCamp](https://freecodecamp.org/) - Free coding bootcamp
-- 🎥 [Traversy Media](https://www.youtube.com/user/TechGuyWeb) - Web development tutorials
-- 💻 [Codecademy](https://codecademy.com/) - Interactive coding lessons
-- 🏆 [HackerRank](https://hackerrank.com/) - Coding challenges
-
-### **Community & Support**
-- 💬 [Stack Overflow](https://stackoverflow.com/) - Q&A community
-- 💬 [Reddit - r/webdev](https://reddit.com/r/webdev) - Web development community
-- 💬 [Discord - Reactiflux](https://discord.gg/reactiflux) - React community
-- 💬 [GitHub Discussions](https://github.com/features/discussions) - Project discussions
-
----
-### **Technical Support Infrastructure**
-
-#### **Development Environment Support**
-- 🖥️ **Lab Computers**: Pre-configured development environments
-- ☁️ **Cloud Resources**: Free tier access to AWS, MongoDB Atlas, Vercel
-- 🛠️ **Software Licenses**: Student licenses for professional tools
-- 📡 **Network Resources**: High-speed internet and VPN access
-
-#### **Mentoring & Consultation**
-- 👨‍🏫 **Office Hours**: Regular instructor availability
-- 👩‍💼 **Industry Mentors**: Professional developers as project advisors
-- 👥 **Peer Tutoring**: Advanced students helping struggling classmates
-- 🆘 **Emergency Support**: Weekend and evening technical assistance
-
-### **Quality Assurance Process**
-
-#### **Assessment Standardization**
-- 📊 **Rubric Calibration**: Multiple instructors review sample projects
-- 🔄 **Inter-rater Reliability**: Consistent grading across evaluators
-- 📝 **Feedback Training**: Standardized feedback format and quality
-- 🎯 **Bias Mitigation**: Anonymous review processes where appropriate
-
-#### **Continuous Improvement**
-- 📈 **Student Feedback**: Regular surveys on assessment effectiveness
-- 🔍 **Learning Analytics**: Data-driven assessment refinement
-- 🏆 **Best Practices**: Sharing successful assessment strategies
-- 🔄 **Annual Review**: Yearly assessment method evaluation and updates
-
----
-
-## 🏁 **Conclusion & Success Strategies**
-
-### **Keys to Success in Both Assessments**
-
-#### **Technical Excellence**
-1. **Start Early**: Begin planning and development as soon as projects are announced
-2. **Follow Best Practices**: Use proper coding standards and architectural patterns
-3. **Test Thoroughly**: Implement comprehensive testing strategies
-4. **Document Well**: Create clear, professional documentation
-5. **Optimize Performance**: Ensure applications are fast and responsive
-
-#### **Project Management**
-1. **Plan Effectively**: Break down projects into manageable tasks
-2. **Manage Time**: Use project management tools and stick to deadlines
-3. **Communicate Regularly**: Maintain open communication with teammates and instructors
-4. **Adapt Quickly**: Be flexible when facing technical challenges
-5. **Seek Help Early**: Don't wait until problems become critical
-
-#### **Professional Development**
-1. **Build Portfolio**: Use projects as showcase pieces for future opportunities
-2. **Network Actively**: Engage with industry mentors and guest speakers
-3. **Learn Continuously**: Stay updated with latest technologies and trends
-4. **Reflect and Improve**: Regularly assess your progress and areas for growth
-5. **Collaborate Effectively**: Develop strong teamwork and leadership skills
-
-### **Long-term Impact**
-Both the midterm individual project and final capstone project are designed to:
-- **Build Industry-Ready Skills**: Prepare students for immediate employment
-- **Create Portfolio Pieces**: Provide impressive examples for job applications
-- **Develop Professional Networks**: Connect students with industry professionals
-- **Foster Innovation**: Encourage creative problem-solving and entrepreneurship
-- **Establish Foundation**: Create a strong base for advanced computer science studies
-
-### **Final Words**
-These major assessments represent the culmination of your learning journey in ENGSE203. They are designed not just to evaluate your technical skills, but to prepare you for the challenges and opportunities of a career in software engineering. Approach them with dedication, creativity, and professionalism, and they will serve as stepping stones to your future success in the technology industry.
-
-**Good luck, and remember: The goal is not just to complete the assignments, but to become the software engineer you aspire to be!** 🚀
-
----
-
-<div align="center">
-
-### 🌟 **Ready to Build Amazing Things?**
-
-**Your journey to becoming a professional software engineer starts here!**
-
-[📧 Contact Instructors](mailto:thanit@rmutl.ac.th) | [💬 Join Discord](https://discord.gg/engse203) | [📚 Access Resources](https://resources.engse203.edu)
-
----
-
-*Last Updated: July 2025 | Assessment Guidelines Version 3.0*  
-*© 2025 ENGSE203 Course Team. All rights reserved.*
-
-</div>
+**ผู้รับผิดชอบรายวิชา:** อาจารย์ธนิต เกตุแก้ว  
+**กลุ่มเป้าหมาย:** นักศึกษาวิศวกรรมซอฟต์แวร์ ชั้นปีที่ 2  
+**คำแนะนำ:** เริ่มจาก [LAB 01](./labs/week-01-developer-environment-git-github/) และอย่าข้ามการตั้งค่า Git/GitHub เพราะจะเป็นหลักฐานการเรียนรู้ตลอดภาคการศึกษา
