@@ -1,5 +1,7 @@
 # ENGSE203 LAB Repository
 
+> **Repository version:** v2.0.0 — WSL 2 / Ubuntu 24.04 LTS / GitHub SSH setup
+
 > **ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์**  
 > *Computer Programming for Software Engineer*  
 > หลักสูตรวิศวกรรมศาสตรบัณฑิต สาขาวิชาวิศวกรรมซอฟต์แวร์
@@ -49,7 +51,15 @@ git push -u origin main
 | Postman / Thunder Client | ทดสอบ RESTful API | ใช้ตาม LAB ที่กำหนด |
 | SQLite / MongoDB tools | ตรวจสอบและจัดการฐานข้อมูล | ใช้ตามประเภทฐานข้อมูลของ LAB |
 
-รายละเอียดการเตรียมเครื่องทั้ง iMac M1/macOS และ Windows ดูที่ [คู่มือ Cross-platform Setup](./docs/cross-platform-setup.md)
+## เริ่มต้นตั้งค่าเครื่อง (Repository v2)
+
+ก่อนเริ่ม LAB 01 ให้ทำตามเอกสาร setup ให้ครบตามเครื่องที่ใช้
+
+- **Windows 11 notebook:** [Part 1 — ติดตั้ง WSL 2 + Ubuntu 24.04 LTS](./docs/part-1-wsl2-ubuntu-24.04-windows-11.md) → [Part 2 — โปรแกรม, Node.js, Git/GitHub SSH และ VS Code](./docs/part-2-developer-tools-git-github-vscode.md)
+- **iMac M1/macOS:** [Part 2 — โปรแกรม, Node.js, Git/GitHub SSH และ VS Code](./docs/part-2-developer-tools-git-github-vscode.md)
+- ดูสรุปแบบย่อได้ที่ [คู่มือ Cross-platform Setup](./docs/cross-platform-setup.md)
+
+> **มาตรฐาน Windows ของรายวิชา:** ใช้ VS Code บน Windows เชื่อมเข้า Ubuntu 24.04 LTS ผ่าน Remote - WSL และรัน `node`, `npm`, `git`, `sqlite3` ภายใน Ubuntu WSL เท่านั้น
 
 ## เส้นทาง LAB ตลอดรายวิชา
 
@@ -125,6 +135,9 @@ git push -u origin main
 ENGSE203-Labs-2569/
 ├── README.md
 ├── docs/
+│   ├── part-1-wsl2-ubuntu-24.04-windows-11.md
+│   ├── part-2-developer-tools-git-github-vscode.md
+│   └── cross-platform-setup.md
 ├── templates/
 ├── labs/
 │   ├── week-01-developer-environment-git-github/
@@ -138,4 +151,4 @@ ENGSE203-Labs-2569/
 
 **ผู้รับผิดชอบรายวิชา:** อาจารย์ธนิต เกตุแก้ว  
 **กลุ่มเป้าหมาย:** นักศึกษาวิศวกรรมซอฟต์แวร์ ชั้นปีที่ 2  
-**คำแนะนำ:** เริ่มจาก [LAB 01](./labs/week-01-developer-environment-git-github/) และอย่าข้ามการตั้งค่า Git/GitHub เพราะจะเป็นหลักฐานการเรียนรู้ตลอดภาคการศึกษา
+**คำแนะนำ:** ทำ [เอกสาร Setup v2](./docs/part-2-developer-tools-git-github-vscode.md) ให้ครบก่อน แล้วจึงเริ่ม [LAB 01](./labs/week-01-developer-environment-git-github/) อย่าข้ามการตั้งค่า Git/GitHub ผ่าน SSH เพราะจะเป็นหลักฐานการเรียนรู้ตลอดภาคการศึกษา

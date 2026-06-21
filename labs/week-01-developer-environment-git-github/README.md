@@ -22,7 +22,7 @@
 - บัญชี GitHub ที่ใช้งานได้
 - อินเทอร์เน็ต
 
-> ใช้ iMac M1/macOS ในห้องปฏิบัติการ หรือ notebook Windows ของตนเองได้ โดยดู [คู่มือ Cross-platform Setup](../../docs/cross-platform-setup.md)
+> ใช้ iMac M1/macOS ในห้องปฏิบัติการ หรือ notebook Windows ของตนเองได้ โดยทำ [คู่มือ Setup v2](../../docs/part-2-developer-tools-git-github-vscode.md) ให้ครบก่อน สำหรับ Windows ให้ใช้ Ubuntu 24.04 LTS บน WSL 2 ตาม [Part 1](../../docs/part-1-wsl2-ubuntu-24.04-windows-11.md)
 
 ---
 
@@ -40,21 +40,38 @@ git --version
 
 ### จุดที่ macOS และ Windows ต่างกัน
 
-| รายการ | iMac M1 / macOS | Windows notebook | แนวปฏิบัติร่วม |
+| รายการ | iMac M1 / macOS | Windows 11 notebook | แนวปฏิบัติร่วม |
 |---|---|---|---|
-| Terminal | VS Code Terminal (zsh) | VS Code Terminal (PowerShell) | ใช้ VS Code Terminal เป็นหลัก |
-| โฟลเดอร์งาน | `~/Documents/ENGSE203` | `C:\Users\<username>\Documents\ENGSE203` | ตั้งชื่อโฟลเดอร์ด้วยภาษาอังกฤษ |
-| เปิดโฟลเดอร์ด้วย UI | `open .` | `start .` | ไม่จำเป็นถ้าเปิดโฟลเดอร์จาก VS Code แล้ว |
+| Terminal | VS Code Terminal (zsh) | VS Code Remote - WSL Terminal (Bash) | ใช้ VS Code Integrated Terminal เป็นหลัก |
+| Environment | macOS native | Ubuntu 24.04 LTS บน WSL 2 | รัน Node.js, npm และ Git จาก environment นี้ |
+| โฟลเดอร์งาน | `~/Documents/ENGSE203` | `~/workspace/engse203` ใน Ubuntu WSL | ตั้งชื่อ project เป็นภาษาอังกฤษ |
+| การเปิดโฟลเดอร์ | `code .` | รัน `code .` จาก Ubuntu WSL | Windows ต้องเห็น `WSL: Ubuntu-24.04` ที่มุมซ้ายล่าง |
+
+> **Windows:** ห้ามทำ LAB นี้ใน PowerShell หรือโฟลเดอร์ `/mnt/c/...` ให้เปิด Ubuntu WSL แล้วทำตาม [Part 1](../../docs/part-1-wsl2-ubuntu-24.04-windows-11.md) และ [Part 2](../../docs/part-2-developer-tools-git-github-vscode.md) ก่อน
 
 ---
 
 ## ขั้นตอนที่ 2 — สร้างโครงสร้างโครงงาน
 
-สร้างพื้นที่ทำงานของรายวิชา แล้วสร้างโครงงาน LAB 1 ด้วยคำสั่งนี้
+สร้างพื้นที่ทำงานของรายวิชา แล้วสร้างโครงงาน LAB 1
+
+**macOS / iMac M1**
 
 ```bash
 mkdir -p ~/Documents/ENGSE203
 cd ~/Documents/ENGSE203
+```
+
+**Windows 11 + Ubuntu WSL**
+
+```bash
+mkdir -p ~/workspace/engse203
+cd ~/workspace/engse203
+```
+
+จากนั้น ใช้คำสั่งร่วมกันทั้งสองระบบ
+
+```bash
 mkdir engse203-lab01
 cd engse203-lab01
 npm init -y
@@ -62,7 +79,7 @@ mkdir src
 code .
 ```
 
-> บน Windows ให้สร้าง/เปิดโฟลเดอร์ `Documents\ENGSE203` ด้วย File Explorer หรือ VS Code ก่อน แล้วใช้คำสั่งตั้งแต่ `mkdir engse203-lab01` เป็นต้นไปใน VS Code Terminal ได้
+> Windows students ต้องรันคำสั่งนี้ใน Ubuntu WSL terminal เท่านั้น และหลัง `code .` ให้ตรวจว่ามุมซ้ายล่างของ VS Code แสดง `WSL: Ubuntu-24.04`
 
 โครงสร้างขั้นต่ำที่ต้องได้คือ
 
@@ -127,7 +144,7 @@ engse203-lab01-<student-id>
 ```
 
 3. เลือกสร้าง repository ว่าง **ไม่ต้องสร้าง README จากหน้า GitHub**
-4. คัดลอก repository URL แล้วรันคำสั่งด้านล่างภายในโฟลเดอร์ `engse203-lab01`
+4. กดปุ่ม **Code → SSH** แล้วคัดลอก SSH repository URL จาก GitHub จากนั้นรันคำสั่งด้านล่างภายในโฟลเดอร์ `engse203-lab01`
 
 ```bash
 git config --global user.name "ชื่อภาษาอังกฤษของนักศึกษา"
@@ -137,11 +154,11 @@ git init
 git add .
 git commit -m "feat: initialize ENGSE203 Lab 1"
 git branch -M main
-git remote add origin <repository-url>
+git remote add origin git@github.com:<github-username>/engse203-lab01-<student-id>.git
 git push -u origin main
 ```
 
-หลัง push สำเร็จ ให้เปิดหน้า repository แล้วตรวจว่ามี `src/hello.js`, `package.json` และ `README.md` ครบถ้วน
+หลัง push สำเร็จ ให้เปิดหน้า repository แล้วตรวจว่ามี `src/hello.js`, `package.json` และ `README.md` ครบถ้วน หาก push ไม่ผ่านให้กลับไปตรวจ SSH key ตาม [Part 2](../../docs/part-2-developer-tools-git-github-vscode.md#d-เชื่อม-git-กับ-github-ผ่าน-ssh-key)
 
 ---
 

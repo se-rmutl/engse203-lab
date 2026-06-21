@@ -1,38 +1,49 @@
-# คู่มือเตรียมเครื่องแบบ Cross-platform
+# คู่มือ Cross-platform Setup (Quick Reference)
 
-รายวิชาใช้เครื่อง iMac M1 ในห้องปฏิบัติการ และอนุญาตให้ทำงานต่อบน notebook Windows ของนักศึกษา จึงกำหนดให้ใช้ **Visual Studio Code Integrated Terminal** เป็นหลัก เพื่อลดความแตกต่างของระบบปฏิบัติการ
+รายวิชา ENGSE203 ใช้ iMac M1/macOS ในห้องปฏิบัติการ และอนุญาตให้นักศึกษาพัฒนาต่อบน notebook Windows 11 ได้ โดยกำหนด environment มาตรฐานดังนี้
 
-## พื้นที่เก็บงานแนะนำ
+| เครื่อง | Environment สำหรับพัฒนา | Workspace มาตรฐาน | Terminal ที่ใช้ทำ LAB |
+|---|---|---|---|
+| iMac M1 / macOS | macOS native | `~/Documents/ENGSE203` | zsh ใน VS Code / Terminal.app |
+| Windows 11 | Ubuntu 24.04 LTS บน WSL 2 | `~/workspace/engse203` | Bash ใน VS Code Remote - WSL |
 
-| macOS / iMac M1 | Windows notebook | แนวปฏิบัติร่วม |
-|---|---|---|
-| `~/Documents/ENGSE203` | `C:\Users\<username>\Documents\ENGSE203` | เก็บงานรายวิชาไว้ในโฟลเดอร์เดียวและตั้งชื่อสม่ำเสมอ |
+## เอกสารตั้งค่าแบบละเอียด (Repository v2)
 
-## ตรวจสอบเครื่องมือ
+1. **Windows 11:** [Part 1 — ติดตั้งและตั้งค่า WSL 2 + Ubuntu 24.04 LTS](./part-1-wsl2-ubuntu-24.04-windows-11.md)
+2. **macOS และ Windows + WSL:** [Part 2 — โปรแกรมที่ต้องติดตั้ง, Checklist และ Git/GitHub/VS Code ผ่าน SSH](./part-2-developer-tools-git-github-vscode.md)
 
-เปิด Terminal ใน VS Code แล้วรันคำสั่งต่อไปนี้ ซึ่งใช้ได้ทั้ง macOS และ Windows PowerShell
+## คำสั่งตรวจสอบก่อนเริ่ม LAB
+
+### macOS
 
 ```bash
 node -v
 npm -v
 git --version
+sqlite3 --version
+ssh -T git@github.com
 ```
 
-หากคำสั่งใดแสดงว่าไม่พบคำสั่ง ให้หยุดทำ LAB และแจ้งผู้สอน/ผู้ช่วยสอนก่อนเริ่มขั้นตอนถัดไป
+### Windows + WSL
 
-## ความต่างที่ควรรู้
+เปิดโฟลเดอร์ใน VS Code แล้วตรวจว่ามุมซ้ายล่างขึ้น `WSL: Ubuntu-24.04` จากนั้นเปิด terminal ใน VS Code และรัน
 
-| งาน | macOS / iMac M1 | Windows notebook | ข้อแนะนำ |
-|---|---|---|---|
-| Terminal | zsh ผ่าน VS Code หรือ Terminal.app | PowerShell ผ่าน VS Code หรือ Windows Terminal | ใช้ VS Code Integrated Terminal เป็นหลัก |
-| เปิดโฟลเดอร์ด้วย UI | `open .` | `start .` | ใช้ File Explorer ของ VS Code จะลดความต่างได้ |
-| เปิดโฟลเดอร์ใน VS Code | `code .` | `code .` | ต้องเปิดใช้คำสั่ง `code` ใน PATH ก่อน |
-| Path separator | `/` | `\` หรือ `/` | ในคำสั่ง Node/npm มักใช้ `/` ได้ |
-| คำสั่งสร้างโฟลเดอร์ | `mkdir` | `mkdir` | ใช้ได้เหมือนกันใน PowerShell |
+```bash
+pwd
+node -v
+npm -v
+git --version
+sqlite3 --version
+ssh -T git@github.com
+```
 
 ## ข้อควรระวัง
 
-- ใช้ Node.js รุ่น LTS ตามที่ผู้สอนกำหนดในภาคการศึกษานั้น
-- หลังติดตั้ง Node.js หรือ Git ใหม่ ให้ปิดและเปิด Terminal ใหม่ก่อนตรวจสอบเวอร์ชัน
-- อย่าติดตั้ง package แบบ global หากใบงานไม่ได้กำหนด เพราะอาจทำให้เครื่องแต่ละคนมีสภาพแวดล้อมต่างกัน
-- ในงานที่ต้องใช้ path ให้เก็บไฟล์ในโฟลเดอร์ภาษาอังกฤษเพื่อหลีกเลี่ยงปัญหาบางเครื่องมือ
+- Windows students ต้องรัน Node.js, npm, Git และ SQLite **ภายใน Ubuntu WSL** ไม่ใช่ PowerShell
+- เก็บ active project ไว้ใน Linux filesystem (`~/workspace/engse203`) ไม่ใช่ `/mnt/c/...`
+- สร้าง SSH key แยกสำหรับ macOS และ Ubuntu WSL; ห้ามคัดลอกหรือเผยแพร่ private key
+- ใช้ URL GitHub แบบ SSH (`git@github.com:...`) สำหรับ clone/push
+- อย่าติดตั้ง package แบบ global หาก LAB ไม่ได้กำหนด
+- เก็บ path และชื่อไฟล์เป็นภาษาอังกฤษเมื่อเป็น source code เพื่อลดปัญหากับบาง package/tool
+
+**เริ่มต้นจาก:** [Part 2](./part-2-developer-tools-git-github-vscode.md) แล้วจึงทำ [LAB 01](../labs/week-01-developer-environment-git-github/)
