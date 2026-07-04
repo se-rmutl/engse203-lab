@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="ENGSE203 Learning Dashboard — LAB 02 Modern JavaScript"
+    />
+    <title>ENGSE203 Learning Dashboard</title>
+    <script type="module" crossorigin src="/engse203-lab02-solution/assets/index-BudoJqro.js"></script>
+    <link rel="stylesheet" crossorigin href="/engse203-lab02-solution/assets/index-CQv5LPZs.css">
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <p class="eyebrow">ENGSE203 • LAB 02</p>
+        <h1>ENGSE203 Learning Dashboard</h1>
+        <p>Modern JavaScript, async data, and GitHub Pages</p>
+      </header>
+
+      <p id="app-message" class="message" aria-live="polite"></p>
+
+      <section id="stats" class="stats" aria-label="Task summary"></section>
+
+      <section class="controls" aria-label="Task filters">
+        <label>
+          Search
+          <input
+            id="search"
+            type="search"
+            placeholder="Search title or topic"
+            autocomplete="off"
+          />
+        </label>
+
+        <label>
+          Status
+          <select id="status-filter">
+            <option value="all">All</option>
+            <option value="todo">To do</option>
+            <option value="doing">In progress</option>
+            <option value="done">Done</option>
+          </select>
+        </label>
+      </section>
+
+      <section id="task-list" class="task-list" aria-label="Learning tasks"></section>
+    </main>
+
+  </body>
+</html>

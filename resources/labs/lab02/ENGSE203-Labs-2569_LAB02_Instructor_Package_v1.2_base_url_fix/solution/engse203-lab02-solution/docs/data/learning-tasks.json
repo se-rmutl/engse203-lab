@@ -1,0 +1,50 @@
+[
+  {
+    "id": "w01",
+    "week": 1,
+    "title": "Developer Environment & GitHub Repository",
+    "topic": "Node.js, npm, VS Code and Git",
+    "status": "done",
+    "tags": ["Node.js", "Git", "GitHub"]
+  },
+  {
+    "id": "w02",
+    "week": 2,
+    "title": "Modern JavaScript Learning Dashboard",
+    "topic": "ES Modules, async/await and error handling",
+    "status": "doing",
+    "tags": ["JavaScript", "Modules", "Async"]
+  },
+  {
+    "id": "w03",
+    "week": 3,
+    "title": "Responsive Web UI",
+    "topic": "HTML, CSS, form and DOM event",
+    "status": "todo",
+    "tags": ["HTML", "CSS", "UX"]
+  },
+  {
+    "id": "w04",
+    "week": 4,
+    "title": "React Components and State",
+    "topic": "JSX, props, state and hooks",
+    "status": "todo",
+    "tags": ["React", "Component", "State"]
+  },
+  {
+    "id": "w06",
+    "week": 6,
+    "title": "Node.js and Express API",
+    "topic": "Route, middleware and JSON response",
+    "status": "todo",
+    "tags": ["Node.js", "Express", "API"]
+  },
+  {
+    "id": "w10",
+    "week": 10,
+    "title": "SQLite CRUD",
+    "topic": "Relational data model and SQL CRUD",
+    "status": "todo",
+    "tags": ["SQLite", "SQL", "CRUD"]
+  }
+]
