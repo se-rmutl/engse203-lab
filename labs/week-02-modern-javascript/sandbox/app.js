@@ -40,6 +40,46 @@ console.log(\`Active: ${'${activeTasks.length}'} | ${'${totalMinutes}'} min\`);`
 }
 
 loadDashboard(false);`,
+  free: ``,
+};
+
+const exerciseCode = {
+  "basics-try-2": `const studentName = "Aom";
+let score = 8;
+const passScore = 10;
+
+// 1) เพิ่มคะแนนอีก 2 คะแนน
+// 2) สร้าง result ด้วย template literal
+// 3) console.log(result);`,
+  "arrays-try-2": `const tasks = [
+  { title: "ES Modules", status: "todo", minutes: 40 },
+  { title: "async/await", status: "doing", minutes: 60 },
+  { title: "GitHub Pages", status: "done", minutes: 30 },
+];
+
+// 1) หา task ที่ status เป็น "todo"
+// 2) destructuring ค่า title และข้อมูลที่เหลือ
+// 3) สร้าง startedTask ใหม่ด้วย spread โดย status เป็น "doing"
+// 4) console.log(nextTask.status) และ console.log(startedTask.status)`,
+  "async-try-2": `async function showTodoCount() {
+  showState("Loading", "กำลังอ่านข้อมูล...");
+
+  try {
+    const response = await fakeFetchTasks();
+    if (!response.ok) throw new Error(\`HTTP \${response.status}\`);
+
+    const tasks = await response.json();
+    // 1) สร้าง todoCount จาก tasks
+    // 2) แสดง Success พร้อมจำนวน To do
+    // 3) console.log จำนวน To do
+  } catch (error) {
+    showState("Error", \`ไม่สามารถโหลดข้อมูล: \${error.message}\`);
+  } finally {
+    showState("Finally", "ซ่อน loading indicator");
+  }
+}
+
+showTodoCount();`,
 };
 
 const activeFrames = new Map();
@@ -137,6 +177,11 @@ function runCode(id) {
   const editor = document.querySelector(`#editor-${id}`);
   if (!editor) return;
 
+  if (!editor.value.trim()) {
+    writeOutput(id, "ยังไม่มีโค้ด — ลองพิมพ์ console.log('Hello ENGSE203') แล้วกด Run code");
+    return;
+  }
+
   if (activeFrames.has(id)) activeFrames.get(id).remove();
   writeOutput(id, "▶ Running...");
   if (id === "async") clearAsyncTimeline();
@@ -213,8 +258,28 @@ document.querySelectorAll(".reset-code").forEach((button) => {
   button.addEventListener("click", () => {
     const id = button.dataset.target;
     document.querySelector(`#editor-${id}`).value = defaultCode[id];
-    writeOutput(id, "รีเซ็ตโค้ดแล้ว — กด Run code อีกครั้ง");
+    writeOutput(
+      id,
+      id === "free"
+        ? "ล้าง Editor และ Output แล้ว — พิมพ์โค้ดใหม่ได้ทันที"
+        : "รีเซ็ตโค้ดแล้ว — กด Run code อีกครั้ง",
+    );
     if (id === "async") clearAsyncTimeline();
+  });
+});
+
+document.querySelectorAll(".load-try-code").forEach((button) => {
+  button.addEventListener("click", () => {
+    const id = button.dataset.target;
+    const code = exerciseCode[button.dataset.code];
+    const editor = document.querySelector(`#editor-${id}`);
+    if (!editor || !code) return;
+
+    editor.value = code;
+    writeOutput(id, "โหลดโจทย์แล้ว — เติม TODO ให้ครบ แล้วกด Run code");
+    if (id === "async") clearAsyncTimeline();
+    document.querySelector(`[data-playground="${id}"]`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    window.setTimeout(() => editor.focus(), 300);
   });
 });
 

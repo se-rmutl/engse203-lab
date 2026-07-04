@@ -40,7 +40,8 @@
         <a href="#lesson-1">01 · const / let / template</a>
         <a href="#lesson-2">02 · destructuring / array methods</a>
         <a href="#lesson-3">03 · async / await / error states</a>
-        <a href="#challenge">04 · Mini Challenge</a>
+        <a href="#free-editor">04 · Free JS Editor</a>
+        <a href="#challenge">05 · Mini Challenge</a>
         <div class="nav-tip">
           <strong>กติกาในห้อง</strong>
           <span>อย่าพิมพ์ตามอย่างเดียว: ก่อนกด Run ให้คาดเดาผลลัพธ์ 1 ครั้ง</span>
@@ -140,6 +141,33 @@ console.log(message);
 // ENGSE203: เหลืออีก 4 งาน</code></pre>
             </details>
           </article>
+
+          <article class="challenge-card challenge-card-secondary">
+            <div class="challenge-title-row">
+              <span class="challenge-badge">TRY IT 1B</span>
+              <h3>นับคะแนนด้วย <code>let</code> และแสดงผลด้วย Template Literal</h3>
+            </div>
+            <p>
+              สร้างตัวแปร <code>studentName</code>, <code>score</code> และ <code>passScore</code>
+              เพิ่มคะแนนอีก 2 คะแนน แล้วแสดงว่า “ผ่าน” หรือ “ยังไม่ผ่าน” พร้อมคะแนนปัจจุบัน
+            </p>
+            <p class="hint"><b>Hint:</b> ใช้ <code>score += 2</code> และ conditional operator <code>condition ? A : B</code></p>
+            <div class="challenge-actions">
+              <button class="button button-outline load-try-code" type="button" data-target="basics" data-code="basics-try-2">เปิดโจทย์ใน Editor</button>
+            </div>
+            <details>
+              <summary>ดูเฉลยและผลลัพธ์ตัวอย่าง</summary>
+              <pre><code>const studentName = "Aom";
+let score = 8;
+const passScore = 10;
+
+score += 2;
+const result = `${studentName}: ${score >= passScore ? "ผ่าน" : "ยังไม่ผ่าน"} (${score}/${passScore})`;
+console.log(result);
+
+// Aom: ผ่าน (10/10)</code></pre>
+            </details>
+          </article>
           <button class="complete-button" type="button" data-complete="lesson-1">✓ ทำบทเรียนที่ 1 แล้ว</button>
         </section>
 
@@ -234,6 +262,36 @@ console.log(`To do: ${todoTitles.length}`);
 // To do: 1</code></pre>
             </details>
           </article>
+
+          <article class="challenge-card challenge-card-secondary">
+            <div class="challenge-title-row">
+              <span class="challenge-badge">TRY IT 2B</span>
+              <h3>เปลี่ยนสถานะงานด้วย Destructuring และ Spread</h3>
+            </div>
+            <p>
+              หา task ที่มีสถานะ <code>todo</code> จากนั้นสร้าง object ใหม่ชื่อ <code>startedTask</code>
+              ให้มีสถานะ <code>doing</code> โดยไม่แก้ไข <code>tasks</code> หรือ object เดิม
+            </p>
+            <p class="hint"><b>Hint:</b> ใช้ <code>find</code>, destructuring และ <code>{ ...task, status: "doing" }</code></p>
+            <div class="challenge-actions">
+              <button class="button button-outline load-try-code" type="button" data-target="arrays" data-code="arrays-try-2">เปิดโจทย์ใน Editor</button>
+            </div>
+            <details>
+              <summary>ดูเฉลยและผลลัพธ์ตัวอย่าง</summary>
+              <pre><code>const nextTask = tasks.find(({ status }) => status === "todo");
+const { title, ...taskInfo } = nextTask;
+
+const startedTask = {
+  ...taskInfo,
+  title,
+  status: "doing",
+};
+
+console.log(nextTask.status);    // todo
+console.log(startedTask.status); // doing</code></pre>
+              <p class="solution-note">ตัวแปร <code>startedTask</code> เป็น object ใหม่ จึงไม่เปลี่ยนข้อมูลของ <code>nextTask</code> โดยตรง</p>
+            </details>
+          </article>
           <button class="complete-button" type="button" data-complete="lesson-2">✓ ทำบทเรียนที่ 2 แล้ว</button>
         </section>
 
@@ -321,7 +379,76 @@ loadDashboard(false);</textarea>
               <p class="solution-note">แม้ fake API ส่ง response กลับมาได้ แต่ status 503 ทำให้ <code>response.ok</code> เป็น false จึงต้อง throw error เอง</p>
             </details>
           </article>
+
+          <article class="challenge-card challenge-card-secondary">
+            <div class="challenge-title-row">
+              <span class="challenge-badge">TRY IT 3B</span>
+              <h3>นับงาน To do หลังโหลดข้อมูลสำเร็จ</h3>
+            </div>
+            <p>
+              หลังได้ <code>tasks</code> จาก <code>await response.json()</code> ให้สร้าง <code>todoCount</code>
+              แล้วแสดงข้อความ Success ว่ายังเหลืองาน To do กี่รายการ
+            </p>
+            <p class="hint"><b>Hint:</b> ใช้ <code>tasks.filter(({ status }) =&gt; status === "todo").length</code></p>
+            <div class="challenge-actions">
+              <button class="button button-outline load-try-code" type="button" data-target="async" data-code="async-try-2">เปิดโจทย์ใน Editor</button>
+            </div>
+            <details>
+              <summary>ดูเฉลยและผลลัพธ์ตัวอย่าง</summary>
+              <pre><code>const tasks = await response.json();
+const todoCount = tasks.filter(({ status }) =&gt; status === "todo").length;
+
+showState("Success", `ยังเหลืองาน To do ${todoCount} รายการ`);
+console.log(`To do: ${todoCount}`);
+
+// Success: ยังเหลืองาน To do 1 รายการ
+// To do: 1</code></pre>
+            </details>
+          </article>
           <button class="complete-button" type="button" data-complete="lesson-3">✓ ทำบทเรียนที่ 3 แล้ว</button>
+        </section>
+
+        <section class="lesson-section free-editor-section" id="free-editor" aria-labelledby="free-editor-title">
+          <div class="lesson-heading">
+            <div class="lesson-number">04</div>
+            <div>
+              <p class="section-kicker">LIVE CODING SPACE</p>
+              <h2 id="free-editor-title">Free JavaScript Editor</h2>
+              <p>
+                พื้นที่ว่างสำหรับผู้สอนพิมพ์ JavaScript สดระหว่างอธิบาย หรือให้นักศึกษาลองเขียนโค้ดสั้น ๆ
+                แล้วดูผลลัพธ์ใน Console ทันที โค้ดที่รันจะถูกแยกจากหน้า Sandbox เพื่อไม่ให้กระทบส่วนอื่นของบทเรียน
+              </p>
+            </div>
+          </div>
+
+          <div class="playground free-playground" data-playground="free">
+            <div class="playground-header">
+              <div>
+                <span class="playground-label">FREE CODE PAD</span>
+                <h3>พิมพ์ JavaScript ของคุณเอง</h3>
+              </div>
+              <div class="playground-actions">
+                <button class="button button-secondary reset-code" type="button" data-target="free">Reset</button>
+                <button class="button run-code" type="button" data-target="free">▶ Run code</button>
+              </div>
+            </div>
+            <div class="editor-output-grid">
+              <label class="editor-wrap">
+                <span>Editor ว่าง · ลองเริ่มด้วย <code>console.log("Hello ENGSE203")</code></span>
+                <textarea id="editor-free" spellcheck="false" aria-label="Free JavaScript editor" placeholder="// พิมพ์ JavaScript ของคุณที่นี่
+console.log("Hello ENGSE203");"></textarea>
+              </label>
+              <section class="console-wrap" aria-live="polite">
+                <div class="console-title"><span class="console-dot"></span>Console output</div>
+                <pre id="output-free">พิมพ์โค้ดใน Editor แล้วกด Run code</pre>
+              </section>
+            </div>
+            <div class="free-editor-note">
+              <strong>ใช้ได้ทันที:</strong>
+              <code>console.log()</code>, <code>const</code>, <code>let</code>, function, array methods,
+              <code>async/await</code> และ <code>fakeFetchTasks()</code> สำหรับทดลอง async แบบเดียวกับตัวอย่างด้านบน
+            </div>
+          </div>
         </section>
 
         <section class="mini-challenge" id="challenge" aria-labelledby="challenge-title">

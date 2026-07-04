@@ -146,6 +146,14 @@ details { margin-top: .85rem; border-radius: 10px; background: #f3f7fd; padding:
 summary { color: var(--blue-strong); font-weight: 850; cursor: pointer; }
 details pre { margin: .8rem 0 0; overflow-x: auto; border-radius: 10px; padding: .85rem; color: #dfeaff; background: #0c1b39; font-size: .82rem; line-height: 1.5; }
 .solution-note { margin: .85rem 0 0 !important; font-size: .9rem; }
+.challenge-card-secondary { border-style: dashed; background: #fcfdff; }
+.challenge-actions { margin-top: .85rem; }
+.button-outline { color: #1e56a4; background: #fff; border: 1px solid #8fb8f8; }
+.button-outline:hover { color: #fff; background: #1e56a4; }
+.free-editor-section { padding-top: 4.4rem; }
+.free-playground textarea { min-height: 315px; }
+.free-editor-note { padding: .8rem 1rem; color: #395678; background: #fbfdff; border-top: 1px solid var(--line); font-size: .9rem; }
+.free-editor-note code { margin-inline: .08rem; }
 .complete-button { margin-top: 1rem; border: 1px solid #85b2f6; border-radius: 11px; padding: .63rem .8rem; color: #1b4f99; background: #eaf3ff; font-weight: 850; }
 .complete-button.is-complete { color: var(--mint-ink); border-color: #75d09d; background: var(--mint); }
 
