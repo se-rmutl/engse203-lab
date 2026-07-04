@@ -10,6 +10,18 @@
 
 ---
 
+## 0. Classroom Sandbox — ทำพร้อมผู้สอน
+
+ก่อนเริ่มทำ LAB ให้นักศึกษาเปิด Sandbox เพื่อทดลองแนวคิดสำคัญในสัปดาห์นี้แบบแก้โค้ดและดูผลลัพธ์ได้ทันที
+
+- [เปิด Modern JavaScript Classroom Sandbox (source)](./sandbox/index.html)
+- GitHub Pages ของรายวิชา: `https://se-rmutl.github.io/engse203/labs/week-02-modern-javascript/sandbox/`
+- เนื้อหา: `const/let`, template literal, destructuring, spread, `map/filter/reduce`, `async/await`, `response.ok`, `try/catch/finally`
+
+> ลำดับที่แนะนำ: ทำตัวอย่าง → กด Run code → ทำโจทย์ Try It → เปิดเฉลย → เริ่มพัฒนาไฟล์ใน `starter/src/`
+
+---
+
 ## 1. เป้าหมายของ LAB
 
 เมื่อทำ LAB 02 เสร็จ นักศึกษาจะสามารถ

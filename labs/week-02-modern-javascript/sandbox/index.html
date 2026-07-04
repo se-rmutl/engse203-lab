@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="ENGSE203 Week 02 Modern JavaScript Classroom Sandbox for live coding and guided practice"
+    />
+    <title>ENGSE203 | Modern JavaScript Classroom Sandbox</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#lesson-1">ข้ามไปยังบทเรียน</a>
+
+    <header class="site-header">
+      <div class="page-shell header-layout">
+        <div>
+          <p class="eyebrow">ENGSE203 · WEEK 02 · LIVE CODING</p>
+          <h1>Modern JavaScript<br /><span>Classroom Sandbox</span></h1>
+          <p class="header-lead">
+            พิมพ์ตามผู้สอน → กด Run → อ่านผลลัพธ์ → ปรับโค้ดด้วยตนเอง
+            เพื่อเชื่อมแนวคิด ES6+ เข้ากับการสร้าง Learning Dashboard
+          </p>
+        </div>
+        <aside class="progress-card" aria-label="ความคืบหน้ากิจกรรม">
+          <span class="progress-label">Lesson progress</span>
+          <strong id="progress-count">0 / 3</strong>
+          <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
+          <button class="button button-secondary button-small" id="reset-progress" type="button">
+            รีเซ็ตความคืบหน้า
+          </button>
+        </aside>
+      </div>
+    </header>
+
+    <main class="page-shell page-layout">
+      <aside class="lesson-nav" aria-label="สารบัญบทเรียน">
+        <p class="nav-title">ทำตามลำดับนี้</p>
+        <a href="#lesson-1">01 · const / let / template</a>
+        <a href="#lesson-2">02 · destructuring / array methods</a>
+        <a href="#lesson-3">03 · async / await / error states</a>
+        <a href="#challenge">04 · Mini Challenge</a>
+        <div class="nav-tip">
+          <strong>กติกาในห้อง</strong>
+          <span>อย่าพิมพ์ตามอย่างเดียว: ก่อนกด Run ให้คาดเดาผลลัพธ์ 1 ครั้ง</span>
+        </div>
+      </aside>
+
+      <div class="lesson-content">
+        <section class="how-to card-panel" aria-labelledby="how-to-title">
+          <div>
+            <p class="section-kicker">เริ่มต้นใน 3 นาที</p>
+            <h2 id="how-to-title">วิธีใช้ Sandbox ระหว่างสอน</h2>
+          </div>
+          <ol class="steps-inline">
+            <li><span>1</span>อ่าน “ทำไมต้องใช้”</li>
+            <li><span>2</span>แก้/พิมพ์โค้ดตามตัวอย่าง</li>
+            <li><span>3</span>กด <b>Run code</b> และอ่าน Console</li>
+            <li><span>4</span>ทำโจทย์ก่อนเปิดเฉลย</li>
+          </ol>
+        </section>
+
+        <section class="lesson-section" id="lesson-1" aria-labelledby="lesson-1-title">
+          <div class="lesson-heading">
+            <div class="lesson-number">01</div>
+            <div>
+              <p class="section-kicker">Modern JavaScript Essentials</p>
+              <h2 id="lesson-1-title">const / let และ Template Literal</h2>
+              <p>
+                กำหนดตัวแปรให้สื่อความหมายชัดเจน ใช้ <code>const</code> เป็นค่าเริ่มต้น
+                และใช้ <code>let</code> เฉพาะค่าที่ต้องเปลี่ยนจริง ๆ
+              </p>
+            </div>
+          </div>
+
+          <div class="concept-grid two-columns">
+            <article class="concept-card">
+              <h3>ใช้เมื่อ</h3>
+              <p><code>const</code> สำหรับข้อมูลที่ไม่ reassignment, <code>let</code> สำหรับตัวนับหรือ state ที่เปลี่ยนค่า</p>
+            </article>
+            <article class="concept-card">
+              <h3>ผลลัพธ์ต่อคุณภาพโค้ด</h3>
+              <p>ลดการใช้ <code>var</code>, ลดความสับสนเรื่อง scope และอ่านข้อความสถานะได้ง่ายด้วย backtick</p>
+            </article>
+          </div>
+
+          <div class="playground" data-playground="basics">
+            <div class="playground-header">
+              <div>
+                <span class="playground-label">LIVE EXAMPLE A</span>
+                <h3>ประกาศสถานะของ Lab</h3>
+              </div>
+              <div class="playground-actions">
+                <button class="button button-secondary reset-code" type="button" data-target="basics">Reset</button>
+                <button class="button run-code" type="button" data-target="basics">▶ Run code</button>
+              </div>
+            </div>
+            <div class="editor-output-grid">
+              <label class="editor-wrap">
+                <span>แก้ไขโค้ดได้ตรงนี้</span>
+                <textarea id="editor-basics" spellcheck="false" aria-label="โค้ดตัวอย่าง const let template literal">const course = "ENGSE203";
+const week = 2;
+let completedTasks = 1;
+
+completedTasks += 1;
+
+const message = `${course} · Week ${week}\nทำเสร็จแล้ว ${completedTasks} งาน`;
+console.log(message);</textarea>
+              </label>
+              <section class="console-wrap" aria-live="polite">
+                <div class="console-title"><span class="console-dot"></span>Console output</div>
+                <pre id="output-basics">กด Run code เพื่อดูผลลัพธ์</pre>
+              </section>
+            </div>
+            <div class="expected-output">
+              <strong>คาดว่าจะแสดง</strong>
+              <code>ENGSE203 · Week 2<br />ทำเสร็จแล้ว 2 งาน</code>
+            </div>
+          </div>
+
+          <article class="challenge-card">
+            <div class="challenge-title-row">
+              <span class="challenge-badge">TRY IT 1</span>
+              <h3>ทำข้อความสรุปของตนเอง</h3>
+            </div>
+            <p>
+              เปลี่ยนชื่อวิชาเป็นชื่อที่ต้องการ กำหนด <code>totalTasks</code> และ <code>completedTasks</code>
+              แล้วพิมพ์ข้อความ <code>เหลืออีก X งาน</code> ด้วย template literal
+            </p>
+            <p class="hint"><b>Hint:</b> ใช้ <code>totalTasks - completedTasks</code> ภายใน <code>${...}</code></p>
+            <details>
+              <summary>ดูเฉลยและผลลัพธ์ตัวอย่าง</summary>
+              <pre><code>const course = "ENGSE203";
+const totalTasks = 6;
+const completedTasks = 2;
+const message = `${course}: เหลืออีก ${totalTasks - completedTasks} งาน`;
+console.log(message);
+
+// ENGSE203: เหลืออีก 4 งาน</code></pre>
+            </details>
+          </article>
+          <button class="complete-button" type="button" data-complete="lesson-1">✓ ทำบทเรียนที่ 1 แล้ว</button>
+        </section>
+
+        <section class="lesson-section" id="lesson-2" aria-labelledby="lesson-2-title">
+          <div class="lesson-heading">
+            <div class="lesson-number">02</div>
+            <div>
+              <p class="section-kicker">Transform data without mutating it</p>
+              <h2 id="lesson-2-title">Destructuring, Spread และ map / filter / reduce</h2>
+              <p>
+                Dashboard ไม่ควรแก้ข้อมูลต้นฉบับโดยไม่จำเป็น เราจึงเลือกข้อมูล แปลงข้อมูล
+                และสรุปข้อมูลด้วย array methods ที่อ่านเป็นขั้นตอน
+              </p>
+            </div>
+          </div>
+
+          <div class="concept-table-wrap" role="region" aria-label="สรุปแนวคิด Modern JavaScript" tabindex="0">
+            <table class="concept-table">
+              <thead>
+                <tr><th>แนวคิด</th><th>ใช้เมื่อ</th><th>ผลต่อคุณภาพโค้ด</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Destructuring</td><td>ดึงค่าจาก object หรือ array</td><td>เข้าถึง property ชัดเจน ไม่ต้องเขียนซ้ำ</td></tr>
+                <tr><td>Spread</td><td>คัดลอก/ต่อยอดข้อมูล</td><td>สร้างข้อมูลใหม่โดยไม่แก้ object/array เดิม</td></tr>
+                <tr><td>map / filter / reduce</td><td>แปลง คัดเลือก สรุปข้อมูล</td><td>ลด loop ที่ยาวและทดสอบตรรกะได้ง่าย</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="playground" data-playground="arrays">
+            <div class="playground-header">
+              <div>
+                <span class="playground-label">LIVE EXAMPLE B</span>
+                <h3>สร้างรายการ active tasks และสรุปเวลา</h3>
+              </div>
+              <div class="playground-actions">
+                <button class="button button-secondary reset-code" type="button" data-target="arrays">Reset</button>
+                <button class="button run-code" type="button" data-target="arrays">▶ Run code</button>
+              </div>
+            </div>
+            <div class="editor-output-grid">
+              <label class="editor-wrap">
+                <span>แก้ไขโค้ดได้ตรงนี้</span>
+                <textarea id="editor-arrays" spellcheck="false" aria-label="โค้ดตัวอย่าง destructuring spread map filter reduce">const tasks = [
+  { title: "ES Modules", status: "todo", minutes: 40 },
+  { title: "async/await", status: "doing", minutes: 60 },
+  { title: "GitHub Pages", status: "done", minutes: 30 },
+];
+
+const activeTasks = tasks
+  .filter(({ status }) => status !== "done")
+  .map(({ title, ...task }) => ({ ...task, title: title.trim() }));
+
+const totalMinutes = activeTasks
+  .reduce((sum, { minutes }) => sum + minutes, 0);
+
+console.log(activeTasks);
+console.log(`Active: ${activeTasks.length} | ${totalMinutes} min`);</textarea>
+              </label>
+              <section class="console-wrap" aria-live="polite">
+                <div class="console-title"><span class="console-dot"></span>Console output</div>
+                <pre id="output-arrays">กด Run code เพื่อดูผลลัพธ์</pre>
+              </section>
+            </div>
+            <div class="expected-output">
+              <strong>คาดว่าจะแสดง</strong>
+              <code>รายการ ES Modules และ async/await<br />Active: 2 | 100 min</code>
+            </div>
+          </div>
+
+          <article class="challenge-card">
+            <div class="challenge-title-row">
+              <span class="challenge-badge">TRY IT 2</span>
+              <h3>สรุปเฉพาะงานที่ยังไม่เสร็จ</h3>
+            </div>
+            <p>
+              จากตัวแปร <code>tasks</code> ด้านบน ให้สร้าง <code>todoTitles</code>
+              ซึ่งเป็น array ของชื่อ task ที่มีสถานะ <code>todo</code> เท่านั้น
+              จากนั้นแสดงข้อความจำนวนรายการ
+            </p>
+            <p class="hint"><b>Hint:</b> ใช้ <code>filter</code> แล้วต่อด้วย <code>map</code></p>
+            <details>
+              <summary>ดูเฉลยและผลลัพธ์ตัวอย่าง</summary>
+              <pre><code>const todoTitles = tasks
+  .filter(({ status }) => status === "todo")
+  .map(({ title }) => title);
+
+console.log(todoTitles);
+console.log(`To do: ${todoTitles.length}`);
+
+// ["ES Modules"]
+// To do: 1</code></pre>
+            </details>
+          </article>
+          <button class="complete-button" type="button" data-complete="lesson-2">✓ ทำบทเรียนที่ 2 แล้ว</button>
+        </section>
+
+        <section class="lesson-section" id="lesson-3" aria-labelledby="lesson-3-title">
+          <div class="lesson-heading">
+            <div class="lesson-number">03</div>
+            <div>
+              <p class="section-kicker">Make the UI explain what is happening</p>
+              <h2 id="lesson-3-title">Async/Await และ Error Handling</h2>
+              <p>
+                การโหลด JSON หรือ API อาจช้า ล้มเหลว หรือได้ HTTP status ที่ไม่สำเร็จ
+                หน้าที่ของโปรแกรมคือสื่อสารสถานะให้ผู้ใช้เข้าใจ ไม่ปล่อยให้หน้าเว็บว่าง
+              </p>
+            </div>
+          </div>
+
+          <div class="state-grid" aria-label="สถานะของหน้าจอขณะโหลดข้อมูล">
+            <article><span class="state-pill loading">Loading</span><p>เริ่มโหลดข้อมูลและยังไม่มีผลลัพธ์</p></article>
+            <article><span class="state-pill success">Success</span><p>ได้ข้อมูลและตรวจ <code>response.ok</code> ผ่าน</p></article>
+            <article><span class="state-pill error">Error</span><p>คำขอล้มเหลวหรือ <code>response.ok</code> เป็น false</p></article>
+            <article><span class="state-pill finally">Finally</span><p>ทำงานหลัง try/catch เสมอ เช่น ซ่อน loading</p></article>
+          </div>
+
+          <div class="playground" data-playground="async">
+            <div class="playground-header">
+              <div>
+                <span class="playground-label">LIVE EXAMPLE C</span>
+                <h3>โหลดข้อมูลด้วย fake API ที่ตอบสำเร็จ</h3>
+              </div>
+              <div class="playground-actions">
+                <button class="button button-secondary reset-code" type="button" data-target="async">Reset</button>
+                <button class="button run-code" type="button" data-target="async">▶ Run code</button>
+              </div>
+            </div>
+            <div class="editor-output-grid">
+              <label class="editor-wrap">
+                <span>แก้ไขโค้ดได้ตรงนี้ · เปลี่ยน false เป็น true เพื่อทดลอง Error</span>
+                <textarea id="editor-async" spellcheck="false" aria-label="โค้ดตัวอย่าง async await error handling">async function loadDashboard(shouldFail = false) {
+  showState("Loading", "กำลังโหลด learning tasks...");
+
+  try {
+    const response = await fakeFetchTasks({ shouldFail });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const tasks = await response.json();
+    showState("Success", `โหลดข้อมูล ${tasks.length} รายการแล้ว`);
+    console.log(tasks.map(({ title }) => title));
+  } catch (error) {
+    showState("Error", `ไม่สามารถโหลดข้อมูล: ${error.message}`);
+  } finally {
+    showState("Finally", "ซ่อน loading indicator");
+  }
+}
+
+loadDashboard(false);</textarea>
+              </label>
+              <section class="console-wrap" aria-live="polite">
+                <div class="console-title"><span class="console-dot"></span>Console output</div>
+                <pre id="output-async">กด Run code เพื่อดูผลลัพธ์</pre>
+              </section>
+            </div>
+            <div class="async-timeline" aria-live="polite" aria-label="ลำดับสถานะจากโค้ด async">
+              <strong>UI state timeline</strong>
+              <div id="async-state-log" class="state-log"><span class="empty-state">เมื่อ Run code ระบบจะแสดงลำดับ Loading → Success/Error → Finally</span></div>
+            </div>
+          </div>
+
+          <article class="challenge-card">
+            <div class="challenge-title-row">
+              <span class="challenge-badge">TRY IT 3</span>
+              <h3>ทดสอบความผิดพลาดแบบที่ Dashboard ต้องรองรับ</h3>
+            </div>
+            <p>
+              เปลี่ยนบรรทัดสุดท้ายเป็น <code>loadDashboard(true)</code> แล้วกด Run
+              สังเกตว่าบรรทัด <code>if (!response.ok)</code> ช่วยให้โปรแกรมเข้าสู่ <code>catch</code> ได้อย่างไร
+            </p>
+            <details>
+              <summary>ดูเฉลยและผลลัพธ์ตัวอย่าง</summary>
+              <pre><code>loadDashboard(true);
+
+// UI state timeline
+// Loading: กำลังโหลด learning tasks...
+// Error: ไม่สามารถโหลดข้อมูล: HTTP 503
+// Finally: ซ่อน loading indicator</code></pre>
+              <p class="solution-note">แม้ fake API ส่ง response กลับมาได้ แต่ status 503 ทำให้ <code>response.ok</code> เป็น false จึงต้อง throw error เอง</p>
+            </details>
+          </article>
+          <button class="complete-button" type="button" data-complete="lesson-3">✓ ทำบทเรียนที่ 3 แล้ว</button>
+        </section>
+
+        <section class="mini-challenge" id="challenge" aria-labelledby="challenge-title">
+          <div class="mini-challenge-heading">
+            <div>
+              <p class="section-kicker">BEFORE STARTING LAB 02</p>
+              <h2 id="challenge-title">Mini Challenge: พร้อมสร้าง Dashboard หรือยัง?</h2>
+              <p>ตอบก่อน แล้วค่อยเปิดเฉลยเพื่อทบทวนสิ่งที่ต้องนำไปใช้ใน <code>src/</code></p>
+            </div>
+          </div>
+          <div class="quiz-grid">
+            <article class="quiz-card">
+              <h3>Q1. ข้อมูลที่ต้องเก็บจาก API อยู่ไฟล์ใด?</h3>
+              <button class="quiz-answer" type="button" data-answer="api">เปิดเฉลย</button>
+              <p id="answer-api" hidden><b>api.js</b> — รับผิดชอบ fetch, response.ok และ throw Error</p>
+            </article>
+            <article class="quiz-card">
+              <h3>Q2. Logic สำหรับ search/filter ควรอยู่ไฟล์ใด?</h3>
+              <button class="quiz-answer" type="button" data-answer="utils">เปิดเฉลย</button>
+              <p id="answer-utils" hidden><b>utils.js</b> — เป็น logic ที่ไม่ผูกกับ DOM และทดสอบได้ง่าย</p>
+            </article>
+            <article class="quiz-card">
+              <h3>Q3. หลัง fetch เสร็จต้องตรวจอะไร?</h3>
+              <button class="quiz-answer" type="button" data-answer="ok">เปิดเฉลย</button>
+              <p id="answer-ok" hidden><b>response.ok</b> — เพราะ 404/500 อาจไม่เข้า catch โดยอัตโนมัติ</p>
+            </article>
+          </div>
+          <div class="lab-bridge">
+            <strong>เชื่อมไปยัง LAB 02:</strong>
+            นำแนวคิดใน Sandbox นี้ไปใช้กับ <code>api.js</code>, <code>utils.js</code>, <code>ui.js</code> และ <code>main.js</code>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-shell">
+        <strong>ENGSE203 · Week 02</strong>
+        <span>Modern JavaScript, ES Modules, Async/Await &amp; Error Handling</span>
+      </div>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
