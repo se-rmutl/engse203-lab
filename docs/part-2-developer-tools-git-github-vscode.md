@@ -1,3 +1,6 @@
+> **คู่มือหลักที่อัปเดตล่าสุด:** [Setup Guide v3](./setup/README.md)
+> เอกสารนี้เก็บไว้เพื่ออ้างอิงลำดับเดิมของ Repository v2; นักศึกษาใหม่ให้ใช้คู่มือ v3 เป็นหลัก
+
 # Part 2 — โปรแกรมที่ต้องติดตั้ง, Checklist และ Git/GitHub/VS Code ผ่าน SSH
 
 > ใช้คู่กับ [Part 1 — WSL 2 + Ubuntu 24.04 LTS บน Windows 11](./part-1-wsl2-ubuntu-24.04-windows-11.md)  

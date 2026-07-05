@@ -161,8 +161,8 @@ engse203-lab02-<student-id>/
 > สำหรับ Windows ห้ามรัน Node.js/npm/Git ของ LAB นี้จาก PowerShell หรือจาก `/mnt/c/...` ให้เปิดโฟลเดอร์ผ่าน WSL และตรวจว่ามุมซ้ายล่างของ VS Code แสดง `WSL: Ubuntu-24.04`
 
 อ่านคู่มือเพิ่มเติม:
-- [Part 1 — WSL 2 + Ubuntu 24.04 LTS](../../docs/part-1-wsl2-ubuntu-24.04-windows-11.md)
-- [Part 2 — Developer Tools, GitHub SSH และ VS Code](../../docs/part-2-developer-tools-git-github-vscode.md)
+- [Windows 11 + WSL2 Setup](../../docs/setup/windows-11-wsl2.md)
+- [GitHub SSH + VS Code Setup](../../docs/setup/README.md)
 - [คู่มือการส่งงาน](../../docs/submission-guide.md)
 
 ---
@@ -474,7 +474,7 @@ https://<github-username>.github.io/engse203-lab02-<student-id>/?simulateError=1
 | Deploy แล้ว CSS/JS/JSON ขึ้น 404 | ตรวจชื่อ repository ใน `vite.config.js`, ค่า `base`, build ใหม่ และ commit `docs/` ไป `main` |
 | Browser แจ้ง import error | ตรวจ `<script type="module">` และใช้ relative import เช่น `./utils.js` |
 | GitHub Pages ยังไม่ขึ้น | ตรวจ `Settings → Pages → main /docs`, ตรวจว่า `docs/` มีอยู่ใน `main`, แล้วดู Actions/Pages deployment |
-| `git push` ผ่าน SSH ไม่ได้ | ทดสอบ `ssh -T git@github.com` และกลับไปตรวจ SSH key ตามคู่มือ Part 2 |
+| `git push` ผ่าน SSH ไม่ได้ | ทดสอบ `ssh -T git@github.com` และกลับไปตรวจ SSH key ตาม [GitHub SSH Guide](../../docs/setup/git-github-ssh.md) |
 
 ---
 
