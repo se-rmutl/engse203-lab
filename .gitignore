@@ -29,3 +29,5 @@ Thumbs.db
 *.sqlite3
 *.db
 uploads/
+
+resources
