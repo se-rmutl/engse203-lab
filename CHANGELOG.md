@@ -1,5 +1,14 @@
 # Changelog
 
+## v3.0.0 — Unified Setup Guide: Node.js 22+, GitHub SSH & VS Code
+
+- เพิ่ม `docs/setup/` เป็น Setup Hub แยกเส้นทางชัดเจนสำหรับ macOS และ Windows 11 + WSL2
+- กำหนด baseline ของรายวิชาเป็น Node.js `>=22.12.0`; เพิ่ม `.nvmrc` และ `engines.node` ใน starter ของ LAB 02
+- เพิ่มคู่มือ Git commit identity, SSH key แบบตั้งชื่อไฟล์, GitHub account, multiple accounts และการวิเคราะห์ permission error
+- เพิ่มคู่มือ VS Code: GitHub sign-in, Source Control, Remote - WSL และ extension IDs ที่ใช้ในรายวิชา
+- เพิ่ม `scripts/verify-setup.mjs` และ Verification Checklist สำหรับตรวจ environment และทดสอบ clone/commit/push จริง
+- ปรับ README และ LAB 01–02 ให้ชี้ไปยัง Setup Guide v3
+
 ## v2.0.0 — WSL 2, Development Environment & GitHub SSH Setup
 
 - เพิ่ม **Part 1**: คู่มือติดตั้งและตั้งค่า Windows 11 + WSL 2 + Ubuntu 24.04 LTS

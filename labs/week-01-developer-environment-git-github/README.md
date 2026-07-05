@@ -22,7 +22,7 @@
 - บัญชี GitHub ที่ใช้งานได้
 - อินเทอร์เน็ต
 
-> ใช้ iMac M1/macOS ในห้องปฏิบัติการ หรือ notebook Windows ของตนเองได้ โดยทำ [คู่มือ Setup v2](../../docs/part-2-developer-tools-git-github-vscode.md) ให้ครบก่อน สำหรับ Windows ให้ใช้ Ubuntu 24.04 LTS บน WSL 2 ตาม [Part 1](../../docs/part-1-wsl2-ubuntu-24.04-windows-11.md)
+> ใช้ iMac M1/macOS ในห้องปฏิบัติการ หรือ notebook Windows ของตนเองได้ โดยทำ [Setup Guide v3](../../docs/setup/README.md) ให้ครบก่อน สำหรับ Windows ให้ใช้ Ubuntu 24.04 LTS บน WSL 2 ตาม [Windows 11 + WSL2 Setup](../../docs/setup/windows-11-wsl2.md)
 
 ---
 
@@ -47,7 +47,7 @@ git --version
 | โฟลเดอร์งาน | `~/Documents/ENGSE203` | `~/workspace/engse203` ใน Ubuntu WSL | ตั้งชื่อ project เป็นภาษาอังกฤษ |
 | การเปิดโฟลเดอร์ | `code .` | รัน `code .` จาก Ubuntu WSL | Windows ต้องเห็น `WSL: Ubuntu-24.04` ที่มุมซ้ายล่าง |
 
-> **Windows:** ห้ามทำ LAB นี้ใน PowerShell หรือโฟลเดอร์ `/mnt/c/...` ให้เปิด Ubuntu WSL แล้วทำตาม [Part 1](../../docs/part-1-wsl2-ubuntu-24.04-windows-11.md) และ [Part 2](../../docs/part-2-developer-tools-git-github-vscode.md) ก่อน
+> **Windows:** ห้ามทำ LAB นี้ใน PowerShell หรือโฟลเดอร์ `/mnt/c/...` ให้เปิด Ubuntu WSL แล้วทำตาม [Windows 11 + WSL2 Setup](../../docs/setup/windows-11-wsl2.md) และ [Git + GitHub SSH Guide](../../docs/setup/git-github-ssh.md) ก่อน
 
 ---
 
@@ -158,7 +158,7 @@ git remote add origin git@github.com:<github-username>/engse203-lab01-<student-i
 git push -u origin main
 ```
 
-หลัง push สำเร็จ ให้เปิดหน้า repository แล้วตรวจว่ามี `src/hello.js`, `package.json` และ `README.md` ครบถ้วน หาก push ไม่ผ่านให้กลับไปตรวจ SSH key ตาม [Part 2](../../docs/part-2-developer-tools-git-github-vscode.md#d-เชื่อม-git-กับ-github-ผ่าน-ssh-key)
+หลัง push สำเร็จ ให้เปิดหน้า repository แล้วตรวจว่ามี `src/hello.js`, `package.json` และ `README.md` ครบถ้วน หาก push ไม่ผ่านให้กลับไปตรวจ SSH key ตาม [GitHub SSH Guide](../../docs/setup/git-github-ssh.md)
 
 ---
 
