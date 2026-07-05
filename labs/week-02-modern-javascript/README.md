@@ -14,8 +14,8 @@
 
 ก่อนเริ่มทำ LAB ให้นักศึกษาเปิด Sandbox เพื่อทดลองแนวคิดสำคัญในสัปดาห์นี้แบบแก้โค้ดและดูผลลัพธ์ได้ทันที
 
-- [เปิด Modern JavaScript Classroom Sandbox (source)](./sandbox/)
-- GitHub Pages ของรายวิชา: `https://se-rmutl.github.io/engse203/labs/week-02-modern-javascript/sandbox/`
+- [เปิด Modern JavaScript Classroom Sandbox](./sandbox/)
+- GitHub Pages ของ Sandbox: `https://se-rmutl.github.io/engse203/labs/week-02-modern-javascript/sandbox/`
 - เนื้อหา: `const/let`, template literal, destructuring, spread, `map/filter/reduce`, `async/await`, `response.ok`, `try/catch/finally`
 - มีโจทย์ Try It เพิ่มหัวข้อละ 2 กิจกรรม พร้อมปุ่มเปิด starter code ใน Editor และเฉลย/ผลลัพธ์
 - มี **Free JavaScript Editor** แบบว่าง พร้อมปุ่ม `Run code` / `Reset` และ Console output สำหรับ Live Coding ในชั้นเรียน
