@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ENGSE203 Pre-LAB 3</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <p class="eyebrow">ENGSE203 • PRE-LAB 3</p>
+      <h1>Profile Card Builder</h1>
+      <p>Semantic HTML, Responsive Layout, Event และ Form</p>
+    </div>
+  </header>
+
+  <main class="container page-grid">
+    <section class="panel" aria-labelledby="form-title">
+      <h2 id="form-title">สร้างข้อมูลแนะนำตัว</h2>
+
+      <form id="profile-form" novalidate>
+        <!-- TODO 1: สร้าง field displayName พร้อม label, input, hint และ error -->
+
+        <!-- TODO 2: สร้าง select ชื่อ learningRole -->
+
+        <!-- TODO 3: สร้าง textarea ชื่อ learningGoal -->
+
+        <div class="actions">
+          <button type="submit">ยืนยันข้อมูล</button>
+          <button type="reset" class="button-secondary">เริ่มใหม่</button>
+        </div>
+        <p id="form-status" class="status" role="status"></p>
+      </form>
+    </section>
+
+    <aside class="panel preview-panel" aria-labelledby="preview-title">
+      <h2 id="preview-title">Live Preview</h2>
+      <article class="profile-card" aria-live="polite">
+        <div class="avatar" aria-hidden="true">SE</div>
+        <h3 id="preview-name">ยังไม่ระบุชื่อ</h3>
+        <p id="preview-role">ยังไม่เลือกบทบาท</p>
+        <p id="preview-goal">ยังไม่มีเป้าหมายการเรียนรู้</p>
+      </article>
+    </aside>
+  </main>
+</body>
+</html>

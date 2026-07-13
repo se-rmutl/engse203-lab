@@ -1,0 +1,18 @@
+{
+  "name": "engse203-lab03-campus-service-request",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "node --check src/main.js"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
