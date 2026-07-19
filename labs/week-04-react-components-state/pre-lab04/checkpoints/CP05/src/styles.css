@@ -1,0 +1,29 @@
+*, *::before, *::after { box-sizing: border-box; }
+:root { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #16223a; background: #f3f7fc; }
+body { margin: 0; min-width: 320px; }
+button, input, select { font: inherit; }
+.container { width: min(100% - 2rem, 72rem); margin-inline: auto; }
+.hero { padding: 2rem 0; color: white; background: linear-gradient(135deg, #0b2b57, #1768c4); }
+.hero h1 { margin: .25rem 0; font-size: clamp(2rem, 7vw, 4rem); }
+.eyebrow { margin: 0; font-size: .78rem; font-weight: 900; letter-spacing: .12em; }
+.eyebrow.dark { color: #1768c4; }
+.page-content { padding-block: 1rem 3rem; }
+.summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; margin-bottom: 1rem; }
+.summary-card, .panel { padding: 1rem; border: 1px solid #c9d8eb; border-radius: .8rem; background: white; }
+.summary-card { display: flex; justify-content: space-between; }
+.workspace-grid { display: grid; gap: 1rem; }
+.task-list { display: grid; gap: .7rem; margin-top: 1rem; }
+.task-card { display: flex; justify-content: space-between; padding: 1rem; border: 1px solid #c9d8eb; border-radius: .7rem; }
+.badge { border-radius: 999px; padding: .2rem .5rem; background: #e8f1fb; }
+.field { display: grid; gap: .35rem; margin-bottom: .8rem; }
+input, select { width: 100%; padding: .7rem; }
+.error { min-height: 1.1rem; color: #b42318; }
+.filter-bar { display: flex; flex-wrap: wrap; gap: .4rem; }
+.filter-button, .filter-active, form > button, .danger-button { border: 0; border-radius: .55rem; padding: .6rem .8rem; }
+.filter-active, form > button { color: white; background: #1768c4; }
+.danger-button { color: #b42318; background: #feeceb; }
+.empty-state { padding: 1.25rem; border: 2px dashed #c9d8eb; text-align: center; }
+.status { min-height: 1.2rem; }
+
+/* CP06 จึงค่อยเพิ่ม desktop media query, focus-visible และ accessibility polish */
+

@@ -1,0 +1,51 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #17243a;
+  background: #f2f6fb;
+  --navy: #0b2b57;
+  --blue: #1768c4;
+  --surface: #fff;
+  --border: #c8d8eb;
+  --muted: #5f7086;
+  --danger: #b42318;
+}
+
+body { margin: 0; min-width: 320px; }
+button, input, select, textarea { font: inherit; }
+.container { width: min(100% - 2rem, 76rem); margin-inline: auto; }
+.hero { padding: 2rem 0; color: white; background: linear-gradient(135deg, var(--navy), var(--blue)); }
+.hero h1 { margin: .25rem 0; font-size: clamp(2rem, 7vw, 4rem); }
+.eyebrow { margin: 0; font-size: .78rem; font-weight: 900; letter-spacing: .12em; }
+.eyebrow.dark { color: var(--blue); }
+.page-content { padding-block: 1rem 3rem; }
+.summary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin-bottom: 1rem; }
+.summary-card, .panel { padding: 1rem; border: 1px solid var(--border); border-radius: .9rem; background: var(--surface); }
+.summary-card { display: flex; justify-content: space-between; gap: .5rem; }
+.summary-card strong { color: var(--blue); font-size: 1.5rem; }
+.workspace-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; align-items: start; }
+.section-heading { display: flex; flex-direction: column; gap: .75rem; }
+.field { display: grid; gap: .35rem; margin-bottom: .85rem; }
+label, legend { font-weight: 750; }
+input:not([type="radio"]), select, textarea { width: 100%; padding: .72rem; border: 1px solid #91a8c5; border-radius: .6rem; }
+.error { min-height: 1.1rem; color: var(--danger); }
+.status { min-height: 1.2rem; }
+form > button, .filter-active { border: 0; border-radius: .6rem; padding: .65rem .85rem; color: white; background: var(--blue); font-weight: 800; }
+.filter-bar { display: flex; flex-wrap: wrap; gap: .4rem; }
+.filter-button { border: 1px solid var(--border); border-radius: .6rem; padding: .55rem .7rem; color: var(--navy); background: #eef4fb; }
+.request-list { display: grid; gap: .7rem; margin-top: 1rem; }
+.request-card { display: flex; justify-content: space-between; gap: .8rem; padding: 1rem; border: 1px solid var(--border); border-radius: .75rem; background: #f9fbfe; }
+.request-card h3 { margin: .15rem 0; }
+.request-card p { margin: .2rem 0; color: var(--muted); }
+.request-id { font-weight: 800; }
+.request-card button { align-self: start; border: 0; border-radius: .5rem; padding: .5rem .7rem; color: var(--danger); background: #feeceb; }
+
+@media (min-width: 52rem) {
+  .summary-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .workspace-grid { grid-template-columns: minmax(18rem, .78fr) minmax(0, 1.35fr); }
+  .section-heading { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+
+/* TODO LAB4-R12: เพิ่ม focus-visible, aria-invalid และ state/badge styles */
+

@@ -1,5 +1,5 @@
 {
-  "name": "engse203-lab02-learning-dashboard",
+  "name": "engse203-prelab04-starter",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -9,10 +9,16 @@
     "preview": "vite preview",
     "check": "node scripts/check-project.mjs"
   },
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
   "devDependencies": {
-    "vite": "^7.1.7"
+    "@vitejs/plugin-react": "^6.0.3",
+    "vite": "^8.1.5"
   },
   "engines": {
     "node": ">=22.12.0"
   }
 }
+

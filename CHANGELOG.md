@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.1.0 — Week 04 React Guided Practice & LAB 4
+
+- เพิ่ม Pre-LAB 04 แบบ CP00–CP07 รวม 240 นาที สำหรับผู้เริ่ม React
+- เพิ่ม Study Task Board starter, checkpoint snapshots, instructor script และ verified solution
+- เพิ่ม LAB 4 Campus Service Request starter, requirements, grading checklist, verifier และ instructor solution
+- เชื่อม JSX, components, props, state, events, controlled form, list/filter/delete, responsive UI และ GitHub Pages โดยไม่ล้ำ Week 05
+- ปรับ README หลักและ Week 04 hub ให้แยก guided practice ออกจาก independent homework ชัดเจน
+
 ## v3.0.0 — Unified Setup Guide: Node.js 22+, GitHub SSH & VS Code
 
 - เพิ่ม `docs/setup/` เป็น Setup Hub แยกเส้นทางชัดเจนสำหรับ macOS และ Windows 11 + WSL2

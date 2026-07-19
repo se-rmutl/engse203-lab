@@ -10,13 +10,65 @@
 
 ---
 
-## 0. Classroom Sandbox — ทำพร้อมผู้สอน
+## 0. เอกสารพื้นฐาน JavaScript ที่ใช้ตลอด LAB 02
+
+LAB 02 ไม่ได้มุ่งเพียงให้หน้า Dashboard แสดงผลได้ แต่ให้ผู้เรียนฝึกเขียนโค้ดที่ **อ่านง่าย แยกหน้าที่ชัดเจน แก้ไขได้ และรับมือกับข้อมูลจริงได้** เอกสารในโฟลเดอร์ [`docs/`](./docs/) ทั้ง 4 เรื่องจึงเป็นพื้นฐานที่ต้องเชื่อมไปใช้กับโค้ดใน `src/` โดยตรง
+
+> **ลำดับแนะนำ:** อ่านเรื่อง 1 → 2 → 3 → 4 แล้วกลับมาทำ Classroom Sandbox และ Starter Project
+
+### 0.1 Learning Path: จากชื่อที่ดี → ฟังก์ชัน → ข้อมูล → เว็บที่รับมือข้อผิดพลาดได้
+
+```mermaid
+flowchart LR
+    A["1. Variable Naming<br/>ตั้งชื่อให้สื่อความหมาย"] --> B["2. Functions<br/>แยกงานเป็นฟังก์ชัน"]
+    B --> C["3. Destructuring + Array Methods<br/>จัดการข้อมูลจาก JSON"]
+    C --> D["4. Async/Await + Error Handling<br/>โหลดข้อมูลจริงและรับมือปัญหา"]
+    D --> E["LAB 02<br/>Learning Dashboard"]
+```
+
+| ลำดับ | เอกสารพื้นฐาน | สิ่งที่ควรเข้าใจ | นำไปใช้ตรงไหนใน LAB 02 |
+|---:|---|---|---|
+| 1 | [**Variable Naming**](./docs/variable_naming.md) | `camelCase`, `PascalCase`, `SCREAMING_SNAKE_CASE`, การตั้งชื่อที่สื่อความหมาย | ตั้งชื่อ เช่น `learningTasks`, `selectedStatus`, `isLoading`, `fetchLearningTasks()` ในทุกไฟล์ `src/` |
+| 2 | [**Functions and Invocation**](./docs/functions_and_invocation.md) | function declaration, arrow function, parameter, argument, `return`, pure function และ side effect | แยก `filterTasks()`, `getStats()`, `renderTasks()`, `loadDashboard()` ให้แต่ละฟังก์ชันมีหน้าที่ชัดเจน |
+| 3 | [**Destructuring / Array Methods**](./docs/destructuring_array_map_filter_reduce.md) | object/array destructuring, spread, `map()`, `filter()`, `reduce()` และการไม่แก้ข้อมูลต้นฉบับโดยไม่จำเป็น | ใช้กับรายการ task: filter ตามคำค้น/สถานะ, map เพื่อ render card, reduce เพื่อสร้าง summary |
+| 4 | [**Async/Await and Error Handling**](./docs/async-await_and_error-handling.md) | Promise, `fetch`, `async/await`, `response.ok`, `throw`, `try/catch/finally`, loading/success/error UI | พัฒนา `api.js` และ `loadDashboard()` เพื่อโหลด JSON จริงและทดสอบ `?simulateError=1` |
+
+### 0.2 แผนที่การเชื่อมโยง Docs → Modules ของโครงงาน
+
+```mermaid
+flowchart TB
+    N["variable_naming.md"] --> U["utils.js<br/>ชื่อ function / state / property ที่สื่อความหมาย"]
+    F["functions_and_invocation.md"] --> U
+    F --> UI["ui.js<br/>render functions และการเรียกใช้"]
+    A["destructuring_array_map_filter_reduce.md"] --> U
+    A --> UI
+    H["async-await_and_error-handling.md"] --> API["api.js<br/>fetch + response.ok + throw"]
+    H --> M["main.js<br/>loadDashboard + try/catch/finally"]
+    API --> M
+    U --> M
+    UI --> M
+    M --> D["ENGSE203 Learning Dashboard"]
+```
+
+### 0.3 วิธีใช้เอกสารระหว่างทำ LAB
+
+1. **ก่อนเริ่มเขียน:** อ่านเรื่อง Variable Naming และ Functions เพื่อกำหนดชื่อและแบ่งหน้าที่ของโค้ดตั้งแต่ต้น
+2. **เมื่อทำ `utils.js` และ `ui.js`:** เปิดเรื่อง Destructuring / `map()` / `filter()` / `reduce()` เพื่อจัดการ array ของ task โดยไม่แก้ข้อมูลต้นฉบับ
+3. **เมื่อทำ `api.js` และ `main.js`:** เปิดเรื่อง Async/Await และ Error Handling เพื่อทำ `fetch`, ตรวจ `response.ok`, แสดง loading/success/error และใช้ `finally`
+4. **เมื่อ review งานก่อนส่ง:** ตรวจว่า code ทุกส่วนสะท้อนหลักคิดจากทั้ง 4 เอกสาร ไม่ใช่เพียงทำให้ผลลัพธ์บนหน้าจอแสดงได้
+
+> เอกสารทั้ง 4 เรื่องเป็น **คู่มืออ้างอิงระหว่างเขียนโค้ด** นักศึกษาควรเปิดอ่านพร้อม Starter Project และอธิบายได้ว่าตนเองใช้แนวคิดใดใน `api.js`, `utils.js`, `ui.js` และ `main.js`
+
+---
+
+## 0.4 Classroom Sandbox — ทำพร้อมผู้สอน
 
 ก่อนเริ่มทำ LAB ให้นักศึกษาเปิด Sandbox เพื่อทดลองแนวคิดสำคัญในสัปดาห์นี้แบบแก้โค้ดและดูผลลัพธ์ได้ทันที
 
 - [เปิด Modern JavaScript Classroom Sandbox](./sandbox/)
 - GitHub Pages ของ Sandbox: `https://se-rmutl.github.io/engse203/labs/week-02-modern-javascript/sandbox/`
 - เนื้อหา: `const/let`, template literal, destructuring, spread, `map/filter/reduce`, `async/await`, `response.ok`, `try/catch/finally`
+- อ่านควบคู่กับ Docs: [Variable Naming](./docs/variable_naming.md) · [Functions](./docs/functions_and_invocation.md) · [Destructuring & Array Methods](./docs/destructuring_array_map_filter_reduce.md) · [Async/Await & Error Handling](./docs/async-await_and_error-handling.md)
 - มีโจทย์ Try It เพิ่มหัวข้อละ 2 กิจกรรม พร้อมปุ่มเปิด starter code ใน Editor และเฉลย/ผลลัพธ์
 - มี **Free JavaScript Editor** แบบว่าง พร้อมปุ่ม `Run code` / `Reset` และ Console output สำหรับ Live Coding ในชั้นเรียน
 
@@ -109,8 +161,8 @@ engse203-lab02-<student-id>/
 > สำหรับ Windows ห้ามรัน Node.js/npm/Git ของ LAB นี้จาก PowerShell หรือจาก `/mnt/c/...` ให้เปิดโฟลเดอร์ผ่าน WSL และตรวจว่ามุมซ้ายล่างของ VS Code แสดง `WSL: Ubuntu-24.04`
 
 อ่านคู่มือเพิ่มเติม:
-- [Part 1 — WSL 2 + Ubuntu 24.04 LTS](../../docs/part-1-wsl2-ubuntu-24.04-windows-11.md)
-- [Part 2 — Developer Tools, GitHub SSH และ VS Code](../../docs/part-2-developer-tools-git-github-vscode.md)
+- [Windows 11 + WSL2 Setup](../../docs/setup/windows-11-wsl2.md)
+- [GitHub SSH + VS Code Setup](../../docs/setup/README.md)
 - [คู่มือการส่งงาน](../../docs/submission-guide.md)
 
 ---
@@ -210,6 +262,8 @@ const repositoryName = "engse203-lab02-<student-id>";
 
 #### 4.1 `src/api.js`
 
+อ่านประกอบก่อนเริ่ม: [Async/Await และ Error Handling](./docs/async-await_and_error-handling.md) — โดยเฉพาะ `fetch`, `response.ok`, `throw new Error(...)`, `async/await` และ `try/catch/finally`
+
 ต้องมี
 
 - `export async function fetchLearningTasks(...)`
@@ -220,6 +274,8 @@ const repositoryName = "engse203-lab02-<student-id>";
 
 #### 4.2 `src/utils.js`
 
+อ่านประกอบก่อนเริ่ม: [Variable Naming](./docs/variable_naming.md) · [Functions and Invocation](./docs/functions_and_invocation.md) · [Destructuring / Array Methods](./docs/destructuring_array_map_filter_reduce.md)
+
 ต้องมีฟังก์ชันสำหรับ
 
 - แปลงชื่อสถานะเป็นข้อความ
@@ -229,6 +285,8 @@ const repositoryName = "engse203-lab02-<student-id>";
 
 #### 4.3 `src/ui.js`
 
+อ่านประกอบก่อนเริ่ม: [Functions and Invocation](./docs/functions_and_invocation.md) และ [Destructuring / Array Methods](./docs/destructuring_array_map_filter_reduce.md) เพื่อสร้าง render function ที่รับข้อมูลเข้าอย่างชัดเจน
+
 ต้องมีฟังก์ชันสำหรับ
 
 - แสดงข้อความ loading / success / error
@@ -237,6 +295,8 @@ const repositoryName = "engse203-lab02-<student-id>";
 - แสดง empty state เมื่อค้นหา/กรองแล้วไม่พบข้อมูล
 
 #### 4.4 `src/main.js`
+
+อ่านประกอบก่อนเริ่ม: [Functions and Invocation](./docs/functions_and_invocation.md) และ [Async/Await และ Error Handling](./docs/async-await_and_error-handling.md) เพื่อเชื่อม event, state, render และลำดับ async อย่างเป็นระบบ
 
 ต้องมี
 
@@ -381,6 +441,15 @@ https://<github-username>.github.io/engse203-lab02-<student-id>/?simulateError=1
 
 ## 7. Checklist ก่อนส่ง
 
+### 7.1 ตรวจการใช้ JavaScript Foundations
+
+- [ ] ใช้ชื่อ variable/function แบบ `camelCase` และสื่อความหมายตาม [Variable Naming](./docs/variable_naming.md)
+- [ ] แยก function ให้มีหน้าที่ชัดเจน รับ parameter/คืนค่าอย่างเหมาะสมตาม [Functions and Invocation](./docs/functions_and_invocation.md)
+- [ ] ใช้ destructuring, `map()`, `filter()` หรือ `reduce()` ในจุดที่เหมาะสมตาม [Destructuring / Array Methods](./docs/destructuring_array_map_filter_reduce.md)
+- [ ] ใช้ `fetch`, `response.ok`, `try/catch/finally` และแสดง UI state ตาม [Async/Await and Error Handling](./docs/async-await_and_error-handling.md)
+
+### 7.2 Checklist งานและการส่ง
+
 - [ ] ใช้ repository ชื่อ `engse203-lab02-<student-id>`
 - [ ] ทำงานบน `feature/lab02-dashboard` และ merge PR ไป `main` แล้ว
 - [ ] มี `src/api.js`, `src/utils.js`, `src/ui.js`, `src/main.js`
@@ -405,7 +474,7 @@ https://<github-username>.github.io/engse203-lab02-<student-id>/?simulateError=1
 | Deploy แล้ว CSS/JS/JSON ขึ้น 404 | ตรวจชื่อ repository ใน `vite.config.js`, ค่า `base`, build ใหม่ และ commit `docs/` ไป `main` |
 | Browser แจ้ง import error | ตรวจ `<script type="module">` และใช้ relative import เช่น `./utils.js` |
 | GitHub Pages ยังไม่ขึ้น | ตรวจ `Settings → Pages → main /docs`, ตรวจว่า `docs/` มีอยู่ใน `main`, แล้วดู Actions/Pages deployment |
-| `git push` ผ่าน SSH ไม่ได้ | ทดสอบ `ssh -T git@github.com` และกลับไปตรวจ SSH key ตามคู่มือ Part 2 |
+| `git push` ผ่าน SSH ไม่ได้ | ทดสอบ `ssh -T git@github.com` และกลับไปตรวจ SSH key ตาม [GitHub SSH Guide](../../docs/setup/git-github-ssh.md) |
 
 ---
 
@@ -421,6 +490,15 @@ https://<github-username>.github.io/engse203-lab02-<student-id>/?simulateError=1
 ---
 
 ## เอกสารอ้างอิง
+
+### เอกสารพื้นฐานของ LAB 02
+
+- [Variable Naming: Case และ Best Practices](./docs/variable_naming.md)
+- [JavaScript Functions และรูปแบบการเรียกใช้](./docs/functions_and_invocation.md)
+- [Destructuring และ Array Methods: `map()` / `filter()` / `reduce()`](./docs/destructuring_array_map_filter_reduce.md)
+- [Async/Await และ Error Handling สำหรับเว็บที่โหลดข้อมูลจริง](./docs/async-await_and_error-handling.md)
+
+### แหล่งอ้างอิงเพิ่มเติม
 
 - GitHub Docs — Quickstart for GitHub Pages
 - GitHub Docs — Configuring a publishing source for your GitHub Pages site

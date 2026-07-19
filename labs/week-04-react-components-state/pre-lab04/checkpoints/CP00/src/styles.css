@@ -1,0 +1,12 @@
+*, *::before, *::after { box-sizing: border-box; }
+:root { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #16223a; background: #f3f7fc; }
+body { margin: 0; min-width: 320px; }
+.container { width: min(100% - 2rem, 72rem); margin-inline: auto; }
+.hero { padding: 2.4rem 0; color: white; background: linear-gradient(135deg, #0b2b57, #1768c4); }
+.hero h1 { margin: .25rem 0; font-size: clamp(2rem, 7vw, 4rem); }
+.eyebrow { margin: 0; font-size: .78rem; font-weight: 900; letter-spacing: .12em; }
+.page-content { padding-block: 1.25rem 3rem; }
+.panel { padding: 1.2rem; border: 1px solid #c9d8eb; border-radius: 1rem; background: white; }
+
+/* CP01–CP06: เพิ่ม styles ตาม checkpoint โดยเปรียบเทียบกับโจทย์ ไม่เปิด solution ทั้งไฟล์ */
+

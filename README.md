@@ -84,7 +84,7 @@ git push -u origin main
 | 1 | LAB 01 — Developer Environment & GitHub Repository Setup | รายบุคคล | Node/npm/Git, `hello.js`, README, GitHub repository | [เปิด LAB 01](./labs/week-01-developer-environment-git-github/) |
 | 2 | LAB 02 — Modern JavaScript, Modules & Async Data | รายบุคคล | ES6+, module, async/await, error handling, branch/PR | [เปิด LAB 02](./labs/week-02-modern-javascript/) |
 | 3 | LAB 03 — Responsive Web UI & Form Interaction | รายบุคคล | HTML/CSS, responsive UI, form validation, DOM/event | [เปิด LAB 03](./labs/week-03-responsive-ui/) |
-| 4 | LAB 04 — React Components, Props & State | รายบุคคล | React component, props, state, event handling | [เปิด LAB 04](./labs/week-04-react-components-state/) |
+| 4 | Pre-LAB 04 + LAB 04 — React Components, Props & State | รายบุคคล | guided checkpoints 240 นาที, React components, props, state, form/events, PR/Pages | [เปิด Week 04](./labs/week-04-react-components-state/) |
 | 5 | LAB 05 — React Routing, Data Fetching & Front-end Mini App | รายบุคคล | routing, form, local state, fetch/mock data | [เปิด LAB 05](./labs/week-05-react-mini-app/) |
 | 6 | LAB 06 — Node.js / Express API Foundation | รายบุคคล | Express app, route, middleware, controller/service | [เปิด LAB 06](./labs/week-06-express-api-foundation/) |
 | 7 | LAB 07 — RESTful API, Validation & Error Handling | รายบุคคล | REST design, HTTP status, validation, errors | [เปิด LAB 07](./labs/week-07-rest-validation/) |
@@ -99,6 +99,15 @@ git push -u origin main
 | 16 | LAB 15 — Team Full-Stack Sprint 2 & Demo | กลุ่ม | code review, test, README, demo, peer evaluation | [เปิด LAB 15](./labs/week-16-team-sprint-2-demo/) |
 | 17 | ทบทวนบทเรียน | รายบุคคล | checkpoint, error clinic, final preparation | [แนวทางทบทวน](./labs/week-17-review/) |
 | 18 | สอบปลายภาค | รายบุคคล | วิเคราะห์/ประยุกต์/ปรับปรุงระบบจากโจทย์ | [รายละเอียดขอบเขต](./labs/week-18-final/) |
+
+### Week 04 สำหรับผู้เริ่ม React
+
+Week 04 มีสองเส้นทางที่ไม่ควรสลับลำดับ:
+
+1. [Pre-LAB 04 — Study Task Board](./labs/week-04-react-components-state/pre-lab04/) ทำตาม CP00–CP07 ในชั้นเรียน 240 นาที
+2. [LAB 4 — Campus Service Request](./labs/week-04-react-components-state/lab04/) ประยุกต์ด้วยตนเองและส่งผ่าน repository/PR/Pages
+
+ผู้สอนดู code-asset alignment และ solution paths ได้จาก [Week 04 Hub](./labs/week-04-react-components-state/)
 
 ## แผนผังหน่วยเรียน
 
