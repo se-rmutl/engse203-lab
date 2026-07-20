@@ -1,0 +1,2125 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092746">
+  <meta name="description" content="ENGSE203 Week 04 Classroom Slides — React.js Fundamentals">
+  <title>ENGSE203 Week 04 — React.js Fundamentals</title>
+  <style>
+    @font-face {
+      font-family: "TH Sarabun New";
+      src: url("fonts/THSarabunNew-Regular.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "TH Sarabun New";
+      src: url("fonts/THSarabunNew-Bold.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 700 900;
+      font-display: swap;
+    }
+
+    :root {
+      --navy: #092746;
+      --navy-2: #0d3761;
+      --blue: #1261a6;
+      --cyan: #00a6a6;
+      --yellow: #f4b942;
+      --green: #218a57;
+      --red: #bd3d3a;
+      --ink: #10253d;
+      --muted: #52677c;
+      --line: #c9d8e6;
+      --surface: #ffffff;
+      --soft: #f3f7fb;
+      --font-scale: 1;
+      --topbar-h: 4.25rem;
+      --sidebar-w: 17rem;
+      color-scheme: light;
+      font-family: "TH Sarabun New", "Noto Sans Thai", "Leelawadee UI", Tahoma, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: #dfe8f1;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 88% 8%, rgba(0, 166, 166, .14), transparent 28rem),
+        linear-gradient(135deg, #e8f0f7, #d9e4ee);
+      font-size: calc(16px * var(--font-scale));
+      overflow: hidden;
+    }
+
+    button, input, select, textarea { font: inherit; }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: .2rem solid var(--yellow);
+      outline-offset: .14rem;
+    }
+
+    .skip-link {
+      position: fixed;
+      left: 1rem;
+      top: -5rem;
+      z-index: 999;
+      padding: .7rem 1rem;
+      color: white;
+      background: var(--navy);
+      border-radius: .5rem;
+    }
+
+    .skip-link:focus { top: .5rem; }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      min-height: var(--topbar-h);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: .55rem .8rem;
+      color: white;
+      background: rgba(9, 39, 70, .98);
+      box-shadow: 0 .25rem 1rem rgba(7, 31, 56, .25);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      min-width: 14.5rem;
+    }
+
+    .brand-mark {
+      width: 2.55rem;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: .12rem solid rgba(255, 255, 255, .72);
+      border-radius: .75rem;
+      color: var(--navy);
+      background: linear-gradient(135deg, var(--yellow), #ffe079);
+      font: 800 1.25rem/1 Arial, sans-serif;
+    }
+
+    .brand strong,
+    .brand small { display: block; }
+    .brand strong { font-size: .98rem; }
+    .brand small { color: #bcd6ed; font-size: .7rem; }
+
+    .progress-wrap { min-width: 0; }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: .2rem;
+      color: #d8e9f7;
+      font-size: .72rem;
+    }
+
+    .progress-track {
+      height: .34rem;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .2);
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--cyan), var(--yellow));
+      transition: width .25s ease;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: .35rem;
+    }
+
+    .icon-button,
+    .nav-button {
+      min-width: 2.35rem;
+      min-height: 2.35rem;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .28);
+      border-radius: .6rem;
+      color: white;
+      background: rgba(255, 255, 255, .08);
+      cursor: pointer;
+    }
+
+    .icon-button:hover,
+    .nav-button:hover { background: rgba(255, 255, 255, .18); }
+
+    .menu-button { display: none; }
+
+    .sidebar {
+      position: fixed;
+      z-index: 80;
+      top: var(--topbar-h);
+      left: 0;
+      bottom: 0;
+      width: var(--sidebar-w);
+      padding: 1rem .75rem 4rem;
+      overflow-y: auto;
+      border-right: 1px solid rgba(9, 39, 70, .15);
+      background: rgba(246, 249, 252, .96);
+      backdrop-filter: blur(10px);
+    }
+
+    .sidebar h2 {
+      margin: .2rem .65rem .65rem;
+      color: var(--muted);
+      font-size: .76rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .toc {
+      display: grid;
+      gap: .2rem;
+    }
+
+    .toc a {
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: .35rem;
+      align-items: center;
+      padding: .52rem .65rem;
+      border-radius: .62rem;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: .78rem;
+      line-height: 1.25;
+    }
+
+    .toc a span:first-child {
+      display: grid;
+      place-items: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: .45rem;
+      color: var(--blue);
+      background: #e4eff9;
+      font-weight: 800;
+    }
+
+    .toc a:hover { background: #eaf2f9; }
+
+    .toc a.active {
+      color: white;
+      background: var(--navy);
+      box-shadow: 0 .35rem .85rem rgba(9, 39, 70, .18);
+    }
+
+    .toc a.active span:first-child {
+      color: var(--navy);
+      background: var(--yellow);
+    }
+
+    .keyboard-help {
+      margin: 1rem .55rem 0;
+      padding: .75rem;
+      border-radius: .7rem;
+      color: var(--muted);
+      background: #e9f1f8;
+      font-size: .68rem;
+      line-height: 1.6;
+    }
+
+    kbd {
+      padding: .08rem .3rem;
+      border: 1px solid #afc2d3;
+      border-bottom-width: .16rem;
+      border-radius: .3rem;
+      color: var(--ink);
+      background: white;
+      font: 700 .66rem/1.3 Arial, sans-serif;
+    }
+
+    .deck {
+      height: calc(100vh - var(--topbar-h));
+      margin-top: var(--topbar-h);
+      margin-left: var(--sidebar-w);
+      padding: 1.1rem 1.2rem 5.25rem;
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+      scroll-padding-top: 1rem;
+    }
+
+    .slide {
+      position: relative;
+      width: min(100%, calc((100vh - var(--topbar-h) - 3rem) * 16 / 9));
+      aspect-ratio: 16 / 9;
+      min-height: 35rem;
+      margin: 0 auto 1.4rem;
+      padding: clamp(1.45rem, 2.1vw, 2.5rem);
+      overflow: hidden;
+      scroll-snap-align: start;
+      border: 1px solid rgba(9, 39, 70, .12);
+      border-radius: 1.1rem;
+      background: var(--surface);
+      box-shadow: 0 .8rem 2.2rem rgba(9, 39, 70, .13);
+    }
+
+    .slide::after {
+      content: attr(data-slide);
+      position: absolute;
+      right: 1.15rem;
+      bottom: .85rem;
+      color: #8294a5;
+      font: 700 .72rem/1 Arial, sans-serif;
+    }
+
+    .slide.cover {
+      color: white;
+      background:
+        radial-gradient(circle at 82% 22%, rgba(244, 185, 66, .35), transparent 18rem),
+        linear-gradient(135deg, #071d33, #0c3a65 64%, #086f78);
+    }
+
+    .slide.cover::before {
+      content: "";
+      position: absolute;
+      right: -5%;
+      bottom: -22%;
+      width: 52%;
+      aspect-ratio: 1;
+      border: 2px solid rgba(255, 255, 255, .13);
+      border-radius: 3rem;
+      transform: rotate(20deg);
+    }
+
+    .slide.cover::after { color: rgba(255, 255, 255, .65); }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      margin-bottom: .55rem;
+      color: var(--blue);
+      font-size: .74rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .section-kicker::before {
+      content: "";
+      width: 1.6rem;
+      height: .2rem;
+      border-radius: 999px;
+      background: var(--yellow);
+    }
+
+    .cover .section-kicker { color: #b8eff0; }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 15ch;
+      margin: 2.2rem 0 .75rem;
+      font-size: clamp(2.9rem, 5.3vw, 5.2rem);
+      line-height: 1.03;
+      letter-spacing: -.035em;
+    }
+
+    h2 {
+      margin-bottom: .85rem;
+      color: var(--navy);
+      font-size: clamp(1.85rem, 3.1vw, 3.15rem);
+      line-height: 1.12;
+      letter-spacing: -.025em;
+    }
+
+    h3 {
+      margin-bottom: .5rem;
+      color: var(--navy-2);
+      font-size: clamp(1.05rem, 1.45vw, 1.45rem);
+      line-height: 1.25;
+    }
+
+    p, li, td, th, label, input, select, textarea, button {
+      font-size: clamp(.86rem, 1.08vw, 1.14rem);
+    }
+
+    p, li { line-height: 1.52; }
+
+    ul, ol { margin: .3rem 0 0; padding-left: 1.35rem; }
+    li + li { margin-top: .28rem; }
+
+    .lead {
+      max-width: 54rem;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.5vw, 1.45rem);
+      line-height: 1.55;
+    }
+
+    .cover .lead { color: #d5e8f7; }
+
+    .cover-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .65rem;
+      margin-top: 2rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      padding: .38rem .7rem;
+      border: 1px solid rgba(18, 97, 166, .18);
+      border-radius: 999px;
+      color: var(--blue);
+      background: #eaf3fb;
+      font-size: .78rem;
+      font-weight: 750;
+    }
+
+    .cover .pill {
+      color: white;
+      border-color: rgba(255, 255, 255, .25);
+      background: rgba(255, 255, 255, .09);
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: clamp(.75rem, 1.3vw, 1.25rem);
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      min-width: 0;
+      padding: clamp(.8rem, 1.2vw, 1.2rem);
+      border: 1px solid var(--line);
+      border-radius: .85rem;
+      background: var(--soft);
+    }
+
+    .card.accent { border-top: .3rem solid var(--cyan); }
+    .card.warn { border-top: .3rem solid var(--yellow); }
+    .card.success { border-top: .3rem solid var(--green); }
+    .card.danger { border-top: .3rem solid var(--red); }
+
+    .number {
+      display: inline-grid;
+      place-items: center;
+      width: 2.15rem;
+      aspect-ratio: 1;
+      margin-bottom: .55rem;
+      border-radius: .58rem;
+      color: white;
+      background: var(--blue);
+      font: 800 1rem/1 Arial, sans-serif;
+    }
+
+    .big-number {
+      display: block;
+      color: var(--blue);
+      font: 850 clamp(2rem, 3.5vw, 3.6rem)/1 Arial, sans-serif;
+    }
+
+    .callout {
+      margin-top: .75rem;
+      padding: .75rem 1rem;
+      border-left: .32rem solid var(--yellow);
+      border-radius: 0 .65rem .65rem 0;
+      background: #fff8e7;
+      line-height: 1.45;
+    }
+
+    .mental-model {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: .8rem;
+      margin-top: 1.15rem;
+    }
+
+    .mental-box {
+      min-height: 9rem;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      border: .14rem solid var(--blue);
+      border-radius: 1rem;
+      text-align: center;
+      background: #f5faff;
+    }
+
+    .arrow {
+      color: var(--cyan);
+      font: 900 2.2rem/1 Arial, sans-serif;
+    }
+
+    .image-frame {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: .85rem;
+      background: #edf3f8;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .65);
+    }
+
+    .image-frame img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .image-frame.wide { height: min(62vh, 34rem); }
+    .image-frame.medium { height: min(49vh, 27rem); }
+
+    .image-pair {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(8rem, .7fr);
+      gap: 1rem;
+      height: min(63vh, 34rem);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: .8rem;
+      background: white;
+    }
+
+    th, td {
+      padding: .58rem .7rem;
+      border-bottom: 1px solid #dce6ef;
+      vertical-align: top;
+      text-align: left;
+      line-height: 1.35;
+    }
+
+    th {
+      color: white;
+      background: var(--navy-2);
+      font-weight: 750;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    tbody tr:nth-child(even) td { background: #f5f8fb; }
+
+    .code-block {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #294763;
+      border-radius: .8rem;
+      color: #e6f1fb;
+      background: #0c2135;
+      box-shadow: 0 .45rem 1.2rem rgba(9, 39, 70, .13);
+    }
+
+    .code-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 2rem;
+      padding: .32rem .5rem .32rem .8rem;
+      border-bottom: 1px solid rgba(255, 255, 255, .12);
+      color: #9ec2df;
+      background: #102c46;
+      font: 700 .68rem/1 Arial, sans-serif;
+      letter-spacing: .04em;
+    }
+
+    pre {
+      max-height: 19rem;
+      margin: 0;
+      padding: .82rem 1rem;
+      overflow: auto;
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    code,
+    .mono {
+      font-family: "Courier New", Courier, monospace;
+      font-size: clamp(.72rem, .89vw, .96rem);
+      line-height: 1.47;
+    }
+
+    :not(pre) > code {
+      padding: .08rem .28rem;
+      border-radius: .28rem;
+      color: #124b78;
+      background: #e8f1f8;
+    }
+
+    .copy-button {
+      padding: .26rem .55rem;
+      border: 1px solid rgba(255, 255, 255, .22);
+      border-radius: .4rem;
+      color: white;
+      background: rgba(255, 255, 255, .08);
+      cursor: pointer;
+      font: 700 .68rem/1.2 Arial, sans-serif;
+    }
+
+    .copy-button:hover { background: rgba(255, 255, 255, .18); }
+
+    .token-key { color: #f7c66b; }
+    .token-fn { color: #82d7ff; }
+    .token-str { color: #9de29d; }
+    .token-note { color: #809aaf; }
+
+    .demo-panel {
+      padding: 1rem;
+      border: .12rem solid #9bc2dd;
+      border-radius: .9rem;
+      background: linear-gradient(135deg, #f8fcff, #edf7f7);
+    }
+
+    .demo-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: .6rem;
+      margin-bottom: .75rem;
+    }
+
+    .field {
+      min-width: 0;
+      display: grid;
+      gap: .25rem;
+      flex: 1 1 10rem;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 750;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      min-height: 2.35rem;
+      padding: .48rem .58rem;
+      border: 1px solid #9fb4c7;
+      border-radius: .48rem;
+      color: var(--ink);
+      background: white;
+    }
+
+    textarea { min-height: 4.4rem; resize: vertical; }
+
+    [aria-invalid="true"] { border-color: var(--red); }
+
+    .primary-button,
+    .secondary-button,
+    .danger-button,
+    .chip-button {
+      min-height: 2.35rem;
+      padding: .48rem .78rem;
+      border: 1px solid transparent;
+      border-radius: .5rem;
+      cursor: pointer;
+      font-weight: 750;
+    }
+
+    .primary-button { color: white; background: var(--blue); }
+    .primary-button:hover { background: #0d4e88; }
+    .secondary-button { color: var(--navy); border-color: #9fb8cf; background: white; }
+    .secondary-button:hover { background: #eaf2f8; }
+    .danger-button { color: #8b2826; border-color: #e7b3b1; background: #fff1f0; }
+    .chip-button { min-height: 1.9rem; padding: .3rem .6rem; color: var(--blue); background: #e4f0fa; }
+    .chip-button.active { color: white; background: var(--blue); }
+
+    .preview-card {
+      padding: .85rem;
+      border: 1px solid #b8cce0;
+      border-left: .34rem solid var(--cyan);
+      border-radius: .65rem;
+      background: white;
+      box-shadow: 0 .25rem .6rem rgba(9, 39, 70, .08);
+    }
+
+    .preview-card h3 { margin-bottom: .22rem; }
+    .preview-card p { margin-bottom: .18rem; }
+
+    .demo-status {
+      min-height: 1.4rem;
+      margin: .55rem 0 0;
+      color: var(--green);
+      font-size: .82rem;
+      font-weight: 750;
+    }
+
+    .error-text {
+      min-height: 1rem;
+      margin: .1rem 0 0;
+      color: var(--red);
+      font-size: .72rem;
+    }
+
+    .component-lab {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 1rem;
+    }
+
+    .component-tree-demo {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .55rem;
+    }
+
+    .component-node {
+      padding: .65rem;
+      border: 1px solid #9bb8d1;
+      border-radius: .6rem;
+      color: var(--navy);
+      background: #edf5fb;
+      cursor: pointer;
+      text-align: left;
+      font-family: "Courier New", monospace;
+      font-weight: 700;
+    }
+
+    .component-node.root { grid-column: 1 / -1; background: #dbeaf7; }
+    .component-node.active { color: white; border-color: var(--cyan); background: var(--navy); }
+
+    .flow-trace {
+      min-height: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .35rem;
+      margin-top: .55rem;
+      color: var(--muted);
+      font-family: "Courier New", monospace;
+      font-size: .76rem;
+    }
+
+    .flow-trace span {
+      padding: .25rem .42rem;
+      border-radius: .35rem;
+      color: var(--navy);
+      background: #dcebf6;
+    }
+
+    .summary-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: .45rem;
+      margin-bottom: .65rem;
+    }
+
+    .summary-item {
+      padding: .48rem;
+      border: 1px solid #c2d5e4;
+      border-radius: .5rem;
+      background: white;
+      text-align: center;
+    }
+
+    .summary-item strong { display: block; color: var(--blue); font-size: 1.25rem; }
+
+    .request-list-demo {
+      max-height: 12.7rem;
+      display: grid;
+      gap: .45rem;
+      overflow-y: auto;
+    }
+
+    .request-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: .55rem;
+      align-items: center;
+      padding: .5rem .65rem;
+      border: 1px solid #c3d5e5;
+      border-radius: .55rem;
+      background: white;
+    }
+
+    .request-row p { margin: 0; font-size: .78rem; }
+
+    .status-badge {
+      display: inline-flex;
+      margin-left: .25rem;
+      padding: .13rem .35rem;
+      border-radius: 999px;
+      color: #175a3a;
+      background: #daf2e5;
+      font-size: .64rem;
+      font-weight: 800;
+    }
+
+    .empty-state {
+      padding: 1rem;
+      border: 1px dashed #9cb3c7;
+      border-radius: .6rem;
+      color: var(--muted);
+      text-align: center;
+      background: #f7fafc;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: .7rem;
+      margin-top: 1rem;
+    }
+
+    .timeline-step {
+      position: relative;
+      padding: .85rem;
+      border: 1px solid var(--line);
+      border-top: .28rem solid var(--blue);
+      border-radius: .75rem;
+      background: #f6f9fc;
+    }
+
+    .timeline-step:nth-child(2n) { border-top-color: var(--cyan); }
+    .timeline-step:nth-child(3n) { border-top-color: var(--yellow); }
+    .timeline-step strong { display: block; margin-bottom: .2rem; color: var(--navy); }
+
+    .checkpoint-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem;
+      margin-bottom: .75rem;
+    }
+
+    .checkpoint-detail {
+      min-height: 11rem;
+      display: grid;
+      grid-template-columns: 8rem 1fr 1fr;
+      gap: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: .8rem;
+      background: #f5f9fc;
+    }
+
+    .checkpoint-time {
+      display: grid;
+      place-items: center;
+      border-radius: .7rem;
+      color: white;
+      background: var(--navy);
+      text-align: center;
+    }
+
+    .checkpoint-time strong { display: block; font-size: 2rem; }
+
+    .rubric-bar {
+      display: flex;
+      min-height: 3rem;
+      overflow: hidden;
+      border-radius: .75rem;
+      color: white;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .rubric-bar span { display: grid; place-items: center; padding: .35rem; }
+    .rubric-bar span:nth-child(1) { flex: 6; background: #0f4e82; }
+    .rubric-bar span:nth-child(2) { flex: 8; background: #087f85; }
+    .rubric-bar span:nth-child(3) { flex: 5; background: #a97500; }
+    .rubric-bar span:nth-child(4) { flex: 4; background: #536a7e; }
+    .rubric-bar span:nth-child(5) { flex: 4; background: #28704b; }
+    .rubric-bar span:nth-child(6) { flex: 3; background: #8e3d45; }
+
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .45rem .8rem;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: .55rem;
+      padding: .58rem;
+      border: 1px solid var(--line);
+      border-radius: .55rem;
+      background: #f7fafc;
+      cursor: pointer;
+    }
+
+    .check-item input { width: 1.1rem; min-height: 1.1rem; margin-top: .12rem; flex: 0 0 auto; }
+    .check-item:has(input:checked) { border-color: #7fc59e; background: #edf9f2; }
+
+    .teacher-note {
+      position: absolute;
+      left: 1.2rem;
+      right: 3rem;
+      bottom: .72rem;
+      display: none;
+      padding: .42rem .7rem;
+      border-radius: .45rem;
+      color: #664700;
+      background: #fff3c9;
+      font-size: .67rem;
+      line-height: 1.35;
+    }
+
+    body.show-notes .teacher-note { display: block; }
+
+    .question-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .6rem;
+    }
+
+    .reveal-card {
+      min-height: 5.3rem;
+      padding: .7rem;
+      border: 1px solid var(--line);
+      border-radius: .65rem;
+      background: #f6f9fc;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .reveal-card .answer { display: none; margin-top: .4rem; color: var(--green); font-weight: 700; }
+    .reveal-card.open .answer { display: block; }
+
+    .floating-nav {
+      position: fixed;
+      z-index: 90;
+      right: 1.2rem;
+      bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .35rem;
+      border: 1px solid rgba(255, 255, 255, .32);
+      border-radius: .75rem;
+      background: rgba(9, 39, 70, .93);
+      box-shadow: 0 .5rem 1.2rem rgba(9, 39, 70, .25);
+    }
+
+    .slide-counter {
+      min-width: 4rem;
+      color: white;
+      text-align: center;
+      font: 750 .76rem/1 Arial, sans-serif;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 200;
+      left: 50%;
+      bottom: 4.8rem;
+      padding: .6rem .85rem;
+      border-radius: .55rem;
+      color: white;
+      background: rgba(9, 39, 70, .96);
+      box-shadow: 0 .5rem 1.2rem rgba(0, 0, 0, .2);
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, .8rem);
+      transition: .2s ease;
+    }
+
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 1050px) {
+      :root { --sidebar-w: 14.5rem; }
+      .brand { min-width: 11rem; }
+      .brand small { display: none; }
+      .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .slide { min-height: 33rem; }
+      .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 820px) {
+      body { overflow: auto; }
+      .topbar { grid-template-columns: auto 1fr; gap: .5rem; }
+      .brand { min-width: 0; }
+      .brand strong { font-size: .82rem; }
+      .progress-wrap { display: none; }
+      .toolbar { grid-column: 2; grid-row: 1; }
+      .toolbar .desktop-only { display: none; }
+      .menu-button { display: inline-grid; }
+      .sidebar {
+        width: min(85vw, 20rem);
+        transform: translateX(-105%);
+        transition: transform .22s ease;
+        box-shadow: 1rem 0 2rem rgba(9, 39, 70, .2);
+      }
+      body.menu-open .sidebar { transform: translateX(0); }
+      .deck {
+        height: auto;
+        min-height: calc(100vh - var(--topbar-h));
+        margin-left: 0;
+        overflow: visible;
+        scroll-snap-type: none;
+      }
+      .slide {
+        width: 100%;
+        min-height: auto;
+        aspect-ratio: auto;
+        overflow: visible;
+        scroll-snap-align: none;
+        padding: 1.25rem 1rem 3.3rem;
+      }
+      .slide.cover::before { display: none; }
+      .grid-2, .grid-3, .grid-4,
+      .component-lab,
+      .checkpoint-detail,
+      .checklist { grid-template-columns: 1fr; }
+      .mental-model { grid-template-columns: 1fr; }
+      .mental-model .arrow { transform: rotate(90deg); justify-self: center; }
+      .image-frame.wide, .image-frame.medium { height: auto; }
+      .image-pair { height: auto; grid-template-columns: 1fr; }
+      .image-pair .mobile-target { max-height: 36rem; }
+      .summary-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .timeline { grid-template-columns: 1fr; }
+      .rubric-bar { flex-direction: column; }
+      .rubric-bar span { min-height: 2.3rem; }
+      .question-grid { grid-template-columns: 1fr; }
+      h1 { margin-top: 1rem; }
+      .floating-nav { right: .6rem; bottom: .55rem; }
+    }
+
+    @media print {
+      body { overflow: visible; background: white; }
+      .topbar, .sidebar, .floating-nav, .toast { display: none !important; }
+      .deck { height: auto; margin: 0; padding: 0; overflow: visible; }
+      .slide {
+        width: 100%;
+        min-height: 0;
+        aspect-ratio: 16 / 9;
+        margin: 0;
+        break-after: page;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#deck">ข้ามไปยังเนื้อหา</a>
+
+  <header class="topbar">
+    <div class="brand" aria-label="ENGSE203 Week 04">
+      <span class="brand-mark" aria-hidden="true">R</span>
+      <span><strong>ENGSE203 • Week 04</strong><small>React.js Fundamentals</small></span>
+    </div>
+
+    <div class="progress-wrap" aria-hidden="true">
+      <div class="progress-meta"><span id="current-group">Overview</span><span id="progress-text">1 / 33</span></div>
+      <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+    </div>
+
+    <div class="toolbar" aria-label="เครื่องมือการนำเสนอ">
+      <button class="icon-button menu-button" id="menu-button" type="button" aria-label="เปิดสารบัญ" aria-expanded="false">☰</button>
+      <button class="icon-button desktop-only" id="font-down" type="button" aria-label="ลดขนาดตัวอักษร">A−</button>
+      <button class="icon-button desktop-only" id="font-up" type="button" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
+      <button class="icon-button desktop-only" id="notes-toggle" type="button" aria-label="เปิดหรือปิดคำแนะนำผู้สอน" aria-pressed="false">Notes</button>
+      <button class="icon-button" id="fullscreen-button" type="button" aria-label="เปิดเต็มหน้าจอ">⛶</button>
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar" aria-label="สารบัญ">
+    <h2>Classroom navigation</h2>
+    <nav class="toc">
+      <a href="#s01" data-target="s01"><span>01</span><span>Overview</span></a>
+      <a href="#s04" data-target="s04"><span>02</span><span>Week 03 → React Bridge</span></a>
+      <a href="#s08" data-target="s08"><span>03</span><span>JSX Demo</span></a>
+      <a href="#s10" data-target="s10"><span>04</span><span>Component Demo</span></a>
+      <a href="#s13" data-target="s13"><span>05</span><span>Props Demo</span></a>
+      <a href="#s15" data-target="s15"><span>06</span><span>State &amp; Events</span></a>
+      <a href="#s19" data-target="s19"><span>07</span><span>Controlled Form</span></a>
+      <a href="#s23" data-target="s23"><span>08</span><span>Pre-LAB 04</span></a>
+      <a href="#s26" data-target="s26"><span>09</span><span>LAB 4 Steps</span></a>
+      <a href="#s28" data-target="s28"><span>10</span><span>Instructor Solution</span></a>
+      <a href="#s29" data-target="s29"><span>11</span><span>GitHub Pages</span></a>
+      <a href="#s31" data-target="s31"><span>12</span><span>Submission Checklist</span></a>
+      <a href="#s32" data-target="s32"><span>13</span><span>Week 05 Connection</span></a>
+    </nav>
+    <div class="keyboard-help">
+      <strong>Keyboard</strong><br>
+      <kbd>←</kbd> <kbd>→</kbd> เปลี่ยนสไลด์ • <kbd>F</kbd> Fullscreen<br>
+      <kbd>+</kbd> <kbd>−</kbd> ขนาดตัวอักษร • <kbd>N</kbd> Notes
+    </div>
+  </aside>
+
+  <main class="deck" id="deck" tabindex="-1">
+    <section class="slide cover" id="s01" data-slide="01" data-group="Overview">
+      <span class="section-kicker">ENGSE203 • Computer Programming for Software Engineer</span>
+      <h1>React.js Fundamentals</h1>
+      <p class="lead">JSX • Components • Props • State • Events • Controlled Form</p>
+      <div class="cover-meta">
+        <span class="pill">สัปดาห์ที่ 4</span>
+        <span class="pill">CLO3</span>
+        <span class="pill">ทฤษฎี 1 ชม. + ปฏิบัติ 4 ชม.</span>
+        <span class="pill">Campus Service Request</span>
+      </div>
+      <div class="callout" style="max-width:52rem;margin-top:2.4rem;color:#fff;background:rgba(255,255,255,.08);border-color:#f4b942">
+        <strong>Big Idea:</strong> React ไม่ให้เราไล่แก้ DOM ทีละจุด แต่ให้เราอธิบายว่า UI ควรเป็นอย่างไรจาก <strong>Props + State</strong>
+      </div>
+      <p class="teacher-note">เริ่มด้วยคำถาม: “Week 03 เมื่อข้อมูลเปลี่ยน เราแก้ข้อมูลก่อนหรือแก้หน้าจอก่อน?” อย่าเริ่มจาก syntax</p>
+    </section>
+
+    <section class="slide" id="s02" data-slide="02" data-group="Overview">
+      <span class="section-kicker">Overview</span>
+      <h2>วันนี้เราจะเปลี่ยน “วิธีคิดเรื่อง UI”</h2>
+      <div class="grid-4">
+        <article class="card accent"><span class="number">1</span><h3>Understand</h3><p>เปรียบเทียบ DOM-driven กับ State-driven UI</p></article>
+        <article class="card accent"><span class="number">2</span><h3>Build</h3><p>สร้าง Component Tree ด้วย JSX และ Functional Components</p></article>
+        <article class="card warn"><span class="number">3</span><h3>Interact</h3><p>ใช้ Props, State, Events และ Controlled Form</p></article>
+        <article class="card success"><span class="number">4</span><h3>Deliver</h3><p>ทดสอบ Build, PR และ Deploy ผ่าน GitHub Pages</p></article>
+      </div>
+      <div class="image-frame" style="height:min(35vh,18rem);margin-top:1rem">
+        <img src="images/teaching-flow.png" alt="โครงเวลา Week 04: Theory 60 นาที, Pre-LAB04 CP00–CP07 ในชั้น 240 นาที และ LAB04 การบ้าน 240 นาที">
+      </div>
+      <p class="teacher-note">ให้ผู้เรียนเห็นปลายทางก่อน: งานในคาบคือ Study Task Board ส่วนการบ้านคือ Campus Service Request</p>
+    </section>
+
+    <section class="slide" id="s03" data-slide="03" data-group="Overview">
+      <span class="section-kicker">CLO3 Alignment</span>
+      <h2>Weekly Learning Outcomes และหลักฐาน</h2>
+      <table>
+        <thead><tr><th>ID</th><th>เมื่อจบสัปดาห์ ผู้เรียนทำได้</th><th>หลักฐานที่ตรวจได้</th></tr></thead>
+        <tbody>
+          <tr><td>W4-LO1</td><td>อธิบาย DOM Mutation เทียบ State-driven UI</td><td>คำอธิบายก่อน/หลัง refactor</td></tr>
+          <tr><td>W4-LO2</td><td>สร้าง JSX และ Components ตาม Component Tree</td><td>React source + component tree</td></tr>
+          <tr><td>W4-LO3</td><td>ส่งข้อมูลด้วย Props และอธิบาย one-way flow</td><td>Props + callback evidence</td></tr>
+          <tr><td>W4-LO4</td><td>ใช้ state, events, immutable update และ controlled form</td><td>Application + test cases</td></tr>
+          <tr><td>W4-LO5</td><td>ทดสอบ responsive UI และส่งผ่าน Git/PR/Pages</td><td>Repo + PR + README + Pages</td></tr>
+        </tbody>
+      </table>
+      <div class="callout"><strong>CLO3:</strong> ทุกผลลัพธ์เน้นการสร้าง Interactive UI ที่อธิบาย ownership และ data flow ได้ ไม่ใช่เพียงทำให้หน้าจอสวย</div>
+    </section>
+
+    <section class="slide" id="s04" data-slide="04" data-group="Week 03 → React Bridge">
+      <span class="section-kicker">Bridge</span>
+      <h2>จาก Week 03 สู่ Week 04</h2>
+      <div class="image-frame wide">
+        <img src="images/mental-model.png" alt="เปรียบเทียบ DOM Mutation ใน Week 03 กับ State-driven UI ใน Week 04">
+      </div>
+      <p class="teacher-note">ชี้ว่าทั้งสองด้านเริ่มจาก User Event เหมือนกัน จุดเปลี่ยนคือด้าน React เปลี่ยน State แล้วให้ React re-render</p>
+    </section>
+
+    <section class="slide" id="s05" data-slide="05" data-group="Week 03 → React Bridge">
+      <span class="section-kicker">Compare</span>
+      <h2>ของเดิมยังใช้ได้—แต่เปลี่ยนกลไกควบคุม UI</h2>
+      <table>
+        <thead><tr><th>Week 03</th><th>Week 04</th><th>เหตุผล</th></tr></thead>
+        <tbody>
+          <tr><td>HTML section</td><td>React Component</td><td>แยก responsibility</td></tr>
+          <tr><td><code>querySelector</code></td><td>Props / State</td><td>ข้อมูลเป็น source of truth</td></tr>
+          <tr><td><code>addEventListener</code></td><td>JSX event prop</td><td>event อยู่ใกล้ UI</td></tr>
+          <tr><td><code>FormData</code></td><td>Controlled Form</td><td>ค่าฟอร์มอยู่ใน state</td></tr>
+          <tr><td><code>createElement</code></td><td><code>map()</code> + state</td><td>render จาก array</td></tr>
+          <tr><td>show/hide class</td><td>Conditional Rendering</td><td>UI สะท้อน state</td></tr>
+        </tbody>
+      </table>
+      <div class="callout"><strong>Carry forward:</strong> Semantic HTML, Responsive CSS, validation, accessibility และ GitHub workflow จาก Week 03 ยังคงใช้ต่อ</div>
+    </section>
+
+    <section class="slide" id="s06" data-slide="06" data-group="Week 03 → React Bridge">
+      <span class="section-kicker">Mental Model</span>
+      <h2>State → Render → Event → New State</h2>
+      <div class="mental-model">
+        <div class="mental-box"><div><span class="big-number">1</span><h3>State</h3><p>ข้อมูลปัจจุบันของ application</p></div></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="mental-box"><div><span class="big-number">2</span><h3>Render</h3><p>UI เป็นผลลัพธ์ของ state</p></div></div>
+      </div>
+      <div class="mental-model" style="margin-top:.6rem">
+        <div class="mental-box"><div><span class="big-number">4</span><h3>New State</h3><p>ใช้ setter + immutable update</p></div></div>
+        <div class="arrow" aria-hidden="true">←</div>
+        <div class="mental-box"><div><span class="big-number">3</span><h3>Event</h3><p>ผู้ใช้ click, change, submit</p></div></div>
+      </div>
+      <p class="teacher-note">ถามให้ผู้เรียนชี้ทีละขั้นว่า “ลบคำร้องหนึ่งรายการ” ผ่านวงจรนี้อย่างไร</p>
+    </section>
+
+    <section class="slide" id="s07" data-slide="07" data-group="Week 03 → React Bridge">
+      <span class="section-kicker">Code Bridge</span>
+      <h2>ต่างกันที่ source of truth</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Week 03 — DOM-driven</h3>
+          <div class="code-block"><div class="code-label">app.js <button class="copy-button" type="button">Copy</button></div><pre><code>form.addEventListener("submit", (event) =&gt; {
+  event.preventDefault();
+  const request = readForm();
+  requests.unshift(request);
+  renderRequests();
+  updateSummary();
+});</code></pre></div>
+        </div>
+        <div>
+          <h3>Week 04 — State-driven</h3>
+          <div class="code-block"><div class="code-label">App.jsx <button class="copy-button" type="button">Copy</button></div><pre><code>function handleAddRequest(newRequest) {
+  setRequests((current) =&gt; [
+    newRequest,
+    ...current,
+  ]);
+}
+
+// React renders list + summary again</code></pre></div>
+        </div>
+      </div>
+      <div class="callout"><strong>Check:</strong> เมื่อเพิ่มคำร้อง React version ต้องสั่ง <code>updateSummary()</code> เองหรือไม่? เพราะอะไร?</div>
+    </section>
+
+    <section class="slide" id="s08" data-slide="08" data-group="JSX Demo">
+      <span class="section-kicker">JSX</span>
+      <h2>JSX คือ JavaScript ที่อธิบาย UI</h2>
+      <div class="grid-2">
+        <div class="card accent">
+          <h3>JSX Rules</h3>
+          <ul>
+            <li><code>className</code> แทน <code>class</code></li>
+            <li><code>htmlFor</code> แทน <code>for</code></li>
+            <li>Event เป็น camelCase เช่น <code>onClick</code></li>
+            <li>ปิด tag เช่น <code>&lt;input /&gt;</code></li>
+            <li>คืน element tree เดียวหรือ Fragment</li>
+            <li>ใส่ JavaScript expression ใน <code>{ }</code></li>
+          </ul>
+        </div>
+        <div class="code-block"><div class="code-label">RequestBadge.jsx <button class="copy-button" type="button">Copy</button></div><pre><code>function RequestBadge({ request }) {
+  return (
+    &lt;p className={
+      request.priority === "urgent"
+        ? "urgent"
+        : "normal"
+    }&gt;
+      {request.requestType}
+      {" • "}
+      {request.priority}
+    &lt;/p&gt;
+  );
+}</code></pre></div>
+      </div>
+      <div class="callout"><strong>ไม่ใช่ HTML string:</strong> JSX ถูกแปลงเป็น JavaScript object ที่ React ใช้สร้าง UI</div>
+    </section>
+
+    <section class="slide" id="s09" data-slide="09" data-group="JSX Demo">
+      <span class="section-kicker">Interactive JSX</span>
+      <h2>ทดลอง: Expression เปลี่ยน Output</h2>
+      <div class="grid-2">
+        <div>
+          <div class="code-block"><div class="code-label">RequestCard.jsx <button class="copy-button" type="button">Copy</button></div><pre><code>function RequestCard({ request }) {
+  return (
+    &lt;article className="request-card"&gt;
+      &lt;h3&gt;{request.requestType}&lt;/h3&gt;
+      &lt;p&gt;ผู้แจ้ง: {request.requesterName}&lt;/p&gt;
+      &lt;p&gt;สถานที่: {request.location}&lt;/p&gt;
+    &lt;/article&gt;
+  );
+}</code></pre></div>
+        </div>
+        <div class="demo-panel">
+          <div class="demo-toolbar">
+            <div class="field"><label for="jsx-name">Requester Name</label><input id="jsx-name" value="สมชาย ใจดี"></div>
+            <div class="field"><label for="jsx-location">Location</label><input id="jsx-location" value="ห้องปฏิบัติการ 301"></div>
+            <button class="primary-button" id="run-jsx" type="button">Run JSX Demo</button>
+          </div>
+          <article class="preview-card" id="jsx-preview" aria-live="polite">
+            <h3>แจ้งซ่อม</h3><p>ผู้แจ้ง: สมชาย ใจดี</p><p>สถานที่: ห้องปฏิบัติการ 301</p>
+          </article>
+          <p class="demo-status" id="jsx-status" role="status">พร้อมทดลอง</p>
+        </div>
+      </div>
+      <p class="teacher-note">ให้ผู้เรียนเดาผลก่อนกด Run แล้วถามว่า input ใดคือ props และ output ใดคือ JSX</p>
+    </section>
+
+    <section class="slide" id="s10" data-slide="10" data-group="Component Demo">
+      <span class="section-kicker">Components</span>
+      <h2>แบ่งตาม Responsibility ไม่ใช่จำนวน &lt;div&gt;</h2>
+      <div class="image-frame wide">
+        <img src="images/component-tree.png" alt="Component Tree ของ Campus Service Request">
+      </div>
+    </section>
+
+    <section class="slide" id="s11" data-slide="11" data-group="Component Demo">
+      <span class="section-kicker">Interactive Components</span>
+      <h2>คลิกเพื่อสำรวจ Component Contract</h2>
+      <div class="component-lab">
+        <div class="component-tree-demo" id="component-tree-demo">
+          <button class="component-node root active" type="button" data-component="App">App</button>
+          <button class="component-node" type="button" data-component="AppHeader">AppHeader</button>
+          <button class="component-node" type="button" data-component="SummaryPanel">SummaryPanel</button>
+          <button class="component-node" type="button" data-component="RequestForm">RequestForm</button>
+          <button class="component-node" type="button" data-component="FilterBar">FilterBar</button>
+          <button class="component-node" type="button" data-component="RequestList">RequestList</button>
+          <button class="component-node" type="button" data-component="RequestCard">RequestCard</button>
+        </div>
+        <article class="demo-panel" aria-live="polite">
+          <span class="pill" id="component-owner">State owner</span>
+          <h3 id="component-name" style="margin-top:.6rem">App</h3>
+          <p id="component-role">ถือ requests/filter state, คำนวณ derived data และเชื่อม child components</p>
+          <div class="callout" id="component-why"><strong>Why:</strong> หลายส่วนของหน้าจอใช้ข้อมูลคำร้องชุดเดียวกัน</div>
+        </article>
+      </div>
+      <div class="callout"><strong>Check:</strong> label หนึ่งบรรทัดควรแยกเป็น component หรือไม่? ให้ตัดสินจาก responsibility/reuse/behavior</div>
+    </section>
+
+    <section class="slide" id="s12" data-slide="12" data-group="Component Demo">
+      <span class="section-kicker">Project Structure</span>
+      <h2>React + Vite: โครงสร้างที่อ่านแล้วรู้หน้าที่</h2>
+      <div class="grid-2">
+        <div class="code-block"><div class="code-label">terminal <button class="copy-button" type="button">Copy</button></div><pre><code>node --version        # &gt;= 22.12.0
+git switch main
+git pull origin main
+git switch -c lab/week-04
+cp -R COURSE_REPO/lab04/starter/. labs/week-04/source/
+npm --prefix labs/week-04/source install
+npm --prefix labs/week-04/source run dev</code></pre></div>
+        <div class="code-block"><div class="code-label">src/ <button class="copy-button" type="button">Copy</button></div><pre><code>src/
+├── components/
+│   ├── AppHeader.jsx
+│   ├── SummaryPanel.jsx
+│   ├── RequestForm.jsx
+│   ├── FilterBar.jsx
+│   ├── RequestList.jsx
+│   └── RequestCard.jsx
+├── data/initialRequests.js
+├── App.jsx
+├── main.jsx
+└── styles.css</code></pre></div>
+      </div>
+      <div class="grid-3" style="margin-top:.85rem">
+        <div class="card"><h3><code>main.jsx</code></h3><p>mount React ที่ <code>#root</code></p></div>
+        <div class="card"><h3><code>App.jsx</code></h3><p>state owner และ orchestration</p></div>
+        <div class="card"><h3><code>components/</code></h3><p>UI responsibility ที่ตั้งชื่อได้</p></div>
+      </div>
+    </section>
+
+    <section class="slide" id="s13" data-slide="13" data-group="Props Demo">
+      <span class="section-kicker">Props</span>
+      <h2>Props ลง • Events ขึ้น</h2>
+      <div class="image-frame wide">
+        <img src="images/data-flow.png" alt="One-way data flow จาก App ผ่าน props และ callback events กลับขึ้น App">
+      </div>
+      <p class="teacher-note">วาดลูกศรสีน้ำเงินเป็นข้อมูล read-only ลง และลูกศรสีเขียวเป็น intent/payload กลับขึ้น</p>
+    </section>
+
+    <section class="slide" id="s14" data-slide="14" data-group="Props Demo">
+      <span class="section-kicker">Interactive Props</span>
+      <h2>ทดลอง: Parent เปลี่ยน Props → Child Render ใหม่</h2>
+      <div class="grid-2">
+        <div class="code-block"><div class="code-label">App.jsx → RequestCard.jsx <button class="copy-button" type="button">Copy</button></div><pre><code>&lt;RequestCard
+  request={selectedRequest}
+  onDeleteRequest={handleDeleteRequest}
+/&gt;
+
+function RequestCard({
+  request,
+  onDeleteRequest,
+}) {
+  return (
+    &lt;button onClick={() =&gt;
+      onDeleteRequest(request.id)
+    }&gt;ลบ&lt;/button&gt;
+  );
+}</code></pre></div>
+        <div class="demo-panel">
+          <div class="demo-toolbar">
+            <div class="field"><label for="props-type">requestType prop</label><input id="props-type" value="แจ้งซ่อม"></div>
+            <div class="field"><label for="props-priority">priority prop</label><select id="props-priority"><option value="normal">normal</option><option value="urgent">urgent</option></select></div>
+            <button class="primary-button" id="run-props" type="button">Send Props</button>
+          </div>
+          <article class="preview-card" id="props-preview"><h3>แจ้งซ่อม</h3><p>Priority: normal</p></article>
+          <div class="flow-trace" id="props-trace" aria-live="polite"><span>App</span> → <span>props</span> → <span>RequestCard</span></div>
+        </div>
+      </div>
+      <div class="callout"><strong>Ownership:</strong> Child อ่าน props ได้ แต่ไม่ควรแก้ object/array จาก Parent โดยตรง</div>
+    </section>
+
+    <section class="slide" id="s15" data-slide="15" data-group="State & Events">
+      <span class="section-kicker">State</span>
+      <h2>State เก็บเฉพาะข้อมูลที่ต้องจำและเปลี่ยน</h2>
+      <table>
+        <thead><tr><th>ข้อมูล</th><th>ประเภท</th><th>Owner / เหตุผล</th></tr></thead>
+        <tbody>
+          <tr><td><code>requests</code></td><td>State</td><td>App — หลาย component ใช้</td></tr>
+          <tr><td><code>statusFilter</code></td><td>State</td><td>App — FilterBar เปลี่ยนและ RequestList ใช้</td></tr>
+          <tr><td><code>formData/errors</code></td><td>State</td><td>RequestForm — ใช้เฉพาะ form</td></tr>
+          <tr><td><code>summary</code></td><td>Derived Data</td><td>คำนวณจาก requests ทุก render</td></tr>
+          <tr><td><code>filteredRequests</code></td><td>Derived Data</td><td>คำนวณจาก requests + filter</td></tr>
+        </tbody>
+      </table>
+      <div class="code-block" style="margin-top:.8rem"><div class="code-label">App.jsx <button class="copy-button" type="button">Copy</button></div><pre><code>const [requests, setRequests] = useState(initialRequests);
+const [statusFilter, setStatusFilter] = useState("all");
+
+const filteredRequests = statusFilter === "all"
+  ? requests
+  : requests.filter((request) =&gt; request.status === statusFilter);</code></pre></div>
+      <div class="callout"><strong>Best practice:</strong> อย่าเก็บสิ่งที่คำนวณได้เป็น state ซ้ำ เพราะเกิดข้อมูลไม่ตรงกันได้</div>
+    </section>
+
+    <section class="slide" id="s16" data-slide="16" data-group="State & Events">
+      <span class="section-kicker">Immutable Update</span>
+      <h2>อย่าแก้ Array เดิม—สร้างค่าใหม่</h2>
+      <div class="grid-2">
+        <div class="card danger">
+          <h3>❌ Mutate</h3>
+          <div class="code-block"><div class="code-label">ไม่ควรทำ <button class="copy-button" type="button">Copy</button></div><pre><code>requests.push(newRequest);
+setRequests(requests);</code></pre></div>
+          <button class="danger-button" id="run-mutable" type="button" style="margin-top:.6rem">ทดลอง Mutate</button>
+        </div>
+        <div class="card success">
+          <h3>✓ Immutable</h3>
+          <div class="code-block"><div class="code-label">ควรทำ <button class="copy-button" type="button">Copy</button></div><pre><code>setRequests((current) =&gt; [
+  newRequest,
+  ...current,
+]);</code></pre></div>
+          <button class="primary-button" id="run-immutable" type="button" style="margin-top:.6rem">ทดลอง Immutable</button>
+        </div>
+      </div>
+      <div class="demo-panel" style="margin-top:.8rem">
+        <p id="immutable-result" class="mono" role="status">กดปุ่มเพื่อเปรียบเทียบ reference และ array result</p>
+      </div>
+    </section>
+
+    <section class="slide" id="s17" data-slide="17" data-group="State & Events">
+      <span class="section-kicker">Interactive State</span>
+      <h2>ทดลอง State → Derived Data → Render</h2>
+      <div class="grid-2">
+        <div>
+          <div class="code-block"><div class="code-label">App.jsx <button class="copy-button" type="button">Copy</button></div><pre><code>function handleDeleteRequest(requestId) {
+  setRequests((current) =&gt;
+    current.filter((request) =&gt;
+      request.id !== requestId
+    )
+  );
+}
+
+&lt;button onClick={() =&gt;
+  handleDeleteRequest(request.id)
+}&gt;ลบ&lt;/button&gt;</code></pre></div>
+          <div class="callout"><strong>Event payload:</strong> Child ส่งเฉพาะ intent + id กลับ Parent</div>
+        </div>
+        <div class="demo-panel">
+          <div class="summary-row" id="state-summary"></div>
+          <div class="demo-toolbar" id="state-filters"></div>
+          <div class="demo-toolbar">
+            <button class="primary-button" id="state-add" type="button">+ เพิ่มคำร้องจำลอง</button>
+            <button class="secondary-button" id="state-clear" type="button">ล้างรายการ</button>
+            <span class="pill">Render <strong id="render-count">0</strong></span>
+          </div>
+          <div class="request-list-demo" id="state-list" aria-live="polite"></div>
+        </div>
+      </div>
+      <p class="teacher-note">ให้ผู้เรียนทดลอง filter → delete → clear และสังเกตว่า summary/list/empty state เปลี่ยนจาก state ชุดเดียว</p>
+    </section>
+
+    <section class="slide" id="s18" data-slide="18" data-group="State & Events">
+      <span class="section-kicker">React Events</span>
+      <h2>ส่ง Function ให้ React—อย่าเรียกทันที</h2>
+      <div class="grid-3">
+        <div class="card accent"><h3><code>onChange</code></h3><p>input/select/textarea/filter อัปเดต state</p></div>
+        <div class="card warn"><h3><code>onSubmit</code></h3><p>prevent default → validate → add/stop</p></div>
+        <div class="card success"><h3><code>onClick</code></h3><p>action เฉพาะรายการ เช่น delete/filter</p></div>
+      </div>
+      <div class="grid-2" style="margin-top:.9rem">
+        <div class="code-block"><div class="code-label">ผิด — เรียกระหว่าง render <button class="copy-button" type="button">Copy</button></div><pre><code>&lt;button onClick={
+  handleDelete(request.id)
+}&gt;
+  ลบ
+&lt;/button&gt;</code></pre></div>
+        <div class="code-block"><div class="code-label">ถูก — ส่ง callback <button class="copy-button" type="button">Copy</button></div><pre><code>&lt;button onClick={() =&gt;
+  handleDelete(request.id)
+}&gt;
+  ลบ
+&lt;/button&gt;</code></pre></div>
+      </div>
+      <div class="callout"><strong>Predict:</strong> แบบผิดจะเกิดอะไรขึ้นก่อนผู้ใช้กดปุ่ม?</div>
+    </section>
+
+    <section class="slide" id="s19" data-slide="19" data-group="Controlled Form">
+      <span class="section-kicker">Controlled Form</span>
+      <h2>State เป็น Source of Truth ของทุก Field</h2>
+      <div class="grid-2">
+        <div class="code-block"><div class="code-label">RequestForm.jsx <button class="copy-button" type="button">Copy</button></div><pre><code>const [formData, setFormData] = useState({
+  requesterName: "",
+  requestType: "",
+  location: "",
+  details: "",
+  priority: "normal",
+});
+
+function handleChange(event) {
+  const { name, value } = event.target;
+  setFormData((current) =&gt; ({
+    ...current,
+    [name]: value,
+  }));
+}</code></pre></div>
+        <div class="code-block"><div class="code-label">Controlled input <button class="copy-button" type="button">Copy</button></div><pre><code>&lt;label htmlFor="requesterName"&gt;
+  ชื่อผู้แจ้ง
+&lt;/label&gt;
+&lt;input
+  id="requesterName"
+  name="requesterName"
+  value={formData.requesterName}
+  onChange={handleChange}
+/&gt;</code></pre></div>
+      </div>
+      <div class="callout"><strong>Controlled pair:</strong> ถ้ามี <code>value</code> แต่ไม่มี <code>onChange</code> ผู้ใช้จะพิมพ์ไม่ได้</div>
+    </section>
+
+    <section class="slide" id="s20" data-slide="20" data-group="Controlled Form">
+      <span class="section-kicker">Interactive Form</span>
+      <h2>ทดลอง Validation + Submit Flow</h2>
+      <form class="demo-panel" id="request-form-demo" novalidate>
+        <div class="grid-3">
+          <div class="field"><label for="demo-requester">ชื่อผู้แจ้ง</label><input id="demo-requester" name="requesterName" aria-describedby="err-requester"><small class="error-text" id="err-requester"></small></div>
+          <div class="field"><label for="demo-type">ประเภทคำร้อง</label><select id="demo-type" name="requestType" aria-describedby="err-type"><option value="">— เลือก —</option><option>แจ้งซ่อม</option><option>บริการบัญชีผู้ใช้</option><option>ขอใช้ห้อง</option></select><small class="error-text" id="err-type"></small></div>
+          <div class="field"><label for="demo-location">สถานที่</label><input id="demo-location" name="location" aria-describedby="err-location"><small class="error-text" id="err-location"></small></div>
+        </div>
+        <div class="grid-2" style="margin-top:.55rem">
+          <div class="field"><label for="demo-details">รายละเอียด</label><textarea id="demo-details" name="details" aria-describedby="err-details"></textarea><small class="error-text" id="err-details"></small></div>
+          <div>
+            <div class="field"><label for="demo-priority">ความเร่งด่วน</label><select id="demo-priority" name="priority"><option value="normal">normal</option><option value="urgent">urgent</option></select></div>
+            <button class="primary-button" type="submit" style="margin-top:.65rem">Run Submit</button>
+            <button class="secondary-button" id="fill-valid" type="button" style="margin-top:.65rem">เติมข้อมูลตัวอย่าง</button>
+          </div>
+        </div>
+        <p class="demo-status" id="form-status" role="status">ลองกด Submit โดยยังไม่กรอกข้อมูล</p>
+      </form>
+      <p class="teacher-note">สาธิต invalid ก่อน valid: invalid ต้องไม่เพิ่มและไม่ reset เพื่อให้แก้เฉพาะ field ที่ผิด</p>
+    </section>
+
+    <section class="slide" id="s21" data-slide="21" data-group="Controlled Form">
+      <span class="section-kicker">List &amp; Conditional</span>
+      <h2><code>map()</code> + Stable <code>key</code> + UI States</h2>
+      <div class="grid-2">
+        <div class="code-block"><div class="code-label">RequestList.jsx <button class="copy-button" type="button">Copy</button></div><pre><code>if (requests.length === 0) {
+  return &lt;p className="empty-state"&gt;
+    ไม่พบคำร้องในสถานะนี้
+  &lt;/p&gt;;
+}
+
+return requests.map((request) =&gt; (
+  &lt;RequestCard
+    key={request.id}
+    request={request}
+    onDeleteRequest={onDeleteRequest}
+  /&gt;
+));</code></pre></div>
+        <div>
+          <table>
+            <thead><tr><th>UI State</th><th>Condition → Output</th></tr></thead>
+            <tbody>
+              <tr><td>Initial</td><td>มี seed data → cards + summary</td></tr>
+              <tr><td>Filtered</td><td>filter ≠ all → เฉพาะ status</td></tr>
+              <tr><td>Empty</td><td>list ว่าง → empty message</td></tr>
+              <tr><td>Invalid</td><td>errors มีค่า → field errors</td></tr>
+              <tr><td>Success</td><td>submit ผ่าน → new card + feedback</td></tr>
+            </tbody>
+          </table>
+          <div class="callout"><strong>Key:</strong> ใช้ <code>request.id</code> ไม่ใช้ array index เมื่อเพิ่ม/ลบรายการ</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="s22" data-slide="22" data-group="Controlled Form">
+      <span class="section-kicker">Responsive UI</span>
+      <h2>Component/Data ชุดเดียว—Layout ปรับตามหน้าจอ</h2>
+      <div class="image-pair">
+        <div class="image-frame"><img src="images/desktop-result.png" alt="ตัวอย่าง Campus Service Request บน Desktop"></div>
+        <div class="image-frame mobile-target"><img src="images/mobile-result.png" alt="ตัวอย่าง Campus Service Request บน Mobile"></div>
+      </div>
+      <div class="callout"><strong>Check:</strong> 375px ไม่มี horizontal scroll • label/focus/error ชัด • keyboard ใช้งานได้ • ไม่แยก mobile state</div>
+    </section>
+
+    <section class="slide" id="s23" data-slide="23" data-group="Pre-LAB 04">
+      <span class="section-kicker">Pre-LAB 04</span>
+      <h2>Guided Practice 240 นาที: Study Task Board</h2>
+      <div class="grid-3">
+        <div class="card accent"><h3>ทำตามในชั้นเรียน</h3><p>Predict → I Do → We Do → You Do → Check</p></div>
+        <div class="card warn"><h3>CP00–CP07</h3><p>ทุก checkpoint มี source snapshot และ cumulative verifier</p></div>
+        <div class="card success"><h3>Transfer</h3><p>นำ mental model ไปใช้กับ LAB 4 ไม่ใช่ copy/rename</p></div>
+      </div>
+      <div class="code-block" style="margin-top:1rem"><div class="code-label">checkpoint gate <button class="copy-button" type="button">Copy</button></div><pre><code>npm run check:cp -- CP04
+# Checkpoint verifier CP04: PASS (cumulative CP00–CP04)
+
+npm run build</code></pre></div>
+      <div class="callout"><strong>Recovery policy:</strong> ให้ hint 1–2 ครั้งก่อน แล้ว restore checkpoint ล่าสุดเพื่อให้นักศึกษากลับเข้าจังหวะเรียน</div>
+    </section>
+
+    <section class="slide" id="s24" data-slide="24" data-group="Pre-LAB 04">
+      <span class="section-kicker">Checkpoint Console</span>
+      <h2>เลือก CP เพื่อดู Goal • Gate • Recovery</h2>
+      <div class="checkpoint-tabs" id="checkpoint-tabs" role="tablist" aria-label="Pre-LAB checkpoints"></div>
+      <div class="checkpoint-detail" id="checkpoint-detail" aria-live="polite">
+        <div class="checkpoint-time"><div><strong>15</strong>นาที</div></div>
+        <div><h3>CP00 — First React Success</h3><p>Vite/HMR ทำงานและอธิบายเส้นทาง index → main → App</p></div>
+        <div><h3>Gate</h3><p><code>npm run check:cp -- CP00</code></p><h3>Recovery</h3><p>copy snapshot CP00/src</p></div>
+      </div>
+      <div class="callout"><strong>Instructor source:</strong> <code>pre-lab04/INSTRUCTOR_LIVE_CODING_RUNBOOK.md</code> รวม code/why/test/recovery ในไฟล์เดียว</div>
+    </section>
+
+    <section class="slide" id="s25" data-slide="25" data-group="Pre-LAB 04">
+      <span class="section-kicker">Pre-LAB → LAB Transfer</span>
+      <h2>ใช้ Pattern เดิม แต่เปลี่ยน Data Contract</h2>
+      <table>
+        <thead><tr><th>Pre-LAB: Study Task Board</th><th>LAB 4: Campus Service Request</th></tr></thead>
+        <tbody>
+          <tr><td><code>title, category, priority, status</code></td><td><code>requesterName, requestType, location, details, priority, status</code></td></tr>
+          <tr><td>Task components</td><td>AppHeader, SummaryPanel, RequestForm, FilterBar, RequestList, RequestCard</td></tr>
+          <tr><td>validation 2–3 rules</td><td>validation 5 rules + accessible error</td></tr>
+          <tr><td>summary todo/doing/done</td><td>total/pending/in-progress/completed</td></tr>
+          <tr><td>local checkpoint/build</td><td>feature branch + PR + Pages + test evidence</td></tr>
+        </tbody>
+      </table>
+      <div class="callout"><strong>Transfer ไม่ใช่ Copy/Rename:</strong> ออกแบบ mapping, validation, responsibility และหลักฐานใหม่ด้วยตนเอง</div>
+    </section>
+
+    <section class="slide" id="s26" data-slide="26" data-group="LAB 4 Steps">
+      <span class="section-kicker">LAB 4 • Individual • 3 points</span>
+      <h2>Homework Timebox H0–H6 = 240 นาที</h2>
+      <div class="timeline">
+        <article class="timeline-step"><strong>H0 • 20</strong><p>Update main, branch, starter และ install</p></article>
+        <article class="timeline-step"><strong>H1 • 45</strong><p>Component tree, initial data, props rendering</p></article>
+        <article class="timeline-step"><strong>H2 • 50</strong><p>State, derived summary, filter, delete</p></article>
+        <article class="timeline-step"><strong>H3 • 60</strong><p>Controlled form, validation, add, feedback</p></article>
+        <article class="timeline-step"><strong>H4 • 30</strong><p>Responsive, keyboard, TC-01–TC-10</p></article>
+        <article class="timeline-step"><strong>H5 • 30</strong><p>README, build, PR, merge, Pages</p></article>
+        <article class="timeline-step"><strong>H6 • 5</strong><p>Incognito check + ส่ง 3 URLs</p></article>
+      </div>
+      <div class="callout"><strong>Repository:</strong> <code>engse203-student-labs-&lt;student-id&gt;</code> • Branch: <code>lab/week-04</code> • Source: <code>labs/week-04/source/</code></div>
+    </section>
+
+    <section class="slide" id="s27" data-slide="27" data-group="LAB 4 Steps">
+      <span class="section-kicker">Requirements &amp; Rubric</span>
+      <h2>Definition of Done: R01–R14</h2>
+      <div class="grid-3">
+        <div class="card accent"><h3>Structure/Data</h3><p>R01–R04: case contract, component tree, props/callback, derived summary</p></div>
+        <div class="card warn"><h3>Interaction</h3><p>R05–R11: controlled form, validation, immutable add/delete, filter, conditional states</p></div>
+        <div class="card success"><h3>Delivery</h3><p>R12–R14: responsive/accessibility, code quality, Git/PR/README/Pages</p></div>
+      </div>
+      <h3 style="margin-top:1rem">คะแนนเต็ม 3.00</h3>
+      <div class="rubric-bar" aria-label="สัดส่วนคะแนน LAB 4">
+        <span>.60<br>Components</span><span>.80<br>State/Form</span><span>.50<br>UX/Validation</span><span>.40<br>Code</span><span>.40<br>Git/README</span><span>.30<br>Pages/Test</span>
+      </div>
+      <div class="callout"><strong>Gate:</strong> <code>npm install</code>, <code>npm run check</code>, <code>npm run build</code> ผ่าน และ Console ไม่มี error/key warning</div>
+    </section>
+
+    <section class="slide" id="s28" data-slide="28" data-group="Instructor Solution">
+      <span class="section-kicker">Instructor Solution</span>
+      <h2>เฉลยใช้เพื่อ Diagnose และ Recover—ไม่ใช่แจกก่อนทำ</h2>
+      <div class="grid-3">
+        <div class="card accent"><span class="number">1</span><h3>Observe</h3><p>ดู error แรก, current CP และสิ่งที่นักศึกษาคาดว่าจะเกิด</p></div>
+        <div class="card warn"><span class="number">2</span><h3>Hint</h3><p>ให้ hint 1–2 ครั้งหรือเปิด diff เฉพาะไฟล์ที่เกี่ยวข้อง</p></div>
+        <div class="card success"><span class="number">3</span><h3>Recover</h3><p>copy snapshot current CP แล้วให้ผู้เรียนอธิบาย data flow</p></div>
+      </div>
+      <div class="grid-2" style="margin-top:1rem">
+        <div class="code-block"><div class="code-label">Pre-LAB recovery <button class="copy-button" type="button">Copy</button></div><pre><code>mv src ../src-before-CP04
+cp -R "$COURSE_REPO/labs/week-04-react-components-state/\
+pre-lab04/checkpoints/CP04/src" ./src
+npm run check:cp -- CP04</code></pre></div>
+        <div class="card danger"><h3>Instructor Solution</h3><p>เก็บ solution ใน Instructor Kit แยกจาก Course Repository และ Student Template</p><p><strong>Verify:</strong> student package ต้องไม่มี solution</p></div>
+      </div>
+    </section>
+
+    <section class="slide" id="s29" data-slide="29" data-group="GitHub Pages">
+      <span class="section-kicker">Git Workflow</span>
+      <h2>Weekly Branch → Pull Request → Main</h2>
+      <div class="code-block"><div class="code-label">terminal <button class="copy-button" type="button">Copy</button></div><pre><code>git switch -c lab/week-04
+git add .
+git commit -m "feat(week-04): add reusable request components"
+git push -u origin lab/week-04
+
+# เปิด Pull Request: lab/week-04 → main
+# Review checklist → Merge → pull main</code></pre></div>
+      <div class="timeline">
+        <article class="timeline-step"><strong>1 • Branch</strong><p>แยกงานออกจาก main</p></article>
+        <article class="timeline-step"><strong>2 • Commits</strong><p>หลักฐานความคืบหน้าเป็นช่วง</p></article>
+        <article class="timeline-step"><strong>3 • PR</strong><p>อธิบาย change + test evidence</p></article>
+        <article class="timeline-step"><strong>4 • Merge</strong><p>main เป็น version ส่งงาน</p></article>
+      </div>
+    </section>
+
+    <section class="slide" id="s30" data-slide="30" data-group="GitHub Pages">
+      <span class="section-kicker">Build &amp; Deploy</span>
+      <h2>Vite <code>dist/</code> → Publish → Pages Hub</h2>
+      <div class="grid-2">
+        <div class="code-block"><div class="code-label">vite.config.js <button class="copy-button" type="button">Copy</button></div><pre><code>export default defineConfig({
+  plugins: [react()],
+  base: "./",
+  build: {
+    outDir: "dist",
+    emptyOutDir: true,
+  },
+});</code></pre></div>
+        <div class="code-block"><div class="code-label">terminal <button class="copy-button" type="button">Copy</button></div><pre><code>npm --prefix labs/week-04/source run check
+npm --prefix labs/week-04/source run build
+npm run import:publish -- week-04 labs/week-04/source/dist
+npm run build:pages
+npm run verify:lab -- week-04</code></pre></div>
+      </div>
+      <div class="grid-3" style="margin-top:.8rem">
+        <div class="card"><h3>1. Build</h3><p>source → dist → publish</p></div>
+        <div class="card"><h3>2. Hub</h3><p><code>npm run build:pages</code></p></div>
+        <div class="card"><h3>3. Verify</h3><p>เปิด <code>/labs/week-04/</code> ใน Incognito</p></div>
+      </div>
+      <div class="callout"><strong>จำให้ชัด:</strong> อย่าแก้ <code>docs/</code> ด้วยมือ เพราะ Pages Hub generator จะสร้างใหม่</div>
+    </section>
+
+    <section class="slide" id="s31" data-slide="31" data-group="Submission Checklist">
+      <span class="section-kicker">Submission Checklist</span>
+      <h2>ตรวจให้ครบก่อนส่ง 3 ลิงก์ + 1 tag</h2>
+      <div class="checklist" id="submission-checklist">
+        <label class="check-item"><input type="checkbox"><span>ใช้ Student Repository เดิมและ branch <code>lab/week-04</code></span></label>
+        <label class="check-item"><input type="checkbox"><span>Pull Request merge แล้ว พร้อมคำอธิบายและ tests</span></label>
+        <label class="check-item"><input type="checkbox"><span><code>npm run check</code> และ <code>npm run build</code> ผ่าน</span></label>
+        <label class="check-item"><input type="checkbox"><span>TC-01–TC-12 มีผลจริงใน README</span></label>
+        <label class="check-item"><input type="checkbox"><span>Screenshot desktop/mobile และ state สำคัญครบ</span></label>
+        <label class="check-item"><input type="checkbox"><span>Pages เปิด Incognito และไม่มี asset 404</span></label>
+        <label class="check-item"><input type="checkbox"><span>ไม่มี <code>node_modules</code>, secret, token หรือ <code>.env</code></span></label>
+        <label class="check-item"><input type="checkbox"><span>README มีข้อมูลผู้เรียน, URLs และ AI disclosure</span></label>
+      </div>
+      <div class="demo-panel" style="margin-top:.75rem">
+        <p style="margin:0"><strong id="checklist-score">0 / 8</strong> รายการพร้อมส่ง</p>
+        <div class="progress-track" style="margin-top:.4rem;background:#d3e1ec"><div class="progress-bar" id="checklist-progress"></div></div>
+      </div>
+      <div class="callout"><strong>ส่ง:</strong> Repository/Pages Hub URL • LAB04 Result URL • merged PR URL • tag <code>lab-04-submission-v1</code></div>
+    </section>
+
+    <section class="slide" id="s32" data-slide="32" data-group="Week 05 Connection">
+      <span class="section-kicker">Boundary &amp; Handoff</span>
+      <h2>Week 04 พร้อมอะไรให้ Week 05?</h2>
+      <table>
+        <thead><tr><th>Week 04 พร้อมแล้ว</th><th>Week 05 จะเพิ่ม</th></tr></thead>
+        <tbody>
+          <tr><td>Component Tree</td><td>Router / page / layout</td></tr>
+          <tr><td>Request Data Contract</td><td>Mock service / data fetching</td></tr>
+          <tr><td>State in memory</td><td>Persistence / LocalStorage</td></tr>
+          <tr><td>Controlled Form</td><td>Submit ผ่าน service</td></tr>
+          <tr><td>Manual test baseline</td><td>Regression หลัง data lifecycle</td></tr>
+        </tbody>
+      </table>
+      <div class="callout"><strong>Week 04 Boundary:</strong> ยังไม่บังคับ React Router, remote API/fetch, persistence, <code>useEffect()</code> เชิงลึก, Context/state library หรือ authentication</div>
+    </section>
+
+    <section class="slide" id="s33" data-slide="33" data-group="Week 05 Connection">
+      <span class="section-kicker">Check Understanding</span>
+      <h2>คลิกคำถามเพื่อเปิดแนวคำตอบ</h2>
+      <div class="question-grid">
+        <button class="reveal-card" type="button"><strong>1. React mental model ต่างจาก DOM mutation อย่างไร?</strong><span class="answer">เปลี่ยน state แล้วให้ React render UI จาก state แทนแก้ DOM หลายจุดเอง</span></button>
+        <button class="reveal-card" type="button"><strong>2. ใครควรเป็นเจ้าของ requests?</strong><span class="answer">App เพราะ Summary, Filter, Form และ List ต้องใช้ข้อมูลชุดเดียวกัน</span></button>
+        <button class="reveal-card" type="button"><strong>3. Props และ State ต่างกันอย่างไร?</strong><span class="answer">Props เป็น input read-only จาก Parent; State เป็นข้อมูลที่ owner เปลี่ยนผ่าน setter</span></button>
+        <button class="reveal-card" type="button"><strong>4. ทำไมไม่ใช้ <code>push()</code> กับ state?</strong><span class="answer">เพราะ mutate reference เดิม; immutable update ช่วยให้การเปลี่ยนแปลงคาดเดาและตรวจพบง่าย</span></button>
+        <button class="reveal-card" type="button"><strong>5. Controlled input ต้องมีอะไรคู่กัน?</strong><span class="answer"><code>value</code> และ <code>onChange</code> ที่อัปเดต state</span></button>
+        <button class="reveal-card" type="button"><strong>6. Pages asset 404 ตรวจอะไร?</strong><span class="answer">Vite base ./, dist → publish, build Pages Hub และ merge ล่าสุด</span></button>
+      </div>
+      <div class="callout"><strong>Exit ticket:</strong> อธิบายด้วยคำของตนเองว่า “Props ลง • Events ขึ้น • State owner อยู่ที่ใด”</div>
+    </section>
+  </main>
+
+  <div class="floating-nav" aria-label="เปลี่ยนสไลด์">
+    <button class="nav-button" id="prev-slide" type="button" aria-label="สไลด์ก่อนหน้า">←</button>
+    <span class="slide-counter" id="slide-counter">01 / 33</span>
+    <button class="nav-button" id="next-slide" type="button" aria-label="สไลด์ถัดไป">→</button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">คัดลอกแล้ว</div>
+
+  <script>
+    "use strict";
+
+    const slides = [...document.querySelectorAll(".slide")];
+    const deck = document.getElementById("deck");
+    const tocLinks = [...document.querySelectorAll(".toc a")];
+    const progressBar = document.getElementById("progress-bar");
+    const progressText = document.getElementById("progress-text");
+    const currentGroup = document.getElementById("current-group");
+    const slideCounter = document.getElementById("slide-counter");
+    const toast = document.getElementById("toast");
+    let currentIndex = 0;
+    let fontScale = 1;
+    let toastTimer;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => toast.classList.remove("show"), 1500);
+    }
+
+    function setCurrentSlide(index, updateHash = true) {
+      currentIndex = Math.max(0, Math.min(index, slides.length - 1));
+      const slide = slides[currentIndex];
+      const percent = ((currentIndex + 1) / slides.length) * 100;
+      progressBar.style.width = `${percent}%`;
+      progressText.textContent = `${currentIndex + 1} / ${slides.length}`;
+      slideCounter.textContent = `${String(currentIndex + 1).padStart(2, "0")} / ${slides.length}`;
+      currentGroup.textContent = slide.dataset.group;
+      tocLinks.forEach((link) => {
+        const targetIndex = slides.findIndex((item) => item.id === link.dataset.target);
+        const nextTargetIndex = tocLinks
+          .map((item) => slides.findIndex((candidate) => candidate.id === item.dataset.target))
+          .filter((item) => item > targetIndex)
+          .sort((a, b) => a - b)[0] ?? slides.length;
+        link.classList.toggle("active", currentIndex >= targetIndex && currentIndex < nextTargetIndex);
+      });
+      if (updateHash && history.replaceState) history.replaceState(null, "", `#${slide.id}`);
+    }
+
+    function goToSlide(index) {
+      const safeIndex = Math.max(0, Math.min(index, slides.length - 1));
+      slides[safeIndex].scrollIntoView({ behavior: "smooth", block: "start" });
+      setCurrentSlide(safeIndex);
+    }
+
+    document.getElementById("prev-slide").addEventListener("click", () => goToSlide(currentIndex - 1));
+    document.getElementById("next-slide").addEventListener("click", () => goToSlide(currentIndex + 1));
+
+    tocLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        const index = slides.findIndex((slide) => slide.id === link.dataset.target);
+        goToSlide(index);
+        document.body.classList.remove("menu-open");
+        document.getElementById("menu-button").setAttribute("aria-expanded", "false");
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      const index = slides.indexOf(visible.target);
+      if (index >= 0) setCurrentSlide(index, false);
+    }, { root: window.innerWidth > 820 ? deck : null, threshold: [0.35, 0.6, 0.8] });
+    slides.forEach((slide) => observer.observe(slide));
+
+    function adjustFont(delta) {
+      fontScale = Math.max(.82, Math.min(1.28, Number((fontScale + delta).toFixed(2))));
+      document.documentElement.style.setProperty("--font-scale", fontScale);
+      try { localStorage.setItem("engse203-font-scale", String(fontScale)); } catch (_) { /* offline-safe */ }
+      showToast(`ขนาดตัวอักษร ${Math.round(fontScale * 100)}%`);
+    }
+
+    document.getElementById("font-down").addEventListener("click", () => adjustFont(-.06));
+    document.getElementById("font-up").addEventListener("click", () => adjustFont(.06));
+
+    try {
+      const savedScale = Number(localStorage.getItem("engse203-font-scale"));
+      if (savedScale >= .82 && savedScale <= 1.28) {
+        fontScale = savedScale;
+        document.documentElement.style.setProperty("--font-scale", fontScale);
+      }
+    } catch (_) { /* local file mode may block storage */ }
+
+    document.getElementById("fullscreen-button").addEventListener("click", async () => {
+      try {
+        if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+        else await document.exitFullscreen();
+      } catch (_) {
+        showToast("Browser ไม่อนุญาต Fullscreen ในโหมดนี้");
+      }
+    });
+
+    const notesToggle = document.getElementById("notes-toggle");
+    function toggleNotes() {
+      const isOpen = document.body.classList.toggle("show-notes");
+      notesToggle.setAttribute("aria-pressed", String(isOpen));
+      showToast(isOpen ? "เปิด Instructor Notes" : "ปิด Instructor Notes");
+    }
+    notesToggle.addEventListener("click", toggleNotes);
+
+    const menuButton = document.getElementById("menu-button");
+    menuButton.addEventListener("click", () => {
+      const isOpen = document.body.classList.toggle("menu-open");
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      const tag = document.activeElement?.tagName;
+      const editing = ["INPUT", "TEXTAREA", "SELECT"].includes(tag);
+      if (editing) return;
+      if (["ArrowRight", "PageDown", " "].includes(event.key)) { event.preventDefault(); goToSlide(currentIndex + 1); }
+      if (["ArrowLeft", "PageUp"].includes(event.key)) { event.preventDefault(); goToSlide(currentIndex - 1); }
+      if (event.key === "Home") { event.preventDefault(); goToSlide(0); }
+      if (event.key === "End") { event.preventDefault(); goToSlide(slides.length - 1); }
+      if (event.key.toLowerCase() === "f") document.getElementById("fullscreen-button").click();
+      if (event.key.toLowerCase() === "n") toggleNotes();
+      if (event.key === "+" || event.key === "=") adjustFont(.06);
+      if (event.key === "-") adjustFont(-.06);
+    });
+
+    document.querySelectorAll(".copy-button").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const code = button.closest(".code-block")?.querySelector("code")?.textContent ?? "";
+        try {
+          await navigator.clipboard.writeText(code);
+          showToast("คัดลอก code แล้ว");
+        } catch (_) {
+          const area = document.createElement("textarea");
+          area.value = code;
+          area.style.position = "fixed";
+          area.style.opacity = "0";
+          document.body.append(area);
+          area.select();
+          document.execCommand("copy");
+          area.remove();
+          showToast("คัดลอก code แล้ว");
+        }
+      });
+    });
+
+    document.getElementById("run-jsx").addEventListener("click", () => {
+      const name = document.getElementById("jsx-name").value.trim() || "(ไม่ระบุชื่อ)";
+      const location = document.getElementById("jsx-location").value.trim() || "(ไม่ระบุสถานที่)";
+      const preview = document.getElementById("jsx-preview");
+      preview.replaceChildren();
+      const title = document.createElement("h3");
+      const requester = document.createElement("p");
+      const place = document.createElement("p");
+      title.textContent = "แจ้งซ่อม";
+      requester.textContent = `ผู้แจ้ง: ${name}`;
+      place.textContent = `สถานที่: ${location}`;
+      preview.append(title, requester, place);
+      document.getElementById("jsx-status").textContent = "Render ใหม่จาก expression สำเร็จ";
+    });
+
+    const componentInfo = {
+      App: ["State owner", "ถือ requests/filter state, คำนวณ derived data และเชื่อม child components", "หลายส่วนของหน้าจอใช้ข้อมูลคำร้องชุดเดียวกัน"],
+      AppHeader: ["Presentational", "แสดงชื่อระบบ คำอธิบาย และบริบทของ LAB", "รับ title/subtitle ผ่าน props และไม่มีเหตุผลต้องถือ request state"],
+      SummaryPanel: ["Derived view", "แสดง total/pending/in-progress/completed", "รับ summary ที่คำนวณจาก requests จริงเพื่อไม่เกิด duplicate state"],
+      RequestForm: ["Local state", "ถือ formData/errors และส่ง validated request ผ่าน callback", "ค่าฟอร์มใช้เฉพาะที่นี่ แต่ Parent เป็นผู้เพิ่มลง requests"],
+      FilterBar: ["Controlled filter", "รับ current filter/counts และส่งค่าที่เลือกกลับ Parent", "Parent ต้องใช้ filter คำนวณ list ที่ส่งให้ RequestList"],
+      RequestList: ["List boundary", "เลือก empty state หรือ map RequestCard", "รวม list behavior ไว้จุดเดียวและส่ง callback ต่อให้ card"],
+      RequestCard: ["Item view", "แสดง request หนึ่งรายการและส่ง delete intent + id", "ไม่รู้วิธีจัดเก็บ state จึง reusable และทดสอบง่าย"],
+    };
+
+    document.querySelectorAll(".component-node").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".component-node").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        const [owner, role, why] = componentInfo[button.dataset.component];
+        document.getElementById("component-owner").textContent = owner;
+        document.getElementById("component-name").textContent = button.dataset.component;
+        document.getElementById("component-role").textContent = role;
+        document.getElementById("component-why").innerHTML = `<strong>Why:</strong> ${why}`;
+      });
+    });
+
+    document.getElementById("run-props").addEventListener("click", () => {
+      const type = document.getElementById("props-type").value.trim() || "คำร้องทั่วไป";
+      const priority = document.getElementById("props-priority").value;
+      const preview = document.getElementById("props-preview");
+      preview.replaceChildren();
+      const title = document.createElement("h3");
+      const text = document.createElement("p");
+      title.textContent = type;
+      text.textContent = `Priority: ${priority}`;
+      preview.append(title, text);
+      document.getElementById("props-trace").innerHTML = `<span>App</span> → <span>{ requestType: "${type}", priority: "${priority}" }</span> → <span>RequestCard</span>`;
+    });
+
+    const mutableBase = [{ id: "REQ-001" }, { id: "REQ-002" }];
+    document.getElementById("run-mutable").addEventListener("click", () => {
+      const before = mutableBase;
+      mutableBase.push({ id: `REQ-00${mutableBase.length + 1}` });
+      document.getElementById("immutable-result").textContent = `Mutate: before === after → ${before === mutableBase} | length ${mutableBase.length} | reference เดิม`;
+    });
+    document.getElementById("run-immutable").addEventListener("click", () => {
+      const before = [{ id: "REQ-001" }, { id: "REQ-002" }];
+      const after = [{ id: "REQ-003" }, ...before];
+      document.getElementById("immutable-result").textContent = `Immutable: before === after → ${before === after} | before ${before.length}, after ${after.length} | reference ใหม่`;
+    });
+
+    let demoRequests = [
+      { id: "REQ-001", requestType: "แจ้งซ่อม", location: "LAB 301", status: "pending" },
+      { id: "REQ-002", requestType: "บัญชีผู้ใช้", location: "Online", status: "in-progress" },
+      { id: "REQ-003", requestType: "ขอใช้ห้อง", location: "SE Studio", status: "completed" },
+    ];
+    let demoFilter = "all";
+    let renderCount = 0;
+    const statuses = ["all", "pending", "in-progress", "completed"];
+
+    function renderStateDemo() {
+      renderCount += 1;
+      document.getElementById("render-count").textContent = renderCount;
+      const counts = {
+        all: demoRequests.length,
+        pending: demoRequests.filter((item) => item.status === "pending").length,
+        "in-progress": demoRequests.filter((item) => item.status === "in-progress").length,
+        completed: demoRequests.filter((item) => item.status === "completed").length,
+      };
+      const summary = document.getElementById("state-summary");
+      summary.innerHTML = statuses.map((status) => `<div class="summary-item"><strong>${counts[status]}</strong>${status}</div>`).join("");
+      const filters = document.getElementById("state-filters");
+      filters.innerHTML = statuses.map((status) => `<button class="chip-button ${status === demoFilter ? "active" : ""}" type="button" data-filter="${status}" aria-pressed="${status === demoFilter}">${status}</button>`).join("");
+      filters.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => { demoFilter = button.dataset.filter; renderStateDemo(); });
+      });
+      const visible = demoFilter === "all" ? demoRequests : demoRequests.filter((item) => item.status === demoFilter);
+      const list = document.getElementById("state-list");
+      if (visible.length === 0) {
+        list.innerHTML = `<p class="empty-state">ไม่พบคำร้องในสถานะ ${demoFilter}</p>`;
+        return;
+      }
+      list.innerHTML = visible.map((request) => `<article class="request-row"><p><strong>${request.id} • ${request.requestType}</strong><br>${request.location}<span class="status-badge">${request.status}</span></p><button class="danger-button" type="button" data-delete-id="${request.id}">ลบ</button></article>`).join("");
+      list.querySelectorAll("[data-delete-id]").forEach((button) => {
+        button.addEventListener("click", () => {
+          demoRequests = demoRequests.filter((request) => request.id !== button.dataset.deleteId);
+          renderStateDemo();
+        });
+      });
+    }
+
+    document.getElementById("state-add").addEventListener("click", () => {
+      const next = demoRequests.length + renderCount + 1;
+      demoRequests = [{ id: `REQ-${String(next).padStart(3, "0")}`, requestType: "คำร้องจำลอง", location: "Campus", status: "pending" }, ...demoRequests];
+      demoFilter = "all";
+      renderStateDemo();
+    });
+    document.getElementById("state-clear").addEventListener("click", () => { demoRequests = []; renderStateDemo(); });
+    renderStateDemo();
+
+    const form = document.getElementById("request-form-demo");
+    const formFields = {
+      requesterName: [document.getElementById("demo-requester"), document.getElementById("err-requester")],
+      requestType: [document.getElementById("demo-type"), document.getElementById("err-type")],
+      location: [document.getElementById("demo-location"), document.getElementById("err-location")],
+      details: [document.getElementById("demo-details"), document.getElementById("err-details")],
+    };
+
+    function validateDemo(data) {
+      const errors = {};
+      if (data.requesterName.trim().length < 2) errors.requesterName = "กรอกชื่ออย่างน้อย 2 ตัวอักษร";
+      if (!data.requestType) errors.requestType = "กรุณาเลือกประเภทคำร้อง";
+      if (!data.location.trim()) errors.location = "กรุณาระบุสถานที่";
+      if (data.details.trim().length < 10) errors.details = "อธิบายอย่างน้อย 10 ตัวอักษร";
+      return errors;
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(form));
+      const errors = validateDemo(data);
+      Object.entries(formFields).forEach(([name, [control, error]]) => {
+        const message = errors[name] ?? "";
+        control.setAttribute("aria-invalid", String(Boolean(message)));
+        error.textContent = message;
+      });
+      const status = document.getElementById("form-status");
+      if (Object.keys(errors).length > 0) {
+        status.style.color = "var(--red)";
+        status.textContent = `Invalid: พบ ${Object.keys(errors).length} จุด — ไม่เพิ่มและไม่ reset`;
+        return;
+      }
+      const request = {
+        id: `REQ-${String(Date.now()).slice(-4)}`,
+        requestType: data.requestType,
+        location: data.location,
+        status: "pending",
+      };
+      demoRequests = [request, ...demoRequests];
+      demoFilter = "all";
+      renderStateDemo();
+      form.reset();
+      Object.values(formFields).forEach(([control, error]) => { control.setAttribute("aria-invalid", "false"); error.textContent = ""; });
+      status.style.color = "var(--green)";
+      status.textContent = `Success: เพิ่ม ${request.id} แบบ immutable และ reset form`;
+    });
+
+    document.getElementById("fill-valid").addEventListener("click", () => {
+      document.getElementById("demo-requester").value = "กานต์ วิศวกร";
+      document.getElementById("demo-type").value = "แจ้งซ่อม";
+      document.getElementById("demo-location").value = "ห้องปฏิบัติการ 301";
+      document.getElementById("demo-details").value = "เครื่องปรับอากาศไม่ทำงานตั้งแต่ช่วงเช้า";
+      document.getElementById("form-status").textContent = "เติมข้อมูลแล้ว — กด Run Submit เพื่อทดสอบ valid path";
+    });
+
+    const checkpointData = [
+      ["CP00", 15, "First React Success", "Vite/HMR และเส้นทาง index → main → App", "App.jsx"],
+      ["CP01", 30, "JSX & Components", "สร้าง AppHeader/SummaryPanel และส่ง props", "App.jsx + components"],
+      ["CP02", 35, "Props, map & key", "TaskList/TaskCard และ stable task.id", "TaskList.jsx + TaskCard.jsx"],
+      ["CP03", 40, "State & Filter", "useState, derived summary และ status filter", "App.jsx + FilterBar.jsx"],
+      ["CP04", 50, "Controlled Form", "validation, onChange/onSubmit และ immutable add", "TaskForm.jsx + App.jsx"],
+      ["CP05", 35, "Callback & Conditional", "delete ด้วย id/filter และ empty state", "TaskList/TaskCard/App"],
+      ["CP06", 20, "Responsive & A11y", "375px, focus, label, error และ status", "styles.css + form"],
+      ["CP07", 15, "Verify & Transfer", "check/build/reflection และ LAB 4 bridge", "REFLECTION.md + scripts"],
+    ];
+    const checkpointTabs = document.getElementById("checkpoint-tabs");
+    const checkpointDetail = document.getElementById("checkpoint-detail");
+
+    function showCheckpoint(index) {
+      const [id, minutes, title, goal, files] = checkpointData[index];
+      checkpointTabs.querySelectorAll("button").forEach((button, buttonIndex) => {
+        button.classList.toggle("active", buttonIndex === index);
+        button.setAttribute("aria-selected", String(buttonIndex === index));
+      });
+      checkpointDetail.innerHTML = `<div class="checkpoint-time"><div><strong>${minutes}</strong>นาที</div></div><div><h3>${id} — ${title}</h3><p>${goal}</p><p><strong>ไฟล์:</strong> <code>${files}</code></p></div><div><h3>Gate</h3><p><code>npm run check:cp -- ${id}</code></p><h3>Recovery</h3><p>เก็บ src เดิม แล้ว copy <code>checkpoints/${id}/src</code></p></div>`;
+    }
+
+    checkpointData.forEach(([id], index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `chip-button ${index === 0 ? "active" : ""}`;
+      button.setAttribute("role", "tab");
+      button.setAttribute("aria-selected", String(index === 0));
+      button.textContent = id;
+      button.addEventListener("click", () => showCheckpoint(index));
+      checkpointTabs.append(button);
+    });
+
+    const checklistInputs = [...document.querySelectorAll("#submission-checklist input")];
+    function updateChecklist() {
+      const count = checklistInputs.filter((input) => input.checked).length;
+      document.getElementById("checklist-score").textContent = `${count} / ${checklistInputs.length}`;
+      document.getElementById("checklist-progress").style.width = `${(count / checklistInputs.length) * 100}%`;
+      if (count === checklistInputs.length) showToast("Checklist พร้อมส่งครบแล้ว");
+    }
+    checklistInputs.forEach((input) => input.addEventListener("change", updateChecklist));
+
+    document.querySelectorAll(".reveal-card").forEach((button) => {
+      button.addEventListener("click", () => button.classList.toggle("open"));
+    });
+
+    const hashIndex = slides.findIndex((slide) => `#${slide.id}` === window.location.hash);
+    setCurrentSlide(hashIndex >= 0 ? hashIndex : 0, false);
+    if (hashIndex >= 0) requestAnimationFrame(() => slides[hashIndex].scrollIntoView({ block: "start" }));
+  </script>
+</body>
+</html>

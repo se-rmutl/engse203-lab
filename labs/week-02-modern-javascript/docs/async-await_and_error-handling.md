@@ -3,8 +3,6 @@
 > เอกสารประกอบการสอนรายวิชา **ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์**  
 > หัวข้อ: `async/await`, `fetch`, `response.ok`, `try/catch/finally`, UI state และการทดสอบกรณีผิดพลาด
 
-![Flow: Async/Await และ Error Handling](images/async-fetch-error-flow.png)
-
 ---
 
 ## 1) เป้าหมายการเรียนรู้
@@ -461,7 +459,7 @@ http://localhost:5173/
 GitHub Pages มัก deploy เว็บไว้ใต้ชื่อ repository เช่น:
 
 ```text
-https://<username>.github.io/engse203-lab02-<student-id>/
+https://<username>.github.io/engse203-student-labs-<student-id>/labs/week-02/
 ```
 
 หากเขียน path แบบ `/data/learning-tasks.json` อาจชี้ไปยัง root ของ domain แทนที่จะเป็น root ของ project

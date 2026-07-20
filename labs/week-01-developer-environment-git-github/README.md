@@ -1,221 +1,157 @@
 # LAB 01 — Developer Environment & GitHub Repository Setup
 
-**สัปดาห์ที่ 1** · หน่วยที่ 1 พื้นฐานการพัฒนาโปรแกรมสมัยใหม่และการทำงานร่วมกัน  
-**รูปแบบงาน:** รายบุคคล  
-**CLO ที่เกี่ยวข้อง:** CLO1, CLO2, CLO7  
-**หลักฐานการประเมิน:** A2 Weekly LAB — 3 คะแนนย่อย
+**สัปดาห์ที่ 1** · งานรายบุคคล · **A2 Weekly LAB: 3 คะแนนย่อย**  
+**CLO:** CLO1, CLO2, CLO7
 
-## เป้าหมายของ LAB
+## ก่อนเริ่ม
 
-เมื่อทำ LAB นี้เสร็จ นักศึกษาจะสามารถ
-
-1. ตรวจสอบและใช้ Node.js, npm, Visual Studio Code และ Git จาก Terminal ได้
-2. สร้างโครงงาน JavaScript ขนาดย่อม พร้อม `package.json` และ npm script
-3. รันโปรแกรม Node.js ที่แสดงชื่อ รหัสนักศึกษา OS และ Node.js version ได้
-4. สร้าง GitHub repository, commit, push และจัดทำ README เพื่อเป็นหลักฐานการเรียนรู้ได้
-
-## สิ่งที่ต้องเตรียม
-
-- Visual Studio Code
-- Node.js รุ่น LTS และ npm
-- Git
-- บัญชี GitHub ที่ใช้งานได้
-- อินเทอร์เน็ต
-
-> ใช้ iMac M1/macOS ในห้องปฏิบัติการ หรือ notebook Windows ของตนเองได้ โดยทำ [Setup Guide v3](../../docs/setup/README.md) ให้ครบก่อน สำหรับ Windows ให้ใช้ Ubuntu 24.04 LTS บน WSL 2 ตาม [Windows 11 + WSL2 Setup](../../docs/setup/windows-11-wsl2.md)
-
----
-
-## ขั้นตอนที่ 1 — ตรวจสอบเครื่องมือ
-
-เปิด **Visual Studio Code → Terminal → New Terminal** แล้วรันคำสั่งต่อไปนี้
-
-```bash
-node -v
-npm -v
-git --version
-```
-
-ผลลัพธ์ควรเป็นหมายเลขเวอร์ชันทั้ง 3 รายการ หากคำสั่งใดแสดงข้อความว่าไม่พบคำสั่ง ให้แจ้งผู้สอน/ผู้ช่วยสอนก่อนดำเนินการต่อ
-
-### จุดที่ macOS และ Windows ต่างกัน
-
-| รายการ | iMac M1 / macOS | Windows 11 notebook | แนวปฏิบัติร่วม |
-|---|---|---|---|
-| Terminal | VS Code Terminal (zsh) | VS Code Remote - WSL Terminal (Bash) | ใช้ VS Code Integrated Terminal เป็นหลัก |
-| Environment | macOS native | Ubuntu 24.04 LTS บน WSL 2 | รัน Node.js, npm และ Git จาก environment นี้ |
-| โฟลเดอร์งาน | `~/Documents/ENGSE203` | `~/workspace/engse203` ใน Ubuntu WSL | ตั้งชื่อ project เป็นภาษาอังกฤษ |
-| การเปิดโฟลเดอร์ | `code .` | รัน `code .` จาก Ubuntu WSL | Windows ต้องเห็น `WSL: Ubuntu-24.04` ที่มุมซ้ายล่าง |
-
-> **Windows:** ห้ามทำ LAB นี้ใน PowerShell หรือโฟลเดอร์ `/mnt/c/...` ให้เปิด Ubuntu WSL แล้วทำตาม [Windows 11 + WSL2 Setup](../../docs/setup/windows-11-wsl2.md) และ [Git + GitHub SSH Guide](../../docs/setup/git-github-ssh.md) ก่อน
-
----
-
-## ขั้นตอนที่ 2 — สร้างโครงสร้างโครงงาน
-
-สร้างพื้นที่ทำงานของรายวิชา แล้วสร้างโครงงาน LAB 1
-
-**macOS / iMac M1**
-
-```bash
-mkdir -p ~/Documents/ENGSE203
-cd ~/Documents/ENGSE203
-```
-
-**Windows 11 + Ubuntu WSL**
-
-```bash
-mkdir -p ~/workspace/engse203
-cd ~/workspace/engse203
-```
-
-จากนั้น ใช้คำสั่งร่วมกันทั้งสองระบบ
-
-```bash
-mkdir engse203-lab01
-cd engse203-lab01
-npm init -y
-mkdir src
-code .
-```
-
-> Windows students ต้องรันคำสั่งนี้ใน Ubuntu WSL terminal เท่านั้น และหลัง `code .` ให้ตรวจว่ามุมซ้ายล่างของ VS Code แสดง `WSL: Ubuntu-24.04`
-
-โครงสร้างขั้นต่ำที่ต้องได้คือ
+นักศึกษาต้องสร้าง Student Repository จาก Template ให้เสร็จก่อน โดยทำตาม [สร้าง Student Repository ก่อน LAB01](../../docs/student-repository/CREATE_STUDENT_REPOSITORY_BEFORE_LAB01_TH.md)
 
 ```text
-engse203-lab01/
-├── src/
-│   └── hello.js
-├── package.json
-└── README.md
+Repository: engse203-student-labs-<student-id>
+Branch: lab/week-01
+Source: labs/week-01/source/
+Evidence: labs/week-01/evidence/
+Pages result: docs/labs/week-01/
+Tag: lab-01-submission-v1
 ```
 
-นักศึกษาสามารถคัดลอกไฟล์ตัวอย่างจากโฟลเดอร์ [`starter/`](./starter/) ไปยัง repository ส่งงานของตนเอง หรือสร้างเองตามขั้นตอนนี้
+## เป้าหมาย
 
----
+เมื่อทำ LAB นี้เสร็จ นักศึกษาจะสามารถ:
 
-## ขั้นตอนที่ 3 — เขียนและรันโปรแกรม JavaScript
+1. ตรวจ Node.js, npm, Git และ VS Code Terminal ได้
+2. รัน JavaScript ด้วย Node.js และ npm script ได้
+3. ใช้ branch, commit, push และ Pull Request ได้
+4. สร้างหลักฐาน environment และผลการรันบน Pages Hub ได้
 
-สร้างไฟล์ `src/hello.js` แล้วใส่โค้ดต่อไปนี้ โดยเปลี่ยนชื่อและรหัสนักศึกษาเป็นของตนเอง
+## 1. ตรวจเครื่องมือ
 
-```js
-const student = {
-  name: "ชื่อ-นามสกุล",
-  studentId: "รหัสนักศึกษา",
-  os: process.platform,
-  node: process.version,
-};
-
-function createGreeting({ name, studentId, os, node }) {
-  return `Hello ${name} (${studentId}) | OS: ${os} | Node: ${node}`;
-}
-
-console.log(createGreeting(student));
+```bash
+node --version
+npm --version
+git --version
+ssh -T git@github.com
 ```
 
-เปิดไฟล์ `package.json` และแก้ส่วน `scripts` ให้มีคำสั่ง `start`
+ใช้ Node.js `>=22.12.0` บน VS Code Integrated Terminal สำหรับ macOS หรือ VS Code Remote — WSL2 Ubuntu 24.04 สำหรับ Windows 11
+
+## 2. เปิด Branch LAB01
+
+เปิด Terminal ที่ root ของ Student Repository:
+
+```bash
+git switch main
+git pull origin main
+git switch -c lab/week-01
+git branch --show-current
+```
+
+ผลต้องเป็น `lab/week-01`
+
+## 3. นำ Starter เข้า Source
+
+คัดลอก **เนื้อหาภายใน** [`starter/`](./starter/) ไปยัง:
+
+```text
+labs/week-01/source/
+```
+
+ตัวอย่างเมื่อ Course Repository และ Student Repository อยู่ข้างกัน:
+
+```bash
+cp -R ../engse203-lab/labs/week-01-developer-environment-git-github/starter/. labs/week-01/source/
+```
+
+ห้ามคัดลอก `.git`, `node_modules`, `.env` หรือ secret
+
+## 4. แก้และรันโปรแกรม
+
+แก้ข้อมูลนักศึกษาใน `labs/week-01/source/src/hello.js` แล้วรัน:
+
+```bash
+npm --prefix labs/week-01/source install
+npm --prefix labs/week-01/source run start
+npm --prefix labs/week-01/source run check
+```
+
+ผลต้องแสดงชื่อ รหัสนักศึกษา ระบบปฏิบัติการ และ Node.js version ของเครื่องจริง
+
+## 5. จัดทำ Evidence และ Metadata
+
+ใส่หลักฐานใน `labs/week-01/evidence/`:
+
+- ผล `node --version`, `npm --version`, `git --version`
+- screenshot ผล `npm run start`
+- reflection สั้น ๆ เรื่อง branch/commit/PR
+- ปัญหาและวิธีแก้ หากมี
+
+แก้ `labs/week-01/lab-metadata.json`:
 
 ```json
 {
-  "scripts": {
-    "start": "node src/hello.js"
-  }
+  "status": "ready",
+  "sourceOrigin": "course-starter",
+  "submissionTag": "lab-01-submission-v1",
+  "testStatus": "pass"
 }
 ```
 
-จากนั้นรันโปรแกรม
+LAB01 ไม่มี web application ได้ ระบบจะสร้าง Evidence Report ใน Pages Hub อัตโนมัติ
+
+## 6. Build, Verify และ Pull Request
 
 ```bash
-npm run start
-```
-
-ผลลัพธ์ต้องแสดงชื่อ รหัสนักศึกษา ระบบปฏิบัติการ และ Node.js version ของเครื่องที่ใช้จริง
-
----
-
-## ขั้นตอนที่ 4 — สร้าง GitHub Repository และ Push งาน
-
-1. เปิด GitHub ผ่านเว็บเบราว์เซอร์
-2. สร้าง repository ใหม่ชื่อ
-
-```text
-engse203-lab01-<student-id>
-```
-
-3. เลือกสร้าง repository ว่าง **ไม่ต้องสร้าง README จากหน้า GitHub**
-4. กดปุ่ม **Code → SSH** แล้วคัดลอก SSH repository URL จาก GitHub จากนั้นรันคำสั่งด้านล่างภายในโฟลเดอร์ `engse203-lab01`
-
-```bash
-git config --global user.name "ชื่อภาษาอังกฤษของนักศึกษา"
-git config --global user.email "อีเมลที่ใช้กับ GitHub"
-
-git init
+npm run build:pages
+npm run verify:lab -- week-01
 git add .
-git commit -m "feat: initialize ENGSE203 Lab 1"
-git branch -M main
-git remote add origin git@github.com:<github-username>/engse203-lab01-<student-id>.git
-git push -u origin main
+git commit -m "feat(week-01): complete environment and GitHub lab"
+git push -u origin lab/week-01
 ```
 
-หลัง push สำเร็จ ให้เปิดหน้า repository แล้วตรวจว่ามี `src/hello.js`, `package.json` และ `README.md` ครบถ้วน หาก push ไม่ผ่านให้กลับไปตรวจ SSH key ตาม [GitHub SSH Guide](../../docs/setup/git-github-ssh.md)
+เปิด PR `lab/week-01 → main` แล้วนำ PR URL ใส่ metadata เปลี่ยน status เป็น `submitted` จากนั้น build/verify/commit/push อีกครั้งและ merge PR
 
----
+สร้าง tag หลัง merge:
 
-## ขั้นตอนที่ 5 — เขียน README ของงานตนเอง
-
-ให้ใช้ [README template](../../templates/student-lab-readme-template.md) แล้วเติมข้อมูลอย่างน้อยต่อไปนี้
-
-- ชื่อ-นามสกุล และรหัสนักศึกษา
-- ระบบปฏิบัติการที่ใช้ (macOS หรือ Windows)
-- คำสั่งติดตั้ง/รันงาน: `npm run start`
-- ภาพหน้าจอหรือข้อความผลลัพธ์จาก Terminal อย่างน้อย 1 หลักฐาน
-- ปัญหาที่พบและวิธีแก้ไข (ถ้ามี)
-- หัวข้อ `References & AI Assistance` เมื่อมีการใช้เอกสาร/เว็บไซต์/AI ช่วยทำความเข้าใจ
-
----
+```bash
+git switch main
+git pull origin main
+git tag lab-01-submission-v1
+git push origin lab-01-submission-v1
+```
 
 ## สิ่งที่ต้องส่ง
 
-ส่งผ่าน LMS/Google Classroom หรือระบบที่ผู้สอนกำหนด
+1. Pages Hub URL
+2. LAB01 Result URL ที่ `.../labs/week-01/` ซึ่งเป็น Evidence Report ของ LAB01
+3. Pull Request URL ของ `lab/week-01 → main` ที่ merge แล้ว
+4. Tag `lab-01-submission-v1`
 
-1. URL ของ GitHub repository ชื่อ `engse203-lab01-<student-id>`
-2. `src/hello.js` ที่รันได้จริงและแสดงชื่อ รหัสนักศึกษา OS และ Node.js version
-3. `package.json` ที่มี `scripts.start = "node src/hello.js"`
-4. README ที่ครบถ้วนตามข้อกำหนด พร้อมหลักฐานผลการรัน
-5. Git history อย่างน้อย 1 meaningful commit ที่ push ไปยัง `main` แล้ว
+Repository URL ส่งครั้งแรกหรือเมื่อผู้สอนร้องขอ โดย Pages Hub URL จะเป็น URL หลักเดิมตลอดรายวิชา
 
-> **ไม่ส่งไฟล์ ZIP** เว้นแต่ผู้สอนสั่งเป็นกรณีพิเศษ
+ไม่ส่ง ZIP เว้นแต่ผู้สอนกำหนด
 
----
+## เกณฑ์ประเมิน 3 คะแนน
 
-## เกณฑ์ประเมิน (รวม 3 คะแนน)
+| รายการ | คะแนน |
+|---|---:|
+| Environment และคำสั่งตรวจเครื่องมือ | 0.50 |
+| Source, npm script และผลการรัน | 1.00 |
+| README/Evidence | 0.50 |
+| Branch, commits, PR และ tag | 0.50 |
+| ความครบถ้วน ความปลอดภัย และการอ้างอิง/AI disclosure | 0.50 |
+| **รวม** | **3.00** |
 
-| รายการ | เกณฑ์ | คะแนน |
-|---|---|---:|
-| 1. เครื่องมือและ environment | ตรวจ `node -v`, `npm -v`, `git --version` สำเร็จ และใช้ Terminal ใน VS Code ได้ | 0.5 |
-| 2. โครงสร้างโครงงานและ npm script | มี `src/hello.js`, `package.json` และ `npm run start` รันได้จริง | 1.0 |
-| 3. README และหลักฐานการใช้งาน | README ครบ มีวิธีรันและหลักฐานผลลัพธ์ | 0.5 |
-| 4. Git/GitHub workflow | มี repository, commit, push และข้อความ commit เหมาะสม | 0.5 |
-| 5. ความรับผิดชอบและคุณภาพงาน | ส่งตรงเวลา ไม่มี secret และระบุการอ้างอิง/AI เมื่อมี | 0.5 |
-| **รวม** |  | **3.0** |
+## Checklist
 
-## Checklist ก่อนส่ง
+- [ ] ใช้ Student Repository ที่สร้างจาก Template
+- [ ] branch `lab/week-01`
+- [ ] source อยู่ใน `labs/week-01/source/`
+- [ ] `npm run start` และ `npm run check` ผ่าน
+- [ ] evidence และ metadata ครบ
+- [ ] `npm run verify:lab -- week-01` ผ่าน
+- [ ] PR merge แล้วและ tag มีจริง
+- [ ] Pages Hub และ LAB01 Evidence Report URL เปิดได้
+- [ ] ไม่มี password, token, `.env` หรือ `node_modules`
 
-- [ ] `node -v`, `npm -v`, `git --version` ทำงาน
-- [ ] มี `src/hello.js`, `package.json`, `README.md`
-- [ ] `npm run start` แสดงชื่อ รหัสนักศึกษา OS และ Node.js version
-- [ ] README มีวิธีรัน และหลักฐานผลลัพธ์
-- [ ] GitHub repository มี commit และ push ไป `main` แล้ว
-- [ ] ส่ง URL ผ่าน LMS แล้ว
-- [ ] ไม่มี token, password หรือ `.env` อยู่ใน repository
-
-## เมื่อเจอปัญหา
-
-| อาการ | แนวทางตรวจสอบ |
-|---|---|
-| `node` ไม่พบคำสั่ง | ตรวจว่าติดตั้ง Node.js แล้ว และเปิด Terminal ใหม่ |
-| `git` ไม่พบคำสั่ง | ตรวจการติดตั้ง Git / macOS อาจต้องยืนยัน Command Line Tools |
-| `npm run start` ไม่ทำงาน | ตรวจ `package.json` ว่ามี `scripts.start` และ path ไฟล์ถูกต้อง |
-| push ไม่ได้ | ตรวจ remote URL, ชื่อ branch `main`, สิทธิ์ GitHub และการ sign in |
-| หน้า GitHub ไม่มีไฟล์ | รัน `git status` และตรวจว่าได้ `git add`, `commit`, `push` ครบ |
+อ่าน workflow มาตรฐานได้ที่ [Weekly Workflow](../../docs/student-repository/WEEKLY_WORKFLOW_AND_SUBMISSION_TH.md)

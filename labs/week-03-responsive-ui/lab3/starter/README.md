@@ -8,4 +8,9 @@ npm install
 npm run dev
 ```
 
-ก่อน deploy ให้แก้ `base` ใน `vite.config.js` ให้ตรงชื่อ repository ของตนเอง
+Starter ใช้ `base: './'` และ build ไป `dist/` หลัง build ให้กลับไป Student Repository root แล้วรัน:
+
+```bash
+npm run import:publish -- week-03 labs/week-03/source/dist
+npm run build:pages
+```

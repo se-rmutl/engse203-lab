@@ -1,5 +1,14 @@
 # ENGSE203 LAB XX — <ชื่องาน>
 
+## Submission Contract
+
+- Repository: `engse203-student-labs-<student-id>`
+- Branch: `lab/week-NN`
+- Source path: `labs/week-NN/source/`
+- Pages Hub URL:
+- Pull Request URL:
+- Submission tag: `lab-NN-submission-v1`
+
 ## ผู้จัดทำ
 
 - ชื่อ-นามสกุล: 
@@ -18,17 +27,19 @@
 
 ```bash
 # ตัวอย่างคำสั่ง
-npm install
-npm run start
+npm --prefix labs/week-NN/source install
+npm --prefix labs/week-NN/source run start
 ```
 
 ## โครงสร้างไฟล์
 
 ```text
-.
-├── src/
-├── package.json
-└── README.md
+labs/week-NN/
+├── README.md
+├── lab-metadata.json
+├── source/
+├── evidence/
+└── publish/
 ```
 
 ## หลักฐานผลลัพธ์

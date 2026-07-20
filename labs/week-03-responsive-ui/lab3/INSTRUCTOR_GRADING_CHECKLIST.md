@@ -33,7 +33,7 @@
 
 ## 5. Git / README / Pages — 0.50
 
-- [ ] มี feature branch
+- [ ] ใช้ branch `lab/week-03`
 - [ ] มี commit checkpoints
 - [ ] มี Pull Request ที่ merge แล้ว
 - [ ] README มี test cases/screenshots
@@ -41,8 +41,8 @@
 
 ## Quick diagnosis
 
-- Pages 404 → ตรวจ Settings → Pages → main /docs
-- ไม่มี CSS/JS → ตรวจ Vite `base` ให้ตรงชื่อ repository แล้ว build ใหม่
+- Pages 404 → ตรวจ Pages Hub, merge ล่าสุด และ `docs/labs/week-03/`
+- ไม่มี CSS/JS → ตรวจ `base: './'`, import `dist/` เข้า publish แล้ว build Pages Hub ใหม่
 - FormData ว่าง → ตรวจ `name`
 - Submit reload → ตรวจ `preventDefault()`
 - Push denied → ตรวจ `ssh -T git@github.com` และ `git remote -v`

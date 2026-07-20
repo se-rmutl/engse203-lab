@@ -29,19 +29,19 @@ Week 03: DOM-driven Campus Service Request
 1. ตรวจ `node --version` ให้เป็น `22.12.0` หรือใหม่กว่า
 2. เปิด [Pre-LAB 04 README](./pre-lab04/README.md) และทำ CP00–CP07 ตามเวลา
 3. หลังเรียน เปิด [LAB 4 README](./lab04/README.md)
-4. สร้าง repository `engse203-lab04-<student-id>` ของตนเอง
-5. ทำงานบน branch `feature/react-service-request`
-6. ส่ง Repository URL, Pull Request URL และ GitHub Pages URL
+4. เปิด Student Repository เดิม `engse203-student-labs-<student-id>`
+5. ทำงานบน branch `lab/week-04` ที่ `labs/week-04/source/`
+6. ส่ง Pages Hub URL, LAB04 Result URL, merged Pull Request URL และ tag `lab-04-submission-v1`
 
 ## เริ่มต้นสำหรับผู้สอน
 
+- [Classroom Website — Single-page 16:9](./week04-classroom-site/README.md)
 - [Instructor Step Script — Pre-LAB 04](./pre-lab04/INSTRUCTOR_STEP_SCRIPT.md)
 - [Phase D1 Alignment และ checkpoint contract](./PHASE_D1_ALIGNMENT.md)
 - [LAB 4 Instructor Grading Checklist](./lab04/INSTRUCTOR_GRADING_CHECKLIST.md)
-- `pre-lab04/solution/` — เฉลย worked example
-- `lab04/solution/` — เฉลยอ้างอิงสำหรับตรวจงาน
+- เฉลย Pre-LAB/LAB4 เก็บใน Instructor Kit แยกจาก Course Repository สาธารณะ
 
-> หาก repository นี้เปิดให้นักศึกษาอ่านแบบสาธารณะ ผู้สอนควรย้าย `lab04/solution/` ไปยัง private branch หรือ instructor-only package ก่อนเผยแพร่โจทย์จริง
+> Course Repository สาธารณะต้องไม่มี LAB4 solution ผู้สอนใช้ Instructor Kit แยกต่างหาก
 
 ## ขอบเขต Week 04
 

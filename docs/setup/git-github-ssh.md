@@ -192,7 +192,7 @@ but GitHub does not provide shell access.
 ตัวอย่าง repository ของนักศึกษา:
 
 ```bash
-git clone git@github.com:<github-username>/engse203-lab01-<student-id>.git
+git clone git@github.com:<github-username>/engse203-student-labs-<student-id>.git
 ```
 
 ตรวจ remote:

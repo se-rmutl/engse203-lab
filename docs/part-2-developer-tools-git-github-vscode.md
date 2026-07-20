@@ -498,7 +498,7 @@ git clone git@github.com:<organization-or-user>/engse203-labs-2569.git
 ### เชื่อม repository งานของนักศึกษา
 
 ```bash
-git remote add origin git@github.com:<github-username>/engse203-lab01-<student-id>.git
+git remote add origin git@github.com:<github-username>/engse203-student-labs-<student-id>.git
 git branch -M main
 git push -u origin main
 ```

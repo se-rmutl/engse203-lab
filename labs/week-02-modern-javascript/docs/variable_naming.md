@@ -181,7 +181,7 @@ vite.config.js
 
 ```txt
 /api/learning-tasks
-/engse203-lab02-66123456/
+/engse203-student-labs-66123456/labs/week-02/
 ```
 
 ### CSS class

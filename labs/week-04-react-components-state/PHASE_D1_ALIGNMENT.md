@@ -34,7 +34,7 @@
 | Task components | AppHeader, SummaryPanel, RequestForm, FilterBar, RequestList, RequestCard |
 | validation 2–3 rules | validation 5 rulesและ accessible error |
 | summary todo/doing/done | total/pending/in-progress/completed |
-| local build verification | repository, feature branch, PR, Pages และ test evidence |
+| local build verification | Student Repository, `lab/week-04`, PR, Pages Hub และ test evidence |
 
 ผู้เรียนใช้รูปแบบ state ownership, props/callback, controlled input, immutable array update และ conditional JSX จาก Pre-LAB แต่ต้องออกแบบ data mapping, validation, component responsibility และหลักฐานของ LAB 4 เอง
 
@@ -44,7 +44,7 @@
 
 | ช่วง | นาที | งาน |
 |---|---:|---|
-| H0 | 20 | สร้าง repo, copy starter, install, initial commit และ feature branch |
+| H0 | 20 | update main, เปิด `lab/week-04`, copy starter และ install |
 | H1 | 45 | component tree, data contract และ props rendering |
 | H2 | 50 | requests/filter state, derived summary, list/filter/delete |
 | H3 | 60 | Controlled Form, validation, add และ conditional feedback |

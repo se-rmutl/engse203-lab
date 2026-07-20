@@ -1,5 +1,14 @@
 # Changelog
 
+## v4.0.0 — Unified Student Repository LAB01–04
+
+- เปลี่ยน LAB รายบุคคลเป็นหนึ่ง Student Repository ตลอดรายวิชา
+- กำหนด branch `lab/week-NN`, source/evidence/publish และ Pages Hub contract เดียวกัน
+- เพิ่มคู่มือสร้าง Student Repository จาก Template ก่อน LAB01 สำหรับรุ่นถัดไป
+- เพิ่ม migration workflow สำหรับรุ่นปัจจุบันที่มี repo LAB01–03 แยกแล้ว
+- ปรับ LAB01–04, Vite build, PR, tag และ submission ให้สอดคล้องกัน
+- Student solution ยังคงแยกจาก Course Repository สาธารณะ
+
 ## v3.1.0 — Week 04 React Guided Practice & LAB 4
 
 - เพิ่ม Pre-LAB 04 แบบ CP00–CP07 รวม 240 นาที สำหรับผู้เริ่ม React

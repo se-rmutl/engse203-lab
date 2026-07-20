@@ -119,5 +119,4 @@ npm run preview
 
 ## หลังจบ Pre-LAB
 
-ไปที่ [LAB 4 — React Campus Service Request](../lab04/README.md) สร้าง repository ของตนเอง และประยุกต์ pattern โดยไม่คัดลอกชื่อ field/component ของ Study Task Board ตรง ๆ
-
+ไปที่ [LAB 4 — React Campus Service Request](../lab04/README.md) เปิด branch `lab/week-04` ใน Student Repository เดิม และประยุกต์ pattern โดยไม่คัดลอกชื่อ field/component ของ Study Task Board ตรง ๆ

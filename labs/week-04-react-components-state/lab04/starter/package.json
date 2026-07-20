@@ -1,5 +1,5 @@
 {
-  "name": "engse203-lab04-STUDENT-ID",
+  "name": "engse203-week04-react-service-request",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -21,4 +21,3 @@
     "node": ">=22.12.0"
   }
 }
-

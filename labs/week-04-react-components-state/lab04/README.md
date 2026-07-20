@@ -1,59 +1,52 @@
 # ENGSE203 LAB 4 — React Campus Service Request
 
-**รูปแบบ:** งานรายบุคคลหลังเรียน  
-**คะแนน:** 3.00 คะแนน ภายใต้ A2 Weekly LAB  
-**CLO:** CLO3  
-**การส่ง:** GitHub Repository + merged Pull Request + GitHub Pages
-
-**เวลาที่ออกแบบ:** การบ้านประมาณ 240 นาที ภายใต้เวลาศึกษาด้วยตนเองของรายวิชา
+**รูปแบบ:** งานรายบุคคลหลังเรียน · **A2 Weekly LAB: 3.00 คะแนน**  
+**CLO:** CLO3 · **เวลาที่ออกแบบ:** ประมาณ 240 นาที
 
 ## โจทย์
 
-Refactor Campus Service Request จาก Week 03 ให้เป็น React Component-based Application โดยประยุกต์ mental model จาก Pre-LAB 04 ด้วยตนเอง งานนี้ไม่ใช่การ copy/rename Study Task Board เพราะมี data contract, component contract, validation และ evidence ที่ต่างกัน
+Refactor Campus Service Request จาก Week 03 ให้เป็น React Component-based Application โดยประยุกต์ mental model จาก Pre-LAB 04 ด้วยตนเอง ไม่ใช่การ copy/rename Study Task Board
 
 ## Repository Contract
 
 | รายการ | ค่าที่กำหนด |
 |---|---|
-| Repository | `engse203-lab04-<student-id>` |
-| Branch | `feature/react-service-request` |
+| Repository | `engse203-student-labs-<student-id>` repository เดิม |
+| Branch | `lab/week-04` |
+| Source | `labs/week-04/source/` |
+| Evidence | `labs/week-04/evidence/` |
+| Publish input | `labs/week-04/publish/` |
+| Pages result | `docs/labs/week-04/` |
+| Tag | `lab-04-submission-v1` |
 | Node.js | `>=22.12.0` |
-| Framework | React + Vite |
-| Build output | `docs/` |
-| Pages | `main` / `/docs` |
 
 ## เริ่มงาน
 
-1. สร้าง GitHub repository ชื่อตาม contract โดยให้มี README เริ่มต้น
-2. Clone ผ่าน SSH และคัดลอกไฟล์จาก `starter/` ไปที่ root ของ repository ตนเอง
-3. แก้ `STUDENT-ID` ใน `package.json`, `vite.config.js` และ README
+เปิด Terminal ที่ root ของ Student Repository:
 
 ```bash
-git clone git@github.com:<username>/engse203-lab04-<student-id>.git
-cd engse203-lab04-<student-id>
-cp -R <course-repo>/labs/week-04-react-components-state/lab04/starter/. .
-nvm use
-npm install
-git add .
-git commit -m "feat: create React project structure"
-git switch -c feature/react-service-request
-npm run dev
+git switch main
+git pull origin main
+git switch -c lab/week-04
+cp -R ../engse203-lab/labs/week-04-react-components-state/lab04/starter/. labs/week-04/source/
+npm --prefix labs/week-04/source install
+npm --prefix labs/week-04/source run dev
 ```
 
-`npm run check` ควรยังไม่ผ่านใน starter และจะรายงาน requirement ที่ยังต้องทำ
+`npm run check` ของ starter ควรยังไม่ผ่าน เพราะ requirement ยังไม่ถูก implement
 
 ## Suggested Homework Timebox — 240 นาที
 
 | ช่วง | นาที | Definition of Done |
 |---|---:|---|
-| H0 Setup | 20 | repo/starter/install/initial commit/feature branch พร้อม |
+| H0 Setup | 20 | main ล่าสุด, branch, starter และ install พร้อม |
 | H1 Structure | 45 | component tree, initial data และ props rendering |
-| H2 State | 50 | summary/filter/list/delete ทำงานด้วย immutable state |
-| H3 Form | 60 | controlled form, validation, add และ feedback ทำงาน |
-| H4 UX/Test | 30 | 375px/keyboard และ TC-01–TC-10 บันทึกแล้ว |
-| H5 Delivery | 30 | README, build, PR, merge และ Pages |
-| H6 Submit | 5 | เปิด Pages Incognito และส่ง 3 URLs |
-| **รวม** | **240** |  |
+| H2 State | 50 | summary/filter/list/delete ด้วย immutable state |
+| H3 Form | 60 | controlled form, validation, add และ feedback |
+| H4 UX/Test | 30 | 375px/keyboard และ TC-01–TC-10 |
+| H5 Delivery | 30 | evidence, metadata, build, PR และ Pages Hub |
+| H6 Submit | 5 | เปิด Incognito และส่ง URL/tag |
+| **รวม** | **240** | |
 
 ## Component Contract
 
@@ -66,8 +59,6 @@ App
 └── RequestList
     └── RequestCard
 ```
-
-ต้องมี App และ child components 6 ชื่อตามนี้เป็นอย่างน้อย
 
 ## Data Contract
 
@@ -90,7 +81,7 @@ App
 ## Requirements
 
 - LAB4-R01 ใช้ case/data contract ที่กำหนด
-- LAB4-R02 มี component tree ครบ
+- LAB4-R02 มี App และ child components 6 ชื่อครบ
 - LAB4-R03 ใช้ Props อย่างน้อย 2 จุดและ callback Child → Parent
 - LAB4-R04 Summary คำนวณจาก requests จริง
 - LAB4-R05 ทุก field เป็น Controlled Form
@@ -101,8 +92,8 @@ App
 - LAB4-R10 delete ส่ง id ผ่าน callback และใช้ `filter()`
 - LAB4-R11 มี empty/error/success conditional states
 - LAB4-R12 responsive 375px/desktop และ accessible ขั้นพื้นฐาน
-- LAB4-R13 แยกไฟล์อ่านง่าย ไม่มี DOM mutation หรือ state mutation
-- LAB4-R14 branch/commits/PR/README/build/Pages ครบ
+- LAB4-R13 แยกไฟล์อ่านง่าย ไม่มี DOM/state mutation
+- LAB4-R14 branch/commits/PR/evidence/build/Pages/tag ครบ
 
 ## Validation
 
@@ -114,25 +105,11 @@ App
 | Details | trim แล้วอย่างน้อย 10 ตัวอักษร |
 | Priority | `normal` หรือ `urgent` |
 
-## Suggested Commit Checkpoints
-
-```text
-feat: create React project structure
-feat: add reusable request components
-feat: render requests with props
-feat: manage request state and events
-feat: add controlled request form
-feat: add filter validation and feedback
-style: add responsive React layout
-docs: add test evidence and usage guide
-build: prepare GitHub Pages deployment
-```
-
-## Test Cases ที่ต้องบันทึกใน README
+## Test Cases
 
 | ID | Scenario | Expected Result |
 |---|---|---|
-| TC-01 | Initial render | initial requests/summary ถูกต้อง; console ไม่มี error |
+| TC-01 | Initial render | requests/summary ถูกต้อง; console ไม่มี error |
 | TC-02 | Controlled input | ทุก field เปลี่ยนตาม state |
 | TC-03 | Invalid submit | ไม่เพิ่ม; error ใกล้ field |
 | TC-04 | Valid submit | เพิ่ม pending; summary เพิ่ม; reset form |
@@ -142,36 +119,61 @@ build: prepare GitHub Pages deployment
 | TC-08 | Delete | ลบถูก id; summary/list เปลี่ยน |
 | TC-09 | 375px | ไม่มี horizontal scroll |
 | TC-10 | Keyboard | focus/label/error/feedback ใช้งานได้ |
-| TC-11 | Build/preview | `npm run build` และ preview ผ่าน |
+| TC-11 | Build/preview | check/build/preview ผ่าน |
 | TC-12 | Pages | Incognito โหลดหน้า/assets ครบ |
 
-## Build, Pull Request และ Pages
+## Build, Publish และ Verify
 
-ก่อน build แก้ `base` เป็นชื่อ repository จริง:
-
-```js
-base: '/engse203-lab04-<student-id>/'
-```
-
-จากนั้น:
+Starter ใช้ `base: './'` และ build ไป `dist/` ไม่ต้องใส่ชื่อ repository ใน Vite config
 
 ```bash
-npm run check
-npm run build
-git add .
-git commit -m "build: prepare GitHub Pages deployment"
-git push -u origin feature/react-service-request
+npm --prefix labs/week-04/source run check
+npm --prefix labs/week-04/source run build
+npm run import:publish -- week-04 labs/week-04/source/dist
+npm run build:pages
 ```
 
-เปิด PR ไป `main`, ตรวจ checklist, merge แล้วตั้ง GitHub Pages เป็น `main` / `/docs` และเปิด URL ใน Incognito
+ใส่ screenshots/test/reflection ใน `labs/week-04/evidence/` และแก้ metadata:
+
+```json
+{
+  "status": "ready",
+  "sourceOrigin": "course-starter",
+  "submissionTag": "lab-04-submission-v1",
+  "testStatus": "pass"
+}
+```
+
+ตรวจและ push:
+
+```bash
+npm run verify:lab -- week-04
+git add .
+git commit -m "feat(week-04): build React campus service request"
+git push -u origin lab/week-04
+```
+
+เปิด PR `lab/week-04 → main`, ใส่ PR URL ใน metadata, เปลี่ยน status เป็น `submitted`, build/verify/push แล้ว merge
+
+```bash
+git switch main
+git pull origin main
+git tag lab-04-submission-v1
+git push origin lab-04-submission-v1
+```
 
 ## สิ่งที่ต้องส่ง
 
-1. Repository URL
-2. merged Pull Request URL
-3. GitHub Pages URL
-4. README ที่กรอกข้อมูลผู้เรียน, component tree, วิธีรัน, test evidence, screenshots, URLs และ AI disclosure ครบ
+1. Pages Hub URL
+2. LAB04 Result URL ที่ `.../labs/week-04/`
+3. Pull Request URL ของ `lab/week-04 → main` ที่ merge แล้ว
+4. Tag `lab-04-submission-v1`
+
+ใน repository ต้องมี Evidence/README ที่อธิบาย component tree, state/props/callback,
+ผล TC-01–TC-12, screenshots และ References & AI Assistance
 
 ## ขอบเขต
 
-ไม่ต้องใช้ React Router, remote API/fetch, LocalStorage/database, `useEffect()` เชิงลึก, Context/Redux/Zustand, authentication หรือ automated component testing framework
+ไม่ใช้ React Router, remote API/fetch, LocalStorage/database, `useEffect()` เชิงลึก, Context/Redux/Zustand, authentication หรือ automated component testing framework
+
+อ่าน workflow กลางที่ [Weekly Workflow](../../../docs/student-repository/WEEKLY_WORKFLOW_AND_SUBMISSION_TH.md)

@@ -8,9 +8,9 @@
 
 ## URLs
 
-- Repository: TODO
+- Repository: `engse203-student-labs-<student-id>`
 - Pull Request: TODO
-- GitHub Pages: TODO
+- GitHub Pages: TODO — `/labs/week-04/`
 
 ## Component Tree
 
@@ -27,6 +27,13 @@ npm run dev
 npm run check
 npm run build
 npm run preview
+```
+
+เมื่อทำงานจาก Student Repository root ใช้ `npm --prefix labs/week-04/source run <script>` และนำ build เข้า Pages Hub ด้วย:
+
+```bash
+npm run import:publish -- week-04 labs/week-04/source/dist
+npm run build:pages
 ```
 
 ## State / Props / Callback Explanation
@@ -63,4 +70,3 @@ TODO: เปรียบเทียบ DOM mutation กับ State-driven UI 3
 ## AI / External Resource Disclosure
 
 ระบุเครื่องมือหรือแหล่งที่ใช้, prompt/คำถามสำคัญ, ส่วนที่นำมาปรับ และวิธีที่ตรวจสอบความถูกต้อง หากไม่ได้ใช้ให้เขียนว่า “ไม่ได้ใช้”
-

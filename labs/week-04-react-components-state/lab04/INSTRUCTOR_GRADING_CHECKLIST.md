@@ -4,7 +4,8 @@
 
 ## Gate ก่อนให้คะแนน
 
-- [ ] repository ชื่อ `engse203-lab04-<student-id>`
+- [ ] repository ชื่อ `engse203-student-labs-<student-id>`
+- [ ] source อยู่ที่ `labs/week-04/source/`
 - [ ] `npm install`, `npm run check`, `npm run build` ผ่าน
 - [ ] Console ไม่มี error/key warning
 - [ ] ไม่มี `node_modules`, secret, token หรือ `.env`
@@ -42,7 +43,7 @@
 
 ## Area 5 — Git, PR และ README (0.40)
 
-- [ ] branch `feature/react-service-request`
+- [ ] branch `lab/week-04`
 - [ ] meaningful commits หลาย checkpoint
 - [ ] PR merge แล้วและมีคำอธิบาย/test checklist
 - [ ] README มี component tree, setup, URLs, screenshots, AI disclosure
@@ -59,6 +60,5 @@
 - controlled warning → ตรวจ `value` + `onChange` และ initial value
 - summary ไม่ตรง → อย่าเก็บ summary เป็น state; คำนวณจาก requests
 - ลบ card ผิด → ใช้ unique `request.id` ไม่ใช้ index
-- Pages 404/assets หาย → ตรวจ Vite `base`, commit `docs/`, Pages source
+- Pages 404/assets หาย → ตรวจ `base: './'`, `publish/`, `npm run build:pages` และ merge ล่าสุด
 - build ผ่านแต่ check ไม่ผ่าน → ตรวจ component filenames และ forbidden mutable/DOM patterns
-

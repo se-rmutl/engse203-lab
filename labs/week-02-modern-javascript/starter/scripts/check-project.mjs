@@ -50,7 +50,7 @@ if (missing.length === 0) {
     ["ui.js exports render function", /export\s+function\s+render/],
     ["utils.js exports function", /export\s+function|export\s+const/],
     ["index.html uses type=module", /type=["']module["']/],
-    ["vite.config.js builds to docs", /outDir\s*:\s*["']docs["']/],
+    ["vite.config.js builds to dist", /outDir\s*:\s*["']dist["']/],
   ];
 
   const combined = { api, main, ui, utils, index, viteConfig };
