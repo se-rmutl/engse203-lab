@@ -1,6 +1,6 @@
 # ENGSE203 LAB Repository
 
-> **Repository version:** v3.0.0 — Node.js 22+, GitHub SSH, VS Code และ Cross-platform Setup
+> **Repository version:** v4.2.0 — Unified Student Repository + Week 04 React Beginner Bridge
 
 > **ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์**  
 > *Computer Programming for Software Engineer*  
@@ -21,16 +21,15 @@ Repository นี้เป็นพื้นที่รวมเอกสาร
 
 ## การใช้ Repository นี้
 
-Repository นี้เป็น **Course Repository** สำหรับอ่านใบงานและคัดลอก starter files นักศึกษาไม่ทำงานหรือส่งงานใน Course Repository แต่ใช้ **Student Repository เดียวตลอดรายวิชา** สำหรับ LAB รายบุคคล
+Repository นี้เป็น **Course Repository** สำหรับอ่านใบงานและคัดลอก starter files นักศึกษาไม่ทำงานหรือส่งงานใน Course Repository แต่ใช้ **Student Repository เดียว** สำหรับ LAB รายบุคคล
 
-1. Clone หรือดาวน์โหลด repository นี้ไว้ในเครื่อง
-2. เปิด README ของ LAB ที่กำลังเรียนจากตารางด้านล่าง
-3. ก่อน LAB01 สร้าง `engse203-student-labs-<student-id>` จาก Student Repository Template
-4. ในแต่ละสัปดาห์เปิด branch `lab/week-NN` และคัดลอก starter ไป `labs/week-NN/source/`
-5. Commit, เปิด PR, merge, tag และเผยแพร่ผ่าน Pages Hub URL เดิม
+1. Clone หรือดาวน์โหลด Course Repository นี้ไว้สำหรับอ่านโจทย์และคัดลอก starter
+2. สร้าง Student Repository จาก template **ครั้งเดียวก่อน LAB01**
+3. ทำงานแต่ละสัปดาห์ใน branch `lab/week-NN`
+4. เก็บ source/evidence/publish ใน `labs/week-NN/` ของ Student Repository
+5. เปิด Pull Request ไป `main`, merge, สร้าง Pages Hub และ tag ตามสัปดาห์
 
-เริ่มที่ [Student Repository Hub](./docs/student-repository/) โดยเลือกเส้นทางสำหรับรุ่นใหม่หรือการย้าย LAB01–03 ของรุ่นปัจจุบัน
-ข้อตกลงที่ใช้กับ LAB01–LAB04 ถูกบันทึกใน [Phase F1 — Unified Repository Integration](./docs/student-repository/PHASE_F1_UNIFIED_REPOSITORY_INTEGRATION_TH.md)
+เริ่มที่ [Student Repository Hub](./docs/student-repository/) และอ่าน [Phase F1 — Unified Repository Integration](./docs/student-repository/PHASE_F1_UNIFIED_REPOSITORY_INTEGRATION_TH.md) ก่อน LAB01
 
 > **สำคัญ:** ไม่ควร commit รหัสผ่าน, token, ไฟล์ `.env` หรือข้อมูลส่วนบุคคลที่ไม่จำเป็นขึ้น GitHub
 
@@ -107,10 +106,11 @@ git push -u origin main
 
 Week 04 มีสองเส้นทางที่ไม่ควรสลับลำดับ:
 
-1. [Pre-LAB 04 — Study Task Board](./labs/week-04-react-components-state/pre-lab04/) ทำตาม CP00–CP07 ในชั้นเรียน 240 นาที
-2. [LAB 4 — Campus Service Request](./labs/week-04-react-components-state/lab04/) ประยุกต์บน `lab/week-04` และส่งผ่าน Student Repository/PR/Pages Hub
+1. [React Beginner Bridge Pack](./labs/week-04-react-components-state/react-beginner-bridge/00_START_HERE_REACT_BEGINNER_TH.md) เรียนจาก mental model ไปสู่ JSX, Components, Props, State และ Form
+2. [Pre-LAB 04 — Study Task Board](./labs/week-04-react-components-state/pre-lab04/) ทำตาม CP00–CP07 ในชั้นเรียน 240 นาที
+3. [LAB 4 — Campus Service Request](./labs/week-04-react-components-state/lab04/) ประยุกต์ด้วยตนเองใน branch `lab/week-04`
 
-ผู้สอนดู code-asset alignment และ solution paths ได้จาก [Week 04 Hub](./labs/week-04-react-components-state/)
+เริ่มที่ [Week 04 Hub](./labs/week-04-react-components-state/) ซึ่งเชื่อมบทอ่าน จุดสาธิต checkpoint และงานที่ต้องส่งไว้ในหน้าเดียว
 
 ## แผนผังหน่วยเรียน
 
@@ -149,14 +149,14 @@ Week 04 มีสองเส้นทางที่ไม่ควรสลั
 
 ## กติกาการส่งงานมาตรฐาน
 
-- LAB รายบุคคลทั้งหมดใช้ `engse203-student-labs-<student-id>` repository เดียว
-- ส่ง Pages Hub URL, Weekly Result URL, merged PR URL และ submission tag ของแต่ละสัปดาห์ผ่าน LMS/Google Sheet ตามกำหนด
+- LAB01–LAB04 ใช้ Student Repository เดียว ไม่สร้าง repository แยกราย LAB
+- ส่ง **Pages Hub URL, Weekly Result URL, merged Pull Request URL และ tag** ผ่าน LMS/Google Classroom ภายในเวลาที่กำหนด
 - `main` branch ต้องรันได้ตาม README
 - ทุกงานต้องมี README ที่อธิบายวิธีติดตั้ง วิธีรัน และหลักฐานผลลัพธ์ตามที่ใบงานกำหนด
 - งานกลุ่มต้องแสดงการมีส่วนร่วมของสมาชิกผ่าน issue, branch, commit และ pull request
 - การใช้ AI หรือแหล่งตัวอย่างภายนอกทำได้เมื่อผู้สอนอนุญาต แต่ต้องเปิดเผยแหล่งอ้างอิงและอธิบายส่วนที่นักศึกษาปรับ/เข้าใจด้วยตนเอง
 
-อ่านรายละเอียดที่ [คู่มือการส่งงาน](./docs/submission-guide.md), [Weekly Workflow](./docs/student-repository/WEEKLY_WORKFLOW_AND_SUBMISSION_TH.md) และ [แนวปฏิบัติด้านความซื่อสัตย์ทางวิชาการและ AI](./docs/academic-integrity-ai.md)
+อ่านรายละเอียดที่ [คู่มือการส่งงาน](./docs/submission-guide.md) และ [แนวปฏิบัติด้านความซื่อสัตย์ทางวิชาการและ AI](./docs/academic-integrity-ai.md)
 
 ## โครงสร้าง Repository
 

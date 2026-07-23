@@ -1,81 +1,39 @@
 # คู่มือการส่งงาน ENGSE203
 
-## 1. Repository สำหรับ LAB รายบุคคล
+## 1. Student Repository เดียว
 
-ใช้ repository เดียวตลอดรายวิชา:
+LAB01–LAB04 ใช้ repository เดียว:
 
 ```text
 engse203-student-labs-<student-id>
 ```
 
-ก่อน LAB01 ให้ทำตาม [Student Repository Hub](./student-repository/) ห้ามสร้าง repository ใหม่แยกทุก LAB
+อ่าน branch/path/tag ของแต่ละสัปดาห์ที่ [Student Repository Hub](./student-repository/) และ [Weekly Workflow](./student-repository/WEEKLY_WORKFLOW_AND_SUBMISSION_TH.md)
 
-งานกลุ่มหรือ Full-Stack Project อาจใช้ Team Repository แยกเมื่อใบงานระบุชัดเจน
+## 2. สิ่งที่ต้องมีในทุกงาน
 
-## 2. โครงสร้างมาตรฐาน
+1. Source code ที่รันตามคำสั่งใน README ได้
+2. `README.md` ที่ระบุชื่อ-รหัสนักศึกษา/สมาชิก, วิธีติดตั้ง, วิธีรัน, และหลักฐานผลลัพธ์ตามใบงาน
+3. Git history ที่แสดงการพัฒนางาน ไม่ใช่ commit เดียวหลังทำเสร็จทั้งหมด
+4. แหล่งอ้างอิงและการใช้ AI ในหัวข้อ `References & AI Assistance` เมื่อมีการใช้
+5. ไม่มี password, token, API key, `.env` หรือไฟล์ข้อมูลส่วนตัวที่ไม่จำเป็น
 
-```text
-labs/week-NN/
-├── README.md
-├── lab-metadata.json
-├── source/
-├── evidence/
-└── publish/
+## 3. รูปแบบ README ขั้นต่ำ
 
-docs/labs/week-NN/     # generated Pages output
-```
+ใช้ [README template](../templates/student-lab-readme-template.md) เป็นแนวทาง โดยแต่ละงานอาจเพิ่มหัวข้อเฉพาะ เช่น API Contract, Test Evidence หรือ Demo Video
 
-- Branch: `lab/week-NN`
-- PR: `lab/week-NN → main`
-- Tag: `lab-NN-submission-v1`
-- Pages source: `main /docs`
+## 4. ขั้นตอนส่งงาน
 
-## 3. สิ่งที่ต้องมีในทุกงาน
+1. ตรวจ `npm run ...` หรือคำสั่งรันที่ใบงานกำหนดให้สำเร็จ
+2. ตรวจ README และภาพหลักฐาน
+3. ตรวจ `git status` ว่าไม่มีไฟล์ secret หรือไฟล์ขนาดใหญ่โดยไม่จำเป็น
+4. commit ด้วยข้อความสื่อความหมาย แล้ว push branch `lab/week-NN`
+5. เปิด Pull Request ไป `main`, ตรวจ checklist และ merge
+6. สร้าง/อัปเดต Pages Hub แล้ว tag ตามสัปดาห์
+7. ส่ง Pages Hub URL, Weekly Result URL, merged PR URL และ tag
 
-1. Source code ใน `labs/week-NN/source/` ที่รันตาม README ได้
-2. Evidence/test/reflection ใน `labs/week-NN/evidence/`
-3. `lab-metadata.json` ที่มี status, PR URL, tag และ test status
-4. Git history ที่แสดงการพัฒนาอย่างต่อเนื่อง
-5. `References & AI Assistance` เมื่อใช้แหล่งอ้างอิงหรือ AI
-6. ไม่มี password, token, API key, `.env` หรือข้อมูลส่วนตัวที่ไม่จำเป็น
+## 5. งานกลุ่ม
 
-## 4. ขั้นตอนส่ง
+งานกลุ่มต้องมีหลักฐานที่ตรวจสอบได้ว่าแต่ละคนมีส่วนร่วม เช่น issue ที่รับผิดชอบ, branch ของตนเอง, pull request, commit, review comment และ peer evaluation ตามแบบฟอร์มที่กำหนด
 
-```bash
-npm run build:pages
-npm run verify:lab -- week-NN
-git add .
-git commit -m "feat(week-NN): complete LAB work"
-git push -u origin lab/week-NN
-```
-
-เปิด PR, บันทึก PR URL ใน metadata, merge แล้วสร้าง tag จาก `main`:
-
-```bash
-git switch main
-git pull origin main
-git tag lab-NN-submission-v1
-git push origin lab-NN-submission-v1
-```
-
-## 5. ข้อมูลที่ส่งให้ผู้สอน
-
-- Pages Hub URL ซึ่งใช้ URL เดิมตลอดรายวิชา
-- Weekly Result URL ที่ `.../labs/week-NN/`
-- Pull Request URL ของ `lab/week-NN → main` ที่ merge แล้ว
-- Submission tag `lab-NN-submission-v1`
-
-Repository URL ส่งครั้งแรกหรือเมื่อข้อมูลเปลี่ยน ไม่ส่ง ZIP และไม่สร้าง repository ใหม่รายสัปดาห์
-
-ไม่ส่ง ZIP เว้นแต่ผู้สอนประกาศเป็นกรณีพิเศษ
-
-อ่านขั้นตอนเต็มที่ [Weekly Workflow และวิธีส่งงาน](./student-repository/WEEKLY_WORKFLOW_AND_SUBMISSION_TH.md)
-
-## 6. การแก้งาน
-
-ห้ามแก้ tag เดิมหรือ force-push ประวัติที่ตรวจแล้ว ใช้:
-
-```text
-Branch: fix/week-NN-v2
-Tag: lab-NN-submission-v2
-```
+> ไม่รับไฟล์ ZIP เว้นแต่ผู้สอนประกาศเป็นกรณีพิเศษ

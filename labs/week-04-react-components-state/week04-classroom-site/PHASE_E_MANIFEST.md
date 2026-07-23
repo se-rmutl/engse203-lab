@@ -1,6 +1,6 @@
-# Phase E Manifest — Week 04 Classroom Website
+# Phase B1 Manifest — Week 04 Classroom Website
 
-**สถานะ:** Verified baseline — unified Student Repository contract  
+**สถานะ:** Verified baseline  
 **รูปแบบ:** Single-page HTML slide website, 16:9 desktop/projector และ responsive mobile  
 **Publishing source:** `docs/`
 
@@ -8,7 +8,8 @@
 
 | Path | Role | Status |
 |---|---|---|
-| `docs/index.html` | 33-slide teaching website + embedded CSS/JavaScript | verified |
+| `docs/index.html` | 33-slide teaching website + embedded CSS/JavaScript | B1 integrated |
+| `docs/guides/` | React Beginner Bridge 00–12 + guide index | B1 integrated |
 | `docs/images/` | 6 Week 04 diagrams/desktop/mobile references | verified |
 | `docs/fonts/` | Thai Sarabun New Regular/Bold | verified |
 | `docs/.nojekyll` | GitHub Pages compatibility | ready |
@@ -17,7 +18,7 @@
 ## Required Section Coverage
 
 - Overview
-- Week 03 → React Bridge
+- Week 03 → React Beginner Bridge
 - JSX Demo
 - Component Demo
 - Props Demo
@@ -25,7 +26,7 @@
 - Controlled Form Demo
 - Pre-LAB 04
 - LAB 4 Steps
-- Instructor Solution
+- Instructor Recovery (Private Kit)
 - GitHub Pages
 - Submission Checklist
 - Week 05 Connection / scope boundary
@@ -41,7 +42,8 @@
 - JSX/component/props/state/form/checkpoint/checklist demos: pass
 - Local images load: pass 6/6
 - Embedded Thai font rendering: pass
-- Markdown links in course repository: pass
+- Beginner Guide link map: pending final automated recheck
+- Unified repository labels: integrated
 
 ## Release Gates
 

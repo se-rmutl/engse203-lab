@@ -169,6 +169,8 @@
       color: white;
       background: rgba(255, 255, 255, .08);
       cursor: pointer;
+      text-decoration: none;
+      font: inherit;
     }
 
     .icon-button:hover,
@@ -1057,6 +1059,7 @@
       <button class="icon-button desktop-only" id="font-down" type="button" aria-label="ลดขนาดตัวอักษร">A−</button>
       <button class="icon-button desktop-only" id="font-up" type="button" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
       <button class="icon-button desktop-only" id="notes-toggle" type="button" aria-label="เปิดหรือปิดคำแนะนำผู้สอน" aria-pressed="false">Notes</button>
+      <a class="icon-button" href="guides/index.html" aria-label="เปิด React Beginner Guides">Guides</a>
       <button class="icon-button" id="fullscreen-button" type="button" aria-label="เปิดเต็มหน้าจอ">⛶</button>
     </div>
   </header>
@@ -1112,7 +1115,7 @@
         <article class="card success"><span class="number">4</span><h3>Deliver</h3><p>ทดสอบ Build, PR และ Deploy ผ่าน GitHub Pages</p></article>
       </div>
       <div class="image-frame" style="height:min(35vh,18rem);margin-top:1rem">
-        <img src="images/teaching-flow.png" alt="โครงเวลา Week 04: Theory 60 นาที, Pre-LAB04 CP00–CP07 ในชั้น 240 นาที และ LAB04 การบ้าน 240 นาที">
+        <img src="images/teaching-flow.png" alt="โครงเวลา Week 04: Theory, Pre-LAB, LAB Build และ QA Delivery">
       </div>
       <p class="teacher-note">ให้ผู้เรียนเห็นปลายทางก่อน: งานในคาบคือ Study Task Board ส่วนการบ้านคือ Campus Service Request</p>
     </section>
@@ -1302,12 +1305,11 @@
       <h2>React + Vite: โครงสร้างที่อ่านแล้วรู้หน้าที่</h2>
       <div class="grid-2">
         <div class="code-block"><div class="code-label">terminal <button class="copy-button" type="button">Copy</button></div><pre><code>node --version        # &gt;= 22.12.0
-git switch main
-git pull origin main
-git switch -c lab/week-04
-cp -R COURSE_REPO/lab04/starter/. labs/week-04/source/
-npm --prefix labs/week-04/source install
-npm --prefix labs/week-04/source run dev</code></pre></div>
+npm create vite@latest react-week04-practice \
+  -- --template react
+cd react-week04-practice
+npm install
+npm run dev</code></pre></div>
         <div class="code-block"><div class="code-label">src/ <button class="copy-button" type="button">Copy</button></div><pre><code>src/
 ├── components/
 │   ├── AppHeader.jsx
@@ -1571,15 +1573,15 @@ return requests.map((request) =&gt; (
       <span class="section-kicker">Pre-LAB 04</span>
       <h2>Guided Practice 240 นาที: Study Task Board</h2>
       <div class="grid-3">
-        <div class="card accent"><h3>ทำตามในชั้นเรียน</h3><p>Predict → I Do → We Do → You Do → Check</p></div>
-        <div class="card warn"><h3>CP00–CP07</h3><p>ทุก checkpoint มี source snapshot และ cumulative verifier</p></div>
+        <div class="card accent"><h3>Beginner Guides</h3><p>เปิดบทที่ตรงกับ checkpoint จากปุ่ม Guides</p></div>
+        <div class="card warn"><h3>CP00–CP07</h3><p>Predict → Edit → Run → Observe → Explain → Checkpoint</p></div>
         <div class="card success"><h3>Transfer</h3><p>นำ mental model ไปใช้กับ LAB 4 ไม่ใช่ copy/rename</p></div>
       </div>
       <div class="code-block" style="margin-top:1rem"><div class="code-label">checkpoint gate <button class="copy-button" type="button">Copy</button></div><pre><code>npm run check:cp -- CP04
 # Checkpoint verifier CP04: PASS (cumulative CP00–CP04)
 
 npm run build</code></pre></div>
-      <div class="callout"><strong>Recovery policy:</strong> ให้ hint 1–2 ครั้งก่อน แล้ว restore checkpoint ล่าสุดเพื่อให้นักศึกษากลับเข้าจังหวะเรียน</div>
+      <div class="callout"><strong>Recovery policy:</strong> เปิด Troubleshooting → ให้ hint 1–2 ครั้ง → ผู้สอน restore checkpoint ล่าสุดจาก Private Kit เมื่อจำเป็น</div>
     </section>
 
     <section class="slide" id="s24" data-slide="24" data-group="Pre-LAB 04">
@@ -1591,7 +1593,7 @@ npm run build</code></pre></div>
         <div><h3>CP00 — First React Success</h3><p>Vite/HMR ทำงานและอธิบายเส้นทาง index → main → App</p></div>
         <div><h3>Gate</h3><p><code>npm run check:cp -- CP00</code></p><h3>Recovery</h3><p>copy snapshot CP00/src</p></div>
       </div>
-      <div class="callout"><strong>Instructor source:</strong> <code>pre-lab04/INSTRUCTOR_LIVE_CODING_RUNBOOK.md</code> รวม code/why/test/recovery ในไฟล์เดียว</div>
+      <div class="callout"><strong>Teaching source:</strong> ปุ่ม CP จะแสดง Beginner Guide ที่ต้องเปิด ส่วน code/recovery snapshot อยู่ใน Instructor Private Kit</div>
     </section>
 
     <section class="slide" id="s25" data-slide="25" data-group="Pre-LAB 04">
@@ -1614,15 +1616,15 @@ npm run build</code></pre></div>
       <span class="section-kicker">LAB 4 • Individual • 3 points</span>
       <h2>Homework Timebox H0–H6 = 240 นาที</h2>
       <div class="timeline">
-        <article class="timeline-step"><strong>H0 • 20</strong><p>Update main, branch, starter และ install</p></article>
+        <article class="timeline-step"><strong>H0 • 20</strong><p>Unified repo, starter, install, initial commit, branch</p></article>
         <article class="timeline-step"><strong>H1 • 45</strong><p>Component tree, initial data, props rendering</p></article>
         <article class="timeline-step"><strong>H2 • 50</strong><p>State, derived summary, filter, delete</p></article>
         <article class="timeline-step"><strong>H3 • 60</strong><p>Controlled form, validation, add, feedback</p></article>
         <article class="timeline-step"><strong>H4 • 30</strong><p>Responsive, keyboard, TC-01–TC-10</p></article>
         <article class="timeline-step"><strong>H5 • 30</strong><p>README, build, PR, merge, Pages</p></article>
-        <article class="timeline-step"><strong>H6 • 5</strong><p>Incognito check + ส่ง 3 URLs</p></article>
+        <article class="timeline-step"><strong>H6 • 5</strong><p>Incognito check + ส่ง 3 Links + 1 Tag</p></article>
       </div>
-      <div class="callout"><strong>Repository:</strong> <code>engse203-student-labs-&lt;student-id&gt;</code> • Branch: <code>lab/week-04</code> • Source: <code>labs/week-04/source/</code></div>
+      <div class="callout"><strong>Unified Repository:</strong> <code>engse203-student-labs-&lt;student-id&gt;</code> • Branch: <code>lab/week-04</code> • Source: <code>labs/week-04/source/</code></div>
     </section>
 
     <section class="slide" id="s27" data-slide="27" data-group="LAB 4 Steps">
@@ -1641,8 +1643,8 @@ npm run build</code></pre></div>
     </section>
 
     <section class="slide" id="s28" data-slide="28" data-group="Instructor Solution">
-      <span class="section-kicker">Instructor Solution</span>
-      <h2>เฉลยใช้เพื่อ Diagnose และ Recover—ไม่ใช่แจกก่อนทำ</h2>
+      <span class="section-kicker">Instructor Recovery</span>
+      <h2>Checkpoint/เฉลยอยู่ Private Kit—ใช้เพื่อ Diagnose และ Recover</h2>
       <div class="grid-3">
         <div class="card accent"><span class="number">1</span><h3>Observe</h3><p>ดู error แรก, current CP และสิ่งที่นักศึกษาคาดว่าจะเกิด</p></div>
         <div class="card warn"><span class="number">2</span><h3>Hint</h3><p>ให้ hint 1–2 ครั้งหรือเปิด diff เฉพาะไฟล์ที่เกี่ยวข้อง</p></div>
@@ -1650,19 +1652,18 @@ npm run build</code></pre></div>
       </div>
       <div class="grid-2" style="margin-top:1rem">
         <div class="code-block"><div class="code-label">Pre-LAB recovery <button class="copy-button" type="button">Copy</button></div><pre><code>mv src ../src-before-CP04
-cp -R "$COURSE_REPO/labs/week-04-react-components-state/\
-pre-lab04/checkpoints/CP04/src" ./src
+cp -R "$INSTRUCTOR_KIT/checkpoints/CP04/src" ./src
 npm run check:cp -- CP04</code></pre></div>
-        <div class="card danger"><h3>Instructor Solution</h3><p>เก็บ solution ใน Instructor Kit แยกจาก Course Repository และ Student Template</p><p><strong>Verify:</strong> student package ต้องไม่มี solution</p></div>
+        <div class="card danger"><h3>Public Repository Gate</h3><p>Course Repo สาธารณะต้องไม่มี <code>solution/</code>, grading checklist หรือ source snapshots</p><p><strong>Verify:</strong> Private Kit solution ต้องผ่าน check + smoke + build</p></div>
       </div>
     </section>
 
     <section class="slide" id="s29" data-slide="29" data-group="GitHub Pages">
       <span class="section-kicker">Git Workflow</span>
-      <h2>Weekly Branch → Pull Request → Main</h2>
+      <h2>Feature Branch → Pull Request → Main</h2>
       <div class="code-block"><div class="code-label">terminal <button class="copy-button" type="button">Copy</button></div><pre><code>git switch -c lab/week-04
 git add .
-git commit -m "feat(week-04): add reusable request components"
+git commit -m "feat: add reusable request components"
 git push -u origin lab/week-04
 
 # เปิด Pull Request: lab/week-04 → main
@@ -1682,30 +1683,31 @@ git push -u origin lab/week-04
         <div class="code-block"><div class="code-label">vite.config.js <button class="copy-button" type="button">Copy</button></div><pre><code>export default defineConfig({
   plugins: [react()],
   base: "./",
-  build: {
-    outDir: "dist",
-    emptyOutDir: true,
-  },
 });</code></pre></div>
-        <div class="code-block"><div class="code-label">terminal <button class="copy-button" type="button">Copy</button></div><pre><code>npm --prefix labs/week-04/source run check
-npm --prefix labs/week-04/source run build
-npm run import:publish -- week-04 labs/week-04/source/dist
+        <div class="code-block"><div class="code-label">terminal <button class="copy-button" type="button">Copy</button></div><pre><code>npm run check
+npm run build
+npm run preview
+
+cd ../../..
+npm run import:publish -- 04 labs/week-04/source/dist --replace
 npm run build:pages
-npm run verify:lab -- week-04</code></pre></div>
+git add labs/week-04 docs
+git commit -m "build: prepare GitHub Pages deployment"
+git push origin main</code></pre></div>
       </div>
       <div class="grid-3" style="margin-top:.8rem">
-        <div class="card"><h3>1. Build</h3><p>source → dist → publish</p></div>
-        <div class="card"><h3>2. Hub</h3><p><code>npm run build:pages</code></p></div>
-        <div class="card"><h3>3. Verify</h3><p>เปิด <code>/labs/week-04/</code> ใน Incognito</p></div>
+        <div class="card"><h3>1. Settings</h3><p>Pages → Deploy from branch</p></div>
+        <div class="card"><h3>2. Source</h3><p><code>main</code> / <code>/docs</code></p></div>
+        <div class="card"><h3>3. Verify</h3><p>เปิด URL ใน Incognito + ตรวจ asset 404</p></div>
       </div>
-      <div class="callout"><strong>จำให้ชัด:</strong> อย่าแก้ <code>docs/</code> ด้วยมือ เพราะ Pages Hub generator จะสร้างใหม่</div>
+      <div class="callout"><strong>จำให้ชัด:</strong> <code>/docs</code> คือ publishing source ไม่ใช่ส่วนท้ายของ Pages URL</div>
     </section>
 
     <section class="slide" id="s31" data-slide="31" data-group="Submission Checklist">
       <span class="section-kicker">Submission Checklist</span>
-      <h2>ตรวจให้ครบก่อนส่ง 3 ลิงก์ + 1 tag</h2>
+      <h2>ตรวจให้ครบก่อนส่ง 3 Links + 1 Tag</h2>
       <div class="checklist" id="submission-checklist">
-        <label class="check-item"><input type="checkbox"><span>ใช้ Student Repository เดิมและ branch <code>lab/week-04</code></span></label>
+        <label class="check-item"><input type="checkbox"><span>ใช้ Student Repository เดียวและ <code>main</code> เป็นฉบับส่ง</span></label>
         <label class="check-item"><input type="checkbox"><span>Pull Request merge แล้ว พร้อมคำอธิบายและ tests</span></label>
         <label class="check-item"><input type="checkbox"><span><code>npm run check</code> และ <code>npm run build</code> ผ่าน</span></label>
         <label class="check-item"><input type="checkbox"><span>TC-01–TC-12 มีผลจริงใน README</span></label>
@@ -1718,7 +1720,7 @@ npm run verify:lab -- week-04</code></pre></div>
         <p style="margin:0"><strong id="checklist-score">0 / 8</strong> รายการพร้อมส่ง</p>
         <div class="progress-track" style="margin-top:.4rem;background:#d3e1ec"><div class="progress-bar" id="checklist-progress"></div></div>
       </div>
-      <div class="callout"><strong>ส่ง:</strong> Repository/Pages Hub URL • LAB04 Result URL • merged PR URL • tag <code>lab-04-submission-v1</code></div>
+      <div class="callout"><strong>ส่ง:</strong> Pages Hub URL • Weekly Result URL • merged Pull Request URL • tag <code>lab-04-submission-v1</code></div>
     </section>
 
     <section class="slide" id="s32" data-slide="32" data-group="Week 05 Connection">
@@ -1746,7 +1748,7 @@ npm run verify:lab -- week-04</code></pre></div>
         <button class="reveal-card" type="button"><strong>3. Props และ State ต่างกันอย่างไร?</strong><span class="answer">Props เป็น input read-only จาก Parent; State เป็นข้อมูลที่ owner เปลี่ยนผ่าน setter</span></button>
         <button class="reveal-card" type="button"><strong>4. ทำไมไม่ใช้ <code>push()</code> กับ state?</strong><span class="answer">เพราะ mutate reference เดิม; immutable update ช่วยให้การเปลี่ยนแปลงคาดเดาและตรวจพบง่าย</span></button>
         <button class="reveal-card" type="button"><strong>5. Controlled input ต้องมีอะไรคู่กัน?</strong><span class="answer"><code>value</code> และ <code>onChange</code> ที่อัปเดต state</span></button>
-        <button class="reveal-card" type="button"><strong>6. Pages asset 404 ตรวจอะไร?</strong><span class="answer">Vite base ./, dist → publish, build Pages Hub และ merge ล่าสุด</span></button>
+        <button class="reveal-card" type="button"><strong>6. Pages asset 404 ตรวจอะไร?</strong><span class="answer">Vite base, build output docs, commit/branch และ Pages source main /docs</span></button>
       </div>
       <div class="callout"><strong>Exit ticket:</strong> อธิบายด้วยคำของตนเองว่า “Props ลง • Events ขึ้น • State owner อยู่ที่ใด”</div>
     </section>
@@ -2072,25 +2074,25 @@ npm run verify:lab -- week-04</code></pre></div>
     });
 
     const checkpointData = [
-      ["CP00", 15, "First React Success", "Vite/HMR และเส้นทาง index → main → App", "App.jsx"],
-      ["CP01", 30, "JSX & Components", "สร้าง AppHeader/SummaryPanel และส่ง props", "App.jsx + components"],
-      ["CP02", 35, "Props, map & key", "TaskList/TaskCard และ stable task.id", "TaskList.jsx + TaskCard.jsx"],
-      ["CP03", 40, "State & Filter", "useState, derived summary และ status filter", "App.jsx + FilterBar.jsx"],
-      ["CP04", 50, "Controlled Form", "validation, onChange/onSubmit และ immutable add", "TaskForm.jsx + App.jsx"],
-      ["CP05", 35, "Callback & Conditional", "delete ด้วย id/filter และ empty state", "TaskList/TaskCard/App"],
-      ["CP06", 20, "Responsive & A11y", "375px, focus, label, error และ status", "styles.css + form"],
-      ["CP07", 15, "Verify & Transfer", "check/build/reflection และ LAB 4 bridge", "REFLECTION.md + scripts"],
+      ["CP00", 15, "First React Success", "Vite/HMR และเส้นทาง index → main → App", "App.jsx", "01 Mental Model + 02 First App", "01_WEEK03_TO_REACT_MENTAL_MODEL_TH.md"],
+      ["CP01", 30, "JSX & Components", "สร้าง AppHeader/SummaryPanel และส่ง props", "App.jsx + components", "03 JSX + 04 Components", "03_JSX_FUNDAMENTALS_TH.md"],
+      ["CP02", 35, "Props, map & key", "TaskList/TaskCard และ stable task.id", "TaskList.jsx + TaskCard.jsx", "05 Props + 07 List/Key", "05_PROPS_AND_ONE_WAY_DATA_FLOW_TH.md"],
+      ["CP03", 40, "State & Filter", "useState, derived summary และ status filter", "App.jsx + FilterBar.jsx", "06 State & Events", "06_STATE_AND_EVENTS_TH.md"],
+      ["CP04", 50, "Controlled Form", "validation, onChange/onSubmit และ immutable add", "TaskForm.jsx + App.jsx", "08 Controlled Form", "08_CONTROLLED_FORM_VALIDATION_TH.md"],
+      ["CP05", 35, "Callback & Conditional", "delete ด้วย id/filter และ empty state", "TaskList/TaskCard/App", "05 Props/Callback + 07 Conditional", "07_LIST_KEY_CONDITIONAL_RENDERING_TH.md"],
+      ["CP06", 20, "Responsive & A11y", "375px, focus, label, error และ status", "styles.css + form", "09 Guided Build", "09_STUDY_TASK_BOARD_GUIDED_BUILD_TH.md"],
+      ["CP07", 15, "Verify & Transfer", "check/build/reflection และ LAB 4 bridge", "REFLECTION.md + scripts", "10 Transfer + 11 Test/Submit", "10_TRANSFER_TO_LAB04_CAMPUS_SERVICE_REQUEST_TH.md"],
     ];
     const checkpointTabs = document.getElementById("checkpoint-tabs");
     const checkpointDetail = document.getElementById("checkpoint-detail");
 
     function showCheckpoint(index) {
-      const [id, minutes, title, goal, files] = checkpointData[index];
+      const [id, minutes, title, goal, files, guideLabel, guideFile] = checkpointData[index];
       checkpointTabs.querySelectorAll("button").forEach((button, buttonIndex) => {
         button.classList.toggle("active", buttonIndex === index);
         button.setAttribute("aria-selected", String(buttonIndex === index));
       });
-      checkpointDetail.innerHTML = `<div class="checkpoint-time"><div><strong>${minutes}</strong>นาที</div></div><div><h3>${id} — ${title}</h3><p>${goal}</p><p><strong>ไฟล์:</strong> <code>${files}</code></p></div><div><h3>Gate</h3><p><code>npm run check:cp -- ${id}</code></p><h3>Recovery</h3><p>เก็บ src เดิม แล้ว copy <code>checkpoints/${id}/src</code></p></div>`;
+      checkpointDetail.innerHTML = `<div class="checkpoint-time"><div><strong>${minutes}</strong>นาที</div></div><div><h3>${id} — ${title}</h3><p>${goal}</p><p><strong>ไฟล์:</strong> <code>${files}</code></p><p><a href="guides/${guideFile}" target="_blank" rel="noopener"><strong>เปิด Guide:</strong> ${guideLabel}</a></p></div><div><h3>Gate</h3><p><code>npm run check:cp -- ${id}</code></p><h3>Recovery</h3><p>Troubleshooting → hint → instructor snapshot</p></div>`;
     }
 
     checkpointData.forEach(([id], index) => {

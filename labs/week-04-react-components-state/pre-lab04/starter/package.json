@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "node scripts/check-project.mjs"
+    "check": "node scripts/check-project.mjs",
+    "check:cp": "node scripts/check-checkpoint.mjs"
   },
   "dependencies": {
     "react": "^19.2.7",
@@ -21,4 +22,3 @@
     "node": ">=22.12.0"
   }
 }
-

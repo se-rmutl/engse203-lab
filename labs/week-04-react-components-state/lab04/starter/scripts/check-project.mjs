@@ -46,8 +46,9 @@ for (const [label, pattern] of patterns) {
 if (/document\.querySelector|innerHTML|\.push\s*\(|\.splice\s*\(/.test(source)) {
   failures.push('forbidden DOM mutation or mutable array update found');
 }
-if (!/base:\s*['"]\.\/['"]/.test(viteConfig)) failures.push("Vite base must be './' for nested Pages Hub path");
-if (!/outDir:\s*['"]dist['"]/.test(viteConfig)) failures.push('Vite build.outDir must be dist');
+if (/STUDENT-ID/.test(viteConfig)) failures.push('replace STUDENT-ID in vite.config.js');
+if (!/base:\s*['"]\.\/['"]/.test(viteConfig)) failures.push("Vite base must be './' for the unified Pages Hub");
+if (/outDir:\s*['"]docs['"]/.test(viteConfig)) failures.push('do not write Vite build directly to repository docs/');
 if (/TODO/.test(readme)) failures.push('complete README TODO items and test evidence');
 
 try {

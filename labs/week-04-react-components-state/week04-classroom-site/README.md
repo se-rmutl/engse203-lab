@@ -1,6 +1,6 @@
 # ENGSE203 Week 04 Classroom Website
 
-Single-page 16:9 classroom slide website สำหรับสอน React.js Fundamentals โดยอ้างอิง `ENGSE203_Week04_เอกสารประกอบการสอน.docx`, Phase A Blueprint และ Phase D1 code contracts
+Single-page 16:9 classroom slide website สำหรับสอน React.js Fundamentals ฉบับ Phase B1 ซึ่งเชื่อม React Beginner Bridge, CP00–CP07 และ Unified Student Repository contract
 
 ## เปิดใช้งานในห้องเรียน
 
@@ -37,9 +37,11 @@ npx serve docs
 - State/filter/add/delete/empty-state simulator
 - Controlled Form validation และ valid/invalid submit
 - CP00–CP07 checkpoint console
+- ปุ่ม `Guides` และหน้า `docs/guides/index.html` สำหรับเปิดบท 00–12
+- แต่ละ CP ใน checkpoint console มีลิงก์ไปยัง Beginner Guide ที่ตรงกับกิจกรรม
 - Submission checklist progress
 
-Interactive demos ใช้ JavaScript ภายในหน้าเพื่อสาธิต mental model และผลลัพธ์ ส่วน code block แสดง React/JSX ที่นำไปใช้ใน Vite project จริง
+Interactive demos ใช้ JavaScript ภายในหน้าเพื่อสาธิต mental model และผลลัพธ์ ส่วน code block แสดง React/JSX ที่นำไปใช้ใน Vite project จริง สัญญาส่งงานใช้ branch `lab/week-04`, result `/labs/week-04/` และ tag `lab-04-submission-v1`
 
 ## Deploy ด้วย GitHub Pages
 
@@ -56,8 +58,8 @@ Settings → Pages → Deploy from a branch → main → /docs
 | Website section | Canonical source |
 |---|---|
 | Overview / Bridge / JSX / Components / Props / State / Form | Week 04 เอกสารประกอบการสอน |
-| Pre-LAB CP00–CP07 | `pre-lab04/README.md` และ Instructor Live-Coding Runbook |
+| Pre-LAB CP00–CP07 | React Beginner Guides 00–12 + `pre-lab04/README.md` |
 | LAB 4 H0–H6 / R01–R14 | `lab04/README.md` |
-| Instructor Solution | Phase D1 manifest และ grading checklist |
-| Git/Pages/Submission | LAB 4 repository contract |
+| Instructor Recovery | Phase B1 Instructor Private Kit |
+| Git/Pages/Submission | Unified Student Repository contract |
 | Week 05 Connection | Week 04 scope boundary |
