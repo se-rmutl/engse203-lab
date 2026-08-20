@@ -15,9 +15,9 @@
 | 1 | ก่อนคาบ 5A · 30 นาที | [`pre-lab05/README.md`](pre-lab05/README.md) |
 | 2 | ในคาบ 5A | [`lab05/LAB05A_STUDENT_GUIDE_TH.md`](lab05/LAB05A_STUDENT_GUIDE_TH.md) |
 | 3 | ก่อนคาบ 5B · 20 นาที | [`pre-lab05/PRE_LAB05B_GUIDE_TH.md`](pre-lab05/PRE_LAB05B_GUIDE_TH.md) |
-| 4 | ในคาบ 5B | `lab05/LAB05B_STUDENT_GUIDE_TH.md` |
+| 4 | ในคาบ 5B | [`lab05/LAB05B_STUDENT_GUIDE_TH.md`](lab05/LAB05B_STUDENT_GUIDE_TH.md) |
 
-อ่านประกอบได้ตลอด — [เอกสารประกอบการสอน 5A](guides/ENGSE203_Week05A_Teaching_Document_TH.html) และ [ภาพรวมรูปแบบการเรียน](guides/ENGSE203_Week05_Learning_Model_Infographic.html)
+อ่านประกอบได้ตลอด — [เอกสารประกอบการสอน 5A](guides/ENGSE203_Week05A_Teaching_Document_TH.html) · [เอกสารประกอบการสอน 5B](guides/ENGSE203_Week05B_Teaching_Document_TH.html) · [ภาพรวมรูปแบบการเรียน](guides/ENGSE203_Week05_Learning_Model_Infographic.html)
 
 ---
 
@@ -61,12 +61,15 @@ week-05-react-mini-app/
 │   └── starter/               ← Study Task Board (เขียนเสร็จแล้ว ใช้สังเกตอย่างเดียว)
 ├── lab05/
 │   ├── LAB05A_STUDENT_GUIDE_TH.md
+│   ├── LAB05B_STUDENT_GUIDE_TH.md
 │   ├── CHECKPOINT_CARDS_5A_TH.md
 │   ├── CHECKPOINT_CARDS_5B_TH.md
 │   ├── starter/               ← Campus Service Request (มี TODO ให้ทำ)
-│   └── evidence-templates/
+│   ├── REGRESSION_CHECKLIST.md
+│   └── evidence-templates/  (TEST_REPORT · AI_USAGE)
 └── guides/
     ├── ENGSE203_Week05A_Teaching_Document_TH.html
+    ├── ENGSE203_Week05B_Teaching_Document_TH.html
     └── ENGSE203_Week05_Learning_Model_Infographic.html
 ```
 

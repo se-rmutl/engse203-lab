@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENGSE203 Week 05B — เอกสารประกอบการสอน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F5F9; --card:#FFFFFF; --ink:#16233A; --ink-soft:#5A6880;
+  --track:#C2CDDC; --a:#1F5FA8; --a-tint:#E4EDF8; --b:#6B3B96; --b-tint:#EDE6F5;
+  --loading:#B5771A; --success:#25755A; --error:#B23A2E; --rule:#DDE4EE;
+  --code-bg:#101827;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  line-height:1.75; padding:0 20px 80px; -webkit-font-smoothing:antialiased;
+}
+.doc{max-width:860px;margin:0 auto}
+
+.cover{padding:64px 0 40px;border-bottom:3px solid var(--b)}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.2em;color:var(--b);text-transform:uppercase}
+.cover h1{font-size:clamp(30px,5vw,46px);font-weight:700;line-height:1.15;
+  letter-spacing:-.02em;margin:14px 0 8px}
+.cover .subtitle{font-size:19px;color:var(--ink-soft);font-weight:300;margin-bottom:28px}
+.meta{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px}
+.meta th{text-align:left;font-weight:600;padding:7px 14px 7px 0;
+  width:190px;vertical-align:top;color:var(--ink-soft);font-size:13px}
+.meta td{padding:7px 0;border-bottom:1px solid var(--rule)}
+.meta tr:first-child td,.meta tr:first-child th{border-top:1px solid var(--rule)}
+
+.bigidea{background:var(--ink);color:#fff;padding:24px 26px;border-radius:4px;margin-top:8px}
+.bigidea .lab{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;
+  opacity:.65;text-transform:uppercase;margin-bottom:8px}
+.bigidea p{font-size:17px;line-height:1.6}
+.bigidea code{font-family:'IBM Plex Mono',monospace;font-size:15px;
+  background:rgba(255,255,255,.14);padding:1px 7px;border-radius:3px}
+
+.howto{background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  padding:26px;margin:36px 0}
+.howto h2{font-size:19px;margin-bottom:14px}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;font-size:14px;margin-top:14px}
+.legend .k{font-weight:600;white-space:nowrap}
+
+.ch{margin-top:60px;padding-top:8px}
+.ch-num{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:.16em;color:var(--b);text-transform:uppercase;
+  display:flex;align-items:center;gap:12px}
+.ch-num::after{content:"";flex:1;height:1px;background:var(--rule)}
+.ch h2{font-size:28px;font-weight:700;line-height:1.25;margin:12px 0 6px;letter-spacing:-.01em}
+.ch .readtime{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  color:var(--track);letter-spacing:.06em;margin-bottom:22px}
+.ch h3{font-size:19px;font-weight:600;margin:32px 0 10px}
+.ch h4{font-size:16px;font-weight:600;margin:22px 0 8px}
+p{margin-bottom:14px}
+ul,ol{margin:0 0 16px 22px}
+li{margin-bottom:7px}
+strong{font-weight:600}
+em{font-style:normal;background:linear-gradient(transparent 62%,var(--b-tint) 62%)}
+
+code{font-family:'IBM Plex Mono',monospace;font-size:.88em;
+  background:#E8EDF4;padding:2px 6px;border-radius:3px;color:#1B3358}
+pre{background:var(--code-bg);color:#E4EAF3;border-radius:4px;
+  padding:20px 22px;overflow-x:auto;margin:16px 0;font-size:13.5px;line-height:1.7}
+pre code{background:none;padding:0;color:inherit;font-size:13.5px}
+.c-key{color:#93B8F0} .c-str{color:#9ED9A8} .c-com{color:#7E8CA3;font-style:italic}
+.c-fn{color:#E0C285} .c-bad{color:#F0968C} .c-tag{color:#8FD3D0} .c-hl{color:#FFD97A;font-weight:600}
+
+table.d{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0}
+table.d th{text-align:left;background:#E8EDF4;padding:10px 12px;
+  font-weight:600;font-size:13px;border-bottom:2px solid var(--track)}
+table.d td{padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.d tr:hover td{background:#FAFCFE}
+
+figure{margin:30px 0;background:var(--card);border:1px solid var(--rule);
+  border-radius:4px;padding:24px 22px 16px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:13px;color:var(--ink-soft);margin-top:16px;
+  padding-top:12px;border-top:1px solid var(--rule)}
+figcaption b{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  letter-spacing:.1em;color:var(--b);display:block;margin-bottom:4px;text-transform:uppercase}
+
+.box{border-radius:4px;padding:20px 22px;margin:22px 0;font-size:14.5px}
+.box .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px;display:block}
+.box p:last-child{margin-bottom:0}
+.predict{background:var(--b-tint);border-left:3px solid var(--b)}
+.predict .h{color:var(--b)}
+.pitfall{background:#FBEBE8;border-left:3px solid var(--error)}
+.pitfall .h{color:var(--error)}
+.note{background:#FDF4E3;border-left:3px solid var(--loading)}
+.note .h{color:var(--loading)}
+.next{background:var(--a-tint);border-left:3px solid var(--a)}
+.next .h{color:var(--a)}
+.win{background:#E7F3ED;border-left:3px solid var(--success)}
+.win .h{color:var(--success)}
+
+details{background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  padding:14px 18px;margin:14px 0;font-size:14.5px}
+details summary{cursor:pointer;font-weight:600;font-size:14.5px;list-style:none;
+  display:flex;align-items:center;gap:9px}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸";color:var(--b);font-size:13px;transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+details .ans{margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-weight:300}
+details .ans p:last-child{margin-bottom:0}
+
+.recap{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--ink);
+  border-radius:4px;padding:22px;margin:30px 0 0}
+.recap .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px;display:block}
+.recap ul{margin-bottom:0;margin-left:20px}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--rule);
+  font-size:12.5px;color:var(--ink-soft);font-weight:300;
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer .m{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.05em}
+
+.toc{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:24px 26px;margin:28px 0}
+.toc h2{font-size:17px;margin-bottom:14px}
+.toc ol{margin:0 0 0 20px;font-size:14.5px}
+.toc li{margin-bottom:6px}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+.toc a:hover{border-bottom-color:var(--b);color:var(--b)}
+.toc .t{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--track);margin-left:6px}
+
+@media print{
+  body{background:#fff;padding:0}
+  figure,.box,.recap,details,table.d{break-inside:avoid}
+  .ch{break-before:page}
+  details{border:none} details summary::before{content:""}
+  details .ans{display:block}
+}
+@media (max-width:640px){
+  .meta th{width:auto;display:block;padding-bottom:0}
+  .meta td{display:block;padding-top:2px}
+  .cover{padding:36px 0 28px}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+
+<!-- ════════════ COVER ════════════ -->
+<header class="cover">
+  <p class="eyebrow">ENGSE203 · Week 05 · คาบที่ 2 จาก 2</p>
+  <h1>ข้อมูลอยู่ได้จริง<br>และของเดิมต้องไม่พัง</h1>
+  <p class="subtitle">Browser Storage, Safe Parse, Recovery, Effect Cleanup และการส่งมอบ</p>
+
+  <table class="meta">
+    <tr><th>รายวิชา</th><td>ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์</td></tr>
+    <tr><th>ต่อจาก</th><td>คาบ 5A — route ครบ 5 เส้น และโหลดข้อมูลผ่าน Service ได้แล้ว</td></tr>
+    <tr><th>เวลา</th><td>ทฤษฎี 60 นาที + ปฏิบัติ 240 นาที</td></tr>
+    <tr><th>Checkpoints</th><td>CP04a · CP04b · cleanup guard · CP05b · CP06</td></tr>
+    <tr><th>checker</th><td>เริ่ม 117/133 → จบ <strong>133/133</strong></td></tr>
+    <tr><th>ประเมินผล</th><td>ส่ง LAB 05 หลังคาบนี้ — งานชิ้นเดียว 3.00 คะแนน</td></tr>
+  </table>
+
+  <div class="bigidea">
+    <span class="lab">แนวคิดแกนกลางของคาบนี้</span>
+    <p><code>ข้อมูลต้องแปลงเป็นข้อความก่อนเก็บ</code> และ <code>ต้องไม่เชื่อข้อมูลที่อ่านกลับมา</code></p>
+  </div>
+</header>
+
+<!-- ════════════ HOW TO READ ════════════ -->
+<section class="howto">
+  <h2>วิธีอ่านเอกสารนี้</h2>
+  <p>โครงเหมือนเอกสารของคาบ 5A ทุกประการ แต่ละบทจบในตัวเอง มีเวลาอ่านกำกับ และปิดท้ายด้วยสรุปสั้น</p>
+  <p><strong>ถ้าอ่านก่อนเข้าคาบ</strong> ให้อ่านบทที่ 1 ถึง 3 ก็พอ · บทที่ 4 ถึง 6 จะเข้าใจง่ายกว่ามากถ้าอ่านตอนกำลังจะลงมือทำ</p>
+  <p><strong>บทที่ 6 คือคำตอบของคำถามที่ค้างมาจากสัปดาห์ที่แล้ว</strong> — เรื่อง Effect ที่ทำงาน 2 รอบ</p>
+
+  <div class="legend">
+    <span class="k">🟣 ทายก่อนอ่านต่อ</span>
+    <span>หยุดคิดและตอบในใจก่อน อย่าเพิ่งอ่านคำตอบ</span>
+    <span class="k">🔴 กับดักที่พบบ่อย</span>
+    <span>ความผิดพลาดที่รุ่นก่อน ๆ เจอจริง</span>
+    <span class="k">🟡 หมายเหตุ</span>
+    <span>ข้อมูลเสริมที่ควรรู้</span>
+    <span class="k">🟢 จุดที่ควรภูมิใจ</span>
+    <span>ผลลัพธ์ที่พิสูจน์ว่าออกแบบมาถูก</span>
+    <span class="k">🔵 มองไปข้างหน้า</span>
+    <span>จุดเชื่อมไปยัง Week 06 และ Week 08</span>
+    <span class="k">▸ เฉลย</span>
+    <span>กดเพื่อดูคำตอบ — พยายามตอบเองก่อนเสมอ</span>
+  </div>
+</section>
+
+<nav class="toc">
+  <h2>สารบัญ</h2>
+  <ol>
+    <li><a href="#c1">ทำไมข้อมูลถึงหายตอน refresh</a><span class="t">7 นาที</span></li>
+    <li><a href="#c2">แปลงข้อมูลเป็นข้อความและกลับคืน</a><span class="t">9 นาที</span></li>
+    <li><a href="#c3">Envelope และหมายเลขเวอร์ชัน</a><span class="t">8 นาที</span></li>
+    <li><a href="#c4">อ่านกลับมาแล้วอย่าเพิ่งเชื่อ</a><span class="t">12 นาที</span></li>
+    <li><a href="#c5">Recovery — แอปที่กู้ตัวเองได้</a><span class="t">9 นาที</span></li>
+    <li><a href="#c6">คำตอบเรื่อง Effect ที่ทำงาน 2 รอบ</a><span class="t">11 นาที</span></li>
+    <li><a href="#c7">Regression และการส่งมอบ</a><span class="t">8 นาที</span></li>
+    <li><a href="#c8">จากทฤษฎีสู่ Checkpoint</a><span class="t">5 นาที</span></li>
+  </ol>
+</nav>
+
+<!-- ════════════ CH 1 ════════════ -->
+<section class="ch" id="c1">
+  <p class="ch-num">บทที่ 1</p>
+  <h2>ทำไมข้อมูลถึงหายตอน refresh</h2>
+  <p class="readtime">เวลาอ่าน ≈ 7 นาที</p>
+
+  <p>สัปดาห์ที่แล้วเราแก้ปัญหาไปสองข้อจากสามข้อ — URL บอกได้แล้วว่ากำลังดูอะไร และผู้ใช้รู้แล้วว่าระบบกำลังโหลดหรือพลาด</p>
+  <p>เหลือข้อสุดท้าย <strong>กด refresh แล้วข้อมูลที่เพิ่งเพิ่มหายไปไหน</strong></p>
+
+  <div class="box predict">
+    <span class="h">🟣 ทายก่อนอ่านต่อ</span>
+    <p>ใน Pre-LAB คุณเปลี่ยน preference แล้ว refresh — ค่านั้น<em>ไม่หาย</em> แต่คำร้องที่เพิ่มใน LAB กลับหาย</p>
+    <p style="margin-bottom:0">ทั้งที่เป็นข้อมูลในเบราว์เซอร์เหมือนกัน <strong>ต่างกันตรงไหน</strong></p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="เปรียบเทียบหน่วยความจำกับที่เก็บถาวร">
+      <style>
+        .t1{font:600 13.5px 'IBM Plex Sans Thai',sans-serif;fill:#16233A}
+        .s1{font:300 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#5A6880}
+        .m1{font:600 10.5px 'IBM Plex Mono',monospace;letter-spacing:.1em}
+      </style>
+      <text x="14" y="18" class="m1" fill="#B23A2E">หน่วยความจำ · MEMORY</text>
+      <rect x="14" y="28" width="356" height="96" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.5" rx="4"/>
+      <rect x="32" y="46" width="150" height="28" fill="#fff" stroke="#C2CDDC" rx="3"/>
+      <text x="46" y="65" class="s1">useState(requests)</text>
+      <text x="200" y="65" class="s1">อยู่ในแรมของแท็บ</text>
+      <text x="32" y="98" class="t1" fill="#8F2B21">ปิดแท็บ · refresh · ปิดเบราว์เซอร์</text>
+      <text x="32" y="114" class="s1" fill="#8F2B21">→ หายทั้งหมด ไม่มีอะไรเหลือ</text>
+
+      <text x="404" y="18" class="m1" fill="#25755A">ที่เก็บถาวร · LOCAL STORAGE</text>
+      <rect x="404" y="28" width="342" height="96" fill="#E7F3ED" stroke="#25755A" stroke-width="1.5" rx="4"/>
+      <rect x="422" y="46" width="180" height="28" fill="#fff" stroke="#C2CDDC" rx="3"/>
+      <text x="436" y="65" class="s1">localStorage.setItem(…)</text>
+      <text x="620" y="65" class="s1">อยู่ในดิสก์</text>
+      <text x="422" y="98" class="t1" fill="#1B5C46">ปิดแท็บ · refresh · ปิดเบราว์เซอร์</text>
+      <text x="422" y="114" class="s1" fill="#1B5C46">→ ยังอยู่ จนกว่าจะลบเอง</text>
+
+      <rect x="14" y="142" width="732" height="46" fill="#fff" stroke="#C2CDDC" rx="4"/>
+      <text x="32" y="163" class="t1">แต่มีข้อแลกเปลี่ยนสำคัญ</text>
+      <text x="32" y="180" class="s1">Local Storage เก็บได้เฉพาะ “ข้อความ” เท่านั้น · ผูกกับเบราว์เซอร์และเครื่องนั้น ๆ · และผู้ใช้แก้เองได้</text>
+
+      <rect x="14" y="200" width="732" height="46" fill="#FDF4E3" stroke="#B5771A" rx="4"/>
+      <text x="32" y="221" class="t1" fill="#8A5A0E">สิ่งที่เราจะทำวันนี้</text>
+      <text x="32" y="238" class="s1" fill="#8A5A0E">ย้ายข้อมูลคำร้องจากฝั่งซ้ายไปฝั่งขวา แล้วรับมือกับข้อแลกเปลี่ยนทั้งสามข้อให้ได้</text>
+    </svg>
+    <figcaption><b>ภาพที่ 1</b>ข้อมูลใน <code>useState</code> อยู่ในหน่วยความจำของแท็บ พอ refresh หน้าเว็บถูกสร้างใหม่ทั้งหมด state จึงกลับไปเป็นค่าเริ่มต้น</figcaption>
+  </figure>
+
+  <details>
+    <summary>เฉลยคำถามตอนต้นบท</summary>
+    <div class="ans">
+      <p>แอปใน Pre-LAB เขียนค่า preference ลง <code>localStorage</code> ทุกครั้งที่เปลี่ยน แล้วอ่านกลับมาตอนเปิดหน้า ส่วนแอป LAB ของเราเก็บคำร้องไว้ใน <code>useState</code> อย่างเดียว</p>
+      <p style="margin-bottom:0">พูดง่าย ๆ คือ Pre-LAB ทำสิ่งที่เรากำลังจะทำวันนี้ไปแล้ว — และนั่นคือเหตุผลที่ให้ไปสังเกตมาก่อน</p>
+    </div>
+  </details>
+
+  <h3>ที่เก็บในเบราว์เซอร์มีหลายแบบ</h3>
+  <table class="d">
+    <tr><th>ที่เก็บ</th><th>อยู่ได้นานแค่ไหน</th><th>เหมาะกับ</th></tr>
+    <tr><td><code>localStorage</code></td><td>จนกว่าจะลบเอง</td><td>ข้อมูลสาธิต การตั้งค่า ← <strong>เราใช้ตัวนี้</strong></td></tr>
+    <tr><td><code>sessionStorage</code></td><td>เฉพาะแท็บนั้น ปิดแล้วหาย</td><td>ข้อมูลชั่วคราวระหว่างทำงาน</td></tr>
+    <tr><td>IndexedDB</td><td>จนกว่าจะลบเอง</td><td>ข้อมูลจำนวนมากและซับซ้อน</td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🔴 สิ่งที่ห้ามเก็บใน Local Storage</span>
+    <p>ผู้ใช้แก้ข้อมูลตรงนี้ได้เองง่าย ๆ อย่างที่คุณเพิ่งลองทำใน Pre-LAB และสคริปต์ใด ๆ ที่รันในหน้าเดียวกันก็อ่านได้ทั้งหมด</p>
+    <p style="margin-bottom:0"><strong>ห้ามเก็บ</strong> — รหัสผ่าน โทเคน เลขบัตรประชาชน ข้อมูลส่วนบุคคลจริง หรืออะไรที่ถ้าถูกแก้แล้วระบบจะเสียหาย · LAB นี้ใช้ข้อมูลสาธิตทั้งหมด</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 1</span>
+    <ul>
+      <li>state อยู่ในหน่วยความจำ refresh แล้วหาย · Local Storage อยู่ในดิสก์ จึงยังอยู่</li>
+      <li>แลกมาด้วย 3 ข้อ — เก็บได้แต่ข้อความ ผูกกับเครื่อง และผู้ใช้แก้เองได้</li>
+      <li>ห้ามเก็บข้อมูลสำคัญหรือข้อมูลส่วนบุคคลจริง</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════════ CH 2 ════════════ -->
+<section class="ch" id="c2">
+  <p class="ch-num">บทที่ 2</p>
+  <h2>แปลงข้อมูลเป็นข้อความและกลับคืน</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <p>ข้อจำกัดข้อแรกจากบทที่แล้วคือ <strong>Local Storage เก็บได้เฉพาะข้อความ</strong> แต่ข้อมูลคำร้องของเราเป็น array ของ object</p>
+
+  <div class="box predict">
+    <span class="h">🟣 ทายก่อนอ่านต่อ</span>
+    <p style="margin-bottom:0">ถ้าเราเขียนแบบนี้ แล้วอ่านกลับมาจะได้อะไร</p>
+    <pre style="margin:12px 0 0"><code><span class="c-fn">localStorage</span>.<span class="c-fn">setItem</span>(<span class="c-str">'test'</span>, { name: <span class="c-str">'สมชาย'</span> });
+<span class="c-fn">localStorage</span>.<span class="c-fn">getItem</span>(<span class="c-str">'test'</span>);   <span class="c-com">// → ?</span></code></pre>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>ได้ข้อความว่า <code>"[object Object]"</code></p>
+      <p style="margin-bottom:0">เบราว์เซอร์แปลง object เป็นข้อความให้เองโดยอัตโนมัติ แต่แปลงแบบไร้ประโยชน์ — <strong>ข้อมูลข้างในหายหมดและกู้กลับไม่ได้</strong> ที่แย่คือ<em>ไม่มี error ใด ๆ</em> โปรแกรมทำงานต่อไปเงียบ ๆ แล้วคุณจะรู้ตัวตอนอ่านกลับมาไม่ได้</p>
+    </div>
+  </details>
+
+  <h3>2.1 คู่แปลงที่ต้องใช้เสมอ</h3>
+
+<pre><code><span class="c-com">// ตอนเก็บ — object → ข้อความ</span>
+<span class="c-fn">localStorage</span>.<span class="c-fn">setItem</span>(key, <span class="c-hl">JSON.stringify</span>(data));
+
+<span class="c-com">// ตอนอ่าน — ข้อความ → object</span>
+<span class="c-key">const</span> data = <span class="c-hl">JSON.parse</span>(<span class="c-fn">localStorage</span>.<span class="c-fn">getItem</span>(key));</code></pre>
+
+  <figure>
+    <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="วงจรการแปลงข้อมูลไปกลับ">
+      <style>
+        .t2{font:600 13px 'IBM Plex Sans Thai',sans-serif;fill:#16233A}
+        .s2{font:300 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#5A6880}
+        .m2{font:500 11px 'IBM Plex Mono',monospace;fill:#6B3B96}
+      </style>
+      <rect x="14" y="46" width="200" height="72" fill="#fff" stroke="#C2CDDC" stroke-width="1.5" rx="4"/>
+      <text x="30" y="38" class="m2">ในโปรแกรมของเรา</text>
+      <text x="30" y="70" class="t2">Array ของ Object</text>
+      <text x="30" y="90" class="s2">[{ id: 'REQ-001', … }]</text>
+      <text x="30" y="108" class="s2">ใช้ .filter() .map() ได้</text>
+
+      <path d="M222 66 L300 66" stroke="#6B3B96" stroke-width="2" marker-end="url(#p1)"/>
+      <text x="228" y="58" class="m2">JSON.stringify()</text>
+      <path d="M300 98 L222 98" stroke="#6B3B96" stroke-width="2" marker-end="url(#p1)"/>
+      <text x="234" y="114" class="m2">JSON.parse()</text>
+
+      <rect x="308" y="46" width="200" height="72" fill="#EDE6F5" stroke="#6B3B96" stroke-width="1.5" rx="4"/>
+      <text x="324" y="38" class="m2">รูปแบบกลาง</text>
+      <text x="324" y="70" class="t2">ข้อความ</text>
+      <text x="324" y="90" class="s2">'[{"id":"REQ-001",…}]'</text>
+      <text x="324" y="108" class="s2">เป็นแค่ตัวอักษรเรียงกัน</text>
+
+      <path d="M516 82 L594 82" stroke="#25755A" stroke-width="2" marker-end="url(#p2)"/>
+      <rect x="602" y="46" width="144" height="72" fill="#E7F3ED" stroke="#25755A" stroke-width="1.5" rx="4"/>
+      <text x="618" y="38" class="m2" fill="#25755A">Local Storage</text>
+      <text x="618" y="70" class="t2" fill="#1B5C46">เก็บข้อความ</text>
+      <text x="618" y="90" class="s2" fill="#1B5C46">อยู่ในดิสก์</text>
+      <text x="618" y="108" class="s2" fill="#1B5C46">refresh แล้วยังอยู่</text>
+
+      <rect x="14" y="146" width="732" height="46" fill="#FBEBE8" stroke="#B23A2E" rx="4"/>
+      <text x="32" y="167" class="t2" fill="#8F2B21">จุดเปราะบางของวงจรนี้</text>
+      <text x="32" y="184" class="s2" fill="#8F2B21">ขาไป เราควบคุมได้ทั้งหมด · ขากลับ เราไม่รู้เลยว่าข้อความที่อ่านมายังเหมือนตอนเขียนหรือไม่ ← บทที่ 4</text>
+
+      <defs>
+        <marker id="p1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+          <path d="M0 0 L8 4 L0 8 z" fill="#6B3B96"/></marker>
+        <marker id="p2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+          <path d="M0 0 L8 4 L0 8 z" fill="#25755A"/></marker>
+      </defs>
+    </svg>
+    <figcaption><b>ภาพที่ 2</b>ข้อมูลต้องผ่านรูปแบบกลางที่เป็นข้อความเสมอ · ขาไปเราควบคุมได้ แต่ขากลับควบคุมไม่ได้ ซึ่งเป็นที่มาของงานทั้งหมดในบทที่ 4</figcaption>
+  </figure>
+
+  <h3>2.2 <code>structuredClone</code> — ทำไมต้องคัดลอกก่อนคืน</h3>
+
+  <p>ในโค้ดของ LAB คุณจะเห็น <code>structuredClone()</code> ครอบผลลัพธ์อยู่หลายจุด</p>
+
+<pre><code><span class="c-key">return</span> { status: <span class="c-str">'valid'</span>, requests: <span class="c-hl">structuredClone</span>(envelope.requests) };</code></pre>
+
+  <p>เหตุผลคือ <strong>ใน JavaScript การส่ง array หรือ object ไปให้ใครคือการส่งกุญแจบ้าน ไม่ใช่ส่งรูปถ่ายบ้าน</strong></p>
+
+  <div class="box pitfall">
+    <span class="h">🔴 บั๊กที่จะเกิดถ้าไม่คัดลอก</span>
+    <p>สมมติ Service คืน array ตัวเดิมออกไป แล้วหน้าจอเอาไปแก้</p>
+<pre style="margin:12px 0"><code><span class="c-key">const</span> requests = <span class="c-key">await</span> <span class="c-fn">getRequests</span>();
+requests.<span class="c-fn">push</span>(newItem);        <span class="c-com">// ตั้งใจแก้แค่ในหน้าจอ</span>
+<span class="c-com">// แต่ข้อมูลต้นทางใน Service เปลี่ยนตามไปด้วย</span></code></pre>
+    <p style="margin-bottom:0">ผลคือข้อมูลเปลี่ยนในที่ที่ไม่ได้ตั้งใจ <strong>โดยไม่มี error ให้จับ</strong> เป็นบั๊กประเภทที่หายากที่สุดประเภทหนึ่ง</p>
+  </div>
+
+  <p><code>structuredClone()</code> สร้างสำเนาลึกให้ ทุกคนที่เรียก Service จึงได้ข้อมูลชุดของตัวเอง แก้ยังไงก็ไม่กระทบใคร</p>
+
+  <div class="box note">
+    <span class="h">🟡 หมายเหตุ</span>
+    <p style="margin-bottom:0">มีเทคนิคเก่าที่ใช้ <code>JSON.parse(JSON.stringify(x))</code> เพื่อคัดลอกลึกเช่นกัน แต่จะทำให้ <code>Date</code> กลายเป็นข้อความ และรับมือกับข้อมูลที่อ้างถึงตัวเองไม่ได้ · <code>structuredClone</code> เป็นวิธีมาตรฐานของเบราว์เซอร์สมัยใหม่</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 2</span>
+    <ul>
+      <li>Local Storage เก็บได้แต่ข้อความ ต้องใช้ <code>JSON.stringify</code> ตอนเก็บและ <code>JSON.parse</code> ตอนอ่าน</li>
+      <li>ลืม <code>stringify</code> แล้วจะได้ <code>"[object Object]"</code> โดยไม่มี error เตือน</li>
+      <li><code>structuredClone</code> ทำให้ผู้เรียกได้ข้อมูลชุดของตัวเอง ป้องกันการแก้ข้ามกันโดยไม่ตั้งใจ</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════════ CH 3 ════════════ -->
+<section class="ch" id="c3">
+  <p class="ch-num">บทที่ 3</p>
+  <h2>Envelope และหมายเลขเวอร์ชัน</h2>
+  <p class="readtime">เวลาอ่าน ≈ 8 นาที</p>
+
+  <p>เราไม่ได้เก็บ array ของคำร้องลงไปตรง ๆ แต่ห่อไว้ในกล่องที่มีข้อมูลกำกับด้วย เรียกว่า <strong>envelope</strong></p>
+
+<pre><code>{
+  <span class="c-hl">"schemaVersion"</span>: <span class="c-str">1</span>,
+  <span class="c-str">"updatedAt"</span>: <span class="c-str">"2026-08-13T09:15:00.000Z"</span>,
+  <span class="c-str">"requests"</span>: [ … ]
+}</code></pre>
+
+  <div class="box predict">
+    <span class="h">🟣 ทายก่อนอ่านต่อ</span>
+    <p style="margin-bottom:0">ทำไมต้องมี <code>schemaVersion</code> ในเมื่อเราก็รู้อยู่แล้วว่าข้อมูลหน้าตาเป็นอย่างไร</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>เพราะ <strong>ข้อมูลอยู่ในเครื่องผู้ใช้ แต่โค้ดอยู่ที่เรา</strong> — สองอย่างนี้อัปเดตไม่พร้อมกัน</p>
+      <p>สมมติเทอมหน้าคุณเพิ่มฟิลด์ <code>dueDate</code> เข้าไปในคำร้อง ผู้ใช้ที่เคยเปิดเว็บเมื่อสัปดาห์ที่แล้วจะมีข้อมูลเก่าที่<em>ไม่มี</em>ฟิลด์นั้นค้างอยู่ในเครื่อง พอเปิดเว็บใหม่ โค้ดใหม่จะอ่านข้อมูลเก่าแล้วพัง</p>
+      <p style="margin-bottom:0">มี <code>schemaVersion</code> ทำให้โปรแกรมรู้ทันทีว่า <em>"ข้อมูลนี้เป็นของโครงสร้างรุ่นเก่า ฉันอ่านไม่ได้"</em> แล้วเลือกทางออกได้อย่างปลอดภัย</p>
+    </div>
+  </details>
+
+  <figure>
+    <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ปัญหาข้อมูลเก่ากับโค้ดใหม่">
+      <style>
+        .t3{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#16233A}
+        .s3{font:300 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#5A6880}
+        .m3{font:500 10.5px 'IBM Plex Mono',monospace;letter-spacing:.06em}
+      </style>
+      <text x="14" y="18" class="m3" fill="#5A6880">สัปดาห์ที่แล้ว</text>
+      <rect x="14" y="28" width="330" height="60" fill="#fff" stroke="#C2CDDC" rx="4"/>
+      <text x="30" y="50" class="t3">ผู้ใช้เปิดเว็บ · ข้อมูลถูกเก็บลงเครื่อง</text>
+      <text x="30" y="70" class="s3">{ schemaVersion: 1, requests: [{ id, ชื่อ, สถานที่ }] }</text>
+
+      <text x="416" y="18" class="m3" fill="#5A6880">วันนี้</text>
+      <rect x="416" y="28" width="330" height="60" fill="#fff" stroke="#C2CDDC" rx="4"/>
+      <text x="432" y="50" class="t3">เราปล่อยเวอร์ชันใหม่ · เพิ่มฟิลด์ dueDate</text>
+      <text x="432" y="70" class="s3">โค้ดคาดหวัง { …, dueDate } ทุกรายการ</text>
+
+      <path d="M180 92 L360 122" stroke="#C2CDDC" stroke-width="1.6"/>
+      <path d="M580 92 L400 122" stroke="#C2CDDC" stroke-width="1.6"/>
+
+      <rect x="180" y="126" width="400" height="44" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.5" rx="4"/>
+      <text x="200" y="146" class="t3" fill="#8F2B21">โค้ดใหม่เจอข้อมูลเก่าในเครื่องผู้ใช้</text>
+      <text x="200" y="163" class="s3" fill="#8F2B21">ถ้าไม่มีตัวบอกเวอร์ชัน → อ่านแล้วพังแบบไม่รู้สาเหตุ</text>
+
+      <rect x="180" y="180" width="400" height="42" fill="#E7F3ED" stroke="#25755A" stroke-width="1.5" rx="4"/>
+      <text x="200" y="200" class="t3" fill="#1B5C46">มี schemaVersion → รู้ทันทีว่าเป็นข้อมูลรุ่นเก่า</text>
+      <text x="200" y="216" class="s3" fill="#1B5C46">เลือกได้ว่าจะแปลงให้เข้ากับรุ่นใหม่ หรือทิ้งแล้วเริ่มใหม่อย่างปลอดภัย</text>
+    </svg>
+    <figcaption><b>ภาพที่ 3</b>ข้อมูลอยู่ในเครื่องผู้ใช้ แต่โค้ดอยู่ที่เรา · <code>schemaVersion</code> คือสิ่งที่ทำให้สองฝั่งคุยกันรู้เรื่องแม้จะอัปเดตไม่พร้อมกัน</figcaption>
+  </figure>
+
+  <h3>ส่วนประกอบทั้งสามของ envelope</h3>
+  <table class="d">
+    <tr><th style="width:150px">ฟิลด์</th><th>ทำหน้าที่อะไร</th></tr>
+    <tr><td><code>schemaVersion</code></td><td>บอกว่าโครงสร้างข้อมูลนี้เป็นรุ่นไหน — ถ้าไม่ตรงกับที่โค้ดรองรับ ถือว่าอ่านไม่ได้</td></tr>
+    <tr><td><code>updatedAt</code></td><td>เวลาที่บันทึกล่าสุด · ใช้ตรวจสอบและแก้ปัญหาได้เมื่อมีอะไรผิดปกติ</td></tr>
+    <tr><td><code>requests</code></td><td>ข้อมูลจริงที่เราต้องการเก็บ</td></tr>
+  </table>
+
+  <p>คีย์ที่ใช้ก็มีความหมายเช่นกัน</p>
+
+<pre><code><span class="c-key">export const</span> STORAGE_KEY = <span class="c-str">'engse203-campus-requests-v1'</span>;
+<span class="c-com">//                            └─ วิชา ─┘└─ ชื่อข้อมูล ──┘└ รุ่น ┘</span></code></pre>
+
+  <p>ตั้งชื่อเฉพาะเจาะจงเพื่อไม่ให้ชนกับข้อมูลของเว็บอื่นที่ใช้โดเมนเดียวกัน — ซึ่งบน GitHub Pages เกิดขึ้นได้จริง เพราะทุกโปรเจกต์ของคุณอยู่ใต้ <code>username.github.io</code> เหมือนกันหมด</p>
+
+  <div class="box pitfall">
+    <span class="h">🔴 กับดัก · <code>localStorage.clear()</code></span>
+    <p>ตอนทำปุ่ม Reset หลายคนเผลอใช้ <code>localStorage.clear()</code> ซึ่ง <strong>ลบข้อมูลของทุกเว็บที่ใช้โดเมนเดียวกัน</strong> — งาน Week 03 และ Week 04 ของคุณเองก็โดนลบไปด้วย</p>
+    <p style="margin-bottom:0">ต้องใช้ <code>localStorage.removeItem(STORAGE_KEY)</code> ที่ลบเฉพาะคีย์ของเรา · <strong>checker ตรวจข้อนี้จริง</strong></p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 3</span>
+    <ul>
+      <li>ไม่เก็บ array ตรง ๆ แต่ห่อใน envelope ที่มี <code>schemaVersion</code>, <code>updatedAt</code> และ <code>requests</code></li>
+      <li><code>schemaVersion</code> แก้ปัญหาข้อมูลเก่าค้างในเครื่องผู้ใช้ขณะที่โค้ดเปลี่ยนไปแล้ว</li>
+      <li>ตั้งชื่อคีย์ให้เฉพาะเจาะจง และลบเฉพาะคีย์ของตัวเองเสมอ</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════════ CH 4 ════════════ -->
+<section class="ch" id="c4">
+  <p class="ch-num">บทที่ 4</p>
+  <h2>อ่านกลับมาแล้วอย่าเพิ่งเชื่อ</h2>
+  <p class="readtime">เวลาอ่าน ≈ 12 นาที · บทที่สำคัญที่สุดของคาบนี้</p>
+
+  <p>ขาไปเราควบคุมได้ทั้งหมด แต่<strong>ขากลับควบคุมไม่ได้เลย</strong> ระหว่างที่ข้อมูลนอนอยู่ในเครื่องผู้ใช้ อาจเกิดอะไรขึ้นก็ได้</p>
+
+  <ul>
+    <li>ผู้ใช้เปิด DevTools แล้วแก้เอง — อย่างที่คุณทำใน Pre-LAB</li>
+    <li>ส่วนขยายเบราว์เซอร์เข้าไปยุ่ง</li>
+    <li>เขียนค้างกลางคันเพราะแท็บถูกปิด</li>
+    <li>เป็นข้อมูลจากโค้ดเวอร์ชันเก่า</li>
+  </ul>
+
+  <p><strong>ทุกกรณีข้างบนต้องไม่ทำให้แอปพัง</strong> — ผู้ใช้ควรได้แอปที่ใช้งานได้ ไม่ใช่หน้าจอขาว</p>
+
+  <div class="box predict">
+    <span class="h">🟣 ทายก่อนอ่านต่อ</span>
+    <p style="margin-bottom:0">ถ้าเราใส่ <code>try/catch</code> ครอบ <code>JSON.parse</code> แล้ว — พอหรือยัง</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ยังไม่พอ</strong> เพราะ <code>try/catch</code> จับได้แค่กรณีที่ข้อความ<em>ไม่ใช่ JSON</em> เท่านั้น</p>
+      <p>แต่ข้อความนี้เป็น JSON ที่ถูกต้องสมบูรณ์ และ <code>JSON.parse</code> จะสำเร็จโดยไม่มี error</p>
+      <pre style="margin:12px 0 0"><code>{ <span class="c-str">"schemaVersion"</span>: <span class="c-bad">99</span>, <span class="c-str">"requests"</span>: <span class="c-bad">"ไม่ใช่ array"</span> }</code></pre>
+      <p style="margin-top:12px;margin-bottom:0"><strong>parse ได้ ไม่ได้แปลว่าข้อมูลถูก</strong> — นี่คือประโยคสำคัญที่สุดของบทนี้</p>
+    </div>
+  </details>
+
+  <h3>4.1 ตรวจสามชั้น</h3>
+
+  <figure>
+    <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="การตรวจข้อมูลสามชั้น">
+      <style>
+        .t4{font:600 13px 'IBM Plex Sans Thai',sans-serif;fill:#16233A}
+        .s4{font:300 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#5A6880}
+        .m4{font:500 10.5px 'IBM Plex Mono',monospace;fill:#6B3B96;letter-spacing:.06em}
+      </style>
+      <rect x="14" y="24" width="230" height="86" fill="#fff" stroke="#C2CDDC" stroke-width="1.5" rx="4"/>
+      <text x="30" y="18" class="m4">ชั้นที่ 1</text>
+      <text x="30" y="48" class="t4">ฟอร์ม</text>
+      <text x="30" y="66" class="s4">RequestForm.jsx</text>
+      <text x="30" y="88" class="s4">กันผู้ใช้กรอกผิด</text>
+      <text x="30" y="104" class="s4">บอกทันทีขณะพิมพ์</text>
+
+      <rect x="264" y="24" width="230" height="86" fill="#fff" stroke="#C2CDDC" stroke-width="1.5" rx="4"/>
+      <text x="280" y="18" class="m4">ชั้นที่ 2</text>
+      <text x="280" y="48" class="t4">Service</text>
+      <text x="280" y="66" class="s4">requestService.js</text>
+      <text x="280" y="88" class="s4">กันโค้ดส่วนอื่นเรียกผิด</text>
+      <text x="280" y="104" class="s4">ป้องกันบั๊กของเราเอง</text>
+
+      <rect x="514" y="24" width="232" height="86" fill="#EDE6F5" stroke="#6B3B96" stroke-width="1.5" rx="4"/>
+      <text x="530" y="18" class="m4">ชั้นที่ 3</text>
+      <text x="530" y="48" class="t4">Storage</text>
+      <text x="530" y="66" class="s4">requestStorage.js</text>
+      <text x="530" y="88" class="s4">ไม่เชื่อสิ่งที่อ่านกลับมา</text>
+      <text x="530" y="104" class="s4">← งานของคาบนี้</text>
+
+      <rect x="14" y="128" width="732" height="44" fill="#FDF4E3" stroke="#B5771A" rx="4"/>
+      <text x="32" y="148" class="t4" fill="#8A5A0E">ทำไมต้องซ้ำสามชั้น ทั้งที่เกณฑ์เหมือนกัน</text>
+      <text x="32" y="165" class="s4" fill="#8A5A0E">เพราะแต่ละชั้นกันคนละอย่าง · ถ้าชั้นใดชั้นหนึ่งพลาด ยังมีอีกสองชั้นรับไว้</text>
+
+      <rect x="14" y="182" width="732" height="44" fill="#E4EDF8" stroke="#1F5FA8" rx="4"/>
+      <text x="32" y="202" class="t4" fill="#134B8C">หลักการเดียวกันนี้จะเจออีกใน Week 06</text>
+      <text x="32" y="219" class="s4" fill="#134B8C">เซิร์ฟเวอร์ Express ก็ห้ามเชื่อข้อมูลที่ส่งมาจากฝั่งผู้ใช้ ด้วยเหตุผลเดียวกันเป๊ะ</text>
+    </svg>
+    <figcaption><b>ภาพที่ 4</b>การตรวจซ้ำหลายชั้นไม่ใช่ความซ้ำซ้อนที่ควรลบ แต่เป็นการออกแบบที่ตั้งใจ เรียกว่า defense in depth</figcaption>
+  </figure>
+
+  <table class="d">
+    <tr><th style="width:110px">ชั้น</th><th>ป้องกันอะไร</th><th>ถ้าลบชั้นนี้ออกจะเกิดอะไร</th></tr>
+    <tr><td>ฟอร์ม</td><td>ผู้ใช้กรอกผิด</td><td>ผู้ใช้ไม่รู้ว่ากรอกผิดตรงไหน ต้องกดส่งก่อนถึงจะรู้</td></tr>
+    <tr><td>Service</td><td>โค้ดส่วนอื่นเรียกด้วยข้อมูลผิด</td><td>ข้อมูลเสียหลุดเข้าไปในระบบโดยไม่มีใครทัก</td></tr>
+    <tr><td>Storage</td><td>ข้อมูลถูกแก้จากภายนอกหรือเสียหาย</td><td><strong>เปิดเว็บแล้วหน้าจอขาว</strong></td></tr>
+  </table>
+
+  <h3>4.2 สามสถานะที่ต้องคืน</h3>
+
+  <p><code>readStoredRequests()</code> ต้องคืนสถานะหนึ่งในสามค่านี้เสมอ และ<strong>ห้าม <code>throw</code> ออกไป</strong> เพราะจะทำให้หน้าจอพังทั้งหน้า</p>
+
+  <table class="d">
+    <tr><th style="width:120px">status</th><th>เกิดเมื่อ</th><th>โปรแกรมทำอะไรต่อ</th></tr>
+    <tr><td><code>'missing'</code></td><td>ยังไม่เคยเก็บ — เปิดเว็บครั้งแรก</td><td>โหลดข้อมูลตัวอย่างแล้วเก็บไว้ · <strong>ไม่ต้องแจ้งผู้ใช้</strong></td></tr>
+    <tr><td><code>'valid'</code></td><td>อ่านได้และผ่านการตรวจครบ</td><td>ใช้ข้อมูลนั้นได้เลย</td></tr>
+    <tr><td><code>'invalid'</code></td><td>อ่านไม่ได้หรือรูปแบบผิด</td><td>กู้ข้อมูลตัวอย่าง · <strong>ต้องแจ้งผู้ใช้</strong></td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟡 ทำไม <code>missing</code> ไม่แจ้งแต่ <code>invalid</code> ต้องแจ้ง</span>
+    <p style="margin-bottom:0">การเปิดเว็บครั้งแรกแล้วยังไม่มีข้อมูลเป็นเรื่องปกติ ไม่มีอะไรผิดพลาด · แต่การมีข้อมูลแล้วอ่านไม่ได้แปลว่า<strong>ผู้ใช้อาจเพิ่งเสียข้อมูลไป</strong> ซึ่งเขามีสิทธิ์รู้</p>
+  </div>
+
+  <h3>4.3 สามแบบที่ถือว่า <code>invalid</code></h3>
+
+  <table class="d">
+    <tr><th style="width:200px">ข้อมูลใน storage</th><th>ตรวจเจอด้วยอะไร</th></tr>
+    <tr><td><code>{ ไม่ใช่ JSON</code></td><td><code>try/catch</code> รอบ <code>JSON.parse</code></td></tr>
+    <tr><td><code>{"schemaVersion":99,…}</code></td><td>เทียบกับ <code>SCHEMA_VERSION</code></td></tr>
+    <tr><td>มีคำร้อง <code>id</code> ซ้ำกัน 2 รายการ</td><td><code>validateRequests()</code> ที่ starter เตรียมไว้ให้</td></tr>
+  </table>
+
+  <p>กรณีสุดท้ายน่าสนใจ — ข้อมูลถูกรูปแบบทุกอย่าง แต่มี <code>id</code> ซ้ำ ซึ่งจะทำให้ React แสดงรายการผิดและการลบทำงานผิดพลาด</p>
+
+  <div class="box pitfall">
+    <span class="h">🔴 กับดักที่พบบ่อยที่สุดของบทนี้</span>
+    <p>ทำแค่ <code>try/catch</code> แล้วคิดว่าเสร็จ — ผลคือกรณีที่ 2 และ 3 หลุดผ่านไปได้ทั้งคู่</p>
+    <p style="margin-bottom:0"><strong>ข่าวดี</strong> — checker ตรวจทั้งสามกรณีนี้จริง ถ้าทำไม่ครบจะขึ้นว่ารายการไหนยังไม่ผ่าน</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 4</span>
+    <ul>
+      <li>ขาไปควบคุมได้ ขากลับควบคุมไม่ได้ — จึงต้องตรวจทุกครั้งที่อ่าน</li>
+      <li><strong>parse ได้ ไม่ได้แปลว่าข้อมูลถูก</strong></li>
+      <li>ต้องคืนสามสถานะ และห้าม <code>throw</code> ออกจากฟังก์ชันอ่าน</li>
+      <li>ตรวจสามชั้นเป็นการออกแบบที่ตั้งใจ ไม่ใช่ความซ้ำซ้อน</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════════ CH 5 ════════════ -->
+<section class="ch" id="c5">
+  <p class="ch-num">บทที่ 5</p>
+  <h2>Recovery — แอปที่กู้ตัวเองได้</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <p>ตรวจเจอว่าข้อมูลเสียแล้ว — คำถามถัดไปคือ <strong>แล้วจะทำอะไรต่อ</strong></p>
+
+  <div class="box predict">
+    <span class="h">🟣 ทายก่อนอ่านต่อ</span>
+    <p style="margin-bottom:0">ถ้าคุณเป็นผู้ใช้ แล้วเปิดเว็บมาเจอว่าข้อมูลของตัวเองเสียหาย คุณอยากให้แอปทำอะไร</p>
+  </div>
+
+  <table class="d">
+    <tr><th style="width:36%">ทางเลือก</th><th>ผลที่ผู้ใช้ได้</th><th style="width:90px">ประเมิน</th></tr>
+    <tr><td>ปล่อยให้พัง หน้าจอขาว</td><td>ใช้อะไรไม่ได้เลย ไม่รู้ว่าเกิดอะไรขึ้น</td><td>แย่ที่สุด</td></tr>
+    <tr><td>แสดง error แล้วให้กดลองใหม่</td><td>กดกี่ครั้งก็เหมือนเดิม เพราะข้อมูลยังเสียอยู่</td><td>ไม่ช่วย</td></tr>
+    <tr><td>กู้ข้อมูลตัวอย่างเงียบ ๆ</td><td>ใช้งานต่อได้ แต่<strong>ไม่รู้ว่าข้อมูลตัวเองหายไปแล้ว</strong></td><td>ยังไม่ดีพอ</td></tr>
+    <tr><td><strong>กู้ข้อมูลตัวอย่าง แล้วแจ้งให้ทราบ</strong></td><td>ใช้งานต่อได้ทันที และรู้ว่าเกิดอะไรขึ้น</td><td>✅ ที่เราจะทำ</td></tr>
+  </table>
+
+  <figure>
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ลำดับการกู้คืนข้อมูล">
+      <style>
+        .t5{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#16233A}
+        .s5{font:300 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#5A6880}
+        .m5{font:500 10.5px 'IBM Plex Mono',monospace;letter-spacing:.06em}
+      </style>
+      <rect x="14" y="24" width="150" height="46" fill="#fff" stroke="#C2CDDC" stroke-width="1.5" rx="4"/>
+      <text x="30" y="44" class="t5">เปิดหน้า Dashboard</text>
+      <text x="30" y="60" class="s5">Effect เรียก Service</text>
+
+      <path d="M172 47 L212 47" stroke="#C2CDDC" stroke-width="1.8" marker-end="url(#r5)"/>
+
+      <rect x="220" y="24" width="160" height="46" fill="#EDE6F5" stroke="#6B3B96" stroke-width="1.5" rx="4"/>
+      <text x="236" y="44" class="t5">อ่านจากที่เก็บ</text>
+      <text x="236" y="60" class="s5">readStoredRequests()</text>
+
+      <path d="M300 74 L300 100" stroke="#C2CDDC" stroke-width="1.8" marker-end="url(#r5)"/>
+
+      <rect x="150" y="106" width="300" height="34" fill="#fff" stroke="#C2CDDC" rx="4"/>
+      <text x="166" y="128" class="t5">status = 'valid' ? → คืนข้อมูลนั้นเลย จบ</text>
+
+      <path d="M300 144 L300 168" stroke="#B23A2E" stroke-width="1.8" marker-end="url(#r5b)"/>
+      <text x="310" y="160" class="s5" fill="#8F2B21">ถ้าไม่ใช่</text>
+
+      <rect x="80" y="174" width="600" height="62" fill="#E7F3ED" stroke="#25755A" stroke-width="1.5" rx="4"/>
+      <text x="98" y="195" class="t5" fill="#1B5C46">ขั้นตอนกู้คืน — ทำสามอย่างตามลำดับ</text>
+      <text x="98" y="213" class="s5" fill="#1B5C46">1. โหลดข้อมูลตัวอย่างจากไฟล์   2. เขียนทับที่เก็บด้วยข้อมูลสะอาด</text>
+      <text x="98" y="229" class="s5" fill="#1B5C46">3. ถ้าสาเหตุคือ invalid (ไม่ใช่ missing) → เรียก onRecovery เพื่อแจ้งผู้ใช้</text>
+
+      <defs>
+        <marker id="r5" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+          <path d="M0 0 L8 4 L0 8 z" fill="#C2CDDC"/></marker>
+        <marker id="r5b" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+          <path d="M0 0 L8 4 L0 8 z" fill="#B23A2E"/></marker>
+      </defs>
+    </svg>
+    <figcaption><b>ภาพที่ 5</b>สังเกตขั้นที่ 2 — ต้องเขียนทับที่เก็บด้วย ไม่ใช่แค่คืนข้อมูลไปแสดง ไม่งั้นครั้งหน้าจะเจอข้อมูลเสียอีก</figcaption>
+  </figure>
+
+  <h3>5.1 แจ้งผู้ใช้อย่างไรโดยที่ Storage ไม่ต้องรู้จักหน้าจอ</h3>
+
+  <p>ปัญหาคือ Storage อยู่ชั้นล่างสุด ส่วนกล่องข้อความอยู่ที่หน้าจอชั้นบนสุด — <strong>ชั้นล่างไม่ควรรู้จักชั้นบน</strong> ไม่งั้นจะกลายเป็นผูกกันแน่นจนแยกไม่ออก</p>
+
+  <p>ทางออกคือให้หน้าจอ<em>ส่งฟังก์ชันลงไป</em> แล้วให้ Service เรียกกลับขึ้นมาเมื่อจำเป็น เรียกว่า <strong>callback</strong></p>
+
+<pre><code><span class="c-com">// หน้าจอส่งฟังก์ชันลงไป</span>
+<span class="c-fn">getRequests</span>({ scenario, <span class="c-hl">onRecovery: setNotice</span> })
+
+<span class="c-com">// Service เรียกกลับขึ้นมาเมื่อเพิ่งกู้ข้อมูล</span>
+<span class="c-key">if</span> (stored.status === <span class="c-str">'invalid'</span>) {
+  <span class="c-hl">onRecovery?.</span>(<span class="c-str">'พบข้อมูลเดิมที่อ่านไม่ได้ ระบบจึงกู้ข้อมูลตัวอย่างให้แล้ว'</span>);
+}</code></pre>
+
+  <div class="box note">
+    <span class="h">🟡 ทำไมต้องมีเครื่องหมายคำถามใน <code>onRecovery?.()</code></span>
+    <p style="margin-bottom:0">เพราะผู้เรียกบางคนอาจไม่สนใจเรื่องนี้และไม่ส่ง callback มา เช่น <code>getRequestById()</code> ที่เรียก <code>getRequests()</code> ต่ออีกที · เครื่องหมาย <code>?.</code> ทำให้ข้ามไปเฉย ๆ แทนที่จะพัง</p>
+  </div>
+
+  <p><strong>คุณเคยเห็นรูปแบบนี้มาแล้ว</strong> — ตอน Week 04 ที่ <code>RequestList</code> รับ <code>onDeleteRequest</code> จาก <code>App.jsx</code> เป็นแนวคิดเดียวกันทุกประการ ต่างแค่คราวนี้เป็นการส่งลงไปข้ามชั้นถึง Service</p>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 5</span>
+    <ul>
+      <li>ตรวจเจอว่าเสียแล้วต้องกู้ให้ใช้งานต่อได้ ไม่ใช่แค่แสดง error</li>
+      <li>ต้องเขียนทับที่เก็บด้วยข้อมูลสะอาด ไม่งั้นครั้งหน้าเจออีก</li>
+      <li><code>missing</code> ไม่ต้องแจ้ง · <code>invalid</code> ต้องแจ้ง</li>
+      <li>ใช้ callback ให้ชั้นล่างแจ้งชั้นบนได้โดยไม่ต้องรู้จักกัน</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════════ CH 6 ════════════ -->
+<section class="ch" id="c6">
+  <p class="ch-num">บทที่ 6</p>
+  <h2>คำตอบเรื่อง Effect ที่ทำงาน 2 รอบ</h2>
+  <p class="readtime">เวลาอ่าน ≈ 11 นาที</p>
+
+  <div class="box next">
+    <span class="h">🔵 คำถามที่ค้างมาหนึ่งสัปดาห์</span>
+    <p style="margin-bottom:0">สัปดาห์ที่แล้วคุณเห็นว่า Effect ทำงาน 2 รอบทั้งที่เขียนไว้รอบเดียว แล้วผมบอกว่าให้สังเกตไว้ก่อน — <strong>บทนี้คือคำตอบ</strong></p>
+  </div>
+
+  <p>เริ่มจากคำถามที่ไม่เกี่ยวกันเลย</p>
+
+  <div class="box predict">
+    <span class="h">🟣 ทายก่อนอ่านต่อ</span>
+    <p>ผู้ใช้เปิดหน้า <code>#/requests/REQ-001</code> ซึ่งใช้เวลาโหลด 0.4 วินาที แต่ผ่านไป 0.1 วินาที เขากดกลับไปหน้า Dashboard</p>
+    <p style="margin-bottom:0">อีก 0.3 วินาทีต่อมา ข้อมูลของ <code>REQ-001</code> โหลดเสร็จ — <strong>แล้วเกิดอะไรขึ้น</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>โค้ดใน <code>.then()</code> จะทำงาน แล้วเรียก <code>setRequest()</code> กับ <code>setLoadState()</code> ของหน้าที่<strong>ผู้ใช้ออกไปแล้ว</strong></p>
+      <p style="margin-bottom:0">อาการที่เห็นได้จริง — ผู้ใช้อยู่หน้า Dashboard แต่เห็นข้อมูลกะพริบ หรือสถานะเปลี่ยนโดยไม่มีเหตุผล ในกรณีที่ซับซ้อนกว่านี้จะได้ข้อมูลของหน้าเก่ามาแสดงทับหน้าใหม่</p>
+    </div>
+  </details>
+
+  <p>ปัญหานี้เรียกว่า <strong>stale update</strong> — การอัปเดตที่มาช้าเกินไปจนไม่เกี่ยวข้องแล้ว</p>
+
+  <figure>
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ลำดับเวลาของ stale update">
+      <style>
+        .t6{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#16233A}
+        .s6{font:300 11px 'IBM Plex Sans Thai',sans-serif;fill:#5A6880}
+        .m6{font:500 10px 'IBM Plex Mono',monospace;fill:#8FA6C2;letter-spacing:.08em}
+      </style>
+      <text x="14" y="18" class="m6">ไม่มี CLEANUP GUARD</text>
+      <line x1="14" y1="70" x2="746" y2="70" stroke="#C2CDDC" stroke-width="1.5"/>
+      <circle cx="70" cy="70" r="6" fill="#6B3B96"/>
+      <text x="46" y="52" class="s6">0.0 วิ</text>
+      <text x="30" y="92" class="t6">เปิดหน้า Detail</text>
+      <text x="30" y="108" class="s6">Effect เริ่มโหลด</text>
+
+      <circle cx="240" cy="70" r="6" fill="#B5771A"/>
+      <text x="218" y="52" class="s6">0.1 วิ</text>
+      <text x="196" y="92" class="t6">กดกลับ Dashboard</text>
+      <text x="196" y="108" class="s6">หน้า Detail ถูกถอดออก</text>
+
+      <circle cx="520" cy="70" r="6" fill="#B23A2E"/>
+      <text x="498" y="52" class="s6">0.4 วิ</text>
+      <text x="452" y="92" class="t6" fill="#8F2B21">ข้อมูลโหลดเสร็จ → setRequest()</text>
+      <text x="452" y="108" class="s6" fill="#8F2B21">อัปเดตหน้าที่ไม่อยู่แล้ว ← ปัญหา</text>
+
+      <line x1="14" y1="136" x2="746" y2="136" stroke="#DDE4EE"/>
+
+      <text x="14" y="164" class="m6" fill="#25755A">มี CLEANUP GUARD</text>
+      <line x1="14" y1="206" x2="746" y2="206" stroke="#C2CDDC" stroke-width="1.5"/>
+      <circle cx="70" cy="206" r="6" fill="#6B3B96"/>
+      <text x="30" y="228" class="s6">let ignore = false</text>
+
+      <circle cx="240" cy="206" r="6" fill="#25755A"/>
+      <text x="196" y="228" class="s6" fill="#1B5C46">cleanup ทำงาน → ignore = true</text>
+
+      <circle cx="520" cy="206" r="6" fill="#25755A"/>
+      <text x="452" y="228" class="s6" fill="#1B5C46">โหลดเสร็จ → เห็น ignore เป็น true → ไม่ทำอะไรต่อ</text>
+    </svg>
+    <figcaption><b>ภาพที่ 6</b>เราหยุดคำขอที่ส่งไปแล้วไม่ได้ แต่เราเลือกได้ว่าจะ<em>ใช้ผลลัพธ์</em>ของมันหรือไม่</figcaption>
+  </figure>
+
+  <h3>6.1 cleanup function</h3>
+
+  <p>ถ้า Effect คืนฟังก์ชันกลับไป React จะเรียกฟังก์ชันนั้นก่อนทำ Effect รอบใหม่ และก่อนที่ component จะถูกถอดออก</p>
+
+<pre><code><span class="c-fn">useEffect</span>(() =&gt; {
+  <span class="c-hl">let ignore = false;</span>
+
+  <span class="c-fn">getRequestById</span>(requestId).<span class="c-fn">then</span>((result) =&gt; {
+    <span class="c-hl">if (ignore) return;</span>          <span class="c-com">// ไม่เกี่ยวแล้ว ทิ้งไปเลย</span>
+    <span class="c-fn">setRequest</span>(result);
+    <span class="c-fn">setLoadState</span>(<span class="c-str">'success'</span>);
+  });
+
+  <span class="c-hl">return () =&gt; { ignore = true; };</span>   <span class="c-com">// React เรียกตอนออกจากหน้า</span>
+}, [requestId, reloadKey]);</code></pre>
+
+  <p><strong>สังเกตว่าเราไม่ได้ยกเลิกคำขอ</strong> — คำขอยังวิ่งไปจนเสร็จตามปกติ เราแค่เลือกไม่ใช้ผลลัพธ์ของมัน</p>
+
+  <h3>6.2 แล้วทำไม React ถึงเรียก Effect 2 รอบ</h3>
+
+  <p>ตอนนี้พร้อมรับคำตอบแล้ว</p>
+
+  <p>ในโหมดพัฒนา React จงใจ <strong>เรียก Effect → เรียก cleanup → เรียก Effect อีกรอบ</strong> เพื่อ<em>ทดสอบว่า Effect ของคุณรับมือกับการถูกเรียกซ้ำได้หรือไม่</em></p>
+
+  <table class="d">
+    <tr><th style="width:40%">ถ้าเขียน Effect ถูกต้อง</th><th>ถ้าเขียนผิด</th></tr>
+    <tr>
+      <td>เรียกซ้ำแล้วผลลัพธ์เหมือนเดิม ไม่มีอะไรผิดปกติ</td>
+      <td>เกิดข้อมูลซ้ำ ตัวจับเวลาซ้อนกัน หรือการเชื่อมต่อค้าง — <strong>เห็นได้ทันทีตอนพัฒนา</strong> ไม่ต้องรอผู้ใช้เจอ</td>
+    </tr>
+  </table>
+
+  <div class="box win">
+    <span class="h">🟢 จุดที่ควรสังเกต</span>
+    <p style="margin-bottom:0">React ไม่ได้แค่บอกว่า "คุณควรเขียน cleanup" แต่<strong>สร้างสถานการณ์ให้คุณเห็นปัญหาเองตั้งแต่ตอนพัฒนา</strong> · เป็นแนวคิดการออกแบบเครื่องมือที่ดีมาก — ทำให้ความผิดพลาดปรากฏตัวเร็วที่สุดเท่าที่จะเป็นไปได้</p>
+  </div>
+
+  <div class="box note">
+    <span class="h">🟡 ในการใช้งานจริงเป็นอย่างไร</span>
+    <p style="margin-bottom:0">เมื่อ <code>npm run build</code> แล้วนำขึ้นใช้งานจริง Effect จะทำงาน<strong>รอบเดียว</strong> · พฤติกรรม 2 รอบมีเฉพาะตอนพัฒนาเท่านั้น</p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🔴 checker ตรวจเรื่องนี้ไม่ได้</span>
+    <p style="margin-bottom:0">cleanup guard เป็นการป้องกันบั๊กที่<em>ยังไม่เกิด</em> ตัวเลข checker จึงไม่ขยับเลยหลังเพิ่มเข้าไป · ต้องพิสูจน์ด้วยการ<strong>กดสลับหน้าเร็ว ๆ ระหว่างที่ยังโหลดไม่เสร็จ</strong> แล้วดูว่ามีอะไรผิดปกติหรือไม่</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 6</span>
+    <ul>
+      <li>stale update คือผลลัพธ์ที่มาถึงหลังจากที่มันไม่เกี่ยวข้องแล้ว</li>
+      <li>cleanup function ทำงานก่อน Effect รอบใหม่ และก่อน component ถูกถอดออก</li>
+      <li>เราไม่ได้ยกเลิกคำขอ แต่เลือกไม่ใช้ผลลัพธ์</li>
+      <li>React เรียก Effect 2 รอบตอนพัฒนาเพื่อให้คุณเห็นปัญหาเร็ว — ตอนใช้งานจริงรอบเดียว</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════════ CH 7 ════════════ -->
+<section class="ch" id="c7">
+  <p class="ch-num">บทที่ 7</p>
+  <h2>Regression และการส่งมอบ</h2>
+  <p class="readtime">เวลาอ่าน ≈ 8 นาที</p>
+
+  <p>สองสัปดาห์นี้เราแก้โค้ดของ Week 04 ไปเยอะมาก — ย้ายไฟล์ เปลี่ยนแหล่งข้อมูล เพิ่มชั้นใหม่ เปลี่ยนวิธีลบ</p>
+
+  <p><strong>คำถามที่ต้องตอบก่อนส่งงานคือ ของเดิมยังทำงานครบไหม</strong></p>
+
+  <h3>7.1 regression คืออะไร</h3>
+
+  <p>ความสามารถที่เคยทำงานได้ แล้ว<em>พังเพราะการแก้ครั้งใหม่</em> เรียกว่า regression — เป็นคำที่คุณจะได้ยินทุกวันในการทำงานจริง</p>
+
+  <div class="box pitfall">
+    <span class="h">🔴 ความเข้าใจผิดที่พบบ่อย</span>
+    <p style="margin-bottom:0">"ฟีเจอร์ใหม่ทำงานแล้ว แปลว่างานเสร็จ" — <strong>ไม่ใช่</strong> · ถ้าฟีเจอร์ใหม่ทำงานแต่ของเดิมพัง ผู้ใช้ที่เคยใช้งานได้จะใช้ไม่ได้ ซึ่งแย่กว่าการไม่มีฟีเจอร์ใหม่เสียอีก</p>
+  </div>
+
+  <h3>7.2 ทำไมต้องทดสอบด้วยมือทุกครั้ง</h3>
+
+  <p>ตลอดสองคาบนี้ checker ช่วยเราได้เยอะ แต่มีเรื่องที่มันตรวจไม่ได้เลย</p>
+
+  <table class="d">
+    <tr><th style="width:44%">checker ตรวจได้</th><th>checker ตรวจไม่ได้</th></tr>
+    <tr>
+      <td>
+        โครงสร้างไฟล์และ route<br>
+        พฤติกรรมของ Service และ Storage<br>
+        ขอบเขตของ <code>fetch</code> และ <code>localStorage</code>
+      </td>
+      <td>
+        หน้าจอแสดงผลถูกต้องหรือไม่<br>
+        cleanup guard ทำงานจริงไหม<br>
+        ใช้งานด้วยคีย์บอร์ดได้ไหม<br>
+        หน้าจอกว้าง 375px ยังอ่านได้ไหม<br>
+        <strong>ของเดิมจาก Week 04 ยังทำงานไหม</strong>
+      </td>
+    </tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟡 ประโยคที่ควรจำไปทำงานจริง</span>
+    <p style="margin-bottom:0"><strong>เครื่องมืออัตโนมัติบอกได้ว่าอะไรพัง แต่บอกไม่ได้ว่าอะไรถูก</strong> · ตัวเลข 133/133 แปลว่าไม่มีอะไรที่เครื่องมือจับได้ผิด ไม่ได้แปลว่าโปรแกรมทำงานถูกต้อง</p>
+  </div>
+
+  <h3>7.3 หลักฐานการทดสอบต้องบันทึกผลจริง</h3>
+
+  <p>คุณต้องกรอกรายงานผลทดสอบ 24 รายการ พร้อมภาพหน้าจอ 10 ภาพ</p>
+
+  <p><strong>ถ้าทดสอบแล้วไม่ผ่าน ให้เขียนว่าไม่ผ่าน</strong> พร้อมสิ่งที่เห็นจริง — รายงานที่เขียนย้อนหลังจะเป็น "ผ่าน" ทั้งหมดเสมอ ซึ่งไม่มีคุณค่าอะไรเลยทั้งกับตัวคุณเองและกับคนที่อ่าน</p>
+
+  <p>ในการทำงานจริง รายงานแบบนี้คือสิ่งที่ทำให้คนอื่นเชื่อได้ว่างานของคุณผ่านการตรวจสอบมาแล้วจริง</p>
+
+  <h3>7.4 ลำดับการส่งมอบ</h3>
+
+  <table class="d">
+    <tr><th style="width:60px">ลำดับ</th><th>ทำอะไร</th><th>ตรวจว่าได้อะไร</th></tr>
+    <tr><td>1</td><td><code>npm run check</code></td><td>133/133</td></tr>
+    <tr><td>2</td><td><code>npm run build</code></td><td>ไม่มี error</td></tr>
+    <tr><td>3</td><td><code>npm run preview</code></td><td>เปิดแล้ว refresh ที่ทุก URL ได้</td></tr>
+    <tr><td>4</td><td><code>import:publish</code> และ <code>build:pages</code></td><td>ไฟล์เข้าที่</td></tr>
+    <tr><td>5</td><td>เปิด GitHub Pages ในหน้าต่างส่วนตัว</td><td>refresh ที่ URL ที่มี <code>#</code> ได้</td></tr>
+    <tr><td>6</td><td>Pull Request แล้วติด tag</td><td><code>lab-05-submission-v1</code></td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟡 ทำไมต้องเปิดในหน้าต่างส่วนตัว</span>
+    <p style="margin-bottom:0">เพราะหน้าต่างปกติของคุณมีข้อมูลใน Local Storage ค้างอยู่แล้ว · หน้าต่างส่วนตัวจำลองสถานการณ์ของ<strong>ผู้ใช้ที่เปิดเว็บครั้งแรก</strong> ซึ่งเป็นกรณีที่ต้องแน่ใจว่าทำงานได้</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 7</span>
+    <ul>
+      <li>ฟีเจอร์ใหม่ทำงานแต่ของเดิมพัง = ยังไม่สำเร็จ</li>
+      <li>checker ตรวจโครงสร้างและพฤติกรรม แต่ตรวจหน้าจอและ regression ไม่ได้</li>
+      <li>บันทึกผลจริงเสมอ แม้จะไม่ผ่าน</li>
+      <li>ทดสอบใน incognito เพื่อจำลองผู้ใช้ที่เปิดครั้งแรก</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════════ CH 8 ════════════ -->
+<section class="ch" id="c8">
+  <p class="ch-num">บทที่ 8</p>
+  <h2>จากทฤษฎีสู่ Checkpoint</h2>
+  <p class="readtime">เวลาอ่าน ≈ 5 นาที</p>
+
+  <table class="d">
+    <tr><th style="width:86px">CP</th><th>ทำอะไร</th><th style="width:96px">อ่านบท</th><th>คำถามที่ต้องตอบได้</th></tr>
+    <tr>
+      <td><strong>CP04a</strong><br><span style="font-size:12px;color:#5A6880">55 นาที</span></td>
+      <td>เขียนและอ่านที่เก็บ · <strong>เปลี่ยน 1 บรรทัด</strong> · เพิ่ม ลบ คืนค่า</td>
+      <td>1, 2, 3</td>
+      <td>เปลี่ยนจาก seed เป็น storage แล้วทำไม Dashboard ไม่ต้องแก้</td>
+    </tr>
+    <tr>
+      <td><strong>CP04b</strong><br><span style="font-size:12px;color:#5A6880">55 นาที</span></td>
+      <td>ตรวจ schema เข้ม · กู้คืน · แจ้งผู้ใช้</td>
+      <td>4, 5</td>
+      <td>parse ได้แล้ว ทำไมยังต้องตรวจต่อ</td>
+    </tr>
+    <tr>
+      <td><strong>cleanup</strong><br><span style="font-size:12px;color:#5A6880">30 นาที</span></td>
+      <td>เพิ่ม cleanup guard ใน 2 หน้า</td>
+      <td>6</td>
+      <td>ทำไม React เรียก Effect 2 รอบตอนพัฒนา</td>
+    </tr>
+    <tr>
+      <td><strong>CP05b</strong><br><span style="font-size:12px;color:#5A6880">30 นาที</span></td>
+      <td>ตรวจ regression ของ Week 04 ครบ 11 ข้อ</td>
+      <td>7</td>
+      <td>regression คืออะไร และทำไมต้องทดสอบซ้ำ</td>
+    </tr>
+    <tr>
+      <td><strong>CP06</strong><br><span style="font-size:12px;color:#5A6880">40 นาที</span></td>
+      <td>375px · คีย์บอร์ด · build · หลักฐาน · ส่งมอบ</td>
+      <td>7</td>
+      <td>ทำไม 133/133 ไม่ได้แปลว่างานเสร็จ</td>
+    </tr>
+  </table>
+
+  <h3>เส้นทางตัวเลข checker ของคาบนี้</h3>
+  <table class="d">
+    <tr><th>จุด</th><th style="width:130px">ต้องได้</th><th>หมายเหตุ</th></tr>
+    <tr><td>เริ่มคาบ (จบ 5A)</td><td>117/133</td><td></td></tr>
+    <tr><td>จบ CP04a</td><td>130/133</td><td>ขยับ 13 รายการ</td></tr>
+    <tr><td>จบ CP04b</td><td><strong>133/133</strong></td><td>ครบ</td></tr>
+    <tr><td>จบ cleanup guard</td><td>133/133</td><td><strong>ไม่ขยับ</strong> — ไม่ได้แปลว่าทำผิด</td></tr>
+  </table>
+
+  <div class="box win">
+    <span class="h">🟢 ช่วงเวลาที่ควรสังเกตให้ดี · CP04a-3</span>
+    <p>ก่อนถึงจุดนี้ ผู้สอนจะถามว่า <em>"คิดว่า <code>DashboardPage</code> ต้องแก้กี่บรรทัด"</em></p>
+    <p style="margin-bottom:0">คำตอบคือ <strong>ศูนย์บรรทัด</strong> — เปลี่ยนบรรทัดเดียวใน <code>requestService.js</code> เท่านั้น ทั้งที่แหล่งข้อมูลเปลี่ยนไปโดยสิ้นเชิง</p>
+  </div>
+
+  <div class="box next">
+    <span class="h">🔵 มองไปข้างหน้า</span>
+    <p>เปิด <code>requestService.js</code> แล้วดูรายชื่อฟังก์ชันที่ export ออกไป</p>
+    <pre style="margin:12px 0"><code><span class="c-fn">getRequests</span>()          <span class="c-com">→  GET    /requests</span>
+<span class="c-fn">getRequestById</span>(id)    <span class="c-com">→  GET    /requests/:id</span>
+<span class="c-fn">addRequest</span>(input)     <span class="c-com">→  POST   /requests</span>
+<span class="c-fn">deleteRequest</span>(id)     <span class="c-com">→  DELETE /requests/:id</span></code></pre>
+    <p style="margin-bottom:0">นี่คือหน้าตาของ REST API ที่คุณจะสร้างด้วย Express ใน Week 06 พอดี — <strong>เราออกแบบข้อตกลงนี้ไว้ล่วงหน้าตั้งแต่ต้นโดยไม่ได้บอก</strong> และใน Week 08 คุณจะเปลี่ยนบรรทัดเดียวอีกครั้งเพื่อต่อกับ API จริง</p>
+  </div>
+
+  <h3>ก่อนส่งงาน</h3>
+  <ul>
+    <li><code>npm run check</code> ได้ 133/133</li>
+    <li>รายงานผลทดสอบครบ 24 รายการ พร้อมภาพหน้าจอ 10 ภาพ</li>
+    <li>README มีแผนภาพ เหตุผลการออกแบบ และการเปิดเผยการใช้ AI</li>
+    <li>เผยแพร่บน GitHub Pages แล้วทดสอบในหน้าต่างส่วนตัว</li>
+    <li>Pull Request และ tag <code>lab-05-submission-v1</code></li>
+  </ul>
+</section>
+
+<footer>
+  <span>ENGSE203 · หน่วยที่ 2 · React Router, Data Fetching และ Front-end Mini Application</span>
+  <span class="m">Week 05B · CLO3 · เอกสารประกอบการสอน</span>
+</footer>
+
+</div>
+</body>
+</html>

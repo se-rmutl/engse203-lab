@@ -1,0 +1,1259 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d0a24">
+<title>ENGSE203 Week 05B — Interactive Teaching Slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --font-scale:1;
+  --deep-950:#08061a; --deep-900:#0d0a24; --deep-850:#14102f; --deep-800:#1b1540;
+  --ink:#f0ecff; --muted:#b8b0d8;
+  --violet:#b98cf5; --violet-soft:rgba(185,140,245,.14);
+  --cyan:#38d7ed; --green:#4ade80; --amber:#fbbf24; --red:#fb7185; --blue:#7aa5ff;
+  --panel:rgba(27,21,64,.74); --line:rgba(184,176,216,.24);
+  --shadow:0 24px 70px rgba(0,0,0,.44); --radius:20px;
+  font-size:calc(16px * var(--font-scale));
+}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0}
+body{
+  overflow:hidden;color:var(--ink);
+  background:
+    radial-gradient(circle at 14% 14%, rgba(185,140,245,.16), transparent 32%),
+    radial-gradient(circle at 84% 80%, rgba(56,215,237,.13), transparent 34%),
+    #05040f;
+  font-family:'IBM Plex Sans Thai','Noto Sans Thai','TH Sarabun New',Tahoma,sans-serif;
+}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+.app{min-height:100%;display:grid;place-items:center;position:relative}
+.stage{
+  position:relative;width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));
+  aspect-ratio:16/9;overflow:hidden;background:var(--deep-900);box-shadow:var(--shadow);isolation:isolate;
+}
+.stage::before{content:"";position:absolute;inset:0;z-index:-2;
+  background:linear-gradient(135deg,rgba(255,255,255,.03),transparent 42%),
+  radial-gradient(circle at 80% 8%,rgba(185,140,245,.2),transparent 26%),
+  linear-gradient(160deg,var(--deep-900),#0b0820 64%,#1a1442)}
+.stage::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.2;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:46px 46px;mask-image:linear-gradient(to bottom,black,transparent 88%)}
+
+.slide{position:absolute;inset:0;display:none;padding:4.6% 5.6% 6.4%;overflow:hidden;flex-direction:column}
+.slide.active{display:flex;animation:enter .26s ease-out}
+@keyframes enter{from{opacity:.25;transform:translateX(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.active{animation:none}}
+
+.slide-id{position:absolute;top:3.2%;right:5.6%;font-family:'IBM Plex Mono',monospace;
+  font-size:.66rem;letter-spacing:.14em;color:var(--muted);opacity:.72}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;width:fit-content;color:var(--violet);
+  font-weight:600;letter-spacing:.11em;text-transform:uppercase;font-size:.72rem;margin-bottom:.5rem}
+.eyebrow.amber{color:var(--amber)} .eyebrow.green{color:var(--green)}
+.eyebrow.red{color:var(--red)} .eyebrow.cyan{color:var(--cyan)}
+
+h1{font-size:2.5rem;line-height:1.15;margin:0 0 .5rem;font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.85rem;line-height:1.2;margin:0 0 .7rem;font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.12rem;margin:0 0 .4rem;font-weight:600}
+p{margin:0 0 .6rem;line-height:1.6;font-size:.98rem;color:#e4dffa}
+.lead{font-size:1.12rem;color:var(--muted);font-weight:300;line-height:1.55}
+.muted{color:var(--muted)}
+small{font-size:.78rem;color:var(--muted)}
+strong{font-weight:600}
+code{font-family:'IBM Plex Mono',monospace;font-size:.86em;background:rgba(185,140,245,.14);
+  padding:.1em .4em;border-radius:4px;color:#dcc4ff}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem 1.25rem}
+.grid{display:grid;gap:.9rem}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:.85rem}
+.center{justify-content:center}
+
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+th{text-align:left;padding:.5rem .6rem;color:var(--violet);font-weight:600;
+  border-bottom:1px solid var(--line);font-size:.78rem;letter-spacing:.04em}
+td{padding:.5rem .6rem;border-bottom:1px solid rgba(184,176,216,.11);vertical-align:top;color:#e4dffa}
+tr:last-child td{border-bottom:none}
+
+pre{background:rgba(8,6,26,.88);border:1px solid var(--line);border-radius:12px;
+  padding:.85rem 1rem;overflow:auto;font-size:.82rem;line-height:1.65;margin:.4rem 0}
+pre code{background:none;padding:0;color:#dcd7f2;font-size:.82rem}
+.k{color:#9fbcff}.s{color:#8de3a5}.c{color:#8b83ad;font-style:italic}
+.f{color:#f3d38a}.bad{color:#fb7185}.tg{color:#68d8d2}.hl{color:#ffd97a;font-weight:600}
+
+.chip{display:inline-flex;align-items:center;gap:.35rem;padding:.22rem .6rem;border-radius:999px;
+  font-size:.72rem;font-weight:600;border:1px solid var(--line);background:rgba(185,140,245,.09);color:var(--violet)}
+.chip.g{color:var(--green);background:rgba(74,222,128,.09);border-color:rgba(74,222,128,.3)}
+.chip.a{color:var(--amber);background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3)}
+.chip.r{color:var(--red);background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.3)}
+.chip.c{color:var(--cyan);background:rgba(56,215,237,.09);border-color:rgba(56,215,237,.3)}
+
+.title-slide{justify-content:center}
+.title-slide h1{font-size:3.1rem}
+.brandline{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
+
+.labstop{background:linear-gradient(150deg,rgba(251,191,36,.13),rgba(27,21,64,.82));
+  border:1px solid rgba(251,191,36,.4)}
+.bigtime{font-family:'IBM Plex Mono',monospace;font-size:3.4rem;font-weight:600;line-height:1;color:var(--amber)}
+.timerbtns{display:flex;gap:.5rem;margin-top:.7rem}
+.timerbtns button{background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.4);
+  color:var(--amber);border-radius:10px;padding:.4rem .9rem;font-size:.82rem;font-weight:600}
+.timerbtns button:hover{background:rgba(251,191,36,.26)}
+
+.iact{background:rgba(185,140,245,.07);border:1px solid rgba(185,140,245,.34);border-radius:var(--radius);padding:1rem 1.15rem}
+.opts{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.4rem}
+.opt{background:rgba(20,16,47,.92);border:1px solid var(--line);border-radius:10px;
+  padding:.4rem .85rem;font-size:.84rem;transition:all .15s}
+.opt:hover{border-color:var(--violet);background:rgba(185,140,245,.14)}
+.opt.ok{border-color:var(--green);background:rgba(74,222,128,.18);color:#c9f7d8}
+.opt.no{border-color:var(--red);background:rgba(251,113,133,.18);color:#ffd4da}
+.fb{margin-top:.55rem;font-size:.86rem;min-height:1.3rem;color:var(--muted)}
+.fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+
+.reveal{border:1px dashed var(--line);border-radius:12px;padding:.7rem .9rem;background:rgba(8,6,26,.55)}
+.reveal button{background:none;border:none;color:var(--violet);font-weight:600;font-size:.88rem;padding:0}
+.reveal .ans{display:none;margin-top:.55rem;padding-top:.55rem;border-top:1px solid var(--line);font-size:.9rem}
+.reveal.open .ans{display:block}
+
+.wrong{background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.36);border-radius:var(--radius);padding:1rem 1.15rem}
+.right{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.36);border-radius:var(--radius);padding:1rem 1.15rem}
+.nextbox{background:rgba(56,215,237,.09);border:1px solid rgba(56,215,237,.36);border-radius:var(--radius);padding:1rem 1.15rem}
+
+ul{margin:.2rem 0 .5rem 1.1rem;padding:0}
+li{margin-bottom:.32rem;font-size:.94rem;line-height:1.55;color:#e4dffa}
+
+/* storage inspector widget */
+.storewrap{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.devtool{border:1px solid var(--line);border-radius:12px;background:rgba(8,6,26,.8);overflow:hidden}
+.devhead{background:rgba(184,176,216,.09);padding:.4rem .7rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--line)}
+.devbody{padding:.7rem;font-family:'IBM Plex Mono',monospace;font-size:.76rem;
+  line-height:1.6;min-height:120px;word-break:break-all;color:#dcd7f2}
+.screen{border:1px solid var(--line);border-radius:12px;background:rgba(8,6,26,.8);
+  padding:.9rem;min-height:120px;display:flex;flex-direction:column;justify-content:center;
+  text-align:center;font-size:.9rem;color:var(--muted)}
+.chips{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem}
+.chips button{background:rgba(20,16,47,.92);border:1px solid var(--line);border-radius:8px;
+  padding:.28rem .62rem;font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--muted)}
+.chips button:hover{border-color:var(--violet);color:var(--violet)}
+
+/* layered check */
+.layers{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.layer{border:1px solid var(--line);border-radius:12px;padding:.8rem;background:rgba(8,6,26,.55);
+  transition:all .18s;cursor:pointer}
+.layer:hover{border-color:var(--violet)}
+.layer .n{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--violet);letter-spacing:.1em}
+.layer h3{margin:.3rem 0 .25rem;font-size:1rem}
+.layer p{font-size:.82rem;margin:0;color:var(--muted)}
+.layer.off{opacity:.32;border-color:rgba(251,113,133,.5);background:rgba(251,113,133,.08)}
+.layer.off .broke{display:block;margin-top:.4rem;font-size:.8rem;color:var(--red)}
+.layer .broke{display:none}
+
+/* timeline widget */
+.tl{position:relative;padding:1.4rem 0 .4rem}
+.tl-line{position:absolute;left:2%;right:2%;top:34px;height:2px;background:var(--line)}
+.tl-row{display:grid;grid-template-columns:repeat(3,1fr);position:relative}
+.tl-item{text-align:center}
+.tl-dot{width:16px;height:16px;border-radius:50%;background:var(--deep-900);
+  border:3px solid var(--line);margin:0 auto 12px;position:relative;z-index:2;transition:all .2s}
+.tl-item.on .tl-dot{border-color:var(--violet);background:var(--violet)}
+.tl-item.bad .tl-dot{border-color:var(--red);background:var(--red)}
+.tl-item.good .tl-dot{border-color:var(--green);background:var(--green)}
+.tl-t{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--muted);display:block}
+.tl-x{font-size:.84rem;display:block;margin-top:.2rem}
+
+.bar{position:fixed;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.08);z-index:40}
+.bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--violet),var(--cyan));width:0;transition:width .25s}
+.hud{position:fixed;bottom:14px;right:16px;display:flex;gap:.4rem;align-items:center;z-index:41}
+.hud button{background:rgba(20,16,47,.94);border:1px solid var(--line);border-radius:9px;
+  padding:.28rem .6rem;font-size:.76rem;color:var(--muted)}
+.hud button:hover{color:var(--violet);border-color:var(--violet)}
+.counter{font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--muted);padding:0 .3rem}
+.toc{position:fixed;inset:0;background:rgba(5,4,15,.97);z-index:50;display:none;padding:3vh 6vw;overflow:auto}
+.toc.open{display:block}
+.toc h3{color:var(--violet);margin-bottom:1rem;font-size:1rem;letter-spacing:.1em;text-transform:uppercase}
+.toc ol{columns:2;column-gap:2.5rem;margin:0;padding-left:1.2rem}
+.toc li{margin-bottom:.42rem;font-size:.9rem;break-inside:avoid}
+.toc a{color:var(--ink);text-decoration:none;opacity:.82}
+.toc a:hover{color:var(--violet);opacity:1}
+.toc .tag{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted);margin-left:.4rem}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="stage" id="stage">
+
+<!-- 1 ───────────────────────── -->
+<section class="slide title-slide active" data-title="เปิดบทเรียน">
+  <span class="eyebrow">ENGSE203 · WEEK 05 · คาบที่ 2 จาก 2</span>
+  <h1>ข้อมูลอยู่ได้จริง<br>และของเดิมต้องไม่พัง</h1>
+  <p class="lead">Browser Storage · Safe Parse · Recovery · Effect Cleanup · การส่งมอบ</p>
+  <div class="brandline">
+    <span class="chip">ทฤษฎี 60 นาที</span>
+    <span class="chip">ปฏิบัติ 240 นาที</span>
+    <span class="chip g">117 → 133 / 133</span>
+    <span class="chip a">คาบนี้จบแล้วส่งงาน</span>
+  </div>
+  <p style="margin-top:1.4rem"><small>กด <code>→</code> หรือ <code>Space</code> ไปต่อ · <code>T</code> สารบัญ · <code>F</code> เต็มจอ</small></p>
+</section>
+
+<!-- 2 ───────────────────────── -->
+<section class="slide" data-title="แผนของวันนี้">
+  <span class="slide-id">ORIENTATION</span>
+  <span class="eyebrow">วันนี้เราจะเดินแบบนี้</span>
+  <h2>ทฤษฎีสลับลงมือ 3 รอบ แล้วส่งงาน</h2>
+  <div class="body">
+    <table>
+      <tr><th style="width:104px">ช่วง</th><th>ทำอะไร</th><th style="width:70px">นาที</th></tr>
+      <tr><td><span class="chip">ทวน</span></td><td>ตรวจว่า 5A ผ่านครบทุกคน</td><td>15</td></tr>
+      <tr><td><span class="chip">ทฤษฎี B1</span></td><td>ทำไมข้อมูลหาย · แปลงเป็นข้อความ · envelope</td><td>20</td></tr>
+      <tr><td><span class="chip a">LAB</span></td><td><strong>CP04a</strong> ทำให้ข้อมูลอยู่ต่อได้</td><td>55</td></tr>
+      <tr><td colspan="3" style="color:var(--muted);text-align:center">☕ พัก 10 นาที</td></tr>
+      <tr><td><span class="chip">ทฤษฎี B2</span></td><td>parse ได้ ≠ ข้อมูลถูก · ตรวจ 3 ชั้น · กู้คืน</td><td>25</td></tr>
+      <tr><td><span class="chip a">LAB</span></td><td><strong>CP04b</strong> ทำให้ข้อมูลทนทาน</td><td>55</td></tr>
+      <tr><td><span class="chip">ทฤษฎี B3</span></td><td>คำตอบเรื่อง Effect ที่ทำงาน 2 รอบ</td><td>15</td></tr>
+      <tr><td><span class="chip a">LAB</span></td><td>cleanup guard · CP05b regression · CP06 ส่งมอบ</td><td>100</td></tr>
+      <tr><td><span class="chip g">ปิด</span></td><td>สรุป + สะพานสู่ Week 06</td><td>15</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 3 ───────────────────────── -->
+<section class="slide" data-title="ตรวจความพร้อม">
+  <span class="slide-id">READINESS · 15 MIN</span>
+  <span class="eyebrow amber">ก่อนเริ่ม</span>
+  <h2>ทุกคนต้องผ่าน 5A ก่อน</h2>
+  <div class="body center">
+    <div class="panel">
+      <pre style="margin:0"><code>npm run check -- --session=1     <span class="c">→ ต้องได้ 104/104</span></code></pre>
+    </div>
+    <div class="grid g2">
+      <div class="right">
+        <span class="eyebrow green">ได้ 104/104</span>
+        <p style="margin:0">เริ่มคาบนี้ได้เลย · เปลี่ยนไปใช้ <code>npm run check</code> โหมดเต็ม 133 รายการ</p>
+      </div>
+      <div class="wrong">
+        <span class="eyebrow red">ยังไม่ครบ</span>
+        <p style="margin:0"><strong>ยกมือตอนนี้เลยครับ</strong> ผมจะให้ snapshot ของคาบที่แล้วไปเริ่มพร้อมกัน — อย่าฝืนทำต่อบนโค้ดที่ยังไม่จบ</p>
+      </div>
+    </div>
+    <div class="nextbox">
+      <p style="margin:0"><strong>สัปดาห์ที่แล้วเราทำให้ข้อมูลไหลเข้ามาได้ วันนี้เราจะทำให้มันอยู่ต่อได้</strong> — และผมจะตอบคำถามที่หลายคนถามค้างไว้เมื่อสัปดาห์ที่แล้วด้วย</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 ───────────────────────── -->
+<section class="slide" data-title="B1 · ทำไมข้อมูลหาย">
+  <span class="slide-id">ทฤษฎี B1 · 20 MIN</span>
+  <span class="eyebrow">เปิดหัวข้อ</span>
+  <h2>ทุกคนเพิ่มคำร้อง แล้วกด refresh พร้อมกัน</h2>
+  <div class="body center">
+    <div class="grid g2">
+      <div class="panel" style="border-color:rgba(251,113,133,.42)">
+        <span class="chip r">หน่วยความจำ · useState</span>
+        <p style="margin-top:.7rem">อยู่ในแรมของแท็บ · <strong>refresh แล้วหายหมด</strong></p>
+        <p style="margin:0"><small class="muted">หน้าเว็บถูกสร้างใหม่ทั้งหมด state จึงกลับไปเป็นค่าเริ่มต้น</small></p>
+      </div>
+      <div class="panel" style="border-color:rgba(74,222,128,.42)">
+        <span class="chip g">ที่เก็บถาวร · localStorage</span>
+        <p style="margin-top:.7rem">อยู่ในดิสก์ · <strong>ยังอยู่จนกว่าจะลบเอง</strong></p>
+        <p style="margin:0"><small class="muted">ปิดแท็บ ปิดเบราว์เซอร์ ปิดเครื่อง ก็ยังอยู่</small></p>
+      </div>
+    </div>
+    <div class="iact">
+      <span class="eyebrow amber">คำถามเชื่อมกับ Pre-LAB</span>
+      <p style="margin:0">ใน Pre-LAB ค่า preference ที่พวกคุณเปลี่ยน <strong>ไม่หาย</strong> ทั้งที่เป็นข้อมูลในเบราว์เซอร์เหมือนกัน — <strong>ต่างกันตรงไหน</strong></p>
+    </div>
+    <div class="reveal" data-reveal>
+      <button>▸ เฉลย</button>
+      <div class="ans">
+        <p style="margin:0">แอปใน Pre-LAB เขียนค่าลง <code>localStorage</code> ทุกครั้งที่เปลี่ยน แล้วอ่านกลับมาตอนเปิดหน้า — <strong>ทำสิ่งที่เรากำลังจะทำวันนี้ไปแล้ว</strong> และนั่นคือเหตุผลที่ให้ไปสังเกตมาก่อน</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 ───────────────────────── -->
+<section class="slide" data-title="⚠ ผิดก่อนถูก #4">
+  <span class="slide-id">MISCONCEPTION 04</span>
+  <span class="eyebrow red">ผมจะเขียนผิดให้ดู</span>
+  <h2>ทายก่อน — จะได้อะไรกลับมา</h2>
+  <div class="body">
+    <pre><code><span class="f">localStorage</span>.<span class="f">setItem</span>(<span class="s">'test'</span>, { name: <span class="s">'สมชาย'</span> });
+<span class="f">localStorage</span>.<span class="f">getItem</span>(<span class="s">'test'</span>);   <span class="c">// → ?</span></code></pre>
+    <div class="iact" data-quiz="q1">
+      <div class="opts">
+        <button class="opt" data-a="0">{ name: 'สมชาย' }</button>
+        <button class="opt" data-a="1">"[object Object]"</button>
+        <button class="opt" data-a="0">'{"name":"สมชาย"}'</button>
+        <button class="opt" data-a="0">null</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="wrong">
+      <span class="eyebrow red">สามประเด็นที่ต้องเห็น</span>
+      <ul style="margin-bottom:0">
+        <li>เบราว์เซอร์แปลง object เป็นข้อความให้เอง <strong>แต่แปลงแบบไร้ประโยชน์</strong></li>
+        <li>ข้อมูลข้างในหายหมดและกู้กลับไม่ได้</li>
+        <li><strong>ไม่มี error ใด ๆ</strong> โปรแกรมทำงานต่อเงียบ ๆ แล้วรู้ตัวตอนอ่านกลับไม่ได้</li>
+      </ul>
+    </div>
+    <div class="right">
+      <p style="margin:0"><strong>Local Storage เก็บได้แต่ข้อความ — ต้องแปลงเองเสมอ</strong> ด้วย <code>JSON.stringify</code> ตอนเก็บ และ <code>JSON.parse</code> ตอนอ่าน</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 ───────────────────────── -->
+<section class="slide" data-title="B1 · Envelope">
+  <span class="slide-id">W5-C09</span>
+  <span class="eyebrow">ไม่เก็บ array ตรง ๆ</span>
+  <h2>ห่อไว้ในกล่องที่มีข้อมูลกำกับ</h2>
+  <div class="body">
+    <pre><code>{
+  <span class="hl">"schemaVersion"</span>: <span class="s">1</span>,          <span class="c">← โครงสร้างข้อมูลรุ่นไหน</span>
+  <span class="s">"updatedAt"</span>: <span class="s">"2026-08-13T09:15:00.000Z"</span>,
+  <span class="s">"requests"</span>: [ … ]           <span class="c">← ข้อมูลจริง</span>
+}</code></pre>
+    <div class="iact" data-quiz="q2">
+      <p style="margin:0 0 .3rem"><strong>ทำไมต้องมี <code>schemaVersion</code> ในเมื่อเราก็รู้อยู่แล้วว่าข้อมูลหน้าตาเป็นอย่างไร</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">เพื่อให้ debug ง่ายขึ้น</button>
+        <button class="opt" data-a="1">เพราะข้อมูลอยู่ในเครื่องผู้ใช้ แต่โค้ดอยู่ที่เรา — อัปเดตไม่พร้อมกัน</button>
+        <button class="opt" data-a="0">เพื่อให้ประหยัดพื้นที่</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="panel">
+      <p style="margin:0"><small>ผู้ใช้ที่เปิดเว็บเมื่อสัปดาห์ที่แล้วจะมีข้อมูล<strong>รุ่นเก่า</strong>ค้างอยู่ในเครื่อง · พอเราปล่อยเวอร์ชันใหม่ที่เพิ่มฟิลด์ โค้ดใหม่จะอ่านข้อมูลเก่าแล้วพัง — ถ้าไม่มีตัวบอกเวอร์ชัน</small></p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 ───────────────────────── -->
+<section class="slide" data-title="🎮 ทดลอง Storage Inspector">
+  <span class="slide-id">ACTIVE 01</span>
+  <span class="eyebrow amber">ลองเล่น</span>
+  <h2>เขียนอะไรลงไป แล้วอ่านกลับได้อะไร</h2>
+  <div class="body">
+    <div class="iact">
+      <div class="chips" style="margin:0 0 .55rem">
+        <button data-store="obj">setItem(object)</button>
+        <button data-store="json">setItem(JSON.stringify)</button>
+        <button data-store="env">envelope เต็มรูปแบบ</button>
+        <button data-store="clear">ลบคีย์</button>
+      </div>
+      <div class="storewrap">
+        <div class="devtool">
+          <div class="devhead">DEVTOOLS → LOCAL STORAGE</div>
+          <div class="devbody" id="devOut">— ยังไม่มีข้อมูล —</div>
+        </div>
+        <div class="screen" id="appOut">กดปุ่มด้านบนเพื่อดูผล</div>
+      </div>
+    </div>
+    <p><small>สังเกตว่าปุ่มแรกเก็บได้ แต่<strong>อ่านกลับมาใช้ไม่ได้เลย</strong> ทั้งที่ไม่มี error ปรากฏ</small></p>
+  </div>
+</section>
+
+<!-- 8 ── LAB CP04a ────────────── -->
+<section class="slide" data-title="⏸ LAB · CP04a">
+  <span class="slide-id">CP04a · PERSIST</span>
+  <div class="body center">
+    <div class="labstop panel">
+      <span class="eyebrow amber">หยุดสไลด์ — เปิดโค้ด</span>
+      <h2 style="margin-top:.4rem">CP04a · ทำให้ข้อมูลอยู่ต่อได้</h2>
+      <div class="grid" style="grid-template-columns:1.6fr 1fr;gap:1rem;margin-top:.5rem">
+        <div>
+          <table style="font-size:.8rem">
+            <tr><th style="width:66px">ช่วง</th><th>ทำอะไร</th><th style="width:48px">นาที</th></tr>
+            <tr><td>04a-1</td><td><code>5B-B</code> เขียนลงที่เก็บ</td><td>12</td></tr>
+            <tr><td>04a-2</td><td><code>5B-A</code> อ่านพื้นฐาน + <code>5B-2</code></td><td>15</td></tr>
+            <tr style="background:rgba(185,140,245,.12)"><td><strong>04a-3</strong></td><td><strong>เปลี่ยน 1 บรรทัด ← หยุดฟังพร้อมกัน</strong></td><td>3</td></tr>
+            <tr><td>04a-4</td><td><code>5B-4</code> เพิ่มคำร้อง + navigate</td><td>15</td></tr>
+            <tr><td>04a-5</td><td><code>5B-5</code> <code>5B-6</code> ลบ · คืนค่า</td><td>10</td></tr>
+          </table>
+        </div>
+        <div style="display:flex;flex-direction:column;justify-content:center;align-items:center">
+          <p class="bigtime" id="t-cp04a">55:00</p>
+          <div class="timerbtns">
+            <button data-timer="t-cp04a" data-min="55" data-act="start">เริ่ม</button>
+            <button data-timer="t-cp04a" data-act="pause">หยุด</button>
+            <button data-timer="t-cp04a" data-min="55" data-act="reset">ตั้งใหม่</button>
+          </div>
+        </div>
+      </div>
+      <div class="nextbox" style="margin-top:.6rem">
+        <p style="margin:0"><strong>ประกาศล่วงหน้า</strong> — วันนี้มีช่วงหนึ่งที่ผมอยากให้ทุกคนหยุดมือแล้วดูพร้อมกัน คือ<strong>ช่วงที่สาม</strong> เดี๋ยวผมจะบอกเมื่อถึงเวลา</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 ───────────────────────── -->
+<section class="slide" data-title="⭐ CP04a-3 · คำถาม">
+  <span class="slide-id">KEY MOMENT · 1/3</span>
+  <span class="eyebrow amber">หยุดพิมพ์ ยกมือขึ้นจากคีย์บอร์ด</span>
+  <h2>กระดาษที่พวกคุณเขียนไว้เมื่อสัปดาห์ที่แล้ว</h2>
+  <div class="body center">
+    <div class="panel" style="text-align:center;padding:2rem">
+      <p class="lead" style="margin-bottom:.6rem">Exit ticket ข้อ 4 ของคาบ 5A</p>
+      <p style="font-size:1.3rem;line-height:1.5">
+        <em>"สัปดาห์หน้าเราจะทำให้ข้อมูลไม่หายตอน refresh<br>
+        — คิดว่า<strong>ไฟล์ไหนต้องแก้มากที่สุด</strong>"</em>
+      </p>
+    </div>
+    <div class="iact" style="text-align:center">
+      <p style="margin:0;font-size:1.15rem"><strong>ตอนนี้เราจะทำสิ่งนั้นแล้ว</strong></p>
+      <p style="margin:.5rem 0 0;font-size:1.15rem">
+        <code>DashboardPage.jsx</code> ที่มีร้อยกว่าบรรทัด — <strong>ต้องแก้กี่บรรทัด</strong>
+      </p>
+      <p style="margin:.7rem 0 0"><small class="muted">ยกมือทาย: 50 ขึ้นไป / 20–50 / 5–20 / น้อยกว่า 5</small></p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 ──────────────────────── -->
+<section class="slide" data-title="⭐ CP04a-3 · เฉลย">
+  <span class="slide-id">KEY MOMENT · 2/3</span>
+  <span class="eyebrow green">เฉลย</span>
+  <div class="body center" style="align-items:center;text-align:center">
+    <p style="font-family:'IBM Plex Mono',monospace;font-size:5rem;font-weight:600;
+       color:var(--green);line-height:1;letter-spacing:-.03em;margin:0">0</p>
+    <h2 style="margin-top:.8rem">ศูนย์บรรทัด</h2>
+    <p class="lead"><code>DashboardPage</code> ไม่ต้องแก้อะไรเลย</p>
+    <div class="right" style="margin-top:1rem;width:100%;text-align:left">
+      <span class="eyebrow green">เปลี่ยนแค่บรรทัดเดียวใน requestService.js</span>
+      <pre style="margin:.4rem 0 0"><code><span class="bad">- return fetchSeedRequests();</span>
+<span class="s">+ return loadNormalRequests();</span></code></pre>
+    </div>
+    <p style="margin-top:.8rem"><small class="muted"><code>DashboardPage</code> ไม่เคยรู้ว่าข้อมูลมาจากไหน มันรู้แค่ว่าเรียก <code>getRequests()</code> แล้วได้ array กลับมา</small></p>
+  </div>
+</section>
+
+<!-- 11 ──────────────────────── -->
+<section class="slide" data-title="⭐ CP04a-3 · ทำไมถึงสำคัญ">
+  <span class="slide-id">KEY MOMENT · 3/3</span>
+  <span class="eyebrow cyan">มองไปข้างหน้า</span>
+  <h2>แหล่งข้อมูลเปลี่ยน 3 ครั้ง · UI ไม่ถูกแก้เลย</h2>
+  <div class="body center">
+    <div class="grid" style="grid-template-columns:auto 1fr;gap:1rem;align-items:center">
+      <div class="panel" style="text-align:center;min-width:180px;border-color:rgba(74,222,128,.4)">
+        <p style="margin:0"><strong>DashboardPage</strong></p>
+        <p style="margin:.3rem 0 0"><small class="muted">เรียก <code>getRequests()</code><br>แล้วแสดงผล</small></p>
+        <p style="margin:.6rem 0 0"><span class="chip g">ไม่เคยแก้เลย</span></p>
+      </div>
+      <div>
+        <div class="panel" style="margin-bottom:.4rem;border-color:rgba(184,176,216,.3);opacity:.6">
+          <span class="chip">คาบ 5A · สัปดาห์ที่แล้ว</span>
+          <p style="margin:.3rem 0 0"><small>อ่านไฟล์ <code>initialRequests.json</code> ด้วย <code>fetch()</code></small></p>
+        </div>
+        <div class="panel" style="margin-bottom:.4rem;border-color:rgba(185,140,245,.5)">
+          <span class="chip">คาบ 5B · วันนี้ · เมื่อกี้นี้เอง</span>
+          <p style="margin:.3rem 0 0"><small>อ่านจากที่เก็บในเครื่องก่อน ไม่มีค่อยอ่านไฟล์</small></p>
+        </div>
+        <div class="panel" style="border-color:rgba(56,215,237,.5)">
+          <span class="chip c">WEEK 08</span>
+          <p style="margin:.3rem 0 0"><small>เรียก API จริงจากเซิร์ฟเวอร์ Express ที่พวกคุณจะสร้างสัปดาห์หน้า</small></p>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <p style="margin:0">"นี่คือเหตุผลที่เราเสียเวลาสร้าง Service Layer เมื่อสัปดาห์ที่แล้ว ทั้งที่ตอนนั้นมันดูเหมือนงานส่วนเกิน — <strong>และใน Week 08 เราจะเปลี่ยนบรรทัดนี้อีกครั้ง แล้วก็จะไม่ต้องแก้ UI อีกเหมือนกัน</strong>"</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12 ──────────────────────── -->
+<section class="slide" data-title="CP04a · กับดัก">
+  <span class="slide-id">PITFALLS · CP04a</span>
+  <span class="eyebrow red">สี่กับดักของช่วงนี้</span>
+  <h2>ข่าวดี — checker จับได้ทุกอัน</h2>
+  <div class="body">
+    <table>
+      <tr><th style="width:40%">ทำผิดแบบไหน</th><th style="width:14%">build</th><th>checker บอกว่า</th></tr>
+      <tr><td>ลืม <code>JSON.stringify</code></td><td>ผ่าน</td><td><strong>126/133</strong> — ตกหลายรายการพร้อมกัน</td></tr>
+      <tr><td><code>localStorage.clear()</code> แทน <code>removeItem</code></td><td>ผ่าน</td><td><code>clearStoredRequests() ลบเฉพาะคีย์ของ LAB05</code></td></tr>
+      <tr><td>add แล้วลืม <code>writeStoredRequests</code></td><td>ผ่าน</td><td><code>addRequest() … ต้องถูก persist</code></td></tr>
+      <tr><td>ตรวจข้อมูลด้วย <code>?.</code></td><td>ผ่าน</td><td><code>addRequest() ปฏิเสธข้อมูลที่ไม่ครบ…</code></td></tr>
+    </table>
+    <div class="wrong">
+      <span class="eyebrow red"><code>localStorage.clear()</code> อันตรายกว่าที่คิด</span>
+      <p style="margin:0">มันลบข้อมูลของ<strong>ทุกเว็บที่ใช้โดเมนเดียวกัน</strong> — งาน Week 03 และ Week 04 ของคุณเองบน GitHub Pages ก็จะโดนลบไปด้วย เพราะทุกโปรเจกต์อยู่ใต้ <code>username.github.io</code> เหมือนกันหมด</p>
+    </div>
+    <div class="right">
+      <p style="margin:0"><strong>ต่างจากคาบที่แล้ว</strong> — คาบ 5A มีกับดักที่ checker จับไม่ได้เลยหลายอัน แต่<strong>คาบนี้จับได้เกือบทุกอย่าง</strong> ให้รันแล้วอ่านชื่อรายการที่แดง แล้วย้อนไปแก้ตรงนั้น</p>
+    </div>
+  </div>
+</section>
+
+<!-- 13 ──────────────────────── -->
+<section class="slide" data-title="☕ พัก">
+  <span class="slide-id">BREAK</span>
+  <div class="body center" style="align-items:center;text-align:center">
+    <h1 style="font-size:4rem">☕</h1>
+    <h2>พัก 10 นาที</h2>
+    <p class="lead">ใครยังไม่ได้ 130/133 มาคุยกับผมตอนนี้<br>ครึ่งหลังต้องเริ่มพร้อมกันทั้งห้อง</p>
+    <p class="bigtime" id="t-break" style="margin-top:1rem">10:00</p>
+    <div class="timerbtns">
+      <button data-timer="t-break" data-min="10" data-act="start">เริ่ม</button>
+      <button data-timer="t-break" data-act="pause">หยุด</button>
+      <button data-timer="t-break" data-min="10" data-act="reset">ตั้งใหม่</button>
+    </div>
+  </div>
+</section>
+
+<!-- 14 ──────────────────────── -->
+<section class="slide" data-title="⚠ ผิดก่อนถูก #5">
+  <span class="slide-id">ทฤษฎี B2 · MISCONCEPTION 05</span>
+  <span class="eyebrow red">คำถามสำคัญที่สุดของคาบนี้</span>
+  <h2>เรามี <code>try/catch</code> แล้ว — พอหรือยัง</h2>
+  <div class="body">
+    <pre><code><span class="c">// ข้อความนี้อยู่ใน Local Storage</span>
+{ <span class="s">"schemaVersion"</span>: <span class="bad">99</span>, <span class="s">"requests"</span>: <span class="bad">"ไม่ใช่ array"</span> }</code></pre>
+    <div class="iact" data-quiz="q3">
+      <p style="margin:0 0 .3rem"><strong><code>JSON.parse</code> ข้อความนี้จะเกิดอะไรขึ้น</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">โยน SyntaxError · <code>catch</code> จับได้</button>
+        <button class="opt" data-a="1">สำเร็จ ไม่มี error · หลุดผ่านเข้าระบบทั้งชุด</button>
+        <button class="opt" data-a="0">คืน null</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="wrong" style="text-align:center;padding:1.3rem">
+      <p style="margin:0;font-size:1.4rem;font-weight:600">parse ได้ ไม่ได้แปลว่าข้อมูลถูก</p>
+    </div>
+    <p><small><code>try/catch</code> จับได้แค่กรณีที่ข้อความ<strong>ไม่ใช่ JSON</strong> เท่านั้น · ข้อความข้างบนเป็น JSON ที่ถูกต้องสมบูรณ์</small></p>
+  </div>
+</section>
+
+<!-- 15 ──────────────────────── -->
+<section class="slide" data-title="B2 · สามสถานะ">
+  <span class="slide-id">W5-C10</span>
+  <span class="eyebrow">readStoredRequests() ต้องคืนอะไร</span>
+  <h2>สามสถานะ และห้าม <code>throw</code></h2>
+  <div class="body">
+    <table>
+      <tr><th style="width:120px">status</th><th style="width:32%">เกิดเมื่อ</th><th>ทำอะไรต่อ</th><th style="width:120px">แจ้งผู้ใช้ไหม</th></tr>
+      <tr><td><span class="chip">missing</span></td><td>ยังไม่เคยเก็บ</td><td>โหลด seed แล้วเก็บไว้</td><td><strong>ไม่</strong></td></tr>
+      <tr><td><span class="chip g">valid</span></td><td>อ่านได้และผ่านการตรวจ</td><td>ใช้ได้เลย</td><td>—</td></tr>
+      <tr><td><span class="chip r">invalid</span></td><td>อ่านไม่ได้หรือรูปแบบผิด</td><td>กู้ seed แล้วเขียนทับ</td><td><strong>ต้องแจ้ง</strong></td></tr>
+    </table>
+    <div class="reveal" data-reveal>
+      <button>▸ ทำไม missing ไม่ต้องแจ้ง แต่ invalid ต้องแจ้ง</button>
+      <div class="ans">
+        <p style="margin:0">เปิดเว็บครั้งแรกแล้วยังไม่มีข้อมูลเป็นเรื่องปกติ ไม่มีอะไรผิดพลาด · แต่<strong>มีข้อมูลแล้วอ่านไม่ได้แปลว่าผู้ใช้อาจเพิ่งเสียข้อมูลไป</strong> ซึ่งเขามีสิทธิ์รู้</p>
+      </div>
+    </div>
+    <div class="wrong">
+      <p style="margin:0"><strong>ห้าม <code>throw</code> ออกจากฟังก์ชันนี้เด็ดขาด</strong> เพราะจะทำให้หน้าจอพังทั้งหน้า · ต้องคืนสถานะกลับไปให้ผู้เรียกตัดสินใจแทน</p>
+    </div>
+  </div>
+</section>
+
+<!-- 16 ──────────────────────── -->
+<section class="slide" data-title="🎮 ลองปิดการตรวจทีละชั้น">
+  <span class="slide-id">ACTIVE 02</span>
+  <span class="eyebrow amber">ลองเล่น</span>
+  <h2>ตรวจ 3 ชั้น — ถ้าลบชั้นไหนออกจะเกิดอะไร</h2>
+  <div class="body">
+    <p><small>กดที่การ์ดเพื่อ<strong>ปิด</strong>ชั้นนั้น แล้วดูว่าจะเกิดอะไรขึ้น</small></p>
+    <div class="layers">
+      <div class="layer" data-layer="form">
+        <span class="n">ชั้นที่ 1</span>
+        <h3>ฟอร์ม</h3>
+        <p>กันผู้ใช้กรอกผิด บอกทันทีขณะพิมพ์</p>
+        <span class="broke">→ ต้องกดส่งก่อนถึงจะรู้ว่าผิด</span>
+      </div>
+      <div class="layer" data-layer="service">
+        <span class="n">ชั้นที่ 2</span>
+        <h3>Service</h3>
+        <p>กันโค้ดส่วนอื่นเรียกด้วยข้อมูลผิด</p>
+        <span class="broke">→ ข้อมูลเสียหลุดเข้าระบบโดยไม่มีใครทัก</span>
+      </div>
+      <div class="layer" data-layer="storage">
+        <span class="n">ชั้นที่ 3</span>
+        <h3>Storage</h3>
+        <p>ไม่เชื่อสิ่งที่อ่านกลับมา</p>
+        <span class="broke">→ เปิดเว็บแล้วหน้าจอขาว</span>
+      </div>
+    </div>
+    <div class="nextbox" id="layerMsg">
+      <p style="margin:0">ทั้งสามชั้นเปิดอยู่ — ข้อมูลเสียหายจะถูกจับได้ทุกทาง เรียกว่า <strong>defense in depth</strong></p>
+    </div>
+    <p><small><strong>เชื่อมกับ Week 06</strong> — เซิร์ฟเวอร์ Express ก็ห้ามเชื่อข้อมูลที่ส่งมาจากฝั่งผู้ใช้ ด้วยเหตุผลเดียวกันเป๊ะ</small></p>
+  </div>
+</section>
+
+<!-- 17 ──────────────────────── -->
+<section class="slide" data-title="🎮 ทดลองทำข้อมูลพัง">
+  <span class="slide-id">ACTIVE 03</span>
+  <span class="eyebrow amber">ลองเล่น</span>
+  <h2>ข้อมูลเสียหาย 3 แบบ — จับได้ด้วยอะไร</h2>
+  <div class="body">
+    <div class="iact">
+      <div class="chips" style="margin:0 0 .55rem">
+        <button data-bad="ok">ข้อมูลปกติ</button>
+        <button data-bad="json">{ ไม่ใช่ JSON</button>
+        <button data-bad="ver">schemaVersion: 99</button>
+        <button data-bad="dup">id ซ้ำกัน 2 รายการ</button>
+      </div>
+      <div class="storewrap">
+        <div class="devtool">
+          <div class="devhead">ค่าใน LOCAL STORAGE</div>
+          <div class="devbody" id="badRaw">— กดปุ่มด้านบน —</div>
+        </div>
+        <div class="devtool">
+          <div class="devhead">readStoredRequests() คืนอะไร</div>
+          <div class="devbody" id="badOut">—</div>
+        </div>
+      </div>
+      <div class="screen" id="badScreen" style="margin-top:.5rem;min-height:70px">หน้าจอผู้ใช้</div>
+    </div>
+    <p><small>ทั้งสามแบบต้องได้ผลเหมือนกัน — <strong>แอปกู้ข้อมูลกลับมา ใช้งานต่อได้ ไม่มีหน้าจอขาว</strong></small></p>
+  </div>
+</section>
+
+<!-- 18 ── LAB CP04b ───────────── -->
+<section class="slide" data-title="⏸ LAB · CP04b">
+  <span class="slide-id">CP04b · HARDEN</span>
+  <div class="body center">
+    <div class="labstop panel">
+      <span class="eyebrow amber">หยุดสไลด์ — เปิดโค้ด</span>
+      <h2 style="margin-top:.4rem">CP04b · ทำให้ข้อมูลทนทาน</h2>
+      <div class="grid" style="grid-template-columns:1.6fr 1fr;gap:1rem;margin-top:.5rem">
+        <div>
+          <table style="font-size:.8rem">
+            <tr><th style="width:66px">ช่วง</th><th>ทำอะไร</th><th style="width:48px">นาที</th></tr>
+            <tr><td>04b-1</td><td><code>5B-A2</code> ตรวจ schemaVersion + validateRequests</td><td>20</td></tr>
+            <tr><td>04b-2</td><td>ทดสอบ invalid 3 แบบใน DevTools</td><td>15</td></tr>
+            <tr><td>04b-3</td><td><code>5B-2b</code> <code>5B-3b</code> onRecovery แจ้งผู้ใช้</td><td>15</td></tr>
+            <tr><td>04b-4</td><td>เก็บ <code>storage-recovery.png</code></td><td>5</td></tr>
+          </table>
+        </div>
+        <div style="display:flex;flex-direction:column;justify-content:center;align-items:center">
+          <p class="bigtime" id="t-cp04b">55:00</p>
+          <div class="timerbtns">
+            <button data-timer="t-cp04b" data-min="55" data-act="start">เริ่ม</button>
+            <button data-timer="t-cp04b" data-act="pause">หยุด</button>
+            <button data-timer="t-cp04b" data-min="55" data-act="reset">ตั้งใหม่</button>
+          </div>
+        </div>
+      </div>
+      <div class="right" style="margin-top:.6rem">
+        <span class="eyebrow green">ใช้ checker เป็นเครื่องมือ</span>
+        <pre style="margin:.3rem 0 0"><code>npm run check | grep <span class="s">"^\[TODO\]"</span></code></pre>
+        <p style="margin:.4rem 0 0"><small>สามบรรทัดที่ขึ้นมาจะบอกตรง ๆ เลยว่าเหลืออะไร ลองอ่านแล้วไปแก้ทีละข้อ</small></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 ──────────────────────── -->
+<section class="slide" data-title="B2 · onRecovery">
+  <span class="slide-id">W5-C11</span>
+  <span class="eyebrow">โจทย์ของ 04b-3</span>
+  <h2>ชั้นล่างจะแจ้งชั้นบนได้อย่างไร</h2>
+  <div class="body">
+    <div class="grid g2">
+      <div class="wrong">
+        <span class="eyebrow red">ทำแบบนี้ไม่ได้</span>
+        <p style="margin:0">Storage อยู่ชั้นล่างสุด กล่องข้อความอยู่ที่หน้าจอชั้นบนสุด — <strong>ถ้าให้ชั้นล่างรู้จักชั้นบน จะผูกกันแน่นจนแยกไม่ออก</strong></p>
+      </div>
+      <div class="right">
+        <span class="eyebrow green">ทางออก · callback</span>
+        <p style="margin:0">ให้หน้าจอ<strong>ส่งฟังก์ชันลงไป</strong> แล้วให้ Service เรียกกลับขึ้นมาเมื่อจำเป็น</p>
+      </div>
+    </div>
+    <pre><code><span class="c">// ใน DashboardPage — ส่งฟังก์ชันลงไป</span>
+<span class="f">getRequests</span>({ scenario, <span class="hl">onRecovery: setNotice</span> })
+
+<span class="c">// ใน loadNormalRequests — เรียกกลับขึ้นมา</span>
+<span class="k">if</span> (stored.status === <span class="s">'invalid'</span>) {
+  <span class="hl">onRecovery?.</span>(<span class="s">'พบข้อมูลเดิมที่อ่านไม่ได้ ระบบจึงกู้ข้อมูลตัวอย่างให้แล้ว'</span>);
+}</code></pre>
+    <div class="nextbox">
+      <p style="margin:0"><strong>คุณเคยเห็นรูปแบบนี้มาแล้ว</strong> — ตอน Week 04 ที่ <code>RequestList</code> รับ <code>onDeleteRequest</code> มาจาก <code>App.jsx</code> เป็นแนวคิดเดียวกันเป๊ะ ต่างแค่ส่งลงไปลึกกว่า ถึงชั้น Service</p>
+    </div>
+    <p><small><strong>ทำไมต้องมี <code>?.</code></strong> — เพราะผู้เรียกบางคนไม่ส่ง callback มา เช่น <code>getRequestById()</code> ที่เรียก <code>getRequests()</code> ต่ออีกที</small></p>
+  </div>
+</section>
+
+<!-- 20 ──────────────────────── -->
+<section class="slide" data-title="B3 · คำถามที่ค้างมา">
+  <span class="slide-id">ทฤษฎี B3 · 15 MIN</span>
+  <span class="eyebrow cyan">ถึงเวลาแล้ว</span>
+  <h2>คำถามที่ค้างมาหนึ่งสัปดาห์</h2>
+  <div class="body center" style="align-items:center;text-align:center">
+    <pre style="font-size:.95rem"><code><span class="c">// เขียนไว้รอบเดียว แต่ Console ขึ้นแบบนี้</span>
+โหลดข้อมูล...
+โหลดข้อมูล...   <span class="c">← ทำไมมี 2 รอบ</span></code></pre>
+    <p class="lead" style="margin-top:1rem">สัปดาห์ที่แล้วผมบอกว่า <em>"สังเกตไว้ก่อน สัปดาห์หน้าเราจะมาคุยกัน"</em></p>
+    <div class="iact" style="margin-top:.8rem;width:100%">
+      <p style="margin:0"><strong>แต่ก่อนจะเฉลย ขอถามคำถามที่ดูไม่เกี่ยวกันเลยก่อน</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- 21 ──────────────────────── -->
+<section class="slide" data-title="🎮 ทดลอง stale update">
+  <span class="slide-id">ACTIVE 04</span>
+  <span class="eyebrow amber">ลองเล่น</span>
+  <h2>กดเปิดหน้า Detail แล้วกดกลับก่อนโหลดเสร็จ</h2>
+  <div class="body">
+    <div class="iact">
+      <div class="chips" style="margin:0 0 .3rem">
+        <button data-stale="off">ไม่มี cleanup guard</button>
+        <button data-stale="on">มี cleanup guard</button>
+      </div>
+      <div class="tl">
+        <div class="tl-line"></div>
+        <div class="tl-row">
+          <div class="tl-item" id="tl1">
+            <span class="tl-dot"></span>
+            <span class="tl-t">0.0 วิ</span>
+            <span class="tl-x">เปิดหน้า Detail<br>Effect เริ่มโหลด</span>
+          </div>
+          <div class="tl-item" id="tl2">
+            <span class="tl-dot"></span>
+            <span class="tl-t">0.1 วิ</span>
+            <span class="tl-x">กดกลับ Dashboard<br>หน้า Detail ถูกถอดออก</span>
+          </div>
+          <div class="tl-item" id="tl3">
+            <span class="tl-dot"></span>
+            <span class="tl-t">0.4 วิ</span>
+            <span class="tl-x">ข้อมูลโหลดเสร็จ</span>
+          </div>
+        </div>
+      </div>
+      <div class="screen" id="staleOut" style="min-height:72px">เลือกโหมดด้านบนแล้วดูผล</div>
+    </div>
+    <p><small>ปัญหานี้เรียกว่า <strong>stale update</strong> — การอัปเดตที่มาช้าเกินไปจนไม่เกี่ยวข้องแล้ว</small></p>
+  </div>
+</section>
+
+<!-- 22 ──────────────────────── -->
+<section class="slide" data-title="B3 · cleanup guard">
+  <span class="slide-id">W5-C12</span>
+  <span class="eyebrow green">ทางแก้</span>
+  <h2>เราไม่ได้ยกเลิกคำขอ — เราแค่เลือกไม่ใช้ผลลัพธ์</h2>
+  <div class="body">
+    <pre><code><span class="f">useEffect</span>(() =&gt; {
+  <span class="hl">let ignore = false;</span>
+
+  <span class="f">getRequestById</span>(requestId).<span class="f">then</span>((result) =&gt; {
+    <span class="hl">if (ignore) return;</span>          <span class="c">// ไม่เกี่ยวแล้ว ทิ้งไปเลย</span>
+    <span class="f">setRequest</span>(result);
+    <span class="f">setLoadState</span>(<span class="s">'success'</span>);
+  });
+
+  <span class="hl">return () =&gt; { ignore = true; };</span>   <span class="c">// React เรียกตอนออกจากหน้า</span>
+}, [requestId, reloadKey]);</code></pre>
+    <div class="panel">
+      <p style="margin:0"><small>ถ้า Effect คืนฟังก์ชันกลับไป React จะเรียกฟังก์ชันนั้น<strong>ก่อนทำ Effect รอบใหม่</strong> และ<strong>ก่อนที่ component จะถูกถอดออก</strong></small></p>
+    </div>
+  </div>
+</section>
+
+<!-- 23 ──────────────────────── -->
+<section class="slide" data-title="B3 · เฉลย 2 รอบ">
+  <span class="slide-id">THE ANSWER</span>
+  <span class="eyebrow cyan">กลับมาที่คำถามค้าง</span>
+  <h2>ทำไม React เรียก Effect 2 รอบ</h2>
+  <div class="body center">
+    <div class="panel" style="text-align:center;padding:1.2rem">
+      <p style="margin:0;font-family:'IBM Plex Mono',monospace;font-size:1.1rem;color:var(--violet)">
+        เรียก Effect → เรียก cleanup → เรียก Effect อีกรอบ
+      </p>
+    </div>
+    <div class="grid g2">
+      <div class="right">
+        <span class="eyebrow green">ถ้าเขียนถูก</span>
+        <p style="margin:0">เรียกซ้ำแล้วผลลัพธ์เหมือนเดิม ไม่มีอะไรผิดปกติ</p>
+      </div>
+      <div class="wrong">
+        <span class="eyebrow red">ถ้าเขียนผิด</span>
+        <p style="margin:0">ข้อมูลซ้ำ ตัวจับเวลาซ้อนกัน การเชื่อมต่อค้าง — <strong>เห็นทันทีตอนพัฒนา ไม่ต้องรอผู้ใช้เจอ</strong></p>
+      </div>
+    </div>
+    <div class="nextbox">
+      <p style="margin:0"><strong>React ไม่ได้แค่บอกว่าคุณควรเขียน cleanup แต่สร้างสถานการณ์ให้คุณเห็นปัญหาเองตั้งแต่ตอนพัฒนา</strong> — เป็นแนวคิดการออกแบบเครื่องมือที่ดี ทำให้ความผิดพลาดปรากฏตัวเร็วที่สุด</p>
+    </div>
+    <p style="text-align:center"><small class="muted">ตอน <code>npm run build</code> ขึ้นใช้งานจริง Effect จะทำงาน<strong>รอบเดียว</strong></small></p>
+  </div>
+</section>
+
+<!-- 24 ── LAB cleanup ─────────── -->
+<section class="slide" data-title="⏸ LAB · cleanup guard">
+  <span class="slide-id">CLEANUP GUARD</span>
+  <div class="body center">
+    <div class="labstop panel">
+      <span class="eyebrow amber">หยุดสไลด์ — เปิดโค้ด</span>
+      <h2 style="margin-top:.4rem">เพิ่ม cleanup guard ใน 2 ไฟล์</h2>
+      <div class="grid g2" style="margin-top:.5rem">
+        <div>
+          <p><code>DashboardPage.jsx</code> และ <code>RequestDetailPage.jsx</code></p>
+          <p style="margin-top:.4rem"><small>มีคอมเมนต์ <code>TODO 5B: เพิ่ม cleanup guard</code> กำกับไว้แล้ว</small></p>
+          <p style="margin-top:.7rem"><strong>วิธีพิสูจน์ว่าทำงานจริง</strong></p>
+          <ul style="margin-bottom:0;font-size:.86rem">
+            <li>DevTools → Network → throttle เป็น Slow 3G</li>
+            <li>เปิด <code>#/requests/REQ-001</code></li>
+            <li>กดกลับ Dashboard ทันทีก่อนโหลดเสร็จ</li>
+            <li>ต้องไม่มีอะไรกะพริบหรือเปลี่ยนผิดปกติ</li>
+          </ul>
+        </div>
+        <div style="display:flex;flex-direction:column;justify-content:center;align-items:center">
+          <p class="bigtime" id="t-clean">30:00</p>
+          <div class="timerbtns">
+            <button data-timer="t-clean" data-min="30" data-act="start">เริ่ม</button>
+            <button data-timer="t-clean" data-act="pause">หยุด</button>
+            <button data-timer="t-clean" data-min="30" data-act="reset">ตั้งใหม่</button>
+          </div>
+        </div>
+      </div>
+      <div class="wrong" style="margin-top:.6rem">
+        <span class="eyebrow red">อ่านก่อน — ตัวเลขจะไม่ขยับ</span>
+        <p style="margin:0"><code>npm run check</code> จะยังได้ <strong>133/133 เท่าเดิม</strong> · <strong>ไม่ใช่ว่าทำผิด</strong> — cleanup guard ป้องกันบั๊กที่ยังไม่เกิด checker จึงตรวจไม่ได้ เหมือนกับ CP01 เมื่อสัปดาห์ที่แล้ว</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 25 ──────────────────────── -->
+<section class="slide" data-title="CP05b · regression">
+  <span class="slide-id">CP05b · 30 MIN</span>
+  <span class="eyebrow">แนวคิดก่อนลงมือ</span>
+  <h2>ของเดิมยังทำงานครบไหม</h2>
+  <div class="body">
+    <p class="lead">สองสัปดาห์นี้เราแก้โค้ดของ Week 04 ไปเยอะมาก — ย้ายไฟล์ เปลี่ยนแหล่งข้อมูล เพิ่มชั้นใหม่ เปลี่ยนวิธีลบ</p>
+    <div class="wrong" style="text-align:center;padding:1.2rem">
+      <p style="margin:0;font-size:1.3rem;font-weight:600">ฟีเจอร์ใหม่ทำงานแต่ของเดิมพัง = ยังไม่สำเร็จ</p>
+    </div>
+    <div class="grid g2">
+      <div class="panel">
+        <h3>regression คืออะไร</h3>
+        <p style="margin:0"><small>ความสามารถที่เคยทำงานได้ แล้ว<em>พังเพราะการแก้ครั้งใหม่</em> — เป็นคำที่คุณจะได้ยินทุกวันในการทำงานจริง</small></p>
+      </div>
+      <div class="right">
+        <h3>จับคู่ทดสอบไขว้</h3>
+        <p style="margin:0"><small><strong>ให้เพื่อนทดสอบงานของคุณ และคุณทดสอบงานของเพื่อน</strong> — การหาบั๊กในงานคนอื่นง่ายกว่ามาก เพราะไม่มีอคติว่า "ตรงนี้ฉันเขียนเองน่าจะถูก"</small></p>
+      </div>
+    </div>
+    <div class="panel">
+      <p style="margin:0"><small>เดินตาม regression checklist 11 ข้อที่แจกให้ · <strong>บันทึกผลจริงทุกข้อ</strong> แม้จะไม่ผ่าน</small></p>
+    </div>
+  </div>
+</section>
+
+<!-- 26 ── LAB CP06 ────────────── -->
+<section class="slide" data-title="⏸ LAB · CP06">
+  <span class="slide-id">CP06 · SUBMIT</span>
+  <div class="body center">
+    <div class="labstop panel">
+      <span class="eyebrow amber">หยุดสไลด์ — ส่งงาน</span>
+      <h2 style="margin-top:.4rem">CP06 · ตรวจสอบและส่งมอบ</h2>
+      <div class="grid" style="grid-template-columns:1.6fr 1fr;gap:1rem;margin-top:.5rem">
+        <div>
+          <table style="font-size:.8rem">
+            <tr><th style="width:66px">ช่วง</th><th>ทำอะไร</th><th style="width:48px">นาที</th></tr>
+            <tr><td>CP06-1</td><td>375px ทุกหน้า</td><td>10</td></tr>
+            <tr><td>CP06-2</td><td>คีย์บอร์ดอย่างเดียว</td><td>10</td></tr>
+            <tr><td>CP06-3</td><td><code>check</code> + <code>build</code> + <code>preview</code></td><td>10</td></tr>
+            <tr><td>CP06-4</td><td>ปิด TEST_REPORT + README</td><td>10</td></tr>
+          </table>
+          <p style="margin-top:.5rem"><small>TC-23 (Pages) และ TC-24 (PR + tag) อนุญาตให้เป็น <code>NOT RUN</code> ในคาบ</small></p>
+        </div>
+        <div style="display:flex;flex-direction:column;justify-content:center;align-items:center">
+          <p class="bigtime" id="t-cp06">40:00</p>
+          <div class="timerbtns">
+            <button data-timer="t-cp06" data-min="40" data-act="start">เริ่ม</button>
+            <button data-timer="t-cp06" data-act="pause">หยุด</button>
+            <button data-timer="t-cp06" data-min="40" data-act="reset">ตั้งใหม่</button>
+          </div>
+        </div>
+      </div>
+      <div class="nextbox" style="margin-top:.6rem">
+        <p style="margin:0"><small><strong>ทดสอบใน incognito ด้วย</strong> — หน้าต่างปกติของคุณมีข้อมูลค้างอยู่แล้ว · incognito จำลองผู้ใช้ที่เปิดเว็บครั้งแรก ซึ่งเป็นกรณีที่ต้องแน่ใจว่าทำงานได้</small></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 27 ──────────────────────── -->
+<section class="slide" data-title="เรื่องหลักฐาน">
+  <span class="slide-id">EVIDENCE</span>
+  <span class="eyebrow red">เรื่องนี้สำคัญกว่าที่คิด</span>
+  <h2>บันทึกผลจริงเสมอ แม้จะไม่ผ่าน</h2>
+  <div class="body center">
+    <div class="wrong" style="padding:1.3rem">
+      <p style="margin:0;font-size:1.15rem">รายงานที่เขียนย้อนหลังจะเป็น <strong>"ผ่าน" ทั้งหมดเสมอ</strong><br>ซึ่งไม่มีคุณค่าอะไรเลย ทั้งกับตัวคุณเองและกับคนที่อ่าน</p>
+    </div>
+    <div class="grid g2">
+      <div class="panel">
+        <h3>checker ตรวจได้</h3>
+        <ul style="margin-bottom:0;font-size:.88rem">
+          <li>โครงสร้างไฟล์และ route</li>
+          <li>พฤติกรรมของ Service และ Storage</li>
+          <li>ขอบเขตของ <code>fetch</code> และ <code>localStorage</code></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-color:rgba(251,113,133,.4)">
+        <h3>checker ตรวจไม่ได้</h3>
+        <ul style="margin-bottom:0;font-size:.88rem">
+          <li>หน้าจอแสดงผลถูกไหม</li>
+          <li>cleanup guard ทำงานจริงไหม</li>
+          <li>คีย์บอร์ดใช้ได้ไหม · 375px อ่านได้ไหม</li>
+          <li><strong>ของเดิมจาก Week 04 ยังทำงานไหม</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="right">
+      <p style="margin:0"><strong>เครื่องมืออัตโนมัติบอกได้ว่าอะไรพัง แต่บอกไม่ได้ว่าอะไรถูก</strong> — 133/133 แปลว่าไม่มีอะไรที่เครื่องมือจับได้ผิด ไม่ได้แปลว่าโปรแกรมทำงานถูกต้อง</p>
+    </div>
+  </div>
+</section>
+
+<!-- 28 ──────────────────────── -->
+<section class="slide" data-title="สรุป Week 05">
+  <span class="slide-id">RECAP</span>
+  <span class="eyebrow green">จบ Week 05</span>
+  <h2>สองสัปดาห์นี้เราสร้างอะไรขึ้นมา</h2>
+  <div class="body grid g2">
+    <div class="panel">
+      <span class="chip">คาบ 5A · Read Path</span>
+      <ul style="margin-top:.55rem;margin-bottom:0">
+        <li>เส้นทางครบ 5 เส้น ไม่โหลดหน้าใหม่</li>
+        <li>โหลดข้อมูลผ่าน Service Layer</li>
+        <li>5 สถานะ พร้อมปุ่มลองใหม่</li>
+        <li>หน้ารายละเอียดตามรหัส</li>
+      </ul>
+    </div>
+    <div class="panel" style="border-color:rgba(185,140,245,.5)">
+      <span class="chip">คาบ 5B · Write Path</span>
+      <ul style="margin-top:.55rem;margin-bottom:0">
+        <li>ข้อมูลอยู่ต่อหลัง refresh</li>
+        <li>เพิ่ม ลบ คืนค่าได้จริง</li>
+        <li>กู้คืนเมื่อข้อมูลเสียหาย</li>
+        <li>cleanup guard และ regression</li>
+      </ul>
+    </div>
+  </div>
+  <div class="right" style="margin-top:.5rem">
+    <p style="margin:0"><strong>และของเดิมจาก Week 04 ยังทำงานครบทุกอย่าง</strong> — นี่คือส่วนที่ยากที่สุดและมีค่าที่สุด</p>
+  </div>
+</section>
+
+<!-- 29 ──────────────────────── -->
+<section class="slide" data-title="Exit Ticket">
+  <span class="slide-id">EXIT TICKET</span>
+  <span class="eyebrow">ตอบสั้น ๆ ก่อนกลับ</span>
+  <h2>สี่ข้อ</h2>
+  <div class="body center">
+    <div class="grid" style="gap:.5rem">
+      <div class="panel"><p style="margin:0"><strong>1.</strong> <code>readStoredRequests()</code> คืนสถานะได้ 3 แบบ — แต่ละแบบเกิดเมื่อไหร่</p></div>
+      <div class="panel"><p style="margin:0"><strong>2.</strong> ทำไมต้องตรวจข้อมูล 3 ชั้น ทั้งที่เกณฑ์เหมือนกัน</p></div>
+      <div class="panel"><p style="margin:0"><strong>3.</strong> เราเปลี่ยนจาก seed เป็น storage โดยแก้กี่บรรทัด และทำไมถึงน้อยขนาดนั้น</p></div>
+      <div class="nextbox"><p style="margin:0"><strong>4.</strong> Week 06 เราจะสร้าง Express API — <strong>ไฟล์ไหนใน React app นี้จะเปลี่ยนมากที่สุดเมื่อถึง Week 08</strong></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 30 ──────────────────────── -->
+<section class="slide" data-title="→ สะพานสู่ Week 06">
+  <span class="slide-id">HANDOFF · WEEK 06</span>
+  <span class="eyebrow cyan">ส่งต่อ</span>
+  <h2>เปิด <code>requestService.js</code> ดูอีกครั้ง</h2>
+  <div class="body center">
+    <pre style="font-size:.95rem"><code><span class="f">getRequests</span>()          <span class="c">→  GET    /requests</span>
+<span class="f">getRequestById</span>(id)    <span class="c">→  GET    /requests/:id</span>
+<span class="f">addRequest</span>(input)     <span class="c">→  POST   /requests</span>
+<span class="f">deleteRequest</span>(id)     <span class="c">→  DELETE /requests/:id</span></code></pre>
+    <div class="nextbox" style="margin-top:1rem">
+      <p style="margin:0;font-size:1.05rem">นี่คือหน้าตาของ <strong>REST API ที่พวกคุณจะสร้างด้วย Express สัปดาห์หน้า</strong> พอดี</p>
+      <p style="margin:.6rem 0 0"><strong>เราออกแบบข้อตกลงนี้ไว้ล่วงหน้าตั้งแต่ต้นโดยไม่ได้บอกพวกคุณ</strong> — และใน Week 08 พวกคุณจะเปลี่ยนบรรทัดเดียวอีกครั้งเพื่อต่อกับ API จริง แล้วก็จะไม่ต้องแก้ UI อีกเหมือนเดิม</p>
+    </div>
+  </div>
+</section>
+
+<!-- 31 ──────────────────────── -->
+<section class="slide title-slide" data-title="จบ Week 05">
+  <span class="eyebrow green">ENGSE203 · WEEK 05 · จบแล้ว</span>
+  <h1>ส่ง LAB 05 ได้เลย</h1>
+  <p class="lead">งานชิ้นเดียว ส่งครั้งเดียว 3.00 คะแนน</p>
+  <div class="brandline">
+    <span class="chip g">npm run check → 133/133</span>
+    <span class="chip">TEST_REPORT 24 รายการ</span>
+    <span class="chip">ภาพหน้าจอ 10 ภาพ</span>
+    <span class="chip a">tag lab-05-submission-v1</span>
+  </div>
+  <p style="margin-top:1.4rem"><small class="muted">สัปดาห์หน้าเจอกันที่ Week 06 — Express และ REST API</small></p>
+</section>
+
+</div><!-- /stage -->
+</div><!-- /app -->
+
+<div class="bar"><i id="progress"></i></div>
+<div class="hud">
+  <button id="btnPrev" aria-label="สไลด์ก่อนหน้า">←</button>
+  <span class="counter" id="counter">1 / 31</span>
+  <button id="btnNext" aria-label="สไลด์ถัดไป">→</button>
+  <button id="btnToc">สารบัญ</button>
+  <button id="btnMinus" aria-label="ลดขนาดตัวอักษร">A−</button>
+  <button id="btnPlus" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
+  <button id="btnFull">เต็มจอ</button>
+</div>
+<div class="toc" id="toc" role="dialog" aria-label="สารบัญสไลด์">
+  <h3>สารบัญ — กด T หรือ Esc เพื่อปิด</h3>
+  <ol id="tocList"></ol>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+
+  function show(i){
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, n) => s.classList.toggle('active', n === current));
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + slides.length;
+    document.getElementById('progress').style.width = ((current + 1) / slides.length * 100) + '%';
+    history.replaceState(null, '', '#s' + (current + 1));
+  }
+  const next = () => show(current + 1);
+  const prev = () => show(current - 1);
+  document.getElementById('btnNext').onclick = next;
+  document.getElementById('btnPrev').onclick = prev;
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); prev(); }
+    else if (e.key === 'Home'){ show(0); }
+    else if (e.key === 'End'){ show(slides.length - 1); }
+    else if (e.key.toLowerCase() === 't'){ toggleToc(); }
+    else if (e.key === 'Escape'){ setToc(false); }
+    else if (e.key.toLowerCase() === 'f'){ toggleFull(); }
+  });
+
+  const tocEl = document.getElementById('toc');
+  const list = document.getElementById('tocList');
+  slides.forEach((s, i) => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = '#s' + (i + 1);
+    a.textContent = s.dataset.title || ('สไลด์ ' + (i + 1));
+    a.onclick = (e) => { e.preventDefault(); show(i); setToc(false); };
+    li.appendChild(a);
+    const id = s.querySelector('.slide-id');
+    if (id){
+      const tag = document.createElement('span');
+      tag.className = 'tag';
+      tag.textContent = id.textContent;
+      li.appendChild(tag);
+    }
+    list.appendChild(li);
+  });
+  function setToc(open){ tocEl.classList.toggle('open', open); }
+  function toggleToc(){ setToc(!tocEl.classList.contains('open')); }
+  document.getElementById('btnToc').onclick = toggleToc;
+
+  let scale = 1;
+  function setScale(v){
+    scale = Math.max(.75, Math.min(1.35, v));
+    document.documentElement.style.setProperty('--font-scale', scale);
+  }
+  document.getElementById('btnPlus').onclick = () => setScale(scale + .06);
+  document.getElementById('btnMinus').onclick = () => setScale(scale - .06);
+  function toggleFull(){
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  }
+  document.getElementById('btnFull').onclick = toggleFull;
+
+  document.querySelectorAll('[data-reveal]').forEach((box) => {
+    box.querySelector('button').onclick = () => box.classList.toggle('open');
+  });
+
+  document.querySelectorAll('[data-quiz]').forEach((q) => {
+    const fb = q.querySelector('.fb');
+    q.querySelectorAll('.opt').forEach((btn) => {
+      btn.onclick = () => {
+        const right = btn.dataset.a === '1';
+        btn.classList.add(right ? 'ok' : 'no');
+        if (right){
+          fb.textContent = '✓ ถูกต้อง';
+          fb.className = 'fb ok';
+          q.querySelectorAll('.opt').forEach((b) => { b.disabled = true; });
+        } else {
+          fb.textContent = '✕ ยังไม่ใช่ — ลองคิดใหม่อีกครั้ง';
+          fb.className = 'fb no';
+        }
+      };
+    });
+  });
+
+  /* ---------- storage inspector ---------- */
+  const devOut = document.getElementById('devOut');
+  const appOut = document.getElementById('appOut');
+  const storeCases = {
+    obj: {
+      raw: '"[object Object]"',
+      app: '<div><strong style="color:var(--red)">อ่านกลับมาใช้ไม่ได้</strong>'
+         + '<br><small class="muted">ข้อมูลข้างในหายหมด และไม่มี error เตือน</small></div>'
+    },
+    json: {
+      raw: '\'[{"id":"REQ-001","requesterName":"…"}]\'',
+      app: '<div><strong style="color:var(--amber)">อ่านกลับมาได้</strong>'
+         + '<br><small class="muted">แต่ไม่รู้ว่าเป็นข้อมูลรุ่นไหน และไม่มีตัวกำกับใด ๆ</small></div>'
+    },
+    env: {
+      raw: '\'{"schemaVersion":1,"updatedAt":"2026-08-13T09:15:00.000Z","requests":[…]}\'',
+      app: '<div><strong style="color:var(--green)">อ่านกลับมาได้ และตรวจสอบได้</strong>'
+         + '<br><small class="muted">รู้เวอร์ชัน รู้เวลาที่บันทึก ตรวจความถูกต้องได้</small></div>'
+    },
+    clear: { raw: 'null', app: '<span class="muted">ไม่มีคีย์ — เหมือนเปิดเว็บครั้งแรก</span>' }
+  };
+  document.querySelectorAll('[data-store]').forEach((b) => {
+    b.onclick = () => {
+      const c = storeCases[b.dataset.store];
+      devOut.textContent = c.raw;
+      appOut.innerHTML = c.app;
+    };
+  });
+
+  /* ---------- layered checks ---------- */
+  const layerMsg = document.getElementById('layerMsg');
+  const layerTexts = {
+    none: 'ทั้งสามชั้นเปิดอยู่ — ข้อมูลเสียหายจะถูกจับได้ทุกทาง เรียกว่า <strong>defense in depth</strong>',
+    some: 'ยังมีชั้นอื่นรับไว้อยู่ — <strong>นี่คือเหตุผลที่ต้องมีหลายชั้น</strong> ถ้าชั้นใดชั้นหนึ่งพลาด ระบบยังไม่ล่ม',
+    all:  '<strong style="color:var(--red)">ปิดหมดทุกชั้น</strong> — ข้อมูลที่เสียหายจะไหลตรงเข้าหน้าจอ แล้วผู้ใช้จะเจอหน้าจอขาว'
+  };
+  document.querySelectorAll('.layer').forEach((el) => {
+    el.onclick = () => {
+      el.classList.toggle('off');
+      const off = document.querySelectorAll('.layer.off').length;
+      const key = off === 0 ? 'none' : (off === 3 ? 'all' : 'some');
+      layerMsg.innerHTML = '<p style="margin:0">' + layerTexts[key] + '</p>';
+      layerMsg.style.borderColor = off === 3 ? 'rgba(251,113,133,.5)' : 'rgba(56,215,237,.36)';
+    };
+  });
+
+  /* ---------- corrupted data demo ---------- */
+  const badRaw = document.getElementById('badRaw');
+  const badOut = document.getElementById('badOut');
+  const badScreen = document.getElementById('badScreen');
+  const badCases = {
+    ok: {
+      raw: '{"schemaVersion":1,"requests":[{…},{…},{…}]}',
+      out: "{ status: 'valid', requests: [3 รายการ] }",
+      col: 'var(--green)',
+      screen: '<strong style="color:var(--green)">แสดงรายการตามปกติ 3 รายการ</strong>'
+    },
+    json: {
+      raw: '{ ไม่ใช่ JSON',
+      out: "{ status: 'invalid',\n  reason: 'ไม่ใช่ JSON ที่อ่านได้' }",
+      col: 'var(--red)',
+      screen: '<div><strong style="color:var(--amber)">กู้ข้อมูลตัวอย่างกลับมาแล้ว</strong>'
+            + '<br><small class="muted">จับได้ด้วย try/catch</small></div>'
+    },
+    ver: {
+      raw: '{"schemaVersion":99,"requests":[]}',
+      out: "{ status: 'invalid',\n  reason: 'เวอร์ชันข้อมูลไม่ถูกต้อง' }",
+      col: 'var(--red)',
+      screen: '<div><strong style="color:var(--amber)">กู้ข้อมูลตัวอย่างกลับมาแล้ว</strong>'
+            + '<br><small class="muted">จับได้ด้วยการเทียบ SCHEMA_VERSION · <strong>try/catch จับไม่ได้</strong></small></div>'
+    },
+    dup: {
+      raw: '{"schemaVersion":1,"requests":[{"id":"REQ-001"…},{"id":"REQ-001"…}]}',
+      out: "{ status: 'invalid',\n  reason: 'รูปแบบข้อมูลไม่ถูกต้อง' }",
+      col: 'var(--red)',
+      screen: '<div><strong style="color:var(--amber)">กู้ข้อมูลตัวอย่างกลับมาแล้ว</strong>'
+            + '<br><small class="muted">จับได้ด้วย validateRequests() · <strong>ถูกรูปแบบทุกอย่าง แต่ id ซ้ำ</strong></small></div>'
+    }
+  };
+  document.querySelectorAll('[data-bad]').forEach((b) => {
+    b.onclick = () => {
+      const c = badCases[b.dataset.bad];
+      badRaw.textContent = c.raw;
+      badOut.textContent = c.out;
+      badOut.style.color = c.col;
+      badScreen.innerHTML = c.screen;
+    };
+  });
+
+  /* ---------- stale update timeline ---------- */
+  const staleOut = document.getElementById('staleOut');
+  const tls = ['tl1','tl2','tl3'].map((id) => document.getElementById(id));
+  function resetTl(){ tls.forEach((el) => el.className = 'tl-item'); }
+  document.querySelectorAll('[data-stale]').forEach((b) => {
+    b.onclick = () => {
+      const guarded = b.dataset.stale === 'on';
+      resetTl();
+      staleOut.innerHTML = '<span class="muted">เปิดหน้า Detail…</span>';
+      setTimeout(() => { tls[0].className = 'tl-item on'; }, 200);
+      setTimeout(() => {
+        tls[1].className = 'tl-item on';
+        staleOut.innerHTML = guarded
+          ? '<span class="muted">กดกลับ Dashboard → cleanup ทำงาน → <code>ignore = true</code></span>'
+          : '<span class="muted">กดกลับ Dashboard → หน้า Detail ถูกถอดออก</span>';
+      }, 900);
+      setTimeout(() => {
+        tls[2].className = 'tl-item ' + (guarded ? 'good' : 'bad');
+        staleOut.innerHTML = guarded
+          ? '<div><strong style="color:var(--green)">โหลดเสร็จ → เห็นว่า ignore เป็น true → ไม่ทำอะไรต่อ</strong>'
+            + '<br><small class="muted">หน้า Dashboard ไม่ถูกรบกวน</small></div>'
+          : '<div><strong style="color:var(--red)">โหลดเสร็จ → setRequest() ของหน้าที่ไม่อยู่แล้ว</strong>'
+            + '<br><small class="muted">ข้อมูลกะพริบ หรือสถานะเปลี่ยนโดยไม่มีเหตุผล</small></div>';
+      }, 1800);
+    };
+  });
+
+  /* ---------- timers ---------- */
+  const timers = {};
+  function fmt(sec){
+    const m = Math.floor(Math.abs(sec) / 60), s = Math.abs(sec) % 60;
+    return (sec < 0 ? '-' : '') + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  }
+  setInterval(() => {
+    Object.keys(timers).forEach((id) => {
+      const t = timers[id];
+      if (!t || !t.running) return;
+      t.left -= 1;
+      const el = document.getElementById(id);
+      el.textContent = fmt(t.left);
+      el.style.color = t.left <= 0 ? 'var(--red)' : 'var(--amber)';
+    });
+  }, 1000);
+  document.querySelectorAll('[data-timer]').forEach((b) => {
+    b.onclick = () => {
+      const id = b.dataset.timer, act = b.dataset.act;
+      const el = document.getElementById(id);
+      if (!timers[id]) timers[id] = { left: (Number(b.dataset.min) || 10) * 60, running: false };
+      const t = timers[id];
+      if (act === 'start') t.running = true;
+      else if (act === 'pause') t.running = false;
+      else if (act === 'reset'){
+        t.running = false;
+        t.left = (Number(b.dataset.min) || 10) * 60;
+        el.textContent = fmt(t.left);
+        el.style.color = 'var(--amber)';
+      }
+    };
+  });
+
+  const m = location.hash.match(/^#s(\d+)$/);
+  show(m ? Number(m[1]) - 1 : 0);
+})();
+</script>
+</body>
+</html>
