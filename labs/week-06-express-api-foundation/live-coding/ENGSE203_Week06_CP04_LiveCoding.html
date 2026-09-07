@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ENGSE203 Week 06 — CP04 POST + Validation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fs:1;
+  --ink:#EAF6EF; --muted:#A9C7B8; --line:rgba(169,199,184,.22);
+  --green:#4ADE80; --cyan:#38D7ED; --amber:#FBBF24; --red:#FB7185; --violet:#C084FC;
+  --panel:rgba(15,42,30,.74); --code:#04120C;
+  font-size:calc(16px * var(--fs));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 12% 10%,rgba(74,222,128,.14),transparent 32%),
+             radial-gradient(circle at 88% 84%,rgba(56,215,237,.11),transparent 34%),#04100B;
+  color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;
+  padding:0 20px 90px;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{padding:38px 0 22px;border-bottom:2px solid var(--line);margin-bottom:22px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;color:var(--green);text-transform:uppercase}
+h1{font-size:2.3rem;font-weight:700;line-height:1.15;margin:.4rem 0 .3rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-weight:300;font-size:1.05rem}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.pill{font-size:.76rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;
+  border:1px solid var(--line);background:rgba(74,222,128,.09);color:var(--green)}
+.pill.a{color:var(--amber);background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3)}
+.pill.c{color:var(--cyan);background:rgba(56,215,237,.09);border-color:rgba(56,215,237,.3)}
+.pill.r{color:var(--red);background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.3)}
+.pill.v{color:var(--violet);background:rgba(192,132,252,.09);border-color:rgba(192,132,252,.3)}
+.where{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.76rem;font-weight:600;
+  padding:.22rem .6rem;border-radius:7px;background:rgba(74,222,128,.16);color:#bff5d0;
+  border:1px solid rgba(74,222,128,.4)}
+.where.home{background:rgba(251,191,36,.14);color:#ffe1a8;border-color:rgba(251,191,36,.4)}
+
+.jump{position:sticky;top:0;z-index:15;display:flex;gap:.4rem;flex-wrap:wrap;
+  padding:.7rem 0;margin-bottom:8px;background:rgba(4,16,11,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.jump a{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.76rem;
+  padding:.32rem .7rem;border-radius:8px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(15,42,30,.85)}
+.jump a:hover{color:var(--green);border-color:var(--green)}
+.jump a.now{color:#04120C;background:var(--green);border-color:var(--green);font-weight:600}
+
+.step{margin:30px 0;border:1px solid var(--line);border-radius:16px;background:var(--panel);
+  overflow:hidden;scroll-margin-top:70px}
+.step-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;
+  background:rgba(74,222,128,.08);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.num{min-width:38px;height:38px;padding:0 .7rem;flex:0 0 auto;border-radius:19px;
+  display:grid;place-items:center;background:var(--green);color:#04120C;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.92rem}
+.step-head h2{font-size:1.2rem;font-weight:700;line-height:1.3}
+.step-head .file{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted);margin-left:auto}
+.step-body{padding:1.15rem 1.3rem}
+p{margin-bottom:.7rem;font-size:1rem}
+
+.say,.warn,.ok,.vio,.home{padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.say{border-left:3px solid var(--amber);background:rgba(251,191,36,.08)}
+.warn{border-left:3px solid var(--red);background:rgba(251,113,133,.08)}
+.ok{border-left:3px solid var(--green);background:rgba(74,222,128,.08)}
+.vio{border-left:3px solid var(--cyan);background:rgba(56,215,237,.09)}
+.home{border-left:3px solid var(--violet);background:rgba(192,132,252,.08)}
+.say b,.warn b,.ok b,.vio b,.home b{font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+.say b{color:var(--amber)} .warn b{color:var(--red)} .ok b{color:var(--green)}
+.vio b{color:var(--cyan)} .home b{color:var(--violet)}
+
+.codewrap{position:relative;margin:.7rem 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;
+  padding:1rem 1.15rem;overflow-x:auto;font-size:.9rem;line-height:1.72}
+code{font-family:'IBM Plex Mono',monospace}
+pre code{color:#d6efe0}
+.k{color:#8FE3A8}.s{color:#E9C88A}.c{color:#7EA592;font-style:italic}
+.f{color:#8FD0EC}.t{color:#68d8d2}.d{color:#FB7185}.hl{color:#FFE08A;font-weight:600}
+.n{color:#D9A0E8}
+.copy{position:absolute;top:.55rem;right:.6rem;background:rgba(15,42,30,.95);
+  border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:.25rem .65rem;font-size:.74rem;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--green);border-color:var(--green)}
+
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:.7rem 0}
+th{text-align:left;padding:.6rem .7rem;color:var(--green);font-size:.8rem;
+  font-weight:600;border-bottom:1px solid var(--line);letter-spacing:.04em}
+td{padding:.6rem .7rem;border-bottom:1px solid rgba(169,199,184,.1);vertical-align:top}
+tr:last-child td{border-bottom:none}
+ul{margin:.3rem 0 .6rem 1.2rem}li{margin-bottom:.35rem}
+
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem 0;
+  border-bottom:1px solid rgba(169,199,184,.1)}
+.check:last-child{border-bottom:none}
+.box{width:22px;height:22px;flex:0 0 22px;border:2px solid var(--muted);border-radius:5px;
+  cursor:pointer;display:grid;place-items:center;font-size:.85rem;color:transparent;
+  transition:all .15s;margin-top:.15rem}
+.box.on{background:var(--green);border-color:var(--green);color:#04120C}
+
+.trap{border:1px solid rgba(251,113,133,.4);border-radius:14px;
+  background:rgba(251,113,133,.07);padding:1rem 1.15rem;margin:.8rem 0}
+.trap h3{color:var(--red);font-size:1.03rem;margin-bottom:.4rem;display:flex;gap:.5rem;
+  align-items:center;flex-wrap:wrap}
+.trap h3 span{font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  background:rgba(251,113,133,.2);padding:.15rem .5rem;border-radius:5px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.35rem;display:block}
+.tag.b{color:var(--red)} .tag.a{color:var(--green)}
+
+.hud{position:fixed;bottom:14px;right:16px;display:flex;gap:.4rem;z-index:20}
+.hud button{background:rgba(15,42,30,.94);border:1px solid var(--line);border-radius:9px;
+  padding:.3rem .65rem;font-size:.78rem;color:var(--muted);cursor:pointer;font-family:inherit}
+.hud button:hover{color:var(--green);border-color:var(--green)}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.84rem;color:var(--muted);font-weight:300;display:flex;
+  justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.nav{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
+.nav a{text-decoration:none;font-size:.84rem;padding:.45rem .9rem;border-radius:10px;
+  border:1px solid var(--line);color:var(--muted);background:rgba(15,42,30,.7)}
+.nav a:hover{color:var(--green);border-color:var(--green)}
+
+@media (max-width:820px){.split{grid-template-columns:1fr}}
+@media print{body{background:#fff;color:#111}.hud,.jump{display:none}
+  pre{background:#f4f6f9;border-color:#ccc}pre code{color:#111}.step{break-inside:avoid}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">ENGSE203 · Week 06 · Checkpoint 04</p>
+  <h1>POST + Validation <span class="where">🏫 ทำในห้อง</span></h1>
+  <p class="sub">40 นาที · We do validation → You do service/controller</p>
+  <div class="pills">
+    <span class="pill a">TODO M2 · S3 · C3 · R1</span><span class="pill">แก้ 4 ไฟล์</span>
+    <span class="pill c">checker +7</span>
+  </div>
+</header>
+
+<nav class="jump">
+  <a href="#s1">① validation</a><a href="#trap1">กับดัก ?.</a>
+  <a href="#s2">② service</a><a href="#s3">③ controller+route</a>
+  <a href="#s4">ทดสอบ</a><a href="#done">ผ่าน CP</a>
+</nav>
+
+<div class="step" id="s1">
+  <div class="step-head"><span class="num">①</span><h2>validation middleware</h2>
+    <span class="file">src/middleware/validateRequest.js · TODO W06-M2 · We do</span></div>
+  <div class="step-body">
+    <div class="say">
+      <b>อธิบายก่อนพิมพ์</b>
+      "เราจะทำ validation เป็น <strong>middleware</strong> ไม่ใช่เขียนใน controller —
+      เพราะถ้าวันหลังมี route อื่นที่รับข้อมูลแบบเดียวกัน จะใช้ซ้ำได้ทันที"
+    </div>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">export function</span> <span class="f">validateRequest</span>(req, res, next) {
+  <span class="k">const</span> input = req.body;
+  <span class="k">const</span> errors = [];
+
+  <span class="k">if</span> (!input || <span class="k">typeof</span> input !== <span class="s">'object'</span>) {
+    <span class="k">return</span> res.<span class="f">status</span>(<span class="n">400</span>).<span class="f">json</span>({ error: <span class="s">'ต้องส่งข้อมูลคำร้องมาด้วย'</span> });
+  }
+  <span class="k">if</span> (<span class="f">readText</span>(input.requesterName).length &lt; <span class="n">2</span>) errors.<span class="f">push</span>(<span class="s">'ชื่อผู้แจ้งต้องมีอย่างน้อย 2 ตัวอักษร'</span>);
+  <span class="k">if</span> (!REQUEST_TYPES.<span class="f">includes</span>(input.requestType)) errors.<span class="f">push</span>(<span class="s">'ประเภทคำร้องไม่ถูกต้อง'</span>);
+  <span class="k">if</span> (!<span class="f">readText</span>(input.location)) errors.<span class="f">push</span>(<span class="s">'กรุณาระบุสถานที่'</span>);
+  <span class="k">if</span> (<span class="f">readText</span>(input.details).length &lt; <span class="n">10</span>) errors.<span class="f">push</span>(<span class="s">'รายละเอียดต้องมีอย่างน้อย 10 ตัวอักษร'</span>);
+  <span class="k">if</span> (!PRIORITIES.<span class="f">includes</span>(input.priority)) errors.<span class="f">push</span>(<span class="s">'ความเร่งด่วนต้องเป็น normal หรือ urgent'</span>);
+
+  <span class="k">if</span> (errors.length &gt; <span class="n">0</span>) {
+    <span class="k">return</span> res.<span class="f">status</span>(<span class="n">400</span>).<span class="f">json</span>({ error: <span class="s">'ข้อมูลคำร้องไม่ถูกต้อง'</span>, details: errors });
+  }
+  <span class="f">next</span>();
+}</code></pre></div>
+    <div class="vio">
+      <b>ทำไมเก็บ errors เป็น array</b>
+      "ถ้าผู้ใช้กรอกผิด 3 ที่ เราบอกทีเดียวได้ทั้ง 3 ที่
+      <br>ดีกว่าบอกทีละอันแล้วให้เขาแก้ทีละรอบ — <strong>เป็นการออกแบบที่คิดถึงผู้ใช้</strong>"
+    </div>
+  </div>
+</div>
+
+<div class="step" id="trap1" style="border-color:rgba(251,113,133,.5);border-width:2px">
+  <div class="step-head" style="background:rgba(251,113,133,.12)">
+    <span class="num" style="background:var(--red)">!</span>
+    <h2>⭐ กับดักสำคัญที่สุดของคาบ — อย่าใช้ <code>?.</code> ตรวจข้อมูล</h2>
+    <span class="file">Live-coding ผิดก่อนถูก</span></div>
+  <div class="step-body">
+    <div class="say">
+      <b>สาธิตแบบผิดก่อน</b>
+      "ผมจะเขียนแบบที่หลายคนคิดว่าถูก แล้วให้ดูว่าเกิดอะไรขึ้น"
+    </div>
+    <div class="codewrap">
+<pre><code><span class="c">// ✕ แบบที่ดูเหมือนถูก</span>
+<span class="k">if</span> (input.requesterName<span class="d">?.</span><span class="f">trim</span>().length &lt; <span class="n">2</span>) {
+  errors.<span class="f">push</span>(<span class="s">'ชื่อผู้แจ้งไม่ถูกต้อง'</span>);
+}</code></pre></div>
+    <p><strong>ทดสอบใน Console หรือยิง Postman ที่ไม่ส่ง <code>requesterName</code> มาเลย</strong></p>
+    <div class="codewrap">
+<pre><code><span class="k">const</span> input = { requestType: <span class="s">'แจ้งซ่อม'</span>, location: <span class="s">'A'</span>, details: <span class="s">'รายละเอียดครบสิบตัว'</span> };
+input.requesterName<span class="d">?.</span><span class="f">trim</span>().length &lt; <span class="n">2</span>   <span class="c">→ false  ← ไม่มีชื่อเลย แต่ผ่าน!</span></code></pre></div>
+    <div class="warn">
+      <b>เฉลยว่าทำไม</b>
+      <code>?.</code> เจอ <code>undefined</code> แล้ว<strong>ลัดวงจร</strong> ทำให้ทั้งนิพจน์เป็น <code>undefined</code>
+      <br>และ <code>undefined &lt; 2</code> ให้ <code>false</code> เงียบ ๆ →
+      <strong>ข้อมูลที่ไม่มีชื่อเลยผ่าน validation ไปได้</strong>
+      <br>แล้วไปพังเป็น <code>TypeError</code> ทีหลัง ซึ่งผู้ใช้จะเห็นข้อความภาษาโปรแกรมเมอร์แทน "กรุณากรอกชื่อ"
+    </div>
+    <div class="ok">
+      <b>วิธีที่ถูก — ตรวจชนิดข้อมูลก่อนเสมอ</b>
+      <pre style="margin:.4rem 0 0"><code><span class="k">function</span> <span class="f">readText</span>(value) {
+  <span class="k">return typeof</span> value === <span class="s">'string'</span> ? value.<span class="f">trim</span>() : <span class="s">''</span>;
+}
+<span class="c">// starter เตรียมไว้ให้แล้ว — ใช้ตัวนี้</span></code></pre>
+    </div>
+    <div class="vio">
+      <b>เชื่อมกับ Week 05</b>
+      "บั๊กแบบนี้เราเคยเจอมาแล้วตอน Week 05 ใน <code>addRequest()</code>
+      · <strong>เป็นบั๊กที่ทั้ง build และ eslint ไม่จับ</strong> ต้องรู้เองว่าอย่าเขียนแบบนี้"
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s2">
+  <div class="step-head"><span class="num">②</span><h2>service — สร้างคำร้องใหม่</h2>
+    <span class="file">src/services/requestService.js · TODO W06-S3 · You do</span></div>
+  <div class="step-body">
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">export function</span> <span class="f">create</span>(input) {
+  <span class="k">const</span> newRequest = {
+    id: <span class="f">createId</span>(),                        <span class="c">← ให้มาแล้ว</span>
+    requesterName: input.requesterName.<span class="f">trim</span>(),
+    requestType: input.requestType,
+    location: input.location.<span class="f">trim</span>(),
+    details: input.details.<span class="f">trim</span>(),
+    priority: input.priority,
+    status: <span class="s">'pending'</span>,                     <span class="c">← เริ่มต้นเสมอ</span>
+  };
+  requests.<span class="f">push</span>(newRequest);
+  <span class="k">return</span> <span class="f">structuredClone</span>(newRequest);
+}</code></pre></div>
+    <div class="say">
+      <b>ชี้ 2 จุด</b>
+      <strong>หนึ่ง</strong> — <code>status</code> เริ่มต้นเป็น <code>'pending'</code> เสมอ
+      · ผู้ใช้กำหนดเองไม่ได้ เพราะคำร้องใหม่ต้องรอดำเนินการก่อน
+      <br><strong>สอง</strong> — ตรงนี้เชื่อ <code>input</code> ได้เลย เพราะ
+      <strong>middleware ตรวจมาให้แล้ว</strong> — นี่คือประโยชน์ของการแยก validation ออกมา
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s3">
+  <div class="step-head"><span class="num">③</span><h2>controller + route</h2>
+    <span class="file">TODO W06-C3 · R1 · You do</span></div>
+  <div class="step-body">
+    <p><strong>controller</strong> — ตอบ <code>201</code> ไม่ใช่ 200</p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">export function</span> <span class="f">createRequest</span>(req, res) {
+  <span class="k">const</span> created = service.<span class="f">create</span>(req.body);
+  res.<span class="f">status</span>(<span class="hl">201</span>).<span class="f">json</span>(created);
+}</code></pre></div>
+    <div class="ok">
+      <b>เชื่อมกลับ CP00 ตอนเช้า</b>
+      "จำได้ไหมครับ ตอนเช้าเรายิง POST ไปที่ JSONPlaceholder แล้วได้ <strong>201</strong>
+      แล้วผมบอกว่าเดี๋ยวจะรู้คำตอบ — <strong>ตอนนี้แหละครับ</strong>
+      <br><code>201 Created</code> แปลว่าสำเร็จ<strong>และมีของใหม่ถูกสร้างขึ้น</strong>
+      ส่วน 200 แปลว่าสำเร็จเฉย ๆ"
+    </div>
+    <p><strong>route</strong> — ใส่ middleware คั่นระหว่าง path กับ controller</p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code>router.<span class="f">post</span>(<span class="s">'/'</span>, <span class="hl">validateRequest</span>, controller.createRequest);</code></pre></div>
+    <div class="vio">
+      <b>อธิบายว่าอ่านอย่างไร</b>
+      "อ่านจากซ้ายไปขวา — เมื่อมี POST ที่ <code>/</code> ให้ผ่าน <code>validateRequest</code> ก่อน
+      <strong>ถ้าผ่านค่อยไปที่ controller</strong>
+      <br>ถ้า validateRequest ตอบ 400 ไปแล้ว controller จะไม่ทำงานเลย"
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s4">
+  <div class="step-head"><span class="num">4</span><h2>ทดสอบ 4 กรณี</h2>
+    <span class="file">Postman</span></div>
+  <div class="step-body">
+    <p><strong>Body สำหรับกรณีถูกต้อง</strong> (Postman → Body → raw → JSON)</p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code>{
+  <span class="s">"requesterName"</span>: <span class="s">"ทดสอบ นักศึกษา"</span>,
+  <span class="s">"requestType"</span>: <span class="s">"แจ้งซ่อม"</span>,
+  <span class="s">"location"</span>: <span class="s">"C3-401"</span>,
+  <span class="s">"details"</span>: <span class="s">"รายละเอียดยาวพอสมควรจริง"</span>,
+  <span class="s">"priority"</span>: <span class="s">"normal"</span>
+}</code></pre></div>
+    <table>
+      <tr><th>ส่งอะไร</th><th style="width:90px">ต้องได้</th><th>ตรวจอะไรเพิ่ม</th></tr>
+      <tr><td>ข้อมูลครบถูกต้อง</td><td><b>201</b></td><td>คำร้องใหม่มี <code>id</code> ขึ้นต้น <code>REQ-</code> และ <code>status: "pending"</code></td></tr>
+      <tr><td><code>{"requesterName":"x"}</code></td><td><b>400</b></td><td><code>details</code> เป็น array บอกว่าผิดอะไรบ้าง</td></tr>
+      <tr><td><code>details</code> สั้นกว่า 10 ตัว</td><td><b>400</b></td><td>—</td></tr>
+      <tr><td><code>priority</code> เป็นค่าอื่น</td><td><b>400</b></td><td>—</td></tr>
+    </table>
+    <div class="say">
+      <b>ให้ยิงกรณีที่ไม่ส่ง requesterName มาเลยด้วย</b>
+      <pre style="margin:.4rem 0 0"><code>{ <span class="s">"requestType"</span>: <span class="s">"แจ้งซ่อม"</span>, <span class="s">"location"</span>: <span class="s">"A"</span>,
+  <span class="s">"details"</span>: <span class="s">"รายละเอียดครบสิบตัว"</span>, <span class="s">"priority"</span>: <span class="s">"normal"</span> }</code></pre>
+      <p style="margin:.4rem 0 0">ต้องได้ <strong>400</strong> — ถ้าได้ 201 แสดงว่าใช้ <code>?.</code> อยู่</p>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="done">
+  <div class="step-head"><span class="num" style="background:var(--green)">✓</span>
+    <h2>ผ่าน CP04 เมื่อ</h2></div>
+  <div class="step-body">
+    <div>
+      <div class="check"><span class="box" data-check>✓</span><span>POST ถูกต้อง → <b>201</b> · มี <code>status: "pending"</code> และ <code>id</code> ขึ้นต้น <code>REQ-</code></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>POST ไม่ครบ → <b>400</b> พร้อมข้อความที่คนทั่วไปเข้าใจ</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span><strong>POST ที่ไม่ส่ง requesterName มาเลย → 400</strong> (ไม่ใช่ 201)</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span><code>GET /api/requests</code> เห็นคำร้องที่เพิ่งเพิ่ม</span></div>
+    </div>
+    <div class="ok">
+      <b>คำถาม Checkpoint</b>
+      <span style="font-size:1.1rem">POST สำเร็จตอบ 201 ไม่ใช่ 200 เพราะอะไร</span>
+    </div>
+  </div>
+</div>
+
+<footer><span>ENGSE203 · Week 06 · CP04 POST + Validation · เอกสารสำหรับฉายบนจอ</span>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน Week 06 บทที่ 6, 9</span></footer>
+<div class="nav">
+  <a href="ENGSE203_Week06_CP00_LiveCoding.html">CP00</a>
+  <a href="ENGSE203_Week06_CP01_LiveCoding.html">CP01</a>
+  <a href="ENGSE203_Week06_CP02_LiveCoding.html">CP02</a>
+  <a href="ENGSE203_Week06_CP03_LiveCoding.html">CP03</a>
+  <a href="#" style="color:var(--green);border-color:var(--green);background:rgba(74,222,128,.14);font-weight:600">CP04 ← อยู่ที่นี่</a>
+  <a href="ENGSE203_Week06_CP05_LiveCoding.html">CP05 + ปิดคาบ</a>
+</div>
+</div>
+<div class="hud">
+  <button id="minus">A−</button><button id="plus">A+</button><button id="full">เต็มจอ</button>
+</div>
+<script>
+(function(){
+  var fs=1;
+  function setFs(v){fs=Math.max(.75,Math.min(1.6,v));
+    document.documentElement.style.setProperty('--fs',fs);}
+  var p=document.getElementById('plus'),m=document.getElementById('minus'),f=document.getElementById('full');
+  if(p)p.onclick=function(){setFs(fs+.08);};
+  if(m)m.onclick=function(){setFs(fs-.08);};
+  if(f)f.onclick=function(){
+    if(!document.fullscreenElement)document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();
+    else document.exitFullscreen&&document.exitFullscreen();};
+  document.addEventListener('keydown',function(e){
+    if(e.target.tagName==='INPUT')return;
+    if(e.key==='+'||e.key==='=')setFs(fs+.08);
+    if(e.key==='-')setFs(fs-.08);});
+  document.querySelectorAll('[data-check]').forEach(function(b){
+    b.onclick=function(){b.classList.toggle('on');};});
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.onclick=function(){
+      var pre=btn.parentElement.querySelector('pre');
+      var text=pre.innerText.replace(/\s*←[^\n]*/g,'');
+      navigator.clipboard.writeText(text).then(function(){
+        var old=btn.textContent;btn.textContent='คัดลอกแล้ว';
+        setTimeout(function(){btn.textContent=old;},1400);});};});
+  var links=Array.prototype.slice.call(document.querySelectorAll('.jump a[href^="#"]'));
+  if(links.length){
+    var targets=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+    function onScroll(){var best=0;
+      targets.forEach(function(el,i){if(el&&el.getBoundingClientRect().top<=120)best=i;});
+      links.forEach(function(a,i){a.classList.toggle('now',i===best);});}
+    document.addEventListener('scroll',onScroll,{passive:true});onScroll();}
+})();
+
+</script>
+</body>
+</html>

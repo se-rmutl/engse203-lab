@@ -1,5 +1,23 @@
 # Changelog
 
+## v5.1.0 — Week 06 Node.js/Express RESTful API Foundation
+
+- เพิ่มชุดสอน Week 06 ครบ: เอกสารประกอบการสอน 12 บท (9 ภาพ SVG), สไลด์ 2 เวอร์ชัน, หน้าจอ live-coding 6 หน้า
+- เพิ่ม starter (TODO 19 จุด) และ reference solution ของ Campus Service API ด้วย Express 5
+- เพิ่ม `check-project.mjs` ที่ยิง endpoint จริงด้วย supertest — 28 รายการ แยก 🏫 ในห้อง / 🏠 ที่บ้าน / ⭐ challenge
+- แบ่งงานเป็น 3 ระดับ: In-Class (CP00–CP05 ทำเสร็จในคาบ), Take-Home (CP06–CP08), Challenge (คะแนนเพิ่ม)
+- เพิ่ม Postman collection, API_TEST template และ AI_USAGE template
+- endpoint ออกแบบให้ตรงกับ `requestService.js` ของ Week 05 เพื่อเชื่อมกับ React ใน Week 07
+- เพิ่ม Instructor Step Script 300 นาที พร้อม Hint Ladder และแผนสำรอง
+
+## v5.0.0 — Week 05 React Routing, Data Fetching & Browser Storage
+
+- แยก Week 05 เป็น 2 คาบ: 5A Read Path (routing + data fetching) และ 5B Write Path (storage + recovery)
+- เพิ่มเอกสารประกอบการสอน 5A/5B, สไลด์, Pre-LAB, LAB Guide, checkpoint cards และหน้าจอ live-coding
+- เพิ่ม checker v2 (133 รายการ) ที่ตรวจพฤติกรรมจริงด้วย vitest + Testing Library
+- ออกแบบ Service Layer ให้เปลี่ยนแหล่งข้อมูลได้โดยไม่แก้ UI — ปูทางไป REST API ใน Week 06–08
+- LAB 05 เป็นงานชิ้นเดียว ส่งครั้งเดียวหลังจบคาบ 5B
+
 ## v4.0.0 — Unified Student Repository LAB01–04
 
 - เปลี่ยน LAB รายบุคคลเป็นหนึ่ง Student Repository ตลอดรายวิชา

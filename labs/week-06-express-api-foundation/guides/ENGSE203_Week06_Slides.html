@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A1F16">
+<title>ENGSE203 Week 06 — Interactive Teaching Slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --font-scale:1;
+  --deep-950:#04120C; --deep-900:#0A1F16; --deep-850:#0F2A1E; --deep-800:#153728;
+  --ink:#EAF6EF; --muted:#A9C7B8;
+  --green:#4ADE80; --green-soft:rgba(74,222,128,.14);
+  --cyan:#38D7ED; --amber:#FBBF24; --red:#FB7185; --blue:#7AA5FF; --violet:#C084FC;
+  --panel:rgba(15,42,30,.74); --line:rgba(169,199,184,.24);
+  --shadow:0 24px 70px rgba(0,0,0,.44); --radius:20px;
+  font-size:calc(16px * var(--font-scale));
+}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0}
+body{overflow:hidden;color:var(--ink);
+  background:radial-gradient(circle at 14% 14%,rgba(74,222,128,.15),transparent 32%),
+  radial-gradient(circle at 84% 80%,rgba(56,215,237,.12),transparent 34%),#04100B;
+  font-family:'IBM Plex Sans Thai','Noto Sans Thai',Tahoma,sans-serif;}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+.app{min-height:100%;display:grid;place-items:center;position:relative}
+.stage{position:relative;width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));
+  aspect-ratio:16/9;overflow:hidden;background:var(--deep-900);box-shadow:var(--shadow);isolation:isolate;}
+.stage::before{content:"";position:absolute;inset:0;z-index:-2;
+  background:linear-gradient(135deg,rgba(255,255,255,.03),transparent 42%),
+  radial-gradient(circle at 80% 8%,rgba(74,222,128,.16),transparent 26%),
+  linear-gradient(160deg,var(--deep-900),#081b12 64%,#123024)}
+.stage::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.18;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 88%)}
+
+.slide{position:absolute;inset:0;display:none;padding:4.2% 5.2% 6%;overflow:hidden;flex-direction:column}
+.slide.active{display:flex;animation:enter .26s ease-out}
+@keyframes enter{from{opacity:.25;transform:translateX(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.active{animation:none}}
+
+.slide-id{position:absolute;top:3%;right:5.2%;font-family:'IBM Plex Mono',monospace;
+  font-size:.76rem;letter-spacing:.14em;color:var(--muted);opacity:.7}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;width:fit-content;color:var(--green);
+  font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.9rem;margin-bottom:.6rem}
+.eyebrow.amber{color:var(--amber)} .eyebrow.cyan{color:var(--cyan)}
+.eyebrow.red{color:var(--red)} .eyebrow.violet{color:var(--violet)}
+
+h1{font-size:3.4rem;line-height:1.12;margin:0 0 .8rem;font-weight:700;letter-spacing:-.01em}
+h2{font-size:2.5rem;line-height:1.18;margin:0 0 .9rem;font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.45rem;margin:0 0 .4rem;font-weight:600}
+p{margin:0 0 .7rem;line-height:1.5;font-size:1.35rem}
+.lead{font-size:1.65rem;color:var(--muted);font-weight:300;line-height:1.5}
+.muted{color:var(--muted)}
+small{font-size:1rem;color:var(--muted)}
+strong{font-weight:600}
+code{font-family:'IBM Plex Mono',monospace;font-size:.92em;background:rgba(74,222,128,.15);
+  padding:.1em .4em;border-radius:5px;color:#bff5d0}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.3rem 1.5rem}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:.9rem}
+.center{justify-content:center}
+
+table{width:100%;border-collapse:collapse;font-size:1.25rem}
+th{text-align:left;padding:.65rem .8rem;color:var(--green);font-weight:600;
+  border-bottom:2px solid var(--line);font-size:1.1rem}
+td{padding:.65rem .8rem;border-bottom:1px solid rgba(169,199,184,.14);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+
+.chip{display:inline-flex;align-items:center;gap:.4rem;padding:.32rem .82rem;border-radius:999px;
+  font-size:1.05rem;font-weight:600;border:1px solid var(--line);background:rgba(74,222,128,.1);color:var(--green)}
+.chip.a{color:var(--amber);background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.32)}
+.chip.c{color:var(--cyan);background:rgba(56,215,237,.1);border-color:rgba(56,215,237,.32)}
+.chip.v{color:var(--violet);background:rgba(192,132,252,.1);border-color:rgba(192,132,252,.32)}
+.chip.r{color:var(--red);background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.32)}
+
+.where{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:600;
+  padding:.26rem .75rem;border-radius:8px}
+.where.room{background:rgba(74,222,128,.16);color:#bff5d0;border:1px solid rgba(74,222,128,.4)}
+.where.home{background:rgba(251,191,36,.14);color:#ffe1a8;border:1px solid rgba(251,191,36,.4)}
+
+.title-slide{justify-content:center}
+.brandline{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.3rem}
+
+pre{background:rgba(4,16,11,.9);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.2rem;overflow:auto;font-size:1.12rem;line-height:1.55;margin:.4rem 0}
+pre code{background:none;padding:0;color:#d6efe0;font-size:1.12rem}
+.k{color:#8FE3A8}.s{color:#E9C88A}.c{color:#7EA592;font-style:italic}.f{color:#8FD0EC}.n{color:#D9A0E8}.hl{color:#FFE08A;font-weight:600}.bad{color:#FB7185}
+
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.card{border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.25rem;background:rgba(4,16,11,.5)}
+.card .ic{font-size:1.9rem;margin-bottom:.4rem}
+.card h3{font-size:1.3rem;margin-bottom:.3rem}
+.card p{font-size:1.1rem;margin:0;color:var(--muted)}
+.card.room{border-color:rgba(74,222,128,.4)}
+.card.home{border-color:rgba(251,191,36,.4)}
+.card.ch{border-color:rgba(192,132,252,.4)}
+
+.flow{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin:.4rem 0}
+.flow .step{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35);
+  border-radius:12px;padding:.6rem 1rem;font-weight:600;font-size:1.15rem}
+.flow .arr{color:var(--muted);font-size:1.3rem}
+
+.analogy{background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.34);border-radius:var(--radius);padding:1.1rem 1.35rem}
+.note{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.34);border-radius:var(--radius);padding:1.1rem 1.35rem}
+.win{background:rgba(74,222,128,.09);border:1px solid rgba(74,222,128,.36);border-radius:var(--radius);padding:1.1rem 1.35rem}
+.wrong{background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.36);border-radius:var(--radius);padding:1.1rem 1.35rem}
+
+/* quiz */
+.iact{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.3);border-radius:var(--radius);padding:1.2rem 1.4rem}
+.opts{display:flex;gap:.55rem;flex-wrap:wrap;margin-top:.5rem}
+.opt{background:rgba(15,42,30,.92);border:1px solid var(--line);border-radius:12px;
+  padding:.6rem 1.1rem;font-size:1.2rem;transition:all .15s}
+.opt:hover{border-color:var(--green);background:rgba(74,222,128,.14)}
+.opt.ok{border-color:var(--green);background:rgba(74,222,128,.2);color:#c9f7d8}
+.opt.no{border-color:var(--red);background:rgba(251,113,133,.2);color:#ffd4da}
+.fb{margin-top:.6rem;font-size:1.15rem;min-height:1.5rem;color:var(--muted)}
+.fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+
+/* reveal */
+.reveal{border:1px dashed var(--line);border-radius:14px;padding:.8rem 1.1rem;background:rgba(4,16,11,.5)}
+.reveal button{background:none;border:none;color:var(--green);font-weight:600;font-size:1.2rem;padding:0}
+.reveal .ans{display:none;margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--line);font-size:1.2rem}
+.reveal.open .ans{display:block}
+
+/* API playground */
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.pgbox{border:1px solid var(--line);border-radius:14px;background:rgba(4,16,11,.8);overflow:hidden}
+.pghead{background:rgba(169,199,184,.09);padding:.5rem .85rem;font-family:'IBM Plex Mono',monospace;
+  font-size:1rem;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--line)}
+.pgbody{padding:.9rem;font-family:'IBM Plex Mono',monospace;font-size:1.05rem;line-height:1.55;
+  min-height:150px;word-break:break-all;color:#d6efe0;white-space:pre-wrap}
+.reqbtns{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:.6rem}
+.reqbtns button{background:rgba(15,42,30,.92);border:1px solid var(--line);border-radius:9px;
+  padding:.42rem .8rem;font-family:'IBM Plex Mono',monospace;font-size:1rem;color:var(--muted)}
+.reqbtns button:hover{border-color:var(--green);color:var(--green)}
+.reqbtns button.m-get{color:#8FE3A8;border-color:rgba(74,222,128,.4)}
+.reqbtns button.m-post{color:#E9C88A;border-color:rgba(251,191,36,.4)}
+.reqbtns button.m-del{color:#FB7185;border-color:rgba(251,113,133,.4)}
+.stcode{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:1.3rem}
+.stcode.ok{color:var(--green)} .stcode.warn{color:var(--amber)} .stcode.err{color:var(--red)}
+
+/* middleware sim */
+.mw{display:flex;align-items:stretch;gap:.6rem;flex-wrap:wrap;margin:.5rem 0}
+.mwnode{flex:1;min-width:130px;border:1px solid var(--line);border-radius:12px;padding:.85rem;
+  background:rgba(4,16,11,.55);text-align:center;transition:all .3s;opacity:.4}
+.mwnode.lit{opacity:1;border-color:var(--green);background:rgba(74,222,128,.16);
+  box-shadow:0 0 20px rgba(74,222,128,.3);transform:translateY(-3px)}
+.mwnode .mi{font-size:1.6rem;margin-bottom:.3rem}
+.mwnode h3{font-size:1.15rem;margin:0 0 .2rem}
+.mwnode p{font-size:.95rem;margin:0;color:var(--muted)}
+.mwnode.res.lit{border-color:var(--violet);background:rgba(192,132,252,.16);box-shadow:0 0 20px rgba(192,132,252,.3)}
+.mwarr{display:flex;align-items:center;color:var(--muted);font-size:1.4rem}
+
+.bigtime{font-family:'IBM Plex Mono',monospace;font-size:3rem;font-weight:600;line-height:1;color:var(--amber)}
+.timerbtns{display:flex;gap:.5rem;margin-top:.6rem}
+.timerbtns button{background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.4);
+  color:var(--amber);border-radius:10px;padding:.42rem .9rem;font-size:1.05rem;font-weight:600}
+.labstop{background:linear-gradient(150deg,rgba(251,191,36,.13),rgba(15,42,30,.82));border:1px solid rgba(251,191,36,.4)}
+
+ul{margin:.2rem 0 .5rem 1.3rem;padding:0}
+li{margin-bottom:.4rem;font-size:1.25rem;line-height:1.5}
+
+.bar{position:fixed;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.08);z-index:40}
+.bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));width:0;transition:width .25s}
+.hud{position:fixed;bottom:16px;right:18px;display:flex;gap:.45rem;align-items:center;z-index:41}
+.hud button{background:rgba(15,42,30,.94);border:1px solid var(--line);border-radius:10px;
+  padding:.32rem .66rem;font-size:.9rem;color:var(--muted)}
+.hud button:hover{color:var(--green);border-color:var(--green)}
+.counter{font-family:'IBM Plex Mono',monospace;font-size:.88rem;color:var(--muted);padding:0 .35rem}
+.toc{position:fixed;inset:0;background:rgba(4,12,8,.97);z-index:50;display:none;padding:4vh 6vw;overflow:auto}
+.toc.open{display:block}
+.toc h3{color:var(--green);margin-bottom:1rem;font-size:1.3rem;letter-spacing:.08em;text-transform:uppercase}
+.toc ol{columns:2;column-gap:2.5rem;margin:0;padding-left:1.4rem;font-size:1.15rem}
+.toc li{margin-bottom:.5rem;break-inside:avoid}
+.toc a{color:var(--ink);text-decoration:none;opacity:.85}
+.toc a:hover{color:var(--green);opacity:1}
+.toc .tag{font-family:'IBM Plex Mono',monospace;font-size:.85rem;color:var(--muted);margin-left:.4rem}
+</style>
+</head>
+<body>
+<div class="app"><div class="stage" id="stage">
+
+<!-- 1 ─── TITLE ─── -->
+<section class="slide title-slide active" data-title="เปิดบทเรียน">
+  <span class="eyebrow">หน่วยที่ 3 · การพัฒนาส่วนหลัง · Week 06</span>
+  <h1>สร้างเซิร์ฟเวอร์ตัวแรก<br>ด้วย Node.js และ Express</h1>
+  <p class="lead">Backend · HTTP · Express · Routing · Middleware · REST API</p>
+  <div class="brandline">
+    <span class="chip">Node.js 22</span><span class="chip">Express 5</span>
+    <span class="chip a">Postman / Thunder Client</span><span class="chip c">CLO4 · CLO6</span>
+  </div>
+  <p style="margin-top:1.5rem"><small>กด → หรือ Space ไปต่อ · T สารบัญ · F เต็มจอ · A+ A− ปรับขนาด</small></p>
+</section>
+
+<!-- 2 ─── วิธีเรียน ─── -->
+<section class="slide" data-title="วิธีเรียนหน่วยนี้">
+  <span class="slide-id">W06 · ORIENT</span>
+  <span class="eyebrow amber">อ่านก่อนเริ่ม</span>
+  <h2>วิธีเรียนหน่วยนี้</h2>
+  <div class="body">
+    <p>เราเรียนแบบ <strong>สอนไปทำไป</strong> — ปูพื้นฐานช่วงต้น แล้วสลับทฤษฎีกับลงมือทำทีละเรื่อง</p>
+    <div class="three">
+      <div class="card room"><div class="ic">🏫</div><h3>ในห้อง</h3><p>CP00–CP05 · รู้จัก API แล้วสร้าง CRUD ครบ · ทำเสร็จในคาบ ตรวจสด</p></div>
+      <div class="card home"><div class="ic">🏠</div><h3>ที่บ้าน</h3><p>CP06–CP08 · ต่อยอดให้ลึก · ส่งผ่าน git repo</p></div>
+      <div class="card ch"><div class="ic">⭐</div><h3>Challenge</h3><p>ต่อยอดยาก ไม่บังคับ · คะแนนเพิ่มพิเศษ</p></div>
+    </div>
+    <div class="panel" style="border-color:rgba(56,215,237,.4)">
+      <p style="margin:0;font-size:1.25rem"><strong style="color:var(--cyan)">Week 06 ยังไม่เชื่อมกับ React</strong> — ทดสอบ API ด้วย Postman ก่อน · เชื่อมกับแอป React อยู่ Week 07 หลังเรียน CORS</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 ─── ปัญหา frontend อย่างเดียว ─── -->
+<section class="slide" data-title="ทำไมต้องมี backend">
+  <span class="slide-id">W06 · บท 1</span>
+  <span class="eyebrow">เปิดหัวข้อ</span>
+  <h2>ทำไมเราต้องมี backend</h2>
+  <div class="body center">
+    <div class="iact" data-quiz="q1">
+      <p style="margin:0 0 .3rem"><strong>นักศึกษา 2 คนเปิดแอป Campus Service คนละเครื่อง · คนแรกเพิ่มคำร้องใหม่ (เก็บใน localStorage)</strong></p>
+      <p style="margin:.4rem 0 .3rem">คนที่สองจะเห็นคำร้องนั้นไหม?</p>
+      <div class="opts">
+        <button class="opt" data-a="0">เห็น เพราะข้อมูลอยู่ในเบราว์เซอร์</button>
+        <button class="opt" data-a="1">ไม่เห็น เพราะ localStorage แยกกันแต่ละเครื่อง</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="win">
+      <p style="margin:0"><strong>นี่คือเหตุผลที่ต้องมี backend</strong> — frontend อย่างเดียว<strong>ไม่มีที่กลาง</strong>ให้ทุกคนใช้ข้อมูลร่วมกัน · backend คือเครื่องกลางที่ทุกคนเรียกใช้ข้อมูลชุดเดียวกัน</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 ─── analogy ร้านอาหาร ─── -->
+<section class="slide" data-title="เทียบร้านอาหาร">
+  <span class="slide-id">W06 · บท 1</span>
+  <span class="eyebrow violet">เทียบกับของที่คุ้น</span>
+  <h2>Frontend / Backend = หน้าร้าน / ครัว</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="card room"><div class="ic">🍽️</div><h3>Frontend = หน้าร้าน</h3><p>เมนู โต๊ะ สิ่งที่ลูกค้าเห็น · React, HTML, CSS · อยู่ที่เครื่องผู้ใช้แต่ละคน</p></div>
+      <div class="card" style="border-color:rgba(56,215,237,.4)"><div class="ic">👨‍🍳</div><h3>Backend = ครัว</h3><p>ลูกค้าไม่เห็น · ทำอาหารตามออเดอร์ · <strong>มีที่เดียวรับออเดอร์จากทุกโต๊ะ</strong></p></div>
+    </div>
+    <div class="analogy">
+      <p style="margin:0"><strong>ครัวมีที่เดียว แต่รับออเดอร์จากทุกโต๊ะ</strong> — เหมือนเซิร์ฟเวอร์ที่รับคำขอจากผู้ใช้ทุกคน · ลูกค้า (เบราว์เซอร์) สั่งอาหาร (ส่ง request) ครัวทำเสร็จส่งกลับ (response)</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 ─── Node.js ─── -->
+<section class="slide" data-title="Node.js คืออะไร">
+  <span class="slide-id">W06 · บท 2</span>
+  <span class="eyebrow">พื้นฐาน</span>
+  <h2>Node.js — JavaScript นอกเบราว์เซอร์</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="panel" style="border-color:rgba(74,222,128,.4)">
+        <h3 style="color:var(--green)">JS ในเบราว์เซอร์</h3>
+        <ul style="margin-bottom:0"><li>จัดการหน้าเว็บ DOM</li><li>fetch, localStorage</li><li style="color:var(--red)">อ่านไฟล์ไม่ได้</li><li style="color:var(--red)">เป็นเซิร์ฟเวอร์ไม่ได้</li></ul>
+      </div>
+      <div class="panel" style="border-color:rgba(56,215,237,.4)">
+        <h3 style="color:var(--cyan)">Node.js</h3>
+        <ul style="margin-bottom:0"><li>engine V8 ตัวเดียวกับ Chrome</li><li style="color:var(--green)">อ่านเขียนไฟล์ได้</li><li style="color:var(--green)">เปิดเซิร์ฟเวอร์ได้</li><li>แต่ไม่มี window/document</li></ul>
+      </div>
+    </div>
+    <div class="note"><p style="margin:0"><strong>ภาษาเดิม ความสามารถมากขึ้น</strong> — ใช้ JavaScript ที่เขียน React มาเขียนเซิร์ฟเวอร์ได้เลย ไม่ต้องเรียนภาษาใหม่</p></div>
+  </div>
+</section>
+
+<!-- 6 ─── HTTP request/response ─── -->
+<section class="slide" data-title="HTTP request/response">
+  <span class="slide-id">W06 · บท 3</span>
+  <span class="eyebrow">พื้นฐานสำคัญ</span>
+  <h2>HTTP — คู่ถาม/ตอบเสมอ</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="panel" style="border-color:rgba(74,222,128,.4)">
+        <h3 style="color:var(--green)">Request — เบราว์เซอร์ส่งไป</h3>
+        <pre style="margin:.3rem 0 0"><code><span class="hl">GET</span> /api/requests
+Host: localhost:3001</code></pre>
+        <p style="margin:.5rem 0 0"><small>method (ทำอะไร) + path (ที่ไหน)</small></p>
+      </div>
+      <div class="panel" style="border-color:rgba(56,215,237,.4)">
+        <h3 style="color:var(--cyan)">Response — เซิร์ฟเวอร์ตอบกลับ</h3>
+        <pre style="margin:.3rem 0 0"><code><span class="hl">200 OK</span>
+[{"id":"REQ-001",...}]</code></pre>
+        <p style="margin:.5rem 0 0"><small>status code + ข้อมูล</small></p>
+      </div>
+    </div>
+    <p style="text-align:center"><small>คุณใช้ HTTP มาตลอด — ทุก <code>fetch()</code> ใน Week 05 ก็ส่ง request HTTP</small></p>
+  </div>
+</section>
+
+<!-- 7 ─── QUIZ: HTTP method ─── -->
+<section class="slide" data-title="Quiz: HTTP method">
+  <span class="slide-id">W06 · บท 3</span>
+  <span class="eyebrow amber">ทดลองความเข้าใจ</span>
+  <h2>การกระทำไหน ใช้ method อะไร</h2>
+  <div class="body center">
+    <div class="iact" data-quiz="q2">
+      <p style="margin:0 0 .3rem"><strong>"ลบคำร้อง REQ-001" ควรใช้ method ไหน</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">GET</button>
+        <button class="opt" data-a="0">POST</button>
+        <button class="opt" data-a="1">DELETE</button>
+        <button class="opt" data-a="0">PUT</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="iact" data-quiz="q3" style="margin-top:.3rem">
+      <p style="margin:0 0 .3rem"><strong>"เพิ่มคำร้องใหม่" ควรใช้ method ไหน</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">GET</button>
+        <button class="opt" data-a="1">POST</button>
+        <button class="opt" data-a="0">DELETE</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 8 ─── SIMULATE: API Playground (public API) ─── -->
+<section class="slide" data-title="🎮 API Playground">
+  <span class="slide-id">W06 · บท 3.5 · 🏫</span>
+  <span class="eyebrow amber">ลองเล่น — เหมือน Postman</span>
+  <h2>ยิง request แล้วดู response</h2>
+  <div class="body">
+    <div class="iact">
+      <p style="margin:0 0 .5rem"><small>กดปุ่มเพื่อยิง request ไปหา public API (จำลอง) — ดู status code กับ response</small></p>
+      <div class="reqbtns">
+        <button class="m-get" data-pg="get-all">GET /posts</button>
+        <button class="m-get" data-pg="get-one">GET /posts/1</button>
+        <button class="m-get" data-pg="get-404">GET /posts/9999</button>
+        <button class="m-post" data-pg="post">POST /posts</button>
+      </div>
+      <div class="pg">
+        <div class="pgbox"><div class="pghead">REQUEST</div><div class="pgbody" id="pgReq">— กดปุ่มด้านบน —</div></div>
+        <div class="pgbox"><div class="pghead">RESPONSE</div><div class="pgbody" id="pgRes">—</div></div>
+      </div>
+    </div>
+    <p><small>สังเกต: <code>GET</code> สำเร็จได้ <span class="stcode ok" style="font-size:1.05rem">200</span> · <code>POST</code> สร้างสำเร็จได้ <span class="stcode ok" style="font-size:1.05rem">201</span> · ไม่พบได้ <span class="stcode err" style="font-size:1.05rem">404</span></small></p>
+  </div>
+</section>
+
+<!-- 9 ─── explore in-class ─── -->
+<section class="slide" data-title="🏫 CP00 Explore">
+  <span class="slide-id">W06 · CP00 · 🏫</span>
+  <span class="eyebrow">Checkpoint 00 <span class="where room">🏫 ทำในห้อง</span></span>
+  <h2>รู้จัก API ด้วยของจริงก่อน</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="card"><div class="ic">🌐</div><h3>CP00a</h3><p>เปิด public API ในเบราว์เซอร์ · ดู JSON จริง</p></div>
+      <div class="card"><div class="ic">🔍</div><h3>CP00b</h3><p>DevTools → Network · ดู request/response จริง</p></div>
+      <div class="card"><div class="ic">⚡</div><h3>CP00c</h3><p>ยิงด้วย Postman/Thunder Client</p></div>
+    </div>
+    <div class="analogy"><p style="margin:0"><strong>หัดอ่านก่อนหัดเขียน</strong> — เห็น API จากฝั่งผู้ใช้ก่อน แล้วพอไปสร้างเองจะเข้าใจว่ากำลังทำอะไรให้ใคร</p></div>
+  </div>
+</section>
+
+<!-- 10 ─── Express คืออะไร ─── -->
+<section class="slide" data-title="Express คืออะไร">
+  <span class="slide-id">W06 · บท 4</span>
+  <span class="eyebrow">เครื่องมือหลัก</span>
+  <h2>ทำไมใช้ Express ไม่เขียน Node เปล่า</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="panel" style="border-color:rgba(251,113,133,.4)">
+        <h3 style="color:var(--red)">Node เปล่า</h3>
+        <pre style="margin:.3rem 0 0;font-size:.95rem"><code>if (req.url === '/' &amp;&amp;
+    req.method === 'GET') {
+  res.writeHead(200, {...});
+  res.end('hello');
+}</code></pre>
+        <p style="margin:.4rem 0 0"><small>เช็ค url + method เอง ทุกครั้ง</small></p>
+      </div>
+      <div class="panel" style="border-color:rgba(74,222,128,.4)">
+        <h3 style="color:var(--green)">Express</h3>
+        <pre style="margin:.3rem 0 0"><code>app.<span class="f">get</span>(<span class="s">'/'</span>, (req, res) => {
+  res.<span class="f">send</span>(<span class="s">'hello'</span>);
+});</code></pre>
+        <p style="margin:.4rem 0 0"><small>สั้น ชัด โฟกัสที่ตรรกะ</small></p>
+      </div>
+    </div>
+    <div class="analogy"><p style="margin:0"><strong>เหมือน React ช่วยจัดการ DOM</strong> — เราไม่ต้องเขียน <code>document.createElement</code> เอง · Express ช่วยจัดการงานซ้ำ ๆ ของเซิร์ฟเวอร์ให้</p></div>
+  </div>
+</section>
+
+<!-- 11 ─── 3 ส่วนของ Express ─── -->
+<section class="slide" data-title="3 ส่วนของ Express">
+  <span class="slide-id">W06 · บท 4</span>
+  <span class="eyebrow">โครงพื้นฐาน</span>
+  <h2>เซิร์ฟเวอร์ Express มี 3 ส่วน</h2>
+  <div class="body center">
+    <pre><code><span class="c">// 1 · สร้าง app</span>
+<span class="k">const</span> app = <span class="f">express</span>();
+
+<span class="c">// 2 · กำหนด route</span>
+app.<span class="f">get</span>(<span class="s">'/api/requests'</span>, (req, res) => {
+  res.<span class="f">json</span>(requests);
+});
+
+<span class="c">// 3 · เปิดรับคำขอ</span>
+app.<span class="f">listen</span>(<span class="n">3001</span>);</code></pre>
+    <div class="win"><p style="margin:0"><strong>CP01 คือการเขียน 3 ส่วนนี้</strong> — สร้าง app → กำหนด route → เปิดรับคำขอ · เปิด browser แล้วเห็นเซิร์ฟเวอร์ตอบ</p></div>
+  </div>
+</section>
+
+<!-- 12 ─── Routing เทียบ Week 05 ─── -->
+<section class="slide" data-title="Routing">
+  <span class="slide-id">W06 · บท 5</span>
+  <span class="eyebrow violet">เทียบกับ Week 05</span>
+  <h2>Routing — จับคู่ URL กับสิ่งที่ทำ</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="card ch"><div class="ic">⚛️</div><h3>React Router (W05)</h3><p>URL เปลี่ยน → เลือก component ไหนแสดง · ทำในเบราว์เซอร์</p></div>
+      <div class="card room"><div class="ic">🖥️</div><h3>Express routing (W06)</h3><p>คำขอเข้ามา → เลือกโค้ดไหนตอบ · ทำในเซิร์ฟเวอร์</p></div>
+    </div>
+    <p style="text-align:center;font-size:1.4rem"><strong>แนวคิดเดียวกัน — "จับคู่ URL กับสิ่งที่จะทำ"</strong></p>
+    <pre style="font-size:1.05rem"><code>app.<span class="f">get</span>(<span class="s">'/api/requests/:id'</span>, (req, res) => {
+  <span class="k">const</span> id = req.params.<span class="hl">id</span>;   <span class="c">// :id คือส่วนที่เปลี่ยนได้</span>
+});</code></pre>
+  </div>
+</section>
+
+<!-- 13 ─── QUIZ: route order ─── -->
+<section class="slide" data-title="Quiz: ลำดับ route">
+  <span class="slide-id">W06 · บท 5</span>
+  <span class="eyebrow amber">ทดลองความเข้าใจ</span>
+  <h2>กับดักลำดับ route</h2>
+  <div class="body center">
+    <pre style="font-size:1.05rem"><code>app.<span class="f">get</span>(<span class="s">'/api/requests/:id'</span>, ...)    <span class="c">// เขียนก่อน</span>
+app.<span class="f">get</span>(<span class="s">'/api/requests/new'</span>, ...)    <span class="c">// เขียนหลัง</span></code></pre>
+    <div class="iact" data-quiz="q4">
+      <p style="margin:0 0 .3rem"><strong>เมื่อมีคำขอ <code>GET /api/requests/new</code> เข้ามา จะเกิดอะไร</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="1">เข้า :id โดย id='new' (ผิดที่ตั้งใจ)</button>
+        <button class="opt" data-a="0">เข้า route /new ถูกต้อง</button>
+        <button class="opt" data-a="0">error ทั้งคู่</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="wrong"><p style="margin:0"><strong>กฎ</strong> — เขียน route เจาะจง (path คงที่) <strong>ก่อน</strong> route ที่มีตัวแปร <code>:id</code> เสมอ</p></div>
+  </div>
+</section>
+
+<!-- 14 ─── req/res ─── -->
+<section class="slide" data-title="req และ res">
+  <span class="slide-id">W06 · บท 6</span>
+  <span class="eyebrow">อ่านคำขอ เขียนคำตอบ</span>
+  <h2>req อ่าน · res เขียน</h2>
+  <div class="body center">
+    <table>
+      <tr><th>อ่านจาก req</th><th>ได้อะไร</th></tr>
+      <tr><td><code>req.params.id</code></td><td>ค่าจาก <code>:id</code> ใน path</td></tr>
+      <tr><td><code>req.query.status</code></td><td>ค่าหลัง <code>?</code> ใน URL</td></tr>
+      <tr><td><code>req.body</code></td><td>ข้อมูลที่แนบมากับ POST</td></tr>
+    </table>
+    <div class="wrong"><p style="margin:0"><strong>🟥 req.body จะว่างถ้าลืมบรรทัดนี้</strong> — <code>app.use(express.json())</code> · กับดักอันดับ 1 ของมือใหม่</p></div>
+  </div>
+</section>
+
+<!-- 15 ─── SIMULATE: middleware flow ─── -->
+<section class="slide" data-title="🎮 Middleware flow">
+  <span class="slide-id">W06 · บท 7</span>
+  <span class="eyebrow amber">ลองเล่น — ดู request ไหลผ่าน</span>
+  <h2>Middleware — ชั้นที่คำขอไหลผ่าน</h2>
+  <div class="body center">
+    <div class="iact">
+      <p style="margin:0 0 .6rem"><small>กดปุ่มส่ง request แล้วดูมันไหลผ่านทีละชั้น ก่อนถึง handler</small></p>
+      <div class="mw" id="mwFlow">
+        <div class="mwnode" data-mw="0"><div class="mi">📨</div><h3>request</h3><p>เข้ามา</p></div>
+        <div class="mwarr">→</div>
+        <div class="mwnode" data-mw="1"><div class="mi">📝</div><h3>logger</h3><p>บันทึก log</p></div>
+        <div class="mwarr">→</div>
+        <div class="mwnode" data-mw="2"><div class="mi">📦</div><h3>json()</h3><p>อ่าน body</p></div>
+        <div class="mwarr">→</div>
+        <div class="mwnode" data-mw="3"><div class="mi">🎯</div><h3>handler</h3><p>route ที่ตรง</p></div>
+        <div class="mwarr">→</div>
+        <div class="mwnode res" data-mw="4"><div class="mi">📤</div><h3>response</h3><p>ส่งกลับ</p></div>
+      </div>
+      <div style="text-align:center;margin-top:.6rem">
+        <button class="opt" id="mwGo" style="border-color:var(--green);color:var(--green)">▶ ส่ง request</button>
+      </div>
+      <p class="fb" id="mwMsg" style="text-align:center"></p>
+    </div>
+    <p style="text-align:center"><small>แต่ละชั้นเรียก <code>next()</code> เพื่อส่งต่อ · ถ้าลืม request จะค้าง ไม่ถึง handler</small></p>
+  </div>
+</section>
+
+<!-- 16 ─── middleware ลำดับ ─── -->
+<section class="slide" data-title="middleware ลำดับ">
+  <span class="slide-id">W06 · บท 7</span>
+  <span class="eyebrow red">กับดัก</span>
+  <h2>ลำดับ middleware สำคัญมาก</h2>
+  <div class="body center">
+    <div class="wrong">
+      <p style="margin:0 0 .5rem"><strong>ถ้าเขียน <code>express.json()</code> หลัง route</strong> — route นั้นอ่าน body ไม่ได้ เพราะ middleware ยังไม่ทำงานตอน route ทำ</p>
+      <pre style="margin:0;font-size:1rem"><code><span class="bad">app.post('/api/requests', ...)   // route เขียนก่อน</span>
+<span class="bad">app.use(express.json())          // json ทำงานทีหลัง = สาย!</span></code></pre>
+    </div>
+    <div class="win"><p style="margin:0"><strong>กฎ</strong> — middleware ที่ใช้กับทุก route เขียน <strong>ก่อน</strong> route ทั้งหมดเสมอ · เหมือน AppLayout ใน W05 ที่เขียน header ครั้งเดียวใช้ทุกหน้า</p></div>
+  </div>
+</section>
+
+<!-- 17 ─── REST ─── -->
+<section class="slide" data-title="REST">
+  <span class="slide-id">W06 · บท 8</span>
+  <span class="eyebrow">มาตรฐานโลก</span>
+  <h2>REST — path เป็นคำนาม การกระทำอยู่ที่ method</h2>
+  <div class="body center">
+    <table>
+      <tr><th>method + path</th><th>ทำอะไร</th></tr>
+      <tr><td><code style="color:#8FE3A8">GET</code> <code>/api/requests</code></td><td>ดูทั้งหมด</td></tr>
+      <tr><td><code style="color:#8FE3A8">GET</code> <code>/api/requests/:id</code></td><td>ดูใบเดียว</td></tr>
+      <tr><td><code style="color:#E9C88A">POST</code> <code>/api/requests</code></td><td>สร้างใหม่</td></tr>
+      <tr><td><code style="color:#FB7185">DELETE</code> <code>/api/requests/:id</code></td><td>ลบ</td></tr>
+    </table>
+    <p style="text-align:center"><small>path เดียวกันทำได้หลายอย่างตาม method · ตรงกับ <code>requestService.js</code> ของ React ที่มีอยู่แล้ว</small></p>
+  </div>
+</section>
+
+<!-- 18 ─── QUIZ: RESTful ─── -->
+<section class="slide" data-title="Quiz: RESTful">
+  <span class="slide-id">W06 · บท 8</span>
+  <span class="eyebrow amber">ทดลองความเข้าใจ</span>
+  <h2>อันไหน RESTful</h2>
+  <div class="body center">
+    <div class="iact" data-quiz="q5">
+      <p style="margin:0 0 .3rem"><strong>"ลบคำร้อง REQ-001" แบบ RESTful ควรเป็น</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">POST /deleteRequest/REQ-001</button>
+        <button class="opt" data-a="1">DELETE /api/requests/REQ-001</button>
+        <button class="opt" data-a="0">GET /api/requests/delete/REQ-001</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="note"><p style="margin:0"><strong>อย่าเอาคำกริยาใส่ path</strong> — ไม่ใช่ <code>/deleteRequest</code> · ให้ method (DELETE) บอกการกระทำ path บอกแค่ทรัพยากร</p></div>
+  </div>
+</section>
+
+<!-- 19 ─── status code กลุ่ม ─── -->
+<section class="slide" data-title="Status code กลุ่ม">
+  <span class="slide-id">W06 · บท 9</span>
+  <span class="eyebrow">บอกผลด้วยตัวเลข</span>
+  <h2>Status Code — จำเป็นกลุ่ม</h2>
+  <div class="body center">
+    <div class="g2">
+      <div>
+        <div class="panel" style="border-color:rgba(74,222,128,.4);margin-bottom:.6rem"><h3 style="color:var(--green);margin:0">2xx · สำเร็จ</h3><p style="margin:.2rem 0 0"><small>200 OK · 201 Created · 204 No Content</small></p></div>
+        <div class="panel" style="border-color:rgba(251,191,36,.4)"><h3 style="color:var(--amber);margin:0">4xx · ผู้ใช้ผิด</h3><p style="margin:.2rem 0 0"><small>400 Bad Request · 404 Not Found</small></p></div>
+      </div>
+      <div class="panel" style="border-color:rgba(251,113,133,.4);display:flex;flex-direction:column;justify-content:center">
+        <h3 style="color:var(--red);margin:0">5xx · เซิร์ฟเวอร์ผิด</h3>
+        <p style="margin:.3rem 0 0"><small>500 Internal Server Error · โค้ดเราพังเอง</small></p>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:1.35rem"><strong>จำ 6 ตัว: 200 · 201 · 204 · 400 · 404 · 500</strong></p>
+  </div>
+</section>
+
+<!-- 20 ─── SIMULATE: status matcher ─── -->
+<section class="slide" data-title="🎮 Status matcher">
+  <span class="slide-id">W06 · บท 9</span>
+  <span class="eyebrow amber">ลองเล่น — ยิงแล้วดู status</span>
+  <h2>สถานการณ์ไหน ได้ status อะไร</h2>
+  <div class="body center">
+    <div class="iact">
+      <div class="reqbtns" style="margin-bottom:.7rem">
+        <button data-st="get">ดูรายการสำเร็จ</button>
+        <button data-st="create">สร้างคำร้องสำเร็จ</button>
+        <button data-st="delete">ลบสำเร็จ</button>
+        <button data-st="bad">ส่งฟอร์มไม่ครบ</button>
+        <button data-st="notfound">ขอ REQ-999 ที่ไม่มี</button>
+      </div>
+      <div class="panel" style="text-align:center;padding:1.6rem">
+        <p class="stcode" id="stCode" style="font-size:3.4rem;margin:0">—</p>
+        <p id="stMsg" style="margin:.4rem 0 0;font-size:1.3rem;color:var(--muted)">กดปุ่มด้านบนเพื่อดู status code</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 21 ─── QUIZ: 200 vs 201 ─── -->
+<section class="slide" data-title="Quiz: 200 vs 201">
+  <span class="slide-id">W06 · บท 9</span>
+  <span class="eyebrow amber">ทดลองความเข้าใจ</span>
+  <h2>POST สำเร็จ — 200 หรือ 201</h2>
+  <div class="body center">
+    <div class="iact" data-quiz="q6">
+      <p style="margin:0 0 .3rem"><strong>สร้างคำร้องใหม่สำเร็จ ควรตอบ status อะไร</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">200 OK</button>
+        <button class="opt" data-a="1">201 Created</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="reveal" data-reveal>
+      <button>▸ ทำไม 201 ดีกว่า 200</button>
+      <div class="ans"><p style="margin:0"><code>201 Created</code> บอกว่าสำเร็จ<strong>และมีของใหม่ถูกสร้าง</strong> · ส่วน 200 แปลว่าสำเร็จเฉย ๆ · ใช้ 200 ไม่ผิด แต่ 201 สื่อชัดกว่าและเป็นมาตรฐาน REST · <strong>คุณเห็นของจริงมาแล้วใน API Playground!</strong></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 22 ─── แยกชั้น ─── -->
+<section class="slide" data-title="แยกชั้น">
+  <span class="slide-id">W06 · บท 10 · 🏠</span>
+  <span class="eyebrow violet">เทียบกับ Week 05</span>
+  <h2>แยกชั้น Route / Controller / Service</h2>
+  <div class="body center">
+    <table>
+      <tr><th>Backend (W06)</th><th>เหมือน Frontend (W05)</th><th>รู้จัก HTTP</th></tr>
+      <tr><td><strong>Route</strong></td><td>App.jsx</td><td>รู้</td></tr>
+      <tr><td><strong>Controller</strong></td><td>Page</td><td>รู้</td></tr>
+      <tr><td><strong>Service</strong></td><td>requestService</td><td style="color:var(--green)"><strong>ไม่รู้</strong></td></tr>
+    </table>
+    <div class="win"><p style="margin:0"><strong>service ไม่รู้จัก HTTP</strong> → หน่วย 4 เปลี่ยนไปใช้ database ได้โดยแก้แค่ service · เหมือน Service Layer ของ React ที่เปลี่ยน localStorage เป็น API โดย component ไม่ต้องแก้</p></div>
+  </div>
+</section>
+
+<!-- 23 ─── LAB in-class ─── -->
+<section class="slide" data-title="⏸ LAB ในห้อง">
+  <span class="slide-id">W06 · IN-CLASS</span>
+  <div class="body center">
+    <div class="labstop panel">
+      <span class="eyebrow amber">🏫 ทำในห้อง — CP00 ถึง CP05</span>
+      <h2 style="margin-top:.3rem">สร้าง CRUD API ครบ</h2>
+      <table style="font-size:1.15rem">
+        <tr><th style="width:80px">CP</th><th>ทำอะไร</th><th style="width:130px">checkpoint</th></tr>
+        <tr><td>CP00</td><td>รู้จัก API + Postman</td><td>ยิง public API</td></tr>
+        <tr><td>CP01</td><td>Hello Server</td><td>เปิด browser เห็น</td></tr>
+        <tr><td>CP02</td><td>GET + :id + 404</td><td>Postman 200/404</td></tr>
+        <tr><td>CP03</td><td>middleware</td><td>terminal เห็น log</td></tr>
+        <tr><td>CP04</td><td>POST + validation</td><td>Postman 201/400</td></tr>
+        <tr><td>CP05</td><td>DELETE</td><td>Postman 204/404</td></tr>
+      </table>
+      <div style="display:flex;justify-content:center;align-items:center;gap:1.5rem;margin-top:.6rem">
+        <p class="bigtime" id="t-lab">30:00</p>
+        <div class="timerbtns">
+          <button data-timer="t-lab" data-min="30" data-act="start">เริ่ม</button>
+          <button data-timer="t-lab" data-act="pause">หยุด</button>
+          <button data-timer="t-lab" data-min="30" data-act="reset">ตั้งใหม่</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 24 ─── take-home ─── -->
+<section class="slide" data-title="🏠 ที่บ้าน">
+  <span class="slide-id">W06 · TAKE-HOME</span>
+  <span class="eyebrow">🏠 ทำที่บ้าน + ⭐ Challenge</span>
+  <h2>ต่อยอดที่บ้าน แล้วส่ง git</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="panel" style="border-color:rgba(251,191,36,.4)">
+        <h3 style="color:var(--amber)">🏠 Take-Home · CP06–08</h3>
+        <ul style="margin-bottom:0"><li>แยกชั้น route/controller/service</li><li>validation เป็น middleware</li><li>เก็บข้อมูลลงไฟล์ JSON</li><li>Postman collection + API_TEST.md</li></ul>
+      </div>
+      <div class="panel" style="border-color:rgba(192,132,252,.4)">
+        <h3 style="color:var(--violet)">⭐ Challenge (bonus)</h3>
+        <ul style="margin-bottom:0"><li><code>PUT</code> เปลี่ยนสถานะคำร้อง</li><li><code>?status=</code> กรองด้วย query</li><li>validation แยก middleware</li></ul>
+      </div>
+    </div>
+    <div class="note"><p style="margin:0"><strong>ส่ง:</strong> git repo ตัวเอง · branch <code>unit3/week-06</code> · tag <code>lab-06-submission-v1</code> · checker ตรวจอัตโนมัติ + oral สุ่มถาม</p></div>
+  </div>
+</section>
+
+<!-- 25 ─── สรุป + สะพาน W07 ─── -->
+<section class="slide" data-title="สรุป + สะพาน W07">
+  <span class="slide-id">W06 · CLOSE</span>
+  <span class="eyebrow green">จบ Week 06</span>
+  <h2>วันนี้ทำอะไรได้ · สัปดาห์หน้าทำอะไรต่อ</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="win"><h3 style="color:var(--green)">✓ Week 06 ทำได้แล้ว</h3><ul style="margin-bottom:0"><li>เซิร์ฟเวอร์ Express ที่พอร์ต 3001</li><li>CRUD API ครบ 4 endpoint</li><li>middleware + status code ถูก</li><li>ทดสอบผ่าน Postman</li></ul></div>
+      <div class="panel" style="border-color:rgba(56,215,237,.4)"><h3 style="color:var(--cyan)">→ Week 07 ต่อไป</h3><ul style="margin-bottom:0"><li>validation + error handling</li><li><strong>CORS — ให้ React เรียกได้</strong></li><li><strong>เชื่อม React ตัวจริง!</strong></li><li>API contract + deploy</li></ul></div>
+    </div>
+    <div class="panel" style="border-color:rgba(192,132,252,.4)">
+      <p style="margin:0;font-size:1.3rem"><strong style="color:var(--violet)">payoff รออยู่ Week 07</strong> — เปลี่ยน <code>requestService.js</code> ฝั่ง React ให้เรียก API เรา แล้วเห็นแอป Campus ตัวเดิมทำงานกับ backend ใหม่ · component ไม่ต้องแก้เลย</p>
+    </div>
+  </div>
+</section>
+
+</div></div>
+
+<div class="bar"><i id="progress"></i></div>
+<div class="hud">
+  <button id="btnPrev" aria-label="ก่อนหน้า">←</button>
+  <span class="counter" id="counter">1 / 25</span>
+  <button id="btnNext" aria-label="ถัดไป">→</button>
+  <button id="btnToc">สารบัญ</button>
+  <button id="btnMinus">A−</button><button id="btnPlus">A+</button>
+  <button id="btnFull">เต็มจอ</button>
+</div>
+<div class="toc" id="toc" role="dialog"><h3>สารบัญ — กด T หรือ Esc ปิด</h3><ol id="tocList"></ol></div>
+
+<script>
+(function(){
+  'use strict';
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let cur = 0;
+  function show(i){
+    cur=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach((s,n)=>s.classList.toggle('active',n===cur));
+    document.getElementById('counter').textContent=(cur+1)+' / '+slides.length;
+    document.getElementById('progress').style.width=((cur+1)/slides.length*100)+'%';
+    history.replaceState(null,'','#s'+(cur+1));
+  }
+  const next=()=>show(cur+1),prev=()=>show(cur-1);
+  document.getElementById('btnNext').onclick=next;
+  document.getElementById('btnPrev').onclick=prev;
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT')return;
+    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
+    else if(e.key==='ArrowLeft'){e.preventDefault();prev();}
+    else if(e.key==='Home')show(0); else if(e.key==='End')show(slides.length-1);
+    else if(e.key.toLowerCase()==='t')toggleToc();
+    else if(e.key==='Escape')setToc(false);
+    else if(e.key.toLowerCase()==='f')toggleFull();
+    else if(e.key==='+'||e.key==='=')setScale(scale+.06);
+    else if(e.key==='-')setScale(scale-.06);
+  });
+  // TOC
+  const tocEl=document.getElementById('toc'),list=document.getElementById('tocList');
+  slides.forEach((s,i)=>{
+    const li=document.createElement('li'),a=document.createElement('a');
+    a.href='#s'+(i+1);a.textContent=s.dataset.title||('สไลด์ '+(i+1));
+    a.onclick=e=>{e.preventDefault();show(i);setToc(false);};
+    li.appendChild(a);
+    const id=s.querySelector('.slide-id');
+    if(id){const t=document.createElement('span');t.className='tag';t.textContent=id.textContent;li.appendChild(t);}
+    list.appendChild(li);
+  });
+  function setToc(o){tocEl.classList.toggle('open',o);}
+  function toggleToc(){setToc(!tocEl.classList.contains('open'));}
+  document.getElementById('btnToc').onclick=toggleToc;
+  // scale
+  let scale=1;
+  function setScale(v){scale=Math.max(.8,Math.min(1.4,v));document.documentElement.style.setProperty('--font-scale',scale);}
+  document.getElementById('btnPlus').onclick=()=>setScale(scale+.06);
+  document.getElementById('btnMinus').onclick=()=>setScale(scale-.06);
+  function toggleFull(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}
+  document.getElementById('btnFull').onclick=toggleFull;
+  // quiz
+  document.querySelectorAll('[data-quiz]').forEach(q=>{
+    const fb=q.querySelector('.fb');
+    q.querySelectorAll('.opt').forEach(b=>{
+      b.onclick=()=>{
+        const ok=b.dataset.a==='1';
+        b.classList.add(ok?'ok':'no');
+        if(ok){fb.textContent='✓ ถูกต้อง';fb.className='fb ok';q.querySelectorAll('.opt').forEach(x=>x.disabled=true);}
+        else{fb.textContent='✕ ยังไม่ใช่ ลองใหม่';fb.className='fb no';}
+      };
+    });
+  });
+  // reveal
+  document.querySelectorAll('[data-reveal]').forEach(b=>{b.querySelector('button').onclick=()=>b.classList.toggle('open');});
+  // API playground
+  const pgReq=document.getElementById('pgReq'),pgRes=document.getElementById('pgRes');
+  const pgCases={
+    'get-all':{req:'GET /posts\nHost: jsonplaceholder.typicode.com',res:'200 OK\n\n[\n  { "id": 1, "title": "..." },\n  { "id": 2, "title": "..." },\n  ... 100 items\n]'},
+    'get-one':{req:'GET /posts/1\nHost: jsonplaceholder.typicode.com',res:'200 OK\n\n{\n  "userId": 1,\n  "id": 1,\n  "title": "sunt aut...",\n  "body": "quia et..."\n}'},
+    'get-404':{req:'GET /posts/9999\nHost: jsonplaceholder.typicode.com',res:'404 Not Found\n\n{}'},
+    'post':{req:'POST /posts\nContent-Type: application/json\n\n{ "title": "ทดสอบ", "body": "เนื้อหา" }',res:'201 Created\n\n{\n  "title": "ทดสอบ",\n  "body": "เนื้อหา",\n  "id": 101\n}'}
+  };
+  document.querySelectorAll('[data-pg]').forEach(b=>{
+    b.onclick=()=>{const c=pgCases[b.dataset.pg];pgReq.textContent=c.req;pgRes.textContent=c.res;};
+  });
+  // middleware flow
+  const mwGo=document.getElementById('mwGo'),mwMsg=document.getElementById('mwMsg');
+  if(mwGo){
+    const nodes=Array.from(document.querySelectorAll('#mwFlow .mwnode'));
+    mwGo.onclick=()=>{
+      nodes.forEach(n=>n.classList.remove('lit'));mwMsg.textContent='';
+      const labels=['request เข้ามา','logger บันทึก → next()','json() อ่าน body → next()','handler ประมวลผล','response ส่งกลับ'];
+      nodes.forEach((n,i)=>setTimeout(()=>{
+        nodes.forEach(x=>x.classList.remove('lit'));n.classList.add('lit');
+        mwMsg.textContent=labels[i];
+        mwMsg.style.color=i===4?'var(--violet)':'var(--green)';
+      },i*700));
+    };
+  }
+  // status matcher
+  const stCode=document.getElementById('stCode'),stMsg=document.getElementById('stMsg');
+  const stCases={
+    get:{c:'200',cls:'ok',m:'OK — ดูรายการสำเร็จ มีข้อมูลส่งกลับ'},
+    create:{c:'201',cls:'ok',m:'Created — สร้างของใหม่สำเร็จ'},
+    delete:{c:'204',cls:'ok',m:'No Content — ลบสำเร็จ ไม่มีข้อมูลส่งกลับ'},
+    bad:{c:'400',cls:'warn',m:'Bad Request — ผู้ใช้ส่งข้อมูลไม่ถูกต้อง'},
+    notfound:{c:'404',cls:'err',m:'Not Found — ไม่พบทรัพยากรที่ขอ'}
+  };
+  document.querySelectorAll('[data-st]').forEach(b=>{
+    b.onclick=()=>{const c=stCases[b.dataset.st];stCode.textContent=c.c;stCode.className='stcode '+c.cls;stMsg.textContent=c.m;};
+  });
+  // timer
+  const timers={};
+  function fmt(s){const m=Math.floor(Math.abs(s)/60),x=Math.abs(s)%60;return(s<0?'-':'')+String(m).padStart(2,'0')+':'+String(x).padStart(2,'0');}
+  setInterval(()=>{Object.keys(timers).forEach(id=>{const t=timers[id];if(!t||!t.running)return;t.left--;const el=document.getElementById(id);el.textContent=fmt(t.left);el.style.color=t.left<=0?'var(--red)':'var(--amber)';});},1000);
+  document.querySelectorAll('[data-timer]').forEach(b=>{
+    b.onclick=()=>{const id=b.dataset.timer,act=b.dataset.act,el=document.getElementById(id);
+      if(!timers[id])timers[id]={left:(+b.dataset.min||30)*60,running:false};
+      const t=timers[id];
+      if(act==='start')t.running=true;else if(act==='pause')t.running=false;
+      else if(act==='reset'){t.running=false;t.left=(+b.dataset.min||30)*60;el.textContent=fmt(t.left);el.style.color='var(--amber)';}
+    };
+  });
+  const m=location.hash.match(/^#s(\d+)$/);
+  show(m?+m[1]-1:0);
+})();
+</script>
+</body>
+</html>

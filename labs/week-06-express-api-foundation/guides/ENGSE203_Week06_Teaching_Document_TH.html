@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENGSE203 Week 06 — เอกสารประกอบการสอน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1F6F3; --card:#FFFFFF; --ink:#14251E; --ink-soft:#54685E;
+  --track:#BFD2C8; --a:#1E7A54; --a-tint:#DFF0E7; --b:#186B8C; --b-tint:#DDEEF5;
+  --loading:#B5771A; --success:#1E7A54; --error:#B23A2E; --rule:#DBE7E0;
+  --code-bg:#0E1F1A; --accent:#e0824a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  line-height:1.78; padding:0 20px 80px; -webkit-font-smoothing:antialiased;
+}
+.doc{max-width:860px;margin:0 auto}
+
+.cover{padding:64px 0 40px;border-bottom:3px solid var(--a)}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.2em;color:var(--a);text-transform:uppercase}
+.cover h1{font-size:clamp(30px,5vw,46px);font-weight:700;line-height:1.15;
+  letter-spacing:-.02em;margin:14px 0 8px}
+.cover .subtitle{font-size:19px;color:var(--ink-soft);font-weight:300;margin-bottom:28px}
+.meta{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px}
+.meta th{text-align:left;font-weight:600;padding:7px 14px 7px 0;
+  width:190px;vertical-align:top;color:var(--ink-soft);font-size:13px}
+.meta td{padding:7px 0;border-bottom:1px solid var(--rule)}
+.meta tr:first-child td,.meta tr:first-child th{border-top:1px solid var(--rule)}
+
+.bigidea{background:var(--ink);color:#fff;padding:24px 26px;border-radius:4px;margin-top:8px}
+.bigidea .lab{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;
+  opacity:.65;text-transform:uppercase;margin-bottom:8px}
+.bigidea p{font-size:17px;line-height:1.6}
+.bigidea code{font-family:'IBM Plex Mono',monospace;font-size:15px;
+  background:rgba(255,255,255,.14);padding:1px 7px;border-radius:3px}
+
+.howto{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:26px;margin:36px 0}
+.howto h2{font-size:19px;margin-bottom:14px}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;font-size:14px;margin-top:14px}
+.legend .k{font-weight:600;white-space:nowrap}
+.newbie{background:var(--a-tint);border-left:3px solid var(--a);padding:16px 20px;border-radius:0 6px 6px 0;margin-top:18px;font-size:14.5px}
+
+.ch{margin-top:60px;padding-top:8px}
+.ch-num{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:.16em;color:var(--a);text-transform:uppercase;
+  display:flex;align-items:center;gap:12px}
+.ch-num::after{content:"";flex:1;height:1px;background:var(--rule)}
+.ch h2{font-size:28px;font-weight:700;line-height:1.25;margin:12px 0 6px;letter-spacing:-.01em}
+.ch .readtime{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  color:var(--track);letter-spacing:.06em;margin-bottom:22px}
+.ch h3{font-size:19px;font-weight:600;margin:32px 0 10px}
+.ch h4{font-size:16px;font-weight:600;margin:22px 0 8px}
+p{margin-bottom:14px}
+ul,ol{margin:0 0 16px 22px}
+li{margin-bottom:7px}
+strong{font-weight:600}
+em{font-style:normal;background:linear-gradient(transparent 62%,var(--a-tint) 62%)}
+
+code{font-family:'IBM Plex Mono',monospace;font-size:.88em;
+  background:#E6EFE9;padding:2px 6px;border-radius:3px;color:#14503A}
+pre{background:var(--code-bg);color:#E4EFE9;border-radius:4px;
+  padding:20px 22px;overflow-x:auto;margin:16px 0;font-size:13.5px;line-height:1.7}
+pre code{background:none;padding:0;color:inherit;font-size:13.5px}
+.c-key{color:#8FD3A8} .c-str{color:#E9C08A} .c-com{color:#6E8A7E;font-style:italic}
+.c-fn{color:#8FD0EC} .c-bad{color:#F0968C} .c-tag{color:#96D9C8} .c-hl{color:#FFE08A;font-weight:600}
+.c-num{color:#D9A0E8}
+
+.term{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--b);
+  border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0}
+.term .w{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--b);font-size:15px;margin-bottom:4px}
+.term p{margin:0;font-size:14.5px}
+
+table.d{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0}
+table.d th{text-align:left;background:#E6EFE9;padding:10px 12px;
+  font-weight:600;font-size:13px;border-bottom:2px solid var(--track)}
+table.d td{padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.d tr:hover td{background:#FAFCFB}
+
+figure{margin:30px 0;background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:24px 22px 16px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:13px;color:var(--ink-soft);margin-top:16px;padding-top:12px;border-top:1px solid var(--rule)}
+figcaption b{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  letter-spacing:.1em;color:var(--a);display:block;margin-bottom:4px;text-transform:uppercase}
+
+.box{border-radius:4px;padding:20px 22px;margin:22px 0;font-size:14.5px}
+.box .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px;display:block}
+.box p:last-child{margin-bottom:0}
+.predict{background:var(--a-tint);border-left:3px solid var(--a)}
+.predict .h{color:var(--a)}
+.pitfall{background:#FBEBE8;border-left:3px solid var(--error)}
+.pitfall .h{color:var(--error)}
+.note{background:#FDF4E3;border-left:3px solid var(--loading)}
+.note .h{color:var(--loading)}
+.next{background:var(--b-tint);border-left:3px solid var(--b)}
+.next .h{color:var(--b)}
+.analogy{background:#F5EEF8;border-left:3px solid #8E5AA8}
+.analogy .h{color:#8E5AA8}
+
+details{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:14px 18px;margin:14px 0;font-size:14.5px}
+details summary{cursor:pointer;font-weight:600;font-size:14.5px;list-style:none;display:flex;align-items:center;gap:9px}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸";color:var(--a);font-size:13px;transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+details .ans{margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-weight:300}
+details .ans p:last-child{margin-bottom:0}
+
+.recap{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--ink);border-radius:4px;padding:22px;margin:30px 0 0}
+.recap .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px;display:block}
+.recap ul{margin-bottom:0;margin-left:20px}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-soft);font-weight:300;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer .m{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.05em}
+
+.toc{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:24px 26px;margin:28px 0}
+.toc h2{font-size:17px;margin-bottom:8px}
+.toc .toc-note{font-size:13px;color:var(--ink-soft);margin-bottom:16px;font-weight:300}
+.toc ol{margin:0 0 0 20px;font-size:14.5px}
+.toc li{margin-bottom:6px}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+.toc a:hover{border-bottom-color:var(--a);color:var(--a)}
+.toc .t{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--track);margin-left:6px}
+.toc .grp{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--a);margin:14px 0 6px}
+
+@media print{
+  body{background:#fff;padding:0}
+  figure,.box,.recap,details,table.d,.term{break-inside:avoid}
+  .ch{break-before:page}
+  details{border:none} details summary::before{content:""}
+  details .ans{display:block}
+}
+@media (max-width:640px){
+  .meta th{width:auto;display:block;padding-bottom:0}
+  .meta td{display:block;padding-top:2px}
+  .cover{padding:36px 0 28px}
+  .legend{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+
+<!-- ════════ COVER ════════ -->
+<header class="cover">
+  <p class="eyebrow">ENGSE203 · หน่วยที่ 3 · Week 06</p>
+  <h1>สร้างเซิร์ฟเวอร์ตัวแรก<br>ด้วย Node.js และ Express</h1>
+  <p class="subtitle">Node Runtime · HTTP · Express · Routing · Middleware · REST API</p>
+
+  <table class="meta">
+    <tr><th>รายวิชา</th><td>ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์</td></tr>
+    <tr><th>ผู้เรียน</th><td>นักศึกษาวิศวกรรมซอฟต์แวร์ ชั้นปีที่ 2 · <strong>ยังไม่เคยเขียน backend มาก่อน</strong></td></tr>
+    <tr><th>ต่อจาก</th><td>Week 05 — React frontend ที่มี Service Layer รอเรียก API อยู่แล้ว</td></tr>
+    <tr><th>หน่วยที่</th><td>3 · การพัฒนาส่วนหลังและบริการ RESTful API (สัปดาห์ 6–7)</td></tr>
+    <tr><th>Checkpoints</th><td>CP00 · CP01 · CP02 · CP03 · CP04 · CP05</td></tr>
+    <tr><th>Stack</th><td>Node.js ≥ 22.12 · Express 5 · Postman/Thunder Client</td></tr>
+    <tr><th>ประเมินผล</th><td>CLO4 (หลัก) · CLO6 (รอง) · A1 Weekly LAB</td></tr>
+  </table>
+
+  <div class="bigidea">
+    <span class="lab">แนวคิดแกนกลางของคาบนี้</span>
+    <p><code>คำขอเข้ามา</code> → <code>เซิร์ฟเวอร์เลือก route</code> → <code>ผ่าน middleware</code> → <code>ตอบกลับพร้อม status</code></p>
+  </div>
+</header>
+
+<!-- ════════ HOW TO READ ════════ -->
+<section class="howto">
+  <h2>วิธีอ่านเอกสารนี้</h2>
+  <p>เอกสารนี้ยาวกว่าของ Week 04–05 โดยตั้งใจ เพราะ <strong>backend เป็นโลกใหม่ทั้งหมดสำหรับคุณ</strong> ที่ผ่านมาเราเขียนโค้ดที่ทำงานในเบราว์เซอร์ คราวนี้เราจะเขียนโค้ดที่ทำงานบนเครื่องเซิร์ฟเวอร์ ซึ่งคิดคนละแบบ</p>
+
+  <div class="newbie">
+    <strong>ถ้าคุณรู้สึกว่า "ไม่เคยได้ยินคำพวกนี้เลย" — นั่นเป็นเรื่องปกติ</strong> เอกสารนี้ไม่ได้เดาว่าคุณรู้อะไรมาก่อน ทุกคำศัพท์จะมีคำอธิบายในกล่องสีฟ้าก่อนใช้งาน · บทที่ 1–3 คือปูพื้นฐานล้วน ยังไม่มีโค้ด Express เลย ขอให้อ่านช้า ๆ เพราะเป็นรากของทุกอย่างที่ตามมา
+  </div>
+
+  <h2 style="margin-top:26px">รูปแบบการเรียนหน่วยนี้</h2>
+  <p>สัปดาห์นี้เราเรียนแบบ <strong>สอนไปทำไป</strong> — ปูพื้นฐานช่วงต้นคาบ แล้วสลับทฤษฎีกับลงมือทำทีละเรื่อง · งานแบ่งเป็น 3 ระดับ</p>
+  <table class="d">
+    <tr><th>ระดับ</th><th>ทำที่ไหน</th><th>คืออะไร</th></tr>
+    <tr><td><span class="wheretag room">🏫 ในห้อง</span></td><td>ในคาบ ให้เสร็จ</td><td>CP00–CP05 · รู้จัก API + สร้าง CRUD ครบ · ตรวจสดในห้อง</td></tr>
+    <tr><td><span class="wheretag home">🏠 ที่บ้าน</span></td><td>3–5 วันหลังคาบ</td><td>CP06–CP08 · ต่อยอดให้ลึก · ส่งผ่าน git repo</td></tr>
+    <tr><td>⭐ Challenge</td><td>ที่บ้าน (ไม่บังคับ)</td><td>ต่อยอดยาก · คะแนนเพิ่มพิเศษ</td></tr>
+  </table>
+  <div class="box note">
+    <span class="h">🟨 Week 06 ยังไม่เชื่อมกับ React</span>
+    <p style="margin:0">สัปดาห์นี้เราสร้าง API และทดสอบด้วย <strong>Postman</strong> ก่อน · การเชื่อม API เข้ากับแอป React ตัวเดิม (Campus Service Request) อยู่ใน <strong>Week 07</strong> หลังจากที่เราเรียน CORS แล้ว ซึ่งเป็นสิ่งที่ทำให้ React เรียก API ข้ามพอร์ตได้</p>
+  </div>
+
+  <div class="legend">
+    <span class="k">🟩 ทายก่อนอ่านต่อ</span><span>หยุดคิดก่อน อย่าเพิ่งดูคำตอบ</span>
+    <span class="k">🟦 ศัพท์ที่ต้องรู้</span><span>คำใหม่พร้อมคำอธิบายแบบไม่ใช้ศัพท์อื่นมาอธิบายซ้ำ</span>
+    <span class="k">🟪 เทียบกับของที่คุ้น</span><span>อุปมากับสิ่งที่เจอในชีวิตจริงหรือที่เรียนมาแล้ว</span>
+    <span class="k">🟥 กับดักที่พบบ่อย</span><span>ความผิดพลาดที่รุ่นก่อนเจอจริง</span>
+    <span class="k">🟨 หมายเหตุ</span><span>ข้อมูลเสริมที่ควรรู้</span>
+    <span class="k">▸ เฉลย/ดูเพิ่ม</span><span>กดเพื่อเปิด</span>
+  </div>
+</section>
+
+<!-- ════════ TOC ════════ -->
+<nav class="toc">
+  <h2>สารบัญ</h2>
+  <p class="toc-note">12 บท · แบ่งเป็น 3 กลุ่ม · อ่านบท 1–3 ก่อนเข้าคาบ ที่เหลืออ่านตอนลงมือทำ · ป้าย 🏫 = ทำในห้อง · 🏠 = ทำที่บ้าน</p>
+
+  <p class="grp">กลุ่ม 1 · ปูพื้นฐาน (ยังไม่มีโค้ด Express)</p>
+  <ol>
+    <li><a href="#c1">Backend คืออะไร และทำไมเราต้องมีมัน</a><span class="t">10 นาที</span></li>
+    <li><a href="#c2">Node.js — JavaScript ที่ออกนอกเบราว์เซอร์</a><span class="t">9 นาที</span></li>
+    <li><a href="#c3">HTTP — ภาษาที่เครื่องคุยกันบนเว็บ</a><span class="t">12 นาที</span></li>
+    <li><a href="#c3b">รู้จัก API ด้วยของจริงก่อนสร้างเอง <span class="wheretag room">🏫 ในห้อง</span></a><span class="t">11 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 2 · Express และการสร้าง API</p>
+  <ol start="4">
+    <li><a href="#c4">Express คืออะไร และทำไมไม่เขียน Node เปล่า ๆ</a><span class="t">9 นาที</span></li>
+    <li><a href="#c5">Routing — เซิร์ฟเวอร์เลือกตอบอย่างไร</a><span class="t">11 นาที</span></li>
+    <li><a href="#c6">Request และ Response — อ่านคำขอ เขียนคำตอบ</a><span class="t">10 นาที</span></li>
+    <li><a href="#c7">Middleware — ชั้นที่คำขอไหลผ่าน</a><span class="t">12 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 3 · REST และการจัดระเบียบ</p>
+  <ol start="8">
+    <li><a href="#c8">REST — กติกาการออกแบบ API ที่คนทั้งโลกใช้</a><span class="t">11 นาที</span></li>
+    <li><a href="#c9">HTTP Status Code — บอกผลด้วยตัวเลข</a><span class="t">9 นาที</span></li>
+    <li><a href="#c10">แยกชั้น Route / Controller / Service</a><span class="t">9 นาที</span></li>
+    <li><a href="#c11">จากทฤษฎีสู่ Checkpoint</a><span class="t">5 นาที</span></li>
+  </ol>
+</nav>
+
+<!-- ════════ CH 1 ════════ -->
+<section class="ch" id="c1">
+  <p class="ch-num">บทที่ 1 · กลุ่มปูพื้นฐาน</p>
+  <h2>Backend คืออะไร และทำไมเราต้องมีมัน</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที · ยังไม่มีโค้ด</p>
+
+  <p>ห้าสัปดาห์ที่ผ่านมาเราเขียนโค้ดที่ทำงานอยู่ที่เดียว — <strong>ในเบราว์เซอร์ของผู้ใช้</strong> React, HTML, CSS ทั้งหมดถูกดาวน์โหลดไปที่เครื่องผู้ใช้แล้วทำงานที่นั่น</p>
+
+  <p>แต่มีปัญหาที่เบราว์เซอร์อย่างเดียวแก้ไม่ได้ ลองนึกถึงแอป Campus Service Request ที่เราทำ</p>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p>ถ้านักศึกษา 2 คนเปิดแอป Campus Service Request คนละเครื่อง แล้วคนแรกเพิ่มคำร้องใหม่ — <strong>คนที่สองจะเห็นคำร้องนั้นไหม</strong> ในเมื่อข้อมูลเก็บใน localStorage ของแต่ละเครื่อง</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ไม่เห็น</strong> เพราะ localStorage อยู่แยกกันในแต่ละเบราว์เซอร์ · คำร้องที่คนแรกเพิ่มอยู่แค่ในเครื่องคนแรกเท่านั้น</p>
+      <p style="margin:0">นี่คือข้อจำกัดพื้นฐานของ frontend อย่างเดียว — <strong>ไม่มีที่กลางให้ทุกคนใช้ข้อมูลร่วมกัน</strong> และนี่คือเหตุผลที่เราต้องมี backend</p>
+    </div>
+  </details>
+
+  <h3>1.1 สองฝั่งของแอปพลิเคชัน</h3>
+
+  <figure>
+    <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ภาพรวม frontend และ backend">
+      <style>
+        .t1{font:600 13px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s1{font:300 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m1{font:600 10.5px 'IBM Plex Mono',monospace;letter-spacing:.08em}
+      </style>
+      <text x="14" y="18" class="m1" fill="#1E7A54">FRONTEND · ฝั่งผู้ใช้</text>
+      <rect x="14" y="28" width="210" height="120" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5" rx="5"/>
+      <rect x="34" y="48" width="80" height="30" fill="#fff" stroke="#BFD2C8" rx="3"/>
+      <text x="50" y="68" class="s1">เครื่อง A</text>
+      <rect x="130" y="48" width="80" height="30" fill="#fff" stroke="#BFD2C8" rx="3"/>
+      <text x="146" y="68" class="s1">เครื่อง B</text>
+      <text x="34" y="102" class="t1">React · HTML · CSS</text>
+      <text x="34" y="122" class="s1">ทำงานในเบราว์เซอร์</text>
+      <text x="34" y="139" class="s1">ทุกคนมีสำเนาของตัวเอง</text>
+
+      <path d="M232 88 L318 88" stroke="#186B8C" stroke-width="2.5" marker-end="url(#a1)"/>
+      <path d="M318 108 L232 108" stroke="#186B8C" stroke-width="2.5" marker-end="url(#a1)"/>
+      <text x="238" y="80" class="m1" fill="#186B8C">ขอข้อมูล →</text>
+      <text x="238" y="126" class="m1" fill="#186B8C">← ส่งกลับ</text>
+
+      <text x="330" y="18" class="m1" fill="#186B8C">BACKEND · ฝั่งเซิร์ฟเวอร์</text>
+      <rect x="330" y="28" width="240" height="120" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5" rx="5"/>
+      <rect x="350" y="48" width="200" height="34" fill="#fff" stroke="#BFD2C8" rx="3"/>
+      <text x="366" y="70" class="t1">เซิร์ฟเวอร์ Node.js + Express</text>
+      <text x="350" y="104" class="s1">ทำงานบนเครื่องกลางเครื่องเดียว</text>
+      <text x="350" y="123" class="s1">ทุกคนเรียกใช้ที่เดียวกัน</text>
+      <text x="350" y="140" class="t1" fill="#134B6E">← งานของเราวันนี้</text>
+
+      <path d="M450 150 L450 180" stroke="#BFD2C8" stroke-width="2" marker-end="url(#a2)"/>
+      <rect x="350" y="186" width="200" height="34" fill="#fff" stroke="#BFD2C8" stroke-dasharray="5 4" rx="3"/>
+      <text x="366" y="208" class="t1" fill="#8FA6C2">ฐานข้อมูล — หน่วยที่ 4</text>
+
+      <rect x="14" y="244" width="556" height="46" fill="#F5EEF8" stroke="#8E5AA8" rx="5"/>
+      <text x="32" y="264" class="t1" fill="#6B3B96">หัวใจของ backend</text>
+      <text x="32" y="282" class="s1" fill="#6B3B96">เป็น "ที่กลาง" ที่ทุกคนใช้ข้อมูลชุดเดียวกัน · เก็บข้อมูลถาวร · ควบคุมว่าใครทำอะไรได้</text>
+
+      <defs>
+        <marker id="a1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#186B8C"/></marker>
+        <marker id="a2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#BFD2C8"/></marker>
+      </defs>
+    </svg>
+    <figcaption><b>ภาพที่ 1</b>Frontend อยู่ที่เครื่องผู้ใช้แต่ละคน · Backend อยู่ที่เครื่องกลางเครื่องเดียวที่ทุกคนเรียกใช้ร่วมกัน · หน่วยนี้เราสร้างฝั่งขวา</figcaption>
+  </figure>
+
+  <div class="term">
+    <div class="w">Backend / Server-side</div>
+    <p>ส่วนของแอปที่ทำงานบน<strong>เครื่องเซิร์ฟเวอร์</strong> ไม่ใช่ที่เครื่องผู้ใช้ · ผู้ใช้มองไม่เห็นโค้ดส่วนนี้ เห็นแต่ผลลัพธ์ที่มันส่งกลับมา · ทำหน้าที่เก็บข้อมูลกลาง ประมวลผล และตัดสินใจว่าใครทำอะไรได้บ้าง</p>
+  </div>
+
+  <div class="term">
+    <div class="w">Server (เซิร์ฟเวอร์)</div>
+    <p>โปรแกรมที่<strong>รอรับคำขอ</strong>อยู่ตลอดเวลา · เมื่อมีคำขอเข้ามาก็ประมวลผลแล้วตอบกลับ แล้วรอคำขอถัดไป · คำว่า "server" มาจาก "serve" (ให้บริการ) — มันคอยให้บริการคำขอ</p>
+  </div>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับของที่คุ้น</span>
+    <p style="margin:0">คิดถึง<strong>ร้านอาหาร</strong> — frontend คือเมนูและโต๊ะที่ลูกค้าเห็น · backend คือครัวที่ลูกค้าไม่เห็น · ลูกค้า (เบราว์เซอร์) สั่งอาหาร (ส่งคำขอ) พนักงานเสิร์ฟส่งให้ครัว ครัวทำเสร็จแล้วส่งกลับ · ครัวมีที่เดียวแต่รับออเดอร์จากทุกโต๊ะ — เหมือนเซิร์ฟเวอร์ที่รับคำขอจากผู้ใช้ทุกคน</p>
+  </div>
+
+  <h3>1.2 backend ทำอะไรได้ที่ frontend ทำไม่ได้</h3>
+
+  <table class="d">
+    <tr><th>สิ่งที่ต้องการ</th><th>frontend อย่างเดียว</th><th>มี backend</th></tr>
+    <tr><td>ทุกคนเห็นข้อมูลชุดเดียวกัน</td><td>❌ แยกกันแต่ละเครื่อง</td><td>✅ ที่กลางเดียว</td></tr>
+    <tr><td>ข้อมูลอยู่ถาวรจริง</td><td>◐ อยู่แค่ในเบราว์เซอร์นั้น</td><td>✅ เก็บที่เซิร์ฟเวอร์</td></tr>
+    <tr><td>ควบคุมสิทธิ์ว่าใครทำอะไรได้</td><td>❌ ผู้ใช้แก้โค้ดเองได้</td><td>✅ เซิร์ฟเวอร์ตัดสิน</td></tr>
+    <tr><td>เก็บความลับ เช่น รหัสผ่านฐานข้อมูล</td><td>❌ ผู้ใช้เห็นทุกอย่าง</td><td>✅ ซ่อนที่เซิร์ฟเวอร์ได้</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 สิ่งที่เราจะทำในหน่วยนี้ กับสิ่งที่ยังไม่ทำ</span>
+    <p><strong>ทำ</strong> — สร้างเซิร์ฟเวอร์ที่เก็บคำร้องไว้ที่กลาง และให้ React เรียกใช้ผ่าน API</p>
+    <p style="margin:0"><strong>ยังไม่ทำ</strong> — ฐานข้อมูลจริง (หน่วย 4), ระบบล็อกอิน, การ deploy ขึ้นเซิร์ฟเวอร์จริง · หน่วยนี้เก็บข้อมูลในหน่วยความจำของเซิร์ฟเวอร์ไปก่อน</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 1</span>
+    <ul>
+      <li>frontend อยู่ที่เครื่องผู้ใช้แต่ละคน · backend อยู่ที่เครื่องกลางเครื่องเดียว</li>
+      <li>backend คือ "ที่กลาง" ที่ทำให้ทุกคนใช้ข้อมูลชุดเดียวกันได้</li>
+      <li>server = โปรแกรมที่รอรับคำขอแล้วตอบกลับ ตลอดเวลา</li>
+      <li>หน่วยนี้สร้าง backend ให้ Campus Service Request เก็บข้อมูลในหน่วยความจำก่อน</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 2 ════════ -->
+<section class="ch" id="c2">
+  <p class="ch-num">บทที่ 2 · กลุ่มปูพื้นฐาน</p>
+  <h2>Node.js — JavaScript ที่ออกนอกเบราว์เซอร์</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที · ยังไม่มีโค้ด Express</p>
+
+  <p>มาถึงคำถามที่หลายคนสงสัย — เราเขียน JavaScript มาตลอด แต่ JavaScript ทำงานในเบราว์เซอร์ไม่ใช่หรือ แล้วจะเอามาเขียนเซิร์ฟเวอร์ได้อย่างไร</p>
+
+  <div class="term">
+    <div class="w">Node.js</div>
+    <p>โปรแกรมที่ทำให้เรา<strong>รัน JavaScript นอกเบราว์เซอร์ได้</strong> — บนเครื่องคอมพิวเตอร์โดยตรง · แปลว่าเราใช้ภาษาเดิมที่เขียน React มาเขียนเซิร์ฟเวอร์ได้เลย ไม่ต้องเรียนภาษาใหม่</p>
+  </div>
+
+  <h3>2.1 ทำไม JavaScript ถึงออกจากเบราว์เซอร์ได้</h3>
+
+  <p>เดิม JavaScript ทำงานได้เฉพาะในเบราว์เซอร์ เพราะเบราว์เซอร์มี<strong>เครื่องแปลภาษา</strong> (engine) อยู่ข้างใน · Chrome ใช้ engine ชื่อ V8</p>
+
+  <p>ปี 2009 มีคนเอา engine V8 ออกมาจาก Chrome แล้วห่อด้วยความสามารถเพิ่มเติม เช่น อ่านเขียนไฟล์และเปิดรับการเชื่อมต่อเครือข่าย — กลายเป็น Node.js · ทำให้ JavaScript ทำสิ่งที่เบราว์เซอร์ไม่ให้ทำได้</p>
+
+  <figure>
+    <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="เปรียบเทียบ JS ในเบราว์เซอร์กับ Node">
+      <style>
+        .t2{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s2{font:300 11px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m2{font:500 10.5px 'IBM Plex Mono',monospace}
+      </style>
+      <rect x="14" y="30" width="350" height="170" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5" rx="5"/>
+      <text x="30" y="22" class="m2" fill="#1E7A54">JAVASCRIPT ในเบราว์เซอร์</text>
+      <rect x="34" y="46" width="140" height="32" fill="#fff" stroke="#BFD2C8" rx="3"/>
+      <text x="50" y="67" class="t2">engine V8</text>
+      <text x="34" y="100" class="s2">ทำได้: จัดการหน้าเว็บ · DOM · fetch</text>
+      <text x="34" y="122" class="t2" fill="#8F2B21">ทำไม่ได้:</text>
+      <text x="34" y="142" class="s2">• อ่านเขียนไฟล์ในเครื่อง</text>
+      <text x="34" y="160" class="s2">• เปิดรับการเชื่อมต่อเป็นเซิร์ฟเวอร์</text>
+      <text x="34" y="178" class="s2">(เบราว์เซอร์ห้ามไว้เพื่อความปลอดภัย)</text>
+
+      <rect x="396" y="30" width="350" height="170" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5" rx="5"/>
+      <text x="412" y="22" class="m2" fill="#186B8C">NODE.JS</text>
+      <rect x="416" y="46" width="140" height="32" fill="#fff" stroke="#BFD2C8" rx="3"/>
+      <text x="432" y="67" class="t2">engine V8 ตัวเดียวกัน</text>
+      <text x="566" y="66" class="s2">+ ของเพิ่ม</text>
+      <text x="416" y="100" class="s2">ทำได้ทุกอย่างที่เบราว์เซอร์ทำ และเพิ่ม:</text>
+      <text x="416" y="122" class="t2" fill="#134B6E">ทำได้:</text>
+      <text x="416" y="142" class="s2">• อ่านเขียนไฟล์ · ต่อฐานข้อมูล</text>
+      <text x="416" y="160" class="s2">• เปิดรับการเชื่อมต่อเป็นเซิร์ฟเวอร์</text>
+      <text x="416" y="178" class="s2">• ใช้ทรัพยากรเครื่องได้เต็มที่</text>
+    </svg>
+    <figcaption><b>ภาพที่ 2</b>Node ใช้ engine ตัวเดียวกับ Chrome แต่เพิ่มความสามารถที่เบราว์เซอร์ปิดกั้นไว้ · ภาษาเหมือนเดิม แต่ทำได้มากกว่า</figcaption>
+  </figure>
+
+  <div class="box pitfall">
+    <span class="h">🟥 สิ่งที่หายไปเมื่อออกจากเบราว์เซอร์</span>
+    <p>ใน Node <strong>ไม่มี</strong> <code>window</code>, <code>document</code>, <code>localStorage</code> หรือ DOM ใด ๆ เพราะไม่มีหน้าเว็บให้จัดการ · ถ้าเผลอเรียก <code>document.querySelector</code> ในโค้ด Node จะได้ error ทันที</p>
+    <p style="margin:0">แต่ได้ของใหม่มาแทน เช่น <code>process</code> (ข้อมูลของโปรแกรมที่รันอยู่) และ module สำหรับอ่านไฟล์กับเปิดเซิร์ฟเวอร์</p>
+  </div>
+
+  <h3>2.2 npm — คลังของสำเร็จรูป</h3>
+
+  <div class="term">
+    <div class="w">npm (Node Package Manager)</div>
+    <p>คลังกลางที่เก็บ<strong>โค้ดสำเร็จรูปที่คนอื่นเขียนไว้</strong>ให้เราหยิบมาใช้ · แทนที่จะเขียนทุกอย่างเอง เราติดตั้งของที่มีคนทำไว้แล้วมาต่อยอด · คุณใช้ npm มาตั้งแต่ Week 04 แล้วตอน <code>npm install</code></p>
+  </div>
+
+  <p>ของแต่ละชิ้นใน npm เรียกว่า <strong>package</strong> · Express ที่เราจะใช้ก็เป็น package หนึ่ง · เมื่อติดตั้งแล้วรายชื่อจะถูกจดไว้ใน <code>package.json</code></p>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับของที่คุ้น</span>
+    <p style="margin:0">npm เหมือน<strong>App Store</strong> ของโค้ด · แทนที่จะเขียนแอปเองทั้งหมด คุณดาวน์โหลดแอปที่คนอื่นทำไว้ · <code>package.json</code> ก็เหมือนรายการแอปที่ติดตั้งไว้ในเครื่อง</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 2</span>
+    <ul>
+      <li>Node.js ทำให้รัน JavaScript นอกเบราว์เซอร์ได้ — ภาษาเดิม ความสามารถมากขึ้น</li>
+      <li>ใน Node ไม่มี <code>window</code>, <code>document</code>, <code>localStorage</code> แต่อ่านไฟล์และเปิดเซิร์ฟเวอร์ได้</li>
+      <li>npm คือคลังโค้ดสำเร็จรูป · แต่ละชิ้นเรียก package · จดไว้ใน <code>package.json</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 3 ════════ -->
+<section class="ch" id="c3">
+  <p class="ch-num">บทที่ 3 · กลุ่มปูพื้นฐาน</p>
+  <h2>HTTP — ภาษาที่เครื่องคุยกันบนเว็บ</h2>
+  <p class="readtime">เวลาอ่าน ≈ 12 นาที · บทที่สำคัญที่สุดของกลุ่มปูพื้นฐาน</p>
+
+  <p>ก่อนจะสร้างเซิร์ฟเวอร์ ต้องเข้าใจก่อนว่า <strong>เบราว์เซอร์กับเซิร์ฟเวอร์คุยกันอย่างไร</strong> · ภาษาที่ทั้งสองใช้เรียกว่า HTTP</p>
+
+  <div class="term">
+    <div class="w">HTTP (HyperText Transfer Protocol)</div>
+    <p><strong>ชุดกติกา</strong>ที่กำหนดว่าเบราว์เซอร์กับเซิร์ฟเวอร์จะส่งข้อความหากันในรูปแบบไหน · เหมือนภาษาที่ทั้งสองฝ่ายตกลงกันว่าจะพูดแบบนี้ อีกฝ่ายถึงจะเข้าใจ · คำว่า protocol แปลว่า "พิธีการ" หรือ "ข้อตกลง"</p>
+  </div>
+
+  <p>คุณใช้ HTTP มาตลอดโดยไม่รู้ตัว — ทุกครั้งที่เปิดเว็บ เบราว์เซอร์ส่งคำขอ HTTP ไปหาเซิร์ฟเวอร์ · แม้แต่ <code>fetch()</code> ที่เราเขียนใน Week 05 ก็ส่งคำขอ HTTP</p>
+
+  <h3>3.1 คำขอและคำตอบ — request กับ response</h3>
+
+  <p>HTTP ทำงานเป็นคู่เสมอ — ฝั่งหนึ่งส่ง<strong>คำขอ (request)</strong> อีกฝั่งส่ง<strong>คำตอบ (response)</strong> กลับ · เหมือนถาม–ตอบ</p>
+
+  <figure>
+    <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="โครงสร้าง request และ response">
+      <style>
+        .t3{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s3{font:300 10.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .mono3{font:500 10.5px 'IBM Plex Mono',monospace;fill:#186B8C}
+        .lbl3{font:600 10px 'IBM Plex Mono',monospace;letter-spacing:.1em}
+      </style>
+      <text x="14" y="18" class="lbl3" fill="#1E7A54">REQUEST · สิ่งที่เบราว์เซอร์ส่งไป</text>
+      <rect x="14" y="26" width="350" height="210" fill="#fff" stroke="#1E7A54" stroke-width="1.5" rx="5"/>
+      <rect x="14" y="26" width="350" height="34" fill="#DFF0E7" rx="5"/>
+      <text x="30" y="48" class="mono3" style="fill:#14503A;font-weight:600">GET /api/requests HTTP/1.1</text>
+      <text x="30" y="80" class="t3">method + path</text>
+      <text x="30" y="98" class="s3">GET = อยากได้ข้อมูล · /api/requests = ที่ไหน</text>
+      <line x1="30" y1="112" x2="348" y2="112" stroke="#DBE7E0"/>
+      <text x="30" y="132" class="t3">headers — ข้อมูลกำกับ</text>
+      <text x="30" y="150" class="mono3" style="fill:#54685E">Host: localhost:3001</text>
+      <text x="30" y="167" class="mono3" style="fill:#54685E">Accept: application/json</text>
+      <line x1="30" y1="182" x2="348" y2="182" stroke="#DBE7E0"/>
+      <text x="30" y="202" class="t3">body — ข้อมูลที่แนบไป</text>
+      <text x="30" y="220" class="s3">GET ไม่มี body · POST มี (ข้อมูลที่จะสร้าง)</text>
+
+      <path d="M372 130 L392 130" stroke="#54685E" stroke-width="1.5"/>
+      <text x="374" y="124" class="s3">คู่กัน</text>
+
+      <text x="400" y="18" class="lbl3" fill="#186B8C">RESPONSE · สิ่งที่เซิร์ฟเวอร์ตอบกลับ</text>
+      <rect x="400" y="26" width="346" height="210" fill="#fff" stroke="#186B8C" stroke-width="1.5" rx="5"/>
+      <rect x="400" y="26" width="346" height="34" fill="#DDEEF5" rx="5"/>
+      <text x="416" y="48" class="mono3" style="font-weight:600">HTTP/1.1 200 OK</text>
+      <text x="416" y="80" class="t3">status code</text>
+      <text x="416" y="98" class="s3">200 = สำเร็จ · บอกผลด้วยตัวเลข (บทที่ 9)</text>
+      <line x1="416" y1="112" x2="730" y2="112" stroke="#DBE7E0"/>
+      <text x="416" y="132" class="t3">headers</text>
+      <text x="416" y="150" class="mono3" style="fill:#54685E">Content-Type: application/json</text>
+      <line x1="416" y1="164" x2="730" y2="164" stroke="#DBE7E0"/>
+      <text x="416" y="184" class="t3">body — ข้อมูลที่ส่งกลับ</text>
+      <text x="416" y="202" class="mono3" style="fill:#14503A">[{"id":"REQ-001",...}]</text>
+      <text x="416" y="222" class="s3">ข้อมูลจริงที่เบราว์เซอร์ต้องการ</text>
+    </svg>
+    <figcaption><b>ภาพที่ 3</b>ทุกการสื่อสารบนเว็บคือคู่ request–response แบบนี้ · request บอกว่าอยากได้อะไร response ส่งผลกลับพร้อมรหัสสถานะ</figcaption>
+  </figure>
+
+  <h3>3.2 HTTP Method — บอกว่าอยากทำอะไร</h3>
+
+  <p>ส่วนแรกของ request คือ <strong>method</strong> ที่บอกว่าต้องการ<em>ทำอะไร</em>กับข้อมูล · มี 4 ตัวที่ใช้บ่อยที่สุด และตรงกับการกระทำที่เราทำใน Campus Service Request พอดี</p>
+
+  <table class="d">
+    <tr><th>Method</th><th>แปลว่า</th><th>ใน Campus Service Request</th></tr>
+    <tr><td><code>GET</code></td><td>ขอดูข้อมูล (ไม่เปลี่ยนแปลงอะไร)</td><td>ดูรายการคำร้อง</td></tr>
+    <tr><td><code>POST</code></td><td>สร้างข้อมูลใหม่</td><td>เพิ่มคำร้อง</td></tr>
+    <tr><td><code>PUT</code> / <code>PATCH</code></td><td>แก้ไขข้อมูลที่มีอยู่</td><td>เปลี่ยนสถานะคำร้อง</td></tr>
+    <tr><td><code>DELETE</code></td><td>ลบข้อมูล</td><td>ลบคำร้อง</td></tr>
+  </table>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับของที่คุ้น</span>
+    <p style="margin:0">คิดถึงตู้เอกสาร — <code>GET</code> คือหยิบมาอ่าน (แล้ววางคืน ไม่แก้อะไร) · <code>POST</code> คือใส่เอกสารใหม่เข้าไป · <code>PUT</code> คือแก้เอกสารเดิม · <code>DELETE</code> คือฉีกทิ้ง · ทั้ง 4 อย่างทำกับ "ตู้" เดียวกัน แต่เจตนาต่างกัน</p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 GET ห้ามเปลี่ยนแปลงข้อมูล</span>
+    <p style="margin:0">มีกติกาสำคัญ — <code>GET</code> ต้องเป็นการ<strong>อ่านอย่างเดียว</strong> ห้ามลบหรือแก้ข้อมูล · เพราะเบราว์เซอร์และระบบอื่นถือว่า GET ปลอดภัย เรียกซ้ำกี่ครั้งก็ได้ · ถ้าเผลอทำให้ GET ลบข้อมูล จะเกิดบั๊กร้ายแรงที่ข้อมูลหายโดยไม่ตั้งใจ</p>
+  </div>
+
+  <h3>3.3 URL — บอกว่าที่ไหน</h3>
+
+  <p>ส่วนที่สองคือ <strong>path</strong> (เส้นทาง) ที่บอกว่าต้องการข้อมูล<em>ตัวไหน</em></p>
+
+<pre><code>http://localhost:3001/api/requests/REQ-001
+<span class="c-com">└──────┬─────┘└─┬─┘ └───────┬────────┘</span>
+<span class="c-com">   ที่อยู่เซิร์ฟเวอร์  พอร์ต      path (เส้นทางในเซิร์ฟเวอร์)</span></code></pre>
+
+  <div class="term">
+    <div class="w">Port (พอร์ต)</div>
+    <p>ตัวเลขที่บอกว่าจะคุยกับโปรแกรม<strong>ตัวไหน</strong>บนเครื่องนั้น · เครื่องเดียวรันหลายโปรแกรมพร้อมกันได้ แต่ละตัวจับคนละพอร์ต · React ของเราจับพอร์ต 5173 ส่วนเซิร์ฟเวอร์เราจะใช้ 3001 · เหมือนเลขห้องในตึกเดียวกัน</p>
+  </div>
+
+  <div class="box note">
+    <span class="h">🟨 คุณเห็นสิ่งนี้มาแล้วใน Week 05</span>
+    <p style="margin:0">ตอน <code>npm run dev</code> เห็น <code>localhost:5173</code> ไหม — นั่นคือเซิร์ฟเวอร์ของ Vite ที่ให้บริการหน้า React · หน่วยนี้เราจะสร้างเซิร์ฟเวอร์ของเราเองอีกตัวที่พอร์ต 3001 แล้วให้ทั้งสองคุยกัน</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 3</span>
+    <ul>
+      <li>HTTP คือกติกาที่เบราว์เซอร์กับเซิร์ฟเวอร์ใช้คุยกัน — เป็นคู่ request/response เสมอ</li>
+      <li>method บอกว่าอยากทำอะไร: GET อ่าน · POST สร้าง · PUT แก้ · DELETE ลบ</li>
+      <li>GET ต้องอ่านอย่างเดียว ห้ามเปลี่ยนข้อมูล</li>
+      <li>URL บอกที่อยู่เซิร์ฟเวอร์ + พอร์ต + path · พอร์ตบอกว่าคุยกับโปรแกรมตัวไหน</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 3.5 · EXPLORE ════════ -->
+<section class="ch" id="c3b">
+  <p class="ch-num">บทที่ 3.5 · กลุ่มปูพื้นฐาน <span class="wheretag room">🏫 ทำในห้อง</span></p>
+  <h2>รู้จัก API ด้วยของจริงก่อนสร้างเอง</h2>
+  <p class="readtime">เวลาอ่าน ≈ 11 นาที · ทำในห้อง ยังไม่เขียนโค้ด</p>
+
+  <p>ก่อนจะลงมือสร้าง API เอง เราจะ <strong>"เห็น" API ที่คนอื่นสร้างไว้แล้วทำงานก่อน</strong> — เหมือนหัดอ่านหนังสือก่อนหัดเขียน · ถ้าเข้าใจว่า API หน้าตาเป็นอย่างไรจากฝั่งผู้ใช้ พอไปสร้างเองจะเข้าใจว่ากำลังทำอะไรให้ใคร</p>
+
+  <div class="box analogy">
+    <span class="h">🟪 ทำไมต้องดูของจริงก่อน</span>
+    <p style="margin:0">ลองนึกถึงการเรียนทำอาหาร — ก่อนลงมือทำเอง เราชิมอาหารที่ร้านทำก่อน เพื่อรู้ว่าเป้าหมายรสชาติเป็นอย่างไร · การเล่นกับ API จริงก็เหมือนกัน ทำให้เรารู้ว่า "API ที่ดีตอบกลับมาแบบไหน" ก่อนจะสร้างของเราเอง</p>
+  </div>
+
+  <h3>3.5.1 Public API — API ฟรีที่ให้เราลองเล่น</h3>
+
+  <div class="term">
+    <div class="w">Public API</div>
+    <p>API ที่<strong>เปิดให้ใครก็ได้เรียกใช้ฟรี</strong> มักไม่ต้องสมัครสมาชิก · มีไว้ให้นักพัฒนาทดลองและเรียนรู้ · เราจะใช้ตัวหนึ่งชื่อ <strong>JSONPlaceholder</strong> ที่จำลองข้อมูลโพสต์ ผู้ใช้ และคอมเมนต์</p>
+  </div>
+
+  <p>ลองเปิด URL นี้ในเบราว์เซอร์ตอนนี้เลย</p>
+
+<pre><code>https://jsonplaceholder.typicode.com/posts/1</code></pre>
+
+  <p>คุณจะเห็นข้อมูล JSON ตอบกลับมาแบบนี้ — <strong>นี่คือ response จริงจากเซิร์ฟเวอร์จริง</strong></p>
+
+<pre><code>{
+  <span class="c-str">"userId"</span>: <span class="c-num">1</span>,
+  <span class="c-str">"id"</span>: <span class="c-num">1</span>,
+  <span class="c-str">"title"</span>: <span class="c-str">"sunt aut facere..."</span>,
+  <span class="c-str">"body"</span>: <span class="c-str">"quia et suscipit..."</span>
+}</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 โครงข้อมูลนี้คุ้น ๆ ไหม</span>
+    <p style="margin:0">โครง <code>posts</code> ของ JSONPlaceholder คล้ายกับ <code>requests</code> ของ Campus Service Request ที่เราทำ — มี <code>id</code> และ field ข้อมูล · ตอนสร้าง API เราจะทำแบบเดียวกันแต่เป็นคำร้องแทนโพสต์</p>
+  </div>
+
+  <h3>3.5.2 ดู request/response จริงด้วย Chrome DevTools</h3>
+
+  <p>ทุกครั้งที่เปิดเว็บ เบราว์เซอร์ส่ง request มากมายโดยที่เราไม่เห็น · <strong>Network tab ใน DevTools</strong> ให้เราเห็น request/response เหล่านั้นทั้งหมด</p>
+
+  <figure>
+    <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome DevTools Network tab">
+      <style>
+        .t35{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s35{font:300 10.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m35{font:500 10px 'IBM Plex Mono',monospace;fill:#186B8C}
+      </style>
+      <rect x="14" y="20" width="732" height="200" fill="#fff" stroke="#DBE7E0" stroke-width="1.5" rx="6"/>
+      <rect x="14" y="20" width="732" height="30" fill="#2B2B2B" rx="6"/>
+      <text x="30" y="40" style="font:600 11px 'IBM Plex Mono',monospace;fill:#fff">DevTools</text>
+      <text x="120" y="40" style="font:500 11px 'IBM Plex Mono',monospace;fill:#8FD0EC">Network</text>
+      <text x="200" y="40" class="s35" style="fill:#aaa">Console  Elements  Sources</text>
+
+      <line x1="14" y1="66" x2="746" y2="66" stroke="#DBE7E0"/>
+      <text x="30" y="60" class="m35" style="font-weight:600">Name</text>
+      <text x="330" y="60" class="m35" style="font-weight:600">Method</text>
+      <text x="440" y="60" class="m35" style="font-weight:600">Status</text>
+      <text x="540" y="60" class="m35" style="font-weight:600">Type</text>
+
+      <rect x="14" y="70" width="732" height="26" fill="#DFF0E7"/>
+      <text x="30" y="87" class="m35" style="fill:#14503A">posts/1</text>
+      <text x="330" y="87" class="m35" style="fill:#14503A">GET</text>
+      <text x="440" y="87" class="m35" style="fill:#14503A">200</text>
+      <text x="540" y="87" class="s35">xhr / json</text>
+
+      <text x="30" y="112" class="m35" style="fill:#54685E">style.css</text>
+      <text x="330" y="112" class="m35" style="fill:#54685E">GET</text>
+      <text x="440" y="112" class="m35" style="fill:#54685E">200</text>
+      <text x="540" y="112" class="s35">stylesheet</text>
+
+      <line x1="14" y1="124" x2="746" y2="124" stroke="#DBE7E0"/>
+      <text x="30" y="144" class="t35">คลิกที่แถว posts/1 แล้วดูได้:</text>
+      <text x="30" y="166" class="s35">• Headers — method, status, content-type</text>
+      <text x="30" y="184" class="s35">• Payload — ข้อมูลที่ส่งไป (ถ้าเป็น POST)</text>
+      <text x="30" y="202" class="s35">• Response — ข้อมูล JSON ที่ตอบกลับ</text>
+
+      <rect x="400" y="136" width="340" height="74" fill="#FDF4E3" stroke="#B5771A" rx="5"/>
+      <text x="416" y="156" class="t35" fill="#8A5A0E">ทักษะที่ต้องได้</text>
+      <text x="416" y="176" class="s35" fill="#8A5A0E">ชี้ได้ว่า method, status code,</text>
+      <text x="416" y="192" class="s35" fill="#8A5A0E">request body, response อยู่ตรงไหน</text>
+    </svg>
+    <figcaption><b>ภาพที่ 4</b>Network tab แสดงทุก request/response จริง · เปิดด้วย F12 แล้วเลือก Network · รีเฟรชหน้าเว็บแล้วดูรายการที่โผล่ขึ้นมา</figcaption>
+  </figure>
+
+  <div class="box inclass">
+    <span class="h">🏫 ทำในห้อง · CP00b</span>
+    <p style="margin:0">เปิดเว็บอะไรก็ได้ที่คุณใช้ประจำ → กด F12 → แท็บ Network → รีเฟรช · ดูว่ามี request กี่อัน แต่ละอัน method อะไร status เท่าไร · <strong>หาให้เจอว่า request ไหนได้ข้อมูล JSON กลับมา</strong></p>
+  </div>
+
+  <h3>3.5.3 ยิง request เองด้วย Postman หรือ Thunder Client</h3>
+
+  <p>เบราว์เซอร์ยิงได้แค่ GET (พิมพ์ URL แล้ว Enter) · แต่ถ้าอยากลอง POST หรือ DELETE ต้องใช้เครื่องมือเฉพาะ</p>
+
+  <div class="term">
+    <div class="w">Postman / Thunder Client</div>
+    <p>โปรแกรมสำหรับ<strong>ยิง request ไปหา API แล้วดู response</strong> โดยไม่ต้องเขียนโค้ด · เลือก method ได้ (GET/POST/DELETE) ใส่ body ได้ ดู status code ได้ · <strong>Postman</strong> เป็นโปรแกรมแยก · <strong>Thunder Client</strong> เป็นส่วนขยายใน VS Code เบากว่า ไม่ต้องติดตั้งเพิ่ม</p>
+  </div>
+
+  <table class="d">
+    <tr><th>เครื่องมือ</th><th>ข้อดี</th><th>เหมาะกับ</th></tr>
+    <tr><td><strong>Postman</strong></td><td>ครบเครื่อง เก็บ collection ได้ ทีมใช้ร่วมกันได้</td><td>งานจริง มาตรฐานอุตสาหกรรม</td></tr>
+    <tr><td><strong>Thunder Client</strong></td><td>อยู่ใน VS Code ไม่ต้องสลับหน้าต่าง เบา</td><td>ทดสอบเร็ว ๆ ระหว่างเขียนโค้ด</td></tr>
+  </table>
+
+  <div class="box inclass">
+    <span class="h">🏫 ทำในห้อง · CP00c</span>
+    <p style="margin:0">ใช้ Postman หรือ Thunder Client ยิง request เหล่านี้ไปที่ JSONPlaceholder แล้วดู response กับ status code</p>
+    <ul style="margin:10px 0 0">
+      <li><code>GET https://jsonplaceholder.typicode.com/posts</code> — ดูทั้งหมด (จะได้ status อะไร)</li>
+      <li><code>GET https://jsonplaceholder.typicode.com/posts/1</code> — ดูอันเดียว</li>
+      <li><code>POST https://jsonplaceholder.typicode.com/posts</code> พร้อม body — ลองสร้าง (จะได้ status อะไร)</li>
+    </ul>
+  </div>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ตอนยิง <code>POST</code> สร้างโพสต์ใหม่สำเร็จ คุณคิดว่าจะได้ status code อะไรกลับมา · (คำใบ้: ไม่ใช่ 200)</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>ได้ <code>201 Created</code> — เพราะสร้างของใหม่สำเร็จ · เราจะเรียนเรื่อง status code เต็ม ๆ ในบทที่ 9 แต่ตอนนี้คุณเห็นของจริงมาแล้วว่า POST สำเร็จตอบ 201 ไม่ใช่ 200</p>
+      <p style="margin:0"><strong>นี่คือประโยชน์ของการดูของจริงก่อน</strong> — พอถึงตอนสร้าง API เอง คุณจะรู้แล้วว่าควรตอบ status อะไร เพราะเคยเห็นมาแล้ว</p>
+    </div>
+  </details>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 3.5</span>
+    <ul>
+      <li>รู้จัก API จากฝั่งผู้ใช้ก่อนสร้างเอง — เหมือนหัดอ่านก่อนหัดเขียน</li>
+      <li>public API เช่น JSONPlaceholder ให้ลองเล่นฟรี</li>
+      <li>Chrome DevTools → Network ดู request/response จริงได้</li>
+      <li>Postman/Thunder Client ยิง request เองได้ทุก method ดู status code ได้</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 4 ════════ -->
+<section class="ch" id="c4">
+  <p class="ch-num">บทที่ 4 · กลุ่ม Express</p>
+  <h2>Express คืออะไร และทำไมไม่เขียน Node เปล่า ๆ</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <p>Node.js เปิดเซิร์ฟเวอร์ได้ด้วยตัวเอง แต่โค้ดจะยาวและยุ่งยากมาก · ลองดูเซิร์ฟเวอร์ Node เปล่า ๆ ที่แค่ตอบ "hello"</p>
+
+<pre><code><span class="c-key">import</span> http <span class="c-key">from</span> <span class="c-str">'node:http'</span>;
+
+<span class="c-key">const</span> server = http.<span class="c-fn">createServer</span>((req, res) => {
+  <span class="c-key">if</span> (req.url === <span class="c-str">'/'</span> &amp;&amp; req.method === <span class="c-str">'GET'</span>) {
+    res.<span class="c-fn">writeHead</span>(<span class="c-num">200</span>, { <span class="c-str">'Content-Type'</span>: <span class="c-str">'text/plain'</span> });
+    res.<span class="c-fn">end</span>(<span class="c-str">'hello'</span>);
+  } <span class="c-key">else</span> {
+    res.<span class="c-fn">writeHead</span>(<span class="c-num">404</span>);
+    res.<span class="c-fn">end</span>();
+  }
+});
+server.<span class="c-fn">listen</span>(<span class="c-num">3001</span>);</code></pre>
+
+  <p>สังเกตว่าเราต้องเช็ค <code>req.url</code> และ <code>req.method</code> เองทุกครั้ง ต้องตั้ง header เอง · ถ้ามี 10 เส้นทางก็ต้องเขียน if ซ้อนกัน 10 อัน — ยุ่งมาก</p>
+
+  <div class="term">
+    <div class="w">Express.js</div>
+    <p>package ที่มาช่วยจัดการงานซ้ำ ๆ ของการทำเซิร์ฟเวอร์ให้ · แทนที่จะเช็ค url และ method เอง Express ให้เราเขียนสั้น ๆ ว่า "ถ้ามี GET ที่ /api/requests ให้ทำแบบนี้" · เป็น package ที่นิยมที่สุดสำหรับทำเซิร์ฟเวอร์ด้วย Node</p>
+  </div>
+
+  <p>โค้ดเดียวกันด้วย Express</p>
+
+<pre><code><span class="c-key">import</span> express <span class="c-key">from</span> <span class="c-str">'express'</span>;
+<span class="c-key">const</span> app = <span class="c-fn">express</span>();
+
+app.<span class="c-fn">get</span>(<span class="c-str">'/'</span>, (req, res) => {
+  res.<span class="c-fn">send</span>(<span class="c-str">'hello'</span>);
+});
+
+app.<span class="c-fn">listen</span>(<span class="c-num">3001</span>);</code></pre>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับของที่คุ้น</span>
+    <p style="margin:0">Node เปล่ากับ Express เหมือน<strong>ทำอาหารจากวัตถุดิบดิบ กับ ใช้ชุดเครื่องปรุงสำเร็จ</strong> · ทำเองจากศูนย์ได้ทุกอย่างแต่ช้าและพลาดง่าย · Express เตรียมของที่ใช้บ่อยไว้ให้ เราโฟกัสที่ตรรกะของแอปได้เลย · เหมือน React ที่ช่วยจัดการ DOM ให้เราไม่ต้องเขียน <code>document.createElement</code> เอง</p>
+  </div>
+
+  <h3>4.1 โครงเซิร์ฟเวอร์ Express 3 ส่วน</h3>
+
+  <figure>
+    <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="โครงสร้างเซิร์ฟเวอร์ Express">
+      <style>
+        .t4{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s4{font:300 11px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m4{font:500 11px 'IBM Plex Mono',monospace;fill:#14503A}
+      </style>
+      <rect x="14" y="20" width="732" height="52" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5" rx="5"/>
+      <text x="30" y="42" class="t4">1 · สร้าง app</text>
+      <text x="30" y="61" class="m4">const app = express();</text>
+      <text x="420" y="52" class="s4">เริ่มต้นเซิร์ฟเวอร์เปล่า ๆ</text>
+
+      <path d="M380 74 L380 84" stroke="#BFD2C8" stroke-width="2" marker-end="url(#e1)"/>
+      <rect x="14" y="88" width="732" height="52" fill="#fff" stroke="#186B8C" stroke-width="1.5" rx="5"/>
+      <text x="30" y="110" class="t4">2 · กำหนด route</text>
+      <text x="30" y="129" class="m4">app.get('/api/requests', (req, res) => {...})</text>
+      <text x="470" y="120" class="s4">บอกว่า path ไหน ทำอะไร</text>
+
+      <path d="M380 142 L380 152" stroke="#BFD2C8" stroke-width="2" marker-end="url(#e1)"/>
+      <rect x="14" y="156" width="732" height="46" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5" rx="5"/>
+      <text x="30" y="178" class="t4">3 · เปิดรับคำขอ</text>
+      <text x="30" y="196" class="m4">app.listen(3001)</text>
+      <text x="420" y="185" class="s4">เริ่มรอรับคำขอที่พอร์ต 3001</text>
+
+      <defs><marker id="e1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#BFD2C8"/></marker></defs>
+    </svg>
+    <figcaption><b>ภาพที่ 5</b>ทุกเซิร์ฟเวอร์ Express มีสามส่วนนี้เสมอ — สร้าง app, กำหนด route, เปิดรับคำขอ · CP01 คือการเขียนสามบรรทัดนี้</figcaption>
+  </figure>
+
+  <div class="box note">
+    <span class="h">🟨 Express เวอร์ชัน 5</span>
+    <p style="margin:0">เราใช้ Express 5 ซึ่งเป็นเวอร์ชันล่าสุด · โค้ดส่วนใหญ่เหมือน Express 4 ที่เจอในบทเรียนเก่าทั่วไป แต่จัดการ error ของฟังก์ชัน async ได้ดีขึ้น ซึ่งเราจะเห็นประโยชน์ใน Week 07</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 4</span>
+    <ul>
+      <li>Node เปิดเซิร์ฟเวอร์เองได้ แต่โค้ดยาวและต้องจัดการทุกอย่างเอง</li>
+      <li>Express ช่วยจัดการงานซ้ำ ๆ ให้ เขียน route สั้นลงมาก</li>
+      <li>เซิร์ฟเวอร์ Express มี 3 ส่วน: สร้าง app → กำหนด route → เปิดรับคำขอ</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 5 ════════ -->
+<section class="ch" id="c5">
+  <p class="ch-num">บทที่ 5 · กลุ่ม Express</p>
+  <h2>Routing — เซิร์ฟเวอร์เลือกตอบอย่างไร</h2>
+  <p class="readtime">เวลาอ่าน ≈ 11 นาที</p>
+
+  <p>คำว่า routing คุณเจอมาแล้วใน Week 05 ตอน React Router — แนวคิดเหมือนกัน แต่คนละที่</p>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับ Week 05</span>
+    <p><strong>React Router</strong> — URL เปลี่ยน แล้วเลือกว่าจะแสดง component ไหน (ทำในเบราว์เซอร์)</p>
+    <p style="margin:0"><strong>Express routing</strong> — คำขอเข้ามา แล้วเลือกว่าจะรันโค้ดไหนตอบกลับ (ทำในเซิร์ฟเวอร์) · แนวคิด "จับคู่ URL กับสิ่งที่จะทำ" เหมือนกัน</p>
+  </div>
+
+  <div class="term">
+    <div class="w">Route</div>
+    <p>คู่ของ <strong>method + path</strong> กับ<strong>โค้ดที่จะทำ</strong>เมื่อมีคำขอตรงกับคู่นั้น · เช่น "GET ที่ /api/requests" คู่กับ "ส่งรายการคำร้องกลับไป"</p>
+  </div>
+
+  <h3>5.1 หน้าตาของ route</h3>
+
+<pre><code>app.<span class="c-hl">get</span>(<span class="c-hl">'/api/requests'</span>, (req, res) => {
+  <span class="c-com">// โค้ดที่ทำเมื่อมี GET ที่ path นี้</span>
+  res.<span class="c-fn">json</span>(requests);
+});
+<span class="c-com">   └──┬──┘ └──────┬──────┘  └──────────┬──────────┘</span>
+<span class="c-com">   method     path              handler (โค้ดที่ทำ)</span></code></pre>
+
+  <div class="term">
+    <div class="w">Handler (route handler)</div>
+    <p>ฟังก์ชันที่ทำงาน<strong>เมื่อมีคำขอตรงกับ route นั้น</strong> · รับ 2 อย่างเสมอ: <code>req</code> (คำขอที่เข้ามา) และ <code>res</code> (คำตอบที่เราจะส่งกลับ) · เราเขียนในนี้ว่าจะตอบอะไร</p>
+  </div>
+
+  <h3>5.2 route ทั้งหมดของ Campus Service Request</h3>
+
+  <p>นี่คือ route ที่เราต้องสร้าง — ตรงกับฟังก์ชันใน <code>requestService.js</code> ที่ React มีอยู่แล้วจาก Week 05</p>
+
+  <table class="d">
+    <tr><th>method + path</th><th>ทำอะไร</th><th>ตรงกับฟังก์ชัน React</th></tr>
+    <tr><td><code>GET /api/requests</code></td><td>ส่งรายการคำร้องทั้งหมด</td><td><code>getRequests()</code></td></tr>
+    <tr><td><code>GET /api/requests/:id</code></td><td>ส่งคำร้องใบเดียวตามรหัส</td><td><code>getRequestById(id)</code></td></tr>
+    <tr><td><code>POST /api/requests</code></td><td>สร้างคำร้องใหม่</td><td><code>addRequest(input)</code></td></tr>
+    <tr><td><code>DELETE /api/requests/:id</code></td><td>ลบคำร้อง</td><td><code>deleteRequest(id)</code></td></tr>
+  </table>
+
+  <h3>5.3 route parameter — ส่วนที่เปลี่ยนได้ใน path</h3>
+
+  <p>สังเกต <code>:id</code> ใน path — เครื่องหมาย <code>:</code> บอกว่าส่วนนี้<strong>เปลี่ยนแปลงได้</strong> · คุณเคยเห็นแล้วใน React Router ตอน <code>requests/:requestId</code></p>
+
+<pre><code>app.<span class="c-fn">get</span>(<span class="c-str">'/api/requests/</span><span class="c-hl">:id</span><span class="c-str">'</span>, (req, res) => {
+  <span class="c-key">const</span> id = req.params.<span class="c-hl">id</span>;   <span class="c-com">// อ่านค่าจาก path</span>
+  <span class="c-com">// ถ้าเรียก /api/requests/REQ-001 → id = 'REQ-001'</span>
+});</code></pre>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้ามี route ทั้ง <code>GET /api/requests/new</code> (path คงที่) และ <code>GET /api/requests/:id</code> (path มีตัวแปร) แล้วมีคำขอ <code>GET /api/requests/new</code> เข้ามา — Express จะเลือก route ไหน</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>Express เลือก route ที่<strong>เขียนไว้ก่อน</strong> · ถ้าเขียน <code>:id</code> ไว้ก่อน คำว่า <code>new</code> จะถูกจับเป็น <code>id = 'new'</code> แทนที่จะไปที่ route <code>/new</code></p>
+      <p style="margin:0"><strong>กฎ</strong> — เขียน route ที่เจาะจง (path คงที่) ไว้<em>ก่อน</em> route ที่มีตัวแปรเสมอ · นี่คือกับดักที่พบบ่อยและ checker จะตรวจ</p>
+    </div>
+  </details>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 5</span>
+    <ul>
+      <li>route = method + path จับคู่กับ handler (โค้ดที่ทำ)</li>
+      <li>handler รับ <code>req</code> (คำขอ) และ <code>res</code> (คำตอบ) เสมอ</li>
+      <li><code>:id</code> ใน path คือส่วนที่เปลี่ยนได้ อ่านด้วย <code>req.params.id</code></li>
+      <li>เขียน route ที่เจาะจงไว้ก่อน route ที่มีตัวแปร</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 6 ════════ -->
+<section class="ch" id="c6">
+  <p class="ch-num">บทที่ 6 · กลุ่ม Express</p>
+  <h2>Request และ Response — อ่านคำขอ เขียนคำตอบ</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <p>ใน handler ทุกตัวมี 2 ตัวแปรที่ใช้ตลอด — <code>req</code> กับ <code>res</code> · บทนี้เจาะว่าแต่ละตัวใช้อ่านและเขียนอะไรได้บ้าง</p>
+
+  <h3>6.1 req — อ่านสิ่งที่ลูกค้าส่งมา</h3>
+
+  <table class="d">
+    <tr><th>อ่านจาก</th><th>ได้อะไร</th><th>ตัวอย่าง</th></tr>
+    <tr><td><code>req.params</code></td><td>ค่าจาก <code>:id</code> ใน path</td><td><code>req.params.id</code> → <code>'REQ-001'</code></td></tr>
+    <tr><td><code>req.query</code></td><td>ค่าหลัง <code>?</code> ใน URL</td><td><code>?status=pending</code> → <code>req.query.status</code></td></tr>
+    <tr><td><code>req.body</code></td><td>ข้อมูลที่แนบมากับ POST</td><td>ข้อมูลคำร้องใหม่ทั้งก้อน</td></tr>
+    <tr><td><code>req.method</code></td><td>method ที่ใช้</td><td><code>'GET'</code>, <code>'POST'</code></td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 req.body จะว่างถ้าไม่บอก Express ให้อ่าน JSON</span>
+    <p>โดยค่าเริ่มต้น Express <strong>ไม่รู้จะอ่าน body อย่างไร</strong> · ต้องบอกด้วยบรรทัดนี้ก่อน</p>
+    <pre style="margin:12px 0 0"><code>app.<span class="c-fn">use</span>(express.<span class="c-fn">json</span>());   <span class="c-com">// บอก Express ว่า body เป็น JSON</span></code></pre>
+    <p style="margin:12px 0 0">ถ้าลืมบรรทัดนี้ <code>req.body</code> จะเป็น <code>undefined</code> ตลอด แล้ว POST จะพังโดยไม่รู้สาเหตุ · นี่คือกับดักอันดับหนึ่งของมือใหม่</p>
+  </div>
+
+  <h3>6.2 res — เขียนคำตอบกลับไป</h3>
+
+  <table class="d">
+    <tr><th>เขียนด้วย</th><th>ทำอะไร</th></tr>
+    <tr><td><code>res.json(data)</code></td><td>ส่งข้อมูลกลับเป็น JSON (ใช้บ่อยที่สุด)</td></tr>
+    <tr><td><code>res.status(201)</code></td><td>ตั้งรหัสสถานะ (บทที่ 9)</td></tr>
+    <tr><td><code>res.status(404).json({...})</code></td><td>ตั้งสถานะแล้วส่งข้อมูล — ต่อกันได้</td></tr>
+    <tr><td><code>res.end()</code></td><td>จบคำตอบโดยไม่ส่งข้อมูล</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 res.json() ทำสองอย่างให้อัตโนมัติ</span>
+    <p style="margin:0">แปลง object เป็นข้อความ JSON (เหมือน <code>JSON.stringify</code> ที่ใช้ใน Week 05) และตั้ง header <code>Content-Type: application/json</code> ให้ · เบราว์เซอร์จึงรู้ว่าข้อมูลที่ได้เป็น JSON</p>
+  </div>
+
+  <h3>6.3 หนึ่งคำขอ ตอบได้ครั้งเดียว</h3>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ห้ามส่งคำตอบซ้ำ</span>
+    <p>แต่ละคำขอต้องส่งคำตอบ<strong>ครั้งเดียว</strong> · ถ้าเผลอเรียก <code>res.json()</code> สองครั้ง จะได้ error ว่า "ส่ง header ไปแล้ว"</p>
+    <pre style="margin:12px 0 0"><code>app.<span class="c-fn">get</span>(<span class="c-str">'/'</span>, (req, res) => {
+  res.<span class="c-fn">json</span>({ a: <span class="c-num">1</span> });
+  res.<span class="c-fn">json</span>({ b: <span class="c-num">2</span> });   <span class="c-bad">// error! ส่งไปแล้ว</span>
+});</code></pre>
+    <p style="margin:12px 0 0">มักเกิดตอนลืมใส่ <code>return</code> หลังส่งคำตอบในกรณี error แล้วโค้ดไหลลงไปส่งอีกครั้ง</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 6</span>
+    <ul>
+      <li><code>req</code> อ่านคำขอ: <code>params</code> (จาก :id), <code>query</code> (จาก ?), <code>body</code> (จาก POST)</li>
+      <li>ต้องมี <code>app.use(express.json())</code> ก่อน ไม่งั้น <code>req.body</code> ว่าง</li>
+      <li><code>res.json()</code> ส่ง JSON · <code>res.status()</code> ตั้งรหัส · ต่อกันได้</li>
+      <li>หนึ่งคำขอตอบได้ครั้งเดียว · อย่าลืม <code>return</code> หลังส่งคำตอบ</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 7 ════════ -->
+<section class="ch" id="c7">
+  <p class="ch-num">บทที่ 7 · กลุ่ม Express</p>
+  <h2>Middleware — ชั้นที่คำขอไหลผ่าน</h2>
+  <p class="readtime">เวลาอ่าน ≈ 12 นาที · แนวคิดใหม่ที่นามธรรมที่สุด</p>
+
+  <p>Middleware เป็นแนวคิดที่ทำให้ Express ทรงพลัง แต่ก็เป็นสิ่งที่มือใหม่งงมากที่สุด · เราจะค่อย ๆ สร้างความเข้าใจ</p>
+
+  <div class="term">
+    <div class="w">Middleware</div>
+    <p>ฟังก์ชันที่<strong>ทำงานกับคำขอ ก่อนที่มันจะถึง handler</strong> · คำขอทุกอันไหลผ่าน middleware เป็นชั้น ๆ เหมือนผ่านด่านตรวจ ก่อนถึงปลายทาง · คำว่า "middle-ware" = ของที่อยู่ตรงกลาง (ระหว่างคำขอกับคำตอบ)</p>
+  </div>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับของที่คุ้น</span>
+    <p style="margin:0">คิดถึง<strong>ด่านตรวจที่สนามบิน</strong> — ก่อนขึ้นเครื่อง (handler) คุณต้องผ่านหลายด่านเรียงกัน: เช็คอิน → ตรวจกระเป๋า → ตรวจหนังสือเดินทาง · แต่ละด่านทำหน้าที่ของตัวเองแล้วส่งต่อด่านถัดไป · middleware ก็ทำงานเรียงกันแบบนี้ ทุกคำขอผ่านทุกด่านก่อนถึง handler</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="คำขอไหลผ่าน middleware">
+      <style>
+        .t7{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s7{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m7{font:500 10px 'IBM Plex Mono',monospace;fill:#186B8C}
+      </style>
+      <rect x="10" y="70" width="90" height="52" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5" rx="5"/>
+      <text x="26" y="92" class="t7">คำขอ</text>
+      <text x="26" y="108" class="s7">เข้ามา</text>
+
+      <path d="M102 96 L130 96" stroke="#54685E" stroke-width="1.8" marker-end="url(#m7)"/>
+      <rect x="134" y="66" width="120" height="60" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5" rx="5"/>
+      <text x="150" y="88" class="t7">middleware 1</text>
+      <text x="150" y="104" class="s7">บันทึก log</text>
+      <text x="150" y="118" class="m7">next()</text>
+
+      <path d="M256 96 L284 96" stroke="#54685E" stroke-width="1.8" marker-end="url(#m7)"/>
+      <rect x="288" y="66" width="120" height="60" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5" rx="5"/>
+      <text x="304" y="88" class="t7">middleware 2</text>
+      <text x="304" y="104" class="s7">อ่าน JSON body</text>
+      <text x="304" y="118" class="m7">next()</text>
+
+      <path d="M410 96 L438 96" stroke="#54685E" stroke-width="1.8" marker-end="url(#m7)"/>
+      <rect x="442" y="66" width="130" height="60" fill="#DFF0E7" stroke="#1E7A54" stroke-width="2" rx="5"/>
+      <text x="458" y="88" class="t7">handler</text>
+      <text x="458" y="104" class="s7">route ที่ตรงกัน</text>
+      <text x="458" y="118" class="m7">res.json(...)</text>
+
+      <path d="M574 96 L602 96" stroke="#54685E" stroke-width="1.8" marker-end="url(#m7)"/>
+      <rect x="606" y="70" width="140" height="52" fill="#F5EEF8" stroke="#8E5AA8" stroke-width="1.5" rx="5"/>
+      <text x="622" y="92" class="t7" fill="#6B3B96">คำตอบ</text>
+      <text x="622" y="108" class="s7" fill="#6B3B96">ส่งกลับผู้ใช้</text>
+
+      <text x="134" y="150" class="s7">แต่ละ middleware ทำงานของตัวเอง แล้วเรียก next() เพื่อส่งต่อชั้นถัดไป</text>
+      <text x="134" y="168" class="s7" style="fill:#8F2B21">ถ้าไม่เรียก next() คำขอจะค้างตรงนั้น ไม่มีวันถึง handler</text>
+
+      <defs><marker id="m7" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#54685E"/></marker></defs>
+    </svg>
+    <figcaption><b>ภาพที่ 6</b>คำขอไหลผ่าน middleware ทีละชั้นตามลำดับที่เขียน · แต่ละชั้นเรียก <code>next()</code> เพื่อส่งต่อ · ถ้าไม่เรียก คำขอจะค้าง</figcaption>
+  </figure>
+
+  <h3>7.1 หน้าตาของ middleware</h3>
+
+<pre><code><span class="c-key">function</span> <span class="c-fn">logger</span>(req, res, <span class="c-hl">next</span>) {
+  console.<span class="c-fn">log</span>(<span class="c-str">`${req.method} ${req.url}`</span>);   <span class="c-com">// ทำงานของตัวเอง</span>
+  <span class="c-hl">next</span>();                                <span class="c-com">// ส่งต่อชั้นถัดไป</span>
+}
+
+app.<span class="c-fn">use</span>(logger);   <span class="c-com">// ติดตั้งให้ทุกคำขอผ่าน</span></code></pre>
+
+  <p>middleware มี 3 พารามิเตอร์ ต่างจาก handler ที่มี 2 — ตัวที่เพิ่มมาคือ <code>next</code> · เรียก <code>next()</code> เพื่อบอกว่า "ฉันเสร็จแล้ว ส่งต่อได้"</p>
+
+  <div class="term">
+    <div class="w">next()</div>
+    <p>ฟังก์ชันที่<strong>ส่งคำขอต่อไปยัง middleware หรือ handler ชั้นถัดไป</strong> · ถ้าลืมเรียก คำขอจะค้างอยู่ที่ middleware นั้น ผู้ใช้จะรอคำตอบไปเรื่อย ๆ จนหมดเวลา</p>
+  </div>
+
+  <h3>7.2 ลำดับสำคัญมาก</h3>
+
+  <div class="box pitfall">
+    <span class="h">🟥 middleware ทำงานตามลำดับที่เขียน</span>
+    <p>ถ้าเขียน <code>app.use(express.json())</code> <em>หลัง</em> route ที่ต้องอ่าน body — route นั้นจะอ่าน body ไม่ได้ เพราะ middleware ยังไม่ทำงานตอนที่ route ทำ</p>
+    <p style="margin:0"><strong>กฎ</strong> — middleware ที่ต้องใช้กับทุก route ให้เขียน <em>ก่อน</em> route ทั้งหมดเสมอ</p>
+  </div>
+
+  <h3>7.3 middleware ที่เราจะใช้ในหน่วยนี้</h3>
+
+  <table class="d">
+    <tr><th>middleware</th><th>ทำอะไร</th><th>ทำเมื่อ</th></tr>
+    <tr><td><code>express.json()</code></td><td>อ่าน JSON body ให้ req.body ใช้ได้</td><td>Week 06 · CP03</td></tr>
+    <tr><td>logger (เขียนเอง)</td><td>บันทึกทุกคำขอลง terminal</td><td>Week 06 · CP03</td></tr>
+    <tr><td><code>cors()</code></td><td>ให้ React ต่างพอร์ตเรียกได้</td><td>Week 07</td></tr>
+    <tr><td>error handler</td><td>จับ error รวมศูนย์</td><td>Week 07</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไม middleware ถึงมีประโยชน์</span>
+    <p style="margin:0">แทนที่จะเขียน "บันทึก log" ในทุก route (ซ้ำ 10 ที่) เราเขียน middleware ตัวเดียวแล้วทุกคำขอผ่านมันอัตโนมัติ · เป็นหลักการเดียวกับ AppLayout ใน Week 05 ที่เขียน header ครั้งเดียวใช้ทุกหน้า</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 7</span>
+    <ul>
+      <li>middleware = ฟังก์ชันที่คำขอไหลผ่านก่อนถึง handler</li>
+      <li>มี 3 พารามิเตอร์: <code>req</code>, <code>res</code>, <code>next</code> · ต้องเรียก <code>next()</code> เพื่อส่งต่อ</li>
+      <li>ทำงานตามลำดับที่เขียน · middleware ที่ใช้ทุก route เขียนก่อน route</li>
+      <li>ช่วยไม่ต้องเขียนโค้ดซ้ำในทุก route</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 8 ════════ -->
+<section class="ch" id="c8">
+  <p class="ch-num">บทที่ 8 · กลุ่ม REST</p>
+  <h2>REST — กติกาการออกแบบ API ที่คนทั้งโลกใช้</h2>
+  <p class="readtime">เวลาอ่าน ≈ 11 นาที</p>
+
+  <div class="term">
+    <div class="w">API (Application Programming Interface)</div>
+    <p><strong>ช่องทางที่โปรแกรมหนึ่งเรียกใช้อีกโปรแกรม</strong> · ในบริบทของเรา คือช่องทางที่ React (โปรแกรมหนึ่ง) เรียกใช้เซิร์ฟเวอร์ (อีกโปรแกรม) · เหมือนเมนูร้านอาหาร — บอกว่าสั่งอะไรได้บ้างและสั่งอย่างไร โดยไม่ต้องรู้ว่าครัวทำอย่างไร</p>
+  </div>
+
+  <div class="term">
+    <div class="w">REST (REpresentational State Transfer)</div>
+    <p><strong>ชุดแนวทางการออกแบบ API</strong> ที่คนส่วนใหญ่ทั้งโลกใช้ตรงกัน · ไม่ใช่เทคโนโลยีหรือ package แต่เป็น<em>กติกาว่าควรตั้งชื่อ path และใช้ method อย่างไร</em>ให้เป็นมาตรฐาน · API ที่ทำตามกติกานี้เรียกว่า RESTful</p>
+  </div>
+
+  <h3>8.1 หัวใจของ REST — มองทุกอย่างเป็น "ทรัพยากร"</h3>
+
+  <p>REST มองข้อมูลเป็น<strong>ทรัพยากร (resource)</strong> · ในแอปเราทรัพยากรคือ "คำร้อง" (requests) · แล้วใช้ method บอกว่าจะทำอะไรกับทรัพยากรนั้น</p>
+
+  <figure>
+    <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="โครงสร้าง RESTful API">
+      <style>
+        .t8{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s8{font:300 10.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m8{font:500 11px 'IBM Plex Mono',monospace}
+      </style>
+      <text x="14" y="18" class="t8">ทรัพยากรเดียว: requests · ต่างกันที่ method</text>
+
+      <rect x="14" y="30" width="360" height="40" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5" rx="5"/>
+      <text x="30" y="55" class="m8" style="fill:#14503A;font-weight:600">GET</text>
+      <text x="80" y="55" class="m8" style="fill:#14503A">/api/requests</text>
+      <text x="250" y="55" class="s8">ดูทั้งหมด</text>
+
+      <rect x="14" y="76" width="360" height="40" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5" rx="5"/>
+      <text x="30" y="101" class="m8" style="fill:#134B6E;font-weight:600">GET</text>
+      <text x="80" y="101" class="m8" style="fill:#134B6E">/api/requests/:id</text>
+      <text x="250" y="101" class="s8">ดูใบเดียว</text>
+
+      <rect x="14" y="122" width="360" height="40" fill="#FDF4E3" stroke="#B5771A" stroke-width="1.5" rx="5"/>
+      <text x="30" y="147" class="m8" style="fill:#8A5A0E;font-weight:600">POST</text>
+      <text x="90" y="147" class="m8" style="fill:#8A5A0E">/api/requests</text>
+      <text x="250" y="147" class="s8">สร้างใหม่</text>
+
+      <rect x="14" y="168" width="360" height="40" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.5" rx="5"/>
+      <text x="30" y="193" class="m8" style="fill:#8F2B21;font-weight:600">DELETE</text>
+      <text x="110" y="193" class="m8" style="fill:#8F2B21">/api/requests/:id</text>
+      <text x="250" y="193" class="s8">ลบ</text>
+
+      <rect x="396" y="30" width="350" height="178" fill="#F5EEF8" stroke="#8E5AA8" rx="5"/>
+      <text x="412" y="52" class="t8" fill="#6B3B96">สังเกตรูปแบบ</text>
+      <text x="412" y="76" class="s8">• path เป็นคำนามพหูพจน์ (requests) ไม่ใช่คำกริยา</text>
+      <text x="412" y="98" class="s8">• ไม่มี /getRequests หรือ /deleteRequest</text>
+      <text x="412" y="120" class="s8">• การกระทำบอกด้วย method ไม่ใช่ path</text>
+      <text x="412" y="142" class="s8">• path เดียวกันทำได้หลายอย่างตาม method</text>
+      <text x="412" y="172" class="t8" fill="#6B3B96">นี่คือสิ่งที่ทำให้ API</text>
+      <text x="412" y="190" class="t8" fill="#6B3B96">คาดเดาได้และเป็นมาตรฐาน</text>
+    </svg>
+    <figcaption><b>ภาพที่ 7</b>REST ใช้ path เดียวกันแต่ต่าง method เพื่อทำสิ่งต่างกัน · path เป็นคำนาม การกระทำอยู่ที่ method</figcaption>
+  </figure>
+
+  <div class="box pitfall">
+    <span class="h">🟥 กับดักที่มือใหม่ทำบ่อย — เอาคำกริยาใส่ใน path</span>
+    <div style="margin:12px 0">
+    <table class="d" style="margin:0">
+      <tr><th>แบบที่ไม่ใช่ REST</th><th>แบบ RESTful</th></tr>
+      <tr><td><code>GET /getAllRequests</code></td><td><code>GET /api/requests</code></td></tr>
+      <tr><td><code>POST /createRequest</code></td><td><code>POST /api/requests</code></td></tr>
+      <tr><td><code>POST /deleteRequest/5</code></td><td><code>DELETE /api/requests/5</code></td></tr>
+    </table>
+    </div>
+    <p style="margin:0">ฝั่งซ้ายเอาการกระทำ (get, create, delete) ใส่ใน path · ฝั่งขวาให้ method บอกการกระทำ path บอกแค่ทรัพยากร · <strong>RESTful อ่านแล้วเดาได้ทันทีว่าทำอะไร</strong></p>
+  </div>
+
+  <h3>8.2 ทำไมต้องทำตาม REST</h3>
+
+  <p>เพราะ<strong>คนทั้งโลกใช้กติกาเดียวกัน</strong> · เมื่อคุณเจอ API ที่ทำตาม REST คุณเดาได้ทันทีว่า <code>GET /users</code> ดูผู้ใช้ทั้งหมด <code>DELETE /users/5</code> ลบผู้ใช้คนที่ 5 — โดยไม่ต้องอ่านคู่มือ · API ของบริษัทใหญ่อย่าง GitHub, Twitter ก็ใช้ REST</p>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 8</span>
+    <ul>
+      <li>API = ช่องทางที่โปรแกรมเรียกใช้กัน · REST = กติกาการออกแบบ API ที่เป็นมาตรฐาน</li>
+      <li>REST มองข้อมูลเป็นทรัพยากร · path เป็นคำนาม · การกระทำอยู่ที่ method</li>
+      <li>อย่าเอาคำกริยาใส่ path — ใช้ <code>DELETE /requests/5</code> ไม่ใช่ <code>/deleteRequest/5</code></li>
+      <li>ทำตาม REST เพราะคนทั้งโลกใช้ตรงกัน อ่านแล้วเดาได้</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 9 ════════ -->
+<section class="ch" id="c9">
+  <p class="ch-num">บทที่ 9 · กลุ่ม REST</p>
+  <h2>HTTP Status Code — บอกผลด้วยตัวเลข</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <p>ทุก response มี<strong>รหัสสถานะ</strong> — ตัวเลข 3 หลักที่บอกว่าคำขอสำเร็จหรือไม่ · คุณเจอมาแล้วใน Week 05 ตอน <code>response.ok</code> และ 404</p>
+
+  <h3>9.1 จำเป็นกลุ่ม ไม่ต้องท่องทุกตัว</h3>
+
+  <p>รหัสมีเยอะ แต่แบ่งเป็นกลุ่มตามหลักร้อย · จำกลุ่มก็พอ</p>
+
+  <figure>
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="กลุ่ม status code">
+      <style>
+        .t9{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s9{font:300 10.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .n9{font:600 15px 'IBM Plex Mono',monospace}
+      </style>
+      <rect x="14" y="20" width="230" height="44" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5" rx="5"/>
+      <text x="30" y="40" class="n9" fill="#14503A">2xx</text>
+      <text x="80" y="40" class="t9">สำเร็จ</text>
+      <text x="80" y="56" class="s9">คำขอทำงานได้ตามที่ขอ</text>
+
+      <rect x="14" y="72" width="230" height="44" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5" rx="5"/>
+      <text x="30" y="92" class="n9" fill="#134B6E">3xx</text>
+      <text x="80" y="92" class="t9">เปลี่ยนเส้นทาง</text>
+      <text x="80" y="108" class="s9">ให้ไปดูที่อื่น (ไม่ใช้ในหน่วยนี้)</text>
+
+      <rect x="14" y="124" width="230" height="44" fill="#FDF4E3" stroke="#B5771A" stroke-width="1.5" rx="5"/>
+      <text x="30" y="144" class="n9" fill="#8A5A0E">4xx</text>
+      <text x="80" y="144" class="t9">ผู้ใช้ผิด</text>
+      <text x="80" y="160" class="s9">คำขอมีปัญหา เช่น ข้อมูลไม่ครบ</text>
+
+      <rect x="14" y="176" width="230" height="44" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.5" rx="5"/>
+      <text x="30" y="196" class="n9" fill="#8F2B21">5xx</text>
+      <text x="80" y="196" class="t9">เซิร์ฟเวอร์ผิด</text>
+      <text x="80" y="212" class="s9">โค้ดเราพังเอง</text>
+
+      <rect x="266" y="20" width="480" height="200" fill="#fff" stroke="#DBE7E0" rx="5"/>
+      <text x="284" y="42" class="t9">ตัวที่ใช้จริงในหน่วยนี้</text>
+      <text x="284" y="68" class="n9" style="font-size:13px" fill="#14503A">200</text><text x="330" y="68" class="s9">OK — GET สำเร็จ</text>
+      <text x="284" y="90" class="n9" style="font-size:13px" fill="#14503A">201</text><text x="330" y="90" class="s9">Created — POST สร้างสำเร็จ</text>
+      <text x="284" y="112" class="n9" style="font-size:13px" fill="#14503A">204</text><text x="330" y="112" class="s9">No Content — DELETE สำเร็จ (ไม่มีข้อมูลส่งกลับ)</text>
+      <text x="284" y="134" class="n9" style="font-size:13px" fill="#8A5A0E">400</text><text x="330" y="134" class="s9">Bad Request — ข้อมูลที่ส่งมาไม่ถูกต้อง</text>
+      <text x="284" y="156" class="n9" style="font-size:13px" fill="#8A5A0E">404</text><text x="330" y="156" class="s9">Not Found — ไม่พบทรัพยากรที่ขอ</text>
+      <text x="284" y="178" class="n9" style="font-size:13px" fill="#8F2B21">500</text><text x="330" y="178" class="s9">Internal Server Error — โค้ดเซิร์ฟเวอร์พัง</text>
+      <text x="284" y="206" class="s9" style="fill:#8E5AA8">จำ 6 ตัวนี้ก็พอสำหรับหน่วยนี้</text>
+    </svg>
+    <figcaption><b>ภาพที่ 8</b>จำกลุ่มตามหลักร้อย: 2xx สำเร็จ · 4xx ผู้ใช้ผิด · 5xx เซิร์ฟเวอร์ผิด · แล้วจำ 6 ตัวที่ใช้จริง</figcaption>
+  </figure>
+
+  <h3>9.2 ผูกกับสถานการณ์ ไม่ใช่ท่องจำ</h3>
+
+  <p>วิธีจำที่ดีที่สุดคือผูกกับ<strong>สิ่งที่เกิดขึ้นจริง</strong> ใน Campus Service Request</p>
+
+  <table class="d">
+    <tr><th>สถานการณ์</th><th>รหัสที่ถูก</th><th>ทำไม</th></tr>
+    <tr><td>ดูรายการคำร้องได้</td><td><code>200</code></td><td>สำเร็จ มีข้อมูลส่งกลับ</td></tr>
+    <tr><td>สร้างคำร้องใหม่สำเร็จ</td><td><code>201</code></td><td>สำเร็จ <em>และ</em> สร้างของใหม่ขึ้นมา</td></tr>
+    <tr><td>ลบคำร้องสำเร็จ</td><td><code>204</code></td><td>สำเร็จ แต่ไม่มีอะไรส่งกลับ</td></tr>
+    <tr><td>ส่งฟอร์มที่กรอกไม่ครบ</td><td><code>400</code></td><td>ผู้ใช้ส่งข้อมูลผิด</td></tr>
+    <tr><td>ขอคำร้อง REQ-999 ที่ไม่มี</td><td><code>404</code></td><td>ไม่พบทรัพยากรนั้น</td></tr>
+  </table>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">POST สร้างคำร้องสำเร็จ ควรตอบ <code>200</code> หรือ <code>201</code> · ทั้งสองแปลว่าสำเร็จ ต่างกันตรงไหน</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><code>201 Created</code> เจาะจงกว่า — บอกว่าสำเร็จ<strong>และมีของใหม่ถูกสร้างขึ้น</strong> · ส่วน <code>200 OK</code> แปลว่าสำเร็จเฉย ๆ</p>
+      <p style="margin:0">ใช้ <code>200</code> ก็ไม่ถึงกับผิด แต่ <code>201</code> สื่อความหมายชัดกว่าและเป็นมาตรฐาน REST · checker จะตรวจว่า POST ตอบ 201</p>
+    </div>
+  </details>
+
+  <div class="box note">
+    <span class="h">🟨 เชื่อมกับ Week 05</span>
+    <p style="margin:0">ตอน Week 05 เราเขียน <code>if (!response.ok) throw new Error(...)</code> · <code>response.ok</code> เป็น true เมื่อ status เป็น 2xx และ false เมื่อ 4xx/5xx · ตอนนี้คุณเข้าใจแล้วว่าตัวเลขพวกนั้นมาจากไหน — จากฝั่งเซิร์ฟเวอร์ที่เรากำลังจะเขียนนี่เอง</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 9</span>
+    <ul>
+      <li>status code บอกผลด้วยตัวเลข · จำกลุ่ม: 2xx สำเร็จ, 4xx ผู้ใช้ผิด, 5xx เซิร์ฟเวอร์ผิด</li>
+      <li>6 ตัวที่ใช้จริง: 200, 201, 204, 400, 404, 500</li>
+      <li>POST สำเร็จ = 201 · DELETE สำเร็จ = 204 · ไม่พบ = 404 · ข้อมูลผิด = 400</li>
+      <li>ผูกรหัสกับสถานการณ์จริง ดีกว่าท่องตาราง</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 10 ════════ -->
+<section class="ch" id="c10">
+  <p class="ch-num">บทที่ 10 · กลุ่ม REST</p>
+  <h2>แยกชั้น Route / Controller / Service</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <p>เมื่อ API โตขึ้น การเขียนทุกอย่างในไฟล์เดียวจะยุ่งเหยิง · เราแยกความรับผิดชอบเป็นชั้น เหมือนที่แยก Page/Component/Service ใน React</p>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับ Week 05</span>
+    <p style="margin:0">backend แยกชั้นด้วยหลักการเดียวกับ frontend เป๊ะ — <strong>route</strong> เหมือน App.jsx (รับคำขอ ส่งต่อ) · <strong>controller</strong> เหมือน Page (ประสานงาน) · <strong>service</strong> เหมือน requestService (จัดการข้อมูล) · ถ้าเข้าใจการแยกชั้นของ React แล้ว อันนี้คือแนวคิดเดียวกัน</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="การแยกชั้น backend">
+      <style>
+        .t10{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s10{font:300 11px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m10{font:500 10.5px 'IBM Plex Mono',monospace;fill:#186B8C}
+      </style>
+      <rect x="14" y="24" width="732" height="46" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5" rx="5"/>
+      <text x="30" y="44" class="t10">Route</text>
+      <text x="30" y="61" class="s10">รับคำขอ จับคู่ path แล้วส่งต่อ controller</text>
+      <text x="560" y="52" class="m10">requests.routes.js</text>
+
+      <path d="M380 72 L380 82" stroke="#BFD2C8" stroke-width="2" marker-end="url(#c10)"/>
+      <rect x="14" y="86" width="732" height="46" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5" rx="5"/>
+      <text x="30" y="106" class="t10">Controller</text>
+      <text x="30" y="123" class="s10">อ่าน req · ตัดสินใจ status code · เรียก service · ส่ง res</text>
+      <text x="540" y="114" class="m10">requests.controller.js</text>
+
+      <path d="M380 134 L380 144" stroke="#BFD2C8" stroke-width="2" marker-end="url(#c10)"/>
+      <rect x="14" y="148" width="732" height="46" fill="#F5EEF8" stroke="#8E5AA8" stroke-width="1.5" rx="5"/>
+      <text x="30" y="168" class="t10">Service</text>
+      <text x="30" y="185" class="s10">จัดการข้อมูล — หา เพิ่ม ลบ · ไม่รู้จัก req/res</text>
+      <text x="560" y="176" class="m10">requests.service.js</text>
+
+      <rect x="14" y="204" width="732" height="42" fill="#FDF4E3" stroke="#B5771A" rx="5"/>
+      <text x="30" y="224" class="t10" fill="#8A5A0E">ทำไมต้องแยก</text>
+      <text x="30" y="241" class="s10" fill="#8A5A0E">service ไม่รู้จัก HTTP → หน่วย 4 เปลี่ยนไปใช้ database ได้โดยแก้แค่ service ชั้นบนไม่ต้องแตะ</text>
+
+      <defs><marker id="c10" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#BFD2C8"/></marker></defs>
+    </svg>
+    <figcaption><b>ภาพที่ 9</b>route รับคำขอ · controller ประสานและตัดสิน status · service จัดการข้อมูลล้วน · service ไม่รู้จัก HTTP จึงเปลี่ยนไป database ได้ง่ายในหน่วย 4</figcaption>
+  </figure>
+
+  <table class="d">
+    <tr><th>ชั้น</th><th>รู้เรื่อง HTTP ไหม</th><th>หน้าที่</th></tr>
+    <tr><td>Route</td><td>รู้ (method, path)</td><td>จับคู่คำขอกับ controller</td></tr>
+    <tr><td>Controller</td><td>รู้ (req, res, status)</td><td>อ่านคำขอ ตัดสิน status เรียก service</td></tr>
+    <tr><td>Service</td><td><strong>ไม่รู้</strong></td><td>จัดการข้อมูลล้วน ๆ ใช้ที่ไหนก็ได้</td></tr>
+  </table>
+
+  <div class="box next">
+    <span class="h">🟦 มองไปข้างหน้า — หน่วยที่ 4</span>
+    <p style="margin:0">เหตุผลที่ service ไม่รู้จัก HTTP สำคัญมาก — ในหน่วย 4 เราจะเปลี่ยนจากเก็บข้อมูลใน memory ไปเป็นฐานข้อมูล SQLite · ถ้าแยกชั้นดี จะแก้แค่ service ชั้นบน (controller, route) ไม่ต้องแตะเลย · เหมือน Service Layer ของ React ที่เปลี่ยนจาก localStorage เป็น API โดย component ไม่ต้องแก้</p>
+  </div>
+
+  <div class="box note">
+    <span class="h">🟨 หน่วยนี้เริ่มจากง่ายก่อน</span>
+    <p style="margin:0">Week 06 เริ่มเขียนทุกอย่างในไฟล์เดียวก่อน (CP01–CP02) เพื่อให้เห็นภาพรวม แล้วค่อยแยกชั้นใน CP04 · ไม่ต้องแยกตั้งแต่แรกให้งง</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 10</span>
+    <ul>
+      <li>แยกชั้น route/controller/service เหมือน App/Page/Service ของ React</li>
+      <li>route จับคู่คำขอ · controller ประสานและตัดสิน status · service จัดการข้อมูล</li>
+      <li>service ไม่รู้จัก HTTP จึงเปลี่ยนไป database ได้ง่ายในหน่วย 4</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 11 ════════ -->
+<section class="ch" id="c11">
+  <p class="ch-num">บทที่ 11</p>
+  <h2>จากทฤษฎีสู่ Checkpoint</h2>
+  <p class="readtime">เวลาอ่าน ≈ 5 นาที</p>
+
+  <p>ทุกอย่างที่อ่านมาจะถูกใช้ตามลำดับนี้ · แต่ละ checkpoint มีคำถามที่ต้องตอบได้ ไม่ใช่แค่โค้ดรันผ่าน</p>
+
+  <table class="d">
+    <tr><th style="width:96px">CP</th><th>ทำอะไร</th><th style="width:56px">อ่านบท</th><th style="width:60px">ที่ไหน</th></tr>
+    <tr>
+      <td><strong>CP00</strong><br><span style="font-size:12px;color:#54685E">Explore</span></td>
+      <td>รู้จัก API ของจริง — public API + DevTools Network + Postman</td>
+      <td>3.5</td>
+      <td><span class="wheretag room">🏫</span></td>
+    </tr>
+    <tr>
+      <td><strong>CP01</strong><br><span style="font-size:12px;color:#54685E">Hello Server</span></td>
+      <td>เซิร์ฟเวอร์ Express ตัวแรก เปิดพอร์ต 3001</td>
+      <td>4</td>
+      <td><span class="wheretag room">🏫</span></td>
+    </tr>
+    <tr>
+      <td><strong>CP02</strong><br><span style="font-size:12px;color:#54685E">GET</span></td>
+      <td><code>GET /api/requests</code> + <code>:id</code> + 404</td>
+      <td>5, 6</td>
+      <td><span class="wheretag room">🏫</span></td>
+    </tr>
+    <tr>
+      <td><strong>CP03</strong><br><span style="font-size:12px;color:#54685E">Middleware</span></td>
+      <td>logger + <code>express.json()</code> + ลำดับ</td>
+      <td>7</td>
+      <td><span class="wheretag room">🏫</span></td>
+    </tr>
+    <tr>
+      <td><strong>CP04</strong><br><span style="font-size:12px;color:#54685E">POST</span></td>
+      <td><code>POST /api/requests</code> + validation + 201/400</td>
+      <td>6, 9</td>
+      <td><span class="wheretag room">🏫</span></td>
+    </tr>
+    <tr>
+      <td><strong>CP05</strong><br><span style="font-size:12px;color:#54685E">DELETE</span></td>
+      <td><code>DELETE /api/requests/:id</code> + 204/404</td>
+      <td>9</td>
+      <td><span class="wheretag room">🏫</span></td>
+    </tr>
+    <tr style="background:#FDF7EF">
+      <td><strong>CP06</strong><br><span style="font-size:12px;color:#54685E">Layers</span></td>
+      <td>แยกชั้น route/controller/service</td>
+      <td>10</td>
+      <td><span class="wheretag home">🏠</span></td>
+    </tr>
+    <tr style="background:#FDF7EF">
+      <td><strong>CP07</strong><br><span style="font-size:12px;color:#54685E">Validation MW</span></td>
+      <td>validation เป็น middleware + error handling</td>
+      <td>6, 7</td>
+      <td><span class="wheretag home">🏠</span></td>
+    </tr>
+    <tr style="background:#FDF7EF">
+      <td><strong>CP08</strong><br><span style="font-size:12px;color:#54685E">Test + JSON</span></td>
+      <td>Postman collection + API_TEST.md + เก็บลงไฟล์ JSON</td>
+      <td>2, 8</td>
+      <td><span class="wheretag home">🏠</span></td>
+    </tr>
+  </table>
+
+  <div class="box inclass">
+    <span class="h">🏫 ทำในห้อง — CP00 ถึง CP05</span>
+    <p style="margin:0">จบคาบทุกคนมี <strong>CRUD API ครบทำงานได้</strong> ทดสอบผ่าน Postman · เห็น backend สมบูรณ์ในห้อง ไม่ต้องรอกลับบ้าน</p>
+  </div>
+
+  <div class="box takehome">
+    <span class="h">🏠 ทำที่บ้าน — CP06 ถึง CP08</span>
+    <p style="margin:0">ต่อยอดให้ลึก — แยกชั้นให้เป็นระเบียบ, validation เป็น middleware, เก็บข้อมูลลงไฟล์ · ส่งผ่าน git repo ของตัวเอง branch <code>unit3/week-06</code> + tag <code>lab-06-submission-v1</code></p>
+  </div>
+
+  <div class="box challenge">
+    <span class="h">⭐ Challenge — คะแนนเพิ่ม (ไม่บังคับ)</span>
+    <p style="margin:0"><code>PUT /api/requests/:id</code> เปลี่ยนสถานะคำร้อง · <code>GET /api/requests?status=pending</code> กรองด้วย query string · ทำได้ทำ ได้คะแนน bonus</p>
+  </div>
+
+  <h3>สิ่งที่ต้องได้เมื่อจบ Week 06</h3>
+
+  <table class="d">
+    <tr><th>ทำงานได้แล้ว</th><th>ยังทำไม่ได้ (Week 07)</th></tr>
+    <tr>
+      <td>
+        เซิร์ฟเวอร์ Express รันที่พอร์ต 3001<br>
+        CRUD API ครบ 4 endpoint<br>
+        route param อ่าน :id ได้<br>
+        middleware logger + JSON body<br>
+        status code ถูกทุกกรณี<br>
+        แยกชั้น route/controller/service<br>
+        ทดสอบผ่าน Postman ได้
+      </td>
+      <td>
+        validation ตรวจ body ละเอียด<br>
+        error handling รวมศูนย์<br>
+        CORS ให้ React เรียกได้<br>
+        environment config (.env)<br>
+        logging ที่มีประโยชน์<br>
+        API contract เป็นเอกสาร<br>
+        <strong>เชื่อม React จริง</strong>
+      </td>
+    </tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 Week 06 ยังไม่ต่อกับ React</span>
+    <p style="margin:0">สัปดาห์นี้เราทดสอบ API ผ่าน <strong>Postman</strong> ก่อน — Postman เป็น "หน้าจอ" ให้เราเห็นว่า API ทำงานถูก · การเชื่อมกับ React จริงอยู่ Week 07 หลังจากที่ API พร้อมใช้แล้ว (มี CORS, validation, error handling)</p>
+  </div>
+
+  <div class="box next">
+    <span class="h">🟦 ก่อนเข้าคาบ</span>
+    <p style="margin:0">อ่านบทที่ 1–3 มาก่อน (Backend, Node, HTTP) · เป็นพื้นฐานล้วนไม่มีโค้ด แต่ถ้าไม่เข้าใจตรงนี้ ช่วงลงมือทำจะงงว่ากำลังทำอะไรอยู่ · บทที่ 4–10 อ่านตอนลงมือจะเข้าใจง่ายกว่า</p>
+  </div>
+</section>
+
+<footer>
+  <span>ENGSE203 · หน่วยที่ 3 · การพัฒนาส่วนหลังและบริการ RESTful API ด้วย Node.js</span>
+  <span class="m">Week 06 · CLO4 · เอกสารประกอบการสอน</span>
+</footer>
+
+</div>
+</body>
+</html>

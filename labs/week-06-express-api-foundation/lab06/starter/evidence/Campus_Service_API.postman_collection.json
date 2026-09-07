@@ -1,0 +1,37 @@
+{
+  "info": {
+    "name": "ENGSE203 Campus Service API (Week 06)",
+    "description": "ยิงทดสอบ API ที่สร้างในสัปดาห์ที่ 6 · เปิดเซิร์ฟเวอร์ด้วย npm run dev ก่อน",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [{ "key": "baseUrl", "value": "http://localhost:3001" }],
+  "item": [
+    { "name": "00 · GET / (ตรวจว่าเซิร์ฟเวอร์ทำงาน)",
+      "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/", "host": ["{{baseUrl}}"], "path": [""] } } },
+    { "name": "01 · GET /api/requests (ดูทั้งหมด → 200)",
+      "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/requests", "host": ["{{baseUrl}}"], "path": ["api","requests"] } } },
+    { "name": "02 · GET /api/requests/REQ-001 (พบ → 200)",
+      "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/requests/REQ-001", "host": ["{{baseUrl}}"], "path": ["api","requests","REQ-001"] } } },
+    { "name": "03 · GET /api/requests/REQ-999 (ไม่พบ → 404)",
+      "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/requests/REQ-999", "host": ["{{baseUrl}}"], "path": ["api","requests","REQ-999"] } } },
+    { "name": "04 · POST /api/requests (ถูกต้อง → 201)",
+      "request": { "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"requesterName\": \"ทดสอบ นักศึกษา\",\n  \"requestType\": \"แจ้งซ่อม\",\n  \"location\": \"C3-401\",\n  \"details\": \"รายละเอียดยาวพอสมควรจริง\",\n  \"priority\": \"normal\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/requests", "host": ["{{baseUrl}}"], "path": ["api","requests"] } } },
+    { "name": "05 · POST /api/requests (ไม่ครบ → 400)",
+      "request": { "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"requesterName\": \"x\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/requests", "host": ["{{baseUrl}}"], "path": ["api","requests"] } } },
+    { "name": "06 · DELETE /api/requests/REQ-003 (→ 204)",
+      "request": { "method": "DELETE", "url": { "raw": "{{baseUrl}}/api/requests/REQ-003", "host": ["{{baseUrl}}"], "path": ["api","requests","REQ-003"] } } },
+    { "name": "07 · ⭐ GET /api/requests?status=pending (กรอง)",
+      "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/requests?status=pending", "host": ["{{baseUrl}}"], "path": ["api","requests"], "query": [{ "key": "status", "value": "pending" }] } } },
+    { "name": "08 · ⭐ PUT /api/requests/REQ-001 (เปลี่ยนสถานะ)",
+      "request": { "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"status\": \"in-progress\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/requests/REQ-001", "host": ["{{baseUrl}}"], "path": ["api","requests","REQ-001"] } } }
+  ]
+}

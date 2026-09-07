@@ -1,0 +1,25 @@
+{
+  "name": "engse203-week05-campus-service-request",
+  "private": true,
+  "version": "0.3.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "check": "node scripts/check-project.mjs",
+    "build": "vite build",
+    "preview": "vite preview",
+    "verify": "npm run check && npm run build"
+  },
+  "dependencies": {
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "react-router-dom": "7.18.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "6.0.3",
+    "vite": "8.1.5"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

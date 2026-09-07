@@ -1,0 +1,58 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENGSE203 Midterm — Submission</title>
+<style>
+  *{box-sizing:border-box} body{font-family:'Sarabun','Segoe UI',sans-serif;margin:0;background:#eef1f6;color:#0f172a}
+  header{background:linear-gradient(120deg,#0e2a47,#1c5470 60%,#2f7d93);color:#fff;padding:30px 6vw 36px;position:relative}
+  .ribbon{position:absolute;top:22px;right:6vw;background:#f59e0b;color:#3b2600;font-weight:800;letter-spacing:1px;padding:8px 16px;border-radius:8px}
+  .eyebrow{color:#a9c6d8;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 4px}
+  h1{font-size:34px;margin:0 0 4px} .who{color:#dbe9f1;margin:6px 0 14px}
+  .field{display:inline-block;margin:0 12px 8px 0} .field label{display:block;font-size:12px;color:#a9c6d8;margin-bottom:3px}
+  .field input{background:rgba(255,255,255,.12);border:1px dashed rgba(255,255,255,.5);border-radius:8px;padding:8px 12px;color:#fff;font:inherit;min-width:200px}
+  .field input.s{min-width:90px}
+  main{padding:0 6vw 44px}
+  .bar{background:#fff;border:1px solid #e2e8f0;border-left:6px solid #16a34a;border-radius:12px;padding:16px 20px;margin:22px 0 14px}
+  .bar h2{margin:0 0 10px;font-size:17px}
+  .req{display:inline-block;width:32%;min-width:220px;vertical-align:top;margin-bottom:6px}
+  .req .t{font-weight:700} .req .d{color:#475569;font-size:13px} .tick{color:#16a34a;font-weight:800}
+  .card{background:#fff;border:1px solid #e5e9f0;border-top:4px solid #16a34a;border-radius:14px;padding:22px 24px;margin-bottom:20px;box-shadow:0 4px 14px rgba(15,23,42,.05)}
+  .part{color:#1d4ed8;font-weight:800;font-size:15px} .card h3{margin:6px 0 4px;font-size:22px} .meta{color:#475569;font-size:14px;margin:6px 0 14px}
+  a.btn{display:inline-block;text-decoration:none;font-size:14px;padding:9px 16px;border-radius:8px;margin:0 8px 8px 0;font-weight:600}
+  .btn.primary{background:#2b4b80;color:#fff} .btn.ghost{background:#fff;color:#2b4b80;border:1px solid #cbd5e1}
+  ul.ck{list-style:none;padding:0;margin:10px 0 0} ul.ck li{padding:6px 0;border-top:1px dashed #e5e9f0;font-size:14px} ul.ck li:first-child{border-top:none}
+  .note{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:8px;padding:12px 16px;font-size:14px;color:#5b4300;margin:0 0 22px}
+</style></head><body>
+<header>
+  <div class="ribbon">MIDTERM</div>
+  <p class="eyebrow">ENGSE203 • Midterm Examination</p>
+  <h1>Midterm Portfolio</h1>
+  <p class="who">สอบกลางภาค · ภาคปฏิบัติ (Part B)</p>
+  <div>
+    <span class="field"><label>ชื่อ–นามสกุล</label><input placeholder="กรอกชื่อ-นามสกุล"></span>
+    <span class="field"><label>รหัสนักศึกษา</label><input placeholder="รหัสนักศึกษา"></span>
+    <span class="field"><label>Sec</label><input class="s" value="SEC 1"></span>
+    <span class="field"><label>ชุดข้อสอบ</label><input class="s" value="ชุด A"></span>
+  </div>
+</header>
+<main>
+  <div class="bar"><h2>วิธีส่งงาน — ต้องครบทั้ง 3 อย่าง</h2>
+    <div class="req"><span class="tick">✔</span> <span class="t">Commit ทุก checkpoint</span><div class="d">ประวัติ commit แสดงพัฒนาการทีละขั้น</div></div>
+    <div class="req"><span class="tick">✔</span> <span class="t">Build ผ่าน</span><div class="d"><code>npm run build</code> + deploy อัตโนมัติ</div></div>
+    <div class="req"><span class="tick">✔</span> <span class="t">Pull Request + Tag</span><div class="d">tag <code>midterm-submission-v1</code></div></div>
+  </div>
+  <div class="note"><b>สำคัญ:</b> กรอกชื่อ-รหัส-Sec ด้านบน · ตรวจว่าปุ่มทั้ง 3 เปิดได้ก่อนแจ้งเสร็จ</div>
+  <div class="card">
+    <span class="part">PART B · ภาคปฏิบัติ (Coding)</span>
+    <h3>React Campus Service Request</h3>
+    <p class="meta">40 คะแนน · ทำงานทีละ checkpoint · commit ทุกครั้งที่ผ่าน</p>
+    <a class="btn primary" href="./app/">View Result (แอปที่ deploy)</a>
+    <a class="btn ghost" href="#" onclick="return false">Source (แก้ลิงก์เป็น repo ของคุณ)</a>
+    <a class="btn ghost" href="#" onclick="return false">Pull Request (แก้ลิงก์เป็น PR ของคุณ)</a>
+    <ul class="ck">
+      <li>☐ B1 · Debug บั๊ก 6 จุด + B1_BUGS.md</li>
+      <li>☐ B2 · Search (4 checkpoint)</li>
+      <li>☐ B3 · Persist "ทำเสร็จ" + รอด refresh</li>
+      <li>☐ B4 · PriorityBadge + ใช้ใน RequestCard</li>
+      <li>☐ AI_USAGE.md กรอกครบ</li>
+    </ul>
+  </div>
+</main></body></html>

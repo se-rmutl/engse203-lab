@@ -1,0 +1,35 @@
+name: Deploy Midterm to Pages
+on:
+  push:
+    branches: [ main, 'exam/**', 'midterm/**' ]   # deploy ทั้งจาก main และ branch สอบ
+  workflow_dispatch:                               # กดรันเองได้จากแท็บ Actions
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npm run build            # แอป -> dist/ (vite base = './')
+      - name: Assemble site
+        run: |
+          mkdir -p site/app
+          cp -r dist/* site/app/                 # แอปอยู่ที่ /app/
+          cp docs/index.html site/index.html     # หน้า submission อยู่ที่ /
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4
