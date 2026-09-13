@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0A1F16">
-<title>ENGSE203 Week 07 — Interactive Slides</title>
+<title>ENGSE203 Week 07 — Interactive Slides (โครงบท)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -188,27 +188,113 @@ li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
 .toc a:hover{color:var(--green);opacity:1}
 .toc .tag{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--dim);margin-left:.35rem}
 @media (max-width:900px){.toc ol{columns:2}}
+
+/* ── โครงบท ── */
+.chapbadge{position:absolute;top:2.8%;left:5%;display:flex;align-items:center;gap:.5rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.76rem;font-weight:600;letter-spacing:.08em;
+  color:var(--green);background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);
+  padding:.22rem .7rem;border-radius:999px}
+.chapbadge .of{color:var(--muted);font-weight:400}
+.chapbadge.home{color:var(--amber);background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.32)}
+.divider{justify-content:center;align-items:flex-start}
+.divider .grp{font-family:'IBM Plex Mono',monospace;font-size:.95rem;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem}
+.divider .bignum{font-family:'IBM Plex Mono',monospace;font-size:6rem;font-weight:700;
+  line-height:1;color:var(--green);margin-bottom:.4rem;letter-spacing:-.04em}
+.divider .bignum.home{color:var(--amber)}
+.divider h2{font-size:3rem;margin-bottom:.6rem}
+.divider .whatfor{font-size:1.4rem;color:var(--muted);font-weight:300;max-width:46ch;line-height:1.5}
+.divider .mins{margin-top:1.6rem;display:flex;gap:.6rem;flex-wrap:wrap}
+.recap{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.35);
+  border-radius:var(--radius);padding:1.2rem 1.5rem}
+.recap h3{color:var(--green);font-size:1.3rem;margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.6rem}
+.recap ul{margin:0 0 0 1.3rem}
+.recap li{font-size:1.24rem;margin-bottom:.45rem}
+.nextup{background:rgba(56,215,237,.08);border:1px solid rgba(56,215,237,.35);
+  border-radius:var(--radius);padding:.9rem 1.3rem;font-size:1.2rem}
+.nextup b{color:var(--cyan)}
+.whybox{background:rgba(192,132,252,.1);border:1px solid rgba(192,132,252,.4);
+  border-radius:var(--radius);padding:1.2rem 1.5rem}
+.whybox .q{font-size:1.5rem;font-weight:600;color:var(--violet);margin-bottom:.5rem}
+.whybox p{font-size:1.28rem;margin:0}
+.track{display:flex;gap:.3rem;flex-wrap:wrap;justify-content:center;margin-top:.5rem}
+.track span{width:26px;height:6px;border-radius:3px;background:rgba(169,199,184,.2)}
+.track span.done{background:var(--green)}
+.track span.now{background:var(--cyan);box-shadow:0 0 8px rgba(56,215,237,.5)}
+.track span.home{background:rgba(251,191,36,.4)}
 </style>
 </head>
 <body>
 <div class="app"><div class="stage" id="stage">
 
-<!-- ══ 1 TITLE ══ -->
 <section class="slide title-slide active" data-title="เปิดบทเรียน">
   <span class="eyebrow">หน่วยที่ 3 · สัปดาห์ที่ 7 · ปิดหน่วย</span>
   <h1>เชื่อม Front-end กับ Back-end<br>ให้ทำงานด้วยกันจริง</h1>
-  <p class="lead">Origin · CORS · Environment Config · API Client · Loading/Error State</p>
+  <p class="lead">10 บท · 3 กลุ่ม · เรียนครบทุกเรื่อง แล้วลงมือทำในห้อง 4 checkpoint</p>
   <div class="brandline">
-    <span class="chip">Express 5 + cors</span><span class="chip c">React 19 + Vite</span>
-    <span class="chip a">2 process · 2 พอร์ต</span><span class="chip v">CLO4 · CLO6</span>
+    <span class="chip">Origin &amp; CORS</span><span class="chip c">Environment Config</span>
+    <span class="chip a">API Client</span><span class="chip v">Contract &amp; Test</span>
   </div>
   <p style="margin-top:1.4rem"><small>→ / Space ไปต่อ · T สารบัญ · F เต็มจอ · A+ A− ปรับขนาด</small></p>
 </section>
 
-<!-- ══ 2 สถานะปัจจุบัน ══ -->
-<section class="slide" data-title="เราอยู่ตรงไหน">
-  <span class="slide-id">W07 · บท 1</span>
-  <span class="eyebrow cyan">สถานะปัจจุบัน</span>
+<section class="slide" data-title="🗺️ แผนที่คาบนี้">
+  <span class="slide-id">W07 · MAP</span>
+  <span class="eyebrow cyan">อ่านก่อน — เพื่อให้รู้ว่าเราอยู่ตรงไหนตลอดคาบ</span>
+  <h2>คาบนี้มี 10 บท แบ่งเป็น 3 กลุ่ม</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="card room">
+        <div class="ic">❓</div><h3>กลุ่ม 1 · บท 1–3</h3>
+        <p><strong>ทำไมสองฝั่งยังคุยกันไม่ได้</strong><br>สถานะปัจจุบัน · Origin · CORS</p>
+      </div>
+      <div class="card" style="border-color:rgba(56,215,237,.45)">
+        <div class="ic">🔗</div><h3>กลุ่ม 2 · บท 4–7</h3>
+        <p><strong>ต่อสองฝั่งเข้าด้วยกัน</strong><br>Env · API Client · Service Layer · สถานะ</p>
+      </div>
+      <div class="card home">
+        <div class="ic">🚀</div><h3>กลุ่ม 3 · บท 8–10</h3>
+        <p><strong>ทำให้พร้อมใช้จริง</strong><br>Logging · Contract · Test</p>
+      </div>
+    </div>
+    <div class="panel" style="border-color:rgba(251,191,36,.45)">
+      <p style="margin:0;font-size:1.22rem"><strong style="color:var(--amber)">กลุ่ม 3 เรียนในห้อง แต่ลงมือทำที่บ้าน</strong> — เพราะเวลาในคาบไม่พอ แต่ถ้าไม่เรียนก่อนจะทำที่บ้านไม่เป็น · <strong>ฟังให้เข้าใจก่อน แล้วค่อยไปทำ</strong></p>
+    </div>
+    <p style="text-align:center"><small>ทุกสไลด์จะมีป้ายมุมซ้ายบนบอกว่าอยู่บทที่เท่าไร · และมีสไลด์สรุปทุกครั้งที่จบบท</small></p>
+  </div>
+</section>
+
+<section class="slide" data-title="วิธีเรียนสัปดาห์นี้">
+  <span class="slide-id">W07 · ORIENT</span>
+  <span class="eyebrow amber">งานของสัปดาห์นี้</span>
+  <h2>เรียน 10 บท · ลงมือ 4 checkpoint ในห้าง</h2>
+  <div class="body center">
+    <table>
+      <tr><th style="width:120px">บท</th><th>เรียนเรื่อง</th><th style="width:200px">ลงมือทำเมื่อไร</th></tr>
+      <tr><td>1 – 3</td><td>ทำไมสองฝั่งยังคุยกันไม่ได้</td><td><span class="where room">🏫 CP09 · CP10</span></td></tr>
+      <tr><td>4 – 7</td><td>ต่อสองฝั่งเข้าด้วยกัน</td><td><span class="where room">🏫 CP10 · CP11 · CP12</span></td></tr>
+      <tr><td>8 – 10</td><td>ทำให้พร้อมใช้จริง</td><td><span class="where home">🏠 CP13–CP16 ที่บ้าน</span></td></tr>
+    </table>
+    <div class="panel" style="border-color:rgba(251,191,36,.45)">
+      <p style="margin:0;font-size:1.2rem"><strong style="color:var(--amber)">ต้องรัน 2 โปรแกรมพร้อมกัน</strong> — API ที่ <code>:3001</code> และ React ที่ <code>:5173</code> · debug ต้องดูสองที่ — DevTools ของเบราว์เซอร์ และ terminal ของ API</p>
+    </div>
+    <div class="note"><p style="margin:0"><strong>starter ที่แจกมี API ของ Week 06 เสร็จให้แล้ว</strong> — ใครทำ Week 06 ไม่จบก็เริ่มพร้อมเพื่อนได้</p></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 1 · สถานะปัจจุบัน">
+  <span class="grp">กลุ่ม 1 · ทำไมสองฝั่งยังคุยกันไม่ได้</span>
+  <p class="bignum">01</p>
+  <h2>สถานะปัจจุบัน</h2>
+  <p class="whatfor">เรามี React จาก Week 05 และ API จาก Week 06 แล้ว — แต่ทั้งสองยังไม่เคยคุยกัน วันนี้จะต่อให้ติด</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 8 นาที</span></div>
+  <div class="track"><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="มีสองฝั่งแต่ยังไม่ต่อกัน">
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 10</span> · สถานะปัจจุบัน</span>
+  <span class="eyebrow cyan">เราอยู่ตรงไหน</span>
   <h2>มีสองฝั่งแล้ว แต่ยังไม่ได้ต่อกัน</h2>
   <div class="fig">
     <svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="สองฝั่งที่ยังไม่ต่อกัน">
@@ -219,7 +305,6 @@ li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
       <rect x="46" y="118" width="308" height="40" rx="8" fill="rgba(4,14,20,.7)" stroke="rgba(169,199,184,.3)"/>
       <text x="66" y="144" class="svg-m" fill="#7AA5FF">requestService.js</text>
       <text x="46" y="177" class="svg-s">อ่าน localStorage · ข้อมูลอยู่ในเบราว์เซอร์</text>
-
       <text x="530" y="26" class="svg-lbl" fill="#4ADE80">WEEK 06 · BACKEND</text>
       <rect x="520" y="38" width="360" height="150" rx="14" fill="rgba(74,222,128,.1)" stroke="#4ADE80" stroke-width="2"/>
       <rect x="546" y="66" width="308" height="40" rx="8" fill="rgba(4,14,20,.7)" stroke="rgba(169,199,184,.3)"/>
@@ -227,12 +312,10 @@ li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
       <rect x="546" y="118" width="308" height="40" rx="8" fill="rgba(4,14,20,.7)" stroke="rgba(169,199,184,.3)"/>
       <text x="566" y="144" class="svg-m" fill="#4ADE80">4 endpoint พร้อมใช้</text>
       <text x="546" y="177" class="svg-s">ทดสอบผ่าน Postman แล้ว · ยังไม่มีใครเรียก</text>
-
       <path d="M392 112 L505 112" stroke="#FB7185" stroke-width="3" stroke-dasharray="8 6"/>
       <circle cx="450" cy="112" r="22" fill="rgba(251,113,133,.2)" stroke="#FB7185" stroke-width="2.5"/>
       <text x="450" y="121" text-anchor="middle" style="font-size:22px;font-weight:700;fill:#FB7185">?</text>
       <text x="450" y="160" text-anchor="middle" class="svg-s" fill="#FB7185">ยังไม่ได้ต่อกัน</text>
-
       <rect x="20" y="206" width="860" height="56" rx="12" fill="rgba(192,132,252,.12)" stroke="#C084FC" stroke-width="2"/>
       <text x="450" y="230" text-anchor="middle" class="svg-t" fill="#C084FC">งานวันนี้ — ต่อสองฝั่งเข้าด้วยกัน</text>
       <text x="450" y="252" text-anchor="middle" class="svg-s" fill="#C084FC">แก้แค่ Service Layer ฝั่งเดียว · component ทั้งหมดไม่ต้องแตะ</text>
@@ -240,27 +323,9 @@ li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
   </div>
 </section>
 
-<!-- ══ 3 วิธีเรียน ══ -->
-<section class="slide" data-title="วิธีเรียนสัปดาห์นี้">
-  <span class="slide-id">W07 · ORIENT</span>
-  <span class="eyebrow amber">อ่านก่อนเริ่ม</span>
-  <h2>วิธีเรียนสัปดาห์นี้</h2>
-  <div class="body">
-    <div class="three">
-      <div class="card room"><div class="ic">🏫</div><h3>ในห้อง · CP09–CP12</h3><p>เจอ CORS error จริง → แก้ → เชื่อม React กับ API → loading/error state</p></div>
-      <div class="card home"><div class="ic">🏠</div><h3>ที่บ้าน · CP13–CP16</h3><p>PUT · morgan · API contract · automated test</p></div>
-      <div class="card ch"><div class="ic">⭐</div><h3>Challenge</h3><p>AppError · asyncHandler · retry · คะแนนเพิ่ม</p></div>
-    </div>
-    <div class="panel" style="border-color:rgba(251,191,36,.45)">
-      <p style="margin:0;font-size:1.2rem"><strong style="color:var(--amber)">สิ่งที่ต่างจากทุกสัปดาห์ที่ผ่านมา</strong> — ต้องรัน <strong>2 โปรแกรมพร้อมกัน</strong> · API ที่ <code>:3001</code> และ React ที่ <code>:5173</code> · debug ต้องดูสองที่ — DevTools ของเบราว์เซอร์ และ terminal ของ API</p>
-    </div>
-  </div>
-</section>
-
-<!-- ══ 4 QUIZ เปิด ══ -->
-<section class="slide" data-title="Quiz: ต่อได้เลยไหม">
-  <span class="slide-id">W07 · บท 1</span>
-  <span class="eyebrow amber">เปิดหัวข้อด้วยคำถาม</span>
+<section class="slide " data-title="Quiz: ต่อได้เลยไหม">
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 10</span> · สถานะปัจจุบัน</span>
+  <span class="eyebrow amber">ลองคิดก่อน</span>
   <h2>ถ้าแก้ให้เรียก API เลย จะทำงานได้ไหม</h2>
   <div class="body center">
     <pre style="font-size:1.05rem;margin:0"><code><span class="c">// แก้ requestService.js ให้เรียก API ตรง ๆ</span>
@@ -277,14 +342,35 @@ li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
       </div>
       <p class="fb"></p>
     </div>
-    <div class="wrong"><p style="margin:0">React อยู่พอร์ต <strong>5173</strong> · API อยู่ <strong>3001</strong> — เบราว์เซอร์ถือว่าเป็น<strong>คนละที่</strong> และห้ามเรียกข้ามกันโดยไม่ได้รับอนุญาต</p></div>
+    <div class="wrong"><p style="margin:0">React อยู่พอร์ต <strong>5173</strong> · API อยู่ <strong>3001</strong> — เบราว์เซอร์ถือว่าเป็น<strong>คนละที่</strong> · <strong>บทที่ 2 จะอธิบายว่าทำไม</strong></p></div>
   </div>
 </section>
 
-<!-- ══ 5 Origin SVG ══ -->
-<section class="slide" data-title="Origin คืออะไร">
-  <span class="slide-id">W07 · บท 2</span>
-  <span class="eyebrow">รากของเรื่องทั้งหมด</span>
+<section class="slide " data-title="✓ สรุปบทที่ 1">
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 10</span> · สถานะปัจจุบัน</span>
+  
+  <h2>จบบทที่ 1 — สถานะปัจจุบัน</h2>
+  <div class="body center">
+    <div class="recap">
+      <h3>✓ สิ่งที่ต้องจำจากบทนี้</h3>
+      <ul><li>มี frontend (W05) และ API (W06) แล้ว แต่ยังไม่ได้ต่อกัน</li><li>เรียกตรง ๆ ไม่ได้เพราะติด CORS — คนละพอร์ตถือเป็นคนละที่</li><li>งานวันนี้แก้ 5 จุด แต่ <strong>ไม่มี component อยู่ในนั้นเลย</strong></li></ul>
+    </div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 2 — ทำไมเบราว์เซอร์ถึงถือว่าคนละพอร์ตเป็นคนละที่</div>
+    <div class="track"><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+  </div>
+</section>
+<section class="slide divider" data-title="บทที่ 2 · Origin และ Same-Origin Policy">
+  <span class="grp">กลุ่ม 1 · ทำไมสองฝั่งยังคุยกันไม่ได้</span>
+  <p class="bignum">02</p>
+  <h2>Origin และ Same-Origin Policy</h2>
+  <p class="whatfor">ก่อนจะเข้าใจ CORS ต้องรู้ก่อนว่าเบราว์เซอร์มองว่า "ที่เดียวกัน" คืออะไร และทำไมถึงมีกฎห้ามข้ามที่</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 11 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="Origin คืออะไร">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 10</span> · Origin & SOP</span>
+  <span class="eyebrow ">นิยามให้ถูกก่อน</span>
   <h2>Origin = protocol + host + port</h2>
   <div class="fig">
     <svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ส่วนประกอบของ origin">
@@ -300,7 +386,6 @@ li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
       <line x1="578" y1="78" x2="578" y2="112" stroke="#FBBF24" stroke-width="2.5"/>
       <text x="578" y="134" text-anchor="middle" class="svg-t" fill="#FBBF24">port</text>
       <text x="578" y="154" text-anchor="middle" class="svg-s">เลขพอร์ต</text>
-
       <rect x="40" y="210" width="820" height="62" rx="12" fill="rgba(251,113,133,.12)" stroke="#FB7185" stroke-width="2"/>
       <text x="62" y="234" class="svg-t" fill="#FB7185">ต่างแม้แต่ส่วนเดียว = คนละ origin</text>
       <text x="62" y="258" class="svg-m" style="font-size:13px" fill="#FB7185">http://localhost:5173  ≠  http://localhost:3001</text>
@@ -310,15 +395,14 @@ li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
   <p class="figcap">React กับ API อยู่<strong>เครื่องเดียวกัน</strong> แต่เบราว์เซอร์ถือว่าคนละที่ เพราะพอร์ตต่างกัน</p>
 </section>
 
-<!-- ══ 6 Same-Origin Policy ══ -->
-<section class="slide" data-title="ทำไมเบราว์เซอร์ห้าม">
-  <span class="slide-id">W07 · บท 2</span>
-  <span class="eyebrow violet">ทำไมต้องมีกฎนี้</span>
+<section class="slide " data-title="ทำไมเบราว์เซอร์ห้าม">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 10</span> · Origin & SOP</span>
+  <span class="eyebrow violet">เหตุผลที่ต้องมีกฎนี้</span>
   <h2>Same-Origin Policy กันอะไร</h2>
   <div class="body center">
-    <div class="analogy">
-      <p style="margin:0 0 .6rem;font-size:1.3rem"><strong>ถ้าไม่มีกฎนี้</strong> — คุณล็อกอินธนาคารไว้แท็บหนึ่ง แล้วเปิดเว็บแปลก ๆ อีกแท็บ</p>
-      <p style="margin:0;font-size:1.3rem">เว็บแปลก ๆ นั้นจะ<strong>เขียน JavaScript เรียก API ธนาคารได้ทันที</strong> โดยใช้ session ที่คุณล็อกอินไว้ แล้วอ่านยอดเงินหรือโอนออกได้เลย</p>
+    <div class="whybox">
+      <p class="q">ถ้าไม่มีกฎนี้จะเกิดอะไร</p>
+      <p>คุณล็อกอินธนาคารไว้แท็บหนึ่ง แล้วเปิดเว็บแปลก ๆ อีกแท็บ — เว็บนั้นจะ<strong>เขียน JavaScript เรียก API ธนาคารได้ทันที</strong> โดยใช้ session ที่คุณล็อกอินไว้ แล้วอ่านยอดเงินหรือโอนออกได้เลย</p>
     </div>
     <table>
       <tr><th>เรียก API ด้วยอะไร</th><th style="width:130px">ติด CORS</th><th>เพราะอะไร</th></tr>
@@ -330,33 +414,50 @@ li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
   </div>
 </section>
 
-<!-- ══ 7 CORS flow SVG ══ -->
-<section class="slide" data-title="CORS ทำงานอย่างไร">
-  <span class="slide-id">W07 · บท 3</span>
-  <span class="eyebrow cyan">บทที่สำคัญที่สุด</span>
+<section class="slide " data-title="✓ สรุปบทที่ 2">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 10</span> · Origin & Same-Origin Policy</span>
+  
+  <h2>จบบทที่ 2 — Origin & Same-Origin Policy</h2>
+  <div class="body center">
+    <div class="recap">
+      <h3>✓ สิ่งที่ต้องจำจากบทนี้</h3>
+      <ul><li>origin = protocol + host + port · ต่างแม้แต่ส่วนเดียวถือว่าคนละที่</li><li>Same-Origin Policy เป็นกฎของ <strong>เบราว์เซอร์</strong> ไม่ใช่ของเซิร์ฟเวอร์</li><li>มีไว้กันเว็บอันตรายเรียก API ที่เราล็อกอินไว้</li><li>Postman และ curl ไม่ติดกฎนี้ เพราะไม่ใช่เบราว์เซอร์</li></ul>
+    </div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 3 — แล้วถ้าเราอยากให้ข้ามได้ล่ะ ต้องทำอย่างไร</div>
+    <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 3 · CORS — ทางออกที่เซิร์ฟเวอร์เป็นคนเปิดให้">
+  <span class="grp">กลุ่ม 1 · ทำไมสองฝั่งยังคุยกันไม่ได้</span>
+  <p class="bignum">03</p>
+  <h2>CORS — ทางออกที่เซิร์ฟเวอร์เป็นคนเปิดให้</h2>
+  <p class="whatfor">บทที่สำคัญที่สุดของกลุ่มนี้ — เข้าใจ CORS แล้วจะแก้ปัญหาถูกที่ ไม่เสียเวลาแก้ผิดฝั่ง</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 13 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="CORS ทำงานอย่างไร">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 10</span> · CORS</span>
+  <span class="eyebrow cyan">กลไกการทำงาน</span>
   <h2>CORS — เซิร์ฟเวอร์เป็นคนเปิดให้</h2>
   <div class="fig">
     <svg viewBox="0 0 900 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ขั้นตอน CORS">
       <rect x="20" y="34" width="180" height="220" rx="14" fill="rgba(122,165,255,.12)" stroke="#7AA5FF" stroke-width="2"/>
       <text x="110" y="66" text-anchor="middle" class="svg-t">🌐 เบราว์เซอร์</text>
       <text x="110" y="88" text-anchor="middle" class="svg-s">React ที่ :5173</text>
-
       <rect x="700" y="34" width="180" height="220" rx="14" fill="rgba(74,222,128,.12)" stroke="#4ADE80" stroke-width="2"/>
       <text x="790" y="66" text-anchor="middle" class="svg-t">🖥️ API</text>
       <text x="790" y="88" text-anchor="middle" class="svg-s">Express ที่ :3001</text>
-
       <path d="M206 122 L694 122" stroke="#FBBF24" stroke-width="2.5" marker-end="url(#w7a)"/>
       <text x="450" y="112" text-anchor="middle" class="svg-m" fill="#FBBF24">① GET /api/requests</text>
       <text x="450" y="140" text-anchor="middle" class="svg-s">แนบ header: Origin: http://localhost:5173</text>
-
       <path d="M694 180 L206 180" stroke="#4ADE80" stroke-width="2.5" marker-end="url(#w7b)"/>
       <text x="450" y="170" text-anchor="middle" class="svg-m" fill="#4ADE80">② 200 OK + ข้อมูล</text>
       <text x="450" y="198" text-anchor="middle" class="svg-s">แนบ header: Access-Control-Allow-Origin: http://localhost:5173</text>
-
       <rect x="240" y="212" width="420" height="58" rx="12" fill="rgba(192,132,252,.14)" stroke="#C084FC" stroke-width="2"/>
       <text x="450" y="236" text-anchor="middle" class="svg-t" fill="#C084FC">③ เบราว์เซอร์เช็ค header แล้วตัดสิน</text>
       <text x="450" y="258" text-anchor="middle" class="svg-s" fill="#C084FC">ตรงกัน → ยอมให้โค้ดอ่าน · ไม่ตรง → บล็อก ขึ้น error</text>
-
       <defs>
         <marker id="w7a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#FBBF24"/></marker>
         <marker id="w7b" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#4ADE80"/></marker>
@@ -366,9 +467,8 @@ li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
   <p class="figcap">คำขอ<strong>ไปถึงเซิร์ฟเวอร์จริง</strong>และเซิร์ฟเวอร์ทำงานไปแล้ว · เบราว์เซอร์แค่ไม่ให้โค้ดเราอ่าน response</p>
 </section>
 
-<!-- ══ 8 SIM: CORS ══ -->
-<section class="slide" data-title="🎮 CORS Simulator">
-  <span class="slide-id">W07 · บท 3</span>
+<section class="slide " data-title="🎮 CORS Simulator">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 10</span> · CORS</span>
   <span class="eyebrow amber">ลองเล่น — สลับเปิด/ปิด CORS</span>
   <h2>เห็นผลของการเปิด CORS</h2>
   <div class="body">
@@ -387,11 +487,10 @@ li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
   </div>
 </section>
 
-<!-- ══ 9 preflight ══ -->
-<section class="slide" data-title="Preflight">
-  <span class="slide-id">W07 · บท 3</span>
-  <span class="eyebrow">คำขอที่ถูกส่งไปถามก่อน</span>
-  <h2>Preflight — POST ต้องขออนุญาตก่อน</h2>
+<section class="slide " data-title="Preflight">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 10</span> · CORS</span>
+  <span class="eyebrow ">กรณีพิเศษของ POST/PUT/DELETE</span>
+  <h2>Preflight — ถูกส่งไปถามก่อน</h2>
   <div class="body center">
     <pre style="margin:0;font-size:1.02rem"><code><span class="c">// ① เบราว์เซอร์ส่งไปถามก่อน — เราไม่ได้เขียน มันทำเอง</span>
 <span class="hl">OPTIONS</span> /api/requests
@@ -407,9 +506,8 @@ Access-Control-Allow-Methods: GET,POST,PUT,DELETE
   </div>
 </section>
 
-<!-- ══ 10 QUIZ แก้ที่ไหน ══ -->
-<section class="slide" data-title="Quiz: แก้ที่ไหน">
-  <span class="slide-id">W07 · บท 3</span>
+<section class="slide " data-title="Quiz: แก้ที่ไหน">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 10</span> · CORS</span>
   <span class="eyebrow amber">ทดลองความเข้าใจ</span>
   <h2>เจอ CORS error ควรแก้ที่ไหน</h2>
   <div class="body center">
@@ -432,118 +530,174 @@ No 'Access-Control-Allow-Origin' header is present.</span></code></pre>
   </div>
 </section>
 
-<!-- ══ 11 เปิด CORS ══ -->
-<section class="slide" data-title="🏫 CP10 เปิด CORS">
-  <span class="slide-id">W07 · CP10 · 🏫</span>
-  <span class="eyebrow">Checkpoint 10 <span class="where room">🏫 ทำในห้อง</span></span>
-  <h2>เปิด CORS ใน Express</h2>
+<section class="slide " data-title="✓ สรุปบทที่ 3">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 10</span> · CORS</span>
+  
+  <h2>จบบทที่ 3 — CORS</h2>
   <div class="body center">
-    <pre style="margin:0"><code><span class="k">import</span> cors <span class="k">from</span> <span class="s">'cors'</span>;
-
-<span class="c">// ⚠ ต้องอยู่บนสุด ก่อน middleware และ route ทั้งหมด</span>
-app.<span class="f">use</span>(<span class="f">cors</span>({ origin: config.corsOrigin }));</code></pre>
-    <div class="wrong">
-      <p style="margin:0 0 .5rem"><strong>กับดัก 2 อัน</strong></p>
-      <p style="margin:0 0 .4rem"><strong>หนึ่ง · วางผิดที่</strong> — เขียนหลัง route แล้ว preflight จะไปไม่ถึง เพราะ route ตอบไปก่อน</p>
-      <p style="margin:0"><strong>สอง · ใช้ <code>origin: '*'</code></strong> — อนุญาตทุกเว็บในโลก · ตอนพัฒนาสะดวก แต่เผลอติดไปตอนใช้จริงจะเปิดช่องให้ใครก็เรียกได้</p>
+    <div class="recap">
+      <h3>✓ สิ่งที่ต้องจำจากบทนี้</h3>
+      <ul><li>CORS คือกลไกให้ <strong>เซิร์ฟเวอร์</strong> บอกเบราว์เซอร์ว่าอนุญาต origin ไหนบ้าง</li><li>คำขอไปถึงเซิร์ฟเวอร์จริงเสมอ — เบราว์เซอร์แค่บล็อกไม่ให้โค้ดอ่าน response</li><li>preflight (<code>OPTIONS</code>) ถูกส่งไปถามก่อนสำหรับ POST/PUT/DELETE</li><li>เจอ CORS error ให้แก้ที่ <strong>API</strong> ไม่ใช่ React</li></ul>
     </div>
-    <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — เปิด React แล้ว Dashboard โหลดข้อมูลจาก API ขึ้นมาได้ · Console ไม่มี error สีแดง</p></div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือทำ CP09 และ CP10</strong> — เจอ error จริงแล้วแก้</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
   </div>
 </section>
 
-<!-- ══ 12 env SVG ══ -->
-<section class="slide" data-title="Environment config">
-  <span class="slide-id">W07 · บท 4 · CP10</span>
-  <span class="eyebrow">ค่าที่เปลี่ยนตามเครื่อง</span>
-  <h2>โค้ดชุดเดียว ใช้ได้ทุกที่</h2>
-  <div class="fig">
-    <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="environment variables">
-      <rect x="340" y="20" width="220" height="56" rx="12" fill="rgba(74,222,128,.18)" stroke="#4ADE80" stroke-width="2.5"/>
-      <text x="450" y="45" text-anchor="middle" class="svg-t">โค้ดชุดเดียว</text>
-      <text x="450" y="66" text-anchor="middle" class="svg-m" fill="#4ADE80">config.port</text>
+<section class="slide" data-title="🏫 CP09 เจอ CORS error">
+  <span class="chapbadge">🏫 ลงมือทำ · CP09</span>
+  <span class="eyebrow amber">ใช้ความรู้บทที่ 1–3</span>
+  <h2>CP09 · เจอ CORS error ด้วยตาตัวเอง</h2>
+  <div class="body center">
+    <div class="whybox">
+      <p class="q">ทำไมต้องให้เจอ error ก่อนแก้</p>
+      <p>ถ้าแก้ให้เลยตั้งแต่แรก คุณจะไม่รู้ว่ากำลังแก้อะไรอยู่ · <strong>เห็นปัญหาก่อน แล้วการแก้จะมีความหมาย</strong></p>
+    </div>
+    <table style="font-size:1.18rem">
+      <tr><th style="width:60px">ขั้น</th><th>ทำอะไร</th><th style="width:230px">ต้องเห็นอะไร</th></tr>
+      <tr><td>1</td><td>แก้ <code>apiClient.js</code> ชั่วคราวให้เรียก API ตรง ๆ</td><td>—</td></tr>
+      <tr><td>2</td><td>เปิด <code>localhost:5173</code> + DevTools Console</td><td><strong style="color:var(--red)">CORS error สีแดง</strong></td></tr>
+      <tr><td>3</td><td><strong>ดู terminal ของ API</strong></td><td><code>GET /api/requests → 200</code></td></tr>
+      <tr><td>4</td><td>ยิง Postman เส้นเดียวกัน</td><td>ได้ข้อมูลปกติ ไม่มีปัญหา</td></tr>
+    </table>
+    <div class="win"><p style="margin:0"><strong>จุดสำคัญของ CP09</strong> — ขั้นที่ 3 พิสูจน์ว่า <strong>API ทำงานแล้วและตอบ 200 มาแล้ว</strong> · เบราว์เซอร์ต่างหากที่บล็อก</p></div>
+  </div>
+</section>
+<section class="slide divider" data-title="บทที่ 4 · Environment Variables">
+  <span class="grp">กลุ่ม 2 · ต่อสองฝั่งเข้าด้วยกัน</span>
+  <p class="bignum">04</p>
+  <h2>Environment Variables</h2>
+  <p class="whatfor">ที่อยู่ของ API ไม่ควรฝังไว้ในโค้ด — เพราะเครื่องนักศึกษา เครื่องทดสอบ และเซิร์ฟเวอร์จริงใช้ค่าต่างกัน</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 10 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+</section>
 
-      <path d="M390 80 L200 128" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#ev)"/>
-      <path d="M450 80 L450 128" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#ev)"/>
-      <path d="M510 80 L700 128" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#ev)"/>
-
-      <rect x="40" y="134" width="270" height="100" rx="12" fill="rgba(4,14,20,.6)" stroke="rgba(169,199,184,.35)"/>
-      <text x="175" y="160" text-anchor="middle" class="svg-t">💻 เครื่องนักศึกษา</text>
-      <text x="175" y="184" text-anchor="middle" class="svg-m" fill="#A9C7B8">.env</text>
-      <text x="175" y="206" text-anchor="middle" class="svg-s">PORT=3001</text>
-      <text x="175" y="224" text-anchor="middle" class="svg-s">NODE_ENV=development</text>
-
-      <rect x="340" y="134" width="220" height="100" rx="12" fill="rgba(4,14,20,.6)" stroke="rgba(169,199,184,.35)"/>
-      <text x="450" y="160" text-anchor="middle" class="svg-t">🧪 เครื่องทดสอบ</text>
-      <text x="450" y="184" text-anchor="middle" class="svg-m" fill="#A9C7B8">.env</text>
-      <text x="450" y="206" text-anchor="middle" class="svg-s">PORT=4000</text>
-
-      <rect x="590" y="134" width="270" height="100" rx="12" fill="rgba(4,14,20,.6)" stroke="rgba(169,199,184,.35)"/>
-      <text x="725" y="160" text-anchor="middle" class="svg-t">🌍 เซิร์ฟเวอร์จริง</text>
-      <text x="725" y="184" text-anchor="middle" class="svg-m" fill="#A9C7B8">ตั้งที่ระบบ</text>
-      <text x="725" y="206" text-anchor="middle" class="svg-s">PORT=80</text>
-      <text x="725" y="224" text-anchor="middle" class="svg-s">NODE_ENV=production</text>
-
-      <defs><marker id="ev" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="rgba(169,199,184,.5)"/></marker></defs>
-    </svg>
+<section class="slide " data-title="ทำไมต้องมี env">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 10</span> · Environment Config</span>
+  <span class="eyebrow violet">เหตุผลก่อน</span>
+  <h2>ทำไมห้ามฝังที่อยู่ API ไว้ในโค้ด</h2>
+  <div class="body center">
+    <div class="whybox">
+      <p class="q">ถ้าเขียน URL ไว้ในโค้ด แล้ววันหนึ่งย้ายขึ้นเซิร์ฟเวอร์จริง</p>
+      <p>ต้องไล่แก้<strong>ทุกที่ที่เขียน URL ไว้</strong> · ถ้ากระจาย 10 ไฟล์ก็ต้องแก้ 10 จุด ลืมที่เดียวก็พังเฉพาะจุดนั้น หาสาเหตุยาก<br>
+      และถ้าต้องสลับไปมาระหว่างเครื่องตัวเองกับเซิร์ฟเวอร์ ต้องแก้โค้ดกลับไปกลับมาทุกครั้ง — <strong>มีโอกาสเผลอ commit ค่าผิดขึ้นไป</strong></p>
+    </div>
+    <div class="fig" style="max-height:44%">
+      <svg viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="env">
+        <rect x="340" y="8" width="220" height="46" rx="12" fill="rgba(74,222,128,.18)" stroke="#4ADE80" stroke-width="2.5"/>
+        <text x="450" y="28" text-anchor="middle" class="svg-t">โค้ดชุดเดียว</text>
+        <text x="450" y="47" text-anchor="middle" class="svg-m" fill="#4ADE80">config.port</text>
+        <path d="M390 58 L200 100" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#ev)"/>
+        <path d="M450 58 L450 100" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#ev)"/>
+        <path d="M510 58 L700 100" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#ev)"/>
+        <rect x="40" y="106" width="270" height="86" rx="12" fill="rgba(4,14,20,.6)" stroke="rgba(169,199,184,.35)"/>
+        <text x="175" y="130" text-anchor="middle" class="svg-t">💻 เครื่องนักศึกษา</text>
+        <text x="175" y="154" text-anchor="middle" class="svg-s">PORT=3001</text>
+        <text x="175" y="174" text-anchor="middle" class="svg-s">NODE_ENV=development</text>
+        <rect x="340" y="106" width="220" height="86" rx="12" fill="rgba(4,14,20,.6)" stroke="rgba(169,199,184,.35)"/>
+        <text x="450" y="130" text-anchor="middle" class="svg-t">🧪 เครื่องทดสอบ</text>
+        <text x="450" y="154" text-anchor="middle" class="svg-s">PORT=4000</text>
+        <rect x="590" y="106" width="270" height="86" rx="12" fill="rgba(4,14,20,.6)" stroke="rgba(169,199,184,.35)"/>
+        <text x="725" y="130" text-anchor="middle" class="svg-t">🌍 เซิร์ฟเวอร์จริง</text>
+        <text x="725" y="154" text-anchor="middle" class="svg-s">PORT=80</text>
+        <text x="725" y="174" text-anchor="middle" class="svg-s">NODE_ENV=production</text>
+        <defs><marker id="ev" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="rgba(169,199,184,.5)"/></marker></defs>
+      </svg>
+    </div>
   </div>
 </section>
 
-<!-- ══ 13 env กับดัก ══ -->
-<section class="slide" data-title="กับดัก env">
-  <span class="slide-id">W07 · บท 4</span>
+<section class="slide " data-title="กับดัก env">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 10</span> · Environment Config</span>
   <span class="eyebrow red">กับดัก 3 อัน</span>
   <h2>เรื่องที่พลาดกันบ่อยเรื่อง .env</h2>
   <div class="body center">
-    <div class="wrong">
-      <p style="margin:0"><strong>① <code>process.env</code> ได้ string เสมอ</strong> — <code>process.env.PORT</code> ได้ <code>"3001"</code> ไม่ใช่ <code>3001</code> · ต้อง <code>Number()</code> เอง</p>
-    </div>
+    <div class="wrong"><p style="margin:0"><strong>① <code>process.env</code> ได้ string เสมอ</strong> — <code>process.env.PORT</code> ได้ <code>"3001"</code> ไม่ใช่ <code>3001</code> · ต้อง <code>Number()</code> เอง</p></div>
     <div class="wrong">
       <p style="margin:0"><strong>② ฝั่ง Vite ต้องขึ้นต้นด้วย <code>VITE_</code></strong> — ตั้งชื่อ <code>API_BASE_URL</code> เฉย ๆ จะได้ <code>undefined</code><br>
       <small>เพราะโค้ดฝั่งเบราว์เซอร์ผู้ใช้เปิดดูได้หมด · Vite จึงส่งเฉพาะตัวที่ตั้งใจให้เปิดเผย ไม่งั้นรหัสผ่านฐานข้อมูลจะหลุด</small></p>
     </div>
-    <div class="wrong">
-      <p style="margin:0"><strong>③ ห้าม commit <code>.env</code></strong> — ใส่ <code>.gitignore</code> เสมอ แล้ว commit <code>.env.example</code> ที่มีแต่ชื่อตัวแปรแทน</p>
+    <div class="wrong"><p style="margin:0"><strong>③ ห้าม commit <code>.env</code></strong> — ใส่ <code>.gitignore</code> เสมอ แล้ว commit <code>.env.example</code> ที่มีแต่ชื่อตัวแปรแทน</p></div>
+    <div class="win"><p style="margin:0"><strong>รวมการอ่านไว้ที่ <code>config.js</code> ไฟล์เดียว</strong> — เปิดไฟล์เดียวรู้ทันทีว่าแอปต้องการค่าอะไรบ้างถึงจะรันได้</p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 4">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 10</span> · Environment Variables</span>
+  
+  <h2>จบบทที่ 4 — Environment Variables</h2>
+  <div class="body center">
+    <div class="recap">
+      <h3>✓ สิ่งที่ต้องจำจากบทนี้</h3>
+      <ul><li>แยกค่าที่เปลี่ยนตามเครื่องออกจากโค้ด — โค้ดชุดเดียวใช้ได้ทุกที่</li><li>ฝั่ง API รวมการอ่านไว้ที่ <code>config.js</code> ไฟล์เดียว</li><li><code>process.env</code> ได้ string เสมอ — ต้องแปลงชนิดเอง</li><li>ฝั่ง Vite ต้องขึ้นต้นด้วย <code>VITE_</code> · ห้าม commit <code>.env</code></li></ul>
+    </div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือทำ CP10</strong> — เปิด CORS + สร้าง config.js</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 CP10 เปิด CORS + env">
+  <span class="chapbadge">🏫 ลงมือทำ · CP10</span>
+  <span class="eyebrow amber">ใช้ความรู้บทที่ 3 และ 4</span>
+  <h2>CP10 · เปิด CORS + Environment Config</h2>
+  <div class="body center">
+    <pre style="margin:0"><code><span class="c">// ① config.js — รวมค่าตั้งค่าไว้ที่เดียว</span>
+<span class="k">export const</span> config = {
+  port: <span class="f">Number</span>(process.env.PORT ?? <span class="n">3001</span>),
+  corsOrigin: process.env.CORS_ORIGIN ?? <span class="s">'http://localhost:5173'</span>,
+};
+
+<span class="c">// ② app.js — ต้องอยู่บนสุด ก่อน middleware และ route ทั้งหมด</span>
+app.<span class="f">use</span>(<span class="f">cors</span>({ origin: config.corsOrigin }));
+
+<span class="c">// ③ server.js — ใช้ config.port แทนเลขฝังในโค้ด</span>
+app.<span class="f">listen</span>(config.port, ...);</code></pre>
+    <div class="wrong"><p style="margin:0"><strong>⚠ วางผิดที่แล้วพัง</strong> — ถ้าเขียน <code>cors()</code> หลัง route คำขอ preflight จะไปไม่ถึง เพราะ route ตอบไปก่อน</p></div>
+    <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — refresh แล้ว Dashboard โหลดข้อมูลจาก API ขึ้นมาได้ · Console ไม่มี error สีแดง</p></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 5 · API Client — ชั้นกลางที่คุยกับเซิร์ฟเวอร์">
+  <span class="grp">กลุ่ม 2 · ต่อสองฝั่งเข้าด้วยกัน</span>
+  <p class="bignum">05</p>
+  <h2>API Client — ชั้นกลางที่คุยกับเซิร์ฟเวอร์</h2>
+  <p class="whatfor">ก่อนแก้ requestService เราจะสร้างชั้นใหม่ขึ้นมาก่อน เพื่อไม่ต้องเขียนโค้ดซ้ำ 6 รอบ</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 12 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="ทำไมต้องมี apiClient">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 10</span> · API Client</span>
+  <span class="eyebrow violet">เหตุผลก่อน</span>
+  <h2>ทำไมต้องเพิ่มอีกชั้น</h2>
+  <div class="body center">
+    <div class="whybox">
+      <p class="q">ถ้าไม่มีชั้นนี้จะเป็นอย่างไร</p>
+      <p>ทุกฟังก์ชันใน service ต้องเขียนเองหมด — <strong>ต่อ URL · ใส่ header · เช็ค <code>response.ok</code> · แปลง JSON · จัดการ error</strong><br>
+      service มี 6 ฟังก์ชัน = <strong>เขียนซ้ำ 6 รอบ</strong> · แก้ทีต้องแก้ 6 ที่ · ลืมที่เดียวก็พังเฉพาะจุดนั้น</p>
+    </div>
+    <div class="fig" style="max-height:42%">
+      <svg viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ชั้นของ frontend">
+        <rect x="30" y="6" width="840" height="38" rx="10" fill="rgba(122,165,255,.12)" stroke="#7AA5FF" stroke-width="2"/>
+        <text x="52" y="30" class="svg-t">Component · Page — ไม่ต้องแก้เลย</text>
+        <text x="845" y="30" text-anchor="end" class="svg-m" fill="#7AA5FF">ไม่รู้จัก HTTP</text>
+        <path d="M450 46 L450 56" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#cl)"/>
+        <rect x="30" y="60" width="840" height="38" rx="10" fill="rgba(74,222,128,.12)" stroke="#4ADE80" stroke-width="2"/>
+        <text x="52" y="84" class="svg-t">requestService.js — รู้ว่า endpoint ไหนใช้ทำอะไร</text>
+        <text x="845" y="84" text-anchor="end" class="svg-m" fill="#4ADE80">รู้จัก endpoint</text>
+        <path d="M450 100 L450 110" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#cl)"/>
+        <rect x="30" y="114" width="840" height="38" rx="10" fill="rgba(192,132,252,.12)" stroke="#C084FC" stroke-width="2"/>
+        <text x="52" y="138" class="svg-t">apiClient.js ← ไฟล์ใหม่ · ที่เดียวที่เรียก fetch()</text>
+        <text x="845" y="138" text-anchor="end" class="svg-m" fill="#C084FC">รู้จัก HTTP</text>
+        <text x="450" y="172" text-anchor="middle" class="svg-s">เหมือน middleware ฝั่ง backend — จัดการเรื่องซ้ำ ๆ ให้ทุกฟังก์ชัน</text>
+        <defs><marker id="cl" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="rgba(169,199,184,.5)"/></marker></defs>
+      </svg>
     </div>
   </div>
 </section>
 
-<!-- ══ 14 apiClient ชั้น ══ -->
-<section class="slide" data-title="apiClient">
-  <span class="slide-id">W07 · บท 5 · CP11</span>
-  <span class="eyebrow cyan">ชั้นใหม่ที่เพิ่มเข้ามา</span>
-  <h2>API Client — ที่เดียวที่เรียก fetch()</h2>
-  <div class="fig">
-    <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ชั้นของ frontend">
-      <rect x="30" y="20" width="840" height="48" rx="12" fill="rgba(122,165,255,.12)" stroke="#7AA5FF" stroke-width="2"/>
-      <text x="55" y="42" class="svg-t">Component · Page</text>
-      <text x="55" y="60" class="svg-s">DashboardPage, RequestDetailPage, NewRequestPage — ไม่ต้องแก้เลย</text>
-      <text x="845" y="50" text-anchor="end" class="svg-m" fill="#7AA5FF">ไม่รู้จัก HTTP</text>
-
-      <path d="M450 70 L450 82" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#cl)"/>
-      <rect x="30" y="86" width="840" height="48" rx="12" fill="rgba(74,222,128,.12)" stroke="#4ADE80" stroke-width="2"/>
-      <text x="55" y="108" class="svg-t">requestService.js</text>
-      <text x="55" y="126" class="svg-s">รู้ว่า endpoint ไหนใช้ทำอะไร · แปล 404 เป็น null</text>
-      <text x="845" y="116" text-anchor="end" class="svg-m" fill="#4ADE80">รู้จัก endpoint</text>
-
-      <path d="M450 136 L450 148" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#cl)"/>
-      <rect x="30" y="152" width="840" height="48" rx="12" fill="rgba(192,132,252,.12)" stroke="#C084FC" stroke-width="2"/>
-      <text x="55" y="174" class="svg-t">apiClient.js ← ไฟล์ใหม่</text>
-      <text x="55" y="192" class="svg-s">ที่เดียวที่เรียก fetch() · ต่อ URL · ใส่ header · แปลง error</text>
-      <text x="845" y="182" text-anchor="end" class="svg-m" fill="#C084FC">รู้จัก HTTP</text>
-
-      <path d="M450 202 L450 212" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#cl)"/>
-      <rect x="310" y="216" width="280" height="32" rx="10" fill="rgba(251,191,36,.14)" stroke="#FBBF24" stroke-width="2"/>
-      <text x="450" y="238" text-anchor="middle" class="svg-t" fill="#FBBF24">🖥️ Express API ที่ :3001</text>
-
-      <defs><marker id="cl" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="rgba(169,199,184,.5)"/></marker></defs>
-    </svg>
-  </div>
-  <p class="figcap">เหมือน middleware ฝั่ง backend — จัดการเรื่องซ้ำ ๆ ให้ทุกฟังก์ชัน ไม่ต้องเขียน 6 รอบ</p>
-</section>
-
-<!-- ══ 15 SIM: 4 กรณี ══ -->
-<section class="slide" data-title="🎮 4 กรณีของ apiFetch">
-  <span class="slide-id">W07 · บท 5</span>
+<section class="slide " data-title="🎮 4 กรณีของ apiFetch">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 10</span> · API Client</span>
   <span class="eyebrow amber">ลองเล่น — apiClient เจออะไรได้บ้าง</span>
   <h2>apiClient ต้องจัดการ 4 กรณี</h2>
   <div class="body">
@@ -563,10 +717,31 @@ app.<span class="f">use</span>(<span class="f">cors</span>({ origin: config.cors
   </div>
 </section>
 
-<!-- ══ 16 payoff ══ -->
-<section class="slide" data-title="⭐ payoff">
-  <span class="slide-id">W07 · บท 6 · CP11</span>
-  <span class="eyebrow violet">ช่วงเวลาสำคัญที่สุดของสัปดาห์</span>
+<section class="slide " data-title="✓ สรุปบทที่ 5">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 10</span> · API Client</span>
+  
+  <h2>จบบทที่ 5 — API Client</h2>
+  <div class="body center">
+    <div class="recap">
+      <h3>✓ สิ่งที่ต้องจำจากบทนี้</h3>
+      <ul><li>apiClient เป็นชั้นเดียวที่เรียก <code>fetch()</code> — ไม่ต้องเขียนซ้ำใน service</li><li>ต้องจัดการ 4 กรณี: ต่อไม่ได้ (0) · 4xx/5xx · 204 · 2xx ปกติ</li><li><code>fetch</code> ไม่โยน error เมื่อได้ 404 — ต้องเช็ค <code>response.ok</code> เอง</li><li><code>ApiError</code> เก็บ status ไว้ให้คนเรียกตัดสินใจ</li></ul>
+    </div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 6 — เอา apiClient ไปใช้จริงใน Service Layer</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+  </div>
+</section>
+<section class="slide divider" data-title="บทที่ 6 · เปลี่ยน Service Layer ให้เรียก API">
+  <span class="grp">กลุ่ม 2 · ต่อสองฝั่งเข้าด้วยกัน</span>
+  <p class="bignum">06</p>
+  <h2>เปลี่ยน Service Layer ให้เรียก API</h2>
+  <p class="whatfor">ช่วงเวลาสำคัญที่สุดของสัปดาห์ — เราจะเห็นผลของการออกแบบที่ทำมาตั้งแต่ Week 05</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 11 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="⭐ payoff">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 10</span> · Service Layer</span>
+  <span class="eyebrow violet">ผลของการออกแบบเมื่อ 2 สัปดาห์ก่อน</span>
   <h2>เปลี่ยนข้างใน แต่ข้างนอกเหมือนเดิม</h2>
   <div class="body center">
     <div class="g2">
@@ -600,10 +775,9 @@ app.<span class="f">use</span>(<span class="f">cors</span>({ origin: config.cors
   </div>
 </section>
 
-<!-- ══ 17 404 → null ══ -->
-<section class="slide" data-title="404 เป็น null">
-  <span class="slide-id">W07 · บท 6</span>
-  <span class="eyebrow">จุดที่ต้องคิดเป็นพิเศษ</span>
+<section class="slide " data-title="404 เป็น null">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 10</span> · Service Layer</span>
+  <span class="eyebrow ">จุดที่ต้องคิดเป็นพิเศษ</span>
   <h2>ทำไม 404 ต้องแปลงเป็น null</h2>
   <div class="body center">
     <pre style="margin:0"><code><span class="k">export async function</span> <span class="f">getRequestById</span>(requestId) {
@@ -615,54 +789,120 @@ app.<span class="f">use</span>(<span class="f">cors</span>({ origin: config.cors
     <span class="k">throw</span> error;
   }
 }</code></pre>
-    <div class="note">
-      <p style="margin:0">Week 05 <code>getRequestById</code> คืน <code>null</code> เมื่อไม่พบ และ <code>RequestDetailPage</code> เขียนไว้ว่า <code>if (!request)</code> แสดงว่าไม่พบ<br>
+    <div class="whybox">
+      <p class="q">ถ้าไม่แปลงจะเกิดอะไร</p>
+      <p>Week 05 ฟังก์ชันนี้คืน <code>null</code> เมื่อไม่พบ และ <code>RequestDetailPage</code> เขียนไว้ว่า <code>if (!request)</code> แสดงว่าไม่พบ<br>
       <strong>ถ้าปล่อยให้โยน error หน้าจอจะขึ้น "เกิดข้อผิดพลาด" แทน "ไม่พบคำร้อง"</strong> — สื่อสารผิดกับผู้ใช้</p>
     </div>
   </div>
 </section>
 
-<!-- ══ 18 สถานะ SVG ══ -->
-<section class="slide" data-title="สถานะการเรียก API">
-  <span class="slide-id">W07 · บท 7 · CP12</span>
-  <span class="eyebrow">Checkpoint 12 <span class="where room">🏫 ทำในห้อง</span></span>
+<section class="slide " data-title="✓ สรุปบทที่ 6">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 10</span> · Service Layer</span>
+  
+  <h2>จบบทที่ 6 — Service Layer</h2>
+  <div class="body center">
+    <div class="recap">
+      <h3>✓ สิ่งที่ต้องจำจากบทนี้</h3>
+      <ul><li>signature ของทุกฟังก์ชันต้องเหมือนเดิม — ไม่งั้น component พัง</li><li>ข้างในเปลี่ยนคนละเรื่อง แต่ข้างนอกเหมือนเดิมทุกอย่าง</li><li><code>getRequestById</code> ต้องแปลง 404 เป็น <code>null</code> ให้ตรงพฤติกรรมเดิม</li><li><strong>component ไม่ต้องแก้เลยแม้แต่บรรทัดเดียว</strong></li></ul>
+    </div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือทำ CP11</strong> — สร้าง apiClient + แก้ requestService</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 CP11 เชื่อม React กับ API">
+  <span class="chapbadge">🏫 ลงมือทำ · CP11</span>
+  <span class="eyebrow amber">ใช้ความรู้บทที่ 5 และ 6 · ช่วงยาวที่สุดของคาบ</span>
+  <h2>CP11 · apiClient + แก้ requestService</h2>
+  <div class="body center">
+    <table style="font-size:1.15rem">
+      <tr><th>ฟังก์ชัน</th><th style="width:180px">ต้องคืนอะไร</th><th>เรียก endpoint</th></tr>
+      <tr><td><code>getRequests(options)</code></td><td>array</td><td><code>GET /api/requests</code></td></tr>
+      <tr><td><code>getRequestById(id)</code></td><td>object หรือ <strong>null</strong></td><td><code>GET /api/requests/:id</code></td></tr>
+      <tr><td><code>addRequest(input)</code></td><td>object ที่สร้าง</td><td><code>POST /api/requests</code></td></tr>
+      <tr><td><code>deleteRequest(id)</code></td><td>array ที่เหลือ</td><td><code>DELETE /api/requests/:id</code></td></tr>
+    </table>
+    <div class="win">
+      <p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — ดู / เพิ่ม / ลบ คำร้องผ่าน API ได้ · <strong>รีเฟรชหน้าแล้วข้อมูลยังอยู่</strong> (เพราะอยู่ที่เซิร์ฟเวอร์)<br>
+      และ <strong>ยืนยันว่าไม่ได้แก้ไฟล์ใน <code>pages/</code> หรือ <code>components/</code> เลย</strong></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 7 · สถานะของการเรียก API">
+  <span class="grp">กลุ่ม 2 · ต่อสองฝั่งเข้าด้วยกัน</span>
+  <p class="bignum">07</p>
+  <h2>สถานะของการเรียก API</h2>
+  <p class="whatfor">ตอนนี้ข้อมูลอยู่คนละโปรแกรม — สิ่งที่อาจผิดพลาดมีมากขึ้น ผู้ใช้ต้องรู้ว่าเกิดอะไรขึ้น</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 10 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="ทำไมต้องมีสถานะ">
+  <span class="chapbadge">บทที่ 7 <span class="of">/ 10</span> · Loading & Error</span>
+  <span class="eyebrow violet">เหตุผลก่อน — อย่าข้ามบทนี้</span>
+  <h2>ทำไม loading กับ error ถึงสำคัญขึ้นมาก</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="panel" style="border-color:rgba(122,165,255,.4)">
+        <h3 style="color:var(--blue)">Week 05 · ข้อมูลอยู่ในเครื่อง</h3>
+        <ul style="margin-bottom:0">
+          <li>อ่านเสร็จแทบจะทันที</li>
+          <li>แทบไม่มีอะไรผิดพลาด</li>
+          <li>loading เห็นแค่แวบเดียว</li>
+        </ul>
+      </div>
+      <div class="panel" style="border-color:rgba(251,113,133,.45)">
+        <h3 style="color:var(--red)">Week 07 · ข้อมูลอยู่คนละโปรแกรม</h3>
+        <ul style="margin-bottom:0">
+          <li>API อาจ<strong>ยังไม่ได้เปิด</strong></li>
+          <li>เน็ตอาจ<strong>ช้าหรือหลุด</strong></li>
+          <li>เซิร์ฟเวอร์อาจ<strong>พังกลางคัน</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="whybox">
+      <p class="q">ถ้าไม่จัดการ ผู้ใช้จะเห็นอะไร</p>
+      <p><strong>หน้าขาวเปล่า</strong> — ไม่รู้ว่ากำลังโหลดอยู่ หรือพังไปแล้ว หรือไม่มีข้อมูล · แล้วก็กด refresh ซ้ำ ๆ โดยไม่รู้ว่าต้องทำอะไร<br>
+      <strong>นี่คือความต่างระหว่างแอปที่ใช้ได้จริงกับแอปที่ทำงานเฉพาะตอนทุกอย่างปกติ</strong></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide " data-title="4 สถานะ">
+  <span class="chapbadge">บทที่ 7 <span class="of">/ 10</span> · Loading & Error</span>
+  <span class="eyebrow ">สิ่งที่ต้องจัดการ</span>
   <h2>สี่สถานะ — แต่ error แตกย่อยได้</h2>
   <div class="fig">
     <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="สถานะของการเรียก API">
       <rect x="360" y="20" width="180" height="50" rx="12" fill="rgba(251,191,36,.16)" stroke="#FBBF24" stroke-width="2.5"/>
       <text x="450" y="44" text-anchor="middle" class="svg-t" fill="#FBBF24">⏳ loading</text>
       <text x="450" y="62" text-anchor="middle" class="svg-s">กำลังรอ API ตอบ</text>
-
       <path d="M400 74 L220 118" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#st)"/>
       <path d="M450 74 L450 118" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#st)"/>
       <path d="M500 74 L680 118" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#st)"/>
-
       <rect x="50" y="124" width="270" height="76" rx="12" fill="rgba(74,222,128,.14)" stroke="#4ADE80" stroke-width="2"/>
       <text x="185" y="150" text-anchor="middle" class="svg-t" fill="#4ADE80">✓ success</text>
       <text x="185" y="172" text-anchor="middle" class="svg-s">ได้ข้อมูลแล้ว</text>
       <text x="185" y="191" text-anchor="middle" class="svg-s">แสดงรายการ</text>
-
       <rect x="350" y="124" width="200" height="76" rx="12" fill="rgba(4,14,20,.6)" stroke="rgba(169,199,184,.4)" stroke-width="2"/>
       <text x="450" y="150" text-anchor="middle" class="svg-t">— empty</text>
       <text x="450" y="172" text-anchor="middle" class="svg-s">สำเร็จ แต่ไม่มีรายการ</text>
       <text x="450" y="191" text-anchor="middle" class="svg-s">ชวนให้สร้างใหม่</text>
-
       <rect x="580" y="124" width="270" height="76" rx="12" fill="rgba(251,113,133,.14)" stroke="#FB7185" stroke-width="2"/>
       <text x="715" y="150" text-anchor="middle" class="svg-t" fill="#FB7185">✕ error</text>
       <text x="715" y="172" text-anchor="middle" class="svg-s">ติดต่อไม่ได้ / เซิร์ฟเวอร์พัง</text>
       <text x="715" y="191" text-anchor="middle" class="svg-s">บอกสาเหตุ + ปุ่มลองใหม่</text>
-
       <rect x="50" y="212" width="800" height="34" rx="10" fill="rgba(192,132,252,.12)" stroke="rgba(192,132,252,.4)"/>
       <text x="450" y="234" text-anchor="middle" class="svg-s" fill="#C084FC">ใหม่จาก Week 05 — error มีได้หลายสาเหตุ: API ไม่เปิด (0) · ข้อมูลผิด (400) · ไม่พบ (404) · พัง (500)</text>
-
       <defs><marker id="st" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="rgba(169,199,184,.5)"/></marker></defs>
     </svg>
   </div>
 </section>
 
-<!-- ══ 19 error message ══ -->
-<section class="slide" data-title="ข้อความ error">
-  <span class="slide-id">W07 · บท 7</span>
+<section class="slide " data-title="ข้อความ error">
+  <span class="chapbadge">บทที่ 7 <span class="of">/ 10</span> · Loading & Error</span>
   <span class="eyebrow red">อย่าให้ผู้ใช้เห็นข้อความเทคนิค</span>
   <h2>error ต่างกัน ควรบอกต่างกัน</h2>
   <div class="body center">
@@ -673,70 +913,276 @@ app.<span class="f">use</span>(<span class="f">cors</span>({ origin: config.cors
       <tr><td><code style="color:#FBBF24">404</code></td><td>ไม่พบสิ่งที่ขอ</td><td>"ไม่พบคำร้องรหัสนี้" — ไม่ใช่หน้า error</td></tr>
       <tr><td><code style="color:#FB7185">500</code></td><td>เซิร์ฟเวอร์พัง</td><td>"เกิดข้อผิดพลาด ลองใหม่อีกครั้ง"</td></tr>
     </table>
-    <div class="wrong"><p style="margin:0"><code>TypeError: Failed to fetch</code> <strong>ไม่มีความหมายกับผู้ใช้ทั่วไป</strong> — แปลเป็นภาษาคนที่บอกว่าควรทำอะไรต่อ · นี่คือเหตุผลที่เราสร้าง <code>ApiError</code> พร้อมข้อความไทย</p></div>
+    <div class="wrong"><p style="margin:0"><code>TypeError: Failed to fetch</code> <strong>ไม่มีความหมายกับผู้ใช้ทั่วไป</strong> — แปลเป็นภาษาคนที่บอกว่าควรทำอะไรต่อ · นี่คือเหตุผลที่เราสร้าง <code>ApiError</code> พร้อมข้อความไทยในบทที่ 5</p></div>
     <div class="note"><p style="margin:0"><strong>cleanup guard จาก Week 05 จะได้ใช้จริงแล้ว</strong> — ตอนนั้นเห็นผลยากเพราะข้อมูลมาเร็ว · ตอนนี้เรียกข้ามเครื่อง ความช้าเป็นเรื่องจริง</p></div>
   </div>
 </section>
 
-<!-- ══ 20 LAB in-class ══ -->
-<section class="slide" data-title="⏸ LAB ในห้อง">
-  <span class="slide-id">W07 · IN-CLASS</span>
+<section class="slide " data-title="✓ สรุปบทที่ 7">
+  <span class="chapbadge">บทที่ 7 <span class="of">/ 10</span> · สถานะของการเรียก API</span>
+  
+  <h2>จบบทที่ 7 — สถานะของการเรียก API</h2>
   <div class="body center">
-    <div class="labstop panel">
-      <span class="eyebrow amber">🏫 ทำในห้อง — CP09 ถึง CP12</span>
-      <h2 style="margin-top:.2rem">เชื่อม React กับ API</h2>
-      <div class="g21" style="align-items:center">
-        <table style="font-size:1.08rem">
-          <tr><th style="width:70px">CP</th><th>ทำอะไร</th><th style="width:160px">ผ่านเมื่อ</th></tr>
-          <tr><td>CP09</td><td>เจอ CORS error ด้วยตา</td><td>เห็น error สีแดงใน Console</td></tr>
-          <tr><td>CP10</td><td>เปิด CORS + .env</td><td>Dashboard โหลดข้อมูลขึ้น</td></tr>
-          <tr><td>CP11</td><td>apiClient + requestService</td><td>เพิ่ม/ลบคำร้องผ่าน API ได้</td></tr>
-          <tr><td>CP12</td><td>loading + error state</td><td>ปิด API แล้วเห็นข้อความ ไม่ใช่หน้าขาว</td></tr>
-        </table>
-        <div style="text-align:center">
-          <p class="bigtime" id="t-lab">35:00</p>
-          <div class="timerbtns" style="justify-content:center">
-            <button data-timer="t-lab" data-min="35" data-act="start">เริ่ม</button>
-            <button data-timer="t-lab" data-act="pause">หยุด</button>
-            <button data-timer="t-lab" data-min="35" data-act="reset">ตั้งใหม่</button>
-          </div>
-          <p style="margin-top:.5rem"><small>ต้องเปิด <strong>2 terminal</strong><br>API 3001 · React 5173</small></p>
-        </div>
-      </div>
+    <div class="recap">
+      <h3>✓ สิ่งที่ต้องจำจากบทนี้</h3>
+      <ul><li>สี่สถานะ — loading · success · empty · error</li><li>error แตกย่อยได้หลายสาเหตุ ควรบอกผู้ใช้ต่างกัน</li><li>แปลข้อความเทคนิคเป็นภาษาคนที่บอกว่าควรทำอะไรต่อ</li><li>ไม่จัดการ = ผู้ใช้เห็นหน้าขาวเปล่า ไม่รู้ว่าเกิดอะไร</li></ul>
     </div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือทำ CP12</strong> — แล้วจบงานในห้อง</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
   </div>
 </section>
 
-<!-- ══ 21 take-home ══ -->
-<section class="slide" data-title="🏠 ที่บ้าน">
-  <span class="slide-id">W07 · TAKE-HOME</span>
-  <span class="eyebrow">🏠 ทำที่บ้าน + ⭐ Challenge</span>
-  <h2>ทำให้ครบสมบูรณ์แล้วส่ง</h2>
+<section class="slide" data-title="🏫 CP12 loading + error state">
+  <span class="chapbadge">🏫 ลงมือทำ · CP12</span>
+  <span class="eyebrow amber">ใช้ความรู้บทที่ 7 · checkpoint สุดท้ายในห้อง</span>
+  <h2>CP12 · Loading และ Error State</h2>
+  <div class="body center">
+    <table style="font-size:1.18rem">
+      <tr><th>ทดสอบอย่างไร</th><th>ผู้ใช้ควรเห็น</th></tr>
+      <tr><td><strong>ปิด API</strong> (Ctrl+C) แล้ว refresh</td><td>"ติดต่อเซิร์ฟเวอร์ไม่ได้ — ตรวจว่าเปิด API แล้วหรือยัง"</td></tr>
+      <tr><td>ส่งฟอร์มที่กรอกไม่ครบ</td><td>ข้อความจาก API ที่บอกว่าผิดตรงไหน</td></tr>
+      <tr><td>เปิด URL คำร้องที่ไม่มี</td><td>"ไม่พบคำร้อง" (ไม่ใช่หน้า error)</td></tr>
+    </table>
+    <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — ปิด API แล้ว refresh เห็นข้อความ <strong>ไม่ใช่หน้าขาว</strong> · เปิด API กลับมากดลองใหม่แล้วโหลดได้</p></div>
+    <div class="nextup"><b>จบงานในห้องแล้ว →</b> เหลืออีก 3 บท ที่จะเรียนตอนนี้ แล้วไปทำที่บ้าน</div>
+  </div>
+</section>
+<section class="slide" data-title="🏠 กลุ่ม 3 · เรียนในห้อง ทำที่บ้าน">
+  <span class="slide-id">W07 · GROUP 3</span>
+  <span class="eyebrow amber">อีก 3 บทสุดท้าย</span>
+  <h2>กลุ่ม 3 · ทำให้พร้อมใช้จริง</h2>
+  <div class="body center">
+    <div class="whybox">
+      <p class="q">ทำไมต้องเรียนตอนนี้ ทั้งที่ไปทำที่บ้าน</p>
+      <p>เพราะ 3 เรื่องนี้<strong>อธิบายด้วยตัวหนังสือในคู่มือได้ยาก</strong> — ต้องเห็นเหตุผลก่อนถึงจะทำเป็น<br>
+      <strong>ฟังตอนนี้ให้เข้าใจ แล้วค่อยลงมือที่บ้าน</strong> · ถ้าข้ามไป จะไปนั่งงงหน้าจอคนเดียว</p>
+    </div>
+    <div class="three">
+      <div class="card home"><div class="ic">📋</div><h3>บทที่ 8 · Logging &amp; Error</h3><p>morgan + ไม่เปิดเผยข้อมูลภายในตอน production<br><strong>→ 🏠 CP14</strong></p></div>
+      <div class="card home"><div class="ic">📄</div><h3>บทที่ 9 · API Contract</h3><p>ข้อตกลงที่ทำให้ทีมทำงานคู่ขนานได้<br><strong>→ 🏠 CP15</strong></p></div>
+      <div class="card home"><div class="ic">🧪</div><h3>บทที่ 10 · Automated Test</h3><p>รู้ทันทีเมื่อของเดิมพัง<br><strong>→ 🏠 CP16</strong></p></div>
+    </div>
+    <div class="note"><p style="margin:0">งานที่บ้านยังมี <strong>CP13 · PUT เปลี่ยนสถานะ</strong> ด้วย — ใช้ความรู้บทที่ 6 ที่เรียนไปแล้ว ทำตามรูปแบบเดิมได้เลย</p></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 8 · Logging และ Error Handling ระดับใช้งานจริง">
+  <span class="grp">กลุ่ม 3 · ทำให้พร้อมใช้จริง</span>
+  <p class="bignum home">08</p>
+  <h2>Logging และ Error Handling ระดับใช้งานจริง</h2>
+  <p class="whatfor">สิ่งที่ต่างกันระหว่างโค้ดตอนเรียนกับโค้ดที่เอาไปใช้จริง — และเหตุผลด้านความปลอดภัยที่ต้องรู้</p>
+  <div class="mins"><span class="chip a">🏠 เรียนในห้อง · ทำที่บ้าน</span><span class="chip c">≈ 9 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="ทำไมต้องเปลี่ยนเป็น morgan">
+  <span class="chapbadge">บทที่ 8 <span class="of">/ 10</span> · Logging & Error</span>
+  <span class="eyebrow violet">เหตุผลก่อน</span>
+  <h2>logger ที่เขียนเองพอไหม</h2>
+  <div class="body center">
+    <div class="whybox">
+      <p class="q">Week 06 เราเขียน logger เอง — ทำไมต้องเปลี่ยน</p>
+      <p>ตอนนั้นเขียนเองเพื่อให้<strong>เข้าใจว่า middleware ทำงานอย่างไร</strong> · ตอนนี้เข้าใจแล้ว จึงใช้ของที่คนอื่นทำไว้ดีกว่าและครบกว่าได้</p>
+    </div>
+    <pre style="margin:0"><code><span class="k">import</span> morgan <span class="k">from</span> <span class="s">'morgan'</span>;
+
+app.<span class="f">use</span>(<span class="f">morgan</span>(config.isProduction ? <span class="s">'combined'</span> : <span class="s">'dev'</span>));</code></pre>
+    <table>
+      <tr><th style="width:150px">รูปแบบ</th><th>ใช้เมื่อ</th><th>ได้อะไร</th></tr>
+      <tr><td><code>'dev'</code></td><td>ตอนพัฒนา</td><td>สั้น มีสี อ่านง่ายบนหน้าจอ</td></tr>
+      <tr><td><code>'combined'</code></td><td>ตอนใช้งานจริง</td><td>ละเอียด มี IP, user-agent, เวลา — เหมาะเก็บเป็นไฟล์</td></tr>
+    </table>
+    <div class="note"><p style="margin:0"><strong>ทำไมต้องต่างกัน</strong> — ตอนพัฒนาเราดูด้วยตา ต้องการสั้นและอ่านง่าย · ตอนใช้จริง log ถูกเก็บเป็นไฟล์เพื่อไล่ปัญหาย้อนหลัง ต้องการข้อมูลครบที่สุด · <strong>นี่คือเหตุผลที่ต้องมี <code>NODE_ENV</code></strong> ที่เรียนไปในบทที่ 4</p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="ห้ามส่ง stack trace">
+  <span class="chapbadge">บทที่ 8 <span class="of">/ 10</span> · Logging & Error</span>
+  <span class="eyebrow red">เรื่องความปลอดภัยที่ต้องรู้</span>
+  <h2>ทำไมห้ามส่ง stack trace ตอน production</h2>
+  <div class="body center">
+    <div class="whybox">
+      <p class="q">stack trace บอกอะไรคนที่ไม่หวังดีบ้าง</p>
+      <p><strong>โครงสร้างไฟล์ในเครื่องเซิร์ฟเวอร์</strong> · ชื่อตัวแปร · บางทีก็ query ที่ใช้ · เวอร์ชันของ library ที่ใช้อยู่<br>
+      ทั้งหมดนี้คือ<strong>แผนที่ให้คนหาช่องโหว่</strong> — เขารู้ว่าจะโจมตีตรงไหน</p>
+    </div>
+    <pre style="margin:0;font-size:1rem"><code>res.<span class="f">status</span>(status).<span class="f">json</span>({
+  error: status &gt;= <span class="n">500</span> ? <span class="s">'เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์'</span> : err.message,
+  <span class="c">// ส่ง stack เฉพาะตอนพัฒนาเท่านั้น</span>
+  ...(config.isProduction ? {} : { stack: err.stack?.<span class="f">split</span>(<span class="s">'\n'</span>).<span class="f">slice</span>(<span class="n">0</span>, <span class="n">3</span>) }),
+});</code></pre>
+    <div class="win"><p style="margin:0"><strong>หลักการ</strong> — error 5xx บอกผู้ใช้แบบกลาง ๆ แต่ <code>console.error</code> รายละเอียดไว้ให้เราดูเอง · <strong>ผู้ใช้ไม่ต้องรู้ว่าข้างในพังตรงไหน แต่เราต้องรู้</strong></p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 8">
+  <span class="chapbadge home">บทที่ 8 <span class="of">/ 10</span> · Logging & Error Handling</span>
+  
+  <h2>จบบทที่ 8 — Logging & Error Handling</h2>
+  <div class="body center">
+    <div class="recap">
+      <h3>✓ สิ่งที่ต้องจำจากบทนี้</h3>
+      <ul><li>morgan แทน logger ที่เขียนเอง · เปลี่ยนรูปแบบตาม <code>NODE_ENV</code></li><li>ตอน production <strong>ห้ามส่ง stack trace</strong> กลับไปให้ผู้ใช้</li><li>error 5xx บอกผู้ใช้กลาง ๆ แต่ log รายละเอียดไว้ดูเอง</li><li>⭐ Challenge: <code>AppError</code> กำหนด status เอง · <code>asyncHandler</code> ห่อ handler</li></ul>
+    </div>
+    <div class="nextup"><b>ต่อไป →</b> <span class="where home">🏠 CP14</span> ทำที่บ้าน · ต่อไปบทที่ 9</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 9 · API Contract">
+  <span class="grp">กลุ่ม 3 · ทำให้พร้อมใช้จริง</span>
+  <p class="bignum home">09</p>
+  <h2>API Contract</h2>
+  <p class="whatfor">ข้อตกลงที่ทำให้ทีมทำงานคู่ขนานได้ — และเราใช้มันมาตลอด 3 สัปดาห์โดยไม่รู้ตัว</p>
+  <div class="mins"><span class="chip a">🏠 เรียนในห้อง · ทำที่บ้าน</span><span class="chip c">≈ 9 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="ทำไมต้องมี contract">
+  <span class="chapbadge">บทที่ 9 <span class="of">/ 10</span> · API Contract</span>
+  <span class="eyebrow violet">เหตุผลก่อน</span>
+  <h2>ทำไม API Contract ถึงสำคัญในงานจริง</h2>
   <div class="body center">
     <div class="g2">
-      <div class="panel" style="border-color:rgba(251,191,36,.4)">
-        <h3 style="color:var(--amber)">🏠 CP13–CP16</h3>
-        <ul style="margin-bottom:0">
-          <li><strong>CP13</strong> PUT เปลี่ยนสถานะ — ทั้ง API และปุ่มใน React</li>
-          <li><strong>CP14</strong> morgan + error handling ระดับ production</li>
-          <li><strong>CP15</strong> เขียน API Contract</li>
-          <li><strong>CP16</strong> automated test อย่างน้อย 6 เคส</li>
-        </ul>
+      <div class="panel" style="border-color:rgba(251,113,133,.45)">
+        <h3 style="color:var(--red)">✕ ไม่มี contract</h3>
+        <p style="font-size:1.2rem;margin:0">ทีม front-end ต้อง<strong>รอ</strong> back-end ทำเสร็จก่อน<br>
+        ถึงจะเริ่มเขียนได้ · งานเดินทีละฝั่ง<br>
+        <strong>เสียเวลาไปครึ่งหนึ่ง</strong></p>
       </div>
-      <div class="panel" style="border-color:rgba(192,132,252,.4)">
-        <h3 style="color:var(--violet)">⭐ Challenge</h3>
-        <ul style="margin-bottom:0">
-          <li><code>AppError</code> กำหนด status เองได้</li>
-          <li><code>asyncHandler</code> ห่อ handler ที่เป็น async</li>
-          <li>retry อัตโนมัติเมื่อ API ล่มชั่วคราว</li>
-        </ul>
+      <div class="panel" style="border-color:rgba(74,222,128,.45)">
+        <h3 style="color:var(--green)">✓ มี contract</h3>
+        <p style="font-size:1.2rem;margin:0">ตกลงกันก่อนว่าจะส่งอะไรให้กันในรูปแบบไหน<br>
+        แล้ว<strong>แยกกันทำพร้อมกันได้เลย</strong><br>
+        front-end สร้างข้อมูลจำลองตาม contract ไปก่อน</p>
       </div>
     </div>
-    <div class="note"><p style="margin:0"><strong>ส่ง</strong> — branch <code>unit3/week-07</code> · tag <code>lab-07-submission-v1</code> · checker + oral สุ่มถาม</p></div>
+    <div class="whybox">
+      <p class="q">เราใช้ contract มาตลอดโดยไม่รู้ตัว</p>
+      <p><strong>Week 05</strong> ออกแบบ <code>requestService.js</code> ให้มี 4 ฟังก์ชันตรงกับ REST endpoint → นั่นคือการวาง contract ล่วงหน้า<br>
+      <strong>Week 06</strong> สร้าง API ให้ตรง · <strong>Week 07</strong> ต่อเข้าด้วยกันได้แทบไม่ต้องปรับอะไร<br>
+      <strong>เพราะสองฝั่งทำตามข้อตกลงเดียวกัน</strong></p>
+    </div>
   </div>
 </section>
 
-<!-- ══ 22 สรุปหน่วย 3 ══ -->
+<section class="slide " data-title="contract มีอะไรบ้าง">
+  <span class="chapbadge">บทที่ 9 <span class="of">/ 10</span> · API Contract</span>
+  <span class="eyebrow ">สิ่งที่ต้องเขียน</span>
+  <h2>API Contract ต้องมี 6 อย่าง</h2>
+  <div class="body center">
+    <table style="font-size:1.18rem">
+      <tr><th style="width:220px">หัวข้อ</th><th>ทำไมต้องมี</th></tr>
+      <tr><td><strong>โครงสร้างข้อมูล</strong></td><td>field อะไรบ้าง ชนิดอะไร จำเป็นไหม</td></tr>
+      <tr><td><strong>รายการ endpoint</strong></td><td>method + path + ทำอะไร</td></tr>
+      <tr><td><strong>request body</strong></td><td>ส่งอะไรไป — พร้อมตัวอย่างจริง</td></tr>
+      <tr><td><strong>response ทุกกรณี</strong></td><td>สำเร็จได้อะไร · ผิดพลาดได้อะไร</td></tr>
+      <tr><td><strong>status code</strong></td><td>กรณีไหนได้อะไร</td></tr>
+      <tr><td><strong>รูปแบบ error</strong></td><td>ฝั่ง front-end จะได้เขียนโค้ดจัดการได้ถูก</td></tr>
+    </table>
+    <div class="note"><p style="margin:0"><strong>เขียนด้วยภาษาที่คนอ่านรู้เรื่อง</strong> — contract ไม่ใช่โค้ด แต่เป็นเอกสารที่คนสองฝั่งใช้คุยกัน · ใส่<strong>ตัวอย่าง request/response จริง</strong>ด้วยเสมอ เพราะอ่านตัวอย่างเข้าใจเร็วกว่าอ่านคำอธิบาย</p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 9">
+  <span class="chapbadge home">บทที่ 9 <span class="of">/ 10</span> · API Contract</span>
+  
+  <h2>จบบทที่ 9 — API Contract</h2>
+  <div class="body center">
+    <div class="recap">
+      <h3>✓ สิ่งที่ต้องจำจากบทนี้</h3>
+      <ul><li>contract คือข้อตกลงว่าสองฝั่งจะคุยกันอย่างไร</li><li>ทำให้ front-end กับ back-end <strong>ทำงานคู่ขนานกันได้</strong> ไม่ต้องรอกัน</li><li>ต้องมี 6 อย่าง — โครงข้อมูล · endpoint · request · response · status · error</li><li>เราใช้ contract นี้มาตั้งแต่ Week 05 โดยไม่รู้ตัว</li></ul>
+    </div>
+    <div class="nextup"><b>ต่อไป →</b> <span class="where home">🏠 CP15</span> เขียน <code>API_CONTRACT.md</code> ที่บ้าน · ต่อไปบทที่ 10</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 10 · Automated Test">
+  <span class="grp">กลุ่ม 3 · ทำให้พร้อมใช้จริง</span>
+  <p class="bignum home">10</p>
+  <h2>Automated Test</h2>
+  <p class="whatfor">ทำไมต้องเขียน test เองทั้งที่มี checker ให้แล้ว — และประโยชน์จริงของมันคืออะไร</p>
+  <div class="mins"><span class="chip a">🏠 เรียนในห้อง · ทำที่บ้าน</span><span class="chip c">≈ 10 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span></div>
+</section>
+
+<section class="slide " data-title="ทำไมต้องเขียน test เอง">
+  <span class="chapbadge">บทที่ 10 <span class="of">/ 10</span> · Automated Test</span>
+  <span class="eyebrow violet">เหตุผลก่อน</span>
+  <h2>มี checker แล้ว ทำไมต้องเขียน test อีก</h2>
+  <div class="body center">
+    <table style="font-size:1.2rem">
+      <tr><th style="width:180px"></th><th>checker ของวิชา</th><th>test ที่คุณเขียนเอง</th></tr>
+      <tr><td>ใครเขียน</td><td>ผู้สอน</td><td><strong style="color:var(--green)">คุณ</strong></td></tr>
+      <tr><td>ตรวจอะไร</td><td>สิ่งที่โจทย์กำหนด</td><td><strong style="color:var(--green)">สิ่งที่คุณคิดว่าสำคัญ</strong></td></tr>
+      <tr><td>ใช้ตอนไหน</td><td>ตอนส่งงาน</td><td><strong style="color:var(--green)">ทุกครั้งที่แก้โค้ด</strong></td></tr>
+      <tr><td>ในงานจริง</td><td style="color:var(--red)">ไม่มี</td><td><strong style="color:var(--green)">มีเสมอ</strong></td></tr>
+    </table>
+    <div class="whybox">
+      <p class="q">ประโยชน์จริงของ test คืออะไร</p>
+      <p>ไม่ใช่ "พิสูจน์ว่าโค้ดถูก" — แต่คือ <strong>"รู้ทันทีเมื่อของเดิมพัง"</strong><br>
+      เหมือน regression checklist ที่เราเคยทำด้วยมือใน Week 05 · <strong>แต่รันอัตโนมัติในไม่กี่วินาที</strong><br>
+      ยิ่งโปรเจกต์ใหญ่ยิ่งจำเป็น เพราะแก้จุดหนึ่งอาจทำอีกจุดพังโดยไม่รู้ตัว</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide " data-title="โครงของ test">
+  <span class="chapbadge">บทที่ 10 <span class="of">/ 10</span> · Automated Test</span>
+  <span class="eyebrow ">เขียนอย่างไร</span>
+  <h2>supertest — ยิง request จริงโดยไม่ต้องเปิดเซิร์ฟเวอร์</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:1.02rem"><code><span class="k">import</span> { test, describe } <span class="k">from</span> <span class="s">'node:test'</span>;
+<span class="k">import</span> assert <span class="k">from</span> <span class="s">'node:assert/strict'</span>;
+<span class="k">import</span> request <span class="k">from</span> <span class="s">'supertest'</span>;
+
+<span class="f">describe</span>(<span class="s">'GET /api/requests'</span>, () => {
+  <span class="f">test</span>(<span class="s">'คืนรายการทั้งหมด พร้อม status 200'</span>, <span class="k">async</span> () => {
+    <span class="k">const</span> res = <span class="k">await</span> <span class="f">request</span>(app).<span class="f">get</span>(<span class="s">'/api/requests'</span>);
+    assert.<span class="f">equal</span>(res.status, <span class="n">200</span>);
+    assert.<span class="f">ok</span>(<span class="f">Array.isArray</span>(res.body));
+  });
+});</code></pre>
+    <div class="note"><p style="margin:0"><strong>supertest สร้างเซิร์ฟเวอร์ชั่วคราวขึ้นมาเองแล้วปิดให้อัตโนมัติ</strong> — จึงรัน test หลายไฟล์พร้อมกันได้โดยไม่ชนพอร์ต และไม่ต้องจำว่าต้องเปิด API ก่อน</p></div>
+    <div class="win"><p style="margin:0"><strong>🏠 CP16 ต้องเขียนอย่างน้อย 6 เคส</strong> — GET ทั้งหมด · GET ตัวเดียวพบ · GET ไม่พบ (404) · POST ถูกต้อง (201) · POST ไม่ครบ (400) · CORS header</p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 10">
+  <span class="chapbadge home">บทที่ 10 <span class="of">/ 10</span> · Automated Test</span>
+  
+  <h2>จบบทที่ 10 — Automated Test</h2>
+  <div class="body center">
+    <div class="recap">
+      <h3>✓ สิ่งที่ต้องจำจากบทนี้</h3>
+      <ul><li>เขียน test เองเพราะในงานจริงไม่มีใครเขียน checker ให้</li><li>ประโยชน์จริงคือ <strong>"รู้ทันทีเมื่อของเดิมพัง"</strong> ไม่ใช่พิสูจน์ว่าโค้ดถูก</li><li>supertest ยิง request จริงโดยไม่ต้องเปิดเซิร์ฟเวอร์เอง</li><li>CP16 ต้องมีอย่างน้อย 6 เคส ครอบคลุมทั้งกรณีสำเร็จและผิดพลาด</li></ul>
+    </div>
+    <div class="nextup"><b>ต่อไป →</b> สรุปหน่วยที่ 3 — เราทำอะไรมาบ้างใน 2 สัปดาห์</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏠 สรุปงานที่บ้าน">
+  <span class="slide-id">W07 · TAKE-HOME</span>
+  <span class="eyebrow amber">สรุปงานที่ต้องทำต่อ</span>
+  <h2>งานที่บ้าน — CP13 ถึง CP16</h2>
+  <div class="body center">
+    <table style="font-size:1.2rem">
+      <tr><th style="width:90px">CP</th><th>ทำอะไร</th><th style="width:150px">ใช้ความรู้บทที่</th></tr>
+      <tr><td><strong>CP13</strong></td><td>PUT เปลี่ยนสถานะ — ทั้ง API และปุ่มใน React</td><td>บท 6</td></tr>
+      <tr><td><strong>CP14</strong></td><td>morgan + error handling ระดับ production</td><td><strong>บท 8</strong></td></tr>
+      <tr><td><strong>CP15</strong></td><td>เขียน <code>API_CONTRACT.md</code></td><td><strong>บท 9</strong></td></tr>
+      <tr><td><strong>CP16</strong></td><td>automated test อย่างน้อย 6 เคส</td><td><strong>บท 10</strong></td></tr>
+    </table>
+    <div class="panel" style="border-color:rgba(192,132,252,.4)">
+      <h3 style="color:var(--violet)">⭐ Challenge (คะแนนเพิ่ม)</h3>
+      <p style="margin:0;font-size:1.2rem"><code>AppError</code> กำหนด status เอง · <code>asyncHandler</code> ห่อ handler ที่เป็น async · retry อัตโนมัติเมื่อ API ล่มชั่วคราว</p>
+    </div>
+    <div class="note"><p style="margin:0"><strong>ส่ง</strong> — branch <code>unit3/week-07</code> · tag <code>lab-07-submission-v1</code> · <code>node check-week07.mjs</code> เป้าหมาย 33/36 (36/36 ถ้าทำ Challenge)</p></div>
+  </div>
+</section>
+
 <section class="slide" data-title="สรุปหน่วยที่ 3">
   <span class="slide-id">W07 · CLOSE</span>
   <span class="eyebrow green">จบหน่วยที่ 3</span>
@@ -751,7 +1197,6 @@ app.<span class="f">use</span>(<span class="f">cors</span>({ origin: config.cors
       <text x="55" y="130" class="svg-s">• CRUD ครบ 4 endpoint</text>
       <text x="55" y="152" class="svg-s">• status code ถูกตามสถานการณ์</text>
       <text x="55" y="172" class="svg-m" fill="#4ADE80">ทดสอบด้วย Postman</text>
-
       <rect x="470" y="30" width="400" height="150" rx="14" fill="rgba(56,215,237,.12)" stroke="#38D7ED" stroke-width="2"/>
       <text x="495" y="22" class="svg-lbl" fill="#38D7ED">WEEK 07</text>
       <text x="495" y="58" class="svg-t" style="font-size:17px">ทำให้ใช้งานจริงได้</text>
@@ -760,14 +1205,12 @@ app.<span class="f">use</span>(<span class="f">cors</span>({ origin: config.cors
       <text x="495" y="130" class="svg-s">• loading / error state</text>
       <text x="495" y="152" class="svg-s">• API contract + automated test</text>
       <text x="495" y="172" class="svg-m" fill="#38D7ED">ทดสอบด้วยแอปจริง + test</text>
-
       <rect x="30" y="192" width="840" height="34" rx="10" fill="rgba(192,132,252,.14)" stroke="#C084FC" stroke-width="2"/>
       <text x="450" y="214" text-anchor="middle" class="svg-t" fill="#C084FC">คุณสร้าง full-stack application ที่ทำงานได้จริงทั้งระบบแล้ว</text>
     </svg>
   </div>
 </section>
 
-<!-- ══ 23 ปิดท้าย ══ -->
 <section class="slide" data-title="ก้าวต่อไป">
   <span class="slide-id">W07 · END</span>
   <span class="eyebrow violet">ก้าวต่อไป</span>
@@ -798,11 +1241,10 @@ app.<span class="f">use</span>(<span class="f">cors</span>({ origin: config.cors
     </div>
   </div>
 </section>
-
 </div></div>
 <div class="bar"><i id="progress"></i></div>
 <div class="hud">
-  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 23</span><button id="btnNext">→</button>
+  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 54</span><button id="btnNext">→</button>
   <button id="btnToc">สารบัญ</button><button id="btnMinus">A−</button><button id="btnPlus">A+</button><button id="btnFull">เต็มจอ</button>
 </div>
 <div class="toc" id="toc" role="dialog"><h3>สารบัญ — กด T หรือ Esc ปิด</h3><ol id="tocList"></ol></div>
