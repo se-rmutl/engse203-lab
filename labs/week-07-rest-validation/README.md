@@ -154,7 +154,7 @@ git tag lab-07-submission-v1 && git push origin lab-07-submission-v1
 - **ตรวจว่าโปรเจกต์ Week 05 และ Week 06 ของคุณยังเปิดได้** — สัปดาห์นี้ใช้ทั้งคู่
 - ทบทวน `fetch()` และ `async/await`
 - ทบทวนโครงสร้าง `requestService.js` ที่ทำไว้ใน Week 05
-- อ่าน [API contract template](../../templates/api-contract-template.md)
+- ดู **API Contract template** ที่ให้มาใน starter — [`.md`](lab07/starter/templates/API_CONTRACT_TEMPLATE.md) สำหรับทำงานส่ง · [`.docx`](lab07/starter/templates/API_CONTRACT_TEMPLATE.docx) ฉบับทางการสำหรับส่งลูกค้า
 
 ---
 
