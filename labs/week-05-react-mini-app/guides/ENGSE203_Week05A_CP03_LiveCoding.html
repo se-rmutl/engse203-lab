@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ENGSE203 Week 05A — CP03 ทำตามบนจอ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fs:1;
+  --ink:#eaf5ff; --muted:#a8c0d7; --line:rgba(168,192,215,.22);
+  --cyan:#38d7ed; --green:#4ade80; --amber:#fbbf24; --red:#fb7185; --violet:#c084fc;
+  --panel:rgba(10,36,66,.72); --code:#04122a;
+  font-size:calc(16px * var(--fs));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 12% 10%,rgba(56,215,237,.13),transparent 32%),
+             radial-gradient(circle at 88% 84%,rgba(77,145,255,.13),transparent 34%),#020a14;
+  color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;
+  padding:0 20px 90px;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{padding:38px 0 22px;border-bottom:2px solid var(--line);margin-bottom:22px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;color:var(--cyan);text-transform:uppercase}
+h1{font-size:2.3rem;font-weight:700;line-height:1.15;margin:.4rem 0 .3rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-weight:300;font-size:1.05rem}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.pill{font-size:.76rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;
+  border:1px solid var(--line);background:rgba(56,215,237,.08);color:var(--cyan)}
+.pill.a{color:var(--amber);background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3)}
+.pill.g{color:var(--green);background:rgba(74,222,128,.09);border-color:rgba(74,222,128,.3)}
+.pill.v{color:var(--violet);background:rgba(192,132,252,.09);border-color:rgba(192,132,252,.3)}
+.pill.r{color:var(--red);background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.3)}
+
+/* jump nav */
+.jump{position:sticky;top:0;z-index:15;display:flex;gap:.4rem;flex-wrap:wrap;
+  padding:.7rem 0;margin-bottom:8px;background:rgba(2,10,20,.93);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.jump a{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.76rem;
+  padding:.32rem .7rem;border-radius:8px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(10,36,66,.8)}
+.jump a:hover{color:var(--cyan);border-color:var(--cyan)}
+.jump a.now{color:#04121f;background:var(--cyan);border-color:var(--cyan);font-weight:600}
+
+.step{margin:30px 0;border:1px solid var(--line);border-radius:16px;background:var(--panel);overflow:hidden;scroll-margin-top:70px}
+.step-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;
+  background:rgba(56,215,237,.07);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.num{width:auto;min-width:38px;height:38px;padding:0 .7rem;flex:0 0 auto;border-radius:19px;
+  display:grid;place-items:center;background:var(--cyan);color:#04121f;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.92rem}
+.step-head h2{font-size:1.2rem;font-weight:700;line-height:1.3}
+.step-head .file{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted);margin-left:auto}
+.step-body{padding:1.15rem 1.3rem}
+p{margin-bottom:.7rem;font-size:1rem}
+
+.say,.warn,.ok,.vio{padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.say{border-left:3px solid var(--amber);background:rgba(251,191,36,.08)}
+.warn{border-left:3px solid var(--red);background:rgba(251,113,133,.08)}
+.ok{border-left:3px solid var(--green);background:rgba(74,222,128,.08)}
+.vio{border-left:3px solid var(--violet);background:rgba(192,132,252,.09)}
+.say b,.warn b,.ok b,.vio b{font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+.say b{color:var(--amber)} .warn b{color:var(--red)} .ok b{color:var(--green)} .vio b{color:var(--violet)}
+
+.codewrap{position:relative;margin:.7rem 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;
+  padding:1rem 1.15rem;overflow-x:auto;font-size:.9rem;line-height:1.72}
+code{font-family:'IBM Plex Mono',monospace}
+pre code{color:#cfe6f5}
+.k{color:#7fb4ff}.s{color:#8de3a5}.c{color:#7089a3;font-style:italic}
+.f{color:#f3d38a}.t{color:#5fd8d2}.d{color:#fb7185}.hl{color:#ffd97a;font-weight:600}
+.copy{position:absolute;top:.55rem;right:.6rem;background:rgba(10,36,66,.95);
+  border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:.25rem .65rem;font-size:.74rem;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--cyan);border-color:var(--cyan)}
+
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:.7rem 0}
+th{text-align:left;padding:.6rem .7rem;color:var(--cyan);font-size:.8rem;
+  font-weight:600;border-bottom:1px solid var(--line);letter-spacing:.04em}
+td{padding:.6rem .7rem;border-bottom:1px solid rgba(168,192,215,.1);vertical-align:top}
+tr:last-child td{border-bottom:none}
+ul{margin:.3rem 0 .6rem 1.2rem}li{margin-bottom:.35rem}
+
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem 0;border-bottom:1px solid rgba(168,192,215,.1)}
+.check:last-child{border-bottom:none}
+.box{width:22px;height:22px;flex:0 0 22px;border:2px solid var(--muted);border-radius:5px;
+  cursor:pointer;display:grid;place-items:center;font-size:.85rem;color:transparent;
+  transition:all .15s;margin-top:.15rem}
+.box.on{background:var(--green);border-color:var(--green);color:#04121f}
+
+.trap{border:1px solid rgba(251,113,133,.4);border-radius:14px;
+  background:rgba(251,113,133,.07);padding:1rem 1.15rem;margin:.8rem 0}
+.trap h3{color:var(--red);font-size:1.03rem;margin-bottom:.4rem;display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.trap h3 span{font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  background:rgba(251,113,133,.2);padding:.15rem .5rem;border-radius:5px}
+
+.states{display:flex;gap:.45rem;flex-wrap:wrap;margin:.7rem 0}
+.st{flex:1;min-width:96px;padding:.6rem .5rem;border-radius:11px;border:1px solid var(--line);
+  background:rgba(4,18,36,.6);text-align:center;font-size:.84rem}
+.st b{display:block;font-family:'IBM Plex Mono',monospace;font-size:.8rem;margin-bottom:.2rem}
+.st.a{border-color:rgba(251,191,36,.5)} .st.a b{color:var(--amber)}
+.st.g{border-color:rgba(74,222,128,.5)} .st.g b{color:var(--green)}
+.st.r{border-color:rgba(251,113,133,.5)} .st.r b{color:var(--red)}
+.st.c{border-color:rgba(56,215,237,.5)} .st.c b{color:var(--cyan)}
+
+.hud{position:fixed;bottom:14px;right:16px;display:flex;gap:.4rem;z-index:20}
+.hud button{background:rgba(10,36,66,.94);border:1px solid var(--line);border-radius:9px;
+  padding:.3rem .65rem;font-size:.78rem;color:var(--muted);cursor:pointer;font-family:inherit}
+.hud button:hover{color:var(--cyan);border-color:var(--cyan)}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.84rem;color:var(--muted);font-weight:300;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.35rem;display:block}
+.tag.b{color:var(--red)} .tag.a{color:var(--green)}
+@media (max-width:820px){.split{grid-template-columns:1fr}}
+@media print{body{background:#fff;color:#111}.hud,.jump{display:none}
+  pre{background:#f4f6f9;border-color:#ccc}pre code{color:#111}.step{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">ENGSE203 · Week 05A · Checkpoint 03</p>
+  <h1>โหลดข้อมูลผ่าน Service และจัดการ 5 สถานะ</h1>
+  <p class="sub">ก้อนที่ใหญ่ที่สุดของวันนี้ · 70 นาที · แบ่ง 5 ช่วงย่อย</p>
+  <div class="pills">
+    <span class="pill a">TODO 5A-1 · 5A-2</span>
+    <span class="pill">DashboardPage 9 → 100 บรรทัด</span>
+    <span class="pill g">98 → 101 / 104</span>
+    <span class="pill r">build กับ checker จับกับดักไม่ได้</span>
+  </div>
+</header>
+
+<nav class="jump">
+  <a href="#s0">กติกา</a>
+  <a href="#s1">03-1 Service</a>
+  <a href="#s2">03-2 Effect</a>
+  <a href="#s3">03-3 สถานะ</a>
+  <a href="#s4">03-4 ลองใหม่</a>
+  <a href="#s5">03-5 หลักฐาน</a>
+  <a href="#traps">กับดัก</a>
+  <a href="#done">ผ่าน CP</a>
+</nav>
+
+<!-- ═══ กติกา ═══ -->
+<div class="step" id="s0">
+  <div class="step-head">
+    <span class="num" style="background:var(--red)">!</span>
+    <h2>กติกาก่อนเริ่ม — ไม่ใช่คำแนะนำ</h2>
+  </div>
+  <div class="step-body">
+    <div class="warn">
+      <b>ห้ามเขียนรวดเดียวแล้วค่อยรัน</b>
+      ไฟล์นี้จะโตจาก 9 บรรทัดเป็นราว 100 บรรทัด ถ้าเขียนยาว ๆ แล้วค่อยรัน
+      <strong>คุณจะเจอ error 5 ตัวพร้อมกันจนแยกไม่ออกว่าตัวไหนทำให้พัง</strong>
+      <br>เสียเวลามากกว่าที่ประหยัดได้หลายเท่า
+    </div>
+    <table>
+      <tr><th style="width:90px">ช่วง</th><th style="width:60px">นาที</th><th>ทำอะไร</th><th style="width:34%">จบแล้วต้องเห็น</th></tr>
+      <tr><td><b>03-1</b></td><td>15</td><td>Service อ่านไฟล์ข้อมูล + ตรวจ <code>response.ok</code></td><td><code>console.log</code> ได้ 3 รายการ</td></tr>
+      <tr><td><b>03-2</b></td><td>25</td><td>state + Effect เฉพาะกรณีสำเร็จ</td><td>รายการขึ้นหน้าจอ</td></tr>
+      <tr><td><b>03-3</b></td><td>15</td><td>เพิ่ม loading / error / empty</td><td>3 สถานะแสดงถูก</td></tr>
+      <tr><td><b>03-4</b></td><td>10</td><td>ปุ่มลองอีกครั้ง</td><td>กดแล้วกลับมาปกติ</td></tr>
+      <tr><td><b>03-5</b></td><td>5</td><td>เก็บภาพหน้าจอ 3 ภาพ</td><td>ไฟล์ครบใน evidence</td></tr>
+    </table>
+    <div class="say">
+      <b>สิ่งที่เปลี่ยนไปจากเดิม</b>
+      ตอนนี้ Dashboard <code>import</code> ไฟล์ JSON เข้ามาตรง ๆ · หลังจบ CP นี้ <strong>จะไม่มีบรรทัดนั้นแล้ว</strong>
+      ข้อมูลจะมาจาก Service แทน และหน้าจอต้องบอกผู้ใช้ได้ว่าตอนนี้อยู่สถานะไหน
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 03-1 ═══ -->
+<div class="step" id="s1">
+  <div class="step-head">
+    <span class="num">03-1</span>
+    <h2>ทำให้ Service อ่านข้อมูลได้</h2>
+    <span class="file">src/services/requestService.js</span>
+  </div>
+  <div class="step-body">
+    <p>ทำ <code>TODO 5A-1</code> และ <code>TODO 5A-2</code> ในไฟล์เดียวกัน</p>
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="c">// TODO 5A-1 → เขียนตัวฟังก์ชันแทนบรรทัด throw</span>
+<span class="k">async function</span> <span class="f">fetchSeedRequests</span>() {
+  <span class="k">const</span> baseUrl = <span class="hl">import.meta.env?.BASE_URL</span> ?? <span class="s">'/'</span>;
+  <span class="k">const</span> response = <span class="k">await</span> <span class="f">fetch</span>(<span class="s">`${baseUrl}data/initialRequests.json`</span>);
+  <span class="hl">if (!response.ok) throw new Error('ไม่สามารถโหลดข้อมูลตัวอย่างได้');</span>
+  <span class="k">return</span> <span class="f">structuredClone</span>(<span class="k">await</span> response.<span class="f">json</span>());
+}</code></pre>
+    </div>
+
+    <div class="warn">
+      <b>สองจุดที่พลาดง่ายที่สุด</b>
+      <strong>หนึ่ง — ต้องมีเครื่องหมายคำถามใน <code>import.meta.env?.</code></strong>
+      ถ้าไม่ใส่ checker จะเรียกฟังก์ชันนี้นอก Vite ไม่ได้ แล้วรายงานว่าไม่ผ่าน ทั้งที่โค้ดทำงานปกติในเบราว์เซอร์
+      <br><br>
+      <strong>สอง — <code>fetch()</code> ไม่โยน error เมื่อเซิร์ฟเวอร์ตอบ 404</strong>
+      มันถือว่าติดต่อสำเร็จ เพียงแต่ได้หน้า error กลับมา ถ้าไม่ตรวจ <code>response.ok</code> แล้วเรียก <code>.json()</code> ต่อ
+      คุณจะได้ error แปลก ๆ ว่าแปลง HTML เป็น JSON ไม่ได้ ซึ่งไม่บอกเลยว่าปัญหาจริงคือหาไฟล์ไม่เจอ
+    </div>
+
+    <p style="margin-top:1rem"><strong>แล้วทำ <code>TODO 5A-2</code> ต่อ</strong> — ลบบรรทัด <code>throw</code> ออกแล้วใส่บรรทัดนี้แทน</p>
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code>  <span class="k">return</span> <span class="f">fetchSeedRequests</span>();
+  <span class="c">// TODO 5B-3: เปลี่ยนบรรทัดข้างบนเป็น return loadNormalRequests(options.onRecovery);</span></code></pre>
+    </div>
+    <div class="vio">
+      <b>เก็บไว้สัปดาห์หน้า</b>
+      อย่าลบคอมเมนต์ <code>TODO 5B-3</code> ทิ้ง — สัปดาห์หน้าเราจะกลับมาที่บรรทัดนี้
+      แล้วจะได้เห็นว่า<strong>เปลี่ยนแค่บรรทัดเดียว แต่ Dashboard ไม่ต้องแก้เลย</strong>
+    </div>
+
+    <p style="margin-top:1rem"><strong>ทดสอบก่อนไปต่อ</strong> — ใส่บรรทัดนี้ชั่วคราวใน <code>DashboardPage</code></p>
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">import</span> { getRequests } <span class="k">from</span> <span class="s">'../services/requestService.js'</span>;
+<span class="f">getRequests</span>().<span class="f">then</span>((d) =&gt; console.<span class="f">log</span>(<span class="s">'ได้ข้อมูล'</span>, d.length, <span class="s">'รายการ'</span>));</code></pre>
+    </div>
+    <div class="ok">
+      <b>ต้องเห็นใน Console</b>
+      <code>ได้ข้อมูล 3 รายการ</code> — ถ้าเห็นแล้วให้ลบบรรทัดทดสอบทิ้ง แล้วไปช่วง 03-2
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 03-2 ═══ -->
+<div class="step" id="s2">
+  <div class="step-head">
+    <span class="num">03-2</span>
+    <h2>state และ Effect — เฉพาะกรณีสำเร็จ</h2>
+    <span class="file">src/pages/DashboardPage.jsx</span>
+  </div>
+  <div class="step-body">
+    <div class="say">
+      <b>ทายก่อนเขียน</b>
+      dependency array ของ Effect นี้ควรมีอะไรบ้าง และ<strong>ถ้าใส่ <code>requests</code> เข้าไปด้วยจะเกิดอะไรขึ้น</strong>
+    </div>
+
+    <p><strong>เปลี่ยน import ก่อน</strong> — เอา JSON ออก เอา Service เข้า</p>
+    <div class="split">
+      <div>
+        <span class="tag b">ลบ</span>
+<pre><code><span class="d">import initialRequests from</span>
+<span class="d">  '../../public/data/initialRequests.json';</span>
+<span class="d">import RequestForm from '../components/...';</span></code></pre>
+      </div>
+      <div>
+        <span class="tag a">เพิ่ม</span>
+<pre><code><span class="k">import</span> { useEffect } …
+<span class="k">import</span> { Link, useSearchParams } <span class="k">from</span> <span class="s">'react-router-dom'</span>;
+<span class="k">import</span> useManualReload <span class="k">from</span> <span class="s">'../hooks/useManualReload.js'</span>;
+<span class="k">import</span> { getRequests } <span class="k">from</span> <span class="s">'../services/requestService.js'</span>;</code></pre>
+      </div>
+    </div>
+
+    <div class="warn" style="margin-top:.6rem">
+      <b>ฟอร์มหายไปไหน</b>
+      ตอนนี้ <code>RequestForm</code> <strong>ย้ายไปอยู่หน้า New Request แล้ว</strong> เพราะเรามี route แยกให้มันตั้งแต่ CP02
+      Dashboard เหลือแค่แสดงผล ไม่ต้องมีฟอร์ม
+    </div>
+
+    <p style="margin-top:1rem"><strong>state ที่ต้องมี</strong></p>
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">const</span> [searchParams, setSearchParams] = <span class="f">useSearchParams</span>();
+<span class="k">const</span> scenario = searchParams.<span class="f">get</span>(<span class="s">'scenario'</span>) ?? <span class="s">''</span>;
+<span class="k">const</span> [reloadKey, reload] = <span class="f">useManualReload</span>();
+
+<span class="k">const</span> [loadState, setLoadState] = <span class="f">useState</span>(<span class="s">'idle'</span>);
+<span class="k">const</span> [requests, setRequests] = <span class="f">useState</span>([]);       <span class="c">← เริ่มจาก array ว่าง ไม่ใช่ seed</span>
+<span class="k">const</span> [statusFilter, setStatusFilter] = <span class="f">useState</span>(<span class="s">'all'</span>);
+<span class="k">const</span> [errorMessage, setErrorMessage] = <span class="f">useState</span>(<span class="s">''</span>);
+<span class="k">const</span> [notice, setNotice] = <span class="f">useState</span>(<span class="s">''</span>);</code></pre>
+    </div>
+
+    <p><strong>Effect ที่โหลดข้อมูล</strong></p>
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="f">useEffect</span>(() =&gt; {
+  <span class="f">setLoadState</span>(<span class="s">'loading'</span>);
+  <span class="f">setErrorMessage</span>(<span class="s">''</span>);
+  <span class="f">setNotice</span>(<span class="s">''</span>);
+
+  <span class="f">getRequests</span>({ scenario })
+    .<span class="f">then</span>((data) =&gt; {
+      <span class="f">setRequests</span>(data);
+      <span class="f">setLoadState</span>(<span class="s">'success'</span>);
+    })
+    .<span class="f">catch</span>((error) =&gt; {
+      <span class="f">setErrorMessage</span>(error <span class="k">instanceof</span> Error ? error.message : <span class="s">'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ'</span>);
+      <span class="f">setLoadState</span>(<span class="s">'error'</span>);
+    });
+  <span class="c">// TODO 5B: เพิ่ม cleanup guard เพื่อกัน stale update</span>
+}, <span class="hl">[scenario, reloadKey]</span>);   <span class="c">← ห้ามใส่ requests เด็ดขาด</span></code></pre>
+    </div>
+
+    <div class="ok">
+      <b>คำตอบของคำถามตอนต้น</b>
+      ถ้าใส่ <code>requests</code> ลงไปด้วยจะเกิด<strong>วงวนไม่รู้จบ</strong> — Effect เซ็ต <code>requests</code> →
+      <code>requests</code> เปลี่ยน → React เรียก Effect อีกรอบ → เซ็ตอีก วนไปเรื่อย ๆ
+      <br><strong>อาการ</strong> หน้าจอค้าง พัดลมโน้ตบุ๊กดังขึ้น Console ขึ้นรัว ๆ
+    </div>
+
+    <p style="margin-top:1rem"><strong>ส่วนที่คำนวณตอนวาดหน้าจอ ไม่เก็บใส่ state</strong></p>
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">const</span> summary = <span class="f">useMemo</span>(() =&gt; ({
+  total: requests.length,
+  pending: requests.<span class="f">filter</span>((r) =&gt; r.status === <span class="s">'pending'</span>).length,
+  inProgress: requests.<span class="f">filter</span>((r) =&gt; r.status === <span class="s">'in-progress'</span>).length,
+  completed: requests.<span class="f">filter</span>((r) =&gt; r.status === <span class="s">'completed'</span>).length,
+}), [requests]);
+
+<span class="k">const</span> filteredRequests = statusFilter === <span class="s">'all'</span>
+  ? requests
+  : requests.<span class="f">filter</span>((request) =&gt; request.status === statusFilter);</code></pre>
+    </div>
+
+    <p><strong>JSX เฉพาะกรณีสำเร็จก่อน</strong> — ยังไม่ต้องมี loading หรือ error</p>
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">return</span> (
+  <span class="t">&lt;section</span> <span class="k">data-testid</span>=<span class="s">"page-dashboard"</span><span class="t">&gt;</span>
+    <span class="t">&lt;div</span> <span class="k">className</span>=<span class="s">"page-heading"</span><span class="t">&gt;&lt;div&gt;</span>
+      <span class="t">&lt;p</span> <span class="k">className</span>=<span class="s">"eyebrow dark"</span><span class="t">&gt;</span>ROUTED · READ PATH<span class="t">&lt;/p&gt;</span>
+      <span class="t">&lt;h1&gt;</span>Dashboard<span class="t">&lt;/h1&gt;</span>
+      <span class="t">&lt;p&gt;</span>ติดตามคำร้องจาก URL และ Service Layer<span class="t">&lt;/p&gt;</span>
+    <span class="t">&lt;/div&gt;&lt;/div&gt;</span>
+
+    <span class="t">&lt;SummaryPanel</span> <span class="k">summary</span>={summary} <span class="t">/&gt;</span>
+    <span class="t">&lt;section</span> <span class="k">className</span>=<span class="s">"panel"</span> <span class="k">aria-labelledby</span>=<span class="s">"request-list-title"</span><span class="t">&gt;</span>
+      <span class="t">&lt;div</span> <span class="k">className</span>=<span class="s">"section-heading"</span><span class="t">&gt;</span>
+        <span class="t">&lt;h2</span> <span class="k">id</span>=<span class="s">"request-list-title"</span><span class="t">&gt;</span>รายการคำร้อง<span class="t">&lt;/h2&gt;</span>
+        <span class="t">&lt;FilterBar</span> <span class="k">value</span>={statusFilter} <span class="k">onFilterChange</span>={setStatusFilter} <span class="t">/&gt;</span>
+      <span class="t">&lt;/div&gt;</span>
+      <span class="t">&lt;RequestList</span> <span class="k">requests</span>={filteredRequests} <span class="k">onDeleteRequest</span>={handleDelete} <span class="t">/&gt;</span>
+    <span class="t">&lt;/section&gt;</span>
+  <span class="t">&lt;/section&gt;</span>
+);</code></pre>
+    </div>
+
+    <div class="say">
+      <b>รันดูตอนนี้</b>
+      รายการต้องขึ้น แต่<strong>ขึ้นช้ากว่าเดิมประมาณครึ่งวินาที</strong> เพราะเราจงใจหน่วงเวลาไว้ให้เห็น loading ชัด ๆ ในช่วงถัดไป
+    </div>
+    <div class="vio">
+      <b>สิ่งที่คุณจะเห็นแล้วสงสัย</b>
+      เปิด Console แล้วจะเห็นว่า <strong>Effect ทำงาน 2 รอบ</strong> ทั้งที่เขียนไว้รอบเดียว
+      <br><strong>โค้ดคุณไม่ได้ผิด</strong> React ตั้งใจทำแบบนี้ระหว่างพัฒนา ตอนใช้งานจริงจะทำรอบเดียว
+      <br>ตอนนี้ให้สังเกตไว้เฉย ๆ ก่อน — <strong>เราจะคุยกันว่าทำไมในคาบ 5B</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 03-3 ═══ -->
+<div class="step" id="s3">
+  <div class="step-head">
+    <span class="num">03-3</span>
+    <h2>เพิ่ม loading, error และ empty</h2>
+    <span class="file">src/pages/DashboardPage.jsx</span>
+  </div>
+  <div class="step-body">
+    <div class="states">
+      <div class="st a"><b>loading</b>ยังไม่รู้ว่ามีข้อมูลไหม</div>
+      <div class="st g"><b>success</b>มีข้อมูล แสดงรายการ</div>
+      <div class="st c"><b>empty</b>โหลดสำเร็จ แต่ไม่มีรายการ</div>
+      <div class="st r"><b>error</b>โหลดไม่สำเร็จ</div>
+    </div>
+
+    <p><code>LoadingState</code> และ <code>ErrorState</code> starter เตรียมไว้ให้แล้ว ส่วน empty ต้องเขียนเอง</p>
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code>{scenario &amp;&amp; <span class="t">&lt;p</span> <span class="k">className</span>=<span class="s">"lab-scenario"</span> <span class="k">role</span>=<span class="s">"status"</span><span class="t">&gt;</span>LAB test scenario: {scenario}<span class="t">&lt;/p&gt;</span>}
+{notice &amp;&amp; <span class="t">&lt;p</span> <span class="k">className</span>=<span class="s">"notice"</span> <span class="k">role</span>=<span class="s">"status"</span><span class="t">&gt;</span>{notice}<span class="t">&lt;/p&gt;</span>}
+
+{loadState === <span class="s">'loading'</span> &amp;&amp; <span class="t">&lt;LoadingState /&gt;</span>}
+{loadState === <span class="s">'error'</span> &amp;&amp; <span class="t">&lt;ErrorState</span> <span class="k">message</span>={errorMessage} <span class="k">onRetry</span>={handleRetry} <span class="t">/&gt;</span>}
+
+{<span class="hl">loadState === 'success' &amp;&amp; requests.length === 0</span> &amp;&amp; (
+  <span class="t">&lt;section</span> <span class="k">className</span>=<span class="s">"state-card"</span> <span class="k">data-testid</span>=<span class="s">"empty-state"</span><span class="t">&gt;</span>
+    <span class="t">&lt;h2&gt;</span>ยังไม่มีคำร้อง<span class="t">&lt;/h2&gt;</span>
+    <span class="t">&lt;p&gt;</span>เริ่มสร้างคำร้องแรกของคุณได้เลย<span class="t">&lt;/p&gt;</span>
+    <span class="t">&lt;Link</span> <span class="k">className</span>=<span class="s">"button primary inline"</span> <span class="k">to</span>=<span class="s">"/requests/new"</span><span class="t">&gt;</span>สร้างคำร้องใหม่<span class="t">&lt;/Link&gt;</span>
+  <span class="t">&lt;/section&gt;</span>
+)}
+
+{loadState === <span class="s">'success'</span> &amp;&amp; requests.length &gt; 0 &amp;&amp; (
+  <span class="t">&lt;&gt;</span>
+    <span class="c">… SummaryPanel และ RequestList ที่เขียนไว้แล้ว …</span>
+  <span class="t">&lt;/&gt;</span>
+)}</code></pre>
+    </div>
+
+    <div class="warn">
+      <b>บรรทัดที่ไฮไลต์คือหัวใจของช่วงนี้</b>
+      สถานะ empty ต้องตรวจ <strong>สองเงื่อนไขพร้อมกัน</strong> — โหลดสำเร็จแล้ว <em>และ</em> ไม่มีรายการ
+      <br>ถ้าตรวจแค่ <code>requests.length === 0</code> ผู้ใช้จะเห็น "ยังไม่มีคำร้อง" <strong>แวบหนึ่งทุกครั้งที่เปิดหน้า</strong>
+      เพราะตอนเริ่มต้น <code>requests</code> เป็น array ว่างจริง ๆ
+    </div>
+
+    <p style="margin-top:1rem"><strong>ทดสอบทั้ง 3 สถานะด้วย URL</strong></p>
+    <table>
+      <tr><th style="width:34%">URL</th><th>ต้องเห็น</th></tr>
+      <tr><td><code>#/</code></td><td>โหลดแวบหนึ่ง แล้วขึ้นรายการ 3 รายการ</td></tr>
+      <tr><td><code>#/?scenario=error</code></td><td>แถบเหลืองบอกว่าอยู่ในโหมดทดสอบ + กล่องแดง + ปุ่มลองอีกครั้ง</td></tr>
+      <tr><td><code>#/?scenario=empty</code></td><td>แถบเหลือง + กล่อง "ยังไม่มีคำร้อง" + ปุ่มไปสร้างใหม่</td></tr>
+    </table>
+    <div class="say">
+      <b>ทำไมต้องมีแถบเหลือง</b>
+      สองสถานการณ์นี้เป็น<strong>เครื่องมือทดสอบของ LAB</strong> ไม่ใช่การหลอกผู้ใช้ว่าระบบพังจริง
+      หน้าจอจึงต้องมีป้ายบอกไว้ด้วย
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 03-4 ═══ -->
+<div class="step" id="s4">
+  <div class="step-head">
+    <span class="num">03-4</span>
+    <h2>ปุ่มลองอีกครั้ง</h2>
+    <span class="file">src/pages/DashboardPage.jsx</span>
+  </div>
+  <div class="step-body">
+    <p>ปุ่มนี้ต้องรับมือ <strong>2 กรณีที่ต่างกัน</strong></p>
+    <table>
+      <tr><th style="width:38%">ตอนนี้อยู่ที่ไหน</th><th>ต้องทำ</th></tr>
+      <tr><td>อยู่ใน <code>?scenario=error</code></td><td><strong>ลบ scenario ออกจาก URL ก่อน</strong> แล้วโหลดใหม่</td></tr>
+      <tr><td>ไม่มี scenario</td><td>สั่งให้ Effect ทำงานอีกรอบ</td></tr>
+    </table>
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">function</span> <span class="f">handleRetry</span>() {
+  <span class="k">if</span> (scenario) <span class="f">setSearchParams</span>({});   <span class="c">← ลบ ?scenario= ออก</span>
+  <span class="k">else</span> <span class="f">reload</span>();                       <span class="c">← จาก useManualReload</span>
+}</code></pre>
+    </div>
+    <div class="warn">
+      <b>ถ้าไม่ลบ scenario ออก</b>
+      กดลองใหม่กี่ครั้งก็จะ error เหมือนเดิมตลอดไป เพราะ URL ยังสั่งให้จำลองความผิดพลาดอยู่
+    </div>
+
+    <p style="margin-top:1rem"><strong>ปุ่มลบใน CP นี้ยังทำงานกับหน่วยความจำอย่างเดียว</strong></p>
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="c">// คาบ 5A ลบได้เฉพาะในหน่วยความจำ — refresh แล้วกลับมาเหมือนเดิม</span>
+<span class="c">// TODO 5B-CP04a: เปลี่ยนเป็น await deleteRequest(requestId) เพื่อให้ลบแล้วหายจริง</span>
+<span class="k">function</span> <span class="f">handleDelete</span>(requestId) {
+  <span class="f">setRequests</span>((current) =&gt; current.<span class="f">filter</span>((request) =&gt; request.id !== requestId));
+  <span class="f">setNotice</span>(<span class="s">`ลบคำร้อง ${requestId} ในหน่วยความจำแล้ว — refresh จะกลับมา`</span>);
+}</code></pre>
+    </div>
+    <div class="vio">
+      <b>ทำไมยังไม่ลบจริง</b>
+      เพราะ <code>deleteRequest()</code> เป็นงานของคาบ 5B แต่ความสามารถ "ลบได้" เป็นของ Week 04 ที่ห้ามหาย
+      <br>เราจึงให้ทำงานในหน่วยความจำไปก่อน <strong>พร้อมบอกผู้ใช้ตรง ๆ ว่า refresh แล้วจะกลับมา</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 03-5 ═══ -->
+<div class="step" id="s5">
+  <div class="step-head">
+    <span class="num" style="background:var(--green)">03-5</span>
+    <h2>ทดสอบและเก็บหลักฐาน</h2>
+  </div>
+  <div class="step-body">
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code>npm run check -- --session=1</code></pre>
+    </div>
+    <div class="ok">
+      <b>ต้องได้</b>
+      <code>ผ่าน 101/104 รายการ</code> — ขยับจาก 98 ขึ้นมา 3 รายการ
+      <br>ที่เหลืออีก 3 เป็นงานของ CP05a ทั้งหมด
+    </div>
+
+    <div>
+      <div class="check"><span class="box" data-check>✓</span><span><code>#/</code> → เห็น loading แวบหนึ่ง แล้วขึ้นรายการ 3 รายการ</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span><code>#/?scenario=error</code> → กล่องแดง + ปุ่มลองอีกครั้ง</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>กดปุ่มลองอีกครั้ง → <strong>URL เปลี่ยนกลับเป็น <code>#/</code></strong> แล้วขึ้นรายการปกติ</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span><code>#/?scenario=empty</code> → กล่อง "ยังไม่มีคำร้อง" + ปุ่มไปสร้างใหม่</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>เปลี่ยนตัวกรองครบทุกค่า → รายการเปลี่ยนถูก และแผงสรุป<strong>ไม่เปลี่ยน</strong></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>ถ่าย <code>state-loading.png</code></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>ถ่าย <code>state-error-retry.png</code></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>ถ่าย <code>state-empty.png</code></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>กรอก TC-L5-08, 09, 10, 11, 15 ใน TEST_REPORT</span></div>
+    </div>
+    <div class="say">
+      <b>เคล็ดลับถ่ายภาพ loading</b>
+      เปิด DevTools → Network → ตั้ง throttle เป็น Slow 3G แล้ว refresh จะทันถ่าย
+    </div>
+  </div>
+</div>
+
+<!-- ═══ กับดัก ═══ -->
+<div class="step" id="traps">
+  <div class="step-head">
+    <span class="num" style="background:var(--red)">!</span>
+    <h2>สามกับดักที่เครื่องมือจับไม่ได้</h2>
+  </div>
+  <div class="step-body">
+    <div class="warn">
+      <b>อ่านตรงนี้ให้ดี</b>
+      กับดักของ CP03 <strong>ทั้ง <code>npm run build</code> และ <code>npm run check</code> ผ่านหมดทุกอัน</strong>
+      ต่างจาก CP02 ที่ checker ช่วยจับให้ได้ — CP นี้ต้องใช้ตาดูเท่านั้น
+    </div>
+
+    <div class="trap">
+      <h3><span>กับดัก 1</span> ตรวจ empty แค่จำนวนรายการ</h3>
+      <div class="split" style="margin:.5rem 0">
+        <div><span class="tag b">ผิด</span>
+<pre><code>{<span class="d">requests.length === 0</span> &amp;&amp; (</code></pre></div>
+        <div><span class="tag a">ถูก</span>
+<pre><code>{<span class="s">loadState === 'success'</span> &amp;&amp; requests.length === 0 &amp;&amp; (</code></pre></div>
+      </div>
+      <p style="margin:0"><strong>อาการ</strong> — เห็น "ยังไม่มีคำร้อง" แวบหนึ่งทุกครั้งที่เปิดหน้า ถ้าเน็ตช้าจะค้างอยู่หลายวินาที</p>
+    </div>
+
+    <div class="trap">
+      <h3><span>กับดัก 2</span> ใส่ <code>requests</code> ใน dependency array</h3>
+      <p style="margin:.4rem 0"><strong>อาการ</strong> — หน้าจอค้าง พัดลมดัง Console ขึ้นรัว ๆ แท็บอาจไม่ตอบสนอง</p>
+      <p style="margin:0"><strong>วิธีแก้</strong> — เอาสิ่งที่ Effect ตัวนั้นเป็นคนเซ็ตเอง ออกจาก dependency array</p>
+    </div>
+
+    <div class="trap">
+      <h3><span>กับดัก 3</span> คำนวณ filter ใน Effect แล้วเก็บใส่ state</h3>
+      <div class="codewrap" style="margin:.5rem 0">
+<pre><code><span class="k">const</span> [filtered, setFiltered] = <span class="f">useState</span>([]);
+<span class="f">useEffect</span>(() =&gt; {
+  <span class="d">setFiltered(requests.filter(r =&gt; r.status === statusFilter));</span>
+}, [requests, statusFilter]);   <span class="c">← ทำงานได้ แต่ไม่ควรทำ</span></code></pre>
+      </div>
+      <p style="margin:0"><strong>ทำงานได้จริง ซึ่งเป็นสาเหตุที่มันอันตราย</strong> — หน้าจอวาด 2 รอบทุกครั้งที่เปลี่ยนตัวกรอง และตอนนี้มีข้อมูล 2 ชุดที่ต้องตรงกันตลอด วันไหนลืมจะได้หน้าจอผิดโดยไม่มี error ให้จับ</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ปิด ═══ -->
+<div class="step" id="done">
+  <div class="step-head">
+    <span class="num" style="background:var(--violet)">✓</span>
+    <h2>ผ่าน CP03 เมื่อตอบคำถามนี้ได้</h2>
+  </div>
+  <div class="step-body">
+    <div class="vio">
+      <b>คำถาม Checkpoint</b>
+      <span style="font-size:1.1rem">ทำไม loading กับ empty ถึงไม่ใช่สถานะเดียวกัน</span>
+    </div>
+    <p>ตอบด้วยประโยคเดียว · หันไปอธิบายให้เพื่อนข้าง ๆ ฟังก่อน แล้วค่อยยกมือ</p>
+    <div class="ok" style="margin-top:1rem">
+      <b>สิ่งที่เพิ่งเกิดขึ้นและควรภูมิใจ</b>
+      Dashboard ของคุณ<strong>ไม่รู้แล้วว่าข้อมูลมาจากไหน</strong> มันรู้แค่ว่าเรียก <code>getRequests()</code> แล้วได้ array กลับมา
+      <br>สัปดาห์หน้าเราจะเปลี่ยนที่มาของข้อมูลเป็น browser storage <strong>แล้วไฟล์นี้จะไม่ต้องแก้แม้แต่บรรทัดเดียว</strong>
+    </div>
+    <p style="margin-top:1rem"><strong>ต่อไปคือ CP05a</strong> — หน้ารายละเอียดตามรหัส เป็นท่าเดียวกับที่เพิ่งทำ ต่างแค่เพิ่ม <code>useParams()</code> · <strong>ลองทำเองก่อนโดยไม่ดูตัวอย่าง</strong></p>
+    <div class="say"><b>ทำไมข้ามเลข 04</b>ไม่ได้พลาดอะไรไป — <strong>CP04 มีอยู่จริง แต่อยู่ในคาบหน้า</strong> เพราะเป็นเรื่องการ<strong>เขียน</strong>ข้อมูลลงที่เก็บ ซึ่งเป็นแกนของคาบ 5B ทั้งหมด ส่วน CP05a เป็นการ<strong>อ่าน</strong> จึงอยู่ฝั่งเดียวกับ CP03</div>
+  </div>
+</div>
+
+<footer>
+  <span>ENGSE203 · Week 05A · CP03 Service &amp; Effect · เอกสารสำหรับฉายบนจอ</span>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน 5A บทที่ 5, 6, 7</span>
+</footer>
+
+</div>
+
+<div class="hud">
+  <button id="minus">A−</button>
+  <button id="plus">A+</button>
+  <button id="full">เต็มจอ</button>
+</div>
+
+<script>
+(function(){
+  var fs = 1;
+  function setFs(v){ fs = Math.max(.75, Math.min(1.6, v));
+    document.documentElement.style.setProperty('--fs', fs); }
+  document.getElementById('plus').onclick  = function(){ setFs(fs + .08); };
+  document.getElementById('minus').onclick = function(){ setFs(fs - .08); };
+  document.getElementById('full').onclick  = function(){
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    else document.exitFullscreen && document.exitFullscreen();
+  };
+  document.addEventListener('keydown', function(e){
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === '+' || e.key === '=') setFs(fs + .08);
+    if (e.key === '-') setFs(fs - .08);
+  });
+
+  document.querySelectorAll('[data-check]').forEach(function(b){
+    b.onclick = function(){ b.classList.toggle('on'); };
+  });
+
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.onclick = function(){
+      var pre = btn.parentElement.querySelector('pre');
+      var text = pre.innerText.replace(/\s*←[^\n]*/g, '');
+      navigator.clipboard.writeText(text).then(function(){
+        var old = btn.textContent;
+        btn.textContent = 'คัดลอกแล้ว';
+        setTimeout(function(){ btn.textContent = old; }, 1400);
+      });
+    };
+  });
+
+  // highlight current section in jump nav
+  var links = Array.prototype.slice.call(document.querySelectorAll('.jump a'));
+  var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function onScroll(){
+    var best = 0;
+    targets.forEach(function(el, i){
+      if (el && el.getBoundingClientRect().top <= 120) best = i;
+    });
+    links.forEach(function(a, i){ a.classList.toggle('now', i === best); });
+  }
+  document.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+})();
+</script>
+</body>
+</html>

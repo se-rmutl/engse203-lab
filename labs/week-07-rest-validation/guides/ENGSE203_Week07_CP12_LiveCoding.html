@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ENGSE203 Week 07 — CP12 + ปิดหน่วยที่ 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fs:1;
+  --ink:#EAF6EF; --muted:#A9C7B8; --line:rgba(169,199,184,.22);
+  --green:#4ADE80; --cyan:#38D7ED; --amber:#FBBF24; --red:#FB7185; --violet:#C084FC;
+  --panel:rgba(15,42,30,.74); --code:#04120C;
+  font-size:calc(16px * var(--fs));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 12% 10%,rgba(74,222,128,.14),transparent 32%),
+             radial-gradient(circle at 88% 84%,rgba(56,215,237,.11),transparent 34%),#04100B;
+  color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;
+  padding:0 20px 90px;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{padding:38px 0 22px;border-bottom:2px solid var(--line);margin-bottom:22px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;color:var(--green);text-transform:uppercase}
+h1{font-size:2.3rem;font-weight:700;line-height:1.15;margin:.4rem 0 .3rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-weight:300;font-size:1.05rem}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.pill{font-size:.76rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;
+  border:1px solid var(--line);background:rgba(74,222,128,.09);color:var(--green)}
+.pill.a{color:var(--amber);background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3)}
+.pill.c{color:var(--cyan);background:rgba(56,215,237,.09);border-color:rgba(56,215,237,.3)}
+.pill.r{color:var(--red);background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.3)}
+.pill.v{color:var(--violet);background:rgba(192,132,252,.09);border-color:rgba(192,132,252,.3)}
+.where{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.76rem;font-weight:600;
+  padding:.22rem .6rem;border-radius:7px;background:rgba(74,222,128,.16);color:#bff5d0;
+  border:1px solid rgba(74,222,128,.4)}
+.where.home{background:rgba(251,191,36,.14);color:#ffe1a8;border-color:rgba(251,191,36,.4)}
+
+.jump{position:sticky;top:0;z-index:15;display:flex;gap:.4rem;flex-wrap:wrap;
+  padding:.7rem 0;margin-bottom:8px;background:rgba(4,16,11,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.jump a{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.76rem;
+  padding:.32rem .7rem;border-radius:8px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(15,42,30,.85)}
+.jump a:hover{color:var(--green);border-color:var(--green)}
+.jump a.now{color:#04120C;background:var(--green);border-color:var(--green);font-weight:600}
+
+.step{margin:30px 0;border:1px solid var(--line);border-radius:16px;background:var(--panel);
+  overflow:hidden;scroll-margin-top:70px}
+.step-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;
+  background:rgba(74,222,128,.08);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.num{min-width:38px;height:38px;padding:0 .7rem;flex:0 0 auto;border-radius:19px;
+  display:grid;place-items:center;background:var(--green);color:#04120C;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.92rem}
+.step-head h2{font-size:1.2rem;font-weight:700;line-height:1.3}
+.step-head .file{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted);margin-left:auto}
+.step-body{padding:1.15rem 1.3rem}
+p{margin-bottom:.7rem;font-size:1rem}
+
+.say,.warn,.ok,.vio,.home{padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.say{border-left:3px solid var(--amber);background:rgba(251,191,36,.08)}
+.warn{border-left:3px solid var(--red);background:rgba(251,113,133,.08)}
+.ok{border-left:3px solid var(--green);background:rgba(74,222,128,.08)}
+.vio{border-left:3px solid var(--cyan);background:rgba(56,215,237,.09)}
+.home{border-left:3px solid var(--violet);background:rgba(192,132,252,.08)}
+.say b,.warn b,.ok b,.vio b,.home b{font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+.say b{color:var(--amber)} .warn b{color:var(--red)} .ok b{color:var(--green)}
+.vio b{color:var(--cyan)} .home b{color:var(--violet)}
+
+.codewrap{position:relative;margin:.7rem 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;
+  padding:1rem 1.15rem;overflow-x:auto;font-size:.9rem;line-height:1.72}
+code{font-family:'IBM Plex Mono',monospace}
+pre code{color:#d6efe0}
+.k{color:#8FE3A8}.s{color:#E9C88A}.c{color:#7EA592;font-style:italic}
+.f{color:#8FD0EC}.t{color:#68d8d2}.d{color:#FB7185}.hl{color:#FFE08A;font-weight:600}
+.n{color:#D9A0E8}
+.copy{position:absolute;top:.55rem;right:.6rem;background:rgba(15,42,30,.95);
+  border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:.25rem .65rem;font-size:.74rem;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--green);border-color:var(--green)}
+
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:.7rem 0}
+th{text-align:left;padding:.6rem .7rem;color:var(--green);font-size:.8rem;
+  font-weight:600;border-bottom:1px solid var(--line);letter-spacing:.04em}
+td{padding:.6rem .7rem;border-bottom:1px solid rgba(169,199,184,.1);vertical-align:top}
+tr:last-child td{border-bottom:none}
+ul{margin:.3rem 0 .6rem 1.2rem}li{margin-bottom:.35rem}
+
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem 0;
+  border-bottom:1px solid rgba(169,199,184,.1)}
+.check:last-child{border-bottom:none}
+.box{width:22px;height:22px;flex:0 0 22px;border:2px solid var(--muted);border-radius:5px;
+  cursor:pointer;display:grid;place-items:center;font-size:.85rem;color:transparent;
+  transition:all .15s;margin-top:.15rem}
+.box.on{background:var(--green);border-color:var(--green);color:#04120C}
+
+.trap{border:1px solid rgba(251,113,133,.4);border-radius:14px;
+  background:rgba(251,113,133,.07);padding:1rem 1.15rem;margin:.8rem 0}
+.trap h3{color:var(--red);font-size:1.03rem;margin-bottom:.4rem;display:flex;gap:.5rem;
+  align-items:center;flex-wrap:wrap}
+.trap h3 span{font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  background:rgba(251,113,133,.2);padding:.15rem .5rem;border-radius:5px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.35rem;display:block}
+.tag.b{color:var(--red)} .tag.a{color:var(--green)}
+
+.hud{position:fixed;bottom:14px;right:16px;display:flex;gap:.4rem;z-index:20}
+.hud button{background:rgba(15,42,30,.94);border:1px solid var(--line);border-radius:9px;
+  padding:.3rem .65rem;font-size:.78rem;color:var(--muted);cursor:pointer;font-family:inherit}
+.hud button:hover{color:var(--green);border-color:var(--green)}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.84rem;color:var(--muted);font-weight:300;display:flex;
+  justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.nav{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
+.nav a{text-decoration:none;font-size:.84rem;padding:.45rem .9rem;border-radius:10px;
+  border:1px solid var(--line);color:var(--muted);background:rgba(15,42,30,.7)}
+.nav a:hover{color:var(--green);border-color:var(--green)}
+
+@media (max-width:820px){.split{grid-template-columns:1fr}}
+@media print{body{background:#fff;color:#111}.hud,.jump{display:none}
+  pre{background:#f4f6f9;border-color:#ccc}pre code{color:#111}.step{break-inside:avoid}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">ENGSE203 · Week 07 · Checkpoint 12 + ปิดหน่วย</p>
+  <h1>Loading / Error State แล้วปิดหน่วยที่ 3 <span class="where">🏫 ทำในห้อง</span></h1>
+  <p class="sub">35 นาที ทำเอง + 40 นาที ตรวจสดและสรุป</p>
+  <div class="pills">
+    <span class="pill c">checker → 25/25</span><span class="pill a">มอบงานบ้าน</span>
+    <span class="pill v">ปิดหน่วยที่ 3</span>
+  </div>
+</header>
+
+<nav class="jump">
+  <a href="#s1">CP12</a><a href="#s2">ทดสอบ error</a><a href="#s3">ตรวจสด</a>
+  <a href="#s4">สรุปหน่วย 3</a><a href="#s5">มอบงานบ้าน</a><a href="#s6">สะพานหน่วย 4</a>
+</nav>
+
+<div class="step" id="s1">
+  <div class="step-head"><span class="num">12</span><h2>Loading + Error State</h2>
+    <span class="file">frontend/src/pages/DashboardPage.jsx · You do</span></div>
+  <div class="step-body">
+    <div class="say">
+      <b>เปิดช่วงด้วยเหตุผล</b>
+      "ตอน Week 05 ข้อมูลอยู่ในเครื่อง อ่านเสร็จแทบทันที เราเลยแทบไม่เห็นสถานะ loading
+      <br><strong>ตอนนี้ข้อมูลอยู่คนละโปรแกรม — ความช้าและความล้มเหลวเป็นเรื่องจริง</strong>"
+    </div>
+    <table>
+      <tr><th style="width:110px">สถานะ</th><th>เกิดเมื่อ</th><th>ผู้ใช้ควรเห็น</th></tr>
+      <tr><td>loading</td><td>กำลังรอ API ตอบ</td><td>"กำลังโหลด…" หรือ skeleton</td></tr>
+      <tr><td>success</td><td>ได้ข้อมูลแล้ว</td><td>รายการตามปกติ</td></tr>
+      <tr><td>empty</td><td>สำเร็จ แต่ไม่มีรายการ</td><td>"ยังไม่มีคำร้อง" + ปุ่มสร้างใหม่</td></tr>
+      <tr><td>error</td><td>ผิดพลาด</td><td><strong>ข้อความที่บอกว่าควรทำอะไรต่อ</strong> + ปุ่มลองใหม่</td></tr>
+    </table>
+    <p><strong>error ต้องต่างกันตามสาเหตุ</strong></p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">catch</span> (error) {
+  <span class="k">if</span> (error <span class="k">instanceof</span> ApiError &amp;&amp; error.status === <span class="n">0</span>) {
+    <span class="f">setError</span>(<span class="s">'ติดต่อเซิร์ฟเวอร์ไม่ได้ — ตรวจว่าเปิด API ที่พอร์ต 3001 แล้วหรือยัง'</span>);
+  } <span class="k">else</span> {
+    <span class="f">setError</span>(error.message);
+  }
+}</code></pre></div>
+    <div class="warn">
+      <b>⚠ อย่าแสดงข้อความเทคนิคให้ผู้ใช้เห็น</b>
+      <code>TypeError: Failed to fetch</code> ไม่มีความหมายกับผู้ใช้ทั่วไป
+      <br><strong>แปลเป็นภาษาคนที่บอกว่าควรทำอะไรต่อ</strong> —
+      นี่คือเหตุผลที่เราสร้าง <code>ApiError</code> พร้อมข้อความไทยไว้ใน apiClient
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s2">
+  <div class="step-head"><span class="num">!</span><h2>วิธีทดสอบ error ที่ง่ายที่สุด</h2>
+    <span class="file">สาธิตบนจอ</span></div>
+  <div class="step-body">
+    <div class="say">
+      <b>สาธิตให้ดูก่อน</b>
+      "ผมจะปิด API ด้วย <code>Ctrl+C</code> ใน Terminal 1 แล้ว refresh หน้าเว็บ —
+      ดูว่าแอปเราแสดงอะไร"
+    </div>
+    <div class="split">
+      <div><span class="tag b">✕ ไม่ควรได้</span>
+        <ul style="margin:.3rem 0 0"><li>หน้าขาว</li><li><code>Failed to fetch</code></li><li>หมุนค้างไปเรื่อย ๆ</li></ul>
+      </div>
+      <div><span class="tag a">✓ ต้องได้</span>
+        <ul style="margin:.3rem 0 0"><li>"ติดต่อเซิร์ฟเวอร์ไม่ได้…"</li><li>บอกว่าควรทำอะไรต่อ</li><li>มีปุ่มลองใหม่</li></ul>
+      </div>
+    </div>
+    <div class="ok">
+      <b>แล้วเปิด API กลับ</b>
+      กดปุ่มลองใหม่ → <strong>ข้อมูลกลับมา</strong> โดยไม่ต้อง refresh ทั้งหน้า
+    </div>
+    <div class="vio">
+      <b>สิ่งที่จะเห็นชัดขึ้นเมื่อเรียกข้ามเครื่อง</b>
+      "ตอน Week 05 เราใส่ <code>ignore</code> guard ไว้กัน stale update
+      แต่เห็นผลยากเพราะข้อมูลมาเร็วมาก
+      <br><strong>ตอนนี้เรียก API ข้ามเครื่อง ความช้าเป็นเรื่องจริง</strong> —
+      ลองกดสลับหน้าเร็ว ๆ ระหว่างที่ข้อมูลยังโหลดไม่เสร็จ จะเห็นประโยชน์ของ guard ทันที"
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s3">
+  <div class="step-head"><span class="num">✓</span><h2>ตรวจสดทั้งห้อง</h2>
+    <span class="file">15 นาที</span></div>
+  <div class="step-body">
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="c"># รันจาก root ของ week-07 (โฟลเดอร์ที่มีทั้ง api/ และ frontend/)</span>
+node check-week07.mjs --inclass</code></pre></div>
+    <div class="ok">
+      <b>เป้าหมาย</b>
+      <span style="font-size:1.2rem"><code>🏫 ในห้อง (CP09–CP12) ผ่าน <strong>25/25</strong> รายการ</code></span>
+    </div>
+    <div class="say">
+      <b>วิธีตรวจให้เร็ว</b>
+      ให้ทุกคนรันแล้ว<strong>ยกมือรายงานตัวเลข</strong> · คนที่ได้ครบให้ไปช่วยเพื่อน
+      <br><code>node check-week07.mjs --inclass | grep TODO</code> ดูเฉพาะที่ยังไม่ผ่าน
+    </div>
+    <div class="warn">
+      <b>อย่าลืมตรวจสิ่งที่ checker ตรวจไม่ได้</b>
+      checker ตรวจ CORS header ได้ แต่<strong>ตรวจพฤติกรรมในเบราว์เซอร์ไม่ได้</strong>
+      · เดินดูว่าหน้า Dashboard ของนักศึกษาโหลดข้อมูลขึ้นจริง และปิด API แล้วเห็นข้อความ
+    </div>
+    <table>
+      <tr><th style="width:40%">อาการที่เจอบ่อยตอนตรวจ</th><th>สาเหตุ</th></tr>
+      <tr><td>ยังเจอ CORS error</td><td><code>cors</code> อยู่หลัง route · หรือ <code>CORS_ORIGIN</code> ไม่ตรงพอร์ต React</td></tr>
+      <tr><td><code>BASE_URL</code> เป็น undefined</td><td>ตัวแปรไม่ได้ขึ้นต้นด้วย <code>VITE_</code></td></tr>
+      <tr><td>หน้า detail ขึ้น error แทน "ไม่พบ"</td><td><code>getRequestById</code> ไม่ได้แปลง 404 เป็น null</td></tr>
+      <tr><td>ลบแล้วหน้าจอไม่อัปเดต</td><td><code>deleteRequest</code> ไม่ได้คืนรายการใหม่</td></tr>
+      <tr><td>แก้โค้ดแล้วไม่เปลี่ยน</td><td><strong>แก้ผิดโฟลเดอร์</strong> — วันนี้มีสองโปรเจกต์!</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="step" id="s4">
+  <div class="step-head"><span class="num" style="background:var(--cyan)">◆</span>
+    <h2>สรุปหน่วยที่ 3</h2><span class="file">10 นาที</span></div>
+  <div class="step-body">
+    <div class="split">
+      <div><span class="tag a">Week 06 · สร้าง API ให้ทำงานได้</span>
+        <ul>
+          <li>Express server + routing</li>
+          <li>middleware + validation</li>
+          <li>CRUD ครบ 4 endpoint</li>
+          <li>status code ถูกตามสถานการณ์</li>
+        </ul>
+        <p><small>ทดสอบด้วย Postman</small></p>
+      </div>
+      <div><span class="tag" style="color:var(--cyan)">Week 07 · ทำให้ใช้งานจริงได้</span>
+        <ul>
+          <li>CORS + environment config</li>
+          <li><strong>เชื่อม React กับ API</strong></li>
+          <li>loading / error state</li>
+          <li>API contract + automated test</li>
+        </ul>
+        <p><small>ทดสอบด้วยแอปจริง + test</small></p>
+      </div>
+    </div>
+    <div class="ok">
+      <b>ประโยคสรุปหน่วย</b>
+      <span style="font-size:1.1rem"><strong>"สองสัปดาห์นี้พวกคุณสร้าง full-stack application ที่ทำงานได้จริงทั้งระบบ"</strong></span>
+    </div>
+    <div class="say">
+      <b>ถามคำถาม Checkpoint 5 ข้อ</b>
+      สุ่มเรียกคนละข้อ · ถ้าตอบไม่ได้ให้เพื่อนช่วย
+      <ol style="margin:.5rem 0 0">
+        <li>ถ้า API ตอบ 200 แล้ว ทำไมโค้ดเราถึงอ่านข้อมูลไม่ได้</li>
+        <li>ทำไม <code>app.use(cors())</code> ต้องอยู่บนสุด</li>
+        <li>ทำไมต้องแก้ <code>requestService.js</code> แค่ไฟล์เดียว</li>
+        <li><code>fetch</code> โยน error เมื่อไหร่ และไม่โยนเมื่อไหร่</li>
+        <li>status <code>0</code> กับ <code>500</code> ต่างกันอย่างไร</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s5">
+  <div class="step-head"><span class="num" style="background:var(--amber)">🏠</span>
+    <h2>มอบหมายงานที่บ้าน</h2><span class="file">10 นาที</span></div>
+  <div class="step-body">
+    <div class="home">
+      <b>🏠 Take-Home · CP13–CP16</b>
+      <table style="margin:.4rem 0 0">
+        <tr><td style="width:80px"><b>CP13</b></td><td><code>PUT</code> เปลี่ยนสถานะ — ทั้ง API และปุ่มใน React</td></tr>
+        <tr><td><b>CP14</b></td><td>morgan + error handling ระดับ production</td></tr>
+        <tr><td><b>CP15</b></td><td>เขียน <code>API_CONTRACT.md</code> ครบ 5 endpoint</td></tr>
+        <tr><td><b>CP16</b></td><td>automated test อย่างน้อย 6 เคส ด้วย supertest</td></tr>
+      </table>
+    </div>
+    <div class="say">
+      <b>อธิบาย CP15 ให้เห็นคุณค่า</b>
+      "API Contract ไม่ใช่งานเอกสารน่าเบื่อนะครับ — <strong>มันคือสิ่งที่ทำให้ทีมทำงานคู่ขนานกันได้</strong>
+      <br>ถ้าทีมมี 4 คน ทำ front 2 ทำ back 2 · <strong>ถ้าไม่มี contract ฝั่ง front ต้องรอ back ทำเสร็จก่อน</strong>
+      <br>แต่ถ้ามี ทั้งสองฝั่งเริ่มพร้อมกันได้เลย"
+    </div>
+    <div class="vio">
+      <b>เชื่อมกลับ Week 05</b>
+      "จริง ๆ เราใช้ contract กันมาตลอดโดยไม่รู้ตัว —
+      <strong>ตอน Week 05 ที่ผมให้ออกแบบ requestService ให้มี 4 ฟังก์ชัน
+      นั่นคือการวาง contract ไว้ล่วงหน้า</strong>
+      <br>Week 06 สร้าง API ให้ตรง · Week 07 ต่อกันได้แทบไม่ต้องปรับอะไรเลย"
+    </div>
+    <div class="home">
+      <b>⭐ Challenge · คะแนนเพิ่ม (ไม่บังคับ)</b>
+      <code>AppError</code> กำหนด status เองได้ · <code>asyncHandler</code> ห่อ handler async ·
+      retry อัตโนมัติฝั่ง React เมื่อ API ล่มชั่วคราว
+    </div>
+    <div class="ok">
+      <b>วิธีส่ง — เขียนบนกระดาน</b>
+      <pre style="margin:.4rem 0 0"><code>node check-week07.mjs          <span class="c"># อย่างน้อย 31/36</span>
+cd api &amp;&amp; npm test              <span class="c"># ต้องผ่านทุกเคส</span>
+git switch -c unit3/week-07
+git add -A &amp;&amp; git commit -m <span class="s">"LAB07: เชื่อม React กับ API"</span>
+git push -u origin unit3/week-07
+git tag lab-07-submission-v1 &amp;&amp; git push origin lab-07-submission-v1</code></pre>
+    </div>
+    <div class="warn">
+      <b>⚠ ย้ำเรื่องห้าม commit .env</b>
+      "ตรวจ <code>git status</code> ก่อน commit ทุกครั้ง —
+      <strong>ต้องไม่เห็น <code>node_modules</code>, <code>.env</code>, <code>.env.local</code></strong>
+      <br>commit เฉพาะ <code>.env.example</code> ที่ไม่มีค่าจริง"
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s6">
+  <div class="step-head"><span class="num" style="background:var(--violet)">→</span>
+    <h2>สะพานสู่หน่วยที่ 4</h2><span class="file">5 นาที · ห้ามตัด</span></div>
+  <div class="step-body">
+    <div class="say">
+      <b>ถามห้องก่อน</b>
+      "ตอนนี้ระบบเราสมบูรณ์แล้วใช่ไหมครับ — <strong>ยังเหลืออะไรอีกไหม</strong>"
+      <br><small>รอให้มีคนตอบเรื่อง <strong>ข้อมูลยังอยู่ในไฟล์ JSON</strong></small>
+    </div>
+    <div class="split">
+      <div><span class="tag a">✓ ตอนนี้ทำได้แล้ว</span>
+        <ul style="margin:.3rem 0 0">
+          <li>React เรียก API ข้ามพอร์ตได้</li>
+          <li>CRUD ครบทั้งระบบ</li>
+          <li>จัดการ loading และ error</li>
+          <li>มี contract และ test</li>
+        </ul>
+      </div>
+      <div><span class="tag" style="color:var(--violet)">→ หน่วยที่ 4 · Database</span>
+        <ul style="margin:.3rem 0 0">
+          <li>SQLite · MongoDB</li>
+          <li>ข้อมูลอยู่ถาวรจริง ไม่ใช่ไฟล์ JSON</li>
+          <li>ค้นหาและกรองได้เร็วขึ้น</li>
+          <li>รองรับผู้ใช้หลายคนพร้อมกัน</li>
+        </ul>
+      </div>
+    </div>
+    <div class="vio" style="font-size:1.05rem">
+      <b>ประโยคปิดหน่วย</b>
+      <p style="margin:0 0 .6rem">"<strong>และเราเตรียมทางไว้แล้วด้วย</strong> —
+      เปิดไฟล์ <code>services/requestService.js</code> ฝั่ง API ดูสิครับ
+      <strong>ไม่มีคำว่า <code>req</code> หรือ <code>res</code> เลยสักคำ</strong>"</p>
+      <p style="margin:0 0 .6rem">"แปลว่าหน่วยหน้าที่เราเปลี่ยนไปใช้ database
+      <strong>จะแก้แค่ service ไฟล์เดียว</strong> · controller และ route ไม่ต้องแตะเลย"</p>
+      <p style="margin:0">"<strong>เหมือนที่วันนี้เราแก้แค่ requestService ฝั่ง React แล้ว component ไม่ต้องแก้</strong>
+      — หลักการเดียวกันเป๊ะ แค่คนละฝั่ง"</p>
+    </div>
+    <div class="say">
+      <b>ทำไมช่วงนี้ห้ามตัด</b>
+      เพราะมันทำให้นักศึกษาเห็นว่า<strong>การแยกชั้นที่เราทำมาตลอดสามหน่วย
+      ไม่ใช่กฎที่ต้องท่องจำ แต่เป็นสิ่งที่ให้ผลจริงซ้ำแล้วซ้ำอีก</strong>
+      <br>ถ้าเวลาไม่พอ ให้ตัดการตรวจสดแทน แล้วให้ส่ง checker มาทีหลัง
+    </div>
+  </div>
+</div>
+
+<footer><span>ENGSE203 · Week 07 · CP12 Loading/Error State + ปิดหน่วยที่ 3 · เอกสารสำหรับฉายบนจอ</span>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน Week 07 บทที่ 7, 9, 10</span></footer>
+<div class="nav">
+  <a href="ENGSE203_Week07_CP09_LiveCoding.html">CP09</a>
+  <a href="ENGSE203_Week07_CP10_LiveCoding.html">CP10</a>
+  <a href="ENGSE203_Week07_CP11_LiveCoding.html">CP11</a>
+  <a href="#" style="color:var(--green);border-color:var(--green);background:rgba(74,222,128,.14);font-weight:600">CP12 + ปิดหน่วย ← อยู่ที่นี่</a>
+</div>
+</div>
+<div class="hud">
+  <button id="minus">A−</button><button id="plus">A+</button><button id="full">เต็มจอ</button>
+</div>
+<script>
+(function(){
+  var fs=1;
+  function setFs(v){fs=Math.max(.75,Math.min(1.6,v));
+    document.documentElement.style.setProperty('--fs',fs);}
+  var p=document.getElementById('plus'),m=document.getElementById('minus'),f=document.getElementById('full');
+  if(p)p.onclick=function(){setFs(fs+.08);};
+  if(m)m.onclick=function(){setFs(fs-.08);};
+  if(f)f.onclick=function(){
+    if(!document.fullscreenElement)document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();
+    else document.exitFullscreen&&document.exitFullscreen();};
+  document.addEventListener('keydown',function(e){
+    if(e.target.tagName==='INPUT')return;
+    if(e.key==='+'||e.key==='=')setFs(fs+.08);
+    if(e.key==='-')setFs(fs-.08);});
+  document.querySelectorAll('[data-check]').forEach(function(b){
+    b.onclick=function(){b.classList.toggle('on');};});
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.onclick=function(){
+      var pre=btn.parentElement.querySelector('pre');
+      var text=pre.innerText.replace(/\s*←[^\n]*/g,'');
+      navigator.clipboard.writeText(text).then(function(){
+        var old=btn.textContent;btn.textContent='คัดลอกแล้ว';
+        setTimeout(function(){btn.textContent=old;},1400);});};});
+  var links=Array.prototype.slice.call(document.querySelectorAll('.jump a[href^="#"]'));
+  if(links.length){
+    var targets=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+    function onScroll(){var best=0;
+      targets.forEach(function(el,i){if(el&&el.getBoundingClientRect().top<=120)best=i;});
+      links.forEach(function(a,i){a.classList.toggle('now',i===best);});}
+    document.addEventListener('scroll',onScroll,{passive:true});onScroll();}
+})();
+
+</script>
+</body>
+</html>

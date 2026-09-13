@@ -12,11 +12,38 @@
 
 | ลำดับ | ทำเมื่อไร | เปิดไฟล์ |
 |---|---|---|
-| 1 | ก่อนเข้าคาบ | [เอกสารประกอบการสอน](guides/ENGSE203_Week06_Teaching_Document_TH.html) **บทที่ 1–3** (Backend · Node · HTTP) |
+| 0 | **บทนำ · ต้นคาบ** | [สไลด์ API Foundations](https://se-rmutl.github.io/engse203/week06/guides/ENGSE203_API_Foundations_Slides.html) — ทำไมต้องมี API และทำไมต้องเป็น REST |
+| 1 | ก่อนเข้าคาบ | [เอกสารประกอบการสอน](https://se-rmutl.github.io/engse203/week06/week06-teaching-doc.html) **บทที่ 1–3** (Backend · Node · HTTP) |
 | 2 | ในคาบ | [`lab06/LAB06_INCLASS_GUIDE_TH.md`](lab06/LAB06_INCLASS_GUIDE_TH.md) |
 | 3 | ที่บ้าน | [`lab06/LAB06_TAKEHOME_GUIDE_TH.md`](lab06/LAB06_TAKEHOME_GUIDE_TH.md) |
 
-อ่านประกอบได้ตลอด — [เอกสารประกอบการสอน Week 06](guides/ENGSE203_Week06_Teaching_Document_TH.html) (12 บท · 9 ภาพประกอบ)
+อ่านประกอบได้ตลอด — [เอกสารประกอบการสอน Week 06](https://se-rmutl.github.io/engse203/week06/week06-teaching-doc.html) (12 บท · 9 ภาพประกอบ)
+
+---
+
+## สื่อการสอนออนไลน์
+
+> ไฟล์ `.html` เปิดจาก GitHub โดยตรงไม่ได้ (จะเห็นเป็นโค้ด) — **ใช้ลิงก์ด้านล่างนี้แทน**
+
+| สื่อ | เปิด |
+|---|---|
+| **บทนำ · ทำไมต้องมี API และทำไมต้องเป็น REST** | [เปิดสไลด์](https://se-rmutl.github.io/engse203/week06/guides/ENGSE203_API_Foundations_Slides.html) |
+| สไลด์ Week 06 | [เปิดสไลด์](https://se-rmutl.github.io/engse203/week06) |
+| เอกสารประกอบการสอน (12 บท) | [เปิดเอกสาร](https://se-rmutl.github.io/engse203/week06/week06-teaching-doc.html) |
+| แหล่งเรียนรู้เพิ่มเติม (Node/npm · Express · JSON API) | [เปิด](https://se-rmutl.github.io/engse203/week06/extra) |
+
+### หน้าจอ Live-Coding (ใช้ในคาบ)
+
+| Checkpoint | ทำอะไร | เปิด |
+|---|---|---|
+| CP00 | รู้จัก API ของจริง — public API + DevTools + Postman | [เปิด](https://se-rmutl.github.io/engse203/week06/guides/ENGSE203_Week06_CP00_LiveCoding.html) |
+| CP01 | Hello Server | [เปิด](https://se-rmutl.github.io/engse203/week06/guides/ENGSE203_Week06_CP01_LiveCoding.html) |
+| CP02 | GET 2 เส้น + 404 | [เปิด](https://se-rmutl.github.io/engse203/week06/guides/ENGSE203_Week06_CP02_LiveCoding.html) |
+| CP03 | Middleware | [เปิด](https://se-rmutl.github.io/engse203/week06/guides/ENGSE203_Week06_CP03_LiveCoding.html) |
+| CP04 | POST + Validation | [เปิด](https://se-rmutl.github.io/engse203/week06/guides/ENGSE203_Week06_CP04_LiveCoding.html) |
+| CP05 | DELETE + ปิดคาบ | [เปิด](https://se-rmutl.github.io/engse203/week06/guides/ENGSE203_Week06_CP05_LiveCoding.html) |
+
+> ไฟล์ต้นฉบับทั้งหมดอยู่ใน `guides/` ของโฟลเดอร์นี้ — clone ไปเปิดออฟไลน์ได้
 
 ---
 
@@ -139,6 +166,7 @@ week-06-express-api-foundation/
 │   ├── starter/                       ← โค้ดเริ่มต้น (มี TODO 19 จุด)
 │   └── Campus_Service_API.postman_collection.json
 ├── guides/
+│   ├── ENGSE203_API_Foundations_Slides.html        ← บทนำ 20 สไลด์ · ทำไมต้องมี API
 │   ├── ENGSE203_Week06_Teaching_Document_TH.html   ← 12 บท · 9 ภาพ
 │   ├── ENGSE203_Week06_Slides.html                 ← 25 สไลด์
 │   └── ENGSE203_Week06_Slides_Deluxe.html          ← 31 สไลด์ · 12 SVG
@@ -155,7 +183,8 @@ week-06-express-api-foundation/
 | [Instructor Step Script](_instructor-private/ENGSE203_Week06_Instructor_Step_Script_TH.md) | สคริปต์การสอน 300 นาที + Hint Ladder + แผนสำรอง |
 | `_instructor-private/reference-solution/` | เฉลยครบทุก CP รวม Challenge (28/28) |
 | `live-coding/*.html` | หน้าจอฉายทีละ checkpoint |
-| `guides/*_Slides*.html` | สไลด์ 2 เวอร์ชัน — เลือกตามเวลาที่มี |
+| `guides/ENGSE203_API_Foundations_Slides.html` | **บทนำ 20 สไลด์** — ใช้ต้นคาบก่อนเข้าเนื้อหา (~30 นาที) |
+| `guides/ENGSE203_Week06_Slides*.html` | สไลด์หลัก 2 เวอร์ชัน — เลือกตามเวลาที่มี |
 
 **ตรวจก่อนสอน**
 

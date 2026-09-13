@@ -17,7 +17,40 @@
 | 3 | ก่อนคาบ 5B · 20 นาที | [`pre-lab05/PRE_LAB05B_GUIDE_TH.md`](pre-lab05/PRE_LAB05B_GUIDE_TH.md) |
 | 4 | ในคาบ 5B | [`lab05/LAB05B_STUDENT_GUIDE_TH.md`](lab05/LAB05B_STUDENT_GUIDE_TH.md) |
 
-อ่านประกอบได้ตลอด — [เอกสารประกอบการสอน 5A](guides/ENGSE203_Week05A_Teaching_Document_TH.html) · [เอกสารประกอบการสอน 5B](guides/ENGSE203_Week05B_Teaching_Document_TH.html) · [ภาพรวมรูปแบบการเรียน](guides/ENGSE203_Week05_Learning_Model_Infographic.html)
+อ่านประกอบได้ตลอด — [เอกสารประกอบการสอน 5A](https://se-rmutl.github.io/engse203/week05/week05-teaching-doc.html) · [เอกสารประกอบการสอน 5B](https://se-rmutl.github.io/engse203/week05b/week05b-teaching-doc.html) · [ภาพรวมรูปแบบการเรียน](https://se-rmutl.github.io/engse203/week05/guides/ENGSE203_Week05_Learning_Model_Infographic.html)
+
+---
+
+## สื่อการสอนออนไลน์
+
+> ไฟล์ `.html` เปิดจาก GitHub โดยตรงไม่ได้ (จะเห็นเป็นโค้ด) — **ใช้ลิงก์ด้านล่างนี้แทน**
+> ทุกไฟล์เปิดได้ทันทีบนเบราว์เซอร์ ไม่ต้องดาวน์โหลด
+
+### คาบ 5A · Read Path
+
+| สื่อ | เปิด |
+|---|---|
+| สไลด์ 5A | [เปิดสไลด์](https://se-rmutl.github.io/engse203/week05) |
+| เอกสารประกอบการสอน 5A | [เปิดเอกสาร](https://se-rmutl.github.io/engse203/week05/week05-teaching-doc.html) |
+| ภาพรวมรูปแบบการเรียน | [เปิด infographic](https://se-rmutl.github.io/engse203/week05/guides/ENGSE203_Week05_Learning_Model_Infographic.html) |
+| หน้าจอ Live-Coding CP01 · Refactor | [เปิด](https://se-rmutl.github.io/engse203/week05/guides/ENGSE203_Week05A_CP01_LiveCoding.html) |
+| หน้าจอ Live-Coding CP02 · Routing | [เปิด](https://se-rmutl.github.io/engse203/week05/guides/ENGSE203_Week05A_CP02_LiveCoding.html) |
+| หน้าจอ Live-Coding CP03 · Service + Effect | [เปิด](https://se-rmutl.github.io/engse203/week05/guides/ENGSE203_Week05A_CP03_LiveCoding.html) |
+| หน้าจอ Live-Coding CP05a · Dynamic Detail | [เปิด](https://se-rmutl.github.io/engse203/week05/guides/ENGSE203_Week05A_CP05a_LiveCoding.html) |
+
+### คาบ 5B · Write Path
+
+| สื่อ | เปิด |
+|---|---|
+| สไลด์ 5B | [เปิดสไลด์](https://se-rmutl.github.io/engse203/week05b) |
+| เอกสารประกอบการสอน 5B | [เปิดเอกสาร](https://se-rmutl.github.io/engse203/week05b/week05b-teaching-doc.html) |
+| หน้าจอ Live-Coding CP04a · Persist | [เปิด](https://se-rmutl.github.io/engse203/week05b/guides/ENGSE203_Week05B_CP04a_LiveCoding.html) |
+| หน้าจอ Live-Coding CP04a-3 · เปลี่ยนบรรทัดเดียว | [เปิด](https://se-rmutl.github.io/engse203/week05b/guides/ENGSE203_Week05B_CP04a3_LiveCoding.html) |
+| หน้าจอ Live-Coding CP04b · Harden | [เปิด](https://se-rmutl.github.io/engse203/week05b/guides/ENGSE203_Week05B_CP04b_LiveCoding.html) |
+| หน้าจอ Live-Coding Cleanup · Guard | [เปิด](https://se-rmutl.github.io/engse203/week05b/guides/ENGSE203_Week05B_Cleanup_LiveCoding.html) |
+| หน้าจอ Live-Coding CP05b + CP06 · Regression &amp; Submit | [เปิด](https://se-rmutl.github.io/engse203/week05b/guides/ENGSE203_Week05B_CP05b_CP06_LiveCoding.html) |
+
+> ไฟล์ต้นฉบับทั้งหมดอยู่ใน `guides/` ของโฟลเดอร์นี้ — clone ไปเปิดออฟไลน์ได้
 
 ---
 

@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ENGSE203 Week 05B — CP04b ทำตามบนจอ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fs:1;
+  --ink:#f0ecff; --muted:#b8b0d8; --line:rgba(184,176,216,.22);
+  --violet:#b98cf5; --cyan:#38d7ed; --green:#4ade80; --amber:#fbbf24; --red:#fb7185;
+  --panel:rgba(27,21,64,.74); --code:#08061a;
+  font-size:calc(16px * var(--fs));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 12% 10%,rgba(185,140,245,.15),transparent 32%),
+             radial-gradient(circle at 88% 84%,rgba(56,215,237,.12),transparent 34%),#05040f;
+  color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;
+  padding:0 20px 90px;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{padding:38px 0 22px;border-bottom:2px solid var(--line);margin-bottom:22px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;color:var(--violet);text-transform:uppercase}
+h1{font-size:2.3rem;font-weight:700;line-height:1.15;margin:.4rem 0 .3rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-weight:300;font-size:1.05rem}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.pill{font-size:.76rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;
+  border:1px solid var(--line);background:rgba(185,140,245,.09);color:var(--violet)}
+.pill.a{color:var(--amber);background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3)}
+.pill.g{color:var(--green);background:rgba(74,222,128,.09);border-color:rgba(74,222,128,.3)}
+.pill.c{color:var(--cyan);background:rgba(56,215,237,.09);border-color:rgba(56,215,237,.3)}
+.pill.r{color:var(--red);background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.3)}
+
+.jump{position:sticky;top:0;z-index:15;display:flex;gap:.4rem;flex-wrap:wrap;
+  padding:.7rem 0;margin-bottom:8px;background:rgba(5,4,15,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.jump a{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.76rem;
+  padding:.32rem .7rem;border-radius:8px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(20,16,47,.85)}
+.jump a:hover{color:var(--violet);border-color:var(--violet)}
+.jump a.now{color:#0d0a24;background:var(--violet);border-color:var(--violet);font-weight:600}
+
+.step{margin:30px 0;border:1px solid var(--line);border-radius:16px;background:var(--panel);
+  overflow:hidden;scroll-margin-top:70px}
+.step-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;
+  background:rgba(185,140,245,.08);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.num{min-width:38px;height:38px;padding:0 .7rem;flex:0 0 auto;border-radius:19px;
+  display:grid;place-items:center;background:var(--violet);color:#0d0a24;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.92rem}
+.step-head h2{font-size:1.2rem;font-weight:700;line-height:1.3}
+.step-head .file{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted);margin-left:auto}
+.step-body{padding:1.15rem 1.3rem}
+p{margin-bottom:.7rem;font-size:1rem}
+
+.say,.warn,.ok,.vio{padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.say{border-left:3px solid var(--amber);background:rgba(251,191,36,.08)}
+.warn{border-left:3px solid var(--red);background:rgba(251,113,133,.08)}
+.ok{border-left:3px solid var(--green);background:rgba(74,222,128,.08)}
+.vio{border-left:3px solid var(--cyan);background:rgba(56,215,237,.09)}
+.say b,.warn b,.ok b,.vio b{font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+.say b{color:var(--amber)} .warn b{color:var(--red)} .ok b{color:var(--green)} .vio b{color:var(--cyan)}
+
+.codewrap{position:relative;margin:.7rem 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;
+  padding:1rem 1.15rem;overflow-x:auto;font-size:.9rem;line-height:1.72}
+code{font-family:'IBM Plex Mono',monospace}
+pre code{color:#dcd7f2}
+.k{color:#9fbcff}.s{color:#8de3a5}.c{color:#8b83ad;font-style:italic}
+.f{color:#f3d38a}.t{color:#68d8d2}.d{color:#fb7185}.hl{color:#ffd97a;font-weight:600}
+.copy{position:absolute;top:.55rem;right:.6rem;background:rgba(20,16,47,.95);
+  border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:.25rem .65rem;font-size:.74rem;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--violet);border-color:var(--violet)}
+
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:.7rem 0}
+th{text-align:left;padding:.6rem .7rem;color:var(--violet);font-size:.8rem;
+  font-weight:600;border-bottom:1px solid var(--line);letter-spacing:.04em}
+td{padding:.6rem .7rem;border-bottom:1px solid rgba(184,176,216,.1);vertical-align:top}
+tr:last-child td{border-bottom:none}
+ul{margin:.3rem 0 .6rem 1.2rem}li{margin-bottom:.35rem}
+
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem 0;
+  border-bottom:1px solid rgba(184,176,216,.1)}
+.check:last-child{border-bottom:none}
+.box{width:22px;height:22px;flex:0 0 22px;border:2px solid var(--muted);border-radius:5px;
+  cursor:pointer;display:grid;place-items:center;font-size:.85rem;color:transparent;
+  transition:all .15s;margin-top:.15rem}
+.box.on{background:var(--green);border-color:var(--green);color:#0d0a24}
+
+.trap{border:1px solid rgba(251,113,133,.4);border-radius:14px;
+  background:rgba(251,113,133,.07);padding:1rem 1.15rem;margin:.8rem 0}
+.trap h3{color:var(--red);font-size:1.03rem;margin-bottom:.4rem;display:flex;gap:.5rem;
+  align-items:center;flex-wrap:wrap}
+.trap h3 span{font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  background:rgba(251,113,133,.2);padding:.15rem .5rem;border-radius:5px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.35rem;display:block}
+.tag.b{color:var(--red)} .tag.a{color:var(--green)}
+
+.hud{position:fixed;bottom:14px;right:16px;display:flex;gap:.4rem;z-index:20}
+.hud button{background:rgba(20,16,47,.94);border:1px solid var(--line);border-radius:9px;
+  padding:.3rem .65rem;font-size:.78rem;color:var(--muted);cursor:pointer;font-family:inherit}
+.hud button:hover{color:var(--violet);border-color:var(--violet)}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.84rem;color:var(--muted);font-weight:300;display:flex;
+  justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.nav{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
+.nav a{text-decoration:none;font-size:.84rem;padding:.45rem .9rem;border-radius:10px;
+  border:1px solid var(--line);color:var(--muted);background:rgba(20,16,47,.7)}
+.nav a:hover{color:var(--violet);border-color:var(--violet)}
+
+@media (max-width:820px){.split{grid-template-columns:1fr}}
+@media print{body{background:#fff;color:#111}.hud,.jump{display:none}
+  pre{background:#f4f6f9;border-color:#ccc}pre code{color:#111}.step{break-inside:avoid}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">ENGSE203 · Week 05B · Checkpoint 04b</p>
+  <h1>ทำให้ข้อมูลทนทาน</h1>
+  <p class="sub">พิมพ์ตามช่วงแรก → ทำเองที่เหลือ · 55 นาที</p>
+  <div class="pills">
+    <span class="pill a">TODO 5B-A2 · 5B-2b · 5B-3b</span>
+    <span class="pill">แก้ 3 ไฟล์</span>
+    <span class="pill g">130 → 133 / 133</span>
+    <span class="pill c">ใช้ checker เป็นเครื่องมือสอน</span>
+  </div>
+</header>
+
+<nav class="jump">
+  <a href="#s0">ทายก่อน</a>
+  <a href="#s1">04b-1 ตรวจเข้ม</a>
+  <a href="#s2">04b-2 ทดสอบพัง</a>
+  <a href="#s3">04b-3 แจ้งผู้ใช้</a>
+  <a href="#s4">04b-4 หลักฐาน</a>
+  <a href="#done">ผ่าน CP</a>
+</nav>
+
+<div class="step" id="s0">
+  <div class="step-head"><span class="num" style="background:var(--amber)">?</span>
+    <h2>ทายก่อนเริ่ม</h2></div>
+  <div class="step-body">
+    <p>เมื่อเช้าเราใส่ <code>try/catch</code> ครอบ <code>JSON.parse</code> ไปแล้ว</p>
+    <div class="codewrap">
+<pre><code><span class="c">// ข้อความนี้อยู่ใน Local Storage</span>
+{ <span class="s">"schemaVersion"</span>: <span class="d">99</span>, <span class="s">"requests"</span>: <span class="d">"ไม่ใช่ array"</span> }</code></pre></div>
+    <div class="say">
+      <b>คำถาม</b>
+      <span style="font-size:1.1rem"><code>JSON.parse</code> ข้อความนี้จะเกิดอะไรขึ้น
+      — <code>catch</code> จะจับได้ไหม</span>
+    </div>
+    <p>ให้ทายก่อน แล้วรันใน Console ให้ดูจริง</p>
+    <div class="warn" style="text-align:center;padding:1.3rem">
+      <p style="margin:0;font-size:1.4rem;font-weight:600">parse ได้ ไม่ได้แปลว่าข้อมูลถูก</p>
+    </div>
+    <p><small><code>try/catch</code> จับได้แค่กรณีที่ข้อความ<strong>ไม่ใช่ JSON</strong> เท่านั้น ·
+    ข้อความข้างบนเป็น JSON ที่ถูกต้องสมบูรณ์ จึงหลุดผ่านเข้าระบบไปทั้งชุด</small></p>
+  </div>
+</div>
+
+<div class="step" id="s1">
+  <div class="step-head"><span class="num">04b-1</span><h2>ตรวจให้เข้มขึ้น</h2>
+    <span class="file">src/services/requestStorage.js · We do</span></div>
+  <div class="step-body">
+    <p>ทำ <code>TODO 5B-A2</code> — หลัง parse สำเร็จ <strong>ยังต้องตรวจต่ออีก 2 อย่าง</strong></p>
+    <div class="split">
+      <div><span class="tag b">เมื่อเช้า</span>
+<pre><code>  <span class="k">try</span> {
+    <span class="k">const</span> envelope = <span class="f">JSON.parse</span>(rawValue);
+    <span class="d">// TODO 5B-A2: ตรวจให้ครบใน CP04b</span>
+    <span class="k">return</span> { status: <span class="s">'valid'</span>, … };
+  } <span class="k">catch</span> { … }</code></pre></div>
+      <div><span class="tag a">ตอนนี้</span>
+        <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code>  <span class="k">try</span> {
+    <span class="k">const</span> envelope = <span class="f">JSON.parse</span>(rawValue);
+    <span class="hl">if (</span>
+      <span class="hl">!envelope</span>
+      <span class="hl">|| envelope.schemaVersion !== SCHEMA_VERSION</span>
+      <span class="hl">|| !validateRequests(envelope.requests)</span>
+    <span class="hl">) {</span>
+      <span class="hl">return { status: 'invalid', reason: 'รูปแบบหรือเวอร์ชันข้อมูลไม่ถูกต้อง' };</span>
+    <span class="hl">}</span>
+
+    <span class="k">return</span> { status: <span class="s">'valid'</span>, requests: <span class="f">structuredClone</span>(envelope.requests) };
+  } <span class="k">catch</span> {
+    <span class="k">return</span> { status: <span class="s">'invalid'</span>, reason: <span class="s">'ข้อมูลที่บันทึกไว้ไม่ใช่ JSON ที่อ่านได้'</span> };
+  }</code></pre></div></div>
+    </div>
+    <div class="say">
+      <b>ชี้ให้เห็น</b>
+      <code>validateRequests()</code> <strong>starter เตรียมไว้ให้แล้ว</strong> ไม่ต้องเขียนเอง —
+      ให้เปิดดูว่าข้างในตรวจอะไรบ้าง จะเห็นว่ามีการเช็ค id ซ้ำด้วย
+      <br>สังเกตว่าเราตรวจ <code>!envelope</code> ก่อน เพราะ <code>JSON.parse('null')</code> สำเร็จและคืน <code>null</code>
+    </div>
+    <div class="ok">
+      <b>รันทันทีเพื่อดูผล</b>
+      <div class="codewrap" style="margin:.4rem 0 0"><button class="copy" data-copy>คัดลอก</button>
+<pre><code>npm run check | grep <span class="s">"^\[TODO\]"</span></code></pre></div>
+      <p style="margin:.4rem 0 0">จาก 3 รายการควรเหลือ 1 รายการ — ที่เหลือคือเรื่อง <code>onRecovery</code> ในช่วง 04b-3</p>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s2">
+  <div class="step-head"><span class="num">04b-2</span><h2>ทดสอบข้อมูลเสียหาย 3 แบบ</h2>
+    <span class="file">DevTools · You do</span></div>
+  <div class="step-body">
+    <p>เปิด DevTools → Application → Local Storage แล้วแก้ค่าของคีย์ LAB05 ทีละแบบ จากนั้น refresh</p>
+    <table>
+      <tr><th style="width:52px">#</th><th style="width:40%">วางค่านี้ทับ</th><th>ต้องถูกจับด้วย</th></tr>
+      <tr><td><b>1</b></td><td><code>{ ไม่ใช่ JSON</code></td><td><code>try/catch</code></td></tr>
+      <tr><td><b>2</b></td><td><code>{"schemaVersion":99,"requests":[]}</code></td><td>เทียบ <code>SCHEMA_VERSION</code> ← <strong>try/catch จับไม่ได้</strong></td></tr>
+      <tr><td><b>3</b></td><td>envelope ที่มีคำร้อง id ซ้ำกัน 2 รายการ</td><td><code>validateRequests()</code></td></tr>
+    </table>
+    <div class="say">
+      <b>ค่าสำหรับกรณีที่ 3 — คัดลอกไปวางได้เลย</b>
+      <div class="codewrap" style="margin:.4rem 0 0"><button class="copy" data-copy>คัดลอก</button>
+<pre><code>{"schemaVersion":1,"updatedAt":"2026-08-13T00:00:00.000Z","requests":[
+{"id":"REQ-001","requesterName":"ทดสอบ หนึ่ง","requestType":"แจ้งซ่อม","location":"A","details":"รายละเอียดยาวพอสมควร","priority":"normal","status":"pending"},
+{"id":"REQ-001","requesterName":"ทดสอบ สอง","requestType":"แจ้งซ่อม","location":"B","details":"รายละเอียดยาวพอสมควร","priority":"normal","status":"pending"}]}</code></pre></div>
+    </div>
+    <div class="ok">
+      <b>ทั้งสามแบบต้องได้ผลเหมือนกัน</b>
+      แอปกู้ข้อมูลตัวอย่างกลับมา · ใช้งานต่อได้ · <strong>ไม่มีหน้าจอขาว ไม่มี error สีแดงค้างใน Console</strong>
+    </div>
+    <div class="vio">
+      <b>กรณีที่ 3 น่าสนใจที่สุด</b>
+      ข้อมูลถูกรูปแบบทุกอย่าง JSON ก็ถูก เวอร์ชันก็ตรง — <strong>แต่มี id ซ้ำ</strong>
+      ซึ่งจะทำให้ React แสดงรายการผิดและการลบทำงานผิดพลาด
+      <br>เป็นตัวอย่างที่ดีว่าทำไม "ถูกรูปแบบ" กับ "ถูกต้อง" ไม่ใช่เรื่องเดียวกัน
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s3">
+  <div class="step-head"><span class="num">04b-3</span><h2>แจ้งผู้ใช้เมื่อกู้ข้อมูล</h2>
+    <span class="file">requestService.js · DashboardPage.jsx</span></div>
+  <div class="step-body">
+    <div class="say">
+      <b>โจทย์</b>
+      Storage อยู่ชั้นล่างสุด กล่องข้อความอยู่ที่หน้าจอชั้นบนสุด —
+      <strong>ถ้าให้ชั้นล่างรู้จักชั้นบน จะผูกกันแน่นจนแยกไม่ออก</strong>
+      <br>แล้วจะแจ้งผู้ใช้ได้อย่างไร
+    </div>
+    <p><code>TODO 5B-2b</code> และ <code>TODO 5B-3b</code></p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">async function</span> <span class="f">loadNormalRequests</span>(<span class="hl">onRecovery</span>) {
+  <span class="k">const</span> stored = <span class="f">readStoredRequests</span>();
+  <span class="k">if</span> (stored.status === <span class="s">'valid'</span>) <span class="k">return</span> stored.requests;
+
+  <span class="k">const</span> seedRequests = <span class="k">await</span> <span class="f">fetchSeedRequests</span>();
+  <span class="f">writeStoredRequests</span>(seedRequests);
+
+  <span class="hl">if (stored.status === 'invalid') {</span>
+    <span class="hl">onRecovery?.('พบข้อมูลเดิมที่อ่านไม่ได้ ระบบจึงกู้ข้อมูลตัวอย่างให้แล้ว');</span>
+  <span class="hl">}</span>
+  <span class="k">return</span> seedRequests;
+}
+
+<span class="c">// และใน getRequests()</span>
+  <span class="k">return</span> <span class="f">loadNormalRequests</span>(<span class="hl">options.onRecovery</span>);</code></pre></div>
+
+    <p><strong>ใน <code>DashboardPage.jsx</code></strong> ส่ง callback ลงไป — แก้แค่บรรทัดเดียว</p>
+    <div class="split">
+      <div><span class="tag b">เดิม</span>
+<pre><code><span class="f">getRequests</span>({ scenario })</code></pre></div>
+      <div><span class="tag a">ใหม่</span>
+        <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="f">getRequests</span>({ scenario, <span class="hl">onRecovery: setNotice</span> })</code></pre></div></div>
+    </div>
+
+    <div class="vio">
+      <b>อธิบายด้วยสิ่งที่เขาเคยทำมาแล้ว</b>
+      "ตอน Week 04 <code>RequestList</code> รับ <code>onDeleteRequest</code> มาจาก <code>App.jsx</code> ใช่ไหมครับ
+      — อันนี้เหมือนกันเป๊ะ <strong>ต่างแค่ส่งลงไปลึกกว่า ถึงชั้น Service</strong>"
+      <div class="codewrap" style="margin:.5rem 0 0">
+<pre><code>หน้าจอส่งฟังก์ชันลงไป  →  Service เรียกกลับขึ้นมาเมื่อจำเป็น</code></pre></div>
+    </div>
+
+    <div class="warn">
+      <b>สองจุดที่พลาดง่าย</b>
+      <strong>หนึ่ง</strong> — ต้องมี <code>?.</code> ใน <code>onRecovery?.()</code>
+      เพราะผู้เรียกบางคนไม่ส่ง callback มา เช่น <code>getRequestById()</code> ที่เรียก <code>getRequests()</code> ต่ออีกที
+      <br><strong>สอง</strong> — เรียก <code>onRecovery</code> เฉพาะเมื่อ <code>status</code> เป็น <code>'invalid'</code>
+      <strong>ไม่ใช่ <code>'missing'</code></strong> เพราะการเปิดเว็บครั้งแรกแล้วยังไม่มีข้อมูลเป็นเรื่องปกติ ไม่มีอะไรผิดพลาด
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s4">
+  <div class="step-head"><span class="num" style="background:var(--green)">04b-4</span>
+    <h2>ทดสอบและเก็บหลักฐาน</h2></div>
+  <div class="step-body">
+    <div>
+      <div class="check"><span class="box" data-check>✓</span><span>ทำลายข้อมูลแบบที่ 1 → กู้ได้ + มีข้อความแจ้ง</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>ทำลายข้อมูลแบบที่ 2 → กู้ได้ + มีข้อความแจ้ง</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>ทำลายข้อมูลแบบที่ 3 → กู้ได้ + มีข้อความแจ้ง</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span><strong>ลบคีย์ทิ้งแล้วเปิดใหม่ → ต้องไม่มีข้อความแจ้ง</strong> (เพราะเป็น missing ไม่ใช่ invalid)</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>Console ไม่มี uncaught error สีแดง</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>ถ่าย <code>storage-recovery.png</code> ให้เห็นข้อความแจ้งเตือน</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>กรอก TC-L5-18</span></div>
+    </div>
+    <div class="say">
+      <b>ข้อที่ 4 คือข้อที่นักศึกษาลืมบ่อยที่สุด</b>
+      หลายคนเรียก <code>onRecovery</code> ทุกกรณีที่ไม่ใช่ valid — ผลคือผู้ใช้ใหม่ที่เปิดเว็บครั้งแรก
+      จะเจอข้อความว่า "กู้ข้อมูลให้แล้ว" ทั้งที่ไม่เคยมีข้อมูลอะไรเสียหายเลย
+    </div>
+  </div>
+</div>
+
+<div class="step" id="done">
+  <div class="step-head"><span class="num" style="background:var(--green)">✓</span>
+    <h2>ผ่าน CP04b เมื่อ</h2></div>
+  <div class="step-body">
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code>npm run check</code></pre></div>
+    <div class="ok" style="text-align:center;padding:1.2rem">
+      <p style="margin:0;font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--green)">133 / 133</p>
+      <p style="margin:.4rem 0 0">ครบทุกรายการแล้ว</p>
+    </div>
+    <div class="vio">
+      <b>คำถาม Checkpoint</b>
+      <span style="font-size:1.1rem">parse ได้แล้ว ทำไมยังต้องตรวจต่อ</span>
+    </div>
+    <div class="warn">
+      <b>อย่าเพิ่งบอกว่าเสร็จ</b>
+      133/133 แปลว่าไม่มีอะไรที่ checker จับได้ผิด — <strong>ยังเหลือ cleanup guard, regression และการส่งมอบ
+      ซึ่ง checker ตรวจไม่ได้เลย</strong>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>ENGSE203 · Week 05B · CP04b ทำให้ข้อมูลทนทาน · เอกสารสำหรับฉายบนจอ</span>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน 5B บทที่ 4, 5</span>
+</footer>
+
+<div class="nav">
+  <a href="ENGSE203_Week05B_CP04a_LiveCoding.html">CP04a</a>
+  <a href="ENGSE203_Week05B_CP04a3_LiveCoding.html">CP04a-3</a>
+  <a href="#" style="color:var(--violet);border-color:var(--violet);background:rgba(185,140,245,.14);font-weight:600">CP04b ← อยู่ที่นี่</a>
+  <a href="ENGSE203_Week05B_Cleanup_LiveCoding.html">cleanup</a>
+  <a href="ENGSE203_Week05B_CP05b_CP06_LiveCoding.html">CP05b + CP06</a>
+</div>
+
+</div>
+
+<div class="hud">
+  <button id="minus">A−</button>
+  <button id="plus">A+</button>
+  <button id="full">เต็มจอ</button>
+</div>
+
+<script>
+(function(){
+  var fs = 1;
+  function setFs(v){ fs = Math.max(.75, Math.min(1.6, v));
+    document.documentElement.style.setProperty('--fs', fs); }
+  var p=document.getElementById('plus'), m=document.getElementById('minus'), f=document.getElementById('full');
+  if(p) p.onclick = function(){ setFs(fs + .08); };
+  if(m) m.onclick = function(){ setFs(fs - .08); };
+  if(f) f.onclick = function(){
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    else document.exitFullscreen && document.exitFullscreen();
+  };
+  document.addEventListener('keydown', function(e){
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === '+' || e.key === '=') setFs(fs + .08);
+    if (e.key === '-') setFs(fs - .08);
+  });
+  document.querySelectorAll('[data-check]').forEach(function(b){
+    b.onclick = function(){ b.classList.toggle('on'); };
+  });
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.onclick = function(){
+      var pre = btn.parentElement.querySelector('pre');
+      var text = pre.innerText.replace(/\s*←[^\n]*/g, '');
+      navigator.clipboard.writeText(text).then(function(){
+        var old = btn.textContent; btn.textContent = 'คัดลอกแล้ว';
+        setTimeout(function(){ btn.textContent = old; }, 1400);
+      });
+    };
+  });
+  var links = Array.prototype.slice.call(document.querySelectorAll('.jump a[href^="#"]'));
+  if (links.length){
+    var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+    function onScroll(){
+      var best = 0;
+      targets.forEach(function(el,i){ if (el && el.getBoundingClientRect().top <= 120) best = i; });
+      links.forEach(function(a,i){ a.classList.toggle('now', i === best); });
+    }
+    document.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+  }
+})();
+
+</script>
+</body>
+</html>

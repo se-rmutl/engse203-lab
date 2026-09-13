@@ -88,19 +88,18 @@ git push -u origin main
 | 3 | LAB 03 — Responsive Web UI & Form Interaction | รายบุคคล | HTML/CSS, responsive UI, form validation, DOM/event | [เปิด LAB 03](./labs/week-03-responsive-ui/) |
 | 4 | Pre-LAB 04 + LAB 04 — React Components, Props & State | รายบุคคล | guided checkpoints 240 นาที, React components, props, state, form/events, PR/Pages | [เปิด Week 04](./labs/week-04-react-components-state/) |
 | 5 | LAB 05 — React Routing, Data Fetching & Front-end Mini App | รายบุคคล | routing, form, local state, fetch/mock data | [เปิด LAB 05](./labs/week-05-react-mini-app/) |
-| 6 | LAB 06 — Node.js / Express API Foundation | รายบุคคล | Express app, route, middleware, controller/service | [เปิด LAB 06](./labs/week-06-express-api-foundation/) |
-| 7 | LAB 07 — RESTful API, Validation & Error Handling | รายบุคคล | REST design, HTTP status, validation, errors | [เปิด LAB 07](./labs/week-07-rest-validation/) |
-| 8 | LAB 08 — API Contract, CORS & Front-end Integration | รายบุคคล | API contract, API test, CORS/configuration, integration | [เปิด LAB 08](./labs/week-08-api-integration/) |
-| 9 | สอบกลางภาค | รายบุคคล | ทฤษฎีและปฏิบัติ JavaScript, React, REST API | [รายละเอียดขอบเขต](./labs/week-09-midterm/) |
-| 10 | LAB 09 — SQLite & SQL CRUD with Node.js | รายบุคคล | data model, SQLite, SQL CRUD, parameterized query | [เปิด LAB 09](./labs/week-10-sqlite-crud/) |
-| 11 | LAB 10 — MongoDB, Mongoose & NoSQL CRUD | รายบุคคล | collection/document, schema, model, CRUD | [เปิด LAB 10](./labs/week-11-mongodb-mongoose/) |
-| 12 | LAB 11 — Individual Full-Stack Integration | รายบุคคล | React + API + Database working end-to-end | [เปิด LAB 11](./labs/week-12-fullstack-integration/) |
-| 13 | LAB 12 — Unit Testing & Debugging Report | รายบุคคล | test case, unit test, debugging/logging evidence | [เปิด LAB 12](./labs/week-13-testing-debugging/) |
-| 14 | LAB 13 — Quality, Security & Delivery Readiness | รายบุคคล | validation, `.env`, security checklist, documentation | [เปิด LAB 13](./labs/week-14-quality-security/) |
-| 15 | LAB 14 — Cross-platform Product Sprint 1 | กลุ่ม | team plan, issue, branch, PR, cross-platform plan | [เปิด LAB 14](./labs/week-15-team-sprint-1/) |
-| 16 | LAB 15 — Team Full-Stack Sprint 2 & Demo | กลุ่ม | code review, test, README, demo, peer evaluation | [เปิด LAB 15](./labs/week-16-team-sprint-2-demo/) |
-| 17 | ทบทวนบทเรียน | รายบุคคล | checkpoint, error clinic, final preparation | [แนวทางทบทวน](./labs/week-17-review/) |
-| 18 | สอบปลายภาค | รายบุคคล | วิเคราะห์/ประยุกต์/ปรับปรุงระบบจากโจทย์ | [รายละเอียดขอบเขต](./labs/week-18-final/) |
+| 6 | LAB 06 — Node.js / Express API Foundation | รายบุคคล | Express app, route, middleware, controller/service, CRUD API | [เปิด LAB 06](./labs/week-06-express-api-foundation/) |
+| 7 | LAB 07 — RESTful API, Validation & Error Handling | รายบุคคล | validation, error handling, CORS, API contract, เชื่อม Front-end กับ Back-end | [เปิด LAB 07](./labs/week-07-rest-validation/) |
+| 8 | สอบกลางภาค | รายบุคคล | ทฤษฎีและปฏิบัติ JavaScript, React, REST API | [รายละเอียดขอบเขต](./labs/week-08-midterm/) |
+| 9 | LAB 08 — SQLite & SQL CRUD with Node.js | รายบุคคล | data model, SQLite, SQL CRUD, parameterized query | [เปิด LAB 08](./labs/week-09-sqlite-crud/) |
+| 10 | LAB 09 — MongoDB, Mongoose & NoSQL CRUD | รายบุคคล | collection/document, schema, model, CRUD | [เปิด LAB 09](./labs/week-10-mongodb-mongoose/) |
+| 11 | LAB 10 — Individual Full-Stack Integration | รายบุคคล | React + API + Database working end-to-end | [เปิด LAB 10](./labs/week-11-fullstack-integration/) |
+| 12 | LAB 11 — Unit Testing & Debugging Report | รายบุคคล | test case, unit test, debugging/logging evidence | [เปิด LAB 11](./labs/week-12-testing-debugging/) |
+| 13 | LAB 12 — Quality, Security & Delivery Readiness | รายบุคคล | validation, `.env`, security checklist, documentation | [เปิด LAB 12](./labs/week-13-quality-security/) |
+| 14 | LAB 13 — Cross-platform Product Sprint 1 | กลุ่ม | team plan, issue, branch, PR, cross-platform plan | [เปิด LAB 13](./labs/week-14-team-sprint-1/) |
+| 15 | LAB 14 — Team Full-Stack Sprint 2 & Demo | กลุ่ม | code review, test, README, demo, peer evaluation | [เปิด LAB 14](./labs/week-15-team-sprint-2-demo/) |
+| 16 | ทบทวนบทเรียน | รายบุคคล | checkpoint, error clinic, final preparation | [แนวทางทบทวน](./labs/week-16-review/) |
+| 17 | สอบปลายภาค | รายบุคคล | วิเคราะห์/ประยุกต์/ปรับปรุงระบบจากโจทย์ | [รายละเอียดขอบเขต](./labs/week-17-final/) |
 
 ### Week 04 สำหรับผู้เริ่ม React
 
@@ -111,6 +110,29 @@ Week 04 มีสองเส้นทางที่ไม่ควรสลั
 3. [LAB 4 — Campus Service Request](./labs/week-04-react-components-state/lab04/) ประยุกต์ด้วยตนเองใน branch `lab/week-04`
 
 เริ่มที่ [Week 04 Hub](./labs/week-04-react-components-state/) ซึ่งเชื่อมบทอ่าน จุดสาธิต checkpoint และงานที่ต้องส่งไว้ในหน้าเดียว
+
+## สื่อการสอนออนไลน์
+
+สไลด์ เอกสารประกอบการสอน และหน้าจอ Live-Coding ทั้งหมดเผยแพร่บนเว็บไซต์รายวิชา
+
+> ⚠ ไฟล์ `.html` ใน `guides/` ของแต่ละ LAB **เปิดจาก GitHub โดยตรงไม่ได้** (จะเห็นเป็นโค้ดดิบ)
+> ให้ใช้ลิงก์ในตารางนี้ หรือลิงก์ในหน้า README ของแต่ละ LAB แทน
+
+| สัปดาห์ | สไลด์ | เอกสารประกอบการสอน | หน้าจอ Live-Coding |
+|---:|---|---|---|
+| 1 | [เปิด](https://se-rmutl.github.io/engse203/week01) | — | — |
+| 2 | [เปิด](https://se-rmutl.github.io/engse203/week02) | — | — |
+| 3 | [เปิด](https://se-rmutl.github.io/engse203/week03) | — | — |
+| 4 | [เปิด](https://se-rmutl.github.io/engse203/week04) | — | — |
+| 5A | [เปิด](https://se-rmutl.github.io/engse203/week05) | [เปิด](https://se-rmutl.github.io/engse203/week05/week05-teaching-doc.html) | CP01 · CP02 · CP03 · CP05a — [ดูใน LAB 05](./labs/week-05-react-mini-app/) |
+| 5B | [เปิด](https://se-rmutl.github.io/engse203/week05b) | [เปิด](https://se-rmutl.github.io/engse203/week05b/week05b-teaching-doc.html) | CP04a · CP04a-3 · CP04b · Cleanup · CP05b+CP06 — [ดูใน LAB 05](./labs/week-05-react-mini-app/) |
+| 6 | [เปิด](https://se-rmutl.github.io/engse203/week06) · [บทนำ API](https://se-rmutl.github.io/engse203/week06/guides/ENGSE203_API_Foundations_Slides.html) | [เปิด](https://se-rmutl.github.io/engse203/week06/week06-teaching-doc.html) | CP00–CP05 — [ดูใน LAB 06](./labs/week-06-express-api-foundation/) |
+| 7 | [เปิด](https://se-rmutl.github.io/engse203/week07) | [เปิด](https://se-rmutl.github.io/engse203/week07/week07-teaching-doc.html) | CP09–CP12 — [ดูใน LAB 07](./labs/week-07-rest-validation/) |
+| 8+ | เผยแพร่ก่อนถึงสัปดาห์นั้น | — | — |
+
+**เว็บไซต์รายวิชา** — [se-rmutl.github.io/engse203](https://se-rmutl.github.io/engse203/)
+
+---
 
 ## แผนผังหน่วยเรียน
 
@@ -177,7 +199,7 @@ ENGSE203-Labs-2569/
 │   ├── week-01-developer-environment-git-github/
 │   ├── week-02-modern-javascript/
 │   ├── ...
-│   └── week-18-final/
+│   └── week-17-final/
 └── .github/
 ```
 

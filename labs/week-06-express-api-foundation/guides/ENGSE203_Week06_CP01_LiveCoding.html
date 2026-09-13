@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ENGSE203 Week 06 — CP01 Hello Server</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fs:1;
+  --ink:#EAF6EF; --muted:#A9C7B8; --line:rgba(169,199,184,.22);
+  --green:#4ADE80; --cyan:#38D7ED; --amber:#FBBF24; --red:#FB7185; --violet:#C084FC;
+  --panel:rgba(15,42,30,.74); --code:#04120C;
+  font-size:calc(16px * var(--fs));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 12% 10%,rgba(74,222,128,.14),transparent 32%),
+             radial-gradient(circle at 88% 84%,rgba(56,215,237,.11),transparent 34%),#04100B;
+  color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;
+  padding:0 20px 90px;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{padding:38px 0 22px;border-bottom:2px solid var(--line);margin-bottom:22px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;color:var(--green);text-transform:uppercase}
+h1{font-size:2.3rem;font-weight:700;line-height:1.15;margin:.4rem 0 .3rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-weight:300;font-size:1.05rem}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.pill{font-size:.76rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;
+  border:1px solid var(--line);background:rgba(74,222,128,.09);color:var(--green)}
+.pill.a{color:var(--amber);background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3)}
+.pill.c{color:var(--cyan);background:rgba(56,215,237,.09);border-color:rgba(56,215,237,.3)}
+.pill.r{color:var(--red);background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.3)}
+.pill.v{color:var(--violet);background:rgba(192,132,252,.09);border-color:rgba(192,132,252,.3)}
+.where{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.76rem;font-weight:600;
+  padding:.22rem .6rem;border-radius:7px;background:rgba(74,222,128,.16);color:#bff5d0;
+  border:1px solid rgba(74,222,128,.4)}
+.where.home{background:rgba(251,191,36,.14);color:#ffe1a8;border-color:rgba(251,191,36,.4)}
+
+.jump{position:sticky;top:0;z-index:15;display:flex;gap:.4rem;flex-wrap:wrap;
+  padding:.7rem 0;margin-bottom:8px;background:rgba(4,16,11,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.jump a{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.76rem;
+  padding:.32rem .7rem;border-radius:8px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(15,42,30,.85)}
+.jump a:hover{color:var(--green);border-color:var(--green)}
+.jump a.now{color:#04120C;background:var(--green);border-color:var(--green);font-weight:600}
+
+.step{margin:30px 0;border:1px solid var(--line);border-radius:16px;background:var(--panel);
+  overflow:hidden;scroll-margin-top:70px}
+.step-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;
+  background:rgba(74,222,128,.08);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.num{min-width:38px;height:38px;padding:0 .7rem;flex:0 0 auto;border-radius:19px;
+  display:grid;place-items:center;background:var(--green);color:#04120C;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.92rem}
+.step-head h2{font-size:1.2rem;font-weight:700;line-height:1.3}
+.step-head .file{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted);margin-left:auto}
+.step-body{padding:1.15rem 1.3rem}
+p{margin-bottom:.7rem;font-size:1rem}
+
+.say,.warn,.ok,.vio,.home{padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.say{border-left:3px solid var(--amber);background:rgba(251,191,36,.08)}
+.warn{border-left:3px solid var(--red);background:rgba(251,113,133,.08)}
+.ok{border-left:3px solid var(--green);background:rgba(74,222,128,.08)}
+.vio{border-left:3px solid var(--cyan);background:rgba(56,215,237,.09)}
+.home{border-left:3px solid var(--violet);background:rgba(192,132,252,.08)}
+.say b,.warn b,.ok b,.vio b,.home b{font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+.say b{color:var(--amber)} .warn b{color:var(--red)} .ok b{color:var(--green)}
+.vio b{color:var(--cyan)} .home b{color:var(--violet)}
+
+.codewrap{position:relative;margin:.7rem 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;
+  padding:1rem 1.15rem;overflow-x:auto;font-size:.9rem;line-height:1.72}
+code{font-family:'IBM Plex Mono',monospace}
+pre code{color:#d6efe0}
+.k{color:#8FE3A8}.s{color:#E9C88A}.c{color:#7EA592;font-style:italic}
+.f{color:#8FD0EC}.t{color:#68d8d2}.d{color:#FB7185}.hl{color:#FFE08A;font-weight:600}
+.n{color:#D9A0E8}
+.copy{position:absolute;top:.55rem;right:.6rem;background:rgba(15,42,30,.95);
+  border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:.25rem .65rem;font-size:.74rem;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--green);border-color:var(--green)}
+
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:.7rem 0}
+th{text-align:left;padding:.6rem .7rem;color:var(--green);font-size:.8rem;
+  font-weight:600;border-bottom:1px solid var(--line);letter-spacing:.04em}
+td{padding:.6rem .7rem;border-bottom:1px solid rgba(169,199,184,.1);vertical-align:top}
+tr:last-child td{border-bottom:none}
+ul{margin:.3rem 0 .6rem 1.2rem}li{margin-bottom:.35rem}
+
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem 0;
+  border-bottom:1px solid rgba(169,199,184,.1)}
+.check:last-child{border-bottom:none}
+.box{width:22px;height:22px;flex:0 0 22px;border:2px solid var(--muted);border-radius:5px;
+  cursor:pointer;display:grid;place-items:center;font-size:.85rem;color:transparent;
+  transition:all .15s;margin-top:.15rem}
+.box.on{background:var(--green);border-color:var(--green);color:#04120C}
+
+.trap{border:1px solid rgba(251,113,133,.4);border-radius:14px;
+  background:rgba(251,113,133,.07);padding:1rem 1.15rem;margin:.8rem 0}
+.trap h3{color:var(--red);font-size:1.03rem;margin-bottom:.4rem;display:flex;gap:.5rem;
+  align-items:center;flex-wrap:wrap}
+.trap h3 span{font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  background:rgba(251,113,133,.2);padding:.15rem .5rem;border-radius:5px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.35rem;display:block}
+.tag.b{color:var(--red)} .tag.a{color:var(--green)}
+
+.hud{position:fixed;bottom:14px;right:16px;display:flex;gap:.4rem;z-index:20}
+.hud button{background:rgba(15,42,30,.94);border:1px solid var(--line);border-radius:9px;
+  padding:.3rem .65rem;font-size:.78rem;color:var(--muted);cursor:pointer;font-family:inherit}
+.hud button:hover{color:var(--green);border-color:var(--green)}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.84rem;color:var(--muted);font-weight:300;display:flex;
+  justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.nav{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
+.nav a{text-decoration:none;font-size:.84rem;padding:.45rem .9rem;border-radius:10px;
+  border:1px solid var(--line);color:var(--muted);background:rgba(15,42,30,.7)}
+.nav a:hover{color:var(--green);border-color:var(--green)}
+
+@media (max-width:820px){.split{grid-template-columns:1fr}}
+@media print{body{background:#fff;color:#111}.hud,.jump{display:none}
+  pre{background:#f4f6f9;border-color:#ccc}pre code{color:#111}.step{break-inside:avoid}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">ENGSE203 · Week 06 · Checkpoint 01</p>
+  <h1>Hello Server <span class="where">🏫 ทำในห้อง</span></h1>
+  <p class="sub">เซิร์ฟเวอร์ Express ตัวแรก · 20 นาที · We do</p>
+  <div class="pills">
+    <span class="pill a">TODO W06-A2</span><span class="pill">แก้ 1 ไฟล์</span>
+    <span class="pill c">checker +1</span>
+  </div>
+</header>
+
+<nav class="jump">
+  <a href="#prep">เตรียม</a><a href="#s1">3 ส่วน</a><a href="#s2">เขียน route</a>
+  <a href="#s3">ทดสอบ</a><a href="#traps">กับดัก</a><a href="#done">ผ่าน CP</a>
+</nav>
+
+<div class="step" id="prep">
+  <div class="step-head"><span class="num">0</span><h2>ให้ทุกคนเปิดเซิร์ฟเวอร์ก่อน</h2>
+    <span class="file">5 นาที</span></div>
+  <div class="step-body">
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code>cd labs/week-06/starter
+npm install
+npm run dev</code></pre></div>
+    <div class="ok">
+      <b>ทุกคนต้องเห็นบรรทัดนี้</b>
+      <code>Campus Service API พร้อมที่ http://localhost:3001</code>
+      <br><strong>starter เปิดได้ตั้งแต่ยังไม่ทำ TODO</strong> — จุดนี้สำคัญ อย่าให้ใครติดตั้งแต่ยังไม่เริ่ม
+    </div>
+    <div class="say">
+      <b>ประโยคที่ควรพูด</b>
+      "เปิดค้างไว้ทั้งคาบนะครับ · <code>--watch</code> จะรีสตาร์ทให้เองทุกครั้งที่เราแก้ไฟล์
+      ไม่ต้องปิดเปิดเอง"
+    </div>
+    <div class="warn">
+      <b>เดินดูให้ครบทุกคนก่อนไปต่อ</b>
+      ถ้ามีคนเปิดไม่ได้ ปัญหามักเป็น — Node เวอร์ชันเก่าเกินไป · อยู่ผิดโฟลเดอร์ ·
+      พอร์ต 3001 ถูกใช้อยู่ (มีเซิร์ฟเวอร์ค้างจากรอบก่อน)
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s1">
+  <div class="step-head"><span class="num">1</span><h2>อธิบาย 3 ส่วนของ Express ก่อนพิมพ์</h2>
+    <span class="file">5 นาที · I do</span></div>
+  <div class="step-body">
+    <p>เปิด <code>src/app.js</code> บนจอ ชี้ให้เห็นว่ามีอะไรอยู่แล้วบ้าง</p>
+<pre><code><span class="k">export function</span> <span class="f">createApp</span>() {
+  <span class="k">const</span> app = <span class="f">express</span>();      <span class="c">← ① สร้าง app (ให้มาแล้ว)</span>
+
+  <span class="c">// TODO W06-A2 · ② กำหนด route  ← เราจะเขียนตรงนี้</span>
+
+  <span class="k">return</span> app;
+}</code></pre>
+    <p>และใน <code>src/server.js</code></p>
+<pre><code>app.<span class="f">listen</span>(PORT, ...)             <span class="c">← ③ เปิดรับคำขอ (ให้มาแล้ว)</span></code></pre>
+    <div class="vio">
+      <b>ชี้ให้เห็น</b>
+      "ส่วนที่ ① กับ ③ ผมเตรียมไว้ให้แล้ว · <strong>วันนี้เราเติมแค่ส่วนที่ ②</strong>
+      คือบอกว่า path ไหนให้ทำอะไร"
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s2">
+  <div class="step-head"><span class="num">2</span><h2>เขียน route แรก</h2>
+    <span class="file">src/app.js · We do</span></div>
+  <div class="step-body">
+    <p>ทำ <code>TODO W06-A2</code> — พิมพ์พร้อมกันทั้งห้อง</p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code>app.<span class="f">get</span>(<span class="s">'/'</span>, (req, res) => {
+  res.<span class="f">json</span>({ message: <span class="s">'Campus Service API is running'</span>, version: <span class="s">'1.0.0'</span> });
+});</code></pre></div>
+    <div class="say">
+      <b>อธิบายทีละส่วนขณะพิมพ์</b>
+      <code>app.get</code> — เมื่อมี method GET เข้ามา
+      <br><code>'/'</code> — ที่ path นี้
+      <br><code>(req, res) => {}</code> — ให้ทำสิ่งนี้ · <strong>req คือคำขอที่เข้ามา · res คือคำตอบที่เราจะส่ง</strong>
+      <br><code>res.json(...)</code> — ส่ง JSON กลับไป
+    </div>
+    <div class="ok">
+      <b>res.json() ทำ 2 อย่างให้อัตโนมัติ</b>
+      แปลง object เป็นข้อความ JSON (เหมือน <code>JSON.stringify</code> ที่ใช้ใน Week 05)
+      และตั้ง header <code>Content-Type: application/json</code> ให้ด้วย
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s3">
+  <div class="step-head"><span class="num">3</span><h2>ทดสอบ 2 ทาง</h2>
+    <span class="file">5 นาที</span></div>
+  <div class="step-body">
+    <div class="split">
+      <div><span class="tag a">ทางที่ 1 · เบราว์เซอร์</span>
+        <p>เปิด <code>http://localhost:3001</code></p>
+        <p><small>เห็น JSON บนหน้าเว็บ — เร็ว ง่าย แต่ยิงได้แค่ GET</small></p>
+      </div>
+      <div><span class="tag a">ทางที่ 2 · Postman</span>
+        <p>GET <code>http://localhost:3001/</code></p>
+        <p><small>เห็น <strong>status code</strong> ด้วย — ซึ่งเบราว์เซอร์ไม่แสดงให้เห็นชัด</small></p>
+      </div>
+    </div>
+    <div class="say">
+      <b>ให้ยิงด้วย Postman ด้วยเสมอ</b>
+      "เบราว์เซอร์บอกแค่ว่าได้ข้อมูล แต่ Postman บอกว่าได้ <strong>status 200</strong>
+      ซึ่งเป็นสิ่งที่เราต้องคุมให้ถูกตลอดทั้งคาบ"
+    </div>
+    <div class="vio">
+      <b>สาธิตให้เห็นว่า watch ทำงาน</b>
+      แก้ข้อความใน <code>message</code> เป็นอย่างอื่น → บันทึก → ดู terminal รีสตาร์ทเอง →
+      refresh เบราว์เซอร์เห็นข้อความใหม่ · <strong>ไม่ต้องปิดเปิดเซิร์ฟเวอร์เอง</strong>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="traps">
+  <div class="step-head"><span class="num" style="background:var(--red)">!</span>
+    <h2>กับดักของช่วงนี้</h2></div>
+  <div class="step-body">
+    <div class="trap">
+      <h3><span>พบบ่อยที่สุด</span> port ถูกใช้อยู่แล้ว</h3>
+      <p style="margin:.4rem 0"><code>Error: listen EADDRINUSE: address already in use :::3001</code></p>
+      <p style="margin:0">มีเซิร์ฟเวอร์ตัวเก่าค้างอยู่ · ให้กด <code>Ctrl+C</code> ใน terminal เก่า
+      หรือปิด terminal ทั้งหมดแล้วเปิดใหม่</p>
+    </div>
+    <table>
+      <tr><th style="width:36%">อาการ</th><th>สาเหตุ</th></tr>
+      <tr><td><code>Cannot GET /</code></td><td>ยังไม่ได้เขียน route หรือเขียน path ผิด</td></tr>
+      <tr><td>หน้าเว็บโหลดไม่ขึ้นเลย</td><td>เซิร์ฟเวอร์ไม่ได้รัน — ดู terminal</td></tr>
+      <tr><td><code>Cannot find module</code></td><td>ลืม <code>npm install</code></td></tr>
+      <tr><td>แก้แล้วไม่เปลี่ยน</td><td>ลืมบันทึกไฟล์ หรือรัน <code>npm start</code> แทน <code>npm run dev</code></td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="step" id="done">
+  <div class="step-head"><span class="num" style="background:var(--green)">✓</span>
+    <h2>ผ่าน CP01 เมื่อ</h2></div>
+  <div class="step-body">
+    <div>
+      <div class="check"><span class="box" data-check>✓</span><span>เบราว์เซอร์แสดง <code>{"message":"Campus Service API is running",...}</code></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>Postman ยิงแล้วได้ <strong>status 200</strong></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>แก้ข้อความแล้วเซิร์ฟเวอร์รีสตาร์ทเอง</span></div>
+    </div>
+    <div class="ok">
+      <b>คำถาม Checkpoint</b>
+      <span style="font-size:1.1rem">เซิร์ฟเวอร์ Express มี 3 ส่วนอะไรบ้าง</span>
+    </div>
+    <div class="say">
+      <b>ประโยคเชื่อมไป CP02</b>
+      "ตอนนี้เซิร์ฟเวอร์เราตอบได้แล้ว แต่ยังตอบข้อความเดียว —
+      <strong>ต่อไปเราจะให้มันส่งข้อมูลคำร้องจริง</strong>"
+    </div>
+  </div>
+</div>
+
+<footer><span>ENGSE203 · Week 06 · CP01 Hello Server · เอกสารสำหรับฉายบนจอ</span>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน Week 06 บทที่ 4</span></footer>
+<div class="nav">
+  <a href="ENGSE203_Week06_CP00_LiveCoding.html">CP00</a>
+  <a href="#" style="color:var(--green);border-color:var(--green);background:rgba(74,222,128,.14);font-weight:600">CP01 ← อยู่ที่นี่</a>
+  <a href="ENGSE203_Week06_CP02_LiveCoding.html">CP02</a>
+  <a href="ENGSE203_Week06_CP03_LiveCoding.html">CP03</a>
+  <a href="ENGSE203_Week06_CP04_LiveCoding.html">CP04</a>
+  <a href="ENGSE203_Week06_CP05_LiveCoding.html">CP05 + ปิดคาบ</a>
+</div>
+</div>
+<div class="hud">
+  <button id="minus">A−</button><button id="plus">A+</button><button id="full">เต็มจอ</button>
+</div>
+<script>
+(function(){
+  var fs=1;
+  function setFs(v){fs=Math.max(.75,Math.min(1.6,v));
+    document.documentElement.style.setProperty('--fs',fs);}
+  var p=document.getElementById('plus'),m=document.getElementById('minus'),f=document.getElementById('full');
+  if(p)p.onclick=function(){setFs(fs+.08);};
+  if(m)m.onclick=function(){setFs(fs-.08);};
+  if(f)f.onclick=function(){
+    if(!document.fullscreenElement)document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();
+    else document.exitFullscreen&&document.exitFullscreen();};
+  document.addEventListener('keydown',function(e){
+    if(e.target.tagName==='INPUT')return;
+    if(e.key==='+'||e.key==='=')setFs(fs+.08);
+    if(e.key==='-')setFs(fs-.08);});
+  document.querySelectorAll('[data-check]').forEach(function(b){
+    b.onclick=function(){b.classList.toggle('on');};});
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.onclick=function(){
+      var pre=btn.parentElement.querySelector('pre');
+      var text=pre.innerText.replace(/\s*←[^\n]*/g,'');
+      navigator.clipboard.writeText(text).then(function(){
+        var old=btn.textContent;btn.textContent='คัดลอกแล้ว';
+        setTimeout(function(){btn.textContent=old;},1400);});};});
+  var links=Array.prototype.slice.call(document.querySelectorAll('.jump a[href^="#"]'));
+  if(links.length){
+    var targets=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+    function onScroll(){var best=0;
+      targets.forEach(function(el,i){if(el&&el.getBoundingClientRect().top<=120)best=i;});
+      links.forEach(function(a,i){a.classList.toggle('now',i===best);});}
+    document.addEventListener('scroll',onScroll,{passive:true});onScroll();}
+})();
+
+</script>
+</body>
+</html>

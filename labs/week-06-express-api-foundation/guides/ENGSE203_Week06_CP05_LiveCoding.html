@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ENGSE203 Week 06 — CP05 DELETE + ปิดคาบ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fs:1;
+  --ink:#EAF6EF; --muted:#A9C7B8; --line:rgba(169,199,184,.22);
+  --green:#4ADE80; --cyan:#38D7ED; --amber:#FBBF24; --red:#FB7185; --violet:#C084FC;
+  --panel:rgba(15,42,30,.74); --code:#04120C;
+  font-size:calc(16px * var(--fs));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 12% 10%,rgba(74,222,128,.14),transparent 32%),
+             radial-gradient(circle at 88% 84%,rgba(56,215,237,.11),transparent 34%),#04100B;
+  color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;
+  padding:0 20px 90px;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{padding:38px 0 22px;border-bottom:2px solid var(--line);margin-bottom:22px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;color:var(--green);text-transform:uppercase}
+h1{font-size:2.3rem;font-weight:700;line-height:1.15;margin:.4rem 0 .3rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-weight:300;font-size:1.05rem}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.pill{font-size:.76rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;
+  border:1px solid var(--line);background:rgba(74,222,128,.09);color:var(--green)}
+.pill.a{color:var(--amber);background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3)}
+.pill.c{color:var(--cyan);background:rgba(56,215,237,.09);border-color:rgba(56,215,237,.3)}
+.pill.r{color:var(--red);background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.3)}
+.pill.v{color:var(--violet);background:rgba(192,132,252,.09);border-color:rgba(192,132,252,.3)}
+.where{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.76rem;font-weight:600;
+  padding:.22rem .6rem;border-radius:7px;background:rgba(74,222,128,.16);color:#bff5d0;
+  border:1px solid rgba(74,222,128,.4)}
+.where.home{background:rgba(251,191,36,.14);color:#ffe1a8;border-color:rgba(251,191,36,.4)}
+
+.jump{position:sticky;top:0;z-index:15;display:flex;gap:.4rem;flex-wrap:wrap;
+  padding:.7rem 0;margin-bottom:8px;background:rgba(4,16,11,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.jump a{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.76rem;
+  padding:.32rem .7rem;border-radius:8px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(15,42,30,.85)}
+.jump a:hover{color:var(--green);border-color:var(--green)}
+.jump a.now{color:#04120C;background:var(--green);border-color:var(--green);font-weight:600}
+
+.step{margin:30px 0;border:1px solid var(--line);border-radius:16px;background:var(--panel);
+  overflow:hidden;scroll-margin-top:70px}
+.step-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;
+  background:rgba(74,222,128,.08);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.num{min-width:38px;height:38px;padding:0 .7rem;flex:0 0 auto;border-radius:19px;
+  display:grid;place-items:center;background:var(--green);color:#04120C;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.92rem}
+.step-head h2{font-size:1.2rem;font-weight:700;line-height:1.3}
+.step-head .file{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted);margin-left:auto}
+.step-body{padding:1.15rem 1.3rem}
+p{margin-bottom:.7rem;font-size:1rem}
+
+.say,.warn,.ok,.vio,.home{padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.say{border-left:3px solid var(--amber);background:rgba(251,191,36,.08)}
+.warn{border-left:3px solid var(--red);background:rgba(251,113,133,.08)}
+.ok{border-left:3px solid var(--green);background:rgba(74,222,128,.08)}
+.vio{border-left:3px solid var(--cyan);background:rgba(56,215,237,.09)}
+.home{border-left:3px solid var(--violet);background:rgba(192,132,252,.08)}
+.say b,.warn b,.ok b,.vio b,.home b{font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+.say b{color:var(--amber)} .warn b{color:var(--red)} .ok b{color:var(--green)}
+.vio b{color:var(--cyan)} .home b{color:var(--violet)}
+
+.codewrap{position:relative;margin:.7rem 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;
+  padding:1rem 1.15rem;overflow-x:auto;font-size:.9rem;line-height:1.72}
+code{font-family:'IBM Plex Mono',monospace}
+pre code{color:#d6efe0}
+.k{color:#8FE3A8}.s{color:#E9C88A}.c{color:#7EA592;font-style:italic}
+.f{color:#8FD0EC}.t{color:#68d8d2}.d{color:#FB7185}.hl{color:#FFE08A;font-weight:600}
+.n{color:#D9A0E8}
+.copy{position:absolute;top:.55rem;right:.6rem;background:rgba(15,42,30,.95);
+  border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:.25rem .65rem;font-size:.74rem;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--green);border-color:var(--green)}
+
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:.7rem 0}
+th{text-align:left;padding:.6rem .7rem;color:var(--green);font-size:.8rem;
+  font-weight:600;border-bottom:1px solid var(--line);letter-spacing:.04em}
+td{padding:.6rem .7rem;border-bottom:1px solid rgba(169,199,184,.1);vertical-align:top}
+tr:last-child td{border-bottom:none}
+ul{margin:.3rem 0 .6rem 1.2rem}li{margin-bottom:.35rem}
+
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem 0;
+  border-bottom:1px solid rgba(169,199,184,.1)}
+.check:last-child{border-bottom:none}
+.box{width:22px;height:22px;flex:0 0 22px;border:2px solid var(--muted);border-radius:5px;
+  cursor:pointer;display:grid;place-items:center;font-size:.85rem;color:transparent;
+  transition:all .15s;margin-top:.15rem}
+.box.on{background:var(--green);border-color:var(--green);color:#04120C}
+
+.trap{border:1px solid rgba(251,113,133,.4);border-radius:14px;
+  background:rgba(251,113,133,.07);padding:1rem 1.15rem;margin:.8rem 0}
+.trap h3{color:var(--red);font-size:1.03rem;margin-bottom:.4rem;display:flex;gap:.5rem;
+  align-items:center;flex-wrap:wrap}
+.trap h3 span{font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  background:rgba(251,113,133,.2);padding:.15rem .5rem;border-radius:5px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.35rem;display:block}
+.tag.b{color:var(--red)} .tag.a{color:var(--green)}
+
+.hud{position:fixed;bottom:14px;right:16px;display:flex;gap:.4rem;z-index:20}
+.hud button{background:rgba(15,42,30,.94);border:1px solid var(--line);border-radius:9px;
+  padding:.3rem .65rem;font-size:.78rem;color:var(--muted);cursor:pointer;font-family:inherit}
+.hud button:hover{color:var(--green);border-color:var(--green)}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.84rem;color:var(--muted);font-weight:300;display:flex;
+  justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.nav{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
+.nav a{text-decoration:none;font-size:.84rem;padding:.45rem .9rem;border-radius:10px;
+  border:1px solid var(--line);color:var(--muted);background:rgba(15,42,30,.7)}
+.nav a:hover{color:var(--green);border-color:var(--green)}
+
+@media (max-width:820px){.split{grid-template-columns:1fr}}
+@media print{body{background:#fff;color:#111}.hud,.jump{display:none}
+  pre{background:#f4f6f9;border-color:#ccc}pre code{color:#111}.step{break-inside:avoid}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">ENGSE203 · Week 06 · Checkpoint 05 + ปิดคาบ</p>
+  <h1>DELETE แล้วปิดคาบ <span class="where">🏫 ทำในห้อง</span></h1>
+  <p class="sub">20 นาที ทำเอง + 45 นาที ตรวจสดและสรุป</p>
+  <div class="pills">
+    <span class="pill a">TODO S5 · C5 · R1</span><span class="pill c">checker → 23/23</span>
+    <span class="pill v">มอบหมายงานที่บ้าน</span>
+  </div>
+</header>
+
+<nav class="jump">
+  <a href="#s1">DELETE</a><a href="#s2">ตรวจสด</a><a href="#s3">สรุปคาบ</a>
+  <a href="#s4">มอบงานบ้าน</a><a href="#s5">สะพาน W07</a>
+</nav>
+
+<div class="step" id="s1">
+  <div class="step-head"><span class="num">05</span><h2>DELETE — ทำเองล้วน</h2>
+    <span class="file">20 นาที · You do</span></div>
+  <div class="step-body">
+    <div class="say">
+      <b>ประกาศก่อนปล่อยทำ</b>
+      "ช่วงนี้ทำเองทั้งหมดนะครับ — <strong>เป็นท่าเดียวกับที่ทำมา 3 รอบแล้ว</strong>
+      service → controller → route · ต่างแค่ status ที่ตอบ"
+    </div>
+    <p><code>TODO W06-S5</code> — service คืน <code>true</code>/<code>false</code></p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">export function</span> <span class="f">remove</span>(id) {
+  <span class="k">const</span> before = requests.length;
+  requests = requests.<span class="f">filter</span>((r) => r.id !== id);
+  <span class="k">return</span> requests.length &lt; before;
+}</code></pre></div>
+    <p><code>TODO W06-C5</code> — controller ตอบ <code>204</code></p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">export function</span> <span class="f">deleteRequest</span>(req, res) {
+  <span class="k">const</span> removed = service.<span class="f">remove</span>(req.params.id);
+  <span class="k">if</span> (!removed) {
+    <span class="k">return</span> res.<span class="f">status</span>(<span class="n">404</span>).<span class="f">json</span>({ error: <span class="s">`ไม่พบคำร้องรหัส ${req.params.id}`</span> });
+  }
+  res.<span class="f">status</span>(<span class="hl">204</span>).<span class="f">end</span>();
+}</code></pre></div>
+    <div class="vio">
+      <b>ทำไม 204 และทำไม .end()</b>
+      "<strong>204 No Content</strong> แปลว่าสำเร็จแต่<strong>ไม่มีข้อมูลส่งกลับ</strong>
+      — เพราะลบไปแล้ว ไม่มีอะไรจะส่ง
+      <br>จึงใช้ <code>.end()</code> ไม่ใช่ <code>.json()</code> · ถ้าใช้ <code>.json()</code> จะขัดกับความหมายของ 204"
+    </div>
+    <div class="say">
+      <b>ถามห้องระหว่างรอ</b>
+      "ทำไมเราไม่ตอบ 200 พร้อมข้อความว่า 'ลบสำเร็จ' ล่ะครับ"
+      <br><small>คำตอบ — ทำได้ แต่ 204 สื่อชัดกว่าว่าไม่มีอะไรให้อ่าน · และเป็นมาตรฐานที่คนทั้งโลกใช้</small>
+    </div>
+    <p><code>TODO W06-R1</code> — <code>router.delete('/:id', controller.deleteRequest);</code></p>
+    <div class="ok">
+      <b>ทดสอบ</b>
+      <table style="margin:.4rem 0 0">
+        <tr><th>ยิงอะไร</th><th style="width:110px">ต้องได้</th></tr>
+        <tr><td><code>DELETE /api/requests/REQ-003</code></td><td><b>204</b> ไม่มี body</td></tr>
+        <tr><td><code>DELETE /api/requests/REQ-999</code></td><td><b>404</b></td></tr>
+        <tr><td><code>GET /api/requests</code> หลังลบ</td><td>เหลือ 2 รายการ</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s2">
+  <div class="step-head"><span class="num">✓</span><h2>ตรวจสดทั้งห้อง</h2>
+    <span class="file">20 นาที</span></div>
+  <div class="step-body">
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code>npm run check -- --inclass</code></pre></div>
+    <div class="ok">
+      <b>เป้าหมาย</b>
+      <span style="font-size:1.2rem"><code>🏫 ในห้อง (CP00–CP05) ผ่าน <strong>23/23</strong> รายการ</code></span>
+    </div>
+    <div class="say">
+      <b>วิธีตรวจให้เร็ว</b>
+      ให้ทุกคนรันแล้ว<strong>ยกมือรายงานตัวเลข</strong> · เดินดูเฉพาะคนที่ยังไม่ครบ
+      <br>คนที่ได้ 23/23 แล้วให้ไปช่วยเพื่อนข้าง ๆ — เร็วกว่าผู้สอนเดินคนเดียว
+    </div>
+    <div class="vio">
+      <b>ให้ใช้ checker เป็นเครื่องมือ</b>
+      <pre style="margin:.4rem 0 0"><code>npm run check -- --inclass | grep <span class="s">"TODO"</span></code></pre>
+      <p style="margin:.4rem 0 0">บรรทัดที่ขึ้นมาบอกตรง ๆ ว่าเหลืออะไร ให้อ่านแล้วไล่แก้ทีละข้อ</p>
+    </div>
+    <div class="warn">
+      <b>อย่าลืมตรวจสิ่งที่ checker ตรวจไม่ได้</b>
+      <strong>logger middleware</strong> — เดินดูว่า terminal ของนักศึกษามี log ออกมาจริงหรือไม่
+      · checker อ่าน terminal ไม่ได้
+    </div>
+    <table>
+      <tr><th style="width:36%">อาการที่เจอบ่อยตอนตรวจ</th><th>สาเหตุ</th></tr>
+      <tr><td><code>req.body</code> undefined</td><td>ลืม <code>express.json()</code> หรือเขียนหลัง route</td></tr>
+      <tr><td>POST ได้ 400 ทั้งที่ข้อมูลครบ</td><td>validation ใช้ <code>?.</code> แทน <code>readText()</code></td></tr>
+      <tr><td>ทุก path ได้ 404</td><td>ลืม <code>app.use('/api/requests', requestRoutes)</code></td></tr>
+      <tr><td>terminal ไม่มี log</td><td>ลืม <code>app.use(logger)</code> หรือลืม <code>next()</code></td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="step" id="s3">
+  <div class="step-head"><span class="num" style="background:var(--cyan)">◆</span>
+    <h2>สรุปสิ่งที่ทำได้วันนี้</h2><span class="file">10 นาที</span></div>
+  <div class="step-body">
+    <div class="split">
+      <div>
+        <span class="tag a">✓ วันนี้ทำได้แล้ว</span>
+        <ul>
+          <li>เซิร์ฟเวอร์ Express ที่พอร์ต 3001</li>
+          <li>CRUD API ครบ 4 endpoint</li>
+          <li>middleware logger + JSON body</li>
+          <li>status code ถูกทุกกรณี (200/201/204/400/404)</li>
+          <li>ทดสอบผ่าน Postman ได้</li>
+        </ul>
+      </div>
+      <div>
+        <span class="tag" style="color:var(--violet)">→ ยังทำไม่ได้ (Week 07)</span>
+        <ul>
+          <li>error handling รวมศูนย์</li>
+          <li><strong>CORS — ให้ React เรียกได้</strong></li>
+          <li>environment config</li>
+          <li><strong>เชื่อม React ตัวจริง</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="say">
+      <b>ถามคำถาม Checkpoint ทั้ง 5 ข้อ</b>
+      สุ่มเรียกคนละข้อ — <strong>ถ้าตอบไม่ได้ให้เพื่อนช่วย</strong> ไม่ใช่การจับผิด
+      <ol style="margin:.5rem 0 0">
+        <li>ทำไม POST สำเร็จถึงได้ 201 ไม่ใช่ 200</li>
+        <li>เซิร์ฟเวอร์ Express มี 3 ส่วนอะไรบ้าง</li>
+        <li>ทำไมต้องเขียน route เจาะจงก่อน route ที่มีตัวแปร</li>
+        <li>ถ้าลืม <code>express.json()</code> จะเกิดอะไรขึ้น</li>
+        <li>DELETE สำเร็จตอบ 204 ไม่ใช่ 200 เพราะอะไร</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s4">
+  <div class="step-head"><span class="num" style="background:var(--amber)">🏠</span>
+    <h2>มอบหมายงานที่บ้าน</h2><span class="file">10 นาที</span></div>
+  <div class="step-body">
+    <div class="home">
+      <b>🏠 Take-Home · CP06–CP08</b>
+      <table style="margin:.4rem 0 0">
+        <tr><td style="width:80px"><b>CP06</b></td><td>ตรวจการแยกชั้น — service ต้องไม่มี <code>req</code>/<code>res</code></td></tr>
+        <tr><td><b>CP07</b></td><td>error handling + notFound รวมศูนย์</td></tr>
+        <tr><td><b>CP08</b></td><td>เก็บข้อมูลลงไฟล์ JSON + API_TEST.md + screenshot</td></tr>
+      </table>
+    </div>
+    <div class="say">
+      <b>อธิบาย CP08 ให้เห็นปัญหาก่อน — สาธิตสด</b>
+      "ลองดูนะครับ ผมเพิ่มคำร้องใหม่... เห็นแล้วใช่ไหม
+      <br>ทีนี้ผมกด <code>Ctrl+C</code> ปิดเซิร์ฟเวอร์ แล้วเปิดใหม่... <strong>หายไปแล้ว</strong>
+      <br>เพราะข้อมูลอยู่ในหน่วยความจำ — <strong>ปัญหาเดียวกับ useState ใน Week 05 ที่ refresh แล้วหาย</strong>
+      <br>งานที่บ้านคือทำให้มันไม่หาย"
+    </div>
+    <div class="home">
+      <b>⭐ Challenge · คะแนนเพิ่ม (ไม่บังคับ)</b>
+      <code>PUT /api/requests/:id</code> เปลี่ยนสถานะ ·
+      <code>GET /api/requests?status=pending</code> กรองด้วย query
+    </div>
+    <div class="ok">
+      <b>วิธีส่ง — เขียนบนกระดานไว้</b>
+      <pre style="margin:.4rem 0 0"><code>npm run check              <span class="c"># ต้องได้อย่างน้อย 25/28</span>
+git switch -c unit3/week-06
+git add -A &amp;&amp; git commit -m <span class="s">"LAB06: RESTful API"</span>
+git push -u origin unit3/week-06
+git tag lab-06-submission-v1 &amp;&amp; git push origin lab-06-submission-v1</code></pre>
+    </div>
+    <div class="warn">
+      <b>ย้ำเรื่อง AI</b>
+      "ใช้ AI ได้เต็มที่ <strong>แต่ต้องกรอก AI_USAGE.md</strong>
+      และผมจะสุ่มถามจากโค้ดที่ส่ง — <strong>ถ้าอธิบายไม่ได้ คะแนนส่วนนั้นจะถูกทบทวน</strong>
+      <br>ใช้ AI เพื่อ<em>เข้าใจ</em> ไม่ใช่เพื่อ<em>ลอก</em>"
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s5">
+  <div class="step-head"><span class="num" style="background:var(--violet)">→</span>
+    <h2>สะพานสู่ Week 07</h2><span class="file">5 นาที · ห้ามตัด</span></div>
+  <div class="step-body">
+    <p>เปิด <code>requestService.js</code> <strong>ของฝั่ง React จาก Week 05</strong> ขึ้นจอ แล้วชี้ทีละบรรทัด</p>
+<pre><code><span class="f">getRequests</span>()          <span class="c">→  GET    /api/requests      ← เราสร้างวันนี้</span>
+<span class="f">getRequestById</span>(id)    <span class="c">→  GET    /api/requests/:id  ← เราสร้างวันนี้</span>
+<span class="f">addRequest</span>(input)     <span class="c">→  POST   /api/requests      ← เราสร้างวันนี้</span>
+<span class="f">deleteRequest</span>(id)     <span class="c">→  DELETE /api/requests/:id  ← เราสร้างวันนี้</span></code></pre>
+    <div class="vio" style="font-size:1.05rem">
+      <b>ประโยคปิดคาบ</b>
+      <p style="margin:0 0 .6rem">"สังเกตไหมครับว่า <strong>API ที่เราสร้างวันนี้ ตรงกับฟังก์ชันใน React ที่พวกคุณทำไว้เมื่อ Week 05 พอดีทุกเส้น</strong>"</p>
+      <p style="margin:0 0 .6rem">"<strong>เราออกแบบข้อตกลงนี้ไว้ล่วงหน้าตั้งแต่ตอนนั้นโดยไม่ได้บอกพวกคุณ</strong>"</p>
+      <p style="margin:0">"สัปดาห์หน้าเราจะเปลี่ยน <code>requestService.js</code> ให้เรียก API ตัวนี้ —
+      แล้วพวกคุณจะเห็นแอป Campus Service ตัวเดิม<strong>ทำงานกับ backend ที่เพิ่งสร้างเอง</strong>
+      โดยที่ component ไม่ต้องแก้เลยแม้แต่บรรทัดเดียว"</p>
+    </div>
+    <div class="say">
+      <b>ทำไมช่วงนี้ห้ามตัด</b>
+      เป็น payoff ที่ปูมาตั้งแต่ Week 05 · ทำให้นักศึกษาเห็นว่า
+      <strong>ทุกอย่างที่เรียนมาต่อกันเป็นเรื่องเดียว</strong> ไม่ใช่หัวข้อกระจัดกระจาย
+      <br>ถ้าเวลาไม่พอ ให้ตัดการตรวจสดแทน แล้วให้ส่ง checker มาทีหลัง
+    </div>
+  </div>
+</div>
+
+<footer><span>ENGSE203 · Week 06 · CP05 DELETE + ปิดคาบ · เอกสารสำหรับฉายบนจอ</span>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน Week 06 บทที่ 9, 11</span></footer>
+<div class="nav">
+  <a href="ENGSE203_Week06_CP00_LiveCoding.html">CP00</a>
+  <a href="ENGSE203_Week06_CP01_LiveCoding.html">CP01</a>
+  <a href="ENGSE203_Week06_CP02_LiveCoding.html">CP02</a>
+  <a href="ENGSE203_Week06_CP03_LiveCoding.html">CP03</a>
+  <a href="ENGSE203_Week06_CP04_LiveCoding.html">CP04</a>
+  <a href="#" style="color:var(--green);border-color:var(--green);background:rgba(74,222,128,.14);font-weight:600">CP05 + ปิดคาบ ← อยู่ที่นี่</a>
+</div>
+</div>
+<div class="hud">
+  <button id="minus">A−</button><button id="plus">A+</button><button id="full">เต็มจอ</button>
+</div>
+<script>
+(function(){
+  var fs=1;
+  function setFs(v){fs=Math.max(.75,Math.min(1.6,v));
+    document.documentElement.style.setProperty('--fs',fs);}
+  var p=document.getElementById('plus'),m=document.getElementById('minus'),f=document.getElementById('full');
+  if(p)p.onclick=function(){setFs(fs+.08);};
+  if(m)m.onclick=function(){setFs(fs-.08);};
+  if(f)f.onclick=function(){
+    if(!document.fullscreenElement)document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();
+    else document.exitFullscreen&&document.exitFullscreen();};
+  document.addEventListener('keydown',function(e){
+    if(e.target.tagName==='INPUT')return;
+    if(e.key==='+'||e.key==='=')setFs(fs+.08);
+    if(e.key==='-')setFs(fs-.08);});
+  document.querySelectorAll('[data-check]').forEach(function(b){
+    b.onclick=function(){b.classList.toggle('on');};});
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.onclick=function(){
+      var pre=btn.parentElement.querySelector('pre');
+      var text=pre.innerText.replace(/\s*←[^\n]*/g,'');
+      navigator.clipboard.writeText(text).then(function(){
+        var old=btn.textContent;btn.textContent='คัดลอกแล้ว';
+        setTimeout(function(){btn.textContent=old;},1400);});};});
+  var links=Array.prototype.slice.call(document.querySelectorAll('.jump a[href^="#"]'));
+  if(links.length){
+    var targets=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+    function onScroll(){var best=0;
+      targets.forEach(function(el,i){if(el&&el.getBoundingClientRect().top<=120)best=i;});
+      links.forEach(function(a,i){a.classList.toggle('now',i===best);});}
+    document.addEventListener('scroll',onScroll,{passive:true});onScroll();}
+})();
+
+</script>
+</body>
+</html>

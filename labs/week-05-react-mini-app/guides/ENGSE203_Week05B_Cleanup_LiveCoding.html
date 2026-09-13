@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ENGSE203 Week 05B — Cleanup Guard ทำตามบนจอ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fs:1;
+  --ink:#f0ecff; --muted:#b8b0d8; --line:rgba(184,176,216,.22);
+  --violet:#b98cf5; --cyan:#38d7ed; --green:#4ade80; --amber:#fbbf24; --red:#fb7185;
+  --panel:rgba(27,21,64,.74); --code:#08061a;
+  font-size:calc(16px * var(--fs));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 12% 10%,rgba(185,140,245,.15),transparent 32%),
+             radial-gradient(circle at 88% 84%,rgba(56,215,237,.12),transparent 34%),#05040f;
+  color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;
+  padding:0 20px 90px;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{padding:38px 0 22px;border-bottom:2px solid var(--line);margin-bottom:22px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;color:var(--violet);text-transform:uppercase}
+h1{font-size:2.3rem;font-weight:700;line-height:1.15;margin:.4rem 0 .3rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-weight:300;font-size:1.05rem}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.pill{font-size:.76rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;
+  border:1px solid var(--line);background:rgba(185,140,245,.09);color:var(--violet)}
+.pill.a{color:var(--amber);background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3)}
+.pill.g{color:var(--green);background:rgba(74,222,128,.09);border-color:rgba(74,222,128,.3)}
+.pill.c{color:var(--cyan);background:rgba(56,215,237,.09);border-color:rgba(56,215,237,.3)}
+.pill.r{color:var(--red);background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.3)}
+
+.jump{position:sticky;top:0;z-index:15;display:flex;gap:.4rem;flex-wrap:wrap;
+  padding:.7rem 0;margin-bottom:8px;background:rgba(5,4,15,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.jump a{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.76rem;
+  padding:.32rem .7rem;border-radius:8px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(20,16,47,.85)}
+.jump a:hover{color:var(--violet);border-color:var(--violet)}
+.jump a.now{color:#0d0a24;background:var(--violet);border-color:var(--violet);font-weight:600}
+
+.step{margin:30px 0;border:1px solid var(--line);border-radius:16px;background:var(--panel);
+  overflow:hidden;scroll-margin-top:70px}
+.step-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;
+  background:rgba(185,140,245,.08);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.num{min-width:38px;height:38px;padding:0 .7rem;flex:0 0 auto;border-radius:19px;
+  display:grid;place-items:center;background:var(--violet);color:#0d0a24;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.92rem}
+.step-head h2{font-size:1.2rem;font-weight:700;line-height:1.3}
+.step-head .file{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted);margin-left:auto}
+.step-body{padding:1.15rem 1.3rem}
+p{margin-bottom:.7rem;font-size:1rem}
+
+.say,.warn,.ok,.vio{padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.say{border-left:3px solid var(--amber);background:rgba(251,191,36,.08)}
+.warn{border-left:3px solid var(--red);background:rgba(251,113,133,.08)}
+.ok{border-left:3px solid var(--green);background:rgba(74,222,128,.08)}
+.vio{border-left:3px solid var(--cyan);background:rgba(56,215,237,.09)}
+.say b,.warn b,.ok b,.vio b{font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+.say b{color:var(--amber)} .warn b{color:var(--red)} .ok b{color:var(--green)} .vio b{color:var(--cyan)}
+
+.codewrap{position:relative;margin:.7rem 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;
+  padding:1rem 1.15rem;overflow-x:auto;font-size:.9rem;line-height:1.72}
+code{font-family:'IBM Plex Mono',monospace}
+pre code{color:#dcd7f2}
+.k{color:#9fbcff}.s{color:#8de3a5}.c{color:#8b83ad;font-style:italic}
+.f{color:#f3d38a}.t{color:#68d8d2}.d{color:#fb7185}.hl{color:#ffd97a;font-weight:600}
+.copy{position:absolute;top:.55rem;right:.6rem;background:rgba(20,16,47,.95);
+  border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:.25rem .65rem;font-size:.74rem;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--violet);border-color:var(--violet)}
+
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:.7rem 0}
+th{text-align:left;padding:.6rem .7rem;color:var(--violet);font-size:.8rem;
+  font-weight:600;border-bottom:1px solid var(--line);letter-spacing:.04em}
+td{padding:.6rem .7rem;border-bottom:1px solid rgba(184,176,216,.1);vertical-align:top}
+tr:last-child td{border-bottom:none}
+ul{margin:.3rem 0 .6rem 1.2rem}li{margin-bottom:.35rem}
+
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem 0;
+  border-bottom:1px solid rgba(184,176,216,.1)}
+.check:last-child{border-bottom:none}
+.box{width:22px;height:22px;flex:0 0 22px;border:2px solid var(--muted);border-radius:5px;
+  cursor:pointer;display:grid;place-items:center;font-size:.85rem;color:transparent;
+  transition:all .15s;margin-top:.15rem}
+.box.on{background:var(--green);border-color:var(--green);color:#0d0a24}
+
+.trap{border:1px solid rgba(251,113,133,.4);border-radius:14px;
+  background:rgba(251,113,133,.07);padding:1rem 1.15rem;margin:.8rem 0}
+.trap h3{color:var(--red);font-size:1.03rem;margin-bottom:.4rem;display:flex;gap:.5rem;
+  align-items:center;flex-wrap:wrap}
+.trap h3 span{font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  background:rgba(251,113,133,.2);padding:.15rem .5rem;border-radius:5px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.35rem;display:block}
+.tag.b{color:var(--red)} .tag.a{color:var(--green)}
+
+.hud{position:fixed;bottom:14px;right:16px;display:flex;gap:.4rem;z-index:20}
+.hud button{background:rgba(20,16,47,.94);border:1px solid var(--line);border-radius:9px;
+  padding:.3rem .65rem;font-size:.78rem;color:var(--muted);cursor:pointer;font-family:inherit}
+.hud button:hover{color:var(--violet);border-color:var(--violet)}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.84rem;color:var(--muted);font-weight:300;display:flex;
+  justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.nav{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
+.nav a{text-decoration:none;font-size:.84rem;padding:.45rem .9rem;border-radius:10px;
+  border:1px solid var(--line);color:var(--muted);background:rgba(20,16,47,.7)}
+.nav a:hover{color:var(--violet);border-color:var(--violet)}
+
+@media (max-width:820px){.split{grid-template-columns:1fr}}
+@media print{body{background:#fff;color:#111}.hud,.jump{display:none}
+  pre{background:#f4f6f9;border-color:#ccc}pre code{color:#111}.step{break-inside:avoid}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">ENGSE203 · Week 05B · Cleanup Guard</p>
+  <h1>คำตอบเรื่อง Effect ที่ทำงาน 2 รอบ</h1>
+  <p class="sub">สาธิตก่อน → ทำเองใน 2 ไฟล์ · 30 นาที</p>
+  <div class="pills">
+    <span class="pill a">TODO 5B: cleanup guard</span>
+    <span class="pill">แก้ 2 ไฟล์</span>
+    <span class="pill r">133 → 133 · ตัวเลขไม่ขยับ</span>
+    <span class="pill c">คำถามค้างมา 1 สัปดาห์</span>
+  </div>
+</header>
+
+<div class="warn" style="border-left-width:4px">
+  <b>ประกาศก่อนเริ่มทุกครั้ง</b>
+  <span style="font-size:1.05rem">"ช่วงนี้ตัวเลข checker จะ<strong>ไม่ขยับเลย</strong> ยังเป็น 133/133 เหมือนเดิม —
+  <strong>ไม่ใช่ว่าทำผิดนะครับ</strong>"</span>
+  <br><small>cleanup guard ป้องกันบั๊กที่ยังไม่เกิด checker จึงตรวจไม่ได้ เหมือนกับ CP01 เมื่อสัปดาห์ที่แล้ว ·
+  ถ้าไม่ประกาศ นักศึกษาจะไล่แก้วนอยู่เพราะคิดว่าตัวเองทำผิด</small>
+</div>
+
+<nav class="jump">
+  <a href="#s1">1 เรียกชื่อ</a>
+  <a href="#s2">2 คำถามที่ดูไม่เกี่ยว</a>
+  <a href="#s3">3 สาธิต</a>
+  <a href="#s4">4 ทางแก้</a>
+  <a href="#s5">5 เฉลย 2 รอบ</a>
+  <a href="#s6">6 ทำเอง</a>
+  <a href="#done">ผ่าน</a>
+</nav>
+
+<div class="step" id="s1">
+  <div class="step-head"><span class="num">1</span><h2>เปิดด้วยการเรียกชื่อ</h2>
+    <span class="file">3 นาที</span></div>
+  <div class="step-body">
+    <p>เอา<strong>รายชื่อคนที่ถามเรื่อง Effect ทำงาน 2 รอบ</strong>เมื่อสัปดาห์ที่แล้วมาใช้</p>
+    <div class="say">
+      <b>พูดว่า</b>
+      <span style="font-size:1.05rem">"สัปดาห์ที่แล้วมีคนถามผมว่าทำไม Effect ทำงาน 2 รอบ —
+      คุณ<strong>[ชื่อ]</strong> ถามใช่ไหมครับ ผมบอกว่าให้รอสัปดาห์นี้ <strong>ตอนนี้ถึงเวลาแล้ว</strong>"</span>
+    </div>
+    <p>จากนั้นถามทั้งห้องว่า <strong>"มีใครเห็นอาการนี้บ้าง ยกมือ"</strong> — จะเห็นว่าเกือบทั้งห้อง</p>
+    <div class="vio">
+      <b>ทำไมต้องเรียกชื่อ</b>
+      ทำให้ทั้งห้องเห็นว่า<strong>คำถามของพวกเขามีค่าและถูกจดจำไว้จริง</strong>
+      · ผู้เรียนจะกล้าถามมากขึ้นในสัปดาห์ต่อ ๆ ไป
+    </div>
+    <div class="codewrap">
+<pre><code><span class="c">// เขียนไว้รอบเดียว แต่ Console ขึ้นแบบนี้</span>
+โหลดข้อมูล...
+โหลดข้อมูล...   <span class="c">← ทำไมมี 2 รอบ</span></code></pre></div>
+  </div>
+</div>
+
+<div class="step" id="s2">
+  <div class="step-head"><span class="num">2</span><h2>อย่าเพิ่งเฉลย — ถามคำถามที่ดูไม่เกี่ยวก่อน</h2>
+    <span class="file">2 นาที</span></div>
+  <div class="step-body">
+    <div class="warn">
+      <b>สำคัญมาก</b>
+      <strong>ห้ามเฉลยเรื่อง 2 รอบตอนนี้</strong> ให้ถามคำถามข้างล่างก่อน
+      แล้วค่อยเฉลยตอนท้ายว่าสองเรื่องนี้เชื่อมกันอย่างไร
+    </div>
+    <div class="say">
+      <b>ถามว่า</b>
+      <span style="font-size:1.05rem">"ผู้ใช้เปิดหน้า <code>#/requests/REQ-001</code> ซึ่งใช้เวลาโหลด 0.4 วินาที
+      แต่ผ่านไป 0.1 วินาที เขากดกลับไปหน้า Dashboard
+      <br><br>อีก 0.3 วินาทีต่อมา ข้อมูลของ REQ-001 โหลดเสร็จ — <strong>แล้วเกิดอะไรขึ้น</strong>"</span>
+    </div>
+    <p>ให้คิดสักครู่แล้วรับคำตอบ 2–3 คน ก่อนไปสาธิต</p>
+    <div class="ok">
+      <b>คำตอบที่ต้องการ</b>
+      โค้ดใน <code>.then()</code> จะทำงาน แล้วเรียก <code>setRequest()</code> ของหน้าที่<strong>ผู้ใช้ออกไปแล้ว</strong>
+      <br>เรียกว่า <strong>stale update</strong> — การอัปเดตที่มาช้าเกินไปจนไม่เกี่ยวข้องแล้ว
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s3">
+  <div class="step-head"><span class="num">3</span><h2>สาธิตให้เห็นจริง</h2>
+    <span class="file">3 นาที</span></div>
+  <div class="step-body">
+    <p>ทำบนเครื่องผู้สอน โดยยังไม่มี cleanup guard</p>
+    <ol>
+      <li>เปิด DevTools → แท็บ <strong>Network</strong> → ตั้ง throttle เป็น <strong>Slow 3G</strong></li>
+      <li>เปิดแท็บ Console ค้างไว้ให้เห็นด้วย</li>
+      <li>กด <code>#/requests/REQ-001</code></li>
+      <li><strong>กดกลับ Dashboard ทันที</strong>ก่อนโหลดเสร็จ</li>
+      <li>สลับไปมาเร็ว ๆ หลายรอบ</li>
+    </ol>
+    <div class="say">
+      <b>ชี้ให้ดู</b>
+      สถานะบนหน้าจอกะพริบ หรือข้อมูลของหน้าเก่าโผล่มาทับหน้าใหม่แวบหนึ่ง
+      <br><small>ถ้าอาการไม่ชัด ให้เพิ่ม <code>console.log</code> ใน <code>.then()</code> เพื่อให้เห็นว่ามันทำงานหลังออกจากหน้าไปแล้ว</small>
+    </div>
+    <div class="vio">
+      <b>ประโยคเชื่อม</b>
+      "เราหยุดคำขอที่ส่งไปแล้วไม่ได้ครับ — แต่เรา<strong>เลือกได้ว่าจะใช้ผลลัพธ์ของมันหรือไม่</strong>"
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s4">
+  <div class="step-head"><span class="num">4</span><h2>ทางแก้ — cleanup function</h2>
+    <span class="file">4 นาที</span></div>
+  <div class="step-body">
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="f">useEffect</span>(() =&gt; {
+  <span class="hl">let ignore = false;</span>
+  <span class="f">setLoadState</span>(<span class="s">'loading'</span>);
+
+  <span class="f">getRequestById</span>(requestId)
+    .<span class="f">then</span>((result) =&gt; {
+      <span class="hl">if (ignore) return;</span>          <span class="c">← ไม่เกี่ยวแล้ว ทิ้งไปเลย</span>
+      <span class="f">setRequest</span>(result);
+      <span class="f">setLoadState</span>(<span class="s">'success'</span>);
+    })
+    .<span class="f">catch</span>((error) =&gt; {
+      <span class="hl">if (ignore) return;</span>
+      <span class="f">setErrorMessage</span>(…);
+      <span class="f">setLoadState</span>(<span class="s">'error'</span>);
+    });
+
+  <span class="hl">return () =&gt; { ignore = true; };</span>   <span class="c">← React เรียกตอนออกจากหน้า</span>
+}, [requestId, reloadKey]);</code></pre></div>
+    <div class="warn">
+      <b>จุดที่เข้าใจผิดง่ายที่สุด</b>
+      <strong>เราไม่ได้ยกเลิกคำขอ</strong> — คำขอยังวิ่งไปจนเสร็จตามปกติ ข้อมูลก็ยังถูกโหลดมาจริง
+      <br>เราแค่<strong>เลือกไม่ใช้ผลลัพธ์</strong> เท่านั้น
+    </div>
+    <div class="say">
+      <b>อธิบายเรื่อง cleanup function</b>
+      ถ้า Effect คืนฟังก์ชันกลับไป React จะเรียกฟังก์ชันนั้น
+      <strong>ก่อนทำ Effect รอบใหม่</strong> และ <strong>ก่อนที่ component จะถูกถอดออก</strong>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s5" style="border-color:rgba(56,215,237,.6);border-width:2px">
+  <div class="step-head" style="background:rgba(56,215,237,.14)">
+    <span class="num" style="background:var(--cyan)">5</span>
+    <h2>เฉลยคำถามที่ค้างมา</h2><span class="file">3 นาที</span></div>
+  <div class="step-body">
+    <div class="say">
+      <b>พูดว่า</b>
+      <span style="font-size:1.05rem">"ทีนี้กลับมาที่คำถามค้างจากสัปดาห์ที่แล้ว —
+      React เรียก Effect 2 รอบตอนพัฒนา
+      <strong>เพื่อทดสอบว่า Effect ของคุณรับมือกับการถูกเรียกซ้ำได้หรือไม่</strong>"</span>
+    </div>
+    <div class="codewrap">
+<pre><code>เรียก Effect  →  เรียก cleanup  →  เรียก Effect อีกรอบ</code></pre></div>
+    <div class="split">
+      <div class="ok" style="margin:0">
+        <b>ถ้าเขียนถูก</b>
+        เรียกซ้ำแล้วผลลัพธ์เหมือนเดิม ไม่มีอะไรผิดปกติ
+      </div>
+      <div class="trap" style="margin:0">
+        <h3 style="margin:0 0 .3rem">ถ้าเขียนผิด</h3>
+        <p style="margin:0">ข้อมูลซ้ำ ตัวจับเวลาซ้อนกัน การเชื่อมต่อค้าง —
+        <strong>เห็นทันทีตอนพัฒนา ไม่ต้องรอผู้ใช้เจอ</strong></p>
+      </div>
+    </div>
+    <div class="vio" style="margin-top:1rem">
+      <b>ประโยคปิดที่อยากให้จำ</b>
+      <span style="font-size:1.05rem">"React ไม่ได้แค่บอกว่าคุณควรเขียน cleanup แต่
+      <strong>สร้างสถานการณ์ให้คุณเห็นปัญหาเองตั้งแต่ตอนพัฒนา</strong>
+      — นี่คือแนวคิดการออกแบบเครื่องมือที่ดี ทำให้ความผิดพลาดปรากฏตัวเร็วที่สุด"</span>
+    </div>
+    <div class="ok">
+      <b>อย่าลืมย้ำ</b>
+      ตอน <code>npm run build</code> ขึ้นใช้งานจริง Effect จะทำงาน<strong>รอบเดียว</strong> ·
+      พฤติกรรม 2 รอบมีเฉพาะตอนพัฒนาเท่านั้น
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s6">
+  <div class="step-head"><span class="num">6</span><h2>ทำเองใน 2 ไฟล์</h2>
+    <span class="file">DashboardPage.jsx · RequestDetailPage.jsx</span></div>
+  <div class="step-body">
+    <p>แทนที่คอมเมนต์ <code>// TODO 5B: เพิ่ม cleanup guard เพื่อกัน stale update</code> ในทั้งสองไฟล์</p>
+    <div class="say">
+      <b>ต่างกันนิดเดียว</b>
+      <code>DashboardPage</code> ใช้ <code>[scenario, reloadKey]</code> ·
+      <code>RequestDetailPage</code> ใช้ <code>[requestId, reloadKey]</code>
+      <br>ที่เหลือเหมือนกันทุกอย่าง — <code>let ignore = false</code> ข้างบน,
+      <code>if (ignore) return;</code> ในทั้ง <code>.then()</code> และ <code>.catch()</code>,
+      และ <code>return () =&gt; { ignore = true; };</code> ข้างล่าง
+    </div>
+    <div class="warn">
+      <b>อย่าลืม .catch()</b>
+      หลายคนใส่ <code>if (ignore) return;</code> แค่ใน <code>.then()</code>
+      แต่ลืม <code>.catch()</code> — ผลคือถ้าโหลดพลาดหลังออกจากหน้าไปแล้ว
+      หน้าจอที่ผู้ใช้อยู่จะขึ้น error ของหน้าเก่า
+    </div>
+  </div>
+</div>
+
+<div class="step" id="done">
+  <div class="step-head"><span class="num" style="background:var(--green)">✓</span>
+    <h2>พิสูจน์ว่าทำงานจริง</h2></div>
+  <div class="step-body">
+    <div class="warn">
+      <b>checker ตรวจไม่ได้ — ต้องใช้ตา</b>
+      <code>npm run check</code> ยังได้ 133/133 เท่าเดิม · ต้องพิสูจน์ด้วยวิธีข้างล่าง
+    </div>
+    <div>
+      <div class="check"><span class="box" data-check>✓</span><span>DevTools → Network → ตั้ง throttle เป็น <strong>Slow 3G</strong></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>เปิด <code>#/requests/REQ-001</code></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>กดกลับ Dashboard ทันทีก่อนโหลดเสร็จ</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>สลับไปมาเร็ว ๆ หลายรอบ → <strong>ไม่มีอะไรกะพริบหรือเปลี่ยนผิดปกติ</strong></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>Console ไม่มีคำเตือนเรื่องการอัปเดต component ที่ถูกถอดออกแล้ว</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>ปิด throttle กลับเป็นปกติก่อนไปทำ CP05b</span></div>
+    </div>
+    <div class="vio" style="margin-top:1rem">
+      <b>คำถาม Checkpoint</b>
+      <span style="font-size:1.1rem">ทำไม React เรียก Effect 2 รอบตอนพัฒนา</span>
+    </div>
+    <div class="say">
+      <b>ถ้าเวลาไม่พอ</b>
+      ช่วงนี้เป็น<strong>รายการแรกที่ตัดได้</strong> — สาธิตอย่างเดียวแล้วให้ทำเป็นการบ้าน
+      เพราะไม่กระทบการส่งงานและ checker ไม่ตรวจอยู่แล้ว
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>ENGSE203 · Week 05B · Cleanup Guard · เอกสารสำหรับฉายบนจอ</span>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน 5B บทที่ 6</span>
+</footer>
+
+<div class="nav">
+  <a href="ENGSE203_Week05B_CP04a_LiveCoding.html">CP04a</a>
+  <a href="ENGSE203_Week05B_CP04a3_LiveCoding.html">CP04a-3</a>
+  <a href="ENGSE203_Week05B_CP04b_LiveCoding.html">CP04b</a>
+  <a href="#" style="color:var(--violet);border-color:var(--violet);background:rgba(185,140,245,.14);font-weight:600">cleanup ← อยู่ที่นี่</a>
+  <a href="ENGSE203_Week05B_CP05b_CP06_LiveCoding.html">CP05b + CP06</a>
+</div>
+
+</div>
+
+<div class="hud">
+  <button id="minus">A−</button>
+  <button id="plus">A+</button>
+  <button id="full">เต็มจอ</button>
+</div>
+
+<script>
+(function(){
+  var fs = 1;
+  function setFs(v){ fs = Math.max(.75, Math.min(1.6, v));
+    document.documentElement.style.setProperty('--fs', fs); }
+  var p=document.getElementById('plus'), m=document.getElementById('minus'), f=document.getElementById('full');
+  if(p) p.onclick = function(){ setFs(fs + .08); };
+  if(m) m.onclick = function(){ setFs(fs - .08); };
+  if(f) f.onclick = function(){
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    else document.exitFullscreen && document.exitFullscreen();
+  };
+  document.addEventListener('keydown', function(e){
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === '+' || e.key === '=') setFs(fs + .08);
+    if (e.key === '-') setFs(fs - .08);
+  });
+  document.querySelectorAll('[data-check]').forEach(function(b){
+    b.onclick = function(){ b.classList.toggle('on'); };
+  });
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.onclick = function(){
+      var pre = btn.parentElement.querySelector('pre');
+      var text = pre.innerText.replace(/\s*←[^\n]*/g, '');
+      navigator.clipboard.writeText(text).then(function(){
+        var old = btn.textContent; btn.textContent = 'คัดลอกแล้ว';
+        setTimeout(function(){ btn.textContent = old; }, 1400);
+      });
+    };
+  });
+  var links = Array.prototype.slice.call(document.querySelectorAll('.jump a[href^="#"]'));
+  if (links.length){
+    var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+    function onScroll(){
+      var best = 0;
+      targets.forEach(function(el,i){ if (el && el.getBoundingClientRect().top <= 120) best = i; });
+      links.forEach(function(a,i){ a.classList.toggle('now', i === best); });
+    }
+    document.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+  }
+})();
+
+</script>
+</body>
+</html>

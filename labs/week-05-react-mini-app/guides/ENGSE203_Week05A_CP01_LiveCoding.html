@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ENGSE203 Week 05A — CP01 ทำตามบนจอ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fs:1;
+  --navy:#071b33; --ink:#eaf5ff; --muted:#a8c0d7; --line:rgba(168,192,215,.22);
+  --cyan:#38d7ed; --green:#4ade80; --amber:#fbbf24; --red:#fb7185; --violet:#c084fc;
+  --panel:rgba(10,36,66,.72); --code:#04122a;
+  font-size:calc(16px * var(--fs));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 12% 12%,rgba(56,215,237,.13),transparent 32%),
+             radial-gradient(circle at 88% 82%,rgba(77,145,255,.13),transparent 34%),#020a14;
+  color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;
+  padding:0 20px 90px;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto}
+
+header.top{padding:38px 0 22px;border-bottom:2px solid var(--line);margin-bottom:26px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;color:var(--cyan);text-transform:uppercase}
+h1{font-size:2.3rem;font-weight:700;line-height:1.15;margin:.4rem 0 .3rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-weight:300;font-size:1.05rem}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.pill{font-size:.76rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;
+  border:1px solid var(--line);background:rgba(56,215,237,.08);color:var(--cyan)}
+.pill.a{color:var(--amber);background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3)}
+.pill.g{color:var(--green);background:rgba(74,222,128,.09);border-color:rgba(74,222,128,.3)}
+.pill.v{color:var(--violet);background:rgba(192,132,252,.09);border-color:rgba(192,132,252,.3)}
+
+.step{margin:34px 0;border:1px solid var(--line);border-radius:16px;
+  background:var(--panel);overflow:hidden}
+.step-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;
+  background:rgba(56,215,237,.07);border-bottom:1px solid var(--line)}
+.num{width:38px;height:38px;flex:0 0 38px;border-radius:50%;display:grid;place-items:center;
+  background:var(--cyan);color:#04121f;font-family:'IBM Plex Mono',monospace;
+  font-weight:700;font-size:1.05rem}
+.step-head h2{font-size:1.24rem;font-weight:700;line-height:1.3}
+.step-head .file{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--muted);
+  margin-left:auto;flex:0 0 auto}
+.step-body{padding:1.15rem 1.3rem}
+
+p{margin-bottom:.7rem;font-size:1rem}
+.say{border-left:3px solid var(--amber);background:rgba(251,191,36,.08);
+  padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.say b{color:var(--amber);font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+.warn{border-left:3px solid var(--red);background:rgba(251,113,133,.08);
+  padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.warn b{color:var(--red);font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+.ok{border-left:3px solid var(--green);background:rgba(74,222,128,.08);
+  padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.ok b{color:var(--green);font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+
+.codewrap{position:relative;margin:.7rem 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;
+  padding:1rem 1.15rem;overflow-x:auto;font-size:.92rem;line-height:1.75}
+code{font-family:'IBM Plex Mono',monospace}
+pre code{color:#cfe6f5}
+.k{color:#7fb4ff}.s{color:#8de3a5}.c{color:#7089a3;font-style:italic}
+.f{color:#f3d38a}.t{color:#5fd8d2}.d{color:#fb7185}
+.add{background:rgba(74,222,128,.13);display:block;margin:0 -1.15rem;padding:0 1.15rem}
+.del{background:rgba(251,113,133,.13);display:block;margin:0 -1.15rem;padding:0 1.15rem;opacity:.75}
+.copy{position:absolute;top:.55rem;right:.6rem;background:rgba(10,36,66,.95);
+  border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:.25rem .65rem;font-size:.74rem;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--cyan);border-color:var(--cyan)}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.35rem;display:block}
+.tag.b{color:var(--red)} .tag.a{color:var(--green)}
+
+table{width:100%;border-collapse:collapse;font-size:.94rem;margin:.7rem 0}
+th{text-align:left;padding:.6rem .7rem;color:var(--cyan);font-size:.8rem;
+  font-weight:600;border-bottom:1px solid var(--line);letter-spacing:.04em}
+td{padding:.6rem .7rem;border-bottom:1px solid rgba(168,192,215,.1);vertical-align:top}
+tr:last-child td{border-bottom:none}
+
+ul{margin:.3rem 0 .6rem 1.2rem}li{margin-bottom:.35rem}
+
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.6rem 0;
+  border-bottom:1px solid rgba(168,192,215,.1)}
+.check:last-child{border-bottom:none}
+.box{width:22px;height:22px;flex:0 0 22px;border:2px solid var(--muted);border-radius:5px;
+  cursor:pointer;display:grid;place-items:center;font-size:.85rem;color:transparent;
+  transition:all .15s;margin-top:.15rem}
+.box.on{background:var(--green);border-color:var(--green);color:#04121f}
+
+.hud{position:fixed;bottom:14px;right:16px;display:flex;gap:.4rem;z-index:20}
+.hud button{background:rgba(10,36,66,.94);border:1px solid var(--line);border-radius:9px;
+  padding:.3rem .65rem;font-size:.78rem;color:var(--muted);cursor:pointer;font-family:inherit}
+.hud button:hover{color:var(--cyan);border-color:var(--cyan)}
+
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.84rem;color:var(--muted);font-weight:300;display:flex;
+  justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+@media (max-width:820px){.split{grid-template-columns:1fr}}
+@media print{body{background:#fff;color:#111}.hud{display:none}
+  pre{background:#f4f6f9;border-color:#ccc}pre code{color:#111}.step{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">ENGSE203 · Week 05A · Checkpoint 01</p>
+  <h1>ย้ายงานของ Dashboard ออกจาก <code>App.jsx</code></h1>
+  <p class="sub">พิมพ์ตามไปพร้อมกัน · 15 นาทีแรกทำด้วยกัน จากนั้นทำเอง</p>
+  <div class="pills">
+    <span class="pill a">TODO 5A-CP01</span>
+    <span class="pill">แก้ 2 ไฟล์</span>
+    <span class="pill g">หน้าจอต้องไม่เปลี่ยนเลย</span>
+    <span class="pill v">ยังไม่ใส่ Router</span>
+  </div>
+</header>
+
+<!-- ═══ ทายก่อน ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num" style="background:var(--amber)">?</span>
+    <h2>ทายก่อนเริ่ม — เขียนลงใบงาน</h2>
+  </div>
+  <div class="step-body">
+    <div class="say">
+      <b>คำถาม</b>
+      ถ้าเราย้ายโค้ดถูกต้องทุกบรรทัด <strong>หน้าจอควรเปลี่ยนไปหรือไม่</strong>
+    </div>
+    <p>อย่าเพิ่งตอบดัง ๆ เขียนลงกระดาษก่อน แล้วเดี๋ยวเราจะพิสูจน์ด้วยกันตอนท้าย</p>
+    <div class="ok">
+      <b>สิ่งที่เรากำลังทำ</b>
+      ย้ายที่อยู่ของโค้ดโดยที่ผู้ใช้ไม่ควรรู้สึกอะไรเลย — คำนี้เรียกว่า <strong>refactor</strong>
+      <br>ถ้าหน้าจอเปลี่ยน แปลว่าเราไม่ได้ refactor แต่เราทำพัง
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ขั้น 1 ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num">1</span>
+    <h2>ดูก่อนว่าตอนนี้ใครถืออะไรอยู่</h2>
+    <span class="file">src/App.jsx</span>
+  </div>
+  <div class="step-body">
+    <p>เปิด <code>App.jsx</code> แล้วอ่านไปทีละส่วน ถามตัวเองทุกก้อนว่า <strong>“อันนี้เป็นเรื่องของ Dashboard หรือเรื่องของทั้งแอป”</strong></p>
+    <table>
+      <tr><th style="width:46%">โค้ดใน App.jsx ตอนนี้</th><th>เป็นเรื่องของ</th><th style="width:30%">ต้องย้ายไป</th></tr>
+      <tr><td><code>useState(initialRequests)</code></td><td>ข้อมูลของหน้า Dashboard</td><td><code>DashboardPage</code></td></tr>
+      <tr><td><code>statusFilter</code>, <code>notice</code></td><td>สถานะของหน้า Dashboard</td><td><code>DashboardPage</code></td></tr>
+      <tr><td><code>summary</code></td><td>คำนวณจากข้อมูลของ Dashboard</td><td><code>DashboardPage</code></td></tr>
+      <tr><td><code>filteredRequests</code></td><td>คำนวณจากข้อมูลของ Dashboard</td><td><code>DashboardPage</code></td></tr>
+      <tr><td><code>handleAdd</code>, <code>handleDelete</code></td><td>การกระทำบนหน้า Dashboard</td><td><code>DashboardPage</code></td></tr>
+      <tr><td>JSX ของ SummaryPanel, Form, List</td><td>หน้าตาของ Dashboard</td><td><code>DashboardPage</code></td></tr>
+      <tr><td><code>&lt;AppHeader /&gt;</code> และ <code>&lt;main&gt;</code></td><td>กรอบร่วมของทุกหน้า</td><td><code>AppLayout</code> — <strong>มีอยู่แล้ว</strong></td></tr>
+    </table>
+    <div class="say">
+      <b>ถามห้อง</b>
+      แล้วเหลืออะไรให้ <code>App.jsx</code> ทำบ้าง — คำตอบคือ <strong>เหลือแค่หน้าที่ประกอบ</strong> บอกว่าเอา Layout ตัวไหนมาครอบ Page ตัวไหน
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ขั้น 2 ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num">2</span>
+    <h2>เขียน <code>DashboardPage.jsx</code> ใหม่ทั้งไฟล์</h2>
+    <span class="file">src/pages/DashboardPage.jsx</span>
+  </div>
+  <div class="step-body">
+    <p>เลือกทั้งไฟล์แล้วพิมพ์ทับได้เลย</p>
+    <div class="warn">
+      <b>ระวังจุดเดียว</b>
+      บรรทัด <code>import</code> ของ JSON ต้องเป็น <code>../../public/</code> ไม่ใช่ <code>../public/</code>
+      เพราะไฟล์นี้ลงมาอยู่ในโฟลเดอร์ <code>pages/</code> ลึกกว่าเดิมหนึ่งชั้น
+    </div>
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">import</span> { useMemo, useState } <span class="k">from</span> <span class="s">'react'</span>;
+<span class="k">import</span> initialRequests <span class="k">from</span> <span class="s">'../../public/data/initialRequests.json'</span>;   <span class="c">← ../../</span>
+<span class="k">import</span> FilterBar <span class="k">from</span> <span class="s">'../components/FilterBar.jsx'</span>;
+<span class="k">import</span> RequestForm <span class="k">from</span> <span class="s">'../components/RequestForm.jsx'</span>;
+<span class="k">import</span> RequestList <span class="k">from</span> <span class="s">'../components/RequestList.jsx'</span>;
+<span class="k">import</span> SummaryPanel <span class="k">from</span> <span class="s">'../components/SummaryPanel.jsx'</span>;
+
+<span class="k">function</span> <span class="f">DashboardPage</span>() {
+  <span class="k">const</span> [requests, setRequests] = <span class="f">useState</span>(initialRequests);
+  <span class="k">const</span> [statusFilter, setStatusFilter] = <span class="f">useState</span>(<span class="s">'all'</span>);
+  <span class="k">const</span> [notice, setNotice] = <span class="f">useState</span>(<span class="s">''</span>);
+
+  <span class="k">const</span> summary = <span class="f">useMemo</span>(() =&gt; ({
+    total: requests.length,
+    pending: requests.<span class="f">filter</span>((request) =&gt; request.status === <span class="s">'pending'</span>).length,
+    inProgress: requests.<span class="f">filter</span>((request) =&gt; request.status === <span class="s">'in-progress'</span>).length,
+    completed: requests.<span class="f">filter</span>((request) =&gt; request.status === <span class="s">'completed'</span>).length,
+  }), [requests]);
+
+  <span class="k">const</span> filteredRequests = statusFilter === <span class="s">'all'</span>
+    ? requests
+    : requests.<span class="f">filter</span>((request) =&gt; request.status === statusFilter);
+
+  <span class="k">async function</span> <span class="f">handleAdd</span>(input) {
+    <span class="f">setRequests</span>((current) =&gt; [...current, { ...input, id: <span class="s">`REQ-W4-${Date.now()}`</span>, status: <span class="s">'pending'</span> }]);
+    <span class="f">setNotice</span>(<span class="s">'เพิ่มคำร้องในหน่วยความจำแล้ว — กด refresh แล้วจะหาย นี่คือโจทย์ของคาบ 5B'</span>);
+  }
+
+  <span class="k">function</span> <span class="f">handleDelete</span>(requestId) {
+    <span class="f">setRequests</span>((current) =&gt; current.<span class="f">filter</span>((request) =&gt; request.id !== requestId));
+    <span class="f">setNotice</span>(<span class="s">`ลบคำร้อง ${requestId} จาก memory แล้ว`</span>);
+  }
+
+  <span class="k">return</span> (
+    <span class="t">&lt;section</span> <span class="k">data-testid</span>=<span class="s">"page-dashboard"</span><span class="t">&gt;</span>
+      <span class="t">&lt;div</span> <span class="k">className</span>=<span class="s">"page-heading"</span><span class="t">&gt;</span>
+        <span class="t">&lt;div&gt;</span>
+          <span class="t">&lt;p</span> <span class="k">className</span>=<span class="s">"eyebrow dark"</span><span class="t">&gt;</span>CP01 · PAGE REFACTOR<span class="t">&lt;/p&gt;</span>
+          <span class="t">&lt;h1&gt;</span>Campus Service Request<span class="t">&lt;/h1&gt;</span>
+          <span class="t">&lt;p&gt;</span>ตรวจ add, filter, delete และ validation ว่ายังทำงานเหมือนเดิม<span class="t">&lt;/p&gt;</span>
+        <span class="t">&lt;/div&gt;</span>
+      <span class="t">&lt;/div&gt;</span>
+
+      {notice &amp;&amp; <span class="t">&lt;p</span> <span class="k">className</span>=<span class="s">"notice"</span> <span class="k">role</span>=<span class="s">"status"</span><span class="t">&gt;</span>{notice}<span class="t">&lt;/p&gt;</span>}
+
+      <span class="t">&lt;SummaryPanel</span> <span class="k">summary</span>={summary} <span class="t">/&gt;</span>
+
+      <span class="t">&lt;div</span> <span class="k">className</span>=<span class="s">"workspace-grid"</span><span class="t">&gt;</span>
+        <span class="t">&lt;section</span> <span class="k">className</span>=<span class="s">"panel form-panel"</span><span class="t">&gt;</span>
+          <span class="t">&lt;RequestForm</span> <span class="k">onAddRequest</span>={handleAdd} <span class="t">/&gt;</span>
+        <span class="t">&lt;/section&gt;</span>
+        <span class="t">&lt;section</span> <span class="k">className</span>=<span class="s">"panel"</span> <span class="k">aria-labelledby</span>=<span class="s">"request-list-title"</span><span class="t">&gt;</span>
+          <span class="t">&lt;div</span> <span class="k">className</span>=<span class="s">"section-heading"</span><span class="t">&gt;</span>
+            <span class="t">&lt;h2</span> <span class="k">id</span>=<span class="s">"request-list-title"</span><span class="t">&gt;</span>รายการคำร้อง<span class="t">&lt;/h2&gt;</span>
+            <span class="t">&lt;FilterBar</span> <span class="k">value</span>={statusFilter} <span class="k">onFilterChange</span>={setStatusFilter} <span class="t">/&gt;</span>
+          <span class="t">&lt;/div&gt;</span>
+          <span class="t">&lt;RequestList</span> <span class="k">requests</span>={filteredRequests} <span class="k">onDeleteRequest</span>={handleDelete} <span class="t">/&gt;</span>
+        <span class="t">&lt;/section&gt;</span>
+      <span class="t">&lt;/div&gt;</span>
+    <span class="t">&lt;/section&gt;</span>
+  );
+}
+
+<span class="k">export default</span> DashboardPage;</code></pre>
+    </div>
+    <div class="say">
+      <b>ชี้ให้เห็น</b>
+      <code>data-testid="page-dashboard"</code> ต้องคงไว้ — checker ใช้ตรวจว่าหน้านี้มีอยู่จริง
+      <br>และสังเกตว่า <strong>ไม่มี <code>&lt;AppHeader /&gt;</code> ในไฟล์นี้</strong> เพราะ header เป็นของ Layout ไม่ใช่ของหน้า
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ขั้น 3 ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num">3</span>
+    <h2>ทำให้ <code>App.jsx</code> เหลือแค่หน้าที่ประกอบ</h2>
+    <span class="file">src/App.jsx</span>
+  </div>
+  <div class="step-body">
+    <p>จาก 55 บรรทัด เหลือ 12 บรรทัด</p>
+    <div class="split">
+      <div>
+        <span class="tag b">ก่อน</span>
+<pre><code><span class="d">import { useMemo, useState } from 'react';</span>
+<span class="d">import initialRequests from '../public/...';</span>
+<span class="d">import AppHeader from './components/...';</span>
+<span class="d">import FilterBar from './components/...';</span>
+<span class="d">... อีก 3 บรรทัด</span>
+
+<span class="k">function</span> <span class="f">App</span>() {
+  <span class="d">const [requests, setRequests] = useState(...)</span>
+  <span class="d">const [statusFilter, ...] = useState('all')</span>
+  <span class="d">const summary = useMemo(...)</span>
+  <span class="d">function handleAdd(...) { ... }</span>
+  <span class="d">function handleDelete(...) { ... }</span>
+  <span class="k">return</span> ( <span class="d">... JSX 15 บรรทัด ...</span> );
+}</code></pre>
+      </div>
+      <div>
+        <span class="tag a">หลัง</span>
+        <div class="codewrap">
+          <button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">import</span> AppLayout <span class="k">from</span> <span class="s">'./pages/AppLayout.jsx'</span>;
+<span class="k">import</span> DashboardPage <span class="k">from</span> <span class="s">'./pages/DashboardPage.jsx'</span>;
+
+<span class="k">function</span> <span class="f">App</span>() {
+  <span class="k">return</span> (
+    <span class="t">&lt;AppLayout&gt;</span>
+      <span class="t">&lt;DashboardPage /&gt;</span>
+    <span class="t">&lt;/AppLayout&gt;</span>
+  );
+  <span class="c">// TODO 5A-CP02: เปลี่ยนเป็น &lt;Routes&gt; ที่มี AppLayout เป็นกรอบ</span>
+}
+
+<span class="k">export default</span> App;</code></pre>
+        </div>
+      </div>
+    </div>
+    <div class="say">
+      <b>ประโยคที่อยากให้จำ</b>
+      อ่าน <code>App.jsx</code> ตอนนี้แล้วเข้าใจโครงทั้งแอปได้ใน 3 วินาที — <strong>“เอา AppLayout ครอบ DashboardPage”</strong>
+      <br>ก่อนหน้านี้ต้องอ่าน 55 บรรทัดถึงจะรู้ว่าแอปนี้ทำอะไร
+    </div>
+    <div class="warn">
+      <b>ยังไม่ทำตอนนี้</b>
+      <code>AppLayout.jsx</code> <strong>ยังไม่ต้องแตะ</strong> — ตอนนี้มันรับ <code>children</code> อยู่แล้วซึ่งใช้ได้เลย
+      <br>เราจะเปลี่ยนเป็น <code>&lt;Outlet /&gt;</code> ตอน CP02 หลังจากใส่ Router
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ขั้น 4 ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num" style="background:var(--green)">4</span>
+    <h2>รันแล้วพิสูจน์คำทำนาย</h2>
+  </div>
+  <div class="step-body">
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code>npm run dev</code></pre>
+    </div>
+    <div class="ok">
+      <b>คำตอบของคำถามตอนต้น</b>
+      หน้าจอต้อง <strong>เหมือนเดิมทุกพิกเซล</strong> — เราย้ายโค้ดไป 60 กว่าบรรทัด แต่ผู้ใช้ไม่รู้สึกอะไรเลย
+      <br>นี่คือหลักฐานว่าการ refactor สำเร็จ
+    </div>
+    <p><strong>ทดสอบ 4 อย่างเดิมของ Week 04 ให้ครบ</strong></p>
+    <div>
+      <div class="check"><span class="box" data-check>✓</span><span>ส่งฟอร์มเปล่า → ขึ้นข้อความเตือนใต้ช่องกรอกครบ</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>เพิ่มคำร้องที่กรอกครบ → รายการเพิ่มขึ้น และแผงสรุปเปลี่ยนตาม</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>กรองด้วย <code>pending</code> แล้วกลับมา <code>all</code> → รายการเปลี่ยนถูก</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>ลบคำร้อง → หายจากรายการ และแผงสรุปลดลง</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span><code>App.jsx</code> ไม่มี <code>useState</code> เหลืออยู่แล้ว</span></div>
+    </div>
+    <div class="warn">
+      <b>หมายเหตุเรื่อง checker</b>
+      รัน <code>npm run check -- --session=1</code> ตอนนี้จะยังได้ <strong>92/104 เท่าเดิม</strong>
+      <br>ไม่ใช่ว่าทำผิด — CP01 เป็นการจัดระเบียบภายใน ซึ่ง checker ตรวจไม่ได้
+      <br>ตัวเลขจะขยับตอน CP02 ที่เริ่มมี route ให้ตรวจ
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ปิด ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num" style="background:var(--violet)">✓</span>
+    <h2>ผ่าน CP01 เมื่อตอบคำถามนี้ได้</h2>
+  </div>
+  <div class="step-body">
+    <div class="say" style="border-left-color:var(--violet);background:rgba(192,132,252,.09)">
+      <b style="color:var(--violet)">คำถาม Checkpoint</b>
+      <span style="font-size:1.1rem">ทำไมหน้าจอไม่ควรเปลี่ยนเลยหลังย้ายโค้ด</span>
+    </div>
+    <p>ตอบด้วยประโยคเดียว ไม่ต้องยาว · หันไปอธิบายให้เพื่อนข้าง ๆ ฟังก่อน แล้วค่อยยกมือ</p>
+    <p style="margin-top:1rem"><strong>ต่อไปคือ CP02</strong> — ใส่ Router แล้วแยกเป็น 5 หน้า ตอนนั้นเราจะกลับมาแก้ <code>AppLayout.jsx</code> ให้ใช้ <code>&lt;Outlet /&gt;</code></p>
+  </div>
+</div>
+
+<footer>
+  <span>ENGSE203 · Week 05A · CP01 Page Refactor · เอกสารสำหรับฉายบนจอ</span>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน 5A บทที่ 3</span>
+</footer>
+
+</div>
+
+<div class="hud">
+  <button id="minus">A−</button>
+  <button id="plus">A+</button>
+  <button id="full">เต็มจอ</button>
+</div>
+
+<script>
+(function(){
+  var fs = 1;
+  function setFs(v){ fs = Math.max(.75, Math.min(1.6, v));
+    document.documentElement.style.setProperty('--fs', fs); }
+  document.getElementById('plus').onclick  = function(){ setFs(fs + .08); };
+  document.getElementById('minus').onclick = function(){ setFs(fs - .08); };
+  document.getElementById('full').onclick  = function(){
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    else document.exitFullscreen && document.exitFullscreen();
+  };
+  document.addEventListener('keydown', function(e){
+    if (e.key === '+' || e.key === '=') setFs(fs + .08);
+    if (e.key === '-') setFs(fs - .08);
+  });
+
+  document.querySelectorAll('[data-check]').forEach(function(b){
+    b.onclick = function(){ b.classList.toggle('on'); };
+  });
+
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.onclick = function(){
+      var pre = btn.parentElement.querySelector('pre');
+      var text = pre.innerText.replace(/\s*←[^\n]*/g, '');
+      navigator.clipboard.writeText(text).then(function(){
+        var old = btn.textContent;
+        btn.textContent = 'คัดลอกแล้ว';
+        setTimeout(function(){ btn.textContent = old; }, 1400);
+      });
+    };
+  });
+})();
+</script>
+</body>
+</html>

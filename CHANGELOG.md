@@ -1,5 +1,56 @@
 # Changelog
 
+## v6.1.0 — เชื่อมสื่อการสอนบนเว็บเข้ากับ LAB repository
+
+**ปัญหาที่แก้** — README ของ LAB ลิงก์ไฟล์ `.html` ใน `guides/` แบบ relative
+ซึ่ง **GitHub ไม่ render HTML** นักศึกษาที่กดจะเห็นเป็นโค้ดดิบ เปิดใช้งานจริงไม่ได้
+
+- เปลี่ยนลิงก์สื่อทั้งหมดใน README ให้ชี้ **GitHub Pages** (`se-rmutl.github.io/engse203`) ซึ่งเปิดได้ทันที
+- เพิ่มหัวข้อ **"สื่อการสอนออนไลน์"** ใน README ของ LAB 05, 06, 07 พร้อมตารางหน้าจอ Live-Coding ครบทุก checkpoint
+- เพิ่มตารางรวมสื่อทั้งรายวิชาใน README หลัก (สไลด์ · เอกสารประกอบ · live-coding แยกรายสัปดาห์)
+- เติมไฟล์ live-coding ลง `guides/` ของแต่ละ LAB เพื่อให้ clone ไปเปิดออฟไลน์ได้
+  - LAB 05 เพิ่ม 9 ไฟล์ (5A 4 · 5B 5) · LAB 06 เพิ่ม 6 ไฟล์ · LAB 07 เพิ่ม 4 ไฟล์
+- ทุกลิงก์ตรวจแล้วว่าชี้ไฟล์ที่มีอยู่จริงบนเว็บไซต์รายวิชา
+
+## v6.0.0 — ปรับผังสัปดาห์ให้ตรง มคอ. ฉบับ v2 (breaking)
+
+**เหตุผล** — โครงสร้างหน่วยเรียนฉบับ v2 กำหนดหน่วยที่ 3 เป็น **สัปดาห์ที่ 6–7** (เดิมวางไว้ 6–8)
+และสอบกลางภาค **สัปดาห์ที่ 8** (เดิม 9) ทำให้สัปดาห์ที่ 8 เป็นต้นไปเลื่อนลง 1 สัปดาห์ทั้งหมด
+
+- **ลบ** `labs/week-08-api-integration/` — เนื้อหา (API contract, CORS, front-end integration) รวมเข้า `week-07-rest-validation` แล้ว
+- **เปลี่ยนชื่อโฟลเดอร์** ให้ตรงสัปดาห์จริง (เลื่อนลง 1 ตั้งแต่สัปดาห์ 8)
+  - `week-09-midterm` → `week-08-midterm`
+  - `week-10-sqlite-crud` → `week-09-sqlite-crud`
+  - `week-11-mongodb-mongoose` → `week-10-mongodb-mongoose`
+  - `week-12-fullstack-integration` → `week-11-fullstack-integration`
+  - `week-13-testing-debugging` → `week-12-testing-debugging`
+  - `week-14-quality-security` → `week-13-quality-security`
+  - `week-15-team-sprint-1` → `week-14-team-sprint-1`
+  - `week-16-team-sprint-2-demo` → `week-15-team-sprint-2-demo`
+  - `week-17-review` → `week-16-review` · `week-18-final` → `week-17-final`
+- เลข LAB เลื่อนตาม — LAB 08 SQLite (สัปดาห์ 9) ถึง LAB 14 Team Sprint 2 (สัปดาห์ 15)
+- อัปเดตตารางและแผนผังโฟลเดอร์ใน README หลัก
+- ⚠ โฟลเดอร์ที่เปลี่ยนชื่อทั้งหมดยังเป็นโครง README เท่านั้น ยังไม่มีนักศึกษาใช้งาน จึงปรับได้โดยไม่กระทบใคร
+
+## v5.3.0 — เพิ่มสไลด์บทนำ API Foundations
+
+- เพิ่ม `ENGSE203_API_Foundations_Slides.html` (20 สไลด์ · 5 SVG) เป็นบทนำก่อนเข้า Week 06
+- เติมช่องว่างที่ขาดไป: ทำไมต้องมี API · ทำไมเลือก API เป็นหลังบ้าน · REST มาจากไหน · RESTful แปลว่าอะไร
+- ครอบคลุม 6 หลักการของ REST, Richardson Maturity Model, และเทียบ SOAP/REST/GraphQL/gRPC
+- มี simulator ให้ลองแปลงความต้องการเป็น endpoint (รวมกรณียาก "ยืมหนังสือ" → `POST /loans`)
+- อัปเดต Instructor Step Script Week 06 ให้มีช่วงบทนำ 30 นาที พร้อมจังหวะการเล่าและแผนตัดเวลา
+
+## v5.2.0 — Week 07 เชื่อม Front-end กับ Back-end (ปิดหน่วยที่ 3)
+
+- เพิ่มชุดสอน Week 07 ครบ: เอกสารประกอบการสอน 10 บท (7 ภาพ SVG), สไลด์ 23 หน้า, หน้าจอ live-coding 4 หน้า
+- starter และ reference มีทั้ง `api/` (Express) และ `frontend/` (React) ในโฟลเดอร์เดียว
+- เพิ่ม `check-week07.mjs` ตรวจทั้งสองฝั่ง — 36 รายการ แยก 🏫 ในห้อง / 🏠 ที่บ้าน / ⭐ challenge
+- เนื้อหา: CORS, preflight, environment config, API client layer, loading/error state
+- เพิ่ม `API_CONTRACT.md` ฉบับสมบูรณ์เป็นทั้งสื่อสอนและเฉลย
+- เพิ่ม automated test ด้วย `node:test` + supertest (CP16) — นักศึกษาเขียนเอง 6 เคส
+- `requestService.js` เปลี่ยนเป็นเรียก API โดยคง signature เดิมครบ — component ไม่ต้องแก้เลย
+- ปิดหน่วยที่ 3: Week 06 สร้าง API ให้ทำงานได้ · Week 07 ทำให้ทั้งระบบใช้งานได้จริง
+
 ## v5.1.0 — Week 06 Node.js/Express RESTful API Foundation
 
 - เพิ่มชุดสอน Week 06 ครบ: เอกสารประกอบการสอน 12 บท (9 ภาพ SVG), สไลด์ 2 เวอร์ชัน, หน้าจอ live-coding 6 หน้า

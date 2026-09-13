@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A1F16">
+<title>ENGSE203 — API Foundations · ความรู้เบื้องต้นเรื่อง API</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --font-scale:1;
+  --deep-950:#0B0718; --deep-900:#150E28; --deep-850:#1E1636; --deep-800:#2A1F47;
+  --ink:#EAF6EF; --muted:#A9C7B8; --dim:#6E8F7C;
+  --green:#A78BFA; --green-2:#22C55E; --cyan:#38D7ED; --amber:#FBBF24;
+  --red:#FB7185; --blue:#7AA5FF; --violet:#C084FC; --pink:#F472B6;
+  --panel:rgba(15,42,30,.74); --line:rgba(169,199,184,.24);
+  --shadow:0 24px 70px rgba(0,0,0,.44); --radius:20px;
+  font-size:calc(16px * var(--font-scale));
+}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0}
+body{overflow:hidden;color:var(--ink);
+  background:radial-gradient(circle at 14% 14%,rgba(192,132,252,.16),transparent 32%),
+  radial-gradient(circle at 84% 80%,rgba(122,165,255,.13),transparent 34%),#0A0616;
+  font-family:'IBM Plex Sans Thai','Noto Sans Thai',Tahoma,sans-serif;}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+.app{min-height:100%;display:grid;place-items:center;position:relative}
+.stage{position:relative;width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));
+  aspect-ratio:16/9;overflow:hidden;background:var(--deep-900);box-shadow:var(--shadow);isolation:isolate;}
+.stage::before{content:"";position:absolute;inset:0;z-index:-2;
+  background:linear-gradient(135deg,rgba(255,255,255,.03),transparent 42%),
+  radial-gradient(circle at 80% 8%,rgba(192,132,252,.18),transparent 26%),
+  linear-gradient(160deg,var(--deep-900),#120c22 64%,#2A1F47)}
+.stage::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.16;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 88%)}
+
+.slide{position:absolute;inset:0;display:none;padding:3.8% 5% 5.6%;overflow:hidden;flex-direction:column}
+.slide.active{display:flex;animation:enter .26s ease-out}
+@keyframes enter{from{opacity:.25;transform:translateX(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.active{animation:none}}
+
+.slide-id{position:absolute;top:2.8%;right:5%;font-family:'IBM Plex Mono',monospace;
+  font-size:.74rem;letter-spacing:.14em;color:var(--muted);opacity:.65}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;width:fit-content;color:var(--green);
+  font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.88rem;margin-bottom:.5rem}
+.eyebrow.amber{color:var(--amber)} .eyebrow.cyan{color:var(--cyan)}
+.eyebrow.red{color:var(--red)} .eyebrow.violet{color:var(--violet)}
+
+h1{font-size:3.3rem;line-height:1.1;margin:0 0 .7rem;font-weight:700;letter-spacing:-.015em}
+h2{font-size:2.35rem;line-height:1.16;margin:0 0 .7rem;font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.4rem;margin:0 0 .35rem;font-weight:600}
+p{margin:0 0 .6rem;line-height:1.5;font-size:1.3rem}
+.lead{font-size:1.6rem;color:var(--muted);font-weight:300;line-height:1.45}
+.muted{color:var(--muted)}
+small{font-size:1rem;color:var(--muted)}
+strong{font-weight:600}
+code{font-family:'IBM Plex Mono',monospace;font-size:.9em;background:rgba(74,222,128,.15);
+  padding:.08em .38em;border-radius:5px;color:#bff5d0}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.15rem 1.35rem}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:.75rem}
+.center{justify-content:center}
+
+/* SVG figure */
+.fig{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.fig svg{width:100%;height:100%;max-height:100%;display:block}
+.figcap{font-size:1.05rem;color:var(--muted);text-align:center;margin-top:.3rem}
+svg text{font-family:'IBM Plex Sans Thai',sans-serif}
+.svg-t{font-size:15px;font-weight:600;fill:#EAF6EF}
+.svg-s{font-size:12.5px;font-weight:300;fill:#A9C7B8}
+.svg-m{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500}
+.svg-lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em}
+.svg-big{font-size:19px;font-weight:700;fill:#EAF6EF}
+
+table{width:100%;border-collapse:collapse;font-size:1.22rem}
+th{text-align:left;padding:.6rem .75rem;color:var(--green);font-weight:600;
+  border-bottom:2px solid var(--line);font-size:1.08rem}
+td{padding:.6rem .75rem;border-bottom:1px solid rgba(169,199,184,.14);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+
+.chip{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .78rem;border-radius:999px;
+  font-size:1.02rem;font-weight:600;border:1px solid var(--line);background:rgba(74,222,128,.1);color:var(--green)}
+.chip.a{color:var(--amber);background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.32)}
+.chip.c{color:var(--cyan);background:rgba(56,215,237,.1);border-color:rgba(56,215,237,.32)}
+.chip.v{color:var(--violet);background:rgba(192,132,252,.1);border-color:rgba(192,132,252,.32)}
+.chip.r{color:var(--red);background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.32)}
+
+.where{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.98rem;font-weight:600;
+  padding:.24rem .72rem;border-radius:8px}
+.where.room{background:rgba(74,222,128,.16);color:#bff5d0;border:1px solid rgba(74,222,128,.4)}
+.where.home{background:rgba(251,191,36,.14);color:#ffe1a8;border:1px solid rgba(251,191,36,.4)}
+
+.title-slide{justify-content:center}
+.brandline{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.2rem}
+
+pre{background:rgba(4,16,11,.9);border:1px solid var(--line);border-radius:14px;
+  padding:.95rem 1.15rem;overflow:auto;font-size:1.08rem;line-height:1.55;margin:.35rem 0}
+pre code{background:none;padding:0;color:#d6efe0;font-size:1.08rem}
+.k{color:#8FE3A8}.s{color:#E9C88A}.c{color:#7EA592;font-style:italic}.f{color:#8FD0EC}
+.n{color:#D9A0E8}.hl{color:#FFE08A;font-weight:600}.bad{color:#FB7185}
+
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.g21{display:grid;grid-template-columns:1.4fr 1fr;gap:.9rem}
+.card{border:1px solid var(--line);border-radius:16px;padding:1rem 1.15rem;background:rgba(4,16,11,.5)}
+.card .ic{font-size:1.8rem;margin-bottom:.3rem}
+.card h3{font-size:1.25rem;margin-bottom:.25rem}
+.card p{font-size:1.06rem;margin:0;color:var(--muted)}
+.card.room{border-color:rgba(74,222,128,.4)}
+.card.home{border-color:rgba(251,191,36,.4)}
+.card.ch{border-color:rgba(192,132,252,.4)}
+
+.flow{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:.3rem 0}
+.flow .step{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35);
+  border-radius:12px;padding:.55rem .95rem;font-weight:600;font-size:1.1rem}
+.flow .arr{color:var(--muted);font-size:1.25rem}
+
+.analogy{background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.34);border-radius:var(--radius);padding:1rem 1.25rem}
+.note{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.34);border-radius:var(--radius);padding:1rem 1.25rem}
+.win{background:rgba(74,222,128,.09);border:1px solid rgba(74,222,128,.36);border-radius:var(--radius);padding:1rem 1.25rem}
+.wrong{background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.36);border-radius:var(--radius);padding:1rem 1.25rem}
+.term{background:rgba(56,215,237,.08);border-left:4px solid var(--cyan);border-radius:0 14px 14px 0;padding:.9rem 1.2rem}
+.term .w{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--cyan);font-size:1.2rem;margin-bottom:.2rem}
+.term p{margin:0;font-size:1.15rem}
+
+.iact{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.3);border-radius:var(--radius);padding:1rem 1.25rem}
+.opts{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.45rem}
+.opt{background:rgba(15,42,30,.92);border:1px solid var(--line);border-radius:12px;
+  padding:.55rem 1rem;font-size:1.15rem;transition:all .15s}
+.opt:hover{border-color:var(--green);background:rgba(74,222,128,.14)}
+.opt.ok{border-color:var(--green);background:rgba(74,222,128,.2);color:#c9f7d8}
+.opt.no{border-color:var(--red);background:rgba(251,113,133,.2);color:#ffd4da}
+.fb{margin-top:.5rem;font-size:1.1rem;min-height:1.4rem;color:var(--muted)}
+.fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+
+.reveal{border:1px dashed var(--line);border-radius:14px;padding:.7rem 1rem;background:rgba(4,16,11,.5)}
+.reveal button{background:none;border:none;color:var(--green);font-weight:600;font-size:1.15rem;padding:0}
+.reveal .ans{display:none;margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--line);font-size:1.15rem}
+.reveal.open .ans{display:block}
+
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.pgbox{border:1px solid var(--line);border-radius:14px;background:rgba(4,16,11,.8);overflow:hidden}
+.pghead{background:rgba(169,199,184,.09);padding:.42rem .8rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.95rem;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--line)}
+.pgbody{padding:.8rem;font-family:'IBM Plex Mono',monospace;font-size:1rem;line-height:1.5;
+  min-height:130px;word-break:break-all;color:#d6efe0;white-space:pre-wrap}
+.reqbtns{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem}
+.reqbtns button{background:rgba(15,42,30,.92);border:1px solid var(--line);border-radius:9px;
+  padding:.38rem .75rem;font-family:'IBM Plex Mono',monospace;font-size:.98rem;color:var(--muted)}
+.reqbtns button:hover{border-color:var(--green);color:var(--green)}
+.reqbtns button.m-get{color:#8FE3A8;border-color:rgba(74,222,128,.4)}
+.reqbtns button.m-post{color:#E9C88A;border-color:rgba(251,191,36,.4)}
+.reqbtns button.m-del{color:#FB7185;border-color:rgba(251,113,133,.4)}
+.stcode{font-family:'IBM Plex Mono',monospace;font-weight:600}
+.stcode.ok{color:var(--green)} .stcode.warn{color:var(--amber)} .stcode.err{color:var(--red)}
+
+.bigtime{font-family:'IBM Plex Mono',monospace;font-size:2.8rem;font-weight:600;line-height:1;color:var(--amber)}
+.timerbtns{display:flex;gap:.45rem;margin-top:.5rem}
+.timerbtns button{background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.4);
+  color:var(--amber);border-radius:10px;padding:.38rem .85rem;font-size:1rem;font-weight:600}
+.labstop{background:linear-gradient(150deg,rgba(251,191,36,.13),rgba(15,42,30,.82));border:1px solid rgba(251,191,36,.4)}
+
+ul{margin:.15rem 0 .4rem 1.25rem;padding:0}
+li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
+
+.bar{position:fixed;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.08);z-index:40}
+.bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));width:0;transition:width .25s}
+.hud{position:fixed;bottom:16px;right:18px;display:flex;gap:.42rem;align-items:center;z-index:41}
+.hud button{background:rgba(15,42,30,.94);border:1px solid var(--line);border-radius:10px;
+  padding:.3rem .62rem;font-size:.88rem;color:var(--muted)}
+.hud button:hover{color:var(--green);border-color:var(--green)}
+.counter{font-family:'IBM Plex Mono',monospace;font-size:.86rem;color:var(--muted);padding:0 .32rem}
+.toc{position:fixed;inset:0;background:rgba(4,12,8,.97);z-index:50;display:none;padding:3.5vh 5vw;overflow:auto}
+.toc.open{display:block}
+.toc h3{color:var(--green);margin-bottom:.9rem;font-size:1.25rem;letter-spacing:.08em;text-transform:uppercase}
+.toc ol{columns:3;column-gap:2.2rem;margin:0;padding-left:1.3rem;font-size:1.05rem}
+.toc li{margin-bottom:.42rem;break-inside:avoid}
+.toc a{color:var(--ink);text-decoration:none;opacity:.85}
+.toc a:hover{color:var(--green);opacity:1}
+.toc .tag{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--dim);margin-left:.35rem}
+@media (max-width:900px){.toc ol{columns:2}}
+</style>
+</head>
+<body>
+<div class="app"><div class="stage" id="stage">
+
+<!-- 1 TITLE -->
+<section class="slide title-slide active" data-title="เปิดบทเรียน">
+  <span class="eyebrow">ENGSE203 · หน่วยที่ 3 · บทนำก่อนเข้า Week 06</span>
+  <h1>ทำไมต้องมี API<br>และทำไมต้องเป็น REST</h1>
+  <p class="lead">ความรู้เบื้องต้นที่ควรรู้ก่อนลงมือสร้าง API ตัวแรก</p>
+  <div class="brandline">
+    <span class="chip">API คืออะไร</span><span class="chip c">ทำไมเลือกเป็นหลังบ้าน</span>
+    <span class="chip a">REST มาจากไหน</span><span class="chip v">RESTful แปลว่าอะไร</span>
+  </div>
+  <p style="margin-top:1.4rem"><small>→ / Space ไปต่อ · T สารบัญ · F เต็มจอ · A+ A− ปรับขนาด</small></p>
+</section>
+
+<!-- 2 ช่องว่าง -->
+<section class="slide" data-title="ช่องว่างที่เราจะเติม">
+  <span class="slide-id">API · INTRO</span>
+  <span class="eyebrow amber">ก่อนอื่น — ขอถามตรง ๆ</span>
+  <h2>คุณสร้าง API ได้ แต่ตอบคำถามพวกนี้ได้ไหม</h2>
+  <div class="body center">
+    <div class="panel" style="border-color:rgba(251,191,36,.45)">
+      <ul style="margin:0;font-size:1.35rem;line-height:2">
+        <li>ก่อนจะมี API โลกเขาทำกันอย่างไร</li>
+        <li>ทำไมยุคนี้ถึงเลือก <strong>"API เป็นหลังบ้าน"</strong> ไม่ใช่แบบอื่น</li>
+        <li><strong>REST</strong> มาจากไหน ใครคิด</li>
+        <li><strong>"ful"</strong> ใน RESTful แปลว่าอะไร</li>
+        <li>นอกจาก REST มีทางเลือกอะไรอีก แล้วทำไมเราเลือก REST</li>
+      </ul>
+    </div>
+    <div class="analogy"><p style="margin:0;font-size:1.3rem">ถ้าตอบไม่ได้ <strong>ไม่ใช่ความผิดของคุณ</strong> — เราข้ามเรื่องนี้ไปเพื่อให้ลงมือทำได้เร็ว · วันนี้เรากลับมาเติมช่องว่างนี้</p></div>
+  </div>
+</section>
+
+<!-- 3 ย้อนอดีต SVG -->
+<section class="slide" data-title="ก่อนมี API ทำกันอย่างไร">
+  <span class="slide-id">API · บท 1</span>
+  <span class="eyebrow cyan">ย้อนอดีต</span>
+  <h2>ก่อนจะมี API เว็บทำงานอย่างไร</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="เว็บยุคเก่าแบบ server-rendered">
+      <text x="30" y="26" class="svg-lbl" fill="#FBBF24">ยุค 1995–2005 · SERVER-RENDERED</text>
+      <rect x="20" y="38" width="860" height="132" rx="14" fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.4)" stroke-width="2"/>
+
+      <rect x="50" y="66" width="150" height="76" rx="10" fill="rgba(11,7,24,.7)" stroke="rgba(169,199,184,.35)"/>
+      <text x="125" y="98" text-anchor="middle" style="font-size:26px">🌐</text>
+      <text x="125" y="124" text-anchor="middle" class="svg-s">เบราว์เซอร์</text>
+
+      <path d="M206 92 L286 92" stroke="#FBBF24" stroke-width="2" marker-end="url(#f1)"/>
+      <text x="246" y="84" text-anchor="middle" class="svg-m" style="font-size:10px" fill="#FBBF24">ขอหน้าเว็บ</text>
+      <path d="M286 122 L206 122" stroke="#A78BFA" stroke-width="2" marker-end="url(#f2)"/>
+      <text x="246" y="140" text-anchor="middle" class="svg-m" style="font-size:10px" fill="#A78BFA">ส่ง HTML ทั้งหน้า</text>
+
+      <rect x="292" y="60" width="230" height="88" rx="10" fill="rgba(11,7,24,.7)" stroke="rgba(169,199,184,.35)"/>
+      <text x="407" y="88" text-anchor="middle" class="svg-t">เซิร์ฟเวอร์</text>
+      <text x="407" y="110" text-anchor="middle" class="svg-s">ดึงข้อมูล + ประกอบ HTML</text>
+      <text x="407" y="130" text-anchor="middle" class="svg-s">แล้วส่งทั้งหน้ากลับไป</text>
+
+      <path d="M528 104 L590 104" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#f3)"/>
+      <rect x="596" y="76" width="240" height="56" rx="10" fill="rgba(11,7,24,.7)" stroke="rgba(169,199,184,.35)"/>
+      <text x="716" y="110" text-anchor="middle" class="svg-t">🗄️ ฐานข้อมูล</text>
+
+      <rect x="20" y="186" width="860" height="88" rx="14" fill="rgba(251,113,133,.1)" stroke="rgba(251,113,133,.4)" stroke-width="2"/>
+      <text x="45" y="212" class="svg-t" fill="#FB7185">ปัญหาที่เกิดขึ้น</text>
+      <text x="45" y="238" class="svg-s">• กดปุ่มอะไรก็ตาม = โหลดหน้าใหม่ทั้งหน้า แม้จะเปลี่ยนแค่ตัวเลขเดียว</text>
+      <text x="45" y="260" class="svg-s">• อยากทำแอปมือถือ = ต้องเขียนเซิร์ฟเวอร์ใหม่ทั้งชุด เพราะมือถือไม่ได้ต้องการ HTML</text>
+
+      <defs>
+        <marker id="f1" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#FBBF24"/></marker>
+        <marker id="f2" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#A78BFA"/></marker>
+        <marker id="f3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="rgba(169,199,184,.5)"/></marker>
+      </defs>
+    </svg>
+  </div>
+  <p class="figcap">เซิร์ฟเวอร์ประกอบ <strong>HTML ทั้งหน้า</strong> ส่งมาให้ — ข้อมูลกับหน้าตาผูกติดกันเป็นก้อนเดียว</p>
+</section>
+
+<!-- 4 quiz -->
+<section class="slide" data-title="Quiz: ปัญหาคืออะไร">
+  <span class="slide-id">API · บท 1</span>
+  <span class="eyebrow amber">ทดลองความเข้าใจ</span>
+  <h2>ถ้าเซิร์ฟเวอร์ส่ง HTML มาอย่างเดียว</h2>
+  <div class="body center">
+    <div class="iact" data-quiz="q1">
+      <p style="margin:0 0 .3rem"><strong>บริษัทอยากทำแอปมือถือเพิ่ม โดยใช้ข้อมูลชุดเดียวกัน — ปัญหาคืออะไร</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">ไม่มีปัญหา ใช้ของเดิมได้เลย</button>
+        <button class="opt" data-a="1">แอปมือถือไม่ต้องการ HTML ต้องเขียนเซิร์ฟเวอร์ใหม่</button>
+        <button class="opt" data-a="0">ต้องเปลี่ยนฐานข้อมูลใหม่</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="win">
+      <p style="margin:0"><strong>แอปมือถือวาดหน้าจอเอง</strong> — มันต้องการแค่ <strong>ข้อมูลดิบ</strong> ไม่ใช่ HTML สำเร็จรูป<br>
+      ถ้าเซิร์ฟเวอร์ส่งได้แต่ HTML ก็ต้องสร้างเซิร์ฟเวอร์อีกชุดให้มือถือโดยเฉพาะ — <strong>ดูแล 2 ชุด ข้อมูลอาจไม่ตรงกัน</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 ทางออก SVG -->
+<section class="slide" data-title="ทางออก — แยกข้อมูลออกจากหน้าตา">
+  <span class="slide-id">API · บท 2</span>
+  <span class="eyebrow">ทางออก</span>
+  <h2>แยก "ข้อมูล" ออกจาก "หน้าตา"</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="API ให้หลาย client ใช้ร่วมกัน">
+      <rect x="30" y="30" width="180" height="70" rx="12" fill="rgba(122,165,255,.14)" stroke="#7AA5FF" stroke-width="2"/>
+      <text x="120" y="60" text-anchor="middle" style="font-size:22px">💻</text>
+      <text x="120" y="86" text-anchor="middle" class="svg-s">เว็บ (React)</text>
+
+      <rect x="240" y="30" width="180" height="70" rx="12" fill="rgba(167,139,250,.14)" stroke="#A78BFA" stroke-width="2"/>
+      <text x="330" y="60" text-anchor="middle" style="font-size:22px">📱</text>
+      <text x="330" y="86" text-anchor="middle" class="svg-s">แอปมือถือ</text>
+
+      <rect x="450" y="30" width="180" height="70" rx="12" fill="rgba(56,215,237,.14)" stroke="#38D7ED" stroke-width="2"/>
+      <text x="540" y="60" text-anchor="middle" style="font-size:22px">🖥️</text>
+      <text x="540" y="86" text-anchor="middle" class="svg-s">โปรแกรมเดสก์ท็อป</text>
+
+      <rect x="660" y="30" width="210" height="70" rx="12" fill="rgba(251,191,36,.14)" stroke="#FBBF24" stroke-width="2"/>
+      <text x="765" y="60" text-anchor="middle" style="font-size:22px">🤝</text>
+      <text x="765" y="86" text-anchor="middle" class="svg-s">ระบบของบริษัทอื่น</text>
+
+      <path d="M120 104 L400 148" stroke="rgba(169,199,184,.35)" stroke-width="2"/>
+      <path d="M330 104 L430 148" stroke="rgba(169,199,184,.35)" stroke-width="2"/>
+      <path d="M540 104 L470 148" stroke="rgba(169,199,184,.35)" stroke-width="2"/>
+      <path d="M765 104 L500 148" stroke="rgba(169,199,184,.35)" stroke-width="2"/>
+
+      <rect x="270" y="152" width="360" height="66" rx="14" fill="rgba(167,139,250,.22)" stroke="#A78BFA" stroke-width="3"/>
+      <text x="450" y="180" text-anchor="middle" class="svg-big" fill="#A78BFA">API</text>
+      <text x="450" y="204" text-anchor="middle" class="svg-s">ส่ง "ข้อมูลดิบ" (JSON) · ไม่ส่งหน้าตา</text>
+
+      <path d="M450 222 L450 244" stroke="rgba(169,199,184,.4)" stroke-width="2" marker-end="url(#ap)"/>
+      <rect x="330" y="248" width="240" height="42" rx="10" fill="rgba(11,7,24,.7)" stroke="rgba(169,199,184,.35)"/>
+      <text x="450" y="275" text-anchor="middle" class="svg-t">🗄️ ฐานข้อมูล</text>
+
+      <defs><marker id="ap" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="rgba(169,199,184,.5)"/></marker></defs>
+    </svg>
+  </div>
+  <p class="figcap"><strong>เขียน API ชุดเดียว — ทุก client ใช้ร่วมกัน</strong> · แต่ละฝั่งเอาข้อมูลไปวาดหน้าจอเองตามที่ตัวเองถนัด</p>
+</section>
+
+<!-- 6 API คืออะไรจริงๆ -->
+<section class="slide" data-title="API คืออะไรจริง ๆ">
+  <span class="slide-id">API · บท 2</span>
+  <span class="eyebrow">นิยามให้ถูก</span>
+  <h2>API ไม่ได้แปลว่า "เว็บเซิร์ฟเวอร์"</h2>
+  <div class="body center">
+    <div class="term" style="font-size:1.15rem">
+      <div class="w" style="font-size:1.3rem">API · Application Programming Interface</div>
+      <p style="font-size:1.25rem"><strong>ช่องทางที่โปรแกรมหนึ่งเรียกใช้อีกโปรแกรมหนึ่ง</strong> โดยไม่ต้องรู้ว่าข้างในทำงานอย่างไร</p>
+    </div>
+    <p style="text-align:center;font-size:1.3rem">คุณใช้ API มาตลอดโดยไม่รู้ตัว</p>
+    <table>
+      <tr><th>ชนิดของ API</th><th>ตัวอย่างที่คุณเคยใช้</th></tr>
+      <tr><td><strong>Library API</strong></td><td><code>Math.random()</code> · <code>array.map()</code> — เรียกใช้โดยไม่รู้ว่าข้างในเขียนยังไง</td></tr>
+      <tr><td><strong>Browser API</strong></td><td><code>fetch()</code> · <code>localStorage</code> · <code>document.querySelector()</code></td></tr>
+      <tr><td><strong>OS API</strong></td><td>โปรแกรมขอเปิดไฟล์ · ขอใช้กล้อง</td></tr>
+      <tr><td><strong>Web API</strong> ← ที่เรากำลังเรียน</td><td>เรียกข้ามเครื่องผ่านเครือข่าย</td></tr>
+    </table>
+    <div class="analogy"><p style="margin:0"><strong>คำสำคัญคือ "Interface"</strong> — หน้าสัมผัส · เหมือนปลั๊กไฟ คุณเสียบได้โดยไม่ต้องรู้ว่าไฟมาจากเขื่อนหรือโรงไฟฟ้า</p></div>
+  </div>
+</section>
+
+<!-- 7 ประโยชน์ 4 ข้อ -->
+<section class="slide" data-title="ทำไมต้องมี API">
+  <span class="slide-id">API · บท 2</span>
+  <span class="eyebrow cyan">เหตุผล 4 ข้อ</span>
+  <h2>ทำไมยุคนี้ถึงเลือก API เป็นหลังบ้าน</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="card" style="border-color:rgba(167,139,250,.45)"><div class="ic">🔌</div><h3>① ใช้ได้หลาย client</h3><p>เว็บ มือถือ เดสก์ท็อป ใช้ API ชุดเดียว — ข้อมูลตรงกันเสมอ</p></div>
+      <div class="card" style="border-color:rgba(56,215,237,.45)"><div class="ic">👥</div><h3>② ทีมทำงานคู่ขนาน</h3><p>ตกลง contract แล้วแยกกันทำ ไม่ต้องรอกัน</p></div>
+      <div class="card" style="border-color:rgba(74,222,128,.45)"><div class="ic">🔄</div><h3>③ เปลี่ยนฝั่งหนึ่งไม่กระทบอีกฝั่ง</h3><p>เปลี่ยน React เป็น Vue ก็ได้ · เปลี่ยน Node เป็น Go ก็ได้</p></div>
+      <div class="card" style="border-color:rgba(251,191,36,.45)"><div class="ic">🔒</div><h3>④ ควบคุมสิทธิ์ได้จริง</h3><p>ตรรกะสำคัญอยู่ที่เซิร์ฟเวอร์ ผู้ใช้แก้ไม่ได้</p></div>
+    </div>
+    <div class="note"><p style="margin:0"><strong>ข้อ ③ คือสิ่งที่คุณจะเห็นจริงใน Week 07</strong> — เราเปลี่ยนแหล่งข้อมูลของ React จาก localStorage เป็น API โดยไม่แตะ component เลย</p></div>
+  </div>
+</section>
+
+<!-- 8 timeline SVG -->
+<section class="slide" data-title="วิวัฒนาการ">
+  <span class="slide-id">API · บท 3</span>
+  <span class="eyebrow violet">มองภาพใหญ่</span>
+  <h2>วิวัฒนาการของการทำเว็บ</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="วิวัฒนาการของสถาปัตยกรรมเว็บ">
+      <line x1="60" y1="120" x2="860" y2="120" stroke="rgba(169,199,184,.25)" stroke-width="3"/>
+
+      <circle cx="130" cy="120" r="26" fill="rgba(251,191,36,.18)" stroke="#FBBF24" stroke-width="2"/>
+      <text x="130" y="128" text-anchor="middle" class="svg-m" style="font-size:12px" fill="#FBBF24">1995</text>
+      <text x="130" y="62" text-anchor="middle" class="svg-t">Server-rendered</text>
+      <text x="130" y="82" text-anchor="middle" class="svg-s">PHP · JSP · ASP</text>
+      <text x="130" y="172" text-anchor="middle" class="svg-s">ส่ง HTML ทั้งหน้า</text>
+      <text x="130" y="190" text-anchor="middle" class="svg-s">กดอะไรก็โหลดใหม่</text>
+
+      <circle cx="330" cy="120" r="26" fill="rgba(56,215,237,.18)" stroke="#38D7ED" stroke-width="2"/>
+      <text x="330" y="128" text-anchor="middle" class="svg-m" style="font-size:12px" fill="#38D7ED">2005</text>
+      <text x="330" y="62" text-anchor="middle" class="svg-t">AJAX</text>
+      <text x="330" y="82" text-anchor="middle" class="svg-s">Gmail · Google Maps</text>
+      <text x="330" y="172" text-anchor="middle" class="svg-s">ขอข้อมูลเพิ่มได้</text>
+      <text x="330" y="190" text-anchor="middle" class="svg-s">โดยไม่โหลดหน้าใหม่</text>
+
+      <circle cx="550" cy="120" r="30" fill="rgba(167,139,250,.24)" stroke="#A78BFA" stroke-width="3"/>
+      <text x="550" y="128" text-anchor="middle" class="svg-m" style="font-size:12px" fill="#A78BFA">2010s</text>
+      <text x="550" y="58" text-anchor="middle" class="svg-t" style="font-size:17px">SPA + REST API</text>
+      <text x="550" y="80" text-anchor="middle" class="svg-s">React · Vue · Angular</text>
+      <text x="550" y="176" text-anchor="middle" class="svg-t" fill="#A78BFA">◀ ที่เราเรียนอยู่</text>
+      <text x="550" y="196" text-anchor="middle" class="svg-s">แยก frontend / backend ชัดเจน</text>
+
+      <circle cx="770" cy="120" r="26" fill="rgba(74,222,128,.18)" stroke="#4ADE80" stroke-width="2"/>
+      <text x="770" y="128" text-anchor="middle" class="svg-m" style="font-size:12px" fill="#4ADE80">2020s</text>
+      <text x="770" y="62" text-anchor="middle" class="svg-t">ทางเลือกเพิ่มขึ้น</text>
+      <text x="770" y="82" text-anchor="middle" class="svg-s">GraphQL · gRPC</text>
+      <text x="770" y="172" text-anchor="middle" class="svg-s">REST ยังเป็นหลัก</text>
+      <text x="770" y="190" text-anchor="middle" class="svg-s">มีตัวเลือกตามงาน</text>
+
+      <rect x="60" y="216" width="800" height="44" rx="10" fill="rgba(167,139,250,.1)" stroke="rgba(167,139,250,.35)"/>
+      <text x="460" y="243" text-anchor="middle" class="svg-s" fill="#A78BFA">แต่ละยุคเกิดขึ้นเพราะ "ยุคก่อนหน้ามีข้อจำกัด" ไม่ใช่เพราะของใหม่เท่กว่า</text>
+    </svg>
+  </div>
+</section>
+
+<!-- 9 REST มาจากไหน -->
+<section class="slide" data-title="REST มาจากไหน">
+  <span class="slide-id">API · บท 4</span>
+  <span class="eyebrow amber">ที่มาที่ไป</span>
+  <h2>REST มาจากไหน ใครคิด</h2>
+  <div class="body center">
+    <div class="panel" style="border-color:rgba(167,139,250,.5)">
+      <p style="margin:0;font-size:1.35rem"><strong style="color:var(--green)">Roy Fielding</strong> · ปี <strong>2000</strong> · วิทยานิพนธ์ปริญญาเอก</p>
+      <p style="margin:.5rem 0 0;font-size:1.2rem">เขาเป็นหนึ่งในคนที่ออกแบบ <strong>HTTP</strong> เอง — แล้วเขียนวิทยานิพนธ์อธิบายว่า<strong>ทำไมเว็บถึงขยายตัวได้มหาศาลโดยไม่พัง</strong></p>
+    </div>
+    <div class="term">
+      <div class="w">REST · REpresentational State Transfer</div>
+      <p style="font-size:1.2rem"><strong>ไม่ใช่เทคโนโลยี ไม่ใช่ protocol ไม่ใช่ library</strong> — แต่เป็น <strong>"รูปแบบสถาปัตยกรรม" (architectural style)</strong> คือชุดหลักการว่าควรออกแบบระบบอย่างไรให้ขยายตัวได้ดี</p>
+    </div>
+    <div class="wrong"><p style="margin:0"><strong>เพราะฉะนั้น</strong> — ไม่มีใคร "ติดตั้ง REST" ได้ · ไม่มี <code>npm install rest</code> · <strong>REST คือวิธีคิด ไม่ใช่ของที่ลงได้</strong></p></div>
+  </div>
+</section>
+
+<!-- 10 6 constraints SVG -->
+<section class="slide" data-title="6 หลักการของ REST">
+  <span class="slide-id">API · บท 4</span>
+  <span class="eyebrow">แก่นของ REST</span>
+  <h2>6 หลักการที่ Fielding เสนอ</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="หกหลักการของ REST">
+      <rect x="20" y="24" width="280" height="76" rx="12" fill="rgba(167,139,250,.14)" stroke="#A78BFA" stroke-width="2"/>
+      <text x="42" y="50" class="svg-t" fill="#A78BFA">① Client–Server</text>
+      <text x="42" y="72" class="svg-s">แยกฝั่งผู้ใช้กับฝั่งข้อมูลออกจากกัน</text>
+      <text x="42" y="90" class="svg-s" style="font-size:11px">← เราทำแล้วใน Week 06–07</text>
+
+      <rect x="310" y="24" width="280" height="76" rx="12" fill="rgba(56,215,237,.14)" stroke="#38D7ED" stroke-width="2"/>
+      <text x="332" y="50" class="svg-t" fill="#38D7ED">② Stateless</text>
+      <text x="332" y="72" class="svg-s">ทุกคำขอมีข้อมูลครบในตัวเอง</text>
+      <text x="332" y="90" class="svg-s" style="font-size:11px">เซิร์ฟเวอร์ไม่ต้องจำว่าใครทำอะไรค้างไว้</text>
+
+      <rect x="600" y="24" width="280" height="76" rx="12" fill="rgba(74,222,128,.14)" stroke="#4ADE80" stroke-width="2"/>
+      <text x="622" y="50" class="svg-t" fill="#4ADE80">③ Cacheable</text>
+      <text x="622" y="72" class="svg-s">ตอบได้ว่าข้อมูลนี้เก็บไว้ใช้ซ้ำได้ไหม</text>
+      <text x="622" y="90" class="svg-s" style="font-size:11px">ช่วยลดภาระเซิร์ฟเวอร์</text>
+
+      <rect x="20" y="112" width="280" height="76" rx="12" fill="rgba(251,191,36,.14)" stroke="#FBBF24" stroke-width="2"/>
+      <text x="42" y="138" class="svg-t" fill="#FBBF24">④ Uniform Interface</text>
+      <text x="42" y="160" class="svg-s">ใช้รูปแบบเดียวกันทั้งระบบ</text>
+      <text x="42" y="178" class="svg-s" style="font-size:11px">← หัวใจที่สุด ดูสไลด์ถัดไป</text>
+
+      <rect x="310" y="112" width="280" height="76" rx="12" fill="rgba(122,165,255,.14)" stroke="#7AA5FF" stroke-width="2"/>
+      <text x="332" y="138" class="svg-t" fill="#7AA5FF">⑤ Layered System</text>
+      <text x="332" y="160" class="svg-s">มีชั้นกลางคั่นได้ (proxy, cache)</text>
+      <text x="332" y="178" class="svg-s" style="font-size:11px">client ไม่รู้ว่าคุยกับใครกันแน่</text>
+
+      <rect x="600" y="112" width="280" height="76" rx="12" fill="rgba(169,199,184,.1)" stroke="rgba(169,199,184,.35)" stroke-width="2" stroke-dasharray="6 4"/>
+      <text x="622" y="138" class="svg-t" fill="#A9C7B8">⑥ Code on Demand</text>
+      <text x="622" y="160" class="svg-s">ส่งโค้ดไปรันฝั่ง client ได้</text>
+      <text x="622" y="178" class="svg-s" style="font-size:11px">ข้อเดียวที่เป็นทางเลือก ไม่บังคับ</text>
+
+      <rect x="20" y="204" width="860" height="72" rx="12" fill="rgba(167,139,250,.1)" stroke="rgba(167,139,250,.35)"/>
+      <text x="450" y="230" text-anchor="middle" class="svg-t" fill="#A78BFA">API ของเราทำได้กี่ข้อแล้ว</text>
+      <text x="450" y="254" text-anchor="middle" class="svg-s">① แยก client–server ✓ · ② stateless ✓ (ไม่จำ session) · ④ uniform interface ✓ (method + path มาตรฐาน)</text>
+      <text x="450" y="270" text-anchor="middle" class="svg-s">③ cache และ ⑤ layered ยังไม่ได้ทำ — เป็นเรื่องของระบบขนาดใหญ่</text>
+    </svg>
+  </div>
+</section>
+
+<!-- 11 uniform interface -->
+<section class="slide" data-title="Uniform Interface">
+  <span class="slide-id">API · บท 4</span>
+  <span class="eyebrow">หัวใจที่สุดของ REST</span>
+  <h2>Uniform Interface — ทำไมถึงสำคัญที่สุด</h2>
+  <div class="body center">
+    <div class="analogy">
+      <p style="margin:0;font-size:1.28rem"><strong>เทียบกับปลั๊กไฟ</strong> — ถ้าทุกยี่ห้อออกแบบปลั๊กของตัวเอง คุณต้องซื้ออะแดปเตอร์ทุกครั้งที่เปลี่ยนเครื่องใช้ไฟฟ้า<br>
+      แต่เพราะ<strong>ทุกคนใช้มาตรฐานเดียวกัน</strong> — เสียบอะไรก็ได้ ไม่ต้องอ่านคู่มือ</p>
+    </div>
+    <p style="text-align:center;font-size:1.35rem"><strong>API ก็เหมือนกัน</strong> — พอทุกคนใช้กติกาเดียวกัน เจอ API ไหนก็เดาได้ทันที</p>
+    <table>
+      <tr><th>เจอ API ใหม่ที่ไม่เคยใช้</th><th>คุณเดาได้ทันทีว่า</th></tr>
+      <tr><td><code>GET /users</code></td><td>ดูผู้ใช้ทั้งหมด</td></tr>
+      <tr><td><code>GET /users/42</code></td><td>ดูผู้ใช้คนที่ 42</td></tr>
+      <tr><td><code>POST /users</code></td><td>สร้างผู้ใช้ใหม่</td></tr>
+      <tr><td><code>DELETE /users/42</code></td><td>ลบผู้ใช้คนที่ 42</td></tr>
+    </table>
+    <div class="win"><p style="margin:0"><strong>ไม่ต้องอ่านคู่มือเลยสักบรรทัด</strong> — นี่คือพลังของ uniform interface · GitHub, Google, ธนาคาร ก็ใช้รูปแบบเดียวกันนี้</p></div>
+  </div>
+</section>
+
+<!-- 12 resource thinking -->
+<section class="slide" data-title="คิดแบบทรัพยากร">
+  <span class="slide-id">API · บท 5</span>
+  <span class="eyebrow violet">วิธีคิดที่ต้องเปลี่ยน</span>
+  <h2>คิดเป็น "สิ่งของ" ไม่ใช่ "การกระทำ"</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="panel" style="border-color:rgba(251,113,133,.45)">
+        <h3 style="color:var(--red)">✕ คิดแบบฟังก์ชัน</h3>
+        <pre style="margin:.3rem 0 0;font-size:1rem"><code><span class="bad">/getAllRequests
+/createRequest
+/deleteRequestById
+/updateRequestStatus
+/searchRequestsByType</span></code></pre>
+        <p style="margin:.5rem 0 0"><small>ยิ่งมีฟีเจอร์เยอะ path ยิ่งเพิ่มไม่มีที่สิ้นสุด · ต้องจำทุกอันเอง</small></p>
+      </div>
+      <div class="panel" style="border-color:rgba(167,139,250,.45)">
+        <h3 style="color:var(--green)">✓ คิดแบบทรัพยากร</h3>
+        <pre style="margin:.3rem 0 0;font-size:1rem"><code><span class="k">GET</span>    /requests
+<span class="s">POST</span>   /requests
+<span class="d">DELETE</span> /requests/:id
+<span class="f">PUT</span>    /requests/:id
+<span class="k">GET</span>    /requests?type=...</code></pre>
+        <p style="margin:.5rem 0 0"><small><strong>ทรัพยากรเดียว</strong> คือ requests · การกระทำบอกด้วย method</small></p>
+      </div>
+    </div>
+    <div class="note"><p style="margin:0"><strong>คำถามที่ต้องถามตัวเองเวลาออกแบบ</strong> — "ระบบนี้มี<strong>สิ่งของ</strong>อะไรบ้าง" ไม่ใช่ "ระบบนี้<strong>ทำอะไร</strong>ได้บ้าง"<br>
+    <span style="color:var(--muted)">ร้านค้า → สินค้า, คำสั่งซื้อ, ลูกค้า · โรงเรียน → นักเรียน, วิชา, คะแนน</span></p></div>
+  </div>
+</section>
+
+<!-- 13 SIM: resource designer -->
+<section class="slide" data-title="🎮 ออกแบบ endpoint">
+  <span class="slide-id">API · บท 5</span>
+  <span class="eyebrow amber">ลองเล่น — แปลงความต้องการเป็น endpoint</span>
+  <h2>ลองออกแบบดู</h2>
+  <div class="body">
+    <div class="iact">
+      <p style="margin:0 0 .5rem"><small>กดดูว่าความต้องการแต่ละข้อ ควรออกแบบเป็น endpoint อะไร</small></p>
+      <div class="reqbtns">
+        <button data-rd="list">"อยากดูหนังสือทั้งหมด"</button>
+        <button data-rd="one">"อยากดูหนังสือเล่มเดียว"</button>
+        <button data-rd="add">"อยากเพิ่มหนังสือ"</button>
+        <button data-rd="borrow">"อยากยืมหนังสือ"</button>
+        <button data-rd="search">"อยากค้นหนังสือตามหมวด"</button>
+      </div>
+      <div class="pg">
+        <div class="pgbox"><div class="pghead">❌ แบบที่ไม่ใช่ REST</div><div class="pgbody" id="rdBad" style="min-height:120px">— กดปุ่มด้านบน —</div></div>
+        <div class="pgbox"><div class="pghead">✅ แบบ RESTful</div><div class="pgbody" id="rdGood" style="min-height:120px">—</div></div>
+      </div>
+    </div>
+    <p style="text-align:center"><small>ข้อ <strong>"ยืมหนังสือ"</strong> ยากที่สุด — เพราะเป็นการกระทำ ไม่ใช่สิ่งของ · ลองกดดูว่าแก้อย่างไร</small></p>
+  </div>
+</section>
+
+<!-- 14 RESTful คืออะไร -->
+<section class="slide" data-title="RESTful แปลว่าอะไร">
+  <span class="slide-id">API · บท 6</span>
+  <span class="eyebrow amber">คำที่ใช้กันแต่ไม่ค่อยมีใครอธิบาย</span>
+  <h2>"ful" ใน RESTful แปลว่าอะไร</h2>
+  <div class="body center">
+    <div class="panel" style="border-color:rgba(167,139,250,.5);text-align:center;padding:1.6rem">
+      <p style="margin:0;font-size:2rem"><strong style="color:var(--green)">REST</strong> + <strong style="color:var(--amber)">-ful</strong></p>
+      <p style="margin:.5rem 0 0;font-size:1.3rem">เหมือน <em>hope<strong>ful</strong></em> = เต็มไปด้วยความหวัง · <em>care<strong>ful</strong></em> = เต็มไปด้วยความระวัง</p>
+      <p style="margin:.6rem 0 0;font-size:1.4rem"><strong>RESTful = "ทำตามหลักการ REST"</strong></p>
+    </div>
+    <div class="iact" data-quiz="q2">
+      <p style="margin:0 0 .3rem"><strong>API ที่ใช้ HTTP และส่ง JSON — เรียกว่า RESTful ได้เลยไหม</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">ได้ เพราะใช้ HTTP + JSON ก็คือ REST แล้ว</button>
+        <button class="opt" data-a="1">ยังไม่แน่ — ต้องดูว่าทำตามหลักการหรือเปล่า</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="wrong"><p style="margin:0"><strong>ความเข้าใจผิดที่พบบ่อยที่สุด</strong> — "ใช้ HTTP + JSON = REST" · ไม่ใช่ · <code>POST /doEverything</code> ที่ส่ง JSON ก็ใช้ HTTP+JSON แต่<strong>ไม่ RESTful เลย</strong></p></div>
+  </div>
+</section>
+
+<!-- 15 Richardson SVG -->
+<section class="slide" data-title="ระดับความเป็น REST">
+  <span class="slide-id">API · บท 6</span>
+  <span class="eyebrow">RESTful มีระดับ</span>
+  <h2>Richardson Maturity Model — ความเป็น REST มี 4 ระดับ</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Richardson Maturity Model">
+      <rect x="30" y="30" width="840" height="56" rx="10" fill="rgba(251,113,133,.12)" stroke="rgba(251,113,133,.4)" stroke-width="2"/>
+      <text x="52" y="54" class="svg-m" style="font-size:15px;font-weight:700" fill="#FB7185">Level 0</text>
+      <text x="150" y="54" class="svg-t">ใช้ HTTP เป็นแค่ท่อส่งข้อมูล</text>
+      <text x="150" y="76" class="svg-s">POST /api ทุกอย่าง แล้วบอกใน body ว่าจะทำอะไร — ไม่ต่างจากยุคก่อน</text>
+
+      <rect x="30" y="94" width="840" height="56" rx="10" fill="rgba(251,191,36,.12)" stroke="rgba(251,191,36,.4)" stroke-width="2"/>
+      <text x="52" y="118" class="svg-m" style="font-size:15px;font-weight:700" fill="#FBBF24">Level 1</text>
+      <text x="150" y="118" class="svg-t">เริ่มแยกเป็นทรัพยากร</text>
+      <text x="150" y="140" class="svg-s">มี /requests, /users แยกกัน — แต่ยังใช้ POST ทำทุกอย่าง</text>
+
+      <rect x="30" y="158" width="840" height="56" rx="10" fill="rgba(167,139,250,.18)" stroke="#A78BFA" stroke-width="3"/>
+      <text x="52" y="182" class="svg-m" style="font-size:15px;font-weight:700" fill="#A78BFA">Level 2</text>
+      <text x="150" y="182" class="svg-t">ใช้ HTTP method และ status code ให้ถูกความหมาย</text>
+      <text x="150" y="204" class="svg-s">GET/POST/PUT/DELETE ตามเจตนา · 200/201/404 ตามสถานการณ์ ← API ของเราอยู่ตรงนี้</text>
+
+      <rect x="30" y="222" width="840" height="56" rx="10" fill="rgba(56,215,237,.1)" stroke="rgba(56,215,237,.35)" stroke-width="2" stroke-dasharray="6 4"/>
+      <text x="52" y="246" class="svg-m" style="font-size:15px;font-weight:700" fill="#38D7ED">Level 3</text>
+      <text x="150" y="246" class="svg-t">HATEOAS — response บอกทางต่อไปได้เอง</text>
+      <text x="150" y="268" class="svg-s">แนบลิงก์มาว่าจากตรงนี้ทำอะไรต่อได้บ้าง · ในงานจริงน้อยคนทำถึงระดับนี้</text>
+    </svg>
+  </div>
+  <p class="figcap"><strong>งานจริงส่วนใหญ่อยู่ที่ Level 2</strong> — และถือว่า "RESTful" กันแล้ว · API ที่เราสร้างใน Week 06 ก็อยู่ระดับนี้</p>
+</section>
+
+<!-- 16 ทางเลือกอื่น -->
+<section class="slide" data-title="ทางเลือกอื่นนอกจาก REST">
+  <span class="slide-id">API · บท 7</span>
+  <span class="eyebrow cyan">รู้ไว้เพื่อเลือกเป็น</span>
+  <h2>ไม่ได้มีแค่ REST</h2>
+  <div class="body center">
+    <table style="font-size:1.15rem">
+      <tr><th style="width:120px">รูปแบบ</th><th style="width:80px">ยุค</th><th>จุดเด่น</th><th>จุดอ่อน</th></tr>
+      <tr><td><strong>SOAP</strong></td><td>1998</td><td>เข้มงวด มีมาตรฐานชัด · ธนาคารยังใช้</td><td>XML เทอะทะ เขียนยาก</td></tr>
+      <tr style="background:rgba(167,139,250,.12)"><td><strong style="color:var(--green)">REST</strong></td><td>2000</td><td><strong>เรียบง่าย ใช้ HTTP ตรง ๆ · คนรู้จักมากที่สุด</strong></td><td>บางทีต้องยิงหลายครั้งกว่าจะได้ข้อมูลครบ</td></tr>
+      <tr><td><strong>GraphQL</strong></td><td>2015</td><td>ขอเฉพาะ field ที่ต้องการ · ยิงครั้งเดียวได้ครบ</td><td>ฝั่งเซิร์ฟเวอร์ซับซ้อนขึ้นมาก</td></tr>
+      <tr><td><strong>gRPC</strong></td><td>2016</td><td>เร็วมาก · เหมาะให้เซิร์ฟเวอร์คุยกันเอง</td><td>เบราว์เซอร์เรียกตรงไม่ได้</td></tr>
+    </table>
+    <div class="win">
+      <p style="margin:0"><strong>ทำไมวิชานี้เลือก REST</strong> — ① ใช้ HTTP ที่เรียนมาแล้วตรง ๆ ไม่ต้องเรียนอะไรใหม่ · ② เป็นมาตรฐานที่ใช้มากที่สุดในตลาดงาน · ③ เข้าใจ REST แล้วไปเรียน GraphQL ทีหลังง่าย แต่กลับกันไม่ได้</p>
+    </div>
+  </div>
+</section>
+
+<!-- 17 API ในชีวิตจริง -->
+<section class="slide" data-title="API รอบตัวเรา">
+  <span class="slide-id">API · บท 8</span>
+  <span class="eyebrow">ของจริงรอบตัว</span>
+  <h2>API ที่คุณใช้อยู่ทุกวันโดยไม่รู้ตัว</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="card"><div class="ic">🗺️</div><h3>แผนที่ในแอปส่งอาหาร</h3><p>ไม่ได้ทำแผนที่เอง — เรียก API ของ Google Maps</p></div>
+      <div class="card"><div class="ic">💳</div><h3>จ่ายเงินในเว็บช้อปปิ้ง</h3><p>ไม่ได้เก็บเลขบัตรเอง — ส่งต่อ API ของผู้ให้บริการชำระเงิน</p></div>
+      <div class="card"><div class="ic">🔑</div><h3>ปุ่ม "เข้าสู่ระบบด้วย Google"</h3><p>เรียก API ของ Google เพื่อยืนยันตัวตน</p></div>
+    </div>
+    <div class="analogy">
+      <p style="margin:0"><strong>สังเกตรูปแบบที่ซ้ำกัน</strong> — ไม่มีใครทำทุกอย่างเอง · <strong>แต่ละคนทำสิ่งที่ตัวเองเก่งแล้วเปิด API ให้คนอื่นใช้</strong><br>
+      แอปส่งอาหารเก่งเรื่องส่งอาหาร ไม่ต้องเก่งเรื่องแผนที่ — ก็ไปใช้ API ของคนที่เก่งกว่า</p>
+    </div>
+    <div class="note"><p style="margin:0"><strong>นี่คือเหตุผลที่ API เป็นทักษะสำคัญ</strong> — ไม่ว่าจะทำงานบริษัทไหน คุณจะต้อง<strong>ทั้งเรียกใช้ API ของคนอื่น และสร้าง API ให้คนอื่นใช้</strong></p></div>
+  </div>
+</section>
+
+<!-- 18 เชื่อมกับที่เรียน -->
+<section class="slide" data-title="เชื่อมกับที่เราทำ">
+  <span class="slide-id">API · บท 9</span>
+  <span class="eyebrow violet">กลับมาที่ของเรา</span>
+  <h2>API ของเราทำตามหลักการแค่ไหน</h2>
+  <div class="body center">
+    <table style="font-size:1.15rem">
+      <tr><th>หลักการ REST</th><th style="width:100px">เราทำ?</th><th>ทำที่ไหน</th></tr>
+      <tr><td>① Client–Server แยกกัน</td><td style="color:var(--green)"><strong>✓</strong></td><td>React (5173) + Express (3001) คนละโปรแกรม</td></tr>
+      <tr><td>② Stateless</td><td style="color:var(--green)"><strong>✓</strong></td><td>ทุกคำขอมีข้อมูลครบ เซิร์ฟเวอร์ไม่จำ session</td></tr>
+      <tr><td>③ Cacheable</td><td style="color:var(--muted)">ยัง</td><td>เรื่องของระบบขนาดใหญ่</td></tr>
+      <tr><td>④ Uniform Interface</td><td style="color:var(--green)"><strong>✓</strong></td><td><code>GET/POST/PUT/DELETE /api/requests</code></td></tr>
+      <tr><td>⑤ Layered System</td><td style="color:var(--muted)">ยัง</td><td>ยังไม่มี proxy หรือ load balancer</td></tr>
+      <tr><td>⑥ Code on Demand</td><td style="color:var(--muted)">—</td><td>เป็นทางเลือก ไม่บังคับ</td></tr>
+    </table>
+    <div class="win"><p style="margin:0"><strong>ทำได้ 3 จาก 5 ข้อบังคับ และอยู่ที่ Richardson Level 2</strong> — <strong>เรียกว่า RESTful ได้เต็มปาก</strong> · ส่วนที่เหลือเป็นเรื่องของระบบขนาดใหญ่ที่จะได้เจอตอนทำงานจริง</p></div>
+  </div>
+</section>
+
+<!-- 19 QUIZ รวบยอด -->
+<section class="slide" data-title="Quiz รวบยอด">
+  <span class="slide-id">API · REVIEW</span>
+  <span class="eyebrow amber">ทบทวน</span>
+  <h2>ตอบได้ไหม</h2>
+  <div class="body center">
+    <div class="iact" data-quiz="q3">
+      <p style="margin:0 0 .3rem"><strong>ข้อใดอธิบาย REST ได้ถูกต้องที่สุด</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">library ที่ติดตั้งด้วย npm</button>
+        <button class="opt" data-a="0">protocol สำหรับส่งข้อมูลบนเว็บ</button>
+        <button class="opt" data-a="1">รูปแบบสถาปัตยกรรม — ชุดหลักการออกแบบระบบ</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="iact" data-quiz="q4">
+      <p style="margin:0 0 .3rem"><strong>ทำไมแอปมือถือถึงใช้ API ร่วมกับเว็บได้</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="1">เพราะ API ส่งข้อมูลดิบ ไม่ได้ส่งหน้าตา</button>
+        <button class="opt" data-a="0">เพราะมือถือกับเว็บใช้ภาษาเดียวกัน</button>
+        <button class="opt" data-a="0">เพราะ API แปลง HTML ให้มือถืออัตโนมัติ</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 20 สรุป -->
+<section class="slide" data-title="สรุป">
+  <span class="slide-id">API · CLOSE</span>
+  <span class="eyebrow green">สรุป</span>
+  <h2>5 ข้อที่ควรจำจากบทนี้</h2>
+  <div class="body center">
+    <div class="panel" style="border-color:rgba(167,139,250,.5)">
+      <ol style="margin:0 0 0 1.4rem;font-size:1.3rem;line-height:2">
+        <li><strong>API = ช่องทางที่โปรแกรมเรียกใช้กัน</strong> — ไม่ได้แปลว่าเว็บเซิร์ฟเวอร์</li>
+        <li><strong>มี API เพราะต้องแยกข้อมูลออกจากหน้าตา</strong> — client หลายแบบใช้ชุดเดียวกันได้</li>
+        <li><strong>REST เป็นรูปแบบสถาปัตยกรรม</strong> ที่ Roy Fielding เสนอปี 2000 — ไม่ใช่ของที่ติดตั้งได้</li>
+        <li><strong>RESTful = ทำตามหลักการ REST</strong> — และมีระดับ · งานจริงส่วนใหญ่อยู่ Level 2</li>
+        <li><strong>คิดเป็นทรัพยากร ไม่ใช่การกระทำ</strong> — path เป็นคำนาม การกระทำอยู่ที่ method</li>
+      </ol>
+    </div>
+    <div class="panel" style="border-color:rgba(56,215,237,.45);background:rgba(56,215,237,.08)">
+      <p style="margin:0;font-size:1.28rem"><strong style="color:var(--cyan)">ทีนี้พร้อมแล้ว</strong> — คุณรู้แล้วว่ากำลังสร้างอะไร เพื่ออะไร และทำไมต้องเป็นรูปแบบนี้<br>
+      ต่อไปคือลงมือสร้าง API ตัวแรกด้วย Node.js และ Express</p>
+    </div>
+  </div>
+</section>
+
+</div></div>
+<div class="bar"><i id="progress"></i></div>
+<div class="hud">
+  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 20</span><button id="btnNext">→</button>
+  <button id="btnToc">สารบัญ</button><button id="btnMinus">A−</button><button id="btnPlus">A+</button><button id="btnFull">เต็มจอ</button>
+</div>
+<div class="toc" id="toc" role="dialog"><h3>สารบัญ — กด T หรือ Esc ปิด</h3><ol id="tocList"></ol></div>
+
+<script>
+(function(){
+  'use strict';
+  const slides=Array.from(document.querySelectorAll('.slide'));let cur=0;
+  function show(i){cur=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach((s,n)=>s.classList.toggle('active',n===cur));
+    document.getElementById('counter').textContent=(cur+1)+' / '+slides.length;
+    document.getElementById('progress').style.width=((cur+1)/slides.length*100)+'%';
+    history.replaceState(null,'','#s'+(cur+1));}
+  const next=()=>show(cur+1),prev=()=>show(cur-1);
+  document.getElementById('btnNext').onclick=next;document.getElementById('btnPrev').onclick=prev;
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT')return;
+    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
+    else if(e.key==='ArrowLeft'){e.preventDefault();prev();}
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+    else if(e.key.toLowerCase()==='t')toggleToc();else if(e.key==='Escape')setToc(false);
+    else if(e.key.toLowerCase()==='f')toggleFull();
+    else if(e.key==='+'||e.key==='=')setScale(scale+.06);else if(e.key==='-')setScale(scale-.06);});
+  const tocEl=document.getElementById('toc'),list=document.getElementById('tocList');
+  slides.forEach((s,i)=>{const li=document.createElement('li'),a=document.createElement('a');
+    a.href='#s'+(i+1);a.textContent=s.dataset.title||('สไลด์ '+(i+1));
+    a.onclick=e=>{e.preventDefault();show(i);setToc(false);};li.appendChild(a);
+    const id=s.querySelector('.slide-id');
+    if(id){const t=document.createElement('span');t.className='tag';t.textContent=id.textContent;li.appendChild(t);}
+    list.appendChild(li);});
+  function setToc(o){tocEl.classList.toggle('open',o);}
+  function toggleToc(){setToc(!tocEl.classList.contains('open'));}
+  document.getElementById('btnToc').onclick=toggleToc;
+  let scale=1;
+  function setScale(v){scale=Math.max(.8,Math.min(1.4,v));document.documentElement.style.setProperty('--font-scale',scale);}
+  document.getElementById('btnPlus').onclick=()=>setScale(scale+.06);
+  document.getElementById('btnMinus').onclick=()=>setScale(scale-.06);
+  function toggleFull(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}
+  document.getElementById('btnFull').onclick=toggleFull;
+  document.querySelectorAll('[data-quiz]').forEach(q=>{const fb=q.querySelector('.fb');
+    q.querySelectorAll('.opt').forEach(b=>{b.onclick=()=>{const ok=b.dataset.a==='1';
+      b.classList.add(ok?'ok':'no');
+      if(ok){fb.textContent='✓ ถูกต้อง';fb.className='fb ok';q.querySelectorAll('.opt').forEach(x=>x.disabled=true);}
+      else{fb.textContent='✕ ยังไม่ใช่ ลองใหม่';fb.className='fb no';}};});});
+  document.querySelectorAll('[data-reveal]').forEach(b=>{b.querySelector('button').onclick=()=>b.classList.toggle('open');});
+  // ── Resource designer ──
+  const rdBad=document.getElementById('rdBad'),rdGood=document.getElementById('rdGood');
+  const rdCases={
+    list:{b:'GET /getAllBooks\n\n← เอาคำกริยา "get" ใส่ใน path\n   ทั้งที่ method ก็บอกอยู่แล้ว',
+          g:'GET /books\n\n← ทรัพยากรคือ books\n   method GET บอกว่าอ่าน'},
+    one:{b:'GET /getBookById?id=42\n\n← ซ้ำซ้อน · และใช้ query\n   ทั้งที่เป็นการระบุตัวตน',
+         g:'GET /books/42\n\n← id เป็นส่วนหนึ่งของ path\n   เพราะระบุว่า "เล่มไหน"'},
+    add:{b:'POST /createNewBook\n\n← create ซ้ำกับ POST\n   new ไม่ได้บอกอะไรเพิ่ม',
+         g:'POST /books\n\n← path เดียวกับข้อแรก\n   ต่างกันที่ method'},
+    borrow:{b:'POST /borrowBook?id=42\n\n← "ยืม" เป็นการกระทำ\n   ไม่มี method ไหนแปลว่ายืม',
+            g:'POST /loans\n{ "bookId": 42, "userId": 7 }\n\n← มองการยืมเป็น "สิ่งของ"\n   ชื่อว่า loan (รายการยืม)\n   การยืม = สร้าง loan ใหม่'},
+    search:{b:'GET /searchBooksByCategory/นิยาย\n\n← search เป็นคำกริยา\n   และสร้าง path ใหม่ทั้งชุด',
+            g:'GET /books?category=นิยาย\n\n← ยังเป็นทรัพยากร books เหมือนเดิม\n   แค่กรอง → ใช้ query string'}};
+  document.querySelectorAll('[data-rd]').forEach(b=>{b.onclick=()=>{
+    const c=rdCases[b.dataset.rd];
+    rdBad.textContent=c.b;rdBad.style.color='#FB7185';
+    rdGood.textContent=c.g;rdGood.style.color='#A78BFA';};});
+
+  const timers={};
+  function fmt(s){const m=Math.floor(Math.abs(s)/60),x=Math.abs(s)%60;
+    return(s<0?'-':'')+String(m).padStart(2,'0')+':'+String(x).padStart(2,'0');}
+  setInterval(()=>{Object.keys(timers).forEach(id=>{const t=timers[id];if(!t||!t.running)return;
+    t.left--;const el=document.getElementById(id);el.textContent=fmt(t.left);
+    el.style.color=t.left<=0?'var(--red)':'var(--amber)';});},1000);
+  document.querySelectorAll('[data-timer]').forEach(b=>{b.onclick=()=>{
+    const id=b.dataset.timer,act=b.dataset.act,el=document.getElementById(id);
+    if(!timers[id])timers[id]={left:(+b.dataset.min||30)*60,running:false};
+    const t=timers[id];
+    if(act==='start')t.running=true;else if(act==='pause')t.running=false;
+    else if(act==='reset'){t.running=false;t.left=(+b.dataset.min||30)*60;el.textContent=fmt(t.left);el.style.color='var(--amber)';}};});
+  const m=location.hash.match(/^#s(\d+)$/);show(m?+m[1]-1:0);
+})();
+</script>
+</body>
+</html>

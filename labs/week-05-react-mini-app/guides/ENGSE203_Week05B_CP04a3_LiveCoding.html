@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ENGSE203 Week 05B — CP04a-3 เปลี่ยนบรรทัดเดียว</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fs:1;
+  --ink:#f0ecff; --muted:#b8b0d8; --line:rgba(184,176,216,.22);
+  --violet:#b98cf5; --cyan:#38d7ed; --green:#4ade80; --amber:#fbbf24; --red:#fb7185;
+  --panel:rgba(27,21,64,.74); --code:#08061a;
+  font-size:calc(16px * var(--fs));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 12% 10%,rgba(185,140,245,.15),transparent 32%),
+             radial-gradient(circle at 88% 84%,rgba(56,215,237,.12),transparent 34%),#05040f;
+  color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;
+  padding:0 20px 90px;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{padding:38px 0 22px;border-bottom:2px solid var(--line);margin-bottom:22px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;color:var(--violet);text-transform:uppercase}
+h1{font-size:2.3rem;font-weight:700;line-height:1.15;margin:.4rem 0 .3rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-weight:300;font-size:1.05rem}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.pill{font-size:.76rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;
+  border:1px solid var(--line);background:rgba(185,140,245,.09);color:var(--violet)}
+.pill.a{color:var(--amber);background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3)}
+.pill.g{color:var(--green);background:rgba(74,222,128,.09);border-color:rgba(74,222,128,.3)}
+.pill.c{color:var(--cyan);background:rgba(56,215,237,.09);border-color:rgba(56,215,237,.3)}
+.pill.r{color:var(--red);background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.3)}
+
+.jump{position:sticky;top:0;z-index:15;display:flex;gap:.4rem;flex-wrap:wrap;
+  padding:.7rem 0;margin-bottom:8px;background:rgba(5,4,15,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.jump a{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.76rem;
+  padding:.32rem .7rem;border-radius:8px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(20,16,47,.85)}
+.jump a:hover{color:var(--violet);border-color:var(--violet)}
+.jump a.now{color:#0d0a24;background:var(--violet);border-color:var(--violet);font-weight:600}
+
+.step{margin:30px 0;border:1px solid var(--line);border-radius:16px;background:var(--panel);
+  overflow:hidden;scroll-margin-top:70px}
+.step-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;
+  background:rgba(185,140,245,.08);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.num{min-width:38px;height:38px;padding:0 .7rem;flex:0 0 auto;border-radius:19px;
+  display:grid;place-items:center;background:var(--violet);color:#0d0a24;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.92rem}
+.step-head h2{font-size:1.2rem;font-weight:700;line-height:1.3}
+.step-head .file{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted);margin-left:auto}
+.step-body{padding:1.15rem 1.3rem}
+p{margin-bottom:.7rem;font-size:1rem}
+
+.say,.warn,.ok,.vio{padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.say{border-left:3px solid var(--amber);background:rgba(251,191,36,.08)}
+.warn{border-left:3px solid var(--red);background:rgba(251,113,133,.08)}
+.ok{border-left:3px solid var(--green);background:rgba(74,222,128,.08)}
+.vio{border-left:3px solid var(--cyan);background:rgba(56,215,237,.09)}
+.say b,.warn b,.ok b,.vio b{font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+.say b{color:var(--amber)} .warn b{color:var(--red)} .ok b{color:var(--green)} .vio b{color:var(--cyan)}
+
+.codewrap{position:relative;margin:.7rem 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;
+  padding:1rem 1.15rem;overflow-x:auto;font-size:.9rem;line-height:1.72}
+code{font-family:'IBM Plex Mono',monospace}
+pre code{color:#dcd7f2}
+.k{color:#9fbcff}.s{color:#8de3a5}.c{color:#8b83ad;font-style:italic}
+.f{color:#f3d38a}.t{color:#68d8d2}.d{color:#fb7185}.hl{color:#ffd97a;font-weight:600}
+.copy{position:absolute;top:.55rem;right:.6rem;background:rgba(20,16,47,.95);
+  border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:.25rem .65rem;font-size:.74rem;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--violet);border-color:var(--violet)}
+
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:.7rem 0}
+th{text-align:left;padding:.6rem .7rem;color:var(--violet);font-size:.8rem;
+  font-weight:600;border-bottom:1px solid var(--line);letter-spacing:.04em}
+td{padding:.6rem .7rem;border-bottom:1px solid rgba(184,176,216,.1);vertical-align:top}
+tr:last-child td{border-bottom:none}
+ul{margin:.3rem 0 .6rem 1.2rem}li{margin-bottom:.35rem}
+
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem 0;
+  border-bottom:1px solid rgba(184,176,216,.1)}
+.check:last-child{border-bottom:none}
+.box{width:22px;height:22px;flex:0 0 22px;border:2px solid var(--muted);border-radius:5px;
+  cursor:pointer;display:grid;place-items:center;font-size:.85rem;color:transparent;
+  transition:all .15s;margin-top:.15rem}
+.box.on{background:var(--green);border-color:var(--green);color:#0d0a24}
+
+.trap{border:1px solid rgba(251,113,133,.4);border-radius:14px;
+  background:rgba(251,113,133,.07);padding:1rem 1.15rem;margin:.8rem 0}
+.trap h3{color:var(--red);font-size:1.03rem;margin-bottom:.4rem;display:flex;gap:.5rem;
+  align-items:center;flex-wrap:wrap}
+.trap h3 span{font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  background:rgba(251,113,133,.2);padding:.15rem .5rem;border-radius:5px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.35rem;display:block}
+.tag.b{color:var(--red)} .tag.a{color:var(--green)}
+
+.hud{position:fixed;bottom:14px;right:16px;display:flex;gap:.4rem;z-index:20}
+.hud button{background:rgba(20,16,47,.94);border:1px solid var(--line);border-radius:9px;
+  padding:.3rem .65rem;font-size:.78rem;color:var(--muted);cursor:pointer;font-family:inherit}
+.hud button:hover{color:var(--violet);border-color:var(--violet)}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.84rem;color:var(--muted);font-weight:300;display:flex;
+  justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.nav{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
+.nav a{text-decoration:none;font-size:.84rem;padding:.45rem .9rem;border-radius:10px;
+  border:1px solid var(--line);color:var(--muted);background:rgba(20,16,47,.7)}
+.nav a:hover{color:var(--violet);border-color:var(--violet)}
+
+@media (max-width:820px){.split{grid-template-columns:1fr}}
+@media print{body{background:#fff;color:#111}.hud,.jump{display:none}
+  pre{background:#f4f6f9;border-color:#ccc}pre code{color:#111}.step{break-inside:avoid}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">ENGSE203 · Week 05B · Checkpoint 04a-3</p>
+  <h1>เปลี่ยนบรรทัดเดียว</h1>
+  <p class="sub">3 นาที · ผู้สอนทำให้ดู · ช่วงเวลาสำคัญที่สุดของทั้งสองคาบ</p>
+  <div class="pills">
+    <span class="pill a">TODO 5B-3</span>
+    <span class="pill">แก้ 1 บรรทัด</span>
+    <span class="pill g">DashboardPage แก้ 0 บรรทัด</span>
+    <span class="pill c">เชื่อมกับ Exit ticket คาบที่แล้ว</span>
+  </div>
+</header>
+
+<div class="warn" style="border-left-width:4px">
+  <b>ก่อนเปิดหน้านี้</b>
+  ต้องมี <strong>กระดาษ Exit ticket ข้อ 4 ของคาบ 5A ที่เก็บไว้ทั้งห้อง</strong> อยู่ในมือแล้ว
+  <br>ถ้าลืมเอามา ให้ข้ามขั้นที่ 2 แล้วถามด้วยปากเปล่าแทน แต่พลังจะลดลงมาก
+</div>
+
+<nav class="jump">
+  <a href="#x1">1 หยุดห้อง</a>
+  <a href="#x2">2 แจกกระดาษ</a>
+  <a href="#x3">3 ถามซ้ำ</a>
+  <a href="#x4">4 เฉลย</a>
+  <a href="#x5">5 พิสูจน์</a>
+  <a href="#x6">6 ปิด</a>
+  <a href="#why">ทำไมถึงสำคัญ</a>
+</nav>
+
+<div class="step" id="x1">
+  <div class="step-head"><span class="num">1</span><h2>หยุดทั้งห้อง</h2>
+    <span class="file">20 วินาที</span></div>
+  <div class="step-body">
+    <div class="say">
+      <b>พูดว่า</b>
+      <span style="font-size:1.1rem">"ทุกคนหยุดพิมพ์ก่อนครับ <strong>ยกมือขึ้นจากคีย์บอร์ด</strong> ผมมีอะไรจะให้ดู"</span>
+    </div>
+    <p>รอจนเงียบจริง ๆ ก่อนไปต่อ · ถ้ายังมีเสียงพิมพ์ ให้รออีกสักครู่</p>
+    <div class="vio">
+      <b>ทำไมต้องหยุดจริง ๆ</b>
+      ช่วงนี้ใช้เวลาแค่ 3 นาที แต่เป็นจุดที่แนวคิด Service Layer จะติดถาวรหรือไม่ติดเลย
+      <br>ถ้าปล่อยให้พิมพ์ไปฟังไป จะกลายเป็นแค่การแก้โค้ดบรรทัดหนึ่ง
+    </div>
+  </div>
+</div>
+
+<div class="step" id="x2">
+  <div class="step-head"><span class="num">2</span><h2>แจกกระดาษคืน</h2>
+    <span class="file">40 วินาที</span></div>
+  <div class="step-body">
+    <p>แจก Exit ticket ข้อ 4 ของคาบที่แล้วคืนให้ทุกคน</p>
+    <div class="say">
+      <b>พูดว่า</b>
+      "นี่คือกระดาษที่พวกคุณเขียนไว้เมื่อสัปดาห์ที่แล้ว ข้อ 4 ผมถามว่า —"
+    </div>
+    <div class="step" style="margin:.8rem 0;background:rgba(20,16,47,.9)">
+      <div class="step-body" style="text-align:center;padding:1.6rem">
+        <p style="font-size:1.35rem;line-height:1.6;margin:0">
+          <em>"สัปดาห์หน้าเราจะทำให้ข้อมูลไม่หายตอน refresh<br>
+          — คิดว่า<strong>ไฟล์ไหนต้องแก้มากที่สุด</strong>"</em>
+        </p>
+      </div>
+    </div>
+    <p><small class="muted">ให้เวลาอ่านสิ่งที่ตัวเองเขียนสักครู่ · หลายคนจะจำไม่ได้แล้วว่าตอบอะไรไป ซึ่งยิ่งดี</small></p>
+  </div>
+</div>
+
+<div class="step" id="x3">
+  <div class="step-head"><span class="num">3</span><h2>ถามซ้ำ แล้วให้ยกมือทาย</h2>
+    <span class="file">30 วินาที</span></div>
+  <div class="step-body">
+    <div class="say">
+      <b>พูดว่า</b>
+      <span style="font-size:1.1rem">"ตอนนี้เราจะทำสิ่งนั้นแล้วครับ —
+      <strong><code>DashboardPage.jsx</code> ที่มีร้อยกว่าบรรทัด ต้องแก้กี่บรรทัด</strong>"</span>
+    </div>
+    <p>ให้ยกมือทายทีละช่วง</p>
+    <table>
+      <tr><th style="width:30%">ช่วงคำตอบ</th><th>คนที่คิดแบบนี้กำลังคิดว่า</th></tr>
+      <tr><td><b>50 บรรทัดขึ้นไป</b></td><td>ต้องเขียน state และ logic ใหม่ทั้งหมด</td></tr>
+      <tr><td><b>20–50</b></td><td>ต้องแก้ส่วนที่เรียก service และ error handling</td></tr>
+      <tr><td><b>5–20</b></td><td>น่าจะแก้แค่ตรงที่เรียกข้อมูล</td></tr>
+      <tr><td><b>น้อยกว่า 5</b></td><td>เริ่มจับทางได้แล้ว</td></tr>
+    </table>
+    <div class="warn">
+      <b>อย่ารีบเฉลย</b>
+      ปล่อยให้เดากันสักครู่ · ยิ่งมีคนทายตัวเลขสูง คำเฉลยยิ่งมีน้ำหนัก
+      <br>ถ้ามีคนตอบว่า "ไม่ต้องแก้เลย" ให้ถามกลับว่า <strong>"ทำไมถึงคิดแบบนั้น"</strong> แล้วให้เขาอธิบายให้ห้องฟัง
+    </div>
+  </div>
+</div>
+
+<div class="step" id="x4" style="border-color:rgba(74,222,128,.6);border-width:2px">
+  <div class="step-head" style="background:rgba(74,222,128,.14)">
+    <span class="num" style="background:var(--green)">4</span><h2>เฉลย</h2>
+    <span class="file">60 วินาที</span></div>
+  <div class="step-body" style="text-align:center">
+    <p style="font-family:'IBM Plex Mono',monospace;font-size:6rem;font-weight:600;
+       color:var(--green);line-height:1;letter-spacing:-.04em;margin:.4rem 0">0</p>
+    <h2 style="font-size:1.8rem">ศูนย์บรรทัด</h2>
+    <p class="sub"><code>DashboardPage</code> ไม่ต้องแก้อะไรเลย</p>
+
+    <div class="ok" style="text-align:left;margin-top:1.4rem">
+      <b>แล้วเปิด requestService.js บนจอ เปลี่ยนให้ดู</b>
+      <div class="codewrap" style="margin:.5rem 0 0"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">export async function</span> <span class="f">getRequests</span>(options = {}) {
+  <span class="k">await</span> <span class="f">waitForLabDelay</span>();
+
+  <span class="k">if</span> (options.scenario === <span class="s">'error'</span>) { … }
+  <span class="k">if</span> (options.scenario === <span class="s">'empty'</span>) { <span class="k">return</span> []; }
+
+<span class="d">- return fetchSeedRequests();</span>
+<span class="s">+ return loadNormalRequests();</span>
+}</code></pre></div>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="x5">
+  <div class="step-head"><span class="num">5</span><h2>พิสูจน์ให้เห็นกับตา</h2>
+    <span class="file">30 วินาที</span></div>
+  <div class="step-body">
+    <ol>
+      <li>บันทึกไฟล์ แล้วให้แอปรีโหลดเอง</li>
+      <li>ชี้ให้ดูว่า <strong>หน้าจอเหมือนเดิมทุกอย่าง</strong> — รายการ แผงสรุป ตัวกรอง ครบเหมือนเดิม</li>
+      <li>เปิด DevTools → Application → Local Storage → ชี้ว่า<strong>ตอนนี้ข้อมูลมาจากตรงนี้แล้ว</strong></li>
+      <li>ลบคีย์ LAB05 ทิ้ง แล้ว refresh → ข้อมูลตัวอย่างกลับมาและถูกเขียนลงใหม่</li>
+    </ol>
+    <div class="say">
+      <b>ประโยคระหว่างสาธิต</b>
+      "สังเกตนะครับว่าผมไม่ได้แตะไฟล์ <code>DashboardPage.jsx</code> เลยแม้แต่ตัวอักษรเดียว
+      แต่แหล่งข้อมูลเปลี่ยนไปคนละที่แล้ว"
+    </div>
+  </div>
+</div>
+
+<div class="step" id="x6">
+  <div class="step-head"><span class="num" style="background:var(--cyan)">6</span>
+    <h2>ประโยคปิด</h2><span class="file">30 วินาที</span></div>
+  <div class="step-body">
+    <div class="vio" style="font-size:1.05rem;line-height:1.75">
+      <b>พูดให้ครบทั้งสองย่อหน้า</b>
+      <p style="margin:0 0 .7rem">"นี่คือเหตุผลที่เราเสียเวลาสร้าง Service Layer เมื่อสัปดาห์ที่แล้ว
+      ทั้งที่ตอนนั้นมันดูเหมือนงานส่วนเกิน"</p>
+      <p style="margin:0">"และใน <strong>Week 08</strong> เราจะเปลี่ยนบรรทัดนี้อีกครั้งให้เป็น API จริง
+      จากเซิร์ฟเวอร์ Express ที่พวกคุณจะสร้างเองสัปดาห์หน้า —
+      <strong>แล้วก็จะไม่ต้องแก้ UI อีกเหมือนกัน</strong>"</p>
+    </div>
+    <p>จากนั้นให้ทุกคนพิมพ์บรรทัดนั้นตาม แล้วรัน</p>
+    <div class="ok">
+      <b>ทุกคนควรได้ผลเหมือนกัน</b>
+      หน้าจอเหมือนเดิม · <code>npm run check</code> ยังไม่ขยับมาก เพราะ CRUD ยังไม่ได้ทำ
+      <br>กลับไปที่หน้าจอ <strong>CP04a</strong> ช่วง 04a-4 ต่อได้เลย
+    </div>
+  </div>
+</div>
+
+<div class="step" id="why">
+  <div class="step-head"><span class="num" style="background:var(--cyan)">◆</span>
+    <h2>ทำไมช่วงนี้ถึงสำคัญกว่าที่ดู</h2></div>
+  <div class="step-body">
+    <p>สามสัปดาห์ในเทอมนี้ แหล่งข้อมูลเปลี่ยน 3 ครั้ง แต่ <code>DashboardPage</code> ไม่ถูกแก้เลยสักครั้ง</p>
+    <table>
+      <tr><th style="width:22%">เมื่อไหร่</th><th style="width:44%">ข้อมูลมาจากไหน</th><th>DashboardPage</th></tr>
+      <tr><td>คาบ 5A</td><td>อ่านไฟล์ <code>initialRequests.json</code> ด้วย <code>fetch()</code></td><td>เขียนครั้งเดียว</td></tr>
+      <tr style="background:rgba(185,140,245,.1)"><td><b>คาบ 5B · เมื่อกี้</b></td><td>อ่านจาก Local Storage ก่อน ไม่มีค่อยอ่านไฟล์</td><td><b style="color:var(--green)">ไม่แก้เลย</b></td></tr>
+      <tr><td>Week 08</td><td>เรียก API จริงจาก Express</td><td><b style="color:var(--green)">จะไม่แก้อีก</b></td></tr>
+    </table>
+    <div class="ok">
+      <b>สิ่งที่ผู้เรียนควรได้ติดตัว</b>
+      ไม่ใช่ท่าเขียนโค้ด แต่เป็น<strong>เหตุผลว่าทำไมต้องแยกชั้น</strong>
+      <br>ซึ่งเป็นเรื่องที่บอกเฉย ๆ แล้วไม่เชื่อ ต้องให้เห็นผลด้วยตาตัวเอง — และวันนี้คือวันนั้น
+    </div>
+    <div class="say">
+      <b>ถ้ามีเวลาเหลือ ถามต่อได้</b>
+      "แล้วถ้าเราไม่มี Service Layer ตั้งแต่แรก วันนี้เราจะต้องแก้กี่ไฟล์"
+      <br><small>คำตอบ — ทุกไฟล์ที่เรียกข้อมูล ซึ่งตอนนี้คือ Dashboard และ Detail แต่ในระบบจริงอาจเป็นสิบไฟล์</small>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>ENGSE203 · Week 05B · CP04a-3 · สคริปต์สำหรับผู้สอน</span>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: Instructor Step Script 5B หัวข้อ 5.3</span>
+</footer>
+
+<div class="nav">
+  <a href="ENGSE203_Week05B_CP04a_LiveCoding.html">CP04a</a>
+  <a href="#" style="color:var(--violet);border-color:var(--violet);background:rgba(185,140,245,.14);font-weight:600">CP04a-3 ← อยู่ที่นี่</a>
+  <a href="ENGSE203_Week05B_CP04b_LiveCoding.html">CP04b</a>
+  <a href="ENGSE203_Week05B_Cleanup_LiveCoding.html">cleanup</a>
+  <a href="ENGSE203_Week05B_CP05b_CP06_LiveCoding.html">CP05b + CP06</a>
+</div>
+
+</div>
+
+<div class="hud">
+  <button id="minus">A−</button>
+  <button id="plus">A+</button>
+  <button id="full">เต็มจอ</button>
+</div>
+
+<script>
+(function(){
+  var fs = 1;
+  function setFs(v){ fs = Math.max(.75, Math.min(1.6, v));
+    document.documentElement.style.setProperty('--fs', fs); }
+  var p=document.getElementById('plus'), m=document.getElementById('minus'), f=document.getElementById('full');
+  if(p) p.onclick = function(){ setFs(fs + .08); };
+  if(m) m.onclick = function(){ setFs(fs - .08); };
+  if(f) f.onclick = function(){
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    else document.exitFullscreen && document.exitFullscreen();
+  };
+  document.addEventListener('keydown', function(e){
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === '+' || e.key === '=') setFs(fs + .08);
+    if (e.key === '-') setFs(fs - .08);
+  });
+  document.querySelectorAll('[data-check]').forEach(function(b){
+    b.onclick = function(){ b.classList.toggle('on'); };
+  });
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.onclick = function(){
+      var pre = btn.parentElement.querySelector('pre');
+      var text = pre.innerText.replace(/\s*←[^\n]*/g, '');
+      navigator.clipboard.writeText(text).then(function(){
+        var old = btn.textContent; btn.textContent = 'คัดลอกแล้ว';
+        setTimeout(function(){ btn.textContent = old; }, 1400);
+      });
+    };
+  });
+  var links = Array.prototype.slice.call(document.querySelectorAll('.jump a[href^="#"]'));
+  if (links.length){
+    var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+    function onScroll(){
+      var best = 0;
+      targets.forEach(function(el,i){ if (el && el.getBoundingClientRect().top <= 120) best = i; });
+      links.forEach(function(a,i){ a.classList.toggle('now', i === best); });
+    }
+    document.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+  }
+})();
+
+</script>
+</body>
+</html>

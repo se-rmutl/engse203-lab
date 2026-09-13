@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENGSE203 Week 07 — เอกสารประกอบการสอน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1F6F3; --card:#FFFFFF; --ink:#14251E; --ink-soft:#54685E;
+  --track:#BFD2C8; --a:#1E7A54; --a-tint:#DFF0E7; --b:#186B8C; --b-tint:#DDEEF5;
+  --loading:#B5771A; --success:#1E7A54; --error:#B23A2E; --rule:#DBE7E0;
+  --code-bg:#0E1F1A; --vio:#6B3B96; --vio-tint:#F1EAF8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  line-height:1.78;padding:0 20px 80px;-webkit-font-smoothing:antialiased;}
+.doc{max-width:860px;margin:0 auto}
+
+.cover{padding:64px 0 40px;border-bottom:3px solid var(--a)}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.2em;color:var(--a);text-transform:uppercase}
+.cover h1{font-size:clamp(30px,5vw,46px);font-weight:700;line-height:1.15;
+  letter-spacing:-.02em;margin:14px 0 8px}
+.cover .subtitle{font-size:19px;color:var(--ink-soft);font-weight:300;margin-bottom:28px}
+.meta{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px}
+.meta th{text-align:left;font-weight:600;padding:7px 14px 7px 0;width:190px;
+  vertical-align:top;color:var(--ink-soft);font-size:13px}
+.meta td{padding:7px 0;border-bottom:1px solid var(--rule)}
+.meta tr:first-child td,.meta tr:first-child th{border-top:1px solid var(--rule)}
+
+.bigidea{background:var(--ink);color:#fff;padding:24px 26px;border-radius:4px;margin-top:8px}
+.bigidea .lab{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;
+  opacity:.65;text-transform:uppercase;margin-bottom:8px}
+.bigidea p{font-size:17px;line-height:1.6}
+.bigidea code{font-family:'IBM Plex Mono',monospace;font-size:15px;
+  background:rgba(255,255,255,.14);padding:1px 7px;border-radius:3px}
+
+.howto{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:26px;margin:36px 0}
+.howto h2{font-size:19px;margin-bottom:14px}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;font-size:14px;margin-top:14px}
+.legend .k{font-weight:600;white-space:nowrap}
+.newbie{background:var(--a-tint);border-left:3px solid var(--a);padding:16px 20px;
+  border-radius:0 6px 6px 0;margin-top:18px;font-size:14.5px}
+.wheretag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:middle}
+.wheretag.home{background:#FDF2E6;color:#8A5A0E;border:1px solid #E8C99A}
+.wheretag.room{background:#E4F1EA;color:#14503A;border:1px solid #A8D4BE}
+
+.ch{margin-top:60px;padding-top:8px}
+.ch-num{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:.16em;color:var(--a);text-transform:uppercase;
+  display:flex;align-items:center;gap:12px}
+.ch-num::after{content:"";flex:1;height:1px;background:var(--rule)}
+.ch h2{font-size:28px;font-weight:700;line-height:1.25;margin:12px 0 6px;letter-spacing:-.01em}
+.ch .readtime{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  color:var(--track);letter-spacing:.06em;margin-bottom:22px}
+.ch h3{font-size:19px;font-weight:600;margin:32px 0 10px}
+p{margin-bottom:14px}
+ul,ol{margin:0 0 16px 22px}
+li{margin-bottom:7px}
+strong{font-weight:600}
+em{font-style:normal;background:linear-gradient(transparent 62%,var(--a-tint) 62%)}
+
+code{font-family:'IBM Plex Mono',monospace;font-size:.88em;
+  background:#E6EFE9;padding:2px 6px;border-radius:3px;color:#14503A}
+pre{background:var(--code-bg);color:#E4EFE9;border-radius:4px;
+  padding:20px 22px;overflow-x:auto;margin:16px 0;font-size:13.5px;line-height:1.7}
+pre code{background:none;padding:0;color:inherit;font-size:13.5px}
+.c-key{color:#8FD3A8}.c-str{color:#E9C08A}.c-com{color:#6E8A7E;font-style:italic}
+.c-fn{color:#8FD0EC}.c-bad{color:#F0968C}.c-hl{color:#FFE08A;font-weight:600}
+.c-num{color:#D9A0E8}
+
+.term{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--b);
+  border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0}
+.term .w{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--b);
+  font-size:15px;margin-bottom:4px}
+.term p{margin:0;font-size:14.5px}
+
+table.d{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0}
+table.d th{text-align:left;background:#E6EFE9;padding:10px 12px;
+  font-weight:600;font-size:13px;border-bottom:2px solid var(--track)}
+table.d td{padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.d tr:hover td{background:#FAFCFB}
+
+figure{margin:30px 0;background:var(--card);border:1px solid var(--rule);
+  border-radius:4px;padding:24px 22px 16px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:13px;color:var(--ink-soft);margin-top:16px;padding-top:12px;border-top:1px solid var(--rule)}
+figcaption b{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  letter-spacing:.1em;color:var(--a);display:block;margin-bottom:4px;text-transform:uppercase}
+
+.box{border-radius:4px;padding:20px 22px;margin:22px 0;font-size:14.5px}
+.box .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px;display:block}
+.box p:last-child{margin-bottom:0}
+.predict{background:var(--a-tint);border-left:3px solid var(--a)}
+.predict .h{color:var(--a)}
+.pitfall{background:#FBEBE8;border-left:3px solid var(--error)}
+.pitfall .h{color:var(--error)}
+.note{background:#FDF4E3;border-left:3px solid var(--loading)}
+.note .h{color:var(--loading)}
+.next{background:var(--b-tint);border-left:3px solid var(--b)}
+.next .h{color:var(--b)}
+.analogy{background:var(--vio-tint);border-left:3px solid var(--vio)}
+.analogy .h{color:var(--vio)}
+.inclass{background:#E4F1EA;border-left:3px solid var(--a)}
+.inclass .h{color:var(--a)}
+.takehome{background:#FDF2E6;border-left:3px solid var(--loading)}
+.takehome .h{color:var(--loading)}
+.challenge{background:var(--vio-tint);border-left:3px solid var(--vio)}
+.challenge .h{color:var(--vio)}
+
+details{background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  padding:14px 18px;margin:14px 0;font-size:14.5px}
+details summary{cursor:pointer;font-weight:600;font-size:14.5px;list-style:none;
+  display:flex;align-items:center;gap:9px}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸";color:var(--a);font-size:13px;transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+details .ans{margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-weight:300}
+details .ans p:last-child{margin-bottom:0}
+
+.recap{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--ink);
+  border-radius:4px;padding:22px;margin:30px 0 0}
+.recap .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px;display:block}
+.recap ul{margin-bottom:0;margin-left:20px}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--rule);
+  font-size:12.5px;color:var(--ink-soft);font-weight:300;display:flex;
+  justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer .m{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.05em}
+
+.toc{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:24px 26px;margin:28px 0}
+.toc h2{font-size:17px;margin-bottom:8px}
+.toc .toc-note{font-size:13px;color:var(--ink-soft);margin-bottom:16px;font-weight:300}
+.toc ol{margin:0 0 0 20px;font-size:14.5px}
+.toc li{margin-bottom:6px}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+.toc a:hover{border-bottom-color:var(--a);color:var(--a)}
+.toc .t{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--track);margin-left:6px}
+.toc .grp{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--a);margin:14px 0 6px}
+
+@media print{
+  body{background:#fff;padding:0}
+  figure,.box,.recap,details,table.d,.term{break-inside:avoid}
+  .ch{break-before:page}
+  details{border:none}details summary::before{content:""}
+  details .ans{display:block}
+}
+@media (max-width:640px){
+  .meta th{width:auto;display:block;padding-bottom:0}
+  .meta td{display:block;padding-top:2px}
+  .cover{padding:36px 0 28px}
+  .legend{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+
+<!-- ════════ COVER ════════ -->
+<header class="cover">
+  <p class="eyebrow">ENGSE203 · หน่วยที่ 3 · Week 07</p>
+  <h1>เชื่อม Front-end กับ Back-end<br>ให้ทำงานด้วยกันจริง</h1>
+  <p class="subtitle">Origin · CORS · Environment Config · API Client · Loading/Error State · API Contract</p>
+
+  <table class="meta">
+    <tr><th>รายวิชา</th><td>ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์</td></tr>
+    <tr><th>ต่อจาก</th><td>Week 05 — React ที่มี Service Layer · Week 06 — Express API ที่มี 4 endpoint</td></tr>
+    <tr><th>หน่วยที่</th><td>3 · การพัฒนาส่วนหลังและบริการ RESTful API (สัปดาห์ 6–7)</td></tr>
+    <tr><th>Checkpoints</th><td>CP09 · CP10 · CP11 · CP12 · CP13 · CP14 · CP15 · CP16</td></tr>
+    <tr><th>Stack</th><td>Express 5 + cors + morgan + dotenv · React 19 + Vite · supertest</td></tr>
+    <tr><th>ประเมินผล</th><td>CLO4 (หลัก) · CLO6 (รอง)</td></tr>
+  </table>
+
+  <div class="bigidea">
+    <span class="lab">แนวคิดแกนกลางของคาบนี้</span>
+    <p><strong>เปลี่ยนแค่ Service Layer แล้วทั้งแอปทำงานกับ backend จริง</strong><br>
+    <code>component ไม่ต้องแก้เลยแม้แต่บรรทัดเดียว</code></p>
+  </div>
+</header>
+
+<!-- ════════ HOW TO READ ════════ -->
+<section class="howto">
+  <h2>วิธีอ่านเอกสารนี้</h2>
+  <p>สัปดาห์นี้เป็น <strong>payoff ที่เราปูมาสองสัปดาห์</strong> — Week 05 สร้าง Service Layer ไว้ Week 06 สร้าง endpoint ให้ตรงกัน วันนี้เราจะเอาสองฝั่งมาต่อกันจริง</p>
+
+  <div class="newbie">
+    <strong>สิ่งที่ต่างจากทุกสัปดาห์ที่ผ่านมา</strong> — คุณจะต้องรัน <strong>2 โปรแกรมพร้อมกัน</strong> คือ API ที่พอร์ต 3001 และ React ที่พอร์ต 5173 · การ debug จึงต้องดูสองที่: DevTools ของเบราว์เซอร์ และ terminal ของ API · เอกสารนี้จะสอนวิธีดูทั้งสองฝั่ง
+  </div>
+
+  <h2 style="margin-top:26px">รูปแบบการเรียนหน่วยนี้</h2>
+  <table class="d">
+    <tr><th>ระดับ</th><th>ทำที่ไหน</th><th>คืออะไร</th></tr>
+    <tr><td><span class="wheretag room">🏫 ในห้อง</span></td><td>ในคาบ ให้เสร็จ</td><td>CP09–CP12 · เห็น CORS error จริง แล้วแก้ · เชื่อม React กับ API</td></tr>
+    <tr><td><span class="wheretag home">🏠 ที่บ้าน</span></td><td>ภายใน 5 วัน</td><td>CP13–CP16 · PUT, morgan, API contract, automated test</td></tr>
+    <tr><td>⭐ Challenge</td><td>ไม่บังคับ</td><td>AppError, asyncHandler, retry · คะแนนเพิ่ม</td></tr>
+  </table>
+
+  <div class="legend">
+    <span class="k">🟩 ทายก่อนอ่านต่อ</span><span>หยุดคิดก่อน อย่าเพิ่งดูคำตอบ</span>
+    <span class="k">🟦 ศัพท์ที่ต้องรู้</span><span>คำใหม่พร้อมคำอธิบาย</span>
+    <span class="k">🟪 เทียบกับของที่คุ้น</span><span>อุปมากับสิ่งที่เจอในชีวิตจริง</span>
+    <span class="k">🟥 กับดักที่พบบ่อย</span><span>ความผิดพลาดที่รุ่นก่อนเจอจริง</span>
+    <span class="k">▸ เฉลย/ดูเพิ่ม</span><span>กดเพื่อเปิด</span>
+  </div>
+</section>
+
+<!-- ════════ TOC ════════ -->
+<nav class="toc">
+  <h2>สารบัญ</h2>
+  <p class="toc-note">10 บท · อ่านบท 1–3 ก่อนเข้าคาบ ที่เหลืออ่านตอนลงมือทำ</p>
+
+  <p class="grp">กลุ่ม 1 · ทำไมสองฝั่งถึงยังคุยกันไม่ได้</p>
+  <ol>
+    <li><a href="#c1">สถานะปัจจุบัน — มีสองฝั่งแต่ยังไม่ได้ต่อกัน</a><span class="t">8 นาที</span></li>
+    <li><a href="#c2">Origin และ Same-Origin Policy</a><span class="t">11 นาที</span></li>
+    <li><a href="#c3">CORS — ทางออกที่เซิร์ฟเวอร์เป็นคนเปิดให้</a><span class="t">13 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 2 · ต่อสองฝั่งเข้าด้วยกัน</p>
+  <ol start="4">
+    <li><a href="#c4">Environment Variables — ค่าที่เปลี่ยนตามเครื่อง</a><span class="t">10 นาที</span></li>
+    <li><a href="#c5">API Client — ชั้นกลางที่คุยกับเซิร์ฟเวอร์</a><span class="t">12 นาที</span></li>
+    <li><a href="#c6">เปลี่ยน Service Layer ให้เรียก API</a><span class="t">11 นาที</span></li>
+    <li><a href="#c7">สถานะของการเรียก API — loading, error, empty</a><span class="t">10 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 3 · ทำให้พร้อมใช้จริง</p>
+  <ol start="8">
+    <li><a href="#c8">Logging และ Error Handling ระดับใช้งานจริง</a><span class="t">9 นาที</span></li>
+    <li><a href="#c9">API Contract — ข้อตกลงที่ทำให้ทีมทำงานคู่ขนานได้</a><span class="t">9 นาที</span></li>
+    <li><a href="#c10">Automated Test และสรุปหน่วยที่ 3</a><span class="t">10 นาที</span></li>
+  </ol>
+</nav>
+
+<!-- ════════ CH 1 ════════ -->
+<section class="ch" id="c1">
+  <p class="ch-num">บทที่ 1 · กลุ่มที่ 1</p>
+  <h2>สถานะปัจจุบัน — มีสองฝั่งแต่ยังไม่ได้ต่อกัน</h2>
+  <p class="readtime">เวลาอ่าน ≈ 8 นาที</p>
+
+  <p>ตอนนี้คุณมีสองอย่างที่ทำเสร็จแล้ว แต่<strong>ยังไม่เคยคุยกัน</strong></p>
+
+  <figure>
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="สองฝั่งที่ยังไม่ได้ต่อกัน">
+      <style>
+        .t1{font:600 13px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s1{font:300 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m1{font:600 10.5px 'IBM Plex Mono',monospace;letter-spacing:.08em}
+      </style>
+      <text x="20" y="20" class="m1" fill="#186B8C">WEEK 05 · FRONTEND</text>
+      <rect x="20" y="30" width="300" height="130" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5" rx="6"/>
+      <rect x="42" y="52" width="256" height="30" fill="#fff" stroke="#BFD2C8" rx="4"/>
+      <text x="58" y="72" class="t1">React · Campus Service Request</text>
+      <rect x="42" y="92" width="256" height="30" fill="#fff" stroke="#BFD2C8" rx="4"/>
+      <text x="58" y="112" style="font:500 11px 'IBM Plex Mono',monospace;fill:#186B8C">requestService.js</text>
+      <text x="42" y="145" class="s1">อ่าน localStorage · ข้อมูลอยู่ในเบราว์เซอร์</text>
+
+      <text x="440" y="20" class="m1" fill="#1E7A54">WEEK 06 · BACKEND</text>
+      <rect x="440" y="30" width="300" height="130" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5" rx="6"/>
+      <rect x="462" y="52" width="256" height="30" fill="#fff" stroke="#BFD2C8" rx="4"/>
+      <text x="478" y="72" class="t1">Express · Campus Service API</text>
+      <rect x="462" y="92" width="256" height="30" fill="#fff" stroke="#BFD2C8" rx="4"/>
+      <text x="478" y="112" style="font:500 11px 'IBM Plex Mono',monospace;fill:#1E7A54">4 endpoint พร้อมใช้</text>
+      <text x="462" y="145" class="s1">ทดสอบผ่าน Postman แล้ว · ยังไม่มีใครเรียก</text>
+
+      <path d="M330 95 L425 95" stroke="#B23A2E" stroke-width="2.5" stroke-dasharray="7 5"/>
+      <circle cx="378" cy="95" r="16" fill="#FBEBE8" stroke="#B23A2E" stroke-width="2"/>
+      <text x="378" y="101" text-anchor="middle" style="font:700 16px sans-serif;fill:#B23A2E">?</text>
+      <text x="378" y="132" text-anchor="middle" class="s1" fill="#B23A2E">ยังไม่ได้ต่อกัน</text>
+
+      <rect x="20" y="185" width="720" height="50" fill="#F1EAF8" stroke="#6B3B96" rx="6"/>
+      <text x="40" y="207" class="t1" fill="#6B3B96">งานของสัปดาห์นี้</text>
+      <text x="40" y="226" class="s1" fill="#6B3B96">เอาสองฝั่งมาต่อกัน · โดยแก้แค่ requestService.js ฝั่งเดียว — component ทั้งหมดไม่ต้องแตะ</text>
+    </svg>
+    <figcaption><b>ภาพที่ 1</b>Week 05 สร้าง frontend ที่มี Service Layer · Week 06 สร้าง API ที่ตรง contract · วันนี้ต่อสองฝั่งเข้าด้วยกัน</figcaption>
+  </figure>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้าเราแก้ <code>requestService.js</code> ให้เรียก <code>fetch('http://localhost:3001/api/requests')</code> แทนการอ่าน localStorage แล้วเปิดแอปดู — <strong>มันจะทำงานได้เลยไหม</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ไม่ได้</strong> — จะเจอ error ใน Console ว่าถูกบล็อกโดย <em>CORS policy</em></p>
+      <p style="margin:0">เพราะ React อยู่ที่พอร์ต <code>5173</code> แต่ API อยู่ที่ <code>3001</code> — เบราว์เซอร์ถือว่าเป็น<strong>คนละที่</strong> และห้ามเรียกข้ามกันโดยไม่ได้รับอนุญาต · บทที่ 2–3 จะอธิบายว่าทำไม</p>
+    </div>
+  </details>
+
+  <h3>1.1 สิ่งที่ต้องทำในสัปดาห์นี้</h3>
+
+  <table class="d">
+    <tr><th>ต้องแก้</th><th>ฝั่งไหน</th><th>ทำไม</th></tr>
+    <tr><td>เปิด CORS</td><td>API</td><td>ให้เบราว์เซอร์ยอมให้ React เรียกข้ามพอร์ต</td></tr>
+    <tr><td>Environment config</td><td>ทั้งสองฝั่ง</td><td>ที่อยู่ของ API ไม่ควรฝังไว้ในโค้ด</td></tr>
+    <tr><td><code>apiClient.js</code> (ไฟล์ใหม่)</td><td>React</td><td>ที่เดียวที่เรียก <code>fetch()</code> · จัดการ error รวมศูนย์</td></tr>
+    <tr><td><code>requestService.js</code></td><td>React</td><td>เปลี่ยนจาก localStorage เป็นเรียก API</td></tr>
+    <tr><td>loading / error state</td><td>React</td><td>API อาจช้าหรือล่ม ผู้ใช้ต้องรู้ว่าเกิดอะไร</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 สังเกตว่าไม่มี component อยู่ในรายการ</span>
+    <p style="margin:0"><code>DashboardPage</code>, <code>RequestDetailPage</code>, <code>NewRequestPage</code>, <code>RequestList</code> — <strong>ไม่ต้องแก้เลยสักไฟล์</strong> เพราะ Service Layer กันไว้ให้ · นี่คือสิ่งที่เราพิสูจน์กันวันนี้</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 1</span>
+    <ul>
+      <li>มี frontend (Week 05) และ API (Week 06) แล้ว แต่ยังไม่ได้ต่อกัน</li>
+      <li>เรียกตรง ๆ ไม่ได้เพราะติด CORS — คนละพอร์ตถือเป็นคนละที่</li>
+      <li>งานสัปดาห์นี้แก้ 5 จุด แต่ <strong>ไม่มี component อยู่ในนั้นเลย</strong></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 2 ════════ -->
+<section class="ch" id="c2">
+  <p class="ch-num">บทที่ 2 · กลุ่มที่ 1</p>
+  <h2>Origin และ Same-Origin Policy</h2>
+  <p class="readtime">เวลาอ่าน ≈ 11 นาที · รากของเรื่อง CORS ทั้งหมด</p>
+
+  <p>ก่อนจะเข้าใจ CORS ต้องเข้าใจก่อนว่าเบราว์เซอร์มองว่า "ที่เดียวกัน" คืออะไร</p>
+
+  <div class="term">
+    <div class="w">Origin</div>
+    <p><strong>ที่อยู่ของเว็บหนึ่ง ๆ</strong> ประกอบด้วย 3 ส่วน — <code>protocol</code> + <code>host</code> + <code>port</code> · ถ้าสามส่วนนี้เหมือนกันทั้งหมดถึงจะนับว่าเป็น origin เดียวกัน · ต่างแม้แต่ส่วนเดียวก็ถือว่าคนละที่</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ส่วนประกอบของ origin">
+      <style>
+        .t2{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s2{font:300 11px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+      </style>
+      <text x="380" y="45" text-anchor="middle" style="font:600 22px 'IBM Plex Mono',monospace">
+        <tspan fill="#186B8C">http://</tspan><tspan fill="#1E7A54">localhost</tspan><tspan fill="#54685E">:</tspan><tspan fill="#B5771A">5173</tspan>
+      </text>
+      <line x1="230" y1="58" x2="230" y2="85" stroke="#186B8C" stroke-width="2"/>
+      <text x="230" y="104" text-anchor="middle" class="t2" fill="#186B8C">protocol</text>
+      <text x="230" y="122" text-anchor="middle" class="s2">http / https</text>
+      <line x1="370" y1="58" x2="370" y2="120" stroke="#1E7A54" stroke-width="2"/>
+      <text x="370" y="139" text-anchor="middle" class="t2" fill="#1E7A54">host</text>
+      <text x="370" y="157" text-anchor="middle" class="s2">ชื่อเครื่อง / โดเมน</text>
+      <line x1="490" y1="58" x2="490" y2="85" stroke="#B5771A" stroke-width="2"/>
+      <text x="490" y="104" text-anchor="middle" class="t2" fill="#B5771A">port</text>
+      <text x="490" y="122" text-anchor="middle" class="s2">เลขพอร์ต</text>
+
+      <rect x="30" y="178" width="700" height="70" fill="#FBEBE8" stroke="#B23A2E" rx="6"/>
+      <text x="50" y="200" class="t2" fill="#8F2B21">ต่างแม้แต่ส่วนเดียว = คนละ origin</text>
+      <text x="50" y="222" style="font:500 11.5px 'IBM Plex Mono',monospace;fill:#8F2B21">http://localhost:5173  ≠  http://localhost:3001</text>
+      <text x="400" y="222" class="s2" fill="#8F2B21">← ต่างแค่ port ก็คนละที่แล้ว</text>
+      <text x="50" y="240" style="font:500 11.5px 'IBM Plex Mono',monospace;fill:#8F2B21">http://example.com  ≠  https://example.com</text>
+      <text x="400" y="240" class="s2" fill="#8F2B21">← ต่างแค่ http/https ก็คนละที่</text>
+    </svg>
+    <figcaption><b>ภาพที่ 2</b>origin = protocol + host + port · React (5173) กับ API (3001) จึงเป็นคนละ origin ทั้งที่อยู่เครื่องเดียวกัน</figcaption>
+  </figure>
+
+  <div class="term">
+    <div class="w">Same-Origin Policy</div>
+    <p>กฎความปลอดภัยของเบราว์เซอร์ที่ว่า <strong>โค้ดจาก origin หนึ่ง ห้ามอ่านข้อมูลจากอีก origin หนึ่ง</strong> โดยไม่ได้รับอนุญาต · เป็นกฎที่เบราว์เซอร์ทุกตัวบังคับใช้มาตั้งแต่ยุคแรก ๆ ของเว็บ</p>
+  </div>
+
+  <h3>2.1 ทำไมต้องมีกฎนี้ — ตัวอย่างที่ทำให้เห็นภาพ</h3>
+
+  <div class="box analogy">
+    <span class="h">🟪 ถ้าไม่มีกฎนี้จะเกิดอะไร</span>
+    <p>สมมติคุณล็อกอินธนาคารไว้ในแท็บหนึ่ง แล้วเปิดเว็บแปลก ๆ ในอีกแท็บ</p>
+    <p style="margin:0">ถ้าไม่มี Same-Origin Policy — <strong>เว็บแปลก ๆ นั้นจะเขียน JavaScript เรียก API ของธนาคารได้ทันที</strong> โดยใช้ session ที่คุณล็อกอินไว้ แล้วอ่านยอดเงินหรือโอนเงินออกไปได้เลย · กฎนี้คือสิ่งที่กันไม่ให้เกิดเรื่องแบบนั้น</p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ความเข้าใจผิดที่พบบ่อยที่สุด</span>
+    <p><strong>"API ของผมมีปัญหา เลยตอบ CORS error กลับมา"</strong> — ไม่ใช่</p>
+    <p style="margin:0">API ตอบข้อมูลมาปกติ <strong>แต่เบราว์เซอร์เป็นคนบล็อกไม่ให้โค้ดเห็น response นั้น</strong> · CORS error ไม่ได้มาจากเซิร์ฟเวอร์ แต่มาจากเบราว์เซอร์ที่อยู่ตรงกลาง</p>
+  </div>
+
+  <h3>2.2 หลักฐานว่าเบราว์เซอร์เป็นคนบล็อก</h3>
+
+  <p>ลองสังเกตสิ่งนี้</p>
+
+  <table class="d">
+    <tr><th>เรียก API ด้วยอะไร</th><th>ติด CORS ไหม</th><th>เพราะอะไร</th></tr>
+    <tr><td>React ในเบราว์เซอร์</td><td style="color:var(--error)"><strong>ติด</strong></td><td>เบราว์เซอร์บังคับใช้ Same-Origin Policy</td></tr>
+    <tr><td>Postman</td><td style="color:var(--success)">ไม่ติด</td><td>ไม่ใช่เบราว์เซอร์ ไม่มีกฎนี้</td></tr>
+    <tr><td><code>curl</code> ใน terminal</td><td style="color:var(--success)">ไม่ติด</td><td>ไม่ใช่เบราว์เซอร์</td></tr>
+    <tr><td>เซิร์ฟเวอร์อื่นเรียก API เรา</td><td style="color:var(--success)">ไม่ติด</td><td>ไม่ใช่เบราว์เซอร์</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 นี่คือเหตุผลที่ Week 06 ไม่เจอปัญหานี้</span>
+    <p style="margin:0">สัปดาห์ที่แล้วเราทดสอบด้วย Postman ตลอด จึงไม่เคยเจอ CORS · พอเปลี่ยนมาเรียกจากเบราว์เซอร์ถึงเจอทันที</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 2</span>
+    <ul>
+      <li>origin = protocol + host + port · ต่างแม้แต่ส่วนเดียวถือว่าคนละที่</li>
+      <li>Same-Origin Policy คือกฎของ<strong>เบราว์เซอร์</strong> ที่ห้ามอ่านข้อมูลข้าม origin</li>
+      <li>มีไว้กันเว็บอันตรายเรียก API ที่เราล็อกอินไว้</li>
+      <li>Postman และ curl ไม่ติดกฎนี้ เพราะไม่ใช่เบราว์เซอร์</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 3 ════════ -->
+<section class="ch" id="c3">
+  <p class="ch-num">บทที่ 3 · กลุ่มที่ 1</p>
+  <h2>CORS — ทางออกที่เซิร์ฟเวอร์เป็นคนเปิดให้</h2>
+  <p class="readtime">เวลาอ่าน ≈ 13 นาที · บทที่สำคัญที่สุดของสัปดาห์</p>
+
+  <div class="term">
+    <div class="w">CORS (Cross-Origin Resource Sharing)</div>
+    <p>กลไกที่ให้ <strong>เซิร์ฟเวอร์เป็นคนบอกเบราว์เซอร์</strong> ว่า "origin ไหนบ้างที่ฉันอนุญาตให้เรียกฉันได้" · เบราว์เซอร์จะยอมให้โค้ดอ่าน response ก็ต่อเมื่อเซิร์ฟเวอร์ส่ง header อนุญาตมาด้วย</p>
+  </div>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับของที่คุ้น</span>
+    <p style="margin:0">คิดถึง<strong>รายชื่อแขกในงานเลี้ยง</strong> — เจ้าภาพ (เซิร์ฟเวอร์) ทำรายชื่อไว้ว่าใครเข้าได้บ้าง · พนักงานหน้างาน (เบราว์เซอร์) เช็คว่าคนที่มาอยู่ในรายชื่อไหม ถ้าไม่อยู่ก็ไม่ให้เข้า · <strong>คนที่ตัดสินว่าใครเข้าได้คือเจ้าภาพ ไม่ใช่พนักงาน</strong></p>
+  </div>
+
+  <h3>3.1 CORS ทำงานอย่างไร</h3>
+
+  <figure>
+    <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ขั้นตอนการทำงานของ CORS">
+      <style>
+        .t3{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s3{font:300 10.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m3{font:500 10.5px 'IBM Plex Mono',monospace}
+      </style>
+      <rect x="20" y="30" width="150" height="220" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5" rx="6"/>
+      <text x="95" y="52" text-anchor="middle" class="t3">🌐 เบราว์เซอร์</text>
+      <text x="95" y="70" text-anchor="middle" class="s3">React ที่ :5173</text>
+
+      <rect x="590" y="30" width="150" height="220" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5" rx="6"/>
+      <text x="665" y="52" text-anchor="middle" class="t3">🖥️ API</text>
+      <text x="665" y="70" text-anchor="middle" class="s3">Express ที่ :3001</text>
+
+      <path d="M175 105 L585 105" stroke="#B5771A" stroke-width="2" marker-end="url(#c3a)"/>
+      <text x="380" y="98" text-anchor="middle" class="m3" fill="#8A5A0E">① GET /api/requests</text>
+      <text x="380" y="118" text-anchor="middle" class="s3">แนบ header: Origin: http://localhost:5173</text>
+
+      <path d="M585 160 L175 160" stroke="#1E7A54" stroke-width="2" marker-end="url(#c3b)"/>
+      <text x="380" y="153" text-anchor="middle" class="m3" fill="#14503A">② 200 OK + ข้อมูล</text>
+      <text x="380" y="173" text-anchor="middle" class="s3">แนบ header: Access-Control-Allow-Origin: http://localhost:5173</text>
+
+      <rect x="200" y="196" width="360" height="54" fill="#F1EAF8" stroke="#6B3B96" rx="6"/>
+      <text x="380" y="218" text-anchor="middle" class="t3" fill="#6B3B96">③ เบราว์เซอร์เช็ค header</text>
+      <text x="380" y="238" text-anchor="middle" class="s3" fill="#6B3B96">ตรงกัน → ยอมให้โค้ดอ่าน · ไม่ตรง → บล็อก ขึ้น error ใน Console</text>
+
+      <text x="95" y="276" text-anchor="middle" class="s3">โค้ดเราได้ข้อมูล</text>
+      <text x="95" y="292" text-anchor="middle" class="s3">ก็ต่อเมื่อผ่านขั้น ③</text>
+
+      <defs>
+        <marker id="c3a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#B5771A"/></marker>
+        <marker id="c3b" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#1E7A54"/></marker>
+      </defs>
+    </svg>
+    <figcaption><b>ภาพที่ 3</b>คำขอไปถึงเซิร์ฟเวอร์และเซิร์ฟเวอร์ตอบกลับตามปกติ · เบราว์เซอร์เป็นคนตัดสินตอนท้ายว่าจะให้โค้ดเห็นหรือไม่</figcaption>
+  </figure>
+
+  <div class="box pitfall">
+    <span class="h">🟥 จุดที่ต้องเข้าใจให้ชัด</span>
+    <p style="margin:0">แม้จะติด CORS <strong>คำขอก็ไปถึงเซิร์ฟเวอร์แล้ว และเซิร์ฟเวอร์ก็ทำงานไปแล้ว</strong> — ถ้าเป็น <code>POST</code> ข้อมูลก็ถูกสร้างจริง ๆ · เบราว์เซอร์แค่ไม่ให้โค้ดเราอ่าน response · <strong>CORS จึงไม่ใช่ระบบรักษาความปลอดภัยของ API</strong> การป้องกันจริงต้องทำที่เซิร์ฟเวอร์ (เช่น ตรวจสิทธิ์)</p>
+  </div>
+
+  <h3>3.2 Preflight — คำขอที่ถูกส่งไปถามก่อน</h3>
+
+  <p>สำหรับคำขอที่อาจเปลี่ยนแปลงข้อมูล (เช่น <code>POST</code>, <code>PUT</code>, <code>DELETE</code>) เบราว์เซอร์จะ<strong>ส่งคำขอไปถามก่อน</strong>ว่าทำได้ไหม</p>
+
+  <div class="term">
+    <div class="w">Preflight request</div>
+    <p>คำขอ <code>OPTIONS</code> ที่เบราว์เซอร์ส่งไปถามเซิร์ฟเวอร์<strong>ล่วงหน้า</strong>ว่า "ฉันจะส่ง POST มานะ อนุญาตไหม" · ถ้าเซิร์ฟเวอร์ตอบว่าได้ ถึงจะส่งคำขอจริงตามไป · เกิดขึ้นอัตโนมัติ เราไม่ได้เขียนเอง</p>
+  </div>
+
+<pre><code><span class="c-com">// ① เบราว์เซอร์ส่งไปถามก่อน (เราไม่ได้เขียน — เบราว์เซอร์ทำเอง)</span>
+OPTIONS /api/requests
+Origin: http://localhost:5173
+Access-Control-Request-Method: POST
+
+<span class="c-com">// ② เซิร์ฟเวอร์ตอบว่าอนุญาต</span>
+<span class="c-hl">204 No Content</span>
+Access-Control-Allow-Origin: http://localhost:5173
+Access-Control-Allow-Methods: GET,POST,PUT,DELETE
+
+<span class="c-com">// ③ เบราว์เซอร์ถึงจะส่งคำขอจริง</span>
+POST /api/requests
+{ "requesterName": "..." }</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 สังเกตใน DevTools</span>
+    <p style="margin:0">เวลากด POST จากแอป คุณจะเห็นใน Network tab <strong>2 บรรทัด</strong> — <code>OPTIONS</code> หนึ่งบรรทัดตามด้วย <code>POST</code> อีกบรรทัด · ถ้าเห็นแค่ <code>OPTIONS</code> แล้วไม่มี <code>POST</code> ตามมา แปลว่า preflight ไม่ผ่าน</p>
+  </div>
+
+  <h3>3.3 เปิด CORS ใน Express</h3>
+
+<pre><code><span class="c-key">import</span> cors <span class="c-key">from</span> <span class="c-str">'cors'</span>;
+
+<span class="c-com">// ต้องอยู่บนสุด ก่อน middleware และ route ทั้งหมด</span>
+app.<span class="c-fn">use</span>(<span class="c-fn">cors</span>({ origin: <span class="c-str">'http://localhost:5173'</span> }));</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 กับดัก 2 อันของการเปิด CORS</span>
+    <p><strong>หนึ่ง · วางผิดที่</strong> — ถ้าเขียน <code>app.use(cors())</code> ไว้หลัง route คำขอ preflight จะไปไม่ถึง เพราะ route ตอบไปก่อนแล้ว · <strong>ต้องอยู่บนสุดเสมอ</strong></p>
+    <p style="margin:0"><strong>สอง · ใช้ <code>origin: '*'</code> แบบไม่คิด</strong> — แปลว่าอนุญาตทุกเว็บในโลก · ตอนพัฒนาสะดวก แต่ถ้าเผลอติดไปตอนใช้งานจริงจะเปิดช่องให้เว็บใดก็ได้เรียก API เรา</p>
+  </div>
+
+  <h3>3.4 CORS error หน้าตาเป็นอย่างไร</h3>
+
+<pre><code><span class="c-bad">Access to fetch at 'http://localhost:3001/api/requests'
+from origin 'http://localhost:5173' has been blocked by CORS policy:
+No 'Access-Control-Allow-Origin' header is present on the requested resource.</span></code></pre>
+
+  <p><strong>อ่านให้เป็น</strong> — ข้อความบอกครบว่า เรียกจากไหน (<code>origin 'http://localhost:5173'</code>) ไปที่ไหน (<code>fetch at 'http://localhost:3001/...'</code>) และขาดอะไร (<code>No 'Access-Control-Allow-Origin' header</code>)</p>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">เจอ CORS error แล้ว ควรไปแก้ที่ไหน — <strong>โค้ด React หรือโค้ด API</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>แก้ที่ API</strong> — เพราะเซิร์ฟเวอร์คือคนที่ต้องส่ง header อนุญาตมา</p>
+      <p style="margin:0">แก้ฝั่ง React ไม่ได้เลย · ต่อให้เขียน fetch ยังไงก็ไม่ช่วย เพราะเบราว์เซอร์ไม่ได้ดูว่าเราเขียนโค้ดยังไง มันดูว่าเซิร์ฟเวอร์ส่ง header มาหรือเปล่า</p>
+    </div>
+  </details>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 3</span>
+    <ul>
+      <li>CORS คือกลไกให้<strong>เซิร์ฟเวอร์</strong>บอกเบราว์เซอร์ว่าอนุญาต origin ไหนบ้าง</li>
+      <li>คำขอไปถึงเซิร์ฟเวอร์จริงเสมอ — เบราว์เซอร์แค่บล็อกไม่ให้โค้ดอ่าน response</li>
+      <li>preflight (<code>OPTIONS</code>) คือคำขอที่เบราว์เซอร์ส่งไปถามก่อนสำหรับ POST/PUT/DELETE</li>
+      <li><code>app.use(cors(...))</code> ต้องอยู่บนสุด ก่อน route ทั้งหมด</li>
+      <li>เจอ CORS error ให้แก้ที่ <strong>API</strong> ไม่ใช่ React</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 4 ════════ -->
+<section class="ch" id="c4">
+  <p class="ch-num">บทที่ 4 · กลุ่มที่ 2</p>
+  <h2>Environment Variables — ค่าที่เปลี่ยนตามเครื่อง</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <p>ในโค้ดเรามีค่าที่<strong>ไม่ควรฝังไว้ตายตัว</strong> เช่น พอร์ต, ที่อยู่ของ API, รหัสผ่านฐานข้อมูล</p>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้าเราเขียน <code>fetch('http://localhost:3001/api/requests')</code> ไว้ในโค้ด แล้ววันหนึ่งเอา API ขึ้นเซิร์ฟเวอร์จริงที่ <code>https://api.rmutl.ac.th</code> — <strong>ต้องแก้กี่ที่</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ทุกที่ที่เขียน URL ไว้</strong> — ซึ่งถ้ากระจายอยู่ 10 ไฟล์ก็ต้องแก้ 10 ที่ และถ้าลืมที่เดียวก็พังเฉพาะจุดนั้น หาสาเหตุยาก</p>
+      <p style="margin:0">ยิ่งกว่านั้น — ถ้าต้องสลับไปมาระหว่างเครื่องตัวเองกับเซิร์ฟเวอร์จริง จะต้องแก้โค้ดกลับไปกลับมาทุกครั้ง <strong>และมีโอกาสเผลอ commit ค่าผิดขึ้นไป</strong></p>
+    </div>
+  </details>
+
+  <div class="term">
+    <div class="w">Environment variable</div>
+    <p>ค่าที่<strong>อยู่นอกโค้ด</strong> และเปลี่ยนได้ตามสภาพแวดล้อมที่รัน · เครื่องนักศึกษาใช้ค่าหนึ่ง เซิร์ฟเวอร์จริงใช้อีกค่าหนึ่ง โดยที่<strong>โค้ดเป็นชุดเดียวกัน</strong></p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="โค้ดชุดเดียวใช้ได้หลายสภาพแวดล้อม">
+      <style>
+        .t4{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s4{font:300 11px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m4{font:500 11px 'IBM Plex Mono',monospace}
+      </style>
+      <rect x="280" y="20" width="200" height="52" fill="#DFF0E7" stroke="#1E7A54" stroke-width="2" rx="8"/>
+      <text x="380" y="42" text-anchor="middle" class="t4">โค้ดชุดเดียว</text>
+      <text x="380" y="61" text-anchor="middle" class="m4" fill="#14503A">config.port</text>
+
+      <path d="M330 76 L170 120" stroke="#BFD2C8" stroke-width="2" marker-end="url(#e4)"/>
+      <path d="M380 76 L380 120" stroke="#BFD2C8" stroke-width="2" marker-end="url(#e4)"/>
+      <path d="M430 76 L590 120" stroke="#BFD2C8" stroke-width="2" marker-end="url(#e4)"/>
+
+      <rect x="40" y="126" width="230" height="86" fill="#fff" stroke="#BFD2C8" rx="6"/>
+      <text x="155" y="148" text-anchor="middle" class="t4">💻 เครื่องนักศึกษา</text>
+      <text x="155" y="170" text-anchor="middle" class="m4" fill="#54685E">.env</text>
+      <text x="155" y="190" text-anchor="middle" class="s4">PORT=3001</text>
+      <text x="155" y="206" text-anchor="middle" class="s4">NODE_ENV=development</text>
+
+      <rect x="290" y="126" width="180" height="86" fill="#fff" stroke="#BFD2C8" rx="6"/>
+      <text x="380" y="148" text-anchor="middle" class="t4">🧪 เครื่องทดสอบ</text>
+      <text x="380" y="170" text-anchor="middle" class="m4" fill="#54685E">.env</text>
+      <text x="380" y="190" text-anchor="middle" class="s4">PORT=4000</text>
+
+      <rect x="490" y="126" width="230" height="86" fill="#fff" stroke="#BFD2C8" rx="6"/>
+      <text x="605" y="148" text-anchor="middle" class="t4">🌍 เซิร์ฟเวอร์จริง</text>
+      <text x="605" y="170" text-anchor="middle" class="m4" fill="#54685E">ตั้งค่าที่ระบบ</text>
+      <text x="605" y="190" text-anchor="middle" class="s4">PORT=80</text>
+      <text x="605" y="206" text-anchor="middle" class="s4">NODE_ENV=production</text>
+
+      <defs><marker id="e4" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#BFD2C8"/></marker></defs>
+    </svg>
+    <figcaption><b>ภาพที่ 4</b>โค้ดชุดเดียวกันทำงานได้ทุกที่ · เปลี่ยนแค่ค่าใน environment ไม่ต้องแก้โค้ด</figcaption>
+  </figure>
+
+  <h3>4.1 ฝั่ง API — ไฟล์ <code>.env</code></h3>
+
+<pre><code><span class="c-com"># api/.env</span>
+PORT=3001
+CORS_ORIGIN=http://localhost:5173
+NODE_ENV=development</code></pre>
+
+  <p>แล้วรวมการอ่านค่าไว้ที่ไฟล์เดียว</p>
+
+<pre><code><span class="c-com">// api/src/config.js — ที่เดียวที่อ่าน process.env</span>
+<span class="c-key">import</span> <span class="c-str">'dotenv/config'</span>;
+
+<span class="c-key">export const</span> config = {
+  port: <span class="c-fn">Number</span>(process.env.PORT ?? <span class="c-num">3001</span>),
+  corsOrigin: process.env.CORS_ORIGIN ?? <span class="c-str">'http://localhost:5173'</span>,
+  nodeEnv: process.env.NODE_ENV ?? <span class="c-str">'development'</span>,
+  <span class="c-key">get</span> <span class="c-fn">isProduction</span>() { <span class="c-key">return this</span>.nodeEnv === <span class="c-str">'production'</span>; },
+};</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไมต้องรวมไว้ไฟล์เดียว</span>
+    <p style="margin:0">เปิดไฟล์นี้ไฟล์เดียวก็รู้ทันทีว่า<strong>แอปนี้ต้องการค่าอะไรบ้าง</strong> · ถ้าปล่อยให้อ่าน <code>process.env</code> กระจายทั่วโปรเจกต์ จะไม่มีใครรู้ว่าต้องตั้งค่าอะไรบ้างถึงจะรันได้ · <strong>เป็นหลักการเดียวกับ Service Layer</strong> — รวมสิ่งที่เปลี่ยนบ่อยไว้ที่เดียว</p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 <code>process.env</code> ได้ string เสมอ</span>
+    <p style="margin:0"><code>process.env.PORT</code> ได้ <code>"3001"</code> ไม่ใช่ <code>3001</code> · ต้อง <code>Number()</code> เอง ไม่งั้นบางที่จะทำงานผิดโดยไม่มี error</p>
+  </div>
+
+  <h3>4.2 ฝั่ง React — ต้องขึ้นต้นด้วย <code>VITE_</code></h3>
+
+<pre><code><span class="c-com"># frontend/.env.local</span>
+VITE_API_BASE_URL=http://localhost:3001</code></pre>
+
+<pre><code><span class="c-key">const</span> BASE_URL = import.meta.env.<span class="c-hl">VITE_API_BASE_URL</span> ?? <span class="c-str">'http://localhost:3001'</span>;</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ถ้าไม่ขึ้นต้นด้วย <code>VITE_</code> จะได้ <code>undefined</code></span>
+    <p>Vite ส่งเฉพาะตัวแปรที่ขึ้นต้นด้วย <code>VITE_</code> ไปให้โค้ดฝั่งเบราว์เซอร์ · ตั้งชื่อว่า <code>API_BASE_URL</code> เฉย ๆ จะอ่านไม่ได้</p>
+    <p style="margin:0"><strong>ทำไมต้องกันแบบนี้</strong> — เพราะโค้ดฝั่งเบราว์เซอร์<strong>ผู้ใช้เปิดดูได้ทั้งหมด</strong> · ถ้า Vite ส่งทุกตัวแปรไป รหัสผ่านฐานข้อมูลที่อยู่ใน <code>.env</code> จะหลุดไปอยู่ในไฟล์ที่ใครก็โหลดดูได้</p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ห้าม commit ไฟล์ <code>.env</code></span>
+    <p style="margin:0">ใส่ไว้ใน <code>.gitignore</code> เสมอ แล้วสร้าง <code>.env.example</code> ที่มีแต่ชื่อตัวแปรไม่มีค่าจริงไว้ commit แทน · เพื่อให้คนอื่นรู้ว่าต้องตั้งค่าอะไรบ้าง โดยไม่หลุดค่าจริงขึ้น repository</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 4</span>
+    <ul>
+      <li>environment variable แยกค่าที่เปลี่ยนตามเครื่องออกจากโค้ด</li>
+      <li>ฝั่ง API รวมการอ่านไว้ที่ <code>config.js</code> ไฟล์เดียว</li>
+      <li><code>process.env</code> ได้ string เสมอ — ต้องแปลงชนิดเอง</li>
+      <li>ฝั่ง Vite ต้องขึ้นต้นด้วย <code>VITE_</code> ไม่งั้นอ่านไม่ได้</li>
+      <li>ห้าม commit <code>.env</code> · ใช้ <code>.env.example</code> แทน</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 5 ════════ -->
+<section class="ch" id="c5">
+  <p class="ch-num">บทที่ 5 · กลุ่มที่ 2</p>
+  <h2>API Client — ชั้นกลางที่คุยกับเซิร์ฟเวอร์</h2>
+  <p class="readtime">เวลาอ่าน ≈ 12 นาที</p>
+
+  <p>ก่อนจะแก้ <code>requestService.js</code> เราจะสร้างไฟล์ใหม่ขึ้นมาชั้นหนึ่งก่อน</p>
+
+  <div class="term">
+    <div class="w">API Client</div>
+    <p>ไฟล์ที่เป็น<strong>ที่เดียวในโปรเจกต์ที่เรียก <code>fetch()</code></strong> · จัดการเรื่องซ้ำ ๆ ให้ครบ — ต่อ URL, ใส่ header, แปลง JSON, จัดการ error — แล้วให้ที่อื่นเรียกผ่านมันอย่างเดียว</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ชั้นของ frontend หลังเพิ่ม apiClient">
+      <style>
+        .t5{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s5{font:300 11px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m5{font:500 10.5px 'IBM Plex Mono',monospace;fill:#186B8C}
+      </style>
+      <rect x="30" y="20" width="700" height="44" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5" rx="6"/>
+      <text x="50" y="40" class="t5">Component · Page</text>
+      <text x="50" y="57" class="s5">DashboardPage, RequestDetailPage, NewRequestPage — ไม่ต้องแก้เลย</text>
+      <text x="700" y="48" text-anchor="end" class="m5">ไม่รู้จัก HTTP</text>
+
+      <path d="M380 66 L380 78" stroke="#BFD2C8" stroke-width="2" marker-end="url(#a5)"/>
+
+      <rect x="30" y="82" width="700" height="44" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5" rx="6"/>
+      <text x="50" y="102" class="t5">requestService.js</text>
+      <text x="50" y="119" class="s5">รู้ว่า endpoint ไหนใช้ทำอะไร · แปล 404 เป็น null</text>
+      <text x="700" y="110" text-anchor="end" class="m5" fill="#14503A">รู้จัก endpoint</text>
+
+      <path d="M380 128 L380 140" stroke="#BFD2C8" stroke-width="2" marker-end="url(#a5)"/>
+
+      <rect x="30" y="144" width="700" height="44" fill="#F1EAF8" stroke="#6B3B96" stroke-width="1.5" rx="6"/>
+      <text x="50" y="164" class="t5">apiClient.js</text>
+      <text x="50" y="181" class="s5">ที่เดียวที่เรียก fetch() · ต่อ URL · ใส่ header · แปลง error</text>
+      <text x="700" y="172" text-anchor="end" class="m5" fill="#6B3B96">รู้จัก HTTP</text>
+
+      <path d="M380 190 L380 202" stroke="#BFD2C8" stroke-width="2" marker-end="url(#a5)"/>
+
+      <rect x="230" y="206" width="300" height="36" fill="#FDF4E3" stroke="#B5771A" rx="6"/>
+      <text x="380" y="229" text-anchor="middle" class="t5" fill="#8A5A0E">🖥️ Express API ที่ :3001</text>
+
+      <defs><marker id="a5" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#BFD2C8"/></marker></defs>
+    </svg>
+    <figcaption><b>ภาพที่ 5</b>เพิ่มชั้น apiClient ขึ้นมาอีกชั้น · ยิ่งลงล่างยิ่งรู้จักรายละเอียดของ HTTP มากขึ้น</figcaption>
+  </figure>
+
+  <div class="box analogy">
+    <span class="h">🟪 ทำไมต้องมีอีกชั้น</span>
+    <p style="margin:0">เทียบกับฝั่ง backend — <code>apiClient</code> เหมือน <code>middleware</code> ที่จัดการเรื่องซ้ำ ๆ ให้ทุก route · ถ้าไม่มี เราจะต้องเขียน "ต่อ URL, ใส่ header, เช็ค response.ok, แปลง JSON" ซ้ำใน<strong>ทุกฟังก์ชัน</strong>ของ service ซึ่งมี 6 ฟังก์ชัน = เขียนซ้ำ 6 รอบ</p>
+  </div>
+
+  <h3>5.1 สิ่งที่ apiClient ต้องจัดการ — 4 กรณี</h3>
+
+  <table class="d">
+    <tr><th>กรณี</th><th>เกิดเมื่อ</th><th>ต้องทำอะไร</th></tr>
+    <tr><td>ต่อเซิร์ฟเวอร์ไม่ได้</td><td>API ไม่ได้เปิด · เน็ตหลุด</td><td><code>fetch</code> โยน error → แปลงเป็นข้อความที่ผู้ใช้เข้าใจ</td></tr>
+    <tr><td>ตอบ 4xx / 5xx</td><td>ข้อมูลผิด · ไม่พบ · เซิร์ฟเวอร์พัง</td><td>โยน <code>ApiError</code> พร้อม status</td></tr>
+    <tr><td>ตอบ 204</td><td>DELETE สำเร็จ</td><td>คืน <code>null</code> — ไม่มี body ให้ parse</td></tr>
+    <tr><td>ตอบ 2xx อื่น</td><td>สำเร็จปกติ</td><td>คืน <code>response.json()</code></td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 กับดักที่สำคัญที่สุด — <code>fetch</code> ไม่โยน error เมื่อได้ 404</span>
+    <p>เราเจอเรื่องนี้มาแล้วใน Week 05 — <code>fetch</code> จะ resolve สำเร็จแม้เซิร์ฟเวอร์ตอบ 404 หรือ 500</p>
+<pre style="margin:12px 0 0"><code><span class="c-key">const</span> res = <span class="c-key">await</span> <span class="c-fn">fetch</span>(url);   <span class="c-com">// ได้ 404 ก็ไม่ throw</span>
+<span class="c-key">if</span> (!res.ok) { … }            <span class="c-com">// ต้องเช็คเอง</span></code></pre>
+    <p style="margin:12px 0 0"><code>fetch</code> จะโยน error<strong>เฉพาะตอนต่อเซิร์ฟเวอร์ไม่ได้เลย</strong> เช่น API ไม่ได้เปิด</p>
+  </div>
+
+  <h3>5.2 โครงของ apiClient</h3>
+
+<pre><code><span class="c-key">export class</span> ApiError <span class="c-key">extends</span> Error {
+  <span class="c-fn">constructor</span>(message, status) {
+    <span class="c-fn">super</span>(message);
+    <span class="c-key">this</span>.name = <span class="c-str">'ApiError'</span>;
+    <span class="c-key">this</span>.status = status;   <span class="c-com">// เก็บ status ไว้ให้คนเรียกตัดสินใจได้</span>
+  }
+}
+
+<span class="c-key">export async function</span> <span class="c-fn">apiFetch</span>(path, options = {}) {
+  <span class="c-key">let</span> response;
+  <span class="c-key">try</span> {
+    response = <span class="c-key">await</span> <span class="c-fn">fetch</span>(<span class="c-str">`${BASE_URL}${path}`</span>, {
+      headers: { <span class="c-str">'Content-Type'</span>: <span class="c-str">'application/json'</span>, ...options.headers },
+      ...options,
+    });
+  } <span class="c-key">catch</span> {
+    <span class="c-com">// ① ต่อเซิร์ฟเวอร์ไม่ได้เลย</span>
+    <span class="c-key">throw new</span> <span class="c-fn">ApiError</span>(<span class="c-str">'ติดต่อเซิร์ฟเวอร์ไม่ได้ — ตรวจว่าเปิด API แล้วหรือยัง'</span>, <span class="c-num">0</span>);
+  }
+
+  <span class="c-key">if</span> (!response.ok) {
+    <span class="c-com">// ② เซิร์ฟเวอร์ตอบ แต่เป็น 4xx/5xx</span>
+    <span class="c-key">throw new</span> <span class="c-fn">ApiError</span>(<span class="c-key">await</span> <span class="c-fn">parseError</span>(response), response.status);
+  }
+
+  <span class="c-key">if</span> (response.status === <span class="c-num">204</span>) <span class="c-key">return null</span>;   <span class="c-com">// ③ ไม่มี body</span>
+  <span class="c-key">return</span> response.<span class="c-fn">json</span>();                       <span class="c-com">// ④ ปกติ</span>
+}</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไมต้องเก็บ <code>status</code> ไว้ใน error</span>
+    <p style="margin:0">เพราะคนเรียกต้องตัดสินใจต่างกันตาม status — <strong>404 อาจไม่ใช่ความผิดพลาด</strong> (แค่ไม่มีคำร้องรหัสนั้น) แต่ 500 คือระบบพังจริง · ถ้าไม่เก็บ status ไว้ จะแยกไม่ออก</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 5</span>
+    <ul>
+      <li>apiClient เป็นชั้นเดียวที่เรียก <code>fetch()</code> — ไม่ต้องเขียนโค้ดซ้ำใน service</li>
+      <li>ต้องจัดการ 4 กรณี: ต่อไม่ได้ · 4xx/5xx · 204 · 2xx ปกติ</li>
+      <li><code>fetch</code> ไม่โยน error เมื่อได้ 404 — ต้องเช็ค <code>response.ok</code> เอง</li>
+      <li><code>ApiError</code> เก็บ status ไว้ให้คนเรียกตัดสินใจ</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 6 ════════ -->
+<section class="ch" id="c6">
+  <p class="ch-num">บทที่ 6 · กลุ่มที่ 2</p>
+  <h2>เปลี่ยน Service Layer ให้เรียก API</h2>
+  <p class="readtime">เวลาอ่าน ≈ 11 นาที · ช่วงเวลาสำคัญที่สุดของสัปดาห์</p>
+
+  <p>นี่คือช่วงที่เราจะเห็นผลของการออกแบบมาสองสัปดาห์</p>
+
+  <h3>6.1 กฎเหล็กของช่วงนี้</h3>
+
+  <div class="box pitfall">
+    <span class="h">🟥 signature ของทุกฟังก์ชันต้องเหมือนเดิมทุกตัว</span>
+    <p style="margin:0">ถ้าเปลี่ยนชื่อฟังก์ชัน เปลี่ยนจำนวนพารามิเตอร์ หรือเปลี่ยนชนิดของสิ่งที่คืน — <strong>component จะพังทันที</strong> และเราจะเสียประโยชน์ทั้งหมดของการมี Service Layer</p>
+  </div>
+
+  <table class="d">
+    <tr><th>ฟังก์ชัน</th><th>รับอะไร</th><th>คืนอะไร</th><th>endpoint ที่เรียก</th></tr>
+    <tr><td><code>getRequests(options)</code></td><td>optional</td><td>array</td><td><code>GET /api/requests</code></td></tr>
+    <tr><td><code>getRequestById(id)</code></td><td>string</td><td>object หรือ <strong><code>null</code></strong></td><td><code>GET /api/requests/:id</code></td></tr>
+    <tr><td><code>addRequest(input)</code></td><td>object</td><td>object ที่สร้าง</td><td><code>POST /api/requests</code></td></tr>
+    <tr><td><code>deleteRequest(id)</code></td><td>string</td><td>array ที่เหลือ</td><td><code>DELETE /api/requests/:id</code></td></tr>
+  </table>
+
+  <h3>6.2 เทียบก่อน–หลัง</h3>
+
+<pre><code><span class="c-com">// ── Week 05 · อ่าน localStorage ──</span>
+<span class="c-key">export async function</span> <span class="c-fn">getRequests</span>(options = {}) {
+  <span class="c-key">await</span> <span class="c-fn">waitForLabDelay</span>();
+  <span class="c-key">if</span> (options.scenario === <span class="c-str">'empty'</span>) <span class="c-key">return</span> [];
+  <span class="c-key">return</span> <span class="c-fn">loadNormalRequests</span>(options.onRecovery);
+}
+
+<span class="c-com">// ── Week 07 · เรียก API ──</span>
+<span class="c-key">export async function</span> <span class="c-fn">getRequests</span>(options = {}) {
+  <span class="c-key">if</span> (options.scenario === <span class="c-str">'empty'</span>) <span class="c-key">return</span> [];
+  <span class="c-key">const</span> query = options.status ? <span class="c-str">`?status=${<span class="c-fn">encodeURIComponent</span>(options.status)}`</span> : <span class="c-str">''</span>;
+  <span class="c-key">return</span> <span class="c-fn">apiFetch</span>(<span class="c-str">`/api/requests${query}`</span>);
+}</code></pre>
+
+  <p><strong>ข้างในเปลี่ยนคนละเรื่อง แต่ข้างนอกเหมือนเดิมทุกอย่าง</strong> — ชื่อเดิม พารามิเตอร์เดิม คืน array เหมือนเดิม</p>
+
+  <h3>6.3 จุดที่ต้องคิดเป็นพิเศษ — <code>getRequestById</code> กับ 404</h3>
+
+<pre><code><span class="c-key">export async function</span> <span class="c-fn">getRequestById</span>(requestId) {
+  <span class="c-key">try</span> {
+    <span class="c-key">return await</span> <span class="c-fn">apiFetch</span>(<span class="c-str">`/api/requests/${<span class="c-fn">encodeURIComponent</span>(requestId)}`</span>);
+  } <span class="c-key">catch</span> (error) {
+    <span class="c-com">// 404 ไม่ใช่ความผิดพลาดของระบบ — แปลว่าไม่มีคำร้องรหัสนี้</span>
+    <span class="c-key">if</span> (error <span class="c-key">instanceof</span> ApiError &amp;&amp; error.status === <span class="c-num">404</span>) <span class="c-key">return null</span>;
+    <span class="c-key">throw</span> error;   <span class="c-com">// error อื่นปล่อยผ่านไปให้หน้าจอจัดการ</span>
+  }
+}</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไมต้องแปลง 404 เป็น <code>null</code></span>
+    <p style="margin:0">เพราะ Week 05 <code>getRequestById</code> คืน <code>null</code> เมื่อไม่พบ และ <code>RequestDetailPage</code> เขียนไว้ว่า <code>if (!request) แสดงว่าไม่พบ</code> · ถ้าเราปล่อยให้โยน error หน้าจอจะขึ้น "เกิดข้อผิดพลาด" แทนที่จะขึ้น "ไม่พบคำร้อง" — <strong>ซึ่งสื่อสารผิดกับผู้ใช้</strong></p>
+  </div>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">หลังแก้ <code>requestService.js</code> เสร็จ — <strong>ต้องแก้ <code>DashboardPage.jsx</code> กี่บรรทัด</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ศูนย์บรรทัด</strong> — เหมือนตอน Week 05 CP04a-3 ที่เราเปลี่ยนจาก seed เป็น localStorage</p>
+      <p style="margin:0">เพราะ <code>DashboardPage</code> ไม่เคยรู้ว่าข้อมูลมาจากไหน มันรู้แค่ว่าเรียก <code>getRequests()</code> แล้วได้ array กลับมา · <strong>นี่คือครั้งที่สองที่เราได้ประโยชน์จาก Service Layer และครั้งนี้ผลชัดกว่าเดิมมาก</strong> เพราะเปลี่ยนจากในเครื่องไปเป็นข้ามเครื่อง</p>
+    </div>
+  </details>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 6</span>
+    <ul>
+      <li>signature ของทุกฟังก์ชันต้องเหมือนเดิม — ไม่งั้น component พัง</li>
+      <li>ข้างในเปลี่ยนคนละเรื่อง แต่ข้างนอกเหมือนเดิมทุกอย่าง</li>
+      <li><code>getRequestById</code> ต้องแปลง 404 เป็น <code>null</code> ให้ตรงกับพฤติกรรมเดิม</li>
+      <li>component ไม่ต้องแก้เลยแม้แต่บรรทัดเดียว</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 7 ════════ -->
+<section class="ch" id="c7">
+  <p class="ch-num">บทที่ 7 · กลุ่มที่ 2</p>
+  <h2>สถานะของการเรียก API — loading, error, empty</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <p>ตอน Week 05 ข้อมูลอยู่ในเครื่อง อ่านเสร็จแทบจะทันที · ตอนนี้ข้อมูลอยู่คนละโปรแกรม <strong>สิ่งที่อาจผิดพลาดมีมากขึ้น</strong></p>
+
+  <figure>
+    <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="สถานะของการเรียก API">
+      <style>
+        .t7{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s7{font:300 10.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+      </style>
+      <rect x="300" y="20" width="160" height="44" fill="#FDF4E3" stroke="#B5771A" stroke-width="2" rx="8"/>
+      <text x="380" y="40" text-anchor="middle" class="t7" fill="#8A5A0E">⏳ loading</text>
+      <text x="380" y="56" text-anchor="middle" class="s7">กำลังรอ API ตอบ</text>
+
+      <path d="M340 68 L180 110" stroke="#BFD2C8" stroke-width="2" marker-end="url(#s7a)"/>
+      <path d="M380 68 L380 110" stroke="#BFD2C8" stroke-width="2" marker-end="url(#s7a)"/>
+      <path d="M420 68 L580 110" stroke="#BFD2C8" stroke-width="2" marker-end="url(#s7a)"/>
+
+      <rect x="40" y="116" width="220" height="66" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5" rx="8"/>
+      <text x="150" y="138" text-anchor="middle" class="t7" fill="#14503A">✓ success</text>
+      <text x="150" y="156" text-anchor="middle" class="s7">ได้ข้อมูลมาแล้ว</text>
+      <text x="150" y="173" text-anchor="middle" class="s7">แสดงรายการ</text>
+
+      <rect x="290" y="116" width="180" height="66" fill="#fff" stroke="#BFD2C8" stroke-width="1.5" rx="8"/>
+      <text x="380" y="138" text-anchor="middle" class="t7">— empty</text>
+      <text x="380" y="156" text-anchor="middle" class="s7">สำเร็จ แต่ไม่มีรายการ</text>
+      <text x="380" y="173" text-anchor="middle" class="s7">ชวนให้สร้างใหม่</text>
+
+      <rect x="500" y="116" width="220" height="66" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.5" rx="8"/>
+      <text x="610" y="138" text-anchor="middle" class="t7" fill="#8F2B21">✕ error</text>
+      <text x="610" y="156" text-anchor="middle" class="s7">ติดต่อไม่ได้ / เซิร์ฟเวอร์พัง</text>
+      <text x="610" y="173" text-anchor="middle" class="s7">บอกสาเหตุ + ปุ่มลองใหม่</text>
+
+      <rect x="40" y="200" width="680" height="46" fill="#F1EAF8" stroke="#6B3B96" rx="6"/>
+      <text x="380" y="221" text-anchor="middle" class="t7" fill="#6B3B96">สิ่งที่เพิ่มมาจาก Week 05 — error มีได้หลายสาเหตุ</text>
+      <text x="380" y="239" text-anchor="middle" class="s7" fill="#6B3B96">API ไม่ได้เปิด (status 0) · ข้อมูลผิด (400) · ไม่พบ (404) · เซิร์ฟเวอร์พัง (500)</text>
+
+      <defs><marker id="s7a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#BFD2C8"/></marker></defs>
+    </svg>
+    <figcaption><b>ภาพที่ 6</b>สี่สถานะเหมือน Week 05 แต่ error แตกย่อยได้หลายสาเหตุ — ผู้ใช้ควรได้ข้อความที่ต่างกัน</figcaption>
+  </figure>
+
+  <h3>7.1 error ที่ผู้ใช้ควรเห็น ต่างกันตามสาเหตุ</h3>
+
+  <table class="d">
+    <tr><th>status</th><th>เกิดอะไรขึ้น</th><th>ควรบอกผู้ใช้ว่า</th></tr>
+    <tr><td><code>0</code></td><td>ต่อ API ไม่ได้เลย</td><td>"ติดต่อเซิร์ฟเวอร์ไม่ได้ — ตรวจว่าเปิด API แล้วหรือยัง"</td></tr>
+    <tr><td><code>400</code></td><td>ข้อมูลที่ส่งไปไม่ถูกต้อง</td><td>ข้อความจาก API ที่บอกว่าผิดตรงไหน</td></tr>
+    <tr><td><code>404</code></td><td>ไม่พบสิ่งที่ขอ</td><td>"ไม่พบคำร้องรหัสนี้" (ไม่ใช่หน้า error)</td></tr>
+    <tr><td><code>500</code></td><td>เซิร์ฟเวอร์พัง</td><td>"เกิดข้อผิดพลาด ลองใหม่อีกครั้ง"</td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 อย่าแสดงข้อความเทคนิคให้ผู้ใช้เห็น</span>
+    <p style="margin:0"><code>TypeError: Failed to fetch</code> หรือ <code>NetworkError</code> ไม่มีความหมายกับผู้ใช้ทั่วไป · <strong>แปลเป็นภาษาคนที่บอกว่าควรทำอะไรต่อ</strong> — นี่คือเหตุผลที่เราสร้าง <code>ApiError</code> พร้อมข้อความไทยใน apiClient</p>
+  </div>
+
+  <h3>7.2 เรื่องที่จะเห็นชัดขึ้นเมื่อเรียกข้ามเครื่อง</h3>
+
+  <div class="box note">
+    <span class="h">🟨 cleanup guard ที่ทำไว้ใน Week 05 จะได้ใช้จริงแล้ว</span>
+    <p style="margin:0">ตอน Week 05 เราใส่ <code>ignore</code> guard ไว้กัน stale update แต่เห็นผลยากเพราะข้อมูลมาเร็วมาก · <strong>ตอนนี้เรียก API ข้ามเครื่อง ความช้าเป็นเรื่องจริง</strong> — ถ้าผู้ใช้กดสลับหน้าเร็ว ๆ จะเห็นประโยชน์ของ guard ทันที</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 7</span>
+    <ul>
+      <li>สี่สถานะเหมือน Week 05 — loading, success, empty, error</li>
+      <li>แต่ error แตกย่อยได้หลายสาเหตุ ควรบอกผู้ใช้ต่างกัน</li>
+      <li>แปลข้อความเทคนิคเป็นภาษาคนที่บอกว่าควรทำอะไรต่อ</li>
+      <li>cleanup guard จาก Week 05 จะได้ใช้จริงเมื่อเรียกข้ามเครื่อง</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 8 ════════ -->
+<section class="ch" id="c8">
+  <p class="ch-num">บทที่ 8 · กลุ่มที่ 3 <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
+  <h2>Logging และ Error Handling ระดับใช้งานจริง</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <h3>8.1 จาก logger ที่เขียนเอง ไปเป็น morgan</h3>
+
+  <p>Week 06 เราเขียน logger เองเพื่อให้เข้าใจว่า middleware ทำงานอย่างไร · ในงานจริงมีคนทำไว้ให้แล้วและครบกว่า</p>
+
+<pre><code><span class="c-key">import</span> morgan <span class="c-key">from</span> <span class="c-str">'morgan'</span>;
+
+app.<span class="c-fn">use</span>(<span class="c-fn">morgan</span>(config.isProduction ? <span class="c-str">'combined'</span> : <span class="c-str">'dev'</span>));</code></pre>
+
+  <table class="d">
+    <tr><th>รูปแบบ</th><th>ใช้เมื่อ</th><th>ได้อะไร</th></tr>
+    <tr><td><code>'dev'</code></td><td>ตอนพัฒนา</td><td>สั้น มีสี อ่านง่ายบนหน้าจอ</td></tr>
+    <tr><td><code>'combined'</code></td><td>ตอนใช้งานจริง</td><td>ละเอียด มี IP, user-agent, เวลา — เหมาะเก็บเป็นไฟล์</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไมต้องต่างกันตามสภาพแวดล้อม</span>
+    <p style="margin:0">ตอนพัฒนาเราดูด้วยตาบนหน้าจอ ต้องการสั้นและอ่านง่าย · ตอนใช้งานจริง log ถูกเก็บเป็นไฟล์เพื่อไว้ไล่ปัญหาย้อนหลัง ต้องการข้อมูลครบที่สุด · <strong>นี่คือเหตุผลที่ต้องมี <code>NODE_ENV</code></strong></p>
+  </div>
+
+  <h3>8.2 error handling ที่ไม่เปิดเผยข้อมูลภายใน</h3>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ห้ามส่ง stack trace ให้ผู้ใช้ตอน production</span>
+    <p>stack trace บอก<strong>โครงสร้างไฟล์ในเครื่องเซิร์ฟเวอร์</strong> และบางทีก็บอกชื่อตัวแปรหรือ query ที่ใช้ · เป็นข้อมูลที่คนไม่หวังดีใช้หาช่องโหว่ได้</p>
+<pre style="margin:12px 0 0"><code>res.<span class="c-fn">status</span>(status).<span class="c-fn">json</span>({
+  error: status &gt;= <span class="c-num">500</span> ? <span class="c-str">'เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์'</span> : err.message,
+  <span class="c-com">// ส่ง stack เฉพาะตอนพัฒนาเท่านั้น</span>
+  ...(config.isProduction ? {} : { stack: err.stack?.<span class="c-fn">split</span>(<span class="c-str">'\n'</span>).<span class="c-fn">slice</span>(<span class="c-num">0</span>, <span class="c-num">3</span>) }),
+});</code></pre>
+  </div>
+
+  <div class="box challenge">
+    <span class="h">⭐ Challenge · AppError และ asyncHandler</span>
+    <p><code>AppError</code> ให้เรากำหนด status เองได้ตอนโยน error</p>
+    <p style="margin:0"><code>asyncHandler</code> ห่อ handler ที่เป็น async เพื่อให้ error ที่เกิดข้างในถูกส่งไปที่ error middleware · Express 5 จับให้อัตโนมัติแล้ว แต่ Express 4 ที่ยังใช้กันมากในงานจริงไม่จับ — จึงเป็นรูปแบบที่ควรรู้จัก</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 8</span>
+    <ul>
+      <li>morgan แทน logger ที่เขียนเอง · เปลี่ยนรูปแบบตาม <code>NODE_ENV</code></li>
+      <li>ตอน production ห้ามส่ง stack trace กลับไปให้ผู้ใช้</li>
+      <li>error ที่เป็น 5xx ควรบอกผู้ใช้กลาง ๆ แต่ log รายละเอียดไว้ดูเอง</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 9 ════════ -->
+<section class="ch" id="c9">
+  <p class="ch-num">บทที่ 9 · กลุ่มที่ 3 <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
+  <h2>API Contract — ข้อตกลงที่ทำให้ทีมทำงานคู่ขนานได้</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <div class="term">
+    <div class="w">API Contract</div>
+    <p>เอกสารที่ระบุว่า API มี endpoint อะไรบ้าง · แต่ละอันรับอะไร คืนอะไร · ตอบ status อะไรในกรณีไหน · <strong>เป็นข้อตกลงระหว่างคนทำ front-end กับคนทำ back-end</strong></p>
+  </div>
+
+  <div class="box analogy">
+    <span class="h">🟪 ทำไมถึงสำคัญในการทำงานจริง</span>
+    <p>สมมติทีมมี 4 คน — 2 คนทำ front-end 2 คนทำ back-end</p>
+    <p style="margin:0"><strong>ถ้าไม่มี contract</strong> ฝั่ง front-end ต้องรอ back-end ทำเสร็จก่อนถึงจะเริ่มได้ · <strong>ถ้ามี contract</strong> ทั้งสองฝั่งเริ่มพร้อมกันได้เลย เพราะรู้แล้วว่าจะส่งอะไรให้กันในรูปแบบไหน · ฝั่ง front-end สร้างข้อมูลจำลองตาม contract ไปก่อนได้</p>
+  </div>
+
+  <h3>9.1 สิ่งที่ contract ต้องมี</h3>
+
+  <table class="d">
+    <tr><th>หัวข้อ</th><th>ทำไมต้องมี</th></tr>
+    <tr><td>โครงสร้างข้อมูล</td><td>field อะไรบ้าง ชนิดอะไร จำเป็นไหม</td></tr>
+    <tr><td>รายการ endpoint</td><td>method + path + ทำอะไร</td></tr>
+    <tr><td>request body</td><td>ส่งอะไรไป — พร้อมตัวอย่างจริง</td></tr>
+    <tr><td>response ทุกกรณี</td><td>สำเร็จได้อะไร · ผิดพลาดได้อะไร</td></tr>
+    <tr><td>status code</td><td>กรณีไหนได้อะไร</td></tr>
+    <tr><td>รูปแบบ error</td><td>ฝั่ง front-end จะได้เขียนโค้ดจัดการได้ถูก</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 เราใช้ contract นี้มาตลอดโดยไม่รู้ตัว</span>
+    <p style="margin:0">ตอน Week 05 เราออกแบบ <code>requestService.js</code> ให้มี 4 ฟังก์ชันที่ตรงกับ REST endpoint · <strong>นั่นคือการวาง contract ไว้ล่วงหน้า</strong> · Week 06 สร้าง API ให้ตรง · Week 07 ต่อเข้าด้วยกันได้โดยแทบไม่ต้องปรับอะไร — <strong>เพราะสองฝั่งทำตามข้อตกลงเดียวกัน</strong></p>
+  </div>
+
+  <div class="box takehome">
+    <span class="h">🏠 งานที่บ้าน · CP15</span>
+    <p style="margin:0">เขียน <code>API_CONTRACT.md</code> ให้ครบทั้ง 5 endpoint พร้อมตัวอย่าง request/response จริง · มี template ให้ใน <code>templates/api-contract-template.md</code> ของ course repo</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 9</span>
+    <ul>
+      <li>API Contract คือข้อตกลงว่าสองฝั่งจะคุยกันอย่างไร</li>
+      <li>ทำให้ front-end กับ back-end ทำงานคู่ขนานกันได้ ไม่ต้องรอกัน</li>
+      <li>ต้องมี: โครงข้อมูล · endpoint · request · response ทุกกรณี · status code · รูปแบบ error</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 10 ════════ -->
+<section class="ch" id="c10">
+  <p class="ch-num">บทที่ 10</p>
+  <h2>Automated Test และสรุปหน่วยที่ 3</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <h3>10.1 ทำไมต้องเขียน test เอง ทั้งที่มี checker แล้ว</h3>
+
+  <table class="d">
+    <tr><th></th><th>checker ของวิชา</th><th>test ที่คุณเขียนเอง</th></tr>
+    <tr><td>ใครเขียน</td><td>ผู้สอน</td><td><strong>คุณ</strong></td></tr>
+    <tr><td>ตรวจอะไร</td><td>สิ่งที่โจทย์กำหนด</td><td><strong>สิ่งที่คุณคิดว่าสำคัญ</strong></td></tr>
+    <tr><td>ใช้ตอนไหน</td><td>ตอนส่งงาน</td><td>ทุกครั้งที่แก้โค้ด</td></tr>
+    <tr><td>ในงานจริง</td><td>ไม่มี</td><td><strong>มีเสมอ</strong></td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 ประโยชน์จริงของ test</span>
+    <p style="margin:0">ไม่ใช่ "พิสูจน์ว่าโค้ดถูก" แต่คือ <strong>"รู้ทันทีเมื่อของเดิมพัง"</strong> · เหมือน regression checklist ที่เราทำด้วยมือใน Week 05 แต่รันอัตโนมัติในไม่กี่วินาที</p>
+  </div>
+
+  <h3>10.2 โครงของ test</h3>
+
+<pre><code><span class="c-key">import</span> { test, before, describe } <span class="c-key">from</span> <span class="c-str">'node:test'</span>;
+<span class="c-key">import</span> assert <span class="c-key">from</span> <span class="c-str">'node:assert/strict'</span>;
+<span class="c-key">import</span> request <span class="c-key">from</span> <span class="c-str">'supertest'</span>;
+
+<span class="c-fn">describe</span>(<span class="c-str">'GET /api/requests'</span>, () => {
+  <span class="c-fn">test</span>(<span class="c-str">'คืนรายการทั้งหมด พร้อม status 200'</span>, <span class="c-key">async</span> () => {
+    <span class="c-key">const</span> res = <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">get</span>(<span class="c-str">'/api/requests'</span>);
+    assert.<span class="c-fn">equal</span>(res.status, <span class="c-num">200</span>);
+    assert.<span class="c-fn">ok</span>(<span class="c-fn">Array.isArray</span>(res.body));
+  });
+});</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 supertest ยิง request จริงโดยไม่ต้องเปิดเซิร์ฟเวอร์</span>
+    <p style="margin:0">มันสร้างเซิร์ฟเวอร์ชั่วคราวขึ้นมาเองแล้วปิดให้อัตโนมัติ · <strong>จึงรัน test พร้อมกันหลายไฟล์ได้โดยไม่ชนพอร์ต</strong> และไม่ต้องจำว่าต้องเปิด API ก่อน</p>
+  </div>
+
+  <h3>10.3 สรุปหน่วยที่ 3 — เราทำอะไรมาบ้าง</h3>
+
+  <figure>
+    <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="สรุปหน่วยที่ 3">
+      <style>
+        .t10{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s10{font:300 11px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+      </style>
+      <rect x="30" y="30" width="330" height="150" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5" rx="8"/>
+      <text x="50" y="22" style="font:600 10.5px 'IBM Plex Mono',monospace;fill:#1E7A54;letter-spacing:.08em">WEEK 06</text>
+      <text x="50" y="55" class="t10">สร้าง API ให้ทำงานได้</text>
+      <text x="50" y="80" class="s10">• Express server + routing</text>
+      <text x="50" y="100" class="s10">• middleware + validation</text>
+      <text x="50" y="120" class="s10">• CRUD ครบ 4 endpoint</text>
+      <text x="50" y="140" class="s10">• status code ถูกตามสถานการณ์</text>
+      <text x="50" y="163" class="s10">ทดสอบด้วย Postman</text>
+
+      <rect x="400" y="30" width="330" height="150" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5" rx="8"/>
+      <text x="420" y="22" style="font:600 10.5px 'IBM Plex Mono',monospace;fill:#186B8C;letter-spacing:.08em">WEEK 07</text>
+      <text x="420" y="55" class="t10">ทำให้ใช้งานจริงได้</text>
+      <text x="420" y="80" class="s10">• CORS + environment config</text>
+      <text x="420" y="100" class="s10">• เชื่อม React กับ API</text>
+      <text x="420" y="120" class="s10">• loading / error state</text>
+      <text x="420" y="140" class="s10">• API contract + automated test</text>
+      <text x="420" y="163" class="s10">ทดสอบด้วยแอปจริง + test</text>
+
+      <rect x="30" y="192" width="700" height="34" fill="#F1EAF8" stroke="#6B3B96" rx="6"/>
+      <text x="380" y="214" text-anchor="middle" class="t10" fill="#6B3B96">จบหน่วยที่ 3 — คุณสร้าง full-stack application ที่ทำงานได้จริงทั้งระบบ</text>
+    </svg>
+    <figcaption><b>ภาพที่ 7</b>Week 06 ทำให้ API ทำงานได้ · Week 07 ทำให้ทั้งระบบใช้งานได้จริง</figcaption>
+  </figure>
+
+  <h3>10.4 Checkpoint ทั้งหมดของสัปดาห์นี้</h3>
+
+  <table class="d">
+    <tr><th style="width:80px">CP</th><th>ทำอะไร</th><th style="width:60px">อ่านบท</th><th style="width:56px">ที่ไหน</th></tr>
+    <tr><td><strong>CP09</strong></td><td>เจอ CORS error ด้วยตาตัวเอง</td><td>2, 3</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP10</strong></td><td>เปิด CORS + environment config</td><td>3, 4</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP11</strong></td><td>apiClient + แก้ requestService</td><td>5, 6</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP12</strong></td><td>loading + error state</td><td>7</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP13</strong></td><td>PUT เปลี่ยนสถานะ ทั้ง API และ React</td><td>6</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP14</strong></td><td>morgan + error handling ระดับ production</td><td>8</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP15</strong></td><td>เขียน API Contract</td><td>9</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP16</strong></td><td>automated test อย่างน้อย 6 เคส</td><td>10</td><td><span class="wheretag home">🏠</span></td></tr>
+  </table>
+
+  <div class="box inclass">
+    <span class="h">🏫 ทำในห้อง · CP09–CP12</span>
+    <p style="margin:0">จบคาบทุกคนมี <strong>แอป Campus Service Request ที่ทำงานกับ API จริง</strong> — เปิดสองหน้าต่าง เห็นข้อมูลไหลจาก API เข้าหน้าจอ</p>
+  </div>
+
+  <div class="box takehome">
+    <span class="h">🏠 ทำที่บ้าน · CP13–CP16</span>
+    <p style="margin:0">ทำให้ครบสมบูรณ์ — PUT, logging, contract, test · ส่งผ่าน git branch <code>unit3/week-07</code> + tag <code>lab-07-submission-v1</code></p>
+  </div>
+
+  <div class="box next">
+    <span class="h">🟦 ก่อนเข้าคาบ</span>
+    <p style="margin:0">อ่านบทที่ 1–3 มาก่อน (สถานะปัจจุบัน · Origin · CORS) · ถ้าไม่เข้าใจเรื่อง CORS ช่วงลงมือจะงงว่ากำลังแก้อะไรอยู่ · และ<strong>ตรวจว่าโปรเจกต์ Week 05 กับ Week 06 ของคุณยังเปิดได้</strong> เพราะสัปดาห์นี้ต้องใช้ทั้งคู่</p>
+  </div>
+</section>
+
+<footer>
+  <span>ENGSE203 · หน่วยที่ 3 · การพัฒนาส่วนหลังและบริการ RESTful API ด้วย Node.js</span>
+  <span class="m">Week 07 · CLO4 · เอกสารประกอบการสอน</span>
+</footer>
+
+</div>
+</body>
+</html>

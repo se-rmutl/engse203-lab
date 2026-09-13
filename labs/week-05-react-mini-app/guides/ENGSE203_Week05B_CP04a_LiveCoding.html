@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ENGSE203 Week 05B — CP04a ทำตามบนจอ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fs:1;
+  --ink:#f0ecff; --muted:#b8b0d8; --line:rgba(184,176,216,.22);
+  --violet:#b98cf5; --cyan:#38d7ed; --green:#4ade80; --amber:#fbbf24; --red:#fb7185;
+  --panel:rgba(27,21,64,.74); --code:#08061a;
+  font-size:calc(16px * var(--fs));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 12% 10%,rgba(185,140,245,.15),transparent 32%),
+             radial-gradient(circle at 88% 84%,rgba(56,215,237,.12),transparent 34%),#05040f;
+  color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;
+  padding:0 20px 90px;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{padding:38px 0 22px;border-bottom:2px solid var(--line);margin-bottom:22px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;color:var(--violet);text-transform:uppercase}
+h1{font-size:2.3rem;font-weight:700;line-height:1.15;margin:.4rem 0 .3rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-weight:300;font-size:1.05rem}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.pill{font-size:.76rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;
+  border:1px solid var(--line);background:rgba(185,140,245,.09);color:var(--violet)}
+.pill.a{color:var(--amber);background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3)}
+.pill.g{color:var(--green);background:rgba(74,222,128,.09);border-color:rgba(74,222,128,.3)}
+.pill.c{color:var(--cyan);background:rgba(56,215,237,.09);border-color:rgba(56,215,237,.3)}
+.pill.r{color:var(--red);background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.3)}
+
+.jump{position:sticky;top:0;z-index:15;display:flex;gap:.4rem;flex-wrap:wrap;
+  padding:.7rem 0;margin-bottom:8px;background:rgba(5,4,15,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.jump a{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.76rem;
+  padding:.32rem .7rem;border-radius:8px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(20,16,47,.85)}
+.jump a:hover{color:var(--violet);border-color:var(--violet)}
+.jump a.now{color:#0d0a24;background:var(--violet);border-color:var(--violet);font-weight:600}
+
+.step{margin:30px 0;border:1px solid var(--line);border-radius:16px;background:var(--panel);
+  overflow:hidden;scroll-margin-top:70px}
+.step-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;
+  background:rgba(185,140,245,.08);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.num{min-width:38px;height:38px;padding:0 .7rem;flex:0 0 auto;border-radius:19px;
+  display:grid;place-items:center;background:var(--violet);color:#0d0a24;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.92rem}
+.step-head h2{font-size:1.2rem;font-weight:700;line-height:1.3}
+.step-head .file{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted);margin-left:auto}
+.step-body{padding:1.15rem 1.3rem}
+p{margin-bottom:.7rem;font-size:1rem}
+
+.say,.warn,.ok,.vio{padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.say{border-left:3px solid var(--amber);background:rgba(251,191,36,.08)}
+.warn{border-left:3px solid var(--red);background:rgba(251,113,133,.08)}
+.ok{border-left:3px solid var(--green);background:rgba(74,222,128,.08)}
+.vio{border-left:3px solid var(--cyan);background:rgba(56,215,237,.09)}
+.say b,.warn b,.ok b,.vio b{font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+.say b{color:var(--amber)} .warn b{color:var(--red)} .ok b{color:var(--green)} .vio b{color:var(--cyan)}
+
+.codewrap{position:relative;margin:.7rem 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;
+  padding:1rem 1.15rem;overflow-x:auto;font-size:.9rem;line-height:1.72}
+code{font-family:'IBM Plex Mono',monospace}
+pre code{color:#dcd7f2}
+.k{color:#9fbcff}.s{color:#8de3a5}.c{color:#8b83ad;font-style:italic}
+.f{color:#f3d38a}.t{color:#68d8d2}.d{color:#fb7185}.hl{color:#ffd97a;font-weight:600}
+.copy{position:absolute;top:.55rem;right:.6rem;background:rgba(20,16,47,.95);
+  border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:.25rem .65rem;font-size:.74rem;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--violet);border-color:var(--violet)}
+
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:.7rem 0}
+th{text-align:left;padding:.6rem .7rem;color:var(--violet);font-size:.8rem;
+  font-weight:600;border-bottom:1px solid var(--line);letter-spacing:.04em}
+td{padding:.6rem .7rem;border-bottom:1px solid rgba(184,176,216,.1);vertical-align:top}
+tr:last-child td{border-bottom:none}
+ul{margin:.3rem 0 .6rem 1.2rem}li{margin-bottom:.35rem}
+
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem 0;
+  border-bottom:1px solid rgba(184,176,216,.1)}
+.check:last-child{border-bottom:none}
+.box{width:22px;height:22px;flex:0 0 22px;border:2px solid var(--muted);border-radius:5px;
+  cursor:pointer;display:grid;place-items:center;font-size:.85rem;color:transparent;
+  transition:all .15s;margin-top:.15rem}
+.box.on{background:var(--green);border-color:var(--green);color:#0d0a24}
+
+.trap{border:1px solid rgba(251,113,133,.4);border-radius:14px;
+  background:rgba(251,113,133,.07);padding:1rem 1.15rem;margin:.8rem 0}
+.trap h3{color:var(--red);font-size:1.03rem;margin-bottom:.4rem;display:flex;gap:.5rem;
+  align-items:center;flex-wrap:wrap}
+.trap h3 span{font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  background:rgba(251,113,133,.2);padding:.15rem .5rem;border-radius:5px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.35rem;display:block}
+.tag.b{color:var(--red)} .tag.a{color:var(--green)}
+
+.hud{position:fixed;bottom:14px;right:16px;display:flex;gap:.4rem;z-index:20}
+.hud button{background:rgba(20,16,47,.94);border:1px solid var(--line);border-radius:9px;
+  padding:.3rem .65rem;font-size:.78rem;color:var(--muted);cursor:pointer;font-family:inherit}
+.hud button:hover{color:var(--violet);border-color:var(--violet)}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.84rem;color:var(--muted);font-weight:300;display:flex;
+  justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.nav{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
+.nav a{text-decoration:none;font-size:.84rem;padding:.45rem .9rem;border-radius:10px;
+  border:1px solid var(--line);color:var(--muted);background:rgba(20,16,47,.7)}
+.nav a:hover{color:var(--violet);border-color:var(--violet)}
+
+@media (max-width:820px){.split{grid-template-columns:1fr}}
+@media print{body{background:#fff;color:#111}.hud,.jump{display:none}
+  pre{background:#f4f6f9;border-color:#ccc}pre code{color:#111}.step{break-inside:avoid}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">ENGSE203 · Week 05B · Checkpoint 04a</p>
+  <h1>ทำให้ข้อมูลอยู่ต่อได้</h1>
+  <p class="sub">พิมพ์ตาม 2 ช่วงแรก → ดูผู้สอนที่ช่วง 3 → ทำเอง 2 ช่วงหลัง · 55 นาที</p>
+  <div class="pills">
+    <span class="pill a">TODO 5B-B · 5B-A · 5B-1..6</span>
+    <span class="pill">แก้ 4 ไฟล์</span>
+    <span class="pill g">117 → 130 / 133</span>
+    <span class="pill c">checker จับกับดักได้ทุกอัน</span>
+  </div>
+</header>
+
+<nav class="jump">
+  <a href="#s0">ภาพรวม</a>
+  <a href="#s1">04a-1 เขียน</a>
+  <a href="#s2">04a-2 อ่าน</a>
+  <a href="#s3">04a-3 ⭐</a>
+  <a href="#s4">04a-4 เพิ่ม</a>
+  <a href="#s5">04a-5 ลบ/คืนค่า</a>
+  <a href="#traps">กับดัก</a>
+  <a href="#done">ผ่าน CP</a>
+</nav>
+
+<div class="step" id="s0">
+  <div class="step-head"><span class="num">?</span><h2>ภาพรวมของช่วงนี้</h2></div>
+  <div class="step-body">
+    <p>คาบที่แล้วเราทำให้ข้อมูล<strong>ไหลเข้ามา</strong>ได้ · ช่วงนี้เราจะทำให้มัน<strong>อยู่ต่อ</strong>ได้</p>
+    <table>
+      <tr><th style="width:78px">ช่วง</th><th style="width:56px">นาที</th><th>ทำอะไร</th><th style="width:30%">จบแล้วต้องเห็น</th></tr>
+      <tr><td><b>04a-1</b></td><td>12</td><td><code>5B-B</code> เขียนลงที่เก็บ</td><td>DevTools เห็น envelope</td></tr>
+      <tr><td><b>04a-2</b></td><td>15</td><td><code>5B-A</code> อ่านพื้นฐาน + <code>5B-1</code> <code>5B-2</code></td><td>ยังไม่เห็นอะไรเปลี่ยน</td></tr>
+      <tr style="background:rgba(185,140,245,.12)"><td><b>04a-3</b></td><td>3</td><td><b>เปลี่ยน 1 บรรทัด ← หยุดฟังพร้อมกัน</b></td><td>ข้อมูลมาจาก storage แล้ว</td></tr>
+      <tr><td><b>04a-4</b></td><td>15</td><td><code>5B-4</code> เพิ่มคำร้อง + <code>5B-CP04a</code></td><td>เพิ่มแล้วเด้งไปเห็นข้อมูลจริง</td></tr>
+      <tr><td><b>04a-5</b></td><td>10</td><td><code>5B-5</code> <code>5B-6</code> ลบ · คืนค่า</td><td>ลบแล้ว refresh ไม่กลับมา</td></tr>
+    </table>
+    <div class="say">
+      <b>ประกาศก่อนเริ่ม</b>
+      "วันนี้มีช่วงหนึ่งที่ผมอยากให้ทุกคนหยุดมือแล้วดูพร้อมกัน คือ<strong>ช่วงที่สาม</strong> เดี๋ยวผมจะบอกเมื่อถึงเวลา"
+      <br><small>การประกาศล่วงหน้าทำให้ผู้เรียนไม่รีบทำข้ามไป</small>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s1">
+  <div class="step-head"><span class="num">04a-1</span><h2>เขียนข้อมูลลงที่เก็บ</h2>
+    <span class="file">src/services/requestStorage.js</span></div>
+  <div class="step-body">
+    <p>ทำ <code>TODO 5B-B</code> — สิ่งที่เขียนลงไปไม่ใช่ array ตรง ๆ แต่เป็น <strong>envelope</strong></p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">export function</span> <span class="f">writeStoredRequests</span>(requests) {
+  <span class="k">if</span> (!<span class="f">validateRequests</span>(requests)) {
+    <span class="k">throw new</span> <span class="f">Error</span>(<span class="s">'ไม่สามารถบันทึกข้อมูลคำร้องที่ไม่ตรง schema ได้'</span>);
+  }
+
+  <span class="f">localStorage</span>.<span class="f">setItem</span>(STORAGE_KEY, <span class="hl">JSON.stringify</span>({
+    schemaVersion: SCHEMA_VERSION,
+    updatedAt: <span class="k">new</span> <span class="f">Date</span>().<span class="f">toISOString</span>(),
+    requests: <span class="f">structuredClone</span>(requests),
+  }));
+}</code></pre></div>
+    <div class="say">
+      <b>ชี้ให้เห็น 3 จุด</b>
+      <strong>หนึ่ง</strong> — ที่นี่ <code>throw</code> ได้ เพราะการเขียนข้อมูลผิดรูปแบบเป็นความผิดพลาดของโปรแกรมเราเอง
+      ต่างจาก <code>readStoredRequests()</code> ที่ห้าม throw เด็ดขาด
+      <br><strong>สอง</strong> — <code>JSON.stringify</code> ห้ามลืม ไม่งั้นได้ <code>"[object Object]"</code> แบบไม่มี error เตือน
+      <br><strong>สาม</strong> — <code>structuredClone</code> ทำให้ข้อมูลที่เก็บเป็นสำเนาของตัวเอง ผู้เรียกแก้ทีหลังก็ไม่กระทบ
+    </div>
+    <div class="ok">
+      <b>ทดสอบก่อนไปต่อ</b>
+      DevTools → Application → Local Storage → ต้องเห็นคีย์ <code>engse203-campus-requests-v1</code>
+      และค่าที่เป็นข้อความ JSON ที่<strong>อ่านออก</strong>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s2">
+  <div class="step-head"><span class="num">04a-2</span><h2>อ่านจากที่เก็บ — ฉบับพื้นฐาน</h2>
+    <span class="file">requestStorage.js · requestService.js</span></div>
+  <div class="step-body">
+    <div class="warn">
+      <b>รอบนี้ทำแค่พื้นฐาน</b>
+      การตรวจ <code>schemaVersion</code> และ <code>validateRequests</code> เป็นงานของ <strong>CP04b</strong>
+      อย่าเพิ่งทำตอนนี้ — เราจะเห็นเหตุผลว่าทำไมถึงต้องมีในช่วงบ่าย
+    </div>
+    <p><strong>ก่อน</strong> — <code>TODO 5B-A</code> ใน <code>requestStorage.js</code></p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">export function</span> <span class="f">readStoredRequests</span>() {
+  <span class="k">const</span> rawValue = <span class="f">localStorage</span>.<span class="f">getItem</span>(STORAGE_KEY);
+  <span class="k">if</span> (rawValue === <span class="k">null</span>) <span class="k">return</span> { status: <span class="s">'missing'</span> };
+
+  <span class="k">try</span> {
+    <span class="k">const</span> envelope = <span class="f">JSON.parse</span>(rawValue);
+    <span class="c">// TODO 5B-A2: ตรวจ schemaVersion และ validateRequests ให้ครบใน CP04b</span>
+    <span class="k">return</span> { status: <span class="s">'valid'</span>, requests: <span class="f">structuredClone</span>(envelope.requests) };
+  } <span class="k">catch</span> {
+    <span class="k">return</span> { status: <span class="s">'invalid'</span>, reason: <span class="s">'ข้อมูลที่บันทึกไว้ไม่ใช่ JSON ที่อ่านได้'</span> };
+  }
+}</code></pre></div>
+    <div class="warn">
+      <b>ห้าม throw ออกจากฟังก์ชันนี้เด็ดขาด</b>
+      ถ้า throw หน้าจอจะพังทั้งหน้า · ต้อง<strong>คืนสถานะกลับไปให้ผู้เรียกตัดสินใจ</strong>แทน
+      <br>นี่คือเหตุผลที่ฟังก์ชันนี้คืน object ที่มี <code>status</code> ไม่ใช่คืน array ตรง ๆ
+    </div>
+
+    <p style="margin-top:1rem"><strong>จากนั้น</strong> — <code>TODO 5B-1</code> เปิด import และ <code>TODO 5B-2</code> ใน <code>requestService.js</code></p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">import</span> { clearStoredRequests, readStoredRequests, writeStoredRequests } <span class="k">from</span> <span class="s">'./requestStorage.js'</span>;
+
+<span class="k">async function</span> <span class="f">loadNormalRequests</span>() {
+  <span class="k">const</span> stored = <span class="f">readStoredRequests</span>();
+  <span class="k">if</span> (stored.status === <span class="s">'valid'</span>) <span class="k">return</span> stored.requests;
+
+  <span class="k">const</span> seedRequests = <span class="k">await</span> <span class="f">fetchSeedRequests</span>();
+  <span class="f">writeStoredRequests</span>(seedRequests);
+  <span class="c">// TODO 5B-2b: แจ้งผู้ใช้เมื่อกู้ข้อมูลจากของเสีย (ทำใน CP04b)</span>
+  <span class="k">return</span> seedRequests;
+}</code></pre></div>
+    <div class="say">
+      <b>ตอนนี้ยังไม่มีอะไรเปลี่ยนบนหน้าจอ</b>
+      เพราะยังไม่มีใครเรียก <code>loadNormalRequests()</code> เลย
+      <br><strong>ช่วงถัดไปคือช่วงที่ทุกอย่างเชื่อมกัน</strong>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s3" style="border-color:rgba(185,140,245,.6);border-width:2px">
+  <div class="step-head" style="background:rgba(185,140,245,.16)">
+    <span class="num">04a-3</span><h2>⭐ เปลี่ยนบรรทัดเดียว</h2>
+    <span class="file">3 นาที · I do</span></div>
+  <div class="step-body">
+    <div class="vio">
+      <b>ช่วงนี้มีหน้าจอแยกต่างหาก</b>
+      ให้เปิดไฟล์ <strong>CP04a-3</strong> ขึ้นฉายแทน แล้วเดินตามสคริปต์ 6 ขั้นในนั้น
+      <br>เพราะช่วงนี้ต้องหยุดทั้งห้อง แจกกระดาษคืน และให้เวลาทาย — ไม่ใช่แค่พิมพ์โค้ด
+    </div>
+    <p>สรุปสั้น ๆ ว่าเกิดอะไรขึ้น</p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="c">// ใน getRequests() ของ requestService.js</span>
+<span class="d">- return fetchSeedRequests();</span>
+<span class="s">+ return loadNormalRequests();</span></code></pre></div>
+    <div class="ok">
+      <b>ผลลัพธ์</b>
+      หน้าจอเหมือนเดิมทุกอย่าง แต่ข้อมูลมาจาก Local Storage แล้ว
+      · <strong><code>DashboardPage.jsx</code> ไม่ต้องแก้แม้แต่บรรทัดเดียว</strong>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s4">
+  <div class="step-head"><span class="num">04a-4</span><h2>เพิ่มคำร้องใหม่</h2>
+    <span class="file">requestService.js · NewRequestPage.jsx</span></div>
+  <div class="step-body">
+    <p><code>TODO 5B-4</code> — ส่วนตรวจข้อมูลและสร้างรหัส</p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">function</span> <span class="f">readText</span>(value) {
+  <span class="k">return typeof</span> value === <span class="s">'string'</span> ? value.<span class="f">trim</span>() : <span class="s">''</span>;
+}
+
+<span class="k">function</span> <span class="f">validateRequestInput</span>(input) {
+  <span class="k">if</span> (!input) <span class="k">throw new</span> <span class="f">Error</span>(<span class="s">'ข้อมูลคำร้องไม่ถูกต้อง'</span>);
+  <span class="k">if</span> (<span class="f">readText</span>(input.requesterName).length &lt; <span class="s">2</span>) <span class="k">throw new</span> <span class="f">Error</span>(<span class="s">'ชื่อผู้แจ้งไม่ถูกต้อง'</span>);
+  <span class="k">if</span> (!<span class="f">readText</span>(input.requestType)) <span class="k">throw new</span> <span class="f">Error</span>(<span class="s">'กรุณาเลือกประเภทคำร้อง'</span>);
+  <span class="k">if</span> (!<span class="f">readText</span>(input.location)) <span class="k">throw new</span> <span class="f">Error</span>(<span class="s">'กรุณาระบุสถานที่'</span>);
+  <span class="k">if</span> (<span class="f">readText</span>(input.details).length &lt; <span class="s">10</span>) <span class="k">throw new</span> <span class="f">Error</span>(<span class="s">'รายละเอียดต้องมีอย่างน้อย 10 ตัวอักษร'</span>);
+  <span class="k">if</span> (![<span class="s">'normal'</span>, <span class="s">'urgent'</span>].<span class="f">includes</span>(input.priority)) <span class="k">throw new</span> <span class="f">Error</span>(<span class="s">'ความเร่งด่วนไม่ถูกต้อง'</span>);
+}
+
+<span class="k">function</span> <span class="f">createRequestId</span>(requests) {
+  <span class="k">let</span> id;
+  <span class="k">do</span> {
+    <span class="k">const</span> time = <span class="f">Date</span>.<span class="f">now</span>().<span class="f">toString</span>(<span class="s">36</span>).<span class="f">toUpperCase</span>();
+    <span class="k">const</span> random = <span class="f">Math</span>.<span class="f">random</span>().<span class="f">toString</span>(<span class="s">36</span>).<span class="f">slice</span>(<span class="s">2</span>, <span class="s">6</span>).<span class="f">toUpperCase</span>();
+    id = <span class="s">`REQ-${time}-${random}`</span>;
+  } <span class="k">while</span> (requests.<span class="f">some</span>((request) =&gt; request.id === id));
+  <span class="k">return</span> id;
+}
+
+<span class="k">export async function</span> <span class="f">addRequest</span>(requestInput) {
+  <span class="f">validateRequestInput</span>(requestInput);
+  <span class="k">const</span> requests = <span class="k">await</span> <span class="f">getRequests</span>();
+  <span class="k">const</span> newRequest = {
+    id: <span class="f">createRequestId</span>(requests),
+    requesterName: requestInput.requesterName.<span class="f">trim</span>(),
+    requestType: requestInput.requestType,
+    location: requestInput.location.<span class="f">trim</span>(),
+    details: requestInput.details.<span class="f">trim</span>(),
+    priority: requestInput.priority,
+    status: <span class="s">'pending'</span>,
+  };
+  <span class="hl">writeStoredRequests([...requests, newRequest]);</span>   <span class="c">← บันทึกให้เสร็จก่อน</span>
+  <span class="k">return</span> <span class="f">structuredClone</span>(newRequest);
+}</code></pre></div>
+
+    <div class="trap">
+      <h3><span>Live-coding</span> ทำไม <code>readText</code> ถึงจำเป็น</h3>
+      <p style="margin:.4rem 0">ผู้สอนพิมพ์แบบผิดให้ดูก่อน แล้วรันใน Console</p>
+      <div class="codewrap">
+<pre><code><span class="k">const</span> input = { requestType: <span class="s">'แจ้งซ่อม'</span>, location: <span class="s">'A'</span>, details: <span class="s">'รายละเอียดครบสิบตัว'</span> };
+input.requesterName<span class="d">?.</span><span class="f">trim</span>().length &lt; <span class="s">2</span>   <span class="c">→ false  ← ไม่มีชื่อเลย แต่ผ่าน!</span></code></pre></div>
+      <p style="margin:0"><strong>เฉลย</strong> — <code>?.</code> เจอ <code>undefined</code> แล้วลัดวงจร ทั้งนิพจน์เป็น <code>undefined</code>
+      และ <code>undefined &lt; 2</code> ให้ <code>false</code> เงียบ ๆ → หลุดไปพังเป็น <code>TypeError</code> ที่บรรทัดถัดไป
+      ซึ่งผู้ใช้จะเห็นข้อความภาษาโปรแกรมเมอร์แทน "กรุณากรอกชื่อ"</p>
+    </div>
+
+    <p style="margin-top:1rem"><code>TODO 5B-CP04a</code> ใน <code>NewRequestPage.jsx</code></p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">import</span> { useNavigate } <span class="k">from</span> <span class="s">'react-router-dom'</span>;
+<span class="k">import</span> RequestForm <span class="k">from</span> <span class="s">'../components/RequestForm.jsx'</span>;
+<span class="k">import</span> { addRequest } <span class="k">from</span> <span class="s">'../services/requestService.js'</span>;
+
+<span class="k">function</span> <span class="f">NewRequestPage</span>() {
+  <span class="k">const</span> navigate = <span class="f">useNavigate</span>();
+
+  <span class="k">async function</span> <span class="f">handleAddRequest</span>(input) {
+    <span class="k">const</span> created = <span class="k">await</span> <span class="f">addRequest</span>(input);
+    <span class="f">navigate</span>(<span class="s">`/requests/${created.id}`</span>);
+  }
+
+  <span class="k">return</span> (
+    <span class="t">&lt;section</span> <span class="k">data-testid</span>=<span class="s">"page-new-request"</span><span class="t">&gt;</span>
+      <span class="c">… page-heading …</span>
+      <span class="t">&lt;section</span> <span class="k">className</span>=<span class="s">"panel form-panel"</span><span class="t">&gt;</span>
+        <span class="t">&lt;RequestForm</span> <span class="k">onAddRequest</span>={handleAddRequest} <span class="t">/&gt;</span>
+      <span class="t">&lt;/section&gt;</span>
+    <span class="t">&lt;/section&gt;</span>
+  );
+}</code></pre></div>
+    <div class="ok">
+      <b>ทดสอบ</b>
+      เพิ่มคำร้อง → ต้องเด้งไปหน้ารายละเอียด <strong>และเห็นข้อมูลจริง</strong>
+      <br>ถ้าเจอ "ไม่พบคำร้อง" แสดงว่ายังไม่ได้ทำ 04a-3
+    </div>
+  </div>
+</div>
+
+<div class="step" id="s5">
+  <div class="step-head"><span class="num">04a-5</span><h2>ลบ · คืนค่า · ปุ่ม Reset</h2>
+    <span class="file">requestService.js · DashboardPage.jsx</span></div>
+  <div class="step-body">
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">export async function</span> <span class="f">deleteRequest</span>(requestId) {
+  <span class="k">const</span> requests = <span class="k">await</span> <span class="f">getRequests</span>();
+  <span class="k">const</span> nextRequests = requests.<span class="f">filter</span>((request) =&gt; request.id !== requestId);
+  <span class="f">writeStoredRequests</span>(nextRequests);
+  <span class="k">return</span> <span class="f">structuredClone</span>(nextRequests);
+}
+
+<span class="k">export async function</span> <span class="f">resetRequests</span>() {
+  <span class="hl">clearStoredRequests();</span>                <span class="c">← removeItem ไม่ใช่ clear()</span>
+  <span class="k">const</span> seedRequests = <span class="k">await</span> <span class="f">fetchSeedRequests</span>();
+  <span class="f">writeStoredRequests</span>(seedRequests);
+  <span class="k">return</span> <span class="f">structuredClone</span>(seedRequests);
+}</code></pre></div>
+
+    <p><strong>แก้ <code>handleDelete</code> ใน Dashboard</strong> — เดิมลบแค่ใน state</p>
+    <div class="split">
+      <div><span class="tag b">คาบที่แล้ว</span>
+<pre><code><span class="d">function handleDelete(requestId) {</span>
+<span class="d">  setRequests((c) =&gt; c.filter(…));</span>
+<span class="d">  setNotice('ลบในหน่วยความจำแล้ว…');</span>
+<span class="d">}</span></code></pre></div>
+      <div><span class="tag a">วันนี้</span>
+        <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">async function</span> <span class="f">handleDelete</span>(requestId) {
+  <span class="k">const</span> next = <span class="k">await</span> <span class="f">deleteRequest</span>(requestId);
+  <span class="f">setRequests</span>(next);
+  <span class="f">setNotice</span>(<span class="s">`ลบคำร้อง ${requestId} แล้ว`</span>);
+}</code></pre></div></div>
+    </div>
+
+    <p style="margin-top:1rem"><strong>ปุ่ม Reset</strong> — ต้องมี <code>data-testid="reset-button"</code></p>
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">async function</span> <span class="f">handleReset</span>() {
+  <span class="k">if</span> (!<span class="f">window</span>.<span class="f">confirm</span>(<span class="s">'คืนค่าข้อมูลตัวอย่างเริ่มต้น และลบคำร้องที่เพิ่มไว้ทั้งหมด?'</span>)) <span class="k">return</span>;
+  <span class="k">const</span> seedRequests = <span class="k">await</span> <span class="f">resetRequests</span>();
+  <span class="f">setRequests</span>(seedRequests);
+  <span class="f">setStatusFilter</span>(<span class="s">'all'</span>);
+  <span class="f">setNotice</span>(<span class="s">'คืนค่าข้อมูลตัวอย่างเรียบร้อยแล้ว'</span>);
+}
+
+<span class="c">// ใน page-heading</span>
+<span class="t">&lt;button</span> <span class="k">className</span>=<span class="s">"button ghost"</span> <span class="k">data-testid</span>=<span class="s">"reset-button"</span> <span class="k">type</span>=<span class="s">"button"</span> <span class="k">onClick</span>={handleReset}<span class="t">&gt;</span>
+  Reset Demo Data
+<span class="t">&lt;/button&gt;</span></code></pre></div>
+  </div>
+</div>
+
+<div class="step" id="traps">
+  <div class="step-head"><span class="num" style="background:var(--red)">!</span>
+    <h2>สี่กับดัก — และข่าวดี</h2></div>
+  <div class="step-body">
+    <div class="ok">
+      <b>ต่างจากคาบ 5A อย่างชัดเจน</b>
+      กับดักของ CP นี้ <strong>checker จับได้ทั้งหมด</strong> — ต่างจาก CP03 กับ CP05a เมื่อสัปดาห์ที่แล้วที่จับไม่ได้เลย
+      <br>ให้ผู้เรียนรัน <code>npm run check</code> แล้วอ่านชื่อรายการที่แดง แล้วย้อนไปแก้ตรงนั้นได้เลย
+    </div>
+    <table>
+      <tr><th style="width:36%">ทำผิดแบบไหน</th><th style="width:12%">build</th><th>checker</th></tr>
+      <tr><td>ลืม <code>JSON.stringify</code></td><td>ผ่าน</td><td><b style="color:var(--red)">126/133</b> — ตกหลายรายการพร้อมกัน</td></tr>
+      <tr><td><code>localStorage.clear()</code></td><td>ผ่าน</td><td><code>clearStoredRequests() ลบเฉพาะคีย์ของ LAB05</code></td></tr>
+      <tr><td>add แล้วลืม <code>writeStoredRequests</code></td><td>ผ่าน</td><td><code>addRequest() … ต้องถูก persist</code></td></tr>
+      <tr><td>ตรวจข้อมูลด้วย <code>?.</code></td><td>ผ่าน</td><td><code>addRequest() ปฏิเสธข้อมูลที่ไม่ครบ…</code></td></tr>
+    </table>
+    <div class="trap">
+      <h3><span>อันตรายที่สุด</span> <code>localStorage.clear()</code></h3>
+      <p style="margin:0">ลบข้อมูลของ<strong>ทุกเว็บที่ใช้โดเมนเดียวกัน</strong> — งาน Week 03 และ Week 04 ของนักศึกษาเอง
+      บน GitHub Pages ก็จะโดนลบไปด้วย เพราะทุกโปรเจกต์อยู่ใต้ <code>username.github.io</code> เหมือนกันหมด
+      <br><strong>ต้องใช้ <code>localStorage.removeItem(STORAGE_KEY)</code> เท่านั้น</strong></p>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="done">
+  <div class="step-head"><span class="num" style="background:var(--green)">✓</span>
+    <h2>ผ่าน CP04a เมื่อ</h2></div>
+  <div class="step-body">
+    <div class="codewrap"><button class="copy" data-copy>คัดลอก</button>
+<pre><code>npm run check</code></pre></div>
+    <div class="ok"><b>ต้องได้</b><code>ผ่าน 130/133 รายการ</code> — ขยับจาก 117 ขึ้นมา 13 รายการ</div>
+    <div>
+      <div class="check"><span class="box" data-check>✓</span><span>เพิ่มคำร้อง → เด้งไปหน้ารายละเอียด <strong>และเห็นข้อมูลจริง</strong></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>ลบ → refresh ไม่กลับมา</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>Reset → ข้อมูลตัวอย่างกลับมาครบ</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>ส่งฟอร์มไม่ครบ → ขึ้นข้อความที่คนทั่วไปเข้าใจ ไม่ใช่ <code>TypeError</code></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>ถ่าย <code>persistence-add-refresh.png</code> และ <code>persistence-delete-refresh.png</code></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>กรอก TC-L5-07, 13, 14, 16, 17</span></div>
+    </div>
+    <div class="vio" style="margin-top:1rem">
+      <b>คำถาม Checkpoint</b>
+      <span style="font-size:1.1rem">เปลี่ยนจาก seed เป็น storage แล้วทำไม <code>DashboardPage</code> ไม่ต้องแก้</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>ENGSE203 · Week 05B · CP04a ทำให้ข้อมูลอยู่ต่อได้ · เอกสารสำหรับฉายบนจอ</span>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน 5B บทที่ 1, 2, 3</span>
+</footer>
+
+<div class="nav">
+  <a href="#" style="color:var(--violet);border-color:var(--violet);background:rgba(185,140,245,.14);font-weight:600">CP04a ← อยู่ที่นี่</a>
+  <a href="ENGSE203_Week05B_CP04a3_LiveCoding.html">CP04a-3</a>
+  <a href="ENGSE203_Week05B_CP04b_LiveCoding.html">CP04b</a>
+  <a href="ENGSE203_Week05B_Cleanup_LiveCoding.html">cleanup</a>
+  <a href="ENGSE203_Week05B_CP05b_CP06_LiveCoding.html">CP05b + CP06</a>
+</div>
+
+</div>
+
+<div class="hud">
+  <button id="minus">A−</button>
+  <button id="plus">A+</button>
+  <button id="full">เต็มจอ</button>
+</div>
+
+<script>
+(function(){
+  var fs = 1;
+  function setFs(v){ fs = Math.max(.75, Math.min(1.6, v));
+    document.documentElement.style.setProperty('--fs', fs); }
+  var p=document.getElementById('plus'), m=document.getElementById('minus'), f=document.getElementById('full');
+  if(p) p.onclick = function(){ setFs(fs + .08); };
+  if(m) m.onclick = function(){ setFs(fs - .08); };
+  if(f) f.onclick = function(){
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    else document.exitFullscreen && document.exitFullscreen();
+  };
+  document.addEventListener('keydown', function(e){
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === '+' || e.key === '=') setFs(fs + .08);
+    if (e.key === '-') setFs(fs - .08);
+  });
+  document.querySelectorAll('[data-check]').forEach(function(b){
+    b.onclick = function(){ b.classList.toggle('on'); };
+  });
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.onclick = function(){
+      var pre = btn.parentElement.querySelector('pre');
+      var text = pre.innerText.replace(/\s*←[^\n]*/g, '');
+      navigator.clipboard.writeText(text).then(function(){
+        var old = btn.textContent; btn.textContent = 'คัดลอกแล้ว';
+        setTimeout(function(){ btn.textContent = old; }, 1400);
+      });
+    };
+  });
+  var links = Array.prototype.slice.call(document.querySelectorAll('.jump a[href^="#"]'));
+  if (links.length){
+    var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+    function onScroll(){
+      var best = 0;
+      targets.forEach(function(el,i){ if (el && el.getBoundingClientRect().top <= 120) best = i; });
+      links.forEach(function(a,i){ a.classList.toggle('now', i === best); });
+    }
+    document.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+  }
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ENGSE203 Week 05A — CP05a ทำตามบนจอ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fs:1;
+  --ink:#eaf5ff; --muted:#a8c0d7; --line:rgba(168,192,215,.22);
+  --cyan:#38d7ed; --green:#4ade80; --amber:#fbbf24; --red:#fb7185; --violet:#c084fc;
+  --panel:rgba(10,36,66,.72); --code:#04122a;
+  font-size:calc(16px * var(--fs));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 12% 10%,rgba(56,215,237,.13),transparent 32%),
+             radial-gradient(circle at 88% 84%,rgba(77,145,255,.13),transparent 34%),#020a14;
+  color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;
+  padding:0 20px 90px;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{padding:38px 0 22px;border-bottom:2px solid var(--line);margin-bottom:26px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;color:var(--cyan);text-transform:uppercase}
+h1{font-size:2.3rem;font-weight:700;line-height:1.15;margin:.4rem 0 .3rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-weight:300;font-size:1.05rem}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.pill{font-size:.76rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;
+  border:1px solid var(--line);background:rgba(56,215,237,.08);color:var(--cyan)}
+.pill.a{color:var(--amber);background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3)}
+.pill.g{color:var(--green);background:rgba(74,222,128,.09);border-color:rgba(74,222,128,.3)}
+.pill.v{color:var(--violet);background:rgba(192,132,252,.09);border-color:rgba(192,132,252,.3)}
+.pill.r{color:var(--red);background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.3)}
+
+.step{margin:32px 0;border:1px solid var(--line);border-radius:16px;background:var(--panel);overflow:hidden}
+.step-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;
+  background:rgba(56,215,237,.07);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.num{min-width:38px;height:38px;padding:0 .7rem;flex:0 0 auto;border-radius:19px;
+  display:grid;place-items:center;background:var(--cyan);color:#04121f;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.95rem}
+.step-head h2{font-size:1.22rem;font-weight:700;line-height:1.3}
+.step-head .file{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted);margin-left:auto}
+.step-body{padding:1.15rem 1.3rem}
+p{margin-bottom:.7rem;font-size:1rem}
+
+.say,.warn,.ok,.vio{padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.say{border-left:3px solid var(--amber);background:rgba(251,191,36,.08)}
+.warn{border-left:3px solid var(--red);background:rgba(251,113,133,.08)}
+.ok{border-left:3px solid var(--green);background:rgba(74,222,128,.08)}
+.vio{border-left:3px solid var(--violet);background:rgba(192,132,252,.09)}
+.say b,.warn b,.ok b,.vio b{font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+.say b{color:var(--amber)} .warn b{color:var(--red)} .ok b{color:var(--green)} .vio b{color:var(--violet)}
+
+.codewrap{position:relative;margin:.7rem 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;
+  padding:1rem 1.15rem;overflow-x:auto;font-size:.9rem;line-height:1.72}
+code{font-family:'IBM Plex Mono',monospace}
+pre code{color:#cfe6f5}
+.k{color:#7fb4ff}.s{color:#8de3a5}.c{color:#7089a3;font-style:italic}
+.f{color:#f3d38a}.t{color:#5fd8d2}.d{color:#fb7185}.hl{color:#ffd97a;font-weight:600}
+.copy{position:absolute;top:.55rem;right:.6rem;background:rgba(10,36,66,.95);
+  border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:.25rem .65rem;font-size:.74rem;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--cyan);border-color:var(--cyan)}
+
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:.7rem 0}
+th{text-align:left;padding:.6rem .7rem;color:var(--cyan);font-size:.8rem;
+  font-weight:600;border-bottom:1px solid var(--line);letter-spacing:.04em}
+td{padding:.6rem .7rem;border-bottom:1px solid rgba(168,192,215,.1);vertical-align:top}
+tr:last-child td{border-bottom:none}
+ul{margin:.3rem 0 .6rem 1.2rem}li{margin-bottom:.35rem}
+
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem 0;border-bottom:1px solid rgba(168,192,215,.1)}
+.check:last-child{border-bottom:none}
+.box{width:22px;height:22px;flex:0 0 22px;border:2px solid var(--muted);border-radius:5px;
+  cursor:pointer;display:grid;place-items:center;font-size:.85rem;color:transparent;
+  transition:all .15s;margin-top:.15rem}
+.box.on{background:var(--green);border-color:var(--green);color:#04121f}
+
+.trap{border:1px solid rgba(251,113,133,.4);border-radius:14px;
+  background:rgba(251,113,133,.07);padding:1rem 1.15rem;margin:.8rem 0}
+.trap h3{color:var(--red);font-size:1.03rem;margin-bottom:.4rem;display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.trap h3 span{font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  background:rgba(251,113,133,.2);padding:.15rem .5rem;border-radius:5px}
+
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:.8rem 0}
+.tri{border:1px solid var(--line);border-radius:12px;padding:.85rem;background:rgba(4,18,36,.55)}
+.tri .u{font-family:'IBM Plex Mono',monospace;font-size:.85rem;margin-bottom:.4rem;display:block}
+.tri.a{border-color:rgba(74,222,128,.45)} .tri.a .u{color:var(--green)}
+.tri.b{border-color:rgba(56,215,237,.45)} .tri.b .u{color:var(--cyan)}
+.tri.c{border-color:rgba(251,113,133,.45)} .tri.c .u{color:var(--red)}
+.tri p{font-size:.88rem;margin:0}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.35rem;display:block}
+.tag.b{color:var(--red)} .tag.a{color:var(--green)}
+
+.finale{border:1px solid rgba(74,222,128,.45);border-radius:16px;
+  background:linear-gradient(150deg,rgba(74,222,128,.12),rgba(10,36,66,.8));padding:1.4rem 1.4rem}
+.big{font-family:'IBM Plex Mono',monospace;font-size:2.4rem;font-weight:600;
+  color:var(--green);line-height:1;letter-spacing:-.02em}
+
+.hud{position:fixed;bottom:14px;right:16px;display:flex;gap:.4rem;z-index:20}
+.hud button{background:rgba(10,36,66,.94);border:1px solid var(--line);border-radius:9px;
+  padding:.3rem .65rem;font-size:.78rem;color:var(--muted);cursor:pointer;font-family:inherit}
+.hud button:hover{color:var(--cyan);border-color:var(--cyan)}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.84rem;color:var(--muted);font-weight:300;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+@media (max-width:820px){.split,.three{grid-template-columns:1fr}}
+@media print{body{background:#fff;color:#111}.hud{display:none}
+  pre{background:#f4f6f9;border-color:#ccc}pre code{color:#111}.step{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">ENGSE203 · Week 05A · Checkpoint 05a</p>
+  <h1>หน้ารายละเอียดที่อ่านรหัสจาก URL</h1>
+  <p class="sub">ทำเองล้วน · 30 นาที · จุดสุดท้ายของคาบ 5A</p>
+  <div class="pills">
+    <span class="pill a">TODO 5A-3 · 5A-CP05a</span>
+    <span class="pill">แก้ 2 ไฟล์</span>
+    <span class="pill g">101 → 104 / 104</span>
+    <span class="pill v">ท่าเดียวกับ CP03</span>
+  </div>
+</header>
+
+<!-- ═══ ทำไมเลขข้าม ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num" style="background:var(--violet)">?</span>
+    <h2>ทำไมข้ามจาก CP03 มา CP05a</h2>
+  </div>
+  <div class="step-body">
+    <p>ไม่ได้พลาดอะไรไปครับ — <strong>CP04 มีอยู่จริง แต่อยู่ในคาบหน้า</strong></p>
+    <table>
+      <tr><th style="width:34%">คาบ</th><th>Checkpoints</th></tr>
+      <tr><td><strong>5A · Read Path</strong> (วันนี้)</td><td>CP00 · CP01 · CP02 · CP03 · <strong>CP05a</strong></td></tr>
+      <tr><td><strong>5B · Write Path</strong> (สัปดาห์หน้า)</td><td><strong>CP04a · CP04b</strong> · CP05b · CP06</td></tr>
+    </table>
+    <div class="say">
+      <b>เหตุผล</b>
+      เราแบ่งงานตาม<strong>ทิศทางของข้อมูล</strong> ไม่ได้แบ่งตามเลข
+      <br>CP04 คือการ<strong>เขียน</strong>ข้อมูลลงที่เก็บ ซึ่งเป็นแกนของคาบหน้าทั้งหมด
+      <br>ส่วน CP05a คือการ<strong>อ่าน</strong>คำร้องใบเดียว จึงอยู่ฝั่งเดียวกับ CP03 ที่เพิ่งทำ
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ขั้น 0 ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num" style="background:var(--amber)">!</span>
+    <h2>ลองทำเองก่อน — อย่าเพิ่งดูเฉลย</h2>
+  </div>
+  <div class="step-body">
+    <div class="ok">
+      <b>ข่าวดี</b>
+      งานนี้เป็น<strong>ท่าเดียวกับ CP03 ที่เพิ่งทำเสร็จ</strong> — Effect เรียก Service แล้วแยกสถานะ
+      <br>ต่างกันแค่เพิ่ม <code>useParams()</code> เข้ามาอ่านรหัสจาก URL
+    </div>
+    <p><strong>ให้เวลาตัวเอง 15 นาทีลองเขียนเองก่อน</strong> โดยเปิดเฉพาะไฟล์ <code>DashboardPage.jsx</code> ของตัวเองเป็นแบบอ้างอิง</p>
+    <div class="vio">
+      <b>ทำไมต้องลองเอง</b>
+      ถ้าคุณทำได้เองโดยไม่ต้องดูตัวอย่าง แปลว่า <strong>CP03 ติดจริงแล้ว</strong>
+      <br>ถ้าติดเยอะ แปลว่ายังไม่ตกผลึก ซึ่งควรรู้ตอนนี้ ดีกว่าไปรู้ตอนคาบหน้า
+    </div>
+    <p><strong>สิ่งที่ต้องทำมี 2 อย่าง</strong></p>
+    <table>
+      <tr><th style="width:36%">ไฟล์</th><th>ทำอะไร</th></tr>
+      <tr><td><code>services/requestService.js</code></td><td><code>TODO 5A-3</code> — <code>getRequestById()</code></td></tr>
+      <tr><td><code>pages/RequestDetailPage.jsx</code></td><td><code>TODO 5A-CP05a</code> — อ่านรหัส โหลด และแยก 4 สถานะ</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ ขั้น 1 ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num">1</span>
+    <h2>เพิ่ม <code>getRequestById()</code> ใน Service</h2>
+    <span class="file">src/services/requestService.js</span>
+  </div>
+  <div class="step-body">
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">export async function</span> <span class="f">getRequestById</span>(requestId) {
+  <span class="k">const</span> requests = <span class="k">await</span> <span class="f">getRequests</span>();
+  <span class="k">return</span> requests.<span class="f">find</span>((request) =&gt; request.id === requestId) <span class="hl">?? null</span>;
+}</code></pre>
+    </div>
+    <div class="warn">
+      <b>สามบรรทัด แต่ตัดสินใจสำคัญ 2 อย่าง</b>
+      <strong>หนึ่ง</strong> — เรียก <code>getRequests()</code> ที่มีอยู่แล้ว ไม่ต้องเขียน <code>fetch</code> ใหม่
+      พอสัปดาห์หน้าเปลี่ยนที่มาของข้อมูล ฟังก์ชันนี้ก็ได้ประโยชน์ไปด้วยฟรี ๆ
+      <br><br>
+      <strong>สอง</strong> — <code>?? null</code> สำคัญมาก <strong>ห้าม <code>throw</code></strong> เมื่อหาไม่เจอ
+      เพราะ "ไม่พบข้อมูล" ไม่ใช่ความผิดพลาดของระบบ ระบบทำงานถูกทุกอย่าง เพียงแต่ข้อมูลนั้นไม่มี
+    </div>
+    <div class="ok">
+      <b>ตรวจได้ทันที</b>
+      <code>npm run check -- --session=1</code> จะเห็นสองรายการนี้กลายเป็น PASS
+      <br><code>getRequestById() คืนคำร้องที่ ID ตรงกัน</code> และ <code>getRequestById() คืน null เมื่อไม่พบ resource</code>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ขั้น 2 ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num">2</span>
+    <h2>อ่านรหัสจาก URL แล้วโหลด</h2>
+    <span class="file">src/pages/RequestDetailPage.jsx</span>
+  </div>
+  <div class="step-body">
+    <p>โครงเหมือน Dashboard แต่ง่ายกว่า เพราะไม่มีตัวกรองและไม่มีแผงสรุป</p>
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code><span class="k">import</span> { useEffect, useState } <span class="k">from</span> <span class="s">'react'</span>;
+<span class="k">import</span> { Link, <span class="hl">useParams</span> } <span class="k">from</span> <span class="s">'react-router-dom'</span>;
+<span class="k">import</span> ErrorState <span class="k">from</span> <span class="s">'../components/ErrorState.jsx'</span>;
+<span class="k">import</span> LoadingState <span class="k">from</span> <span class="s">'../components/LoadingState.jsx'</span>;
+<span class="k">import</span> useManualReload <span class="k">from</span> <span class="s">'../hooks/useManualReload.js'</span>;
+<span class="k">import</span> { getRequestById } <span class="k">from</span> <span class="s">'../services/requestService.js'</span>;
+
+<span class="k">function</span> <span class="f">RequestDetailPage</span>() {
+  <span class="k">const</span> { <span class="hl">requestId</span> } = <span class="f">useParams</span>();      <span class="c">← ชื่อต้องตรงกับ :requestId ใน route</span>
+  <span class="k">const</span> [reloadKey, reload] = <span class="f">useManualReload</span>();
+
+  <span class="k">const</span> [loadState, setLoadState] = <span class="f">useState</span>(<span class="s">'loading'</span>);
+  <span class="k">const</span> [request, setRequest] = <span class="f">useState</span>(<span class="k">null</span>);
+  <span class="k">const</span> [errorMessage, setErrorMessage] = <span class="f">useState</span>(<span class="s">''</span>);
+
+  <span class="f">useEffect</span>(() =&gt; {
+    <span class="f">setLoadState</span>(<span class="s">'loading'</span>);
+    <span class="f">setErrorMessage</span>(<span class="s">''</span>);
+
+    <span class="f">getRequestById</span>(requestId)
+      .<span class="f">then</span>((result) =&gt; {
+        <span class="f">setRequest</span>(result);
+        <span class="f">setLoadState</span>(<span class="s">'success'</span>);
+      })
+      .<span class="f">catch</span>((error) =&gt; {
+        <span class="f">setErrorMessage</span>(error <span class="k">instanceof</span> Error ? error.message : <span class="s">'โหลดรายละเอียดไม่สำเร็จ'</span>);
+        <span class="f">setLoadState</span>(<span class="s">'error'</span>);
+      });
+    <span class="c">// TODO 5B: เพิ่ม cleanup guard เพื่อกัน stale update</span>
+  }, <span class="hl">[requestId, reloadKey]</span>);       <span class="c">← ต้องมี requestId ไม่งั้นเปลี่ยน URL แล้วข้อมูลไม่เปลี่ยน</span></code></pre>
+    </div>
+    <div class="say">
+      <b>ต่างจาก Dashboard ตรงไหน</b>
+      Dashboard เริ่มที่ <code>'idle'</code> แต่หน้านี้เริ่มที่ <code>'loading'</code> ได้เลย
+      เพราะพอเปิดหน้ามาก็ต้องโหลดทันทีแน่นอน ไม่มีกรณีที่จะไม่โหลด
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ขั้น 3 ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num">3</span>
+    <h2>แยก 4 สถานะบนหน้าจอ</h2>
+    <span class="file">src/pages/RequestDetailPage.jsx</span>
+  </div>
+  <div class="step-body">
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code>  <span class="k">return</span> (
+    <span class="t">&lt;section</span> <span class="k">data-testid</span>=<span class="s">"page-request-detail"</span><span class="t">&gt;</span>
+      <span class="t">&lt;div</span> <span class="k">className</span>=<span class="s">"page-heading"</span><span class="t">&gt;&lt;div&gt;</span>
+        <span class="t">&lt;p</span> <span class="k">className</span>=<span class="s">"eyebrow dark"</span><span class="t">&gt;</span>ROUTED · DYNAMIC DETAIL<span class="t">&lt;/p&gt;</span>
+        <span class="t">&lt;h1&gt;</span>รายละเอียดคำร้อง<span class="t">&lt;/h1&gt;</span>
+        <span class="t">&lt;p&gt;</span>รหัสที่อ่านจาก URL: <span class="t">&lt;code&gt;</span>{requestId}<span class="t">&lt;/code&gt;&lt;/p&gt;</span>
+      <span class="t">&lt;/div&gt;&lt;/div&gt;</span>
+
+      {loadState === <span class="s">'loading'</span> &amp;&amp; <span class="t">&lt;LoadingState</span> <span class="k">message</span>=<span class="s">"กำลังโหลดรายละเอียด…"</span> <span class="t">/&gt;</span>}
+      {loadState === <span class="s">'error'</span> &amp;&amp; <span class="t">&lt;ErrorState</span> <span class="k">message</span>={errorMessage} <span class="k">onRetry</span>={reload} <span class="t">/&gt;</span>}
+
+      {<span class="hl">loadState === 'success' &amp;&amp; !request</span> &amp;&amp; (
+        <span class="t">&lt;section</span> <span class="k">className</span>=<span class="s">"state-card"</span><span class="t">&gt;</span>
+          <span class="t">&lt;h2&gt;</span>ไม่พบคำร้องรหัส {requestId}<span class="t">&lt;/h2&gt;</span>
+          <span class="t">&lt;p&gt;</span>คำร้องนี้อาจถูกลบไปแล้ว หรือรหัสที่พิมพ์ไม่ถูกต้อง<span class="t">&lt;/p&gt;</span>
+          <span class="t">&lt;Link</span> <span class="k">className</span>=<span class="s">"button primary inline"</span> <span class="k">to</span>=<span class="s">"/"</span><span class="t">&gt;</span>กลับไปดูรายการทั้งหมด<span class="t">&lt;/Link&gt;</span>
+        <span class="t">&lt;/section&gt;</span>
+      )}
+
+      {loadState === <span class="s">'success'</span> &amp;&amp; request &amp;&amp; (
+        <span class="t">&lt;article</span> <span class="k">className</span>=<span class="s">"panel detail-card"</span><span class="t">&gt;</span>
+          <span class="t">&lt;h2&gt;</span>{request.requestType}<span class="t">&lt;/h2&gt;</span>
+          <span class="t">&lt;dl&gt;</span>
+            <span class="t">&lt;div&gt;&lt;dt&gt;</span>รหัสคำร้อง<span class="t">&lt;/dt&gt;&lt;dd&gt;</span>{request.id}<span class="t">&lt;/dd&gt;&lt;/div&gt;</span>
+            <span class="t">&lt;div&gt;&lt;dt&gt;</span>ผู้แจ้ง<span class="t">&lt;/dt&gt;&lt;dd&gt;</span>{request.requesterName}<span class="t">&lt;/dd&gt;&lt;/div&gt;</span>
+            <span class="t">&lt;div&gt;&lt;dt&gt;</span>สถานที่<span class="t">&lt;/dt&gt;&lt;dd&gt;</span>{request.location}<span class="t">&lt;/dd&gt;&lt;/div&gt;</span>
+            <span class="t">&lt;div&gt;&lt;dt&gt;</span>รายละเอียด<span class="t">&lt;/dt&gt;&lt;dd&gt;</span>{request.details}<span class="t">&lt;/dd&gt;&lt;/div&gt;</span>
+            <span class="t">&lt;div&gt;&lt;dt&gt;</span>ความเร่งด่วน<span class="t">&lt;/dt&gt;&lt;dd&gt;</span>{request.priority === <span class="s">'urgent'</span> ? <span class="s">'เร่งด่วน'</span> : <span class="s">'ปกติ'</span>}<span class="t">&lt;/dd&gt;&lt;/div&gt;</span>
+            <span class="t">&lt;div&gt;&lt;dt&gt;</span>สถานะ<span class="t">&lt;/dt&gt;&lt;dd&gt;&lt;span</span> <span class="k">className</span>={<span class="s">`badge ${request.status}`</span>}<span class="t">&gt;</span>{request.status}<span class="t">&lt;/span&gt;&lt;/dd&gt;&lt;/div&gt;</span>
+          <span class="t">&lt;/dl&gt;</span>
+          <span class="t">&lt;Link</span> <span class="k">className</span>=<span class="s">"button primary inline"</span> <span class="k">to</span>=<span class="s">"/"</span><span class="t">&gt;</span>กลับ Dashboard<span class="t">&lt;/Link&gt;</span>
+        <span class="t">&lt;/article&gt;</span>
+      )}
+    <span class="t">&lt;/section&gt;</span>
+  );
+}
+
+<span class="k">export default</span> RequestDetailPage;</code></pre>
+    </div>
+    <div class="warn">
+      <b>บรรทัดที่ไฮไลต์คือหัวใจของ CP นี้</b>
+      <code>loadState === 'success' &amp;&amp; !request</code> — โหลดสำเร็จแล้ว <em>แต่</em> ไม่มีข้อมูล
+      <br>เงื่อนไขเดียวกับ empty ใน Dashboard คือ <strong>ต้องรู้ก่อนว่าโหลดจบแล้ว</strong> ถึงจะบอกได้ว่าไม่มี
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ไม่พบ 2 แบบ ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num" style="background:var(--violet)">◆</span>
+    <h2>“ไม่พบ” สามแบบที่ต้องแยกให้ออก</h2>
+  </div>
+  <div class="step-body">
+    <div class="three">
+      <div class="tri a">
+        <span class="u">#/requests/REQ-001</span>
+        <p><strong>พบข้อมูล</strong><br>แสดงรายละเอียดครบถ้วน</p>
+      </div>
+      <div class="tri b">
+        <span class="u">#/requests/REQ-999</span>
+        <p><strong>ไม่มีข้อมูลนี้</strong><br>เส้นทางถูก ระบบเข้าใจว่าอยากดูคำร้อง แต่รหัสนี้ไม่มี<br><em>อยู่ในหน้า Detail</em></p>
+      </div>
+      <div class="tri c">
+        <span class="u">#/xyz</span>
+        <p><strong>ไม่มีเส้นทางนี้</strong><br>ระบบไม่รู้จัก URL นี้เลย<br><em>ไปหน้า NotFoundPage</em></p>
+      </div>
+    </div>
+    <div class="say">
+      <b>เปรียบเทียบให้เห็นภาพ</b>
+      ร้านหนังสือบอกว่า <strong>“ไม่มีหนังสือเล่มนี้ในร้าน”</strong> ต่างจาก <strong>“ไม่มีชั้นวางชื่อนี้”</strong>
+      <br>ผู้ใช้ควรทำอย่างต่อไปคนละอย่าง ข้อความจึงต้องคนละแบบ
+    </div>
+    <div class="warn">
+      <b>อย่าทำให้กลายเป็น error</b>
+      หลายคนเผลอทำให้ "ไม่พบคำร้อง" แสดงเป็นกล่องแดงพร้อมปุ่มลองอีกครั้ง
+      <br><strong>การหาข้อมูลไม่เจอไม่ใช่ความผิดพลาด</strong> ระบบทำงานถูกทุกอย่าง และกดลองใหม่กี่ครั้งก็ไม่เจออยู่ดี
+    </div>
+  </div>
+</div>
+
+<!-- ═══ กับดัก ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num" style="background:var(--red)">!</span>
+    <h2>สามกับดักของ CP นี้</h2>
+  </div>
+  <div class="step-body">
+    <div class="trap">
+      <h3><span>กับดัก 1</span> ชื่อใน <code>useParams()</code> ไม่ตรงกับ route</h3>
+      <div class="split" style="margin:.5rem 0">
+        <div><span class="tag b">ผิด</span>
+<pre><code><span class="c">// route: path="requests/:requestId"</span>
+<span class="k">const</span> { <span class="d">id</span> } = <span class="f">useParams</span>();</code></pre></div>
+        <div><span class="tag a">ถูก</span>
+<pre><code><span class="c">// route: path="requests/:requestId"</span>
+<span class="k">const</span> { <span class="s">requestId</span> } = <span class="f">useParams</span>();</code></pre></div>
+      </div>
+      <p style="margin:0"><strong>อาการ</strong> — ได้ <code>undefined</code> โดยไม่มีข้อความเตือนใด ๆ แล้วหน้าจอขึ้น "ไม่พบคำร้อง" ทุกรหัส</p>
+      <p style="margin:.4rem 0 0"><strong>ที่อันตรายคือ</strong> ผมทดสอบแล้ว — <code>npm run build</code> ผ่าน และ <code>npm run check</code> ก็ยัง <strong>104/104 เต็ม</strong> เครื่องมือจับไม่ได้เลย <strong>ต้องเปิดดูด้วยตาเท่านั้น</strong></p>
+    </div>
+
+    <div class="trap">
+      <h3><span>กับดัก 2</span> Service <code>throw</code> แทนที่จะคืน <code>null</code></h3>
+      <p style="margin:.4rem 0"><strong>อาการ</strong> — <code>REQ-999</code> ขึ้นกล่องแดง error แทนที่จะขึ้นข้อความว่าไม่พบ</p>
+      <div class="ok" style="margin:.5rem 0 0">
+        <b>ข่าวดี — อันนี้ checker จับได้</b>
+        <code style="color:var(--red)">[TODO] R04 getRequestById() คืน null เมื่อไม่พบ resource</code>
+      </div>
+    </div>
+
+    <div class="trap">
+      <h3><span>กับดัก 3</span> ลืมใส่ <code>requestId</code> ใน dependency array</h3>
+      <p style="margin:.4rem 0"><strong>อาการ</strong> — เปิด <code>REQ-001</code> ได้ปกติ แต่พอแก้ URL เป็น <code>REQ-002</code> ข้อมูลบนหน้าจอ<strong>ไม่เปลี่ยน</strong></p>
+      <p style="margin:0">เพราะ React ไม่รู้ว่ามีอะไรเปลี่ยน จึงไม่เรียก Effect ใหม่ · เครื่องมือจับไม่ได้เช่นกัน</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ทดสอบ ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num" style="background:var(--green)">4</span>
+    <h2>ทดสอบและเก็บหลักฐาน</h2>
+  </div>
+  <div class="step-body">
+    <div class="codewrap">
+      <button class="copy" data-copy>คัดลอก</button>
+<pre><code>npm run check -- --session=1</code></pre>
+    </div>
+    <div>
+      <div class="check"><span class="box" data-check>✓</span><span><code>#/requests/REQ-001</code> → แสดงรายละเอียดตรงกับรหัส</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span><code>#/requests/REQ-002</code> → <strong>ข้อมูลเปลี่ยนตาม</strong> ไม่ใช่ค้างของเดิม</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span><code>#/requests/REQ-999</code> → "ไม่พบคำร้องรหัส REQ-999" <strong>ไม่ใช่กล่องแดง</strong></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span><code>#/xyz</code> → ยังไปหน้า NotFoundPage เหมือนเดิม</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>กด refresh ที่ <code>#/requests/REQ-001</code> → ยังได้หน้าเดิม</span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>ถ่ายภาพ <code>route-detail-found.png</code> จาก <code>#/requests/REQ-001</code></span></div>
+      <div class="check"><span class="box" data-check>✓</span><span>กรอก TC-L5-04 และ TC-L5-05 ใน TEST_REPORT</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ปิดคาบ ═══ -->
+<div class="step">
+  <div class="step-head">
+    <span class="num" style="background:var(--green)">✓</span>
+    <h2>จบคาบ 5A</h2>
+  </div>
+  <div class="step-body">
+    <div class="finale">
+      <p class="big">104 / 104</p>
+      <p style="margin:.5rem 0 0"><code>npm run check -- --session=1</code> ต้องผ่านครบทุกรายการ</p>
+    </div>
+
+    <div class="vio" style="margin-top:1rem">
+      <b>คำถาม Checkpoint</b>
+      <span style="font-size:1.1rem"><code>#/requests/REQ-999</code> ต่างจาก <code>#/xyz</code> อย่างไร</span>
+    </div>
+
+    <div class="split" style="margin-top:1rem">
+      <div class="ok" style="margin:0">
+        <b>วันนี้ทำได้แล้ว</b>
+        <ul style="margin-bottom:0">
+          <li>เส้นทางครบ 5 เส้น เปลี่ยนหน้าไม่โหลดใหม่</li>
+          <li>โหลดข้อมูลผ่าน Service Layer</li>
+          <li>5 สถานะครบ พร้อมปุ่มลองอีกครั้ง</li>
+          <li>หน้ารายละเอียดตามรหัส แยกพบ/ไม่พบ</li>
+          <li>ตัวกรองและแผงสรุปยังทำงาน</li>
+        </ul>
+      </div>
+      <div class="vio" style="margin:0">
+        <b>สัปดาห์หน้า — คาบ 5B</b>
+        <ul style="margin-bottom:0">
+          <li>เพิ่มคำร้องใหม่ผ่านฟอร์ม</li>
+          <li>ลบแล้วหายถาวร</li>
+          <li>ข้อมูลอยู่ต่อหลัง refresh</li>
+          <li>กู้คืนข้อมูลที่เสียหาย</li>
+          <li><strong>คำตอบว่าทำไม Effect ทำงาน 2 รอบ</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="say" style="margin-top:1rem">
+      <b>การบ้าน · 30–45 นาที</b>
+      เขียน README ส่วน route และเหตุผลของ dependency · อัปโหลดภาพหน้าจอ 5 ภาพ ·
+      <code>commit</code> และ <code>push</code> ขึ้น <code>lab/week-05</code>
+      <br><strong>และทำ Pre-LAB 05B มาก่อนเข้าคาบหน้า — 20 นาที ไม่ต้องเขียนโค้ด</strong>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>ENGSE203 · Week 05A · CP05a Dynamic Detail · เอกสารสำหรับฉายบนจอ</span>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน 5A บทที่ 4</span>
+</footer>
+
+</div>
+
+<div class="hud">
+  <button id="minus">A−</button>
+  <button id="plus">A+</button>
+  <button id="full">เต็มจอ</button>
+</div>
+
+<script>
+(function(){
+  var fs = 1;
+  function setFs(v){ fs = Math.max(.75, Math.min(1.6, v));
+    document.documentElement.style.setProperty('--fs', fs); }
+  document.getElementById('plus').onclick  = function(){ setFs(fs + .08); };
+  document.getElementById('minus').onclick = function(){ setFs(fs - .08); };
+  document.getElementById('full').onclick  = function(){
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    else document.exitFullscreen && document.exitFullscreen();
+  };
+  document.addEventListener('keydown', function(e){
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === '+' || e.key === '=') setFs(fs + .08);
+    if (e.key === '-') setFs(fs - .08);
+  });
+  document.querySelectorAll('[data-check]').forEach(function(b){
+    b.onclick = function(){ b.classList.toggle('on'); };
+  });
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.onclick = function(){
+      var pre = btn.parentElement.querySelector('pre');
+      var text = pre.innerText.replace(/\s*←[^\n]*/g, '');
+      navigator.clipboard.writeText(text).then(function(){
+        var old = btn.textContent;
+        btn.textContent = 'คัดลอกแล้ว';
+        setTimeout(function(){ btn.textContent = old; }, 1400);
+      });
+    };
+  });
+})();
+</script>
+</body>
+</html>
