@@ -228,7 +228,16 @@ footer .m{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:
     <li><a href="#c8">REST — กติกาการออกแบบ API ที่คนทั้งโลกใช้</a><span class="t">11 นาที</span></li>
     <li><a href="#c9">HTTP Status Code — บอกผลด้วยตัวเลข</a><span class="t">9 นาที</span></li>
     <li><a href="#c10">แยกชั้น Route / Controller / Service</a><span class="t">9 นาที</span></li>
-    <li><a href="#c11">จากทฤษฎีสู่ Checkpoint</a><span class="t">5 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 4 · ทำให้พร้อมใช้จริง <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
+  <ol start="11">
+    <li><a href="#c11">Error Handling — จัดการข้อผิดพลาดไว้ที่เดียว</a><span class="t">10 นาที</span></li>
+    <li><a href="#c12">เก็บข้อมูลถาวร — จาก memory สู่ไฟล์ JSON</a><span class="t">9 นาที</span></li>
+  </ol>
+
+  <ol start="13">
+    <li><a href="#c13">จากทฤษฎีสู่ Checkpoint</a><span class="t">5 นาที</span></li>
   </ol>
 </nav>
 
@@ -1276,7 +1285,221 @@ app.<span class="c-fn">use</span>(logger);   <span class="c-com">// ติดต
 
 <!-- ════════ CH 11 ════════ -->
 <section class="ch" id="c11">
-  <p class="ch-num">บทที่ 11</p>
+  <p class="ch-num">บทที่ 11 · กลุ่มที่ 4 <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
+  <h2>Error Handling — จัดการข้อผิดพลาดไว้ที่เดียว</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <p>ถึงตอนนี้ API ของเราทำงานได้เมื่อทุกอย่างเป็นไปตามแผน แต่<strong>ของจริงไม่เป็นแบบนั้นเสมอ</strong></p>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้าโค้ดใน controller เกิด error ขึ้นมากลางคัน เช่น อ่านข้อมูลไม่ได้ — <strong>ผู้ใช้จะเห็นอะไร</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>ถ้าไม่ได้จัดการอะไรเลย Express จะส่ง<strong>หน้า HTML สีขาวที่มี stack trace เต็มหน้า</strong>กลับไป</p>
+      <p style="margin:0">ซึ่งมีปัญหา 2 อย่าง — ① ผู้ใช้ที่เรียกผ่าน API คาดหวัง JSON แต่ได้ HTML ทำให้โค้ดฝั่ง client พัง · ② stack trace บอกโครงสร้างไฟล์ในเครื่องเซิร์ฟเวอร์ให้คนภายนอกเห็น</p>
+    </div>
+  </details>
+
+  <h3>11.1 ปัญหาของการจัดการ error แบบกระจาย</h3>
+
+  <p>วิธีที่คนมักทำตอนแรกคือ <code>try/catch</code> ในทุก route</p>
+
+<pre><code>app.<span class="c-fn">get</span>(<span class="c-str">'/api/requests'</span>, <span class="c-key">async</span> (req, res) =&gt; {
+  <span class="c-key">try</span> {
+    <span class="c-key">const</span> data = <span class="c-key">await</span> <span class="c-fn">getAll</span>();
+    res.<span class="c-fn">json</span>(data);
+  } <span class="c-key">catch</span> (err) {
+    res.<span class="c-fn">status</span>(<span class="c-num">500</span>).<span class="c-fn">json</span>({ error: <span class="c-str">'เกิดข้อผิดพลาด'</span> });  <span class="c-com">// ← ซ้ำทุก route</span>
+  }
+});</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ทำไมวิธีนี้ไม่ดี</span>
+    <p style="margin:0">มี 5 route ก็ต้องเขียนซ้ำ 5 ครั้ง · วันหนึ่งอยากเปลี่ยนข้อความ error ต้องไล่แก้ 5 ที่ · <strong>ลืมที่เดียวก็จะมี route ที่ตอบ HTML แทน JSON โดยไม่มีใครรู้</strong></p>
+  </div>
+
+  <h3>11.2 ทางออก — middleware ตัวสุดท้ายที่รับ error ทั้งหมด</h3>
+
+  <div class="term">
+    <div class="w">Error-handling middleware</div>
+    <p>middleware พิเศษที่รับ <strong>4 พารามิเตอร์</strong> คือ <code>(err, req, res, next)</code> · Express จะเรียกมันเมื่อมี error เกิดขึ้นที่ไหนก็ตามในระบบ</p>
+  </div>
+
+<pre><code><span class="c-com">// ⚠ ต้องมี 4 พารามิเตอร์ ห้ามขาด — ไม่งั้น Express จะคิดว่าเป็น middleware ธรรมดา</span>
+<span class="c-key">export function</span> <span class="c-fn">errorHandler</span>(err, req, res, next) {
+  <span class="c-key">const</span> status = err.status ?? <span class="c-num">500</span>;
+
+  <span class="c-key">if</span> (status &gt;= <span class="c-num">500</span>) {
+    console.<span class="c-fn">error</span>(<span class="c-str">'เกิดข้อผิดพลาดภายใน:'</span>, err.message);  <span class="c-com">// เราดูเอง</span>
+  }
+
+  res.<span class="c-fn">status</span>(status).<span class="c-fn">json</span>({
+    error: status &gt;= <span class="c-num">500</span> ? <span class="c-str">'เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์'</span> : err.message,
+  });
+}</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 กับดักที่พบบ่อยที่สุดของบทนี้</span>
+    <p style="margin:0">ถ้าเขียน <code>(err, req, res)</code> แค่ 3 ตัว <strong>Express จะไม่เรียกมันเลย</strong> เพราะมันนับจำนวนพารามิเตอร์เพื่อแยกว่าเป็น error handler หรือ middleware ธรรมดา · โค้ดจะดูถูกทุกอย่างแต่ไม่ทำงาน และไม่มี error บอก</p>
+  </div>
+
+  <h3>11.3 notFound — จับคำขอที่ไม่ตรง route ไหนเลย</h3>
+
+<pre><code><span class="c-key">export function</span> <span class="c-fn">notFound</span>(req, res) {
+  res.<span class="c-fn">status</span>(<span class="c-num">404</span>).<span class="c-fn">json</span>({ error: <span class="c-str">`ไม่พบเส้นทาง ${req.method} ${req.originalUrl}`</span> });
+}</code></pre>
+
+  <p>วางไว้<strong>หลัง route ทั้งหมด</strong> — คำขอที่มาถึงตรงนี้แปลว่าไม่ตรงกับ route ไหนเลย</p>
+
+  <h3>11.4 ลำดับที่ถูกต้อง</h3>
+
+<pre><code>app.<span class="c-fn">use</span>(logger);              <span class="c-com">// ① middleware ทั่วไป</span>
+app.<span class="c-fn">use</span>(express.<span class="c-fn">json</span>());
+app.<span class="c-fn">use</span>(<span class="c-str">'/api/requests'</span>, routes);  <span class="c-com">// ② route</span>
+app.<span class="c-fn">use</span>(notFound);            <span class="c-com">// ③ ไม่ตรง route ไหนเลย</span>
+app.<span class="c-fn">use</span>(errorHandler);        <span class="c-com">// ④ ต้องเป็นตัวสุดท้ายเสมอ</span></code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 เชื่อมกับบทที่ 7</span>
+    <p style="margin:0">นี่คือเรื่อง<strong>ลำดับของ middleware</strong>ที่เราเรียนในบทที่ 7 อีกครั้ง — errorHandler ต้องอยู่ล่างสุดเพราะมันคือ "ตาข่ายรองรับ" ที่ดักทุกอย่างที่หลุดมา ถ้าวางบนจะไม่มีอะไรหลุดมาถึง</p>
+  </div>
+
+  <h3>11.5 ส่ง error ไปที่ errorHandler อย่างไร</h3>
+
+<pre><code><span class="c-com">// ใน controller — ส่งต่อด้วย next(err)</span>
+<span class="c-key">export async function</span> <span class="c-fn">listRequests</span>(req, res, next) {
+  <span class="c-key">try</span> {
+    res.<span class="c-fn">json</span>(<span class="c-key">await</span> <span class="c-fn">getAll</span>());
+  } <span class="c-key">catch</span> (err) {
+    <span class="c-fn">next</span>(err);   <span class="c-com">// ← ส่งไปให้ errorHandler จัดการ ไม่ต้องตอบเอง</span>
+  }
+}</code></pre>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 ผลที่ได้</span>
+    <p style="margin:0">ข้อความ error อยู่ที่เดียว · อยากเปลี่ยนรูปแบบแก้ไฟล์เดียว · <strong>ทุก route ตอบ JSON เหมือนกันหมด ไม่มีทางหลุดเป็น HTML</strong></p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 11</span>
+    <ul>
+      <li>ถ้าไม่จัดการ error Express จะส่ง HTML + stack trace กลับไป — ผิดทั้งรูปแบบและความปลอดภัย</li>
+      <li><code>errorHandler</code> ต้องมี <strong>4 พารามิเตอร์</strong> <code>(err, req, res, next)</code> ห้ามขาด</li>
+      <li><code>notFound</code> วางหลัง route ทั้งหมด · <code>errorHandler</code> วางล่างสุดเสมอ</li>
+      <li>controller ส่ง error ต่อด้วย <code>next(err)</code> ไม่ตอบเอง</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 12 ════════ -->
+<section class="ch" id="c12">
+  <p class="ch-num">บทที่ 12 · กลุ่มที่ 4 <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
+  <h2>เก็บข้อมูลถาวร — จาก memory สู่ไฟล์ JSON</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ตอนนี้ข้อมูลคำร้องเก็บไว้ในตัวแปร array ใน service · ถ้า<strong>ปิดเซิร์ฟเวอร์แล้วเปิดใหม่</strong> ข้อมูลที่เพิ่มไปจะเป็นอย่างไร</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p style="margin:0"><strong>หายหมด</strong> กลับไปเหลือแค่ข้อมูลตั้งต้น · เพราะตัวแปรอยู่ใน RAM ซึ่งหายไปเมื่อโปรแกรมจบ · ลองสังเกตตอนทำ CP04 — เพิ่มคำร้อง แล้วกด <code>Ctrl+C</code> ปิดเซิร์ฟเวอร์แล้วเปิดใหม่ จะเห็นว่าของที่เพิ่มหายไป</p>
+    </div>
+  </details>
+
+  <h3>12.1 ระดับของการเก็บข้อมูล</h3>
+
+  <table class="d">
+    <tr><th>วิธีเก็บ</th><th>ข้อมูลอยู่ไหน</th><th>รอด restart</th><th>เราใช้เมื่อไร</th></tr>
+    <tr><td>ตัวแปรใน memory</td><td>RAM</td><td style="color:var(--error)">ไม่รอด</td><td>CP01–CP07</td></tr>
+    <tr><td><strong>ไฟล์ JSON</strong></td><td>ดิสก์</td><td style="color:var(--success)">รอด</td><td><strong>CP08 (สัปดาห์นี้)</strong></td></tr>
+    <tr><td>ฐานข้อมูล</td><td>ดิสก์ + จัดการให้</td><td style="color:var(--success)">รอด</td><td>หน่วยที่ 4</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไมไม่ข้ามไปฐานข้อมูลเลย</span>
+    <p style="margin:0">เพราะไฟล์ JSON สอน<strong>แนวคิดเดียวกัน</strong>โดยไม่ต้องติดตั้งอะไรเพิ่ม — "อ่านตอนเริ่ม เขียนตอนเปลี่ยน" · พอเข้าใจแล้วเปลี่ยนไปฐานข้อมูลในหน่วย 4 จะเป็นแค่การเปลี่ยนวิธีอ่าน/เขียน ไม่ใช่แนวคิดใหม่</p>
+  </div>
+
+  <h3>12.2 รูปแบบที่ใช้ — อ่านตอนเริ่ม เขียนตอนเปลี่ยน</h3>
+
+<pre><code><span class="c-key">import</span> { readFile, writeFile } <span class="c-key">from</span> <span class="c-str">'node:fs/promises'</span>;
+
+<span class="c-key">const</span> FILE = <span class="c-str">'./data/requests.json'</span>;
+<span class="c-key">let</span> requests = [];
+
+<span class="c-com">// ① อ่านครั้งเดียวตอนเซิร์ฟเวอร์เริ่มทำงาน</span>
+<span class="c-key">export async function</span> <span class="c-fn">loadSeed</span>() {
+  <span class="c-key">try</span> {
+    requests = <span class="c-fn">JSON.parse</span>(<span class="c-key">await</span> <span class="c-fn">readFile</span>(FILE, <span class="c-str">'utf8'</span>));
+  } <span class="c-key">catch</span> {
+    requests = [];   <span class="c-com">// ไฟล์ยังไม่มี = เริ่มจากว่าง ไม่ใช่ error</span>
+  }
+}
+
+<span class="c-com">// ② เขียนทุกครั้งที่ข้อมูลเปลี่ยน</span>
+<span class="c-key">async function</span> <span class="c-fn">persist</span>() {
+  <span class="c-key">await</span> <span class="c-fn">writeFile</span>(FILE, <span class="c-fn">JSON.stringify</span>(requests, <span class="c-key">null</span>, <span class="c-num">2</span>), <span class="c-str">'utf8'</span>);
+}</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 กับดัก 3 อันของบทนี้</span>
+    <p><strong>① ลืม <code>await</code></strong> — <code>writeFile</code> เป็น async · ถ้าไม่ <code>await</code> ฟังก์ชันจะคืนค่าก่อนเขียนเสร็จ · <strong>ตอบ 201 ไปแล้วแต่ไฟล์ยังไม่ถูกเขียน</strong></p>
+    <p><strong>② ไฟล์ยังไม่มีแล้วโยน error</strong> — ครั้งแรกที่รัน <code>data/requests.json</code> ยังไม่มี · ต้อง <code>try/catch</code> แล้วเริ่มจาก array ว่าง ไม่ใช่ให้เซิร์ฟเวอร์พัง</p>
+    <p style="margin:0"><strong>③ ลืมสร้างโฟลเดอร์ <code>data/</code></strong> — <code>writeFile</code> ไม่สร้างโฟลเดอร์ให้ · ถ้าไม่มีจะได้ <code>ENOENT</code></p>
+  </div>
+
+  <h3>12.3 จุดที่ต้องเรียก <code>persist()</code></h3>
+
+  <p>ทุกฟังก์ชันที่<strong>เปลี่ยนแปลงข้อมูล</strong> — เพิ่ม ลบ แก้ไข · ส่วนฟังก์ชันที่แค่อ่านไม่ต้องเรียก</p>
+
+  <table class="d">
+    <tr><th>ฟังก์ชัน</th><th>เปลี่ยนข้อมูลไหม</th><th>ต้อง persist</th></tr>
+    <tr><td><code>getAll()</code> · <code>getById()</code></td><td>ไม่</td><td style="color:var(--ink-soft)">ไม่ต้อง</td></tr>
+    <tr><td><code>add()</code></td><td>ใช่</td><td style="color:var(--success)"><strong>ต้อง</strong></td></tr>
+    <tr><td><code>remove()</code></td><td>ใช่</td><td style="color:var(--success)"><strong>ต้อง</strong></td></tr>
+    <tr><td><code>updateStatus()</code> ⭐</td><td>ใช่</td><td style="color:var(--success)"><strong>ต้อง</strong></td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 สังเกตว่าแก้แค่ไฟล์เดียว</span>
+    <p style="margin:0">การเปลี่ยนจาก memory เป็นไฟล์ <strong>แก้แค่ <code>requestService.js</code></strong> — route และ controller ไม่ต้องแตะเลย · นี่คือผลของการแยกชั้นในบทที่ 10 และเป็นรูปแบบเดียวกับที่จะเกิดขึ้นอีกครั้งในหน่วยที่ 4 ตอนเปลี่ยนไปใช้ SQLite</p>
+  </div>
+
+  <h3>12.4 ทดสอบว่าใช้ได้จริง</h3>
+
+  <ol>
+    <li>เพิ่มคำร้องใหม่ด้วย Postman</li>
+    <li>เปิดไฟล์ <code>data/requests.json</code> ดู — ต้องเห็นคำร้องที่เพิ่ง POST</li>
+    <li>กด <code>Ctrl+C</code> ปิดเซิร์ฟเวอร์ แล้ว <code>npm run dev</code> ใหม่</li>
+    <li>ยิง <code>GET /api/requests</code> — <strong>ต้องยังเห็นคำร้องที่เพิ่มไว้</strong></li>
+  </ol>
+
+  <div class="box takehome">
+    <span class="h">🏠 งานที่บ้าน · CP08</span>
+    <p style="margin:0">ทำข้อ 12.2–12.4 ให้ครบ แล้วบันทึกผลลง <code>evidence/API_TEST.md</code> พร้อม screenshot ที่แสดงว่าข้อมูลรอดจากการ restart</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 12</span>
+    <ul>
+      <li>ข้อมูลใน memory หายเมื่อปิดเซิร์ฟเวอร์ — ไฟล์ JSON ทำให้รอด</li>
+      <li>รูปแบบคือ <strong>อ่านครั้งเดียวตอนเริ่ม · เขียนทุกครั้งที่เปลี่ยน</strong></li>
+      <li>กับดัก: ลืม <code>await</code> · ไฟล์ยังไม่มี · ลืมสร้างโฟลเดอร์ <code>data/</code></li>
+      <li>แก้แค่ <code>requestService.js</code> ไฟล์เดียว — ผลของการแยกชั้นในบทที่ 10</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 13 ════════ -->
+<section class="ch" id="c13">
+  <p class="ch-num">บทที่ 13</p>
   <h2>จากทฤษฎีสู่ Checkpoint</h2>
   <p class="readtime">เวลาอ่าน ≈ 5 นาที</p>
 

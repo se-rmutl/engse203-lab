@@ -17,7 +17,7 @@
 | 2 | ในคาบ | [`lab06/LAB06_INCLASS_GUIDE_TH.md`](lab06/LAB06_INCLASS_GUIDE_TH.md) |
 | 3 | ที่บ้าน | [`lab06/LAB06_TAKEHOME_GUIDE_TH.md`](lab06/LAB06_TAKEHOME_GUIDE_TH.md) |
 
-อ่านประกอบได้ตลอด — [เอกสารประกอบการสอน Week 06](https://se-rmutl.github.io/engse203/week06/week06-teaching-doc.html) (12 บท · 9 ภาพประกอบ)
+อ่านประกอบได้ตลอด — [เอกสารประกอบการสอน Week 06](https://se-rmutl.github.io/engse203/week06/week06-teaching-doc.html) (13 บท · 9 ภาพประกอบ)
 
 ---
 
@@ -167,9 +167,8 @@ week-06-express-api-foundation/
 │   └── Campus_Service_API.postman_collection.json
 ├── guides/
 │   ├── ENGSE203_API_Foundations_Slides.html        ← บทนำ 20 สไลด์ · ทำไมต้องมี API
-│   ├── ENGSE203_Week06_Teaching_Document_TH.html   ← 12 บท · 9 ภาพ
-│   ├── ENGSE203_Week06_Slides.html                 ← 25 สไลด์
-│   └── ENGSE203_Week06_Slides_Deluxe.html          ← 31 สไลด์ · 12 SVG
+│   ├── ENGSE203_Week06_Teaching_Document_TH.html   ← 13 บท · 9 ภาพ
+│   └── ENGSE203_Week06_Slides.html                 ← 66 สไลด์ · 12 บท · 11 SVG
 ├── live-coding/                       ← 6 หน้าจอสำหรับฉายในคาบ
 └── _instructor-private/               ⚠ สำหรับผู้สอนเท่านั้น
 ```
@@ -184,7 +183,7 @@ week-06-express-api-foundation/
 | `_instructor-private/reference-solution/` | เฉลยครบทุก CP รวม Challenge (28/28) |
 | `live-coding/*.html` | หน้าจอฉายทีละ checkpoint |
 | `guides/ENGSE203_API_Foundations_Slides.html` | **บทนำ 20 สไลด์** — ใช้ต้นคาบก่อนเข้าเนื้อหา (~30 นาที) |
-| `guides/ENGSE203_Week06_Slides*.html` | สไลด์หลัก 2 เวอร์ชัน — เลือกตามเวลาที่มี |
+| `guides/ENGSE203_Week06_Slides.html` | สไลด์หลัก **66 หน้า · 12 บท** — มีสไลด์คั่นบทและสรุปท้ายบททุกบท |
 
 **ตรวจก่อนสอน**
 
