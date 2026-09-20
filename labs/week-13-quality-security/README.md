@@ -1,4 +1,4 @@
-# LAB 12 — Quality, Security & Delivery Readiness
+# LAB 13 — Quality, Security & Delivery Readiness
 
 **สัปดาห์ที่ 13** · หน่วยที่ 5 คุณภาพซอฟต์แวร์ การทดสอบ และความพร้อมก่อนใช้งาน  
 **รูปแบบงาน:** รายบุคคล  

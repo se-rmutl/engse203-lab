@@ -1,4 +1,4 @@
-# LAB 13 — Cross-platform Product Sprint 1
+# LAB 14 — Cross-platform Product Sprint 1
 
 **สัปดาห์ที่ 14** · หน่วยที่ 6 การพัฒนาแบบข้ามแพลตฟอร์มและโครงงานบูรณาการ  
 **รูปแบบงาน:** กลุ่ม  

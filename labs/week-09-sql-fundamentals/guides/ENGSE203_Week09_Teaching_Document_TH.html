@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENGSE203 Week 09 — เอกสารประกอบการสอน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1F6F3; --card:#FFFFFF; --ink:#14251E; --ink-soft:#54685E;
+  --track:#BFD2C8; --a:#A8620E; --a-tint:#FBF0E2; --b:#186B8C; --b-tint:#DDEEF5;
+  --loading:#B5771A; --success:#1E7A54; --error:#B23A2E; --rule:#DBE7E0;
+  --code-bg:#1E1408; --vio:#6B3B96; --vio-tint:#F1EAF8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  line-height:1.78;padding:0 20px 80px;-webkit-font-smoothing:antialiased;}
+.doc{max-width:860px;margin:0 auto}
+
+.cover{padding:64px 0 40px;border-bottom:3px solid var(--a)}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.2em;color:var(--a);text-transform:uppercase}
+.cover h1{font-size:clamp(30px,5vw,46px);font-weight:700;line-height:1.15;
+  letter-spacing:-.02em;margin:14px 0 8px}
+.cover .subtitle{font-size:19px;color:var(--ink-soft);font-weight:300;margin-bottom:28px}
+.meta{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px}
+.meta th{text-align:left;font-weight:600;padding:7px 14px 7px 0;width:190px;
+  vertical-align:top;color:var(--ink-soft);font-size:13px}
+.meta td{padding:7px 0;border-bottom:1px solid var(--rule)}
+.meta tr:first-child td,.meta tr:first-child th{border-top:1px solid var(--rule)}
+
+.bigidea{background:var(--ink);color:#fff;padding:24px 26px;border-radius:4px;margin-top:8px}
+.bigidea .lab{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;
+  opacity:.65;text-transform:uppercase;margin-bottom:8px}
+.bigidea p{font-size:17px;line-height:1.6}
+.bigidea code{font-family:'IBM Plex Mono',monospace;font-size:15px;
+  background:rgba(255,255,255,.14);padding:1px 7px;border-radius:3px}
+
+.howto{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:26px;margin:36px 0}
+.howto h2{font-size:19px;margin-bottom:14px}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;font-size:14px;margin-top:14px}
+.legend .k{font-weight:600;white-space:nowrap}
+.newbie{background:var(--a-tint);border-left:3px solid var(--a);padding:16px 20px;
+  border-radius:0 6px 6px 0;margin-top:18px;font-size:14.5px}
+.wheretag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:middle}
+.wheretag.home{background:#FDF2E6;color:#8A5A0E;border:1px solid #E8C99A}
+.wheretag.room{background:#E4F1EA;color:#14503A;border:1px solid #A8D4BE}
+
+.ch{margin-top:60px;padding-top:8px}
+.ch-num{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:.16em;color:var(--a);text-transform:uppercase;
+  display:flex;align-items:center;gap:12px}
+.ch-num::after{content:"";flex:1;height:1px;background:var(--rule)}
+.ch h2{font-size:28px;font-weight:700;line-height:1.25;margin:12px 0 6px;letter-spacing:-.01em}
+.ch .readtime{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  color:var(--track);letter-spacing:.06em;margin-bottom:22px}
+.ch h3{font-size:19px;font-weight:600;margin:32px 0 10px}
+p{margin-bottom:14px}
+ul,ol{margin:0 0 16px 22px}
+li{margin-bottom:7px}
+strong{font-weight:600}
+em{font-style:normal;background:linear-gradient(transparent 62%,var(--a-tint) 62%)}
+
+code{font-family:'IBM Plex Mono',monospace;font-size:.88em;
+  background:#F5EADA;padding:2px 6px;border-radius:3px;color:#7A4708}
+pre{background:var(--code-bg);color:#E4EFE9;border-radius:4px;
+  padding:20px 22px;overflow-x:auto;margin:16px 0;font-size:13.5px;line-height:1.7}
+pre code{background:none;padding:0;color:inherit;font-size:13.5px}
+.c-key{color:#F0B872}.c-str{color:#E9C08A}.c-com{color:#6E8A7E;font-style:italic}
+.c-fn{color:#8FD0EC}.c-bad{color:#F0968C}.c-hl{color:#FFE08A;font-weight:600}
+.c-num{color:#D9A0E8}
+
+.term{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--b);
+  border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0}
+.term .w{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--b);
+  font-size:15px;margin-bottom:4px}
+.term p{margin:0;font-size:14.5px}
+
+table.d{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0}
+table.d th{text-align:left;background:#F5EADA;padding:10px 12px;
+  font-weight:600;font-size:13px;border-bottom:2px solid var(--track)}
+table.d td{padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.d tr:hover td{background:#FAFCFB}
+
+figure{margin:30px 0;background:var(--card);border:1px solid var(--rule);
+  border-radius:4px;padding:24px 22px 16px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:13px;color:var(--ink-soft);margin-top:16px;padding-top:12px;border-top:1px solid var(--rule)}
+figcaption b{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  letter-spacing:.1em;color:var(--a);display:block;margin-bottom:4px;text-transform:uppercase}
+
+.box{border-radius:4px;padding:20px 22px;margin:22px 0;font-size:14.5px}
+.box .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px;display:block}
+.box p:last-child{margin-bottom:0}
+.predict{background:var(--a-tint);border-left:3px solid var(--a)}
+.predict .h{color:var(--a)}
+.pitfall{background:#FBEBE8;border-left:3px solid var(--error)}
+.pitfall .h{color:var(--error)}
+.note{background:#FDF4E3;border-left:3px solid var(--loading)}
+.note .h{color:var(--loading)}
+.next{background:var(--b-tint);border-left:3px solid var(--b)}
+.next .h{color:var(--b)}
+.analogy{background:var(--vio-tint);border-left:3px solid var(--vio)}
+.analogy .h{color:var(--vio)}
+.inclass{background:#E4F1EA;border-left:3px solid var(--a)}
+.inclass .h{color:var(--a)}
+.takehome{background:#FDF2E6;border-left:3px solid var(--loading)}
+.takehome .h{color:var(--loading)}
+.challenge{background:var(--vio-tint);border-left:3px solid var(--vio)}
+.challenge .h{color:var(--vio)}
+
+details{background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  padding:14px 18px;margin:14px 0;font-size:14.5px}
+details summary{cursor:pointer;font-weight:600;font-size:14.5px;list-style:none;
+  display:flex;align-items:center;gap:9px}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸";color:var(--a);font-size:13px;transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+details .ans{margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-weight:300}
+details .ans p:last-child{margin-bottom:0}
+
+.recap{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--ink);
+  border-radius:4px;padding:22px;margin:30px 0 0}
+.recap .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px;display:block}
+.recap ul{margin-bottom:0;margin-left:20px}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--rule);
+  font-size:12.5px;color:var(--ink-soft);font-weight:300;display:flex;
+  justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer .m{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.05em}
+
+.toc{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:24px 26px;margin:28px 0}
+.toc h2{font-size:17px;margin-bottom:8px}
+.toc .toc-note{font-size:13px;color:var(--ink-soft);margin-bottom:16px;font-weight:300}
+.toc ol{margin:0 0 0 20px;font-size:14.5px}
+.toc li{margin-bottom:6px}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+.toc a:hover{border-bottom-color:var(--a);color:var(--a)}
+.toc .t{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--track);margin-left:6px}
+.toc .grp{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--a);margin:14px 0 6px}
+
+@media print{
+  body{background:#fff;padding:0}
+  figure,.box,.recap,details,table.d,.term{break-inside:avoid}
+  .ch{break-before:page}
+  details{border:none}details summary::before{content:""}
+  details .ans{display:block}
+}
+@media (max-width:640px){
+  .meta th{width:auto;display:block;padding-bottom:0}
+  .meta td{display:block;padding-top:2px}
+  .cover{padding:36px 0 28px}
+  .legend{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+
+<!-- ════════ COVER ════════ -->
+<header class="cover">
+  <p class="eyebrow">ENGSE203 · หน่วยที่ 4 · Week 09</p>
+  <h1>ฐานข้อมูลเชิงสัมพันธ์<br>และภาษา SQL</h1>
+  <p class="subtitle">ตารางและ Primary Key · SELECT / WHERE / ORDER BY · CRUD · Foreign Key · JOIN</p>
+
+  <table class="meta">
+    <tr><th>รายวิชา</th><td>ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์</td></tr>
+    <tr><th>ต่อจาก</th><td>Week 06–07 — API ที่เก็บข้อมูลใน memory และไฟล์ JSON</td></tr>
+    <tr><th>หน่วยที่</th><td>4 · ฐานข้อมูลและการบูรณาการระบบ Full-Stack (สัปดาห์ 9–11)</td></tr>
+    <tr><th>Checkpoints</th><td>CP17 · CP18 · CP19 · CP20 · CP21 · CP22 · CP23 · CP24 · CP25</td></tr>
+    <tr><th>เครื่องมือ</th><td>SQL playground ออนไลน์ · VS Code + SQLite extension · <code>node:sqlite</code></td></tr>
+    <tr><th>ประเมินผล</th><td>CLO5</td></tr>
+  </table>
+
+  <div class="bigidea">
+    <span class="lab">แนวคิดแกนกลางของคาบนี้</span>
+    <p><strong>เก็บข้อมูลแต่ละอย่างไว้ที่เดียว แล้วเชื่อมถึงกันด้วยความสัมพันธ์</strong><br>
+    <code>แก้ที่เดียว ถูกต้องทั้งระบบ</code></p>
+  </div>
+</header>
+
+<!-- ════════ HOW TO READ ════════ -->
+<section class="howto">
+  <h2>วิธีอ่านเอกสารนี้</h2>
+  <p>สัปดาห์นี้เป็น <strong>เรื่องใหม่ทั้งหมด</strong> — คุณยังไม่เคยเจอ SQL มาก่อน และจะได้เรียนวิชาฐานข้อมูลเต็ม ๆ ในเทอมหน้า</p>
+
+  <div class="newbie">
+    <strong>สัปดาห์นี้จะไม่แตะโค้ด Node เลยแม้แต่บรรทัดเดียว</strong> — เราจะอยู่กับ SQL อย่างเดียวทั้งคาบ เพื่อให้คล่องก่อน · สัปดาห์หน้าค่อยเอา SQL ที่เขียนเป็นแล้วไปใส่ในโปรแกรม
+    <br><br>
+    เหมือนตอน Week 06 ที่เราไปเล่น API ของคนอื่นก่อน แล้วค่อยสร้างเอง — <strong>เห็นของจริงก่อน เข้าใจง่ายกว่า</strong>
+  </div>
+
+  <h2 style="margin-top:26px">รูปแบบการเรียน</h2>
+  <table class="d">
+    <tr><th>ระดับ</th><th>ทำที่ไหน</th><th>คืออะไร</th></tr>
+    <tr><td><span class="wheretag room">🏫 ในห้อง</span></td><td>ในคาบ ให้เสร็จ</td><td>CP17–CP21 · เขียน SQL เป็น · สร้างฐานข้อมูลของตัวเองได้</td></tr>
+    <tr><td><span class="wheretag home">🏠 ที่บ้าน</span></td><td>ภายใน 5 วัน</td><td>CP22–CP25 · queries · schema.sql · เอกสาร · ทดสอบ constraint</td></tr>
+    <tr><td>⭐ Challenge</td><td>ไม่บังคับ</td><td>GROUP BY · LEFT JOIN · INDEX · คะแนนเพิ่ม</td></tr>
+  </table>
+
+  <div class="legend">
+    <span class="k">🟩 ทายก่อนอ่านต่อ</span><span>หยุดคิดก่อน อย่าเพิ่งดูคำตอบ</span>
+    <span class="k">🟦 ศัพท์ที่ต้องรู้</span><span>คำใหม่พร้อมคำอธิบาย</span>
+    <span class="k">🟪 เทียบกับของที่คุ้น</span><span>อุปมากับสิ่งที่เจอในชีวิตจริง</span>
+    <span class="k">🟥 กับดักที่พบบ่อย</span><span>ความผิดพลาดที่เจอจริง</span>
+    <span class="k">▸ เฉลย/ดูเพิ่ม</span><span>กดเพื่อเปิด</span>
+  </div>
+</section>
+
+<!-- ════════ TOC ════════ -->
+<nav class="toc">
+  <h2>สารบัญ</h2>
+  <p class="toc-note">10 บท · <strong>อ่านหัวข้อ "ขอบเขตของสัปดาห์นี้" ก่อนเสมอ</strong> แล้วอ่านบท 1–3 ก่อนเข้าคาบ</p>
+
+  <p class="grp">ก่อนเริ่ม</p>
+  <ol style="list-style:none;padding-left:0">
+    <li><a href="#c0">ขอบเขตของสัปดาห์นี้ — เรียนอะไร ข้ามอะไร</a><span class="t">5 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 1 · ทำไมต้องมีฐานข้อมูล</p>
+  <ol>
+    <li><a href="#c1">จากไฟล์ JSON สู่ฐานข้อมูล</a><span class="t">9 นาที</span></li>
+    <li><a href="#c2">ตาราง แถว คอลัมน์ และ Primary Key</a><span class="t">10 นาที</span></li>
+    <li><a href="#c3">ชนิดข้อมูลและข้อกำหนด</a><span class="t">10 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 2 · เขียน SQL</p>
+  <ol start="4">
+    <li><a href="#c4">SELECT — อ่านข้อมูลออกมา</a><span class="t">11 นาที</span></li>
+    <li><a href="#c5">WHERE และ ORDER BY — กรองและเรียง</a><span class="t">12 นาที</span></li>
+    <li><a href="#c6">INSERT / UPDATE / DELETE</a><span class="t">11 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 3 · ความสัมพันธ์ระหว่างตาราง</p>
+  <ol start="7">
+    <li><a href="#c7">ทำไมต้องแยกตาราง</a><span class="t">11 นาที</span></li>
+    <li><a href="#c8">Foreign Key — เชื่อมสองตารางเข้าด้วยกัน</a><span class="t">10 นาที</span></li>
+    <li><a href="#c9">JOIN — ดึงข้อมูลจากสองตารางมารวมกัน</a><span class="t">12 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 4 · ทำให้พร้อมใช้จริง <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
+  <ol start="10">
+    <li><a href="#c10">schema.sql · เอกสาร · ทดสอบ constraint</a><span class="t">10 นาที</span></li>
+  </ol>
+</nav>
+
+
+<section class="ch" id="c0">
+  <p class="ch-num">ก่อนเริ่ม · ขอบเขตของสัปดาห์นี้</p>
+  <h2>เราจะเรียนฐานข้อมูลแค่ครั้งเดียว — เรียนอะไรบ้าง</h2>
+  <p class="readtime">เวลาอ่าน ≈ 5 นาที · อ่านข้อนี้ก่อนทุกบท</p>
+
+  <p><strong>วิชานี้ไม่ใช่วิชาฐานข้อมูล</strong> — คุณจะได้เรียนฐานข้อมูลเต็ม ๆ ในเทอมหน้า</p>
+
+  <p>สัปดาห์นี้เราสนใจแค่เรื่องเดียว — <strong>ทำอย่างไรให้ API ที่สร้างไว้เก็บข้อมูลลงฐานข้อมูลได้</strong> ดังนั้นเราจะเลือกเรียนเฉพาะสิ่งที่ต้องใช้จริง และข้ามเรื่องที่เป็นทฤษฎีลึกไปก่อน</p>
+
+  <h3>0.1 เรียนอะไร ข้ามอะไร</h3>
+
+  <table class="d">
+    <tr><th style="width:50%">✅ เรียนสัปดาห์นี้ (ใช้จริงทันที)</th><th>⏭ ข้ามไปก่อน (เทอมหน้าเรียนเต็ม)</th></tr>
+    <tr><td>ตาราง · แถว · คอลัมน์ · Primary Key</td><td>ทฤษฎี Relational Algebra</td></tr>
+    <tr><td>ชนิดข้อมูลพื้นฐาน 4 แบบ</td><td>ชนิดข้อมูลขั้นสูง · custom type</td></tr>
+    <tr><td>constraint ที่ใช้จริง 6 ตัว</td><td>trigger · view · stored procedure</td></tr>
+    <tr><td><strong>SELECT · WHERE · ORDER BY</strong></td><td>subquery ซ้อนหลายชั้น · window function</td></tr>
+    <tr><td><strong>INSERT · UPDATE · DELETE</strong></td><td>bulk operation · upsert ขั้นสูง</td></tr>
+    <tr><td>Foreign Key และความสัมพันธ์หนึ่งต่อหลาย</td><td>ความสัมพันธ์หลายต่อหลาย · ตารางกลาง</td></tr>
+    <tr><td><strong>JOIN สองตาราง</strong></td><td>JOIN สามตารางขึ้นไป · self join</td></tr>
+    <tr><td>แยกตารางเพื่อไม่ให้ข้อมูลซ้ำ</td><td>Normalization ครบ 1NF–3NF อย่างเป็นทางการ</td></tr>
+    <tr><td>⭐ GROUP BY · COUNT · INDEX (เสริม)</td><td>Transaction และ ACID · การปรับแต่งประสิทธิภาพ</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 ไม่ได้แปลว่าเรื่องที่ข้ามไม่สำคัญ</span>
+    <p style="margin:0">แต่ถ้าเรียนทุกเรื่องในคาบเดียวจะไม่ได้ลงมือทำอะไรเลย · <strong>เราเลือกเรียนสิ่งที่พาเราไปถึงสัปดาห์หน้าได้</strong><br>
+    เมื่อเรียนวิชาฐานข้อมูลเทอมหน้า คุณจะมีประสบการณ์จริงติดตัวไปแล้ว — เรียนทฤษฎีจะเข้าใจง่ายกว่าคนที่ไม่เคยเขียน SQL เลย</p>
+  </div>
+
+  <h3>0.2 SQL ที่ต้องเขียนได้จริงตอนจบคาบ</h3>
+
+  <p>มีแค่ <strong>6 คำสั่ง</strong> — เขียน 6 อย่างนี้เป็น ก็ทำงานจริงได้แล้ว</p>
+
+  <table class="d">
+    <tr><th style="width:120px">คำสั่ง</th><th>ทำอะไร</th><th>ตรงกับ HTTP</th></tr>
+    <tr><td><code>SELECT</code></td><td>อ่านข้อมูล</td><td><code>GET</code></td></tr>
+    <tr><td><code>INSERT</code></td><td>เพิ่มข้อมูลใหม่</td><td><code>POST</code></td></tr>
+    <tr><td><code>UPDATE</code></td><td>แก้ไขข้อมูลเดิม</td><td><code>PUT</code></td></tr>
+    <tr><td><code>DELETE</code></td><td>ลบข้อมูล</td><td><code>DELETE</code></td></tr>
+    <tr><td><code>CREATE TABLE</code></td><td>สร้างตาราง</td><td>—</td></tr>
+    <tr><td><code>JOIN</code></td><td>รวมสองตาราง</td><td>—</td></tr>
+  </table>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับตอนเรียน Express</span>
+    <p style="margin:0">Week 06 เราไม่ได้เรียน Express ทุกฟีเจอร์ — เรียนแค่ route, middleware, req/res ที่ต้องใช้<br>
+    <strong>สัปดาห์นี้ก็เหมือนกัน</strong> — เรียน SQL เท่าที่ต้องใช้ แล้วลงมือทำให้ได้จริง</p>
+  </div>
+
+  <h3>0.3 ตอนจบสัปดาห์นี้ต้องได้อะไร</h3>
+
+  <p>ไม่ใช่แค่ "เข้าใจ" — แต่ต้องมี<strong>ของจริงที่ส่งต่อให้สัปดาห์หน้าได้</strong></p>
+
+  <table class="d">
+    <tr><th>ไฟล์</th><th>คืออะไร</th><th>สัปดาห์ที่ 10 เอาไปทำอะไร</th></tr>
+    <tr><td><code>campus.db</code></td><td>ฐานข้อมูลที่มีข้อมูลพร้อมใช้</td><td><strong>Node เปิดไฟล์นี้โดยตรง</strong></td></tr>
+    <tr><td><code>schema.sql</code></td><td>คำสั่งสร้างฐานข้อมูลใหม่ทั้งหมด</td><td><strong>สคริปต์ตั้งค่าเรียกใช้ไฟล์นี้</strong></td></tr>
+    <tr><td><code>queries.sql</code></td><td>คำสั่งค้นหาที่ทดสอบแล้ว</td><td><strong>คัดลอกไปใส่ใน service ได้เลย</strong></td></tr>
+    <tr><td><code>DATA_MODEL.md</code></td><td>เอกสารอธิบายการออกแบบ</td><td>อ้างอิงตอนเขียนโค้ด</td></tr>
+  </table>
+
+
+  <h3>0.4 เครื่องมือที่จะใช้ — บันได 3 ขั้น</h3>
+
+  <table class="d">
+    <tr><th style="width:70px">ขั้น</th><th>เครื่องมือ</th><th>ใช้ตอน</th><th>ทำไมตรงนี้</th></tr>
+    <tr><td><strong>①</strong></td><td><strong>SQL playground ออนไลน์</strong></td><td>CP17</td><td>เปิดปุ๊บพิมพ์ได้เลย <strong>ไม่ต้องติดตั้งอะไร</strong></td></tr>
+    <tr><td><strong>②</strong></td><td><strong>VS Code + SQLite extension</strong></td><td>CP19–CP21</td><td>เครื่องมือจริงที่จะใช้สัปดาห์หน้า</td></tr>
+    <tr><td><strong>③</strong></td><td><code>campus.db</code> ของตัวเอง</td><td>ปิดคาบ</td><td><strong>เป็นอินพุตของสัปดาห์ที่ 10</strong></td></tr>
+  </table>
+
+  <h4 style="margin-top:16px">ขั้นที่ ① — SQL playground ออนไลน์ใช้ฟรีที่ไหน</h4>
+
+  <div class="box note">
+    <span class="h">🟨 เกณฑ์ที่ใช้เลือก</span>
+    <p style="margin:0">ต้องเป็น <strong>SQLite แท้</strong> (ไม่ใช่ MySQL หรือ PostgreSQL) เพราะสัปดาห์หน้าเราใช้ <code>node:sqlite</code> · ถ้าเครื่องมือใช้คนละเครื่องยนต์ syntax บางอย่างจะต่างกัน<br>
+    และต้อง <strong>ไม่ต้องสมัครสมาชิก</strong> ไม่งั้นจะเสียเวลาคาบไปกับการสร้างบัญชี</p>
+  </div>
+
+  <table class="d">
+    <tr><th>เว็บ</th><th>เครื่องยนต์</th><th>สมัครสมาชิก</th><th>เหมาะกับเราไหม</th></tr>
+    <tr style="background:#DFF0E7"><td><strong><a href="https://sqlime.org/">sqlime.org</a></strong></td><td><strong>SQLite แท้</strong> (ทำงานในเบราว์เซอร์)</td><td>ไม่ต้อง</td><td><strong>⭐ แนะนำ</strong> — ข้อมูลไม่ออกจากเครื่อง · โหลด/บันทึกไฟล์ <code>.db</code> ได้</td></tr>
+    <tr><td><a href="https://sqliteonline.com/">sqliteonline.com</a></td><td>SQLite แท้</td><td>ไม่ต้อง</td><td>ใช้ได้ — หน้าตาใกล้เคียงโปรแกรมจริง</td></tr>
+    <tr><td><a href="https://www.db-fiddle.com/">db-fiddle.com</a></td><td>เลือกได้ มี SQLite</td><td>ไม่ต้อง</td><td>สำรอง — ต้องเลือกเครื่องยนต์ให้ถูกก่อน</td></tr>
+    <tr><td>W3Schools Try SQL</td><td style="color:var(--error)">เครื่องยนต์ของตัวเอง</td><td>ไม่ต้อง</td><td style="color:var(--error)"><strong>ไม่เหมาะ</strong> — ไม่ใช่ SQLite และแก้ข้อมูลตั้งต้นไม่ได้</td></tr>
+  </table>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 ทำไมแนะนำ sqlime.org เป็นหลัก</span>
+    <p style="margin:0">เป็น SQLite ตัวจริงที่ถูกแปลงให้ทำงาน<strong>ในเบราว์เซอร์ของคุณเอง</strong> — ไม่ได้ส่งข้อมูลไปเซิร์ฟเวอร์ที่ไหน<br>
+    และ<strong>โหลดไฟล์ <code>.db</code> เข้ามาดูได้</strong> — ซึ่งจะมีประโยชน์ตอนอยากเปิด <code>campus.db</code> ของตัวเองดูเร็ว ๆ โดยไม่ต้องเปิด VS Code</p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ข้อควรระวังของ playground ออนไลน์ทุกเจ้า</span>
+    <p><strong>① ต้องวาง seed ก่อนทุกครั้ง</strong> — playground เริ่มเป็นฐานข้อมูลเปล่า · คัดลอก <code>lab09/starter/playground-seed.sql</code> วางแล้วกด Run ก่อน ไม่งั้น <code>SELECT</code> จะได้ <code>no such table</code><br><strong>② ปิดหน้าเว็บแล้วข้อมูลหาย</strong> — เหมาะกับการลองพิมพ์เท่านั้น ไม่ใช่ที่เก็บงานจริง · ต้องวาง seed ใหม่ทุกครั้งที่เปิด<br>
+    
+    <strong>③ บางเจ้า syntax ต่างจาก SQLite เล็กน้อย</strong> — จึงต้องย้ายมาขั้นที่ ② ก่อนจบครึ่งคาบแรก ไม่ให้ติดนิสัย</p>
+    <p style="margin:0"><strong>งานที่ส่งต้องทำจากขั้นที่ ② และ ③ เท่านั้น</strong></p>
+  </div>
+
+  <h4 style="margin-top:16px">ถ้าเน็ตล่มหรือเว็บเข้าไม่ได้ — ทางสำรองที่ไม่ต้องใช้เน็ต</h4>
+
+  <p>Node 22 มี SQLite มาให้แล้ว จึงลอง SQL ได้ทันทีโดยไม่ต้องติดตั้งอะไรเพิ่ม</p>
+
+<pre><code><span class="c-com"># สร้างไฟล์ทดลอง try.mjs แล้วรัน</span>
+node --disable-warning=ExperimentalWarning try.mjs</code></pre>
+
+<pre><code><span class="c-com">// try.mjs — สนามซ้อม SQL แบบออฟไลน์</span>
+<span class="c-key">import</span> { DatabaseSync } <span class="c-key">from</span> <span class="c-str">'node:sqlite'</span>;
+<span class="c-key">const</span> db = <span class="c-key">new</span> <span class="c-fn">DatabaseSync</span>(<span class="c-str">':memory:'</span>);   <span class="c-com">// เก็บใน RAM ไม่สร้างไฟล์</span>
+
+db.<span class="c-fn">exec</span>(<span class="c-str">`
+  CREATE TABLE requests (id TEXT, status TEXT, priority TEXT);
+  INSERT INTO requests VALUES ('REQ-001','pending','urgent');
+  INSERT INTO requests VALUES ('REQ-002','completed','normal');
+`</span>);
+
+<span class="c-com">// เปลี่ยน SQL บรรทัดนี้แล้วรันใหม่ได้เรื่อย ๆ</span>
+console.<span class="c-fn">table</span>(db.<span class="c-fn">prepare</span>(<span class="c-str">"SELECT * FROM requests WHERE status = 'pending'"</span>).<span class="c-fn">all</span>());</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 <code>console.table()</code> แสดงผลเป็นตารางสวย ๆ ใน terminal</span>
+    <p style="margin:0">เหมาะกับการลอง SQL มาก · <code>':memory:'</code> แปลว่าเก็บใน RAM — ปิดโปรแกรมแล้วหาย เหมือน playground ออนไลน์<br>
+    <strong>ข้อดีคือเป็น SQLite ตัวเดียวกับที่ใช้จริงสัปดาห์หน้าแน่นอน</strong></p>
+  </div>
+
+  <div class="box takehome">
+    <span class="h">🏠 นี่คือเหตุผลที่งานที่บ้านสัปดาห์นี้คิดเป็น 70%</span>
+    <p style="margin:0">เพราะมันไม่ใช่ "การบ้านให้ฝึกเพิ่ม" แต่เป็น<strong>วัตถุดิบของสัปดาห์หน้า</strong><br>
+    ถ้า <code>schema.sql</code> รันไม่ได้ หรือตั้งชื่อคอลัมน์ไม่ตรง <strong>สัปดาห์หน้าจะเริ่มไม่ได้</strong></p>
+  </div>
+</section>
+
+<!-- ════════ CH 1 ════════ -->
+<section class="ch" id="c1">
+  <p class="ch-num">บทที่ 1 · กลุ่มที่ 1</p>
+  <h2>จากไฟล์ JSON สู่ฐานข้อมูล</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <p>ตอน Week 06 เราเก็บข้อมูลลงไฟล์ JSON แล้วมันก็ใช้งานได้ — ข้อมูลรอดจากการปิดเซิร์ฟเวอร์ · <strong>แล้วทำไมยังต้องมีฐานข้อมูลอีก</strong></p>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้าระบบมีคำร้อง <strong>50,000 รายการ</strong> เก็บในไฟล์ JSON ไฟล์เดียว แล้วมีคนอยากดู "คำร้องที่ยังไม่เสร็จของภาควิชาวิศวกรรมซอฟต์แวร์" — <strong>โปรแกรมต้องทำอะไรบ้าง</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>ต้อง <strong>อ่านไฟล์ทั้ง 50,000 รายการเข้ามาใน memory ทั้งหมด</strong> แล้ววนลูปกรองทีละรายการ</p>
+      <p style="margin:0">ต่อให้คำตอบมีแค่ 3 รายการ ก็ต้องอ่านทั้งหมดอยู่ดี · และถ้ามีคนขอพร้อมกัน 10 คน ก็อ่านทั้งไฟล์ 10 รอบ</p>
+    </div>
+  </details>
+
+  <h3>1.1 ปัญหา 4 อย่างของไฟล์ JSON</h3>
+
+  <table class="d">
+    <tr><th>ปัญหา</th><th>เกิดอะไรขึ้น</th></tr>
+    <tr><td><strong>ช้าเมื่อข้อมูลเยอะ</strong></td><td>ต้องอ่านทั้งไฟล์ทุกครั้ง แม้ต้องการแค่รายการเดียว</td></tr>
+    <tr><td><strong>เขียนพร้อมกันแล้วพัง</strong></td><td>ถ้าสองคนบันทึกพร้อมกัน คนหลังจะเขียนทับคนแรก — ข้อมูลหาย</td></tr>
+    <tr><td><strong>ไม่มีใครตรวจความถูกต้อง</strong></td><td>ใส่ <code>"status": "ยกเลิก"</code> ก็ได้ ทั้งที่ระบบไม่รู้จักสถานะนี้</td></tr>
+    <tr><td><strong>ข้อมูลซ้ำและไม่ตรงกัน</strong></td><td>ชื่อผู้แจ้งเก็บซ้ำในทุกคำร้อง · แก้ไม่ครบแล้วจะมีหลายเวอร์ชัน</td></tr>
+  </table>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับของที่คุ้น</span>
+    <p style="margin:0"><strong>ไฟล์ JSON = สมุดจดเล่มเดียว</strong> — จดได้เร็ว แต่พอจดเยอะ ๆ จะหาอะไรทีต้องพลิกทั้งเล่ม และถ้าสองคนจะเขียนพร้อมกันก็ต้องแย่งสมุดกัน<br>
+    <strong>ฐานข้อมูล = ตู้เอกสารที่มีระบบ</strong> — มีช่องแยก มีดัชนี หลายคนหยิบพร้อมกันได้ และมีกฎว่าเอกสารแบบไหนใส่ช่องไหนได้บ้าง</p>
+  </div>
+
+  <h3>1.2 ฐานข้อมูลให้อะไรเพิ่ม</h3>
+
+  <table class="d">
+    <tr><th>ความสามารถ</th><th>แก้ปัญหาข้อไหน</th></tr>
+    <tr><td>ค้นหาเฉพาะที่ต้องการโดยไม่อ่านทั้งหมด</td><td>ช้าเมื่อข้อมูลเยอะ</td></tr>
+    <tr><td>จัดการการเขียนพร้อมกันให้เอง</td><td>เขียนพร้อมกันแล้วพัง</td></tr>
+    <tr><td><strong>บังคับกฎของข้อมูลเอง</strong> (constraint)</td><td>ไม่มีใครตรวจความถูกต้อง</td></tr>
+    <tr><td><strong>เชื่อมข้อมูลข้ามตารางได้</strong> (relationship)</td><td>ข้อมูลซ้ำและไม่ตรงกัน</td></tr>
+  </table>
+
+  <div class="term">
+    <div class="w">SQLite</div>
+    <p>ฐานข้อมูลที่<strong>เก็บทั้งฐานไว้ในไฟล์เดียว</strong> ไม่ต้องติดตั้งเซิร์ฟเวอร์แยก · เป็นฐานข้อมูลที่ถูกใช้มากที่สุดในโลกเพราะอยู่ในโทรศัพท์ เบราว์เซอร์ และแอปพลิเคชันแทบทุกตัว</p>
+  </div>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไมวิชานี้เลือก SQLite</span>
+    <p style="margin:0">① ไม่ต้องติดตั้งอะไรเพิ่ม — Node 22 มีมาให้แล้ว · ② ฐานข้อมูลเป็นไฟล์เดียว <strong>commit ขึ้น git ได้</strong> เอาไปเปิดที่เครื่องไหนก็ได้ · ③ ใช้ SQL มาตรฐานเหมือนฐานข้อมูลตัวใหญ่ เรียนที่นี่แล้วไปใช้ที่อื่นได้</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 1</span>
+    <ul>
+      <li>ไฟล์ JSON ใช้ได้ตอนข้อมูลน้อย แต่มีปัญหา 4 อย่างเมื่อระบบโตขึ้น</li>
+      <li>ฐานข้อมูลค้นหาเร็ว · จัดการการเขียนพร้อมกัน · <strong>บังคับกฎเอง</strong> · เชื่อมข้อมูลข้ามตารางได้</li>
+      <li>SQLite เก็บทั้งฐานไว้ในไฟล์เดียว ไม่ต้องติดตั้งเซิร์ฟเวอร์</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 2 ════════ -->
+<section class="ch" id="c2">
+  <p class="ch-num">บทที่ 2 · กลุ่มที่ 1</p>
+  <h2>ตาราง แถว คอลัมน์ และ Primary Key</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <p>ฐานข้อมูลเชิงสัมพันธ์เก็บข้อมูลเป็น <strong>ตาราง</strong> — หน้าตาเหมือนตารางใน Excel ที่คุณคุ้นเคย</p>
+
+
+  <h3>2.0 ภาพรวม — ฐานข้อมูลประกอบด้วยอะไรบ้าง</h3>
+
+  <p>ก่อนลงรายละเอียด ให้เห็นภาพรวมก่อนว่าคำศัพท์แต่ละคำอยู่ตรงไหนของกันและกัน</p>
+
+  <figure>
+    <svg viewBox="0 0 880 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ฐานข้อมูลประกอบด้วยอะไรบ้าง">
+  <style>
+    .at{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .as{font:300 10.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .am{font:500 10px 'IBM Plex Mono',monospace}
+  </style>
+  <defs><marker id="andoc" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+    <path d="M0 0 L7 4 L0 8" fill="none" stroke="#54685E" stroke-width="1.5"/></marker></defs>
+
+  <!-- ชั้น 1 ฐานข้อมูล -->
+  <rect x="20" y="16" width="840" height="86" rx="10" fill="#FBF0E2" stroke="#A8620E" stroke-width="2"/>
+  <text x="40" y="40" class="am" fill="#A8620E" style="letter-spacing:.07em">① DATABASE · ฐานข้อมูล</text>
+  <text x="40" y="60" class="at">campus.db — ไฟล์เดียวที่เก็บทุกอย่าง</text>
+  <text x="40" y="78" class="as">ข้างในมีได้หลายตาราง · คัดลอกไฟล์นี้ไป เท่ากับย้ายข้อมูลทั้งหมด</text>
+  <text x="40" y="94" class="am" fill="#A8620E">api/data/campus.db</text>
+
+  <!-- ชั้น 2 ตาราง -->
+  <rect x="45" y="118" width="380" height="74" rx="9" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.8"/>
+  <text x="63" y="140" class="am" fill="#186B8C" style="letter-spacing:.07em">② TABLE · ตาราง</text>
+  <text x="63" y="160" class="at">users</text>
+  <text x="63" y="178" class="as">เก็บข้อมูล "คน" · 4 คอลัมน์</text>
+
+  <rect x="455" y="118" width="380" height="74" rx="9" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.8"/>
+  <text x="473" y="140" class="am" fill="#186B8C" style="letter-spacing:.07em">② TABLE · ตาราง</text>
+  <text x="473" y="160" class="at">requests</text>
+  <text x="473" y="178" class="as">เก็บข้อมูล "คำร้อง" · 8 คอลัมน์</text>
+
+  <path d="M235 104 L235 114" stroke="#54685E" stroke-width="1.5" marker-end="url(#andoc)"/>
+  <path d="M645 104 L645 114" stroke="#54685E" stroke-width="1.5" marker-end="url(#andoc)"/>
+  <text x="740" y="112" class="as">ตารางเดียวกัน อยู่ในฐานข้อมูลเดียวกัน</text>
+
+  <!-- ชั้น 3 คอลัมน์ + แถว -->
+  <path d="M235 194 L235 210" stroke="#54685E" stroke-width="1.5" marker-end="url(#andoc)"/>
+  <text x="40" y="228" class="am" fill="#6B3B96" style="letter-spacing:.07em">③ COLUMN · คอลัมน์ — ชนิดข้อมูลเดียวกันทั้งแถว (บนลงล่าง)</text>
+
+  <rect x="40" y="236" width="800" height="26" fill="#F1EAF8" stroke="#6B3B96" stroke-width="1.5"/>
+  <text x="56" y="254" class="am" fill="#6B3B96">id</text>
+  <text x="140" y="254" class="am" fill="#6B3B96">requester_id</text>
+  <text x="290" y="254" class="am" fill="#6B3B96">request_type</text>
+  <text x="450" y="254" class="am" fill="#6B3B96">location</text>
+  <text x="600" y="254" class="am" fill="#6B3B96">priority</text>
+  <text x="720" y="254" class="am" fill="#6B3B96">status</text>
+
+  <rect x="40" y="262" width="800" height="26" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.8"/>
+  <text x="56" y="280" class="as">REQ-001</text><text x="140" y="280" class="as">1</text>
+  <text x="290" y="280" class="as">แจ้งซ่อม</text><text x="450" y="280" class="as">ห้อง 301</text>
+  <text x="600" y="280" class="as">urgent</text><text x="720" y="280" class="as">pending</text>
+
+  <rect x="40" y="288" width="800" height="24" fill="#fff" stroke="#D5DDE5"/>
+  <text x="56" y="305" class="as">REQ-002</text><text x="140" y="305" class="as">2</text>
+  <text x="290" y="305" class="as">บริการบัญชีผู้ใช้</text><text x="450" y="305" class="as">อาคารวิศวฯ</text>
+  <text x="600" y="305" class="as">normal</text><text x="720" y="305" class="as">in-progress</text>
+
+  <rect x="40" y="312" width="800" height="24" fill="#fff" stroke="#D5DDE5"/>
+  <text x="56" y="329" class="as">REQ-003</text><text x="140" y="329" class="as">3</text>
+  <text x="290" y="329" class="as">ขอใช้อุปกรณ์</text><text x="450" y="329" class="as">ห้องประชุม 2</text>
+  <text x="600" y="329" class="as">normal</text><text x="720" y="329" class="as">completed</text>
+
+  <path d="M848 275 L862 275 L862 262 M862 275 L862 288" stroke="#1E7A54" stroke-width="1.8" fill="none"/>
+  <text x="866" y="279" class="am" fill="#1E7A54" transform="rotate(90 866 279)">แถว</text>
+
+  <text x="40" y="358" class="am" fill="#1E7A54" style="letter-spacing:.07em">④ ROW / RECORD · แถว — ข้อมูล 1 รายการ (ซ้ายไปขวา)</text>
+
+  <!-- ชั้น 5 ค่า -->
+  <rect x="40" y="374" width="270" height="76" rx="8" fill="#F7F9FB" stroke="#D5DDE5"/>
+  <text x="58" y="396" class="am" fill="#54685E" style="letter-spacing:.07em">⑤ VALUE · ค่าในช่อง</text>
+  <text x="58" y="416" class="at">"แจ้งซ่อม"</text>
+  <text x="58" y="434" class="as">จุดตัดของ 1 แถว กับ 1 คอลัมน์</text>
+
+  <rect x="330" y="374" width="250" height="76" rx="8" fill="#F7F9FB" stroke="#D5DDE5"/>
+  <text x="348" y="396" class="am" fill="#A8620E" style="letter-spacing:.07em">🔑 PRIMARY KEY</text>
+  <text x="348" y="416" class="at">requests.id</text>
+  <text x="348" y="434" class="as">ระบุแถวได้ไม่ซ้ำกัน</text>
+
+  <rect x="600" y="374" width="240" height="76" rx="8" fill="#F7F9FB" stroke="#D5DDE5"/>
+  <text x="618" y="396" class="am" fill="#186B8C" style="letter-spacing:.07em">🔗 FOREIGN KEY</text>
+  <text x="618" y="416" class="at">requests.requester_id</text>
+  <text x="618" y="434" class="as">ชี้ไปหา users.id</text>
+</svg>
+    <figcaption><b>ภาพที่ 1</b>ฐานข้อมูล 1 ไฟล์ → หลายตาราง → แต่ละตารางมีคอลัมน์และแถว → จุดตัดคือค่าในช่อง</figcaption>
+  </figure>
+
+  <table class="d">
+    <tr><th style="width:150px">คำ</th><th>คืออะไร</th><th>ในโปรเจกต์เรา</th></tr>
+    <tr><td><strong>Database</strong></td><td>ที่เก็บทุกอย่าง — SQLite เก็บเป็นไฟล์เดียว</td><td><code>campus.db</code></td></tr>
+    <tr><td><strong>Table</strong></td><td>เก็บข้อมูลเรื่องหนึ่ง</td><td><code>users</code> · <code>requests</code></td></tr>
+    <tr><td><strong>Column</strong></td><td>ช่องข้อมูล — ชนิดเดียวกันทั้งคอลัมน์ (อ่านบนลงล่าง)</td><td><code>status</code> · <code>priority</code></td></tr>
+    <tr><td><strong>Row / Record</strong></td><td>ข้อมูล 1 รายการ (อ่านซ้ายไปขวา)</td><td>คำร้อง 1 ใบ</td></tr>
+    <tr><td><strong>Value</strong></td><td>จุดตัดของ 1 แถว กับ 1 คอลัมน์</td><td><code>"แจ้งซ่อม"</code></td></tr>
+  </table>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับ Excel ที่คุ้นเคย</span>
+    <p style="margin:0"><strong>ไฟล์ Excel = ฐานข้อมูล</strong> · <strong>แต่ละ sheet = ตาราง</strong> · <strong>หัวคอลัมน์ = คอลัมน์</strong> · <strong>แต่ละบรรทัด = แถว</strong><br>
+    ต่างกันตรงที่ฐานข้อมูล <strong>บังคับกฎได้</strong> (ใส่ค่าผิดไม่ได้) และ <strong>เชื่อมข้ามตารางได้</strong> ซึ่ง Excel ทำไม่ได้ดีนัก</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="โครงสร้างของตาราง">
+      <style>
+        .t1{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s1{font:300 11px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m1{font:500 11px 'IBM Plex Mono',monospace}
+      </style>
+      <text x="30" y="24" class="m1" fill="#A8620E" style="letter-spacing:.08em">TABLE · requests</text>
+
+      <rect x="30" y="36" width="700" height="32" fill="#F5EADA" stroke="#C9A57A" stroke-width="1.5"/>
+      <text x="48" y="57" class="m1" fill="#7A4708">id</text>
+      <text x="150" y="57" class="m1" fill="#7A4708">requester_id</text>
+      <text x="300" y="57" class="m1" fill="#7A4708">location</text>
+      <text x="500" y="57" class="m1" fill="#7A4708">status</text>
+      <text x="640" y="57" class="m1" fill="#7A4708">priority</text>
+
+      <rect x="30" y="68" width="700" height="30" fill="#fff" stroke="#DBE7E0"/>
+      <text x="48" y="88" class="s1">REQ-001</text><text x="150" y="88" class="s1">1</text>
+      <text x="300" y="88" class="s1">ห้องปฏิบัติการ 301</text><text x="500" y="88" class="s1">pending</text><text x="640" y="88" class="s1">urgent</text>
+
+      <rect x="30" y="98" width="700" height="30" fill="#FAFCFB" stroke="#DBE7E0"/>
+      <text x="48" y="118" class="s1">REQ-002</text><text x="150" y="118" class="s1">2</text>
+      <text x="300" y="118" class="s1">อาคารวิศวกรรม</text><text x="500" y="118" class="s1">in-progress</text><text x="640" y="118" class="s1">normal</text>
+
+      <rect x="30" y="128" width="700" height="30" fill="#fff" stroke="#DBE7E0"/>
+      <text x="48" y="148" class="s1">REQ-003</text><text x="150" y="148" class="s1">3</text>
+      <text x="300" y="148" class="s1">ห้องประชุม 2</text><text x="500" y="148" class="s1">completed</text><text x="640" y="148" class="s1">normal</text>
+
+      <path d="M20 36 L20 68" stroke="#A8620E" stroke-width="2"/>
+      <text x="14" y="30" text-anchor="end" class="t1" fill="#A8620E" transform="rotate(-90 14 30)"></text>
+      <text x="30" y="180" class="t1" fill="#A8620E">↑ คอลัมน์ (column) — ชนิดข้อมูลเดียวกันทั้งคอลัมน์</text>
+      <path d="M736 68 L750 68 L750 98 L736 98" stroke="#186B8C" stroke-width="2" fill="none"/>
+      <text x="700" y="205" class="t1" fill="#186B8C">← แถว (row) = ข้อมูล 1 รายการ</text>
+
+      <rect x="30" y="216" width="700" height="30" fill="#DFF0E7" stroke="#1E7A54" rx="4"/>
+      <text x="48" y="236" class="t1" fill="#14503A">🔑 Primary Key — คอลัมน์ที่ใช้ระบุแถวได้ไม่ซ้ำกัน · ในตารางนี้คือ id</text>
+    </svg>
+    <figcaption><b>ภาพที่ 2</b>ตารางประกอบด้วยคอลัมน์ (ชนิดข้อมูลเดียวกันทั้งคอลัมน์) และแถว (ข้อมูล 1 รายการ)</figcaption>
+  </figure>
+
+  <h3>2.1 เทียบกับสิ่งที่เราเคยใช้</h3>
+
+  <table class="d">
+    <tr><th>ใน JavaScript (Week 06)</th><th>ในฐานข้อมูล</th></tr>
+    <tr><td>array ของ object</td><td><strong>ตาราง</strong> (table)</td></tr>
+    <tr><td>object 1 ตัว</td><td><strong>แถว</strong> (row)</td></tr>
+    <tr><td>property ของ object</td><td><strong>คอลัมน์</strong> (column)</td></tr>
+    <tr><td>ค่าของ property</td><td>ค่าในช่อง (cell)</td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ความต่างที่สำคัญ</span>
+    <p style="margin:0">ใน JavaScript แต่ละ object <strong>มี property ไม่เหมือนกันก็ได้</strong> — object หนึ่งมี <code>email</code> อีกอันไม่มีก็ไม่มีใครว่า<br>
+    แต่ในตาราง <strong>ทุกแถวต้องมีคอลัมน์เหมือนกันหมด</strong> · ถ้าแถวไหนไม่มีค่า จะเก็บเป็น <code>NULL</code> แทน แต่ช่องนั้นยังมีอยู่</p>
+  </div>
+
+  <div class="term">
+    <div class="w">Primary Key (PK)</div>
+    <p>คอลัมน์ที่ใช้ <strong>ระบุแถวได้อย่างไม่ซ้ำกัน</strong> · ทุกตารางควรมี · ฐานข้อมูลจะไม่ยอมให้มีสองแถวที่ค่า PK ซ้ำกัน และไม่ยอมให้เป็น <code>NULL</code></p>
+  </div>
+
+  <h3>2.2 เลือกอะไรเป็น Primary Key</h3>
+
+  <table class="d">
+    <tr><th>ตัวเลือก</th><th>ดีไหม</th><th>เพราะอะไร</th></tr>
+    <tr><td>เลขที่ระบบสร้างให้</td><td style="color:var(--success)"><strong>ดีที่สุด</strong></td><td>ไม่มีทางซ้ำ ไม่เปลี่ยน ไม่ต้องคิดเอง</td></tr>
+    <tr><td>รหัสที่เราออกแบบ เช่น <code>REQ-001</code></td><td style="color:var(--success)">ดี</td><td>คนอ่านเข้าใจ ใช้อ้างอิงจริงได้</td></tr>
+    <tr><td>อีเมล</td><td style="color:var(--loading)">พอได้</td><td>ไม่ซ้ำจริง แต่<strong>เปลี่ยนได้</strong> ซึ่งยุ่งยาก</td></tr>
+    <tr><td>ชื่อ-นามสกุล</td><td style="color:var(--error)"><strong>ไม่ดี</strong></td><td>ซ้ำกันได้ · เปลี่ยนได้ · สะกดผิดได้</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 ในโปรเจกต์ของเราใช้ทั้งสองแบบ</span>
+    <p style="margin:0"><code>users.id</code> เป็น<strong>ตัวเลขที่ระบบสร้างให้</strong> เพราะผู้ใช้ไม่ต้องเห็นรหัสนี้<br>
+    <code>requests.id</code> เป็น<strong>ข้อความ <code>REQ-001</code></strong> เพราะผู้ใช้เห็นและใช้อ้างอิงจริง เช่น แจ้งเจ้าหน้าที่ว่า "คำร้อง REQ-001"</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 2</span>
+    <ul>
+      <li>ตาราง = array ของ object · แถว = object · คอลัมน์ = property</li>
+      <li>ต่างจาก JavaScript ตรงที่<strong>ทุกแถวต้องมีคอลัมน์เหมือนกันหมด</strong></li>
+      <li>Primary Key ระบุแถวได้ไม่ซ้ำ · ห้ามซ้ำ ห้ามเป็น NULL</li>
+      <li>เลือก PK ที่<strong>ไม่เปลี่ยน</strong> — อย่าใช้ชื่อหรือสิ่งที่แก้ได้</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 3 ════════ -->
+<section class="ch" id="c3">
+  <p class="ch-num">บทที่ 3 · กลุ่มที่ 1</p>
+  <h2>ชนิดข้อมูลและข้อกำหนด</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <p>ตอนสร้างตาราง เราไม่ได้บอกแค่ว่ามีคอลัมน์อะไร แต่บอกด้วยว่า<strong>แต่ละคอลัมน์ยอมรับอะไรได้บ้าง</strong></p>
+
+  <h3>3.1 ชนิดข้อมูลใน SQLite</h3>
+
+  <table class="d">
+    <tr><th>ชนิด</th><th>เก็บอะไร</th><th>ตัวอย่างในโปรเจกต์เรา</th></tr>
+    <tr><td><code>TEXT</code></td><td>ข้อความ</td><td><code>name</code> · <code>location</code> · <code>status</code></td></tr>
+    <tr><td><code>INTEGER</code></td><td>จำนวนเต็ม</td><td><code>users.id</code> · <code>requester_id</code></td></tr>
+    <tr><td><code>REAL</code></td><td>ทศนิยม</td><td>ยังไม่ได้ใช้</td></tr>
+    <tr><td><code>BLOB</code></td><td>ข้อมูลดิบ เช่น รูปภาพ</td><td>ยังไม่ได้ใช้</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 SQLite ไม่มีชนิด "วันที่" โดยเฉพาะ</span>
+    <p style="margin:0">เก็บเป็น <code>TEXT</code> ในรูปแบบ <code>'2026-09-13 16:33:57'</code> แทน · ซึ่งเรียงลำดับได้ถูกต้องอยู่แล้วเพราะเป็นรูปแบบปีเดือนวัน<br>
+    ฐานข้อมูลตัวอื่นเช่น PostgreSQL มีชนิด <code>DATE</code> และ <code>TIMESTAMP</code> แยก</p>
+  </div>
+
+  <h3>3.2 ข้อกำหนด (Constraint) — กฎที่ฐานข้อมูลบังคับเอง</h3>
+
+  <div class="term">
+    <div class="w">Constraint</div>
+    <p>กฎที่กำหนดไว้ตอนสร้างตาราง · <strong>ฐานข้อมูลจะปฏิเสธข้อมูลที่ผิดกฎเอง</strong> ไม่ว่าจะใส่เข้ามาจากทางไหน</p>
+  </div>
+
+  <table class="d">
+    <tr><th>Constraint</th><th>บังคับอะไร</th><th>ใช้ในโปรเจกต์เรา</th></tr>
+    <tr><td><code>PRIMARY KEY</code></td><td>ไม่ซ้ำ + ไม่เป็น NULL</td><td><code>users.id</code> · <code>requests.id</code></td></tr>
+    <tr><td><code>NOT NULL</code></td><td>ต้องมีค่าเสมอ</td><td><code>name</code> · <code>location</code> · <code>details</code></td></tr>
+    <tr><td><code>UNIQUE</code></td><td>ห้ามซ้ำกับแถวอื่น</td><td><code>users.email</code></td></tr>
+    <tr><td><code>DEFAULT</code></td><td>ถ้าไม่ใส่ ใช้ค่านี้</td><td><code>status</code> = <code>'pending'</code></td></tr>
+    <tr><td><code>CHECK</code></td><td>ค่าต้องตรงเงื่อนไข</td><td><code>status</code> ต้องเป็น 1 ใน 3 ค่า</td></tr>
+    <tr><td><code>FOREIGN KEY</code></td><td>ต้องมีอยู่จริงในอีกตาราง</td><td><code>requester_id</code> → <code>users.id</code></td></tr>
+  </table>
+
+  <h3>3.3 ตัวอย่างจริง</h3>
+
+<pre><code><span class="c-key">CREATE TABLE</span> requests (
+  id            <span class="c-key">TEXT PRIMARY KEY</span>,
+  requester_id  <span class="c-key">INTEGER NOT NULL</span>,
+  request_type  <span class="c-key">TEXT NOT NULL</span>
+                <span class="c-key">CHECK</span> (request_type <span class="c-key">IN</span> (<span class="c-str">'แจ้งซ่อม'</span>,<span class="c-str">'บริการบัญชีผู้ใช้'</span>,<span class="c-str">'ขอใช้อุปกรณ์'</span>,<span class="c-str">'อื่น ๆ'</span>)),
+  location      <span class="c-key">TEXT NOT NULL</span>,
+  details       <span class="c-key">TEXT NOT NULL</span>,
+  priority      <span class="c-key">TEXT NOT NULL DEFAULT</span> <span class="c-str">'normal'</span>
+                <span class="c-key">CHECK</span> (priority <span class="c-key">IN</span> (<span class="c-str">'normal'</span>,<span class="c-str">'urgent'</span>)),
+  status        <span class="c-key">TEXT NOT NULL DEFAULT</span> <span class="c-str">'pending'</span>
+                <span class="c-key">CHECK</span> (status <span class="c-key">IN</span> (<span class="c-str">'pending'</span>,<span class="c-str">'in-progress'</span>,<span class="c-str">'completed'</span>)),
+  created_at    <span class="c-key">TEXT NOT NULL DEFAULT</span> (<span class="c-fn">datetime</span>(<span class="c-str">'now'</span>,<span class="c-str">'localtime'</span>)),
+
+  <span class="c-key">FOREIGN KEY</span> (requester_id) <span class="c-key">REFERENCES</span> users(id)
+);</code></pre>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">เรามี validation ฝั่ง API อยู่แล้วตั้งแต่ Week 06 CP04 — <strong>แล้วทำไมยังต้องมี CHECK ในฐานข้อมูลอีก</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>เพราะ <strong>API ไม่ใช่ทางเดียวที่ข้อมูลเข้าฐานข้อมูลได้</strong></p>
+      <p>ข้อมูลอาจเข้ามาทาง — สคริปต์นำเข้าข้อมูล · คนแก้ด้วยมือผ่านเครื่องมือ · ระบบอื่นที่มาเชื่อมทีหลัง · หรือโค้ดที่เขียนผิดในอนาคต</p>
+      <p style="margin:0"><strong>การป้องกันสองชั้นดีกว่าชั้นเดียว</strong> — validation ที่ API ให้ข้อความดี ๆ กับผู้ใช้ ส่วน constraint ที่ฐานข้อมูลเป็นด่านสุดท้ายที่ไม่มีใครข้ามได้</p>
+    </div>
+  </details>
+
+  <div class="box pitfall">
+    <span class="h">🟥 SQLite ปิดการตรวจ Foreign Key ไว้เป็นค่าเริ่มต้น</span>
+    <p style="margin:0">ต้องสั่ง <code>PRAGMA foreign_keys = ON;</code> ทุกครั้งที่เปิดฐานข้อมูล ไม่งั้น <strong>constraint จะไม่ทำงาน</strong> และใส่ <code>requester_id</code> มั่วเข้าไปได้<br>
+    <small>เป็นข้อจำกัดทางประวัติศาสตร์ของ SQLite เพื่อให้เข้ากันได้กับโปรแกรมเก่า</small></p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 3</span>
+    <ul>
+      <li>SQLite มี 4 ชนิดหลัก — <code>TEXT</code> · <code>INTEGER</code> · <code>REAL</code> · <code>BLOB</code></li>
+      <li>constraint คือกฎที่<strong>ฐานข้อมูลบังคับเอง</strong> ไม่ว่าข้อมูลจะเข้ามาทางไหน</li>
+      <li>มี validation ที่ API แล้วก็ยังควรมี constraint — <strong>ป้องกันสองชั้น</strong></li>
+      <li>ต้องสั่ง <code>PRAGMA foreign_keys = ON</code> ไม่งั้น FK ไม่ทำงาน</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 4 ════════ -->
+<section class="ch" id="c4">
+  <p class="ch-num">บทที่ 4 · กลุ่มที่ 2</p>
+  <h2>SELECT — อ่านข้อมูลออกมา</h2>
+  <p class="readtime">เวลาอ่าน ≈ 11 นาที</p>
+
+  <div class="term">
+    <div class="w">SQL (Structured Query Language)</div>
+    <p>ภาษาที่ใช้สั่งงานฐานข้อมูล · <strong>บอกว่าอยากได้อะไร ไม่ต้องบอกว่าหาอย่างไร</strong> — ฐานข้อมูลคิดวิธีที่เร็วที่สุดให้เอง</p>
+  </div>
+
+  <div class="box analogy">
+    <span class="h">🟪 ต่างจาก JavaScript อย่างไร</span>
+    <p>ใน JavaScript เราบอก<strong>ขั้นตอน</strong> — วนลูป เช็คทีละตัว เก็บใส่ array ใหม่</p>
+<pre style="margin:10px 0 0"><code><span class="c-com">// JavaScript — บอกวิธีทำ</span>
+<span class="c-key">const</span> result = requests.<span class="c-fn">filter</span>(r =&gt; r.status === <span class="c-str">'pending'</span>);</code></pre>
+<pre style="margin:10px 0 0"><code><span class="c-com">-- SQL — บอกแค่ว่าอยากได้อะไร</span>
+<span class="c-key">SELECT</span> * <span class="c-key">FROM</span> requests <span class="c-key">WHERE</span> status = <span class="c-str">'pending'</span>;</code></pre>
+    <p style="margin:10px 0 0">ฐานข้อมูลจะตัดสินใจเองว่าจะใช้ index ไหม จะอ่านแบบไหนถึงเร็วที่สุด — <strong>เราไม่ต้องคิดแทนมัน</strong></p>
+  </div>
+
+  <h3>4.1 รูปแบบพื้นฐาน</h3>
+
+<pre><code><span class="c-key">SELECT</span> คอลัมน์ที่อยากได้
+<span class="c-key">FROM</span>   ตารางไหน;</code></pre>
+
+<pre><code><span class="c-com">-- เอาทุกคอลัมน์</span>
+<span class="c-key">SELECT</span> * <span class="c-key">FROM</span> requests;
+
+<span class="c-com">-- เอาเฉพาะบางคอลัมน์</span>
+<span class="c-key">SELECT</span> id, location, status <span class="c-key">FROM</span> requests;</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 <code>SELECT *</code> สะดวก แต่ไม่ควรใช้ในโค้ดจริง</span>
+    <p style="margin:0">เพราะถ้ามีคนเพิ่มคอลัมน์ใหม่ในตาราง โค้ดของคุณจะได้ข้อมูลเกินมาโดยไม่รู้ตัว · และถ้าคอลัมน์นั้นมีข้อมูลอ่อนไหว เช่น รหัสผ่าน ก็จะหลุดออกไปด้วย<br>
+    <strong>ใช้ <code>*</code> ตอนสำรวจข้อมูล · ระบุชื่อคอลัมน์ตอนเขียนโค้ดจริง</strong></p>
+  </div>
+
+  <h3>4.2 ตั้งชื่อใหม่ให้คอลัมน์ด้วย AS</h3>
+
+<pre><code><span class="c-key">SELECT</span> id,
+       request_type <span class="c-key">AS</span> requestType,
+       created_at   <span class="c-key">AS</span> createdAt
+<span class="c-key">FROM</span> requests;</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไมเรื่องนี้สำคัญกับเรา</span>
+    <p style="margin:0">ในฐานข้อมูลนิยมตั้งชื่อแบบ <code>request_type</code> (มีขีดล่าง) · แต่ใน JavaScript นิยม <code>requestType</code><br>
+    <code>AS</code> ช่วยแปลงตอนดึงออกมา — <strong>สัปดาห์หน้าจะได้ใช้เรื่องนี้ตอนทำให้ API คืนข้อมูลรูปแบบเดิมที่ React ใช้อยู่</strong></p>
+  </div>
+
+  <h3>4.3 ค่าที่ไม่ซ้ำด้วย DISTINCT</h3>
+
+<pre><code><span class="c-com">-- มีสถานะอะไรใช้อยู่บ้าง</span>
+<span class="c-key">SELECT DISTINCT</span> status <span class="c-key">FROM</span> requests;</code></pre>
+
+  <h3>4.4 จำกัดจำนวนด้วย LIMIT</h3>
+
+<pre><code><span class="c-key">SELECT</span> * <span class="c-key">FROM</span> requests <span class="c-key">LIMIT</span> <span class="c-num">5</span>;</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 เคล็ดลับตอนสำรวจข้อมูลใหม่</span>
+    <p style="margin:0">เจอตารางที่ไม่เคยเห็น ให้เริ่มด้วย <code>SELECT * FROM ชื่อตาราง LIMIT 5;</code> เสมอ — เห็นหน้าตาข้อมูลโดยไม่ต้องรอโหลดทั้งหมด</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 4</span>
+    <ul>
+      <li>SQL บอกว่า<strong>อยากได้อะไร</strong> ไม่ใช่บอกวิธีหา — ต่างจาก JavaScript</li>
+      <li><code>SELECT คอลัมน์ FROM ตาราง</code> คือรูปแบบพื้นฐาน</li>
+      <li><code>SELECT *</code> ใช้ตอนสำรวจ · ระบุชื่อคอลัมน์ตอนเขียนโค้ดจริง</li>
+      <li><code>AS</code> เปลี่ยนชื่อคอลัมน์ตอนดึงออกมา — <strong>จะได้ใช้จริงสัปดาห์หน้า</strong></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 5 ════════ -->
+<section class="ch" id="c5">
+  <p class="ch-num">บทที่ 5 · กลุ่มที่ 2</p>
+  <h2>WHERE และ ORDER BY — กรองและเรียง</h2>
+  <p class="readtime">เวลาอ่าน ≈ 12 นาที</p>
+
+  <h3>5.1 WHERE — เลือกเฉพาะแถวที่ต้องการ</h3>
+
+<pre><code><span class="c-key">SELECT</span> * <span class="c-key">FROM</span> requests
+<span class="c-key">WHERE</span> status = <span class="c-str">'pending'</span>;</code></pre>
+
+  <table class="d">
+    <tr><th>ตัวดำเนินการ</th><th>ความหมาย</th><th>ตัวอย่าง</th></tr>
+    <tr><td><code>=</code></td><td>เท่ากับ</td><td><code>status = 'pending'</code></td></tr>
+    <tr><td><code>&lt;&gt;</code> หรือ <code>!=</code></td><td>ไม่เท่ากับ</td><td><code>status &lt;&gt; 'completed'</code></td></tr>
+    <tr><td><code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code></td><td>มากกว่า/น้อยกว่า</td><td><code>created_at &gt;= '2026-09-01'</code></td></tr>
+    <tr><td><code>AND</code></td><td>ต้องจริงทั้งสองข้อ</td><td><code>priority = 'urgent' AND status = 'pending'</code></td></tr>
+    <tr><td><code>OR</code></td><td>จริงข้อใดข้อหนึ่ง</td><td><code>status = 'pending' OR status = 'in-progress'</code></td></tr>
+    <tr><td><code>IN</code></td><td>อยู่ในรายการ</td><td><code>status IN ('pending','in-progress')</code></td></tr>
+    <tr><td><code>LIKE</code></td><td>ตรงกับรูปแบบ</td><td><code>details LIKE '%ไม่ทำงาน%'</code></td></tr>
+    <tr><td><code>IS NULL</code></td><td>ไม่มีค่า</td><td><code>email IS NULL</code></td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 กับดัก 3 อันของ WHERE</span>
+    <p><strong>① ใช้ <code>==</code> แบบ JavaScript</strong> — SQL ใช้ <code>=</code> ตัวเดียวในการเปรียบเทียบ · เขียน <code>==</code> จะ error</p>
+    <p><strong>② ใช้ <code>= NULL</code></strong> — ต้องใช้ <code>IS NULL</code> เท่านั้น · <code>= NULL</code> จะไม่เจออะไรเลยและไม่มี error บอก เพราะ <code>NULL</code> แปลว่า "ไม่รู้ค่า" ซึ่งเทียบเท่ากับอะไรไม่ได้</p>
+    <p style="margin:0"><strong>③ ใช้เครื่องหมายคำพูดคู่</strong> — SQL ใช้ <strong>เครื่องหมายคำพูดเดี่ยว</strong> <code>'pending'</code> สำหรับข้อความ · คำพูดคู่ <code>"..."</code> ใช้กับชื่อคอลัมน์ ไม่ใช่ค่า</p>
+  </div>
+
+  <h3>5.2 LIKE — ค้นจากคำบางส่วน</h3>
+
+  <table class="d">
+    <tr><th>รูปแบบ</th><th>หมายถึง</th><th>ตรงกับ</th></tr>
+    <tr><td><code>'%ไม่ทำงาน%'</code></td><td>มีคำนี้อยู่ตรงไหนก็ได้</td><td>"เครื่องปรับอากาศไม่ทำงานตั้งแต่เช้า"</td></tr>
+    <tr><td><code>'REQ-%'</code></td><td>ขึ้นต้นด้วย</td><td>REQ-001 · REQ-002</td></tr>
+    <tr><td><code>'%301'</code></td><td>ลงท้ายด้วย</td><td>ห้องปฏิบัติการ 301</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 <code>%</code> คือ "อะไรก็ได้ กี่ตัวก็ได้"</span>
+    <p style="margin:0">เหมือน <code>*</code> ที่ใช้ค้นไฟล์ในคอมพิวเตอร์ · ถ้าไม่ใส่ <code>%</code> เลย <code>LIKE 'ไม่ทำงาน'</code> จะหาเฉพาะช่องที่มีข้อความนี้<strong>เป๊ะ ๆ ทั้งช่อง</strong> ซึ่งมักไม่ใช่สิ่งที่ต้องการ</p>
+  </div>
+
+  <h3>5.3 ORDER BY — เรียงลำดับ</h3>
+
+<pre><code><span class="c-com">-- เรียงจากน้อยไปมาก (ค่าเริ่มต้น)</span>
+<span class="c-key">SELECT</span> * <span class="c-key">FROM</span> requests <span class="c-key">ORDER BY</span> created_at;
+
+<span class="c-com">-- เรียงจากมากไปน้อย</span>
+<span class="c-key">SELECT</span> * <span class="c-key">FROM</span> requests <span class="c-key">ORDER BY</span> created_at <span class="c-key">DESC</span>;
+
+<span class="c-com">-- เรียงหลายชั้น — เร่งด่วนก่อน แล้วค่อยเรียงตามรหัส</span>
+<span class="c-key">SELECT</span> * <span class="c-key">FROM</span> requests <span class="c-key">ORDER BY</span> priority <span class="c-key">DESC</span>, id;</code></pre>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0"><code>ORDER BY priority DESC</code> จะเรียง <code>'urgent'</code> กับ <code>'normal'</code> อย่างไร <strong>และทำไม</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><code>urgent</code> มาก่อน <code>normal</code> — เพราะเรียงตาม<strong>ตัวอักษรจากหลังไปหน้า</strong> และ <code>u</code> มาหลัง <code>n</code></p>
+      <p style="margin:0"><strong>ที่ได้ผลถูกต้องเป็นความบังเอิญ</strong> — ถ้าวันหนึ่งเพิ่มระดับ <code>'critical'</code> ที่ควรมาก่อน <code>urgent</code> จะเรียงผิดทันที เพราะ <code>c</code> มาก่อน <code>n</code> และ <code>u</code><br>
+      วิธีที่ถูกคือเก็บลำดับความสำคัญเป็นตัวเลขแยกไว้ แต่เกินขอบเขตสัปดาห์นี้</p>
+    </div>
+  </details>
+
+  <h3>5.4 ลำดับของคำสั่งใน SQL</h3>
+
+<pre><code><span class="c-key">SELECT</span>   คอลัมน์
+<span class="c-key">FROM</span>     ตาราง
+<span class="c-key">WHERE</span>    เงื่อนไข
+<span class="c-key">ORDER BY</span> คอลัมน์ที่ใช้เรียง
+<span class="c-key">LIMIT</span>    จำนวน;</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 สลับลำดับไม่ได้</span>
+    <p style="margin:0">SQL บังคับลำดับนี้ตายตัว · เขียน <code>ORDER BY</code> ก่อน <code>WHERE</code> จะ error ทันที<br>
+    <strong>จำง่าย ๆ</strong> — เอาอะไร (SELECT) · จากไหน (FROM) · กรองยังไง (WHERE) · เรียงยังไง (ORDER BY) · เอากี่อัน (LIMIT)</p>
+  </div>
+
+
+  <h3>5.5 ลำดับการทำงานจริงของฐานข้อมูล</h3>
+
+  <p>เราเขียน <code>SELECT</code> ไว้บรรทัดแรก — <strong>แต่ฐานข้อมูลทำเป็นขั้นสุดท้าย</strong></p>
+
+  <figure>
+    <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ลำดับการทำงานของคำสั่ง SELECT">
+      <style>
+        .qt{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .qs{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .qm{font:500 9.5px 'IBM Plex Mono',monospace}
+      </style>
+      <text x="20" y="16" class="qm" fill="#A8620E" style="letter-spacing:.07em">ที่เราเขียน</text>
+      <rect x="20" y="24" width="230" height="96" rx="7" fill="#FBF0E2" stroke="#A8620E" stroke-width="1.3"/>
+      <text x="38" y="44" class="qm" fill="#7A4708">SELECT id, requester</text>
+      <text x="38" y="62" class="qm" fill="#7A4708">FROM requests</text>
+      <text x="38" y="80" class="qm" fill="#7A4708">WHERE status = 'pending'</text>
+      <text x="38" y="98" class="qm" fill="#7A4708">ORDER BY priority DESC</text>
+      <text x="38" y="114" class="qs">เขียนตามไวยากรณ์ของ SQL</text>
+
+      <path d="M258 72 L290 72" stroke="#8FA69A" stroke-width="1.6" marker-end="url(#qa)"/>
+      <defs><marker id="qa" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+        <path d="M0 0 L8 4 L0 8 z" fill="#8FA69A"/></marker></defs>
+
+      <text x="300" y="16" class="qm" fill="#1E7A54" style="letter-spacing:.07em">ฐานข้อมูลทำจริงตามลำดับนี้</text>
+      <rect x="300" y="24" width="440" height="24" rx="5" fill="#DFF0E7" stroke="#A8D4BE"/>
+      <text x="316" y="41" class="qt">① FROM requests</text>
+      <text x="520" y="41" class="qs">หยิบทุกแถวมาก่อน — 5 แถว</text>
+
+      <rect x="300" y="52" width="440" height="24" rx="5" fill="#DFF0E7" stroke="#A8D4BE"/>
+      <text x="316" y="69" class="qt">② WHERE status = 'pending'</text>
+      <text x="520" y="69" class="qs">ตัดแถวที่ไม่ตรงทิ้ง — เหลือ 3 แถว</text>
+
+      <rect x="300" y="80" width="440" height="24" rx="5" fill="#DFF0E7" stroke="#A8D4BE"/>
+      <text x="316" y="97" class="qt">③ ORDER BY priority DESC</text>
+      <text x="520" y="97" class="qs">เรียงใหม่ — urgent มาก่อน</text>
+
+      <rect x="300" y="108" width="440" height="24" rx="5" fill="#C7E7D6" stroke="#1E7A54" stroke-width="1.5"/>
+      <text x="316" y="125" class="qt">④ SELECT id, requester</text>
+      <text x="520" y="125" class="qs">เลือกคอลัมน์ — ทำเป็นขั้นสุดท้าย</text>
+
+      <rect x="20" y="152" width="720" height="58" rx="7" fill="#F1EAF8" stroke="#6B3B96" stroke-width="1.3"/>
+      <text x="40" y="174" class="qt" fill="#6B3B96">ทำไมเรื่องนี้สำคัญ</text>
+      <text x="40" y="192" class="qs">เพราะ WHERE กรองก่อน SELECT — จึงกรองด้วยคอลัมน์ที่ไม่ได้ SELECT ออกมาก็ได้</text>
+      <text x="40" y="206" class="qm" fill="#6B3B96">SELECT id FROM requests WHERE priority = 'urgent'   ← ไม่ได้เลือก priority แต่กรองด้วยได้</text>
+
+      <rect x="20" y="222" width="720" height="62" rx="7" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.3"/>
+      <text x="40" y="244" class="qt" fill="#8F2B21">🟥 ผลที่ตามมาอีกอย่าง</text>
+      <text x="40" y="262" class="qs">ชื่อที่ตั้งด้วย AS ใน SELECT ยังไม่มีตอน WHERE ทำงาน — จึงใช้ใน WHERE ไม่ได้</text>
+      <text x="40" y="277" class="qm" fill="#8F2B21">SELECT name AS n FROM users WHERE n = 'สมชาย'   ✕ error: no such column: n</text>
+    </svg>
+    <figcaption><b>ภาพที่ 3</b>ลำดับที่เขียนกับลำดับที่ทำงานจริงไม่เหมือนกัน — และเป็นเหตุผลของข้อจำกัดหลายอย่าง</figcaption>
+  </figure>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 5</span>
+    <ul>
+      <li><code>WHERE</code> กรองแถว · ใช้ <code>=</code> ตัวเดียว และคำพูด<strong>เดี่ยว</strong> สำหรับข้อความ</li>
+      <li><code>NULL</code> ต้องใช้ <code>IS NULL</code> ไม่ใช่ <code>= NULL</code></li>
+      <li><code>LIKE</code> กับ <code>%</code> ค้นจากคำบางส่วน</li>
+      <li><code>ORDER BY</code> เรียงได้หลายชั้น · <code>DESC</code> คือมากไปน้อย</li>
+      <li>ลำดับคำสั่งบังคับตายตัว — SELECT · FROM · WHERE · ORDER BY · LIMIT</li>
+      <li><strong>แต่ฐานข้อมูลทำงานคนละลำดับ</strong> — FROM → WHERE → ORDER BY → SELECT</li>
+    </ul>
+  </div>
+</section>
+<!-- ════════ CH 6 ════════ -->
+<section class="ch" id="c6">
+  <p class="ch-num">บทที่ 6 · กลุ่มที่ 2</p>
+  <h2>INSERT / UPDATE / DELETE — เปลี่ยนแปลงข้อมูล</h2>
+  <p class="readtime">เวลาอ่าน ≈ 11 นาที</p>
+
+  <p>สามคำสั่งนี้ตรงกับสิ่งที่เราทำใน API มาแล้วตั้งแต่ Week 06</p>
+
+  <table class="d">
+    <tr><th>SQL</th><th>HTTP Method (Week 06)</th><th>ทำอะไร</th></tr>
+    <tr><td><code>SELECT</code></td><td><code>GET</code></td><td>อ่าน</td></tr>
+    <tr><td><code>INSERT</code></td><td><code>POST</code></td><td>สร้างใหม่</td></tr>
+    <tr><td><code>UPDATE</code></td><td><code>PUT</code></td><td>แก้ไข</td></tr>
+    <tr><td><code>DELETE</code></td><td><code>DELETE</code></td><td>ลบ</td></tr>
+  </table>
+
+  <h3>6.1 INSERT — เพิ่มแถวใหม่</h3>
+
+<pre><code><span class="c-key">INSERT INTO</span> requests (id, requester_id, request_type, location, details)
+<span class="c-key">VALUES</span> (<span class="c-str">'REQ-006'</span>, <span class="c-num">2</span>, <span class="c-str">'แจ้งซ่อม'</span>, <span class="c-str">'ห้อง 401'</span>, <span class="c-str">'ไฟกะพริบตลอดเวลา'</span>);</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 ไม่ต้องใส่ทุกคอลัมน์</span>
+    <p style="margin:0">ตัวอย่างนี้ไม่ได้ใส่ <code>priority</code>, <code>status</code> และ <code>created_at</code> — เพราะทั้งสามมี <code>DEFAULT</code> กำหนดไว้<br>
+    ฐานข้อมูลจะเติม <code>'normal'</code>, <code>'pending'</code> และเวลาปัจจุบันให้เอง · <strong>นี่คือประโยชน์ของ DEFAULT ที่เรียนในบทที่ 3</strong></p>
+  </div>
+
+<pre><code><span class="c-com">-- ใส่หลายแถวพร้อมกัน</span>
+<span class="c-key">INSERT INTO</span> users (name, department, email) <span class="c-key">VALUES</span>
+  (<span class="c-str">'สมชาย ใจดี'</span>,      <span class="c-str">'วิศวกรรมซอฟต์แวร์'</span>, <span class="c-str">'somchai@rmutl.ac.th'</span>),
+  (<span class="c-str">'สุภาวดี รักเรียน'</span>, <span class="c-str">'วิศวกรรมซอฟต์แวร์'</span>, <span class="c-str">'supawadee@rmutl.ac.th'</span>);</code></pre>
+
+  <h3>6.2 UPDATE — แก้ไขแถวที่มีอยู่</h3>
+
+<pre><code><span class="c-key">UPDATE</span> requests
+<span class="c-key">SET</span>    status = <span class="c-str">'in-progress'</span>
+<span class="c-key">WHERE</span>  id = <span class="c-str">'REQ-001'</span>;</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 กับดักที่อันตรายที่สุดในบทนี้ — ลืม WHERE</span>
+<pre style="margin:10px 0"><code><span class="c-bad">UPDATE requests SET status = 'completed';</span>   <span class="c-com">-- ไม่มี WHERE</span></code></pre>
+    <p style="margin:0">คำสั่งนี้จะ <strong>เปลี่ยนสถานะของคำร้องทุกรายการในระบบเป็น completed</strong> · ไม่มี error ไม่มีคำเตือน และ<strong>ย้อนกลับไม่ได้</strong><br>
+    <strong>นิสัยที่ควรสร้าง</strong> — เขียน <code>WHERE</code> ก่อนเสมอ แล้วค่อยเขียน <code>SET</code> ทีหลัง</p>
+  </div>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 วิธีป้องกันที่ใช้ได้จริง</span>
+    <p style="margin:0"><strong>ลอง <code>SELECT</code> ด้วยเงื่อนไขเดียวกันก่อนเสมอ</strong></p>
+<pre style="margin:10px 0 0"><code><span class="c-com">-- ① ดูก่อนว่าจะกระทบกี่แถว</span>
+<span class="c-key">SELECT</span> * <span class="c-key">FROM</span> requests <span class="c-key">WHERE</span> id = <span class="c-str">'REQ-001'</span>;
+
+<span class="c-com">-- ② ถ้าถูกต้องแล้วค่อยเปลี่ยนเป็น UPDATE</span>
+<span class="c-key">UPDATE</span> requests <span class="c-key">SET</span> status = <span class="c-str">'in-progress'</span> <span class="c-key">WHERE</span> id = <span class="c-str">'REQ-001'</span>;</code></pre>
+  </div>
+
+  <h3>6.3 DELETE — ลบแถว</h3>
+
+<pre><code><span class="c-key">DELETE FROM</span> requests <span class="c-key">WHERE</span> id = <span class="c-str">'REQ-006'</span>;</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 <code>DELETE FROM requests;</code> ลบทุกแถว</span>
+    <p style="margin:0">อันตรายกว่า <code>UPDATE</code> อีก เพราะข้อมูลหายไปเลย · ใช้วิธีเดียวกัน — <strong><code>SELECT</code> ดูก่อนเสมอ</strong></p>
+  </div>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้าลอง <code>DELETE FROM users WHERE id = 1;</code> ทั้งที่สมชาย (id=1) มีคำร้องอยู่ 2 รายการ — <strong>จะเกิดอะไรขึ้น</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ฐานข้อมูลจะปฏิเสธ</strong> ด้วยข้อความ <code>FOREIGN KEY constraint failed</code></p>
+      <p style="margin:0">เพราะถ้าลบสมชายออกไป คำร้อง REQ-001 และ REQ-004 จะชี้ไปหาคนที่ไม่มีอยู่จริง — กลายเป็นข้อมูลกำพร้า<br>
+      <strong>นี่คือประโยชน์ของ Foreign Key ที่จะเรียนในบทที่ 8</strong> · ต้องลบคำร้องก่อน หรือย้ายคำร้องไปให้คนอื่นก่อน</p>
+    </div>
+  </details>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 6</span>
+    <ul>
+      <li><code>INSERT</code> · <code>UPDATE</code> · <code>DELETE</code> ตรงกับ POST · PUT · DELETE ที่ทำใน API</li>
+      <li>ไม่ต้องใส่คอลัมน์ที่มี <code>DEFAULT</code> — ฐานข้อมูลเติมให้เอง</li>
+      <li><strong>ลืม <code>WHERE</code> = กระทบทุกแถว และย้อนกลับไม่ได้</strong></li>
+      <li>นิสัยที่ต้องสร้าง — <code>SELECT</code> ดูก่อนเสมอ แล้วค่อยเปลี่ยนเป็น <code>UPDATE</code>/<code>DELETE</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 7 ════════ -->
+<section class="ch" id="c7">
+  <p class="ch-num">บทที่ 7 · กลุ่มที่ 3</p>
+  <h2>ทำไมต้องแยกตาราง</h2>
+  <p class="readtime">เวลาอ่าน ≈ 11 นาที · บทที่สำคัญที่สุดของสัปดาห์</p>
+
+  <p>ถึงตอนนี้เรามีตาราง <code>requests</code> ตารางเดียวก็ใช้งานได้แล้ว — <strong>แล้วทำไมต้องแยก <code>users</code> ออกมาอีก</strong></p>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">สมมติเก็บแบบตารางเดียว โดยมีคอลัมน์ <code>requester_name</code> อยู่ในทุกคำร้อง<br>
+    <strong>ถ้าสมชายแจ้งคำร้องไว้ 20 รายการ แล้ววันหนึ่งเขาเปลี่ยนชื่อ — ต้องแก้กี่ที่</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>20 ที่</strong> — และถ้าแก้ไม่ครบ ฐานข้อมูลจะมีทั้งชื่อเก่าและชื่อใหม่ปนกัน</p>
+      <p style="margin:0">เวลาค้นด้วยชื่อใหม่จะได้ไม่ครบ · เวลาทำรายงานจะเห็นเป็นคนละคน · <strong>และไม่มีใครรู้ว่าข้อมูลผิดจนกว่าจะมีคนสังเกตเห็น</strong></p>
+    </div>
+  </details>
+
+  <figure>
+    <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="เปรียบเทียบตารางเดียวกับสองตาราง">
+      <style>
+        .t7{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s7{font:300 10.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m7{font:500 10px 'IBM Plex Mono',monospace}
+      </style>
+      <text x="30" y="20" class="m7" fill="#B23A2E" style="letter-spacing:.08em">✕ ตารางเดียว — ชื่อซ้ำทุกแถว</text>
+      <rect x="30" y="30" width="700" height="26" fill="#FBEBE8" stroke="#E0A99F"/>
+      <text x="46" y="48" class="m7" fill="#8F2B21">id</text>
+      <text x="140" y="48" class="m7" fill="#8F2B21">requester_name</text>
+      <text x="340" y="48" class="m7" fill="#8F2B21">location</text>
+      <text x="540" y="48" class="m7" fill="#8F2B21">status</text>
+      <rect x="30" y="56" width="700" height="24" fill="#fff" stroke="#E8E0DE"/>
+      <text x="46" y="72" class="s7">REQ-001</text><text x="140" y="72" class="s7" fill="#B23A2E">สมชาย ใจดี</text>
+      <text x="340" y="72" class="s7">ห้อง 301</text><text x="540" y="72" class="s7">pending</text>
+      <rect x="30" y="80" width="700" height="24" fill="#fff" stroke="#E8E0DE"/>
+      <text x="46" y="96" class="s7">REQ-004</text><text x="140" y="96" class="s7" fill="#B23A2E">สมชาย ใจดี</text>
+      <text x="340" y="96" class="s7">ห้อง 302</text><text x="540" y="96" class="s7">pending</text>
+      <rect x="30" y="104" width="700" height="24" fill="#fff" stroke="#E8E0DE"/>
+      <text x="46" y="120" class="s7">REQ-009</text><text x="140" y="120" class="s7" fill="#B23A2E">สมชาย ใจดี</text>
+      <text x="340" y="120" class="s7">ห้องสมุด</text><text x="540" y="120" class="s7">completed</text>
+      <text x="140" y="144" class="s7" fill="#B23A2E">↑ ชื่อเดียวกันเก็บซ้ำ 3 ครั้ง · เปลี่ยนชื่อทีต้องแก้ 3 ที่</text>
+
+      <text x="30" y="178" class="m7" fill="#1E7A54" style="letter-spacing:.08em">✓ สองตาราง — ชื่อเก็บที่เดียว</text>
+      <rect x="30" y="188" width="300" height="26" fill="#DFF0E7" stroke="#A8D4BE"/>
+      <text x="46" y="206" class="m7" fill="#14503A">users.id</text>
+      <text x="140" y="206" class="m7" fill="#14503A">name</text>
+      <rect x="30" y="214" width="300" height="24" fill="#fff" stroke="#DBE7E0"/>
+      <text x="46" y="230" class="s7">1</text><text x="140" y="230" class="s7" fill="#1E7A54">สมชาย ใจดี</text>
+      <text x="46" y="256" class="s7" fill="#1E7A54">↑ เก็บครั้งเดียว · แก้ที่นี่ที่เดียว</text>
+
+      <rect x="400" y="188" width="330" height="26" fill="#DFF0E7" stroke="#A8D4BE"/>
+      <text x="416" y="206" class="m7" fill="#14503A">requests.id</text>
+      <text x="530" y="206" class="m7" fill="#14503A">requester_id</text>
+      <text x="650" y="206" class="m7" fill="#14503A">location</text>
+      <rect x="400" y="214" width="330" height="24" fill="#fff" stroke="#DBE7E0"/>
+      <text x="416" y="230" class="s7">REQ-001</text><text x="530" y="230" class="s7" fill="#186B8C">1</text><text x="650" y="230" class="s7">ห้อง 301</text>
+      <rect x="400" y="238" width="330" height="24" fill="#fff" stroke="#DBE7E0"/>
+      <text x="416" y="254" class="s7">REQ-004</text><text x="530" y="254" class="s7" fill="#186B8C">1</text><text x="650" y="254" class="s7">ห้อง 302</text>
+      <rect x="400" y="262" width="330" height="24" fill="#fff" stroke="#DBE7E0"/>
+      <text x="416" y="278" class="s7">REQ-009</text><text x="530" y="278" class="s7" fill="#186B8C">1</text><text x="650" y="278" class="s7">ห้องสมุด</text>
+
+      <path d="M336 226 L396 226" stroke="#186B8C" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="366" y="214" text-anchor="middle" class="s7" fill="#186B8C">FK</text>
+    </svg>
+    <figcaption><b>ภาพที่ 4</b>แยกแล้วชื่อเก็บที่เดียว · คำร้องเก็บแค่ตัวเลขที่ชี้ไปหา — แก้ชื่อที่เดียวถูกทั้งระบบ</figcaption>
+  </figure>
+
+  <h3>7.1 ปัญหา 4 อย่างของการเก็บซ้ำ</h3>
+
+  <table class="d">
+    <tr><th>ปัญหา</th><th>เกิดอะไรขึ้น</th></tr>
+    <tr><td><strong>ข้อมูลซ้ำโดยไม่จำเป็น</strong></td><td>แจ้ง 20 ครั้ง = เก็บชื่อ 20 ครั้ง</td></tr>
+    <tr><td><strong>แก้ไขแล้วไม่ครบ</strong></td><td>เปลี่ยนชื่อต้องไล่แก้ทุกแถว · พลาดที่เดียวข้อมูลก็ไม่ตรงกัน</td></tr>
+    <tr><td><strong>เก็บข้อมูลเพิ่มไม่ได้</strong></td><td>อยากเก็บอีเมลด้วย ต้องเพิ่มคอลัมน์ในทุกแถว และซ้ำอีก</td></tr>
+    <tr><td><strong>พิมพ์ผิดแล้วไม่มีใครรู้</strong></td><td><code>'สมชย ใจดี'</code> ระบบยอมรับปกติ เพราะเป็นแค่ข้อความ</td></tr>
+  </table>
+
+  <div class="term">
+    <div class="w">Update anomaly</div>
+    <p>ปัญหาที่ <strong>แก้ข้อมูลที่เดียวไม่พอ ต้องแก้หลายที่</strong> และมีโอกาสแก้ไม่ครบ · เป็นเหตุผลหลักที่ทำให้ต้องแยกตาราง</p>
+  </div>
+
+  <h3>7.2 แยกแล้วแก้ปัญหาอย่างไร</h3>
+
+  <table class="d">
+    <tr><th>ปัญหาเดิม</th><th>แยกเป็น 2 ตารางแล้ว</th></tr>
+    <tr><td>ข้อมูลซ้ำ</td><td>ชื่อเก็บที่เดียวใน <code>users</code> · <code>requests</code> เก็บแค่ตัวเลข</td></tr>
+    <tr><td>แก้ไม่ครบ</td><td><strong>แก้ที่ <code>users</code> แถวเดียว</strong> ทุกคำร้องเห็นชื่อใหม่ทันที</td></tr>
+    <tr><td>เก็บเพิ่มไม่ได้</td><td>เพิ่มคอลัมน์ใน <code>users</code> ได้เลย ไม่กระทบ <code>requests</code></td></tr>
+    <tr><td>พิมพ์ผิด</td><td><strong>Foreign Key ปฏิเสธ</strong> รหัสที่ไม่มีอยู่จริง</td></tr>
+  </table>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับสิ่งที่เราทำในโค้ดมาแล้ว</span>
+    <p style="margin:0">นี่คือหลักการเดียวกับที่เราทำใน React และ Express — <strong>อย่าเขียนของเดิมซ้ำหลายที่</strong><br>
+    Week 05 เราแยก Service Layer ออกมาเพื่อไม่ให้ทุก component เขียนวิธีอ่านข้อมูลเอง · Week 07 เราแยก <code>apiClient</code> ออกมาเพื่อไม่ให้ทุกฟังก์ชันเขียน <code>fetch</code> เอง<br>
+    <strong>ครั้งนี้คือการไม่เขียนข้อมูลซ้ำในฐานข้อมูล</strong> — หลักการเดียวกัน คนละที่</p>
+  </div>
+
+  <div class="box note">
+    <span class="h">🟨 แล้วแยกมากเกินไปได้ไหม</span>
+    <p style="margin:0">ได้ · ถ้าแยกทุกอย่างเป็นตารางหมด จะต้อง <code>JOIN</code> หลายสิบตารางกว่าจะได้ข้อมูลชุดเดียว ซึ่งช้าและอ่านยาก<br>
+    <strong>หลักการ</strong> — แยกเมื่อข้อมูลนั้น<strong>ถูกใช้ซ้ำ</strong>และ<strong>เปลี่ยนแปลงได้</strong> · <code>location</code> ไม่ได้แยกเพราะแต่ละคำร้องเป็นคนละที่กัน ไม่ได้ใช้ซ้ำ</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 7</span>
+    <ul>
+      <li>เก็บชื่อซ้ำในทุกแถวทำให้เกิด <strong>update anomaly</strong> — แก้ที่เดียวไม่พอ</li>
+      <li>แยกตารางแล้วเก็บที่เดียว แก้ที่เดียว ถูกทั้งระบบ</li>
+      <li>หลักการเดียวกับ Service Layer และ apiClient — <strong>อย่าเขียนของเดิมซ้ำ</strong></li>
+      <li>แยกเมื่อข้อมูล<strong>ถูกใช้ซ้ำและเปลี่ยนแปลงได้</strong> · ไม่ใช่แยกทุกอย่าง</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 8 ════════ -->
+<section class="ch" id="c8">
+  <p class="ch-num">บทที่ 8 · กลุ่มที่ 3</p>
+  <h2>Foreign Key — เชื่อมสองตารางเข้าด้วยกัน</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <div class="term">
+    <div class="w">Foreign Key (FK)</div>
+    <p>คอลัมน์ที่<strong>ชี้ไปยัง Primary Key ของอีกตาราง</strong> · ฐานข้อมูลจะตรวจให้ว่าค่าที่ใส่มี<strong>อยู่จริง</strong>ในตารางปลายทาง</p>
+  </div>
+
+<pre><code><span class="c-key">CREATE TABLE</span> requests (
+  id            <span class="c-key">TEXT PRIMARY KEY</span>,
+  requester_id  <span class="c-key">INTEGER NOT NULL</span>,
+  ...
+  <span class="c-key">FOREIGN KEY</span> (requester_id) <span class="c-key">REFERENCES</span> users(id)
+);</code></pre>
+
+  <p>อ่านว่า — <em>"คอลัมน์ <code>requester_id</code> ในตารางนี้ ต้องเป็นค่าที่มีอยู่ในคอลัมน์ <code>id</code> ของตาราง <code>users</code>"</em></p>
+
+  <h3>8.1 Foreign Key ป้องกันอะไรได้บ้าง</h3>
+
+  <table class="d">
+    <tr><th>ถ้าลองทำ</th><th>ฐานข้อมูลจะ</th></tr>
+    <tr><td>ใส่คำร้องที่ <code>requester_id = 999</code> (ไม่มีคนนี้)</td><td style="color:var(--success)"><strong>ปฏิเสธ</strong> — <code>FOREIGN KEY constraint failed</code></td></tr>
+    <tr><td>ลบผู้ใช้ที่ยังมีคำร้องค้างอยู่</td><td style="color:var(--success)"><strong>ปฏิเสธ</strong> — ไม่ให้เกิดข้อมูลกำพร้า</td></tr>
+    <tr><td>ลบผู้ใช้ที่ไม่มีคำร้องเลย</td><td>อนุญาต</td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ต้องเปิดการตรวจก่อน ไม่งั้นไม่ทำงาน</span>
+<pre style="margin:10px 0"><code><span class="c-key">PRAGMA</span> foreign_keys = <span class="c-key">ON</span>;</code></pre>
+    <p style="margin:0">SQLite <strong>ปิดการตรวจ Foreign Key ไว้เป็นค่าเริ่มต้น</strong> · ถ้าไม่เปิด คำสั่งที่ควรถูกปฏิเสธจะผ่านหมด และคุณจะไม่รู้เลยว่าข้อมูลเสียแล้ว<br>
+    <strong>ต้องสั่งทุกครั้งที่เปิดฐานข้อมูล</strong> — ไม่ใช่สั่งครั้งเดียวแล้วจำไปตลอด</p>
+  </div>
+
+  <h3>8.2 ทำไมชี้ด้วยตัวเลข ไม่ชี้ด้วยชื่อ</h3>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ทำไมไม่ให้ <code>requests</code> เก็บ <code>requester_name</code> แล้วชี้ไปที่ <code>users.name</code> แทน — จะได้อ่านง่ายกว่า</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>เพราะ <strong>ชื่อเปลี่ยนได้</strong> · ถ้าสมชายเปลี่ยนชื่อ ค่าใน <code>users.name</code> เปลี่ยน แต่ <code>requests.requester_name</code> ยังเป็นชื่อเก่า — <strong>ความเชื่อมโยงขาดทันที</strong></p>
+      <p style="margin:0">แต่ <code>users.id</code> เป็นตัวเลขที่<strong>ไม่มีวันเปลี่ยน</strong> · เปลี่ยนชื่อกี่ครั้งก็ยังเป็นคนเดิม id เดิม · นี่คือเหตุผลที่บทที่ 2 บอกว่าอย่าเลือกสิ่งที่แก้ได้มาเป็น Primary Key</p>
+    </div>
+  </details>
+
+  <h3>8.3 ความสัมพันธ์แบบหนึ่งต่อหลาย</h3>
+
+  <div class="term">
+    <div class="w">One-to-many (หนึ่งต่อหลาย)</div>
+    <p>ผู้ใช้ 1 คนแจ้งคำร้องได้<strong>หลายรายการ</strong> · แต่คำร้อง 1 รายการมีผู้แจ้ง<strong>คนเดียว</strong></p>
+  </div>
+
+  <p>วิธีสังเกตว่า FK ควรอยู่ตารางไหน — <strong>อยู่ฝั่ง "หลาย" เสมอ</strong></p>
+
+  <table class="d">
+    <tr><th>ถ้าเก็บกลับด้าน</th><th>จะเกิดอะไร</th></tr>
+    <tr><td>ให้ <code>users</code> เก็บ <code>request_id</code></td><td>เก็บได้แค่คำร้องเดียวต่อคน · ถ้าแจ้ง 20 รายการต้องมี 20 คอลัมน์</td></tr>
+    <tr><td>ให้ <code>requests</code> เก็บ <code>requester_id</code> ✓</td><td>แต่ละคำร้องชี้ไปคนเดียว — <strong>พอดีกับความจริง</strong></td></tr>
+  </table>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 8</span>
+    <ul>
+      <li>Foreign Key ชี้ไปยัง Primary Key ของอีกตาราง · ฐานข้อมูลตรวจให้ว่ามีอยู่จริง</li>
+      <li>ป้องกันทั้ง<strong>ใส่ค่าที่ไม่มีจริง</strong> และ<strong>ลบข้อมูลที่ยังมีคนอ้างถึง</strong></li>
+      <li>ต้องสั่ง <code>PRAGMA foreign_keys = ON</code> ทุกครั้งที่เปิดฐานข้อมูล</li>
+      <li>ชี้ด้วย <strong>id ที่ไม่เปลี่ยน</strong> ไม่ใช่ชื่อที่เปลี่ยนได้</li>
+      <li>ในความสัมพันธ์หนึ่งต่อหลาย <strong>FK อยู่ฝั่ง "หลาย" เสมอ</strong></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 9 ════════ -->
+<section class="ch" id="c9">
+  <p class="ch-num">บทที่ 9 · กลุ่มที่ 3</p>
+  <h2>JOIN — ดึงข้อมูลจากสองตารางมารวมกัน</h2>
+  <p class="readtime">เวลาอ่าน ≈ 12 นาที</p>
+
+  <p>เราแยกข้อมูลออกเป็น 2 ตารางเพื่อไม่ให้ซ้ำ — แต่เวลาใช้งานจริง <strong>ต้องการเห็นพร้อมกัน</strong></p>
+
+  <h3>9.1 รูปแบบของ JOIN</h3>
+
+<pre><code><span class="c-key">SELECT</span> r.id,
+       u.name <span class="c-key">AS</span> requesterName,
+       r.status
+<span class="c-key">FROM</span> requests r
+<span class="c-key">JOIN</span> users u <span class="c-key">ON</span> u.id = r.requester_id;</code></pre>
+
+  <p>อ่านทีละบรรทัด</p>
+
+  <table class="d">
+    <tr><th>บรรทัด</th><th>หมายความว่า</th></tr>
+    <tr><td><code>FROM requests r</code></td><td>เริ่มจากตาราง <code>requests</code> · ตั้งชื่อย่อว่า <code>r</code></td></tr>
+    <tr><td><code>JOIN users u</code></td><td>เอาตาราง <code>users</code> มาต่อ · ตั้งชื่อย่อว่า <code>u</code></td></tr>
+    <tr><td><code>ON u.id = r.requester_id</code></td><td><strong>เชื่อมตรงไหน</strong> — แถวที่ <code>users.id</code> ตรงกับ <code>requests.requester_id</code></td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 ชื่อย่อ (alias) ช่วยให้อ่านง่าย</span>
+    <p style="margin:0"><code>requests r</code> ทำให้เขียน <code>r.id</code> แทน <code>requests.id</code> ได้<br>
+    <strong>จำเป็นเมื่อสองตารางมีคอลัมน์ชื่อเหมือนกัน</strong> — ทั้งสองตารางมี <code>id</code> ถ้าไม่ระบุว่าเป็น <code>r.id</code> หรือ <code>u.id</code> ฐานข้อมูลจะไม่รู้ว่าหมายถึงอันไหน</p>
+  </div>
+
+  <h3>9.2 ผลลัพธ์ที่ได้</h3>
+
+  <table class="d">
+    <tr><th>id</th><th>requesterName</th><th>status</th></tr>
+    <tr><td>REQ-001</td><td>สมชาย ใจดี</td><td>pending</td></tr>
+    <tr><td>REQ-002</td><td>สุภาวดี รักเรียน</td><td>in-progress</td></tr>
+    <tr><td>REQ-004</td><td>สมชาย ใจดี</td><td>pending</td></tr>
+  </table>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 สังเกตให้ดี — นี่คือจุดสำคัญที่สุดของสัปดาห์นี้</span>
+    <p style="margin:0">ผลลัพธ์นี้ <strong>หน้าตาเหมือนข้อมูลที่ API ส่งให้ React ตอน Week 07 ทุกประการ</strong></p>
+<pre style="margin:10px 0 0"><code>{ <span class="c-str">"id"</span>: <span class="c-str">"REQ-001"</span>, <span class="c-str">"requesterName"</span>: <span class="c-str">"สมชาย ใจดี"</span>, <span class="c-str">"status"</span>: <span class="c-str">"pending"</span> }</code></pre>
+    <p style="margin:10px 0 0"><strong>แปลว่าโครงสร้างในฐานข้อมูลไม่จำเป็นต้องเหมือนรูปแบบที่ API ส่งออก</strong><br>
+    ในฐานข้อมูลแยก 2 ตารางเพื่อไม่ให้ข้อมูลซ้ำ · ตอนส่งออกรวมกลับเป็นก้อนเดียวเพื่อให้ฝั่งผู้ใช้ทำงานง่าย<br>
+    <strong>นี่คือหน้าที่ของชั้น service</strong> — สัปดาห์หน้าเราจะเปลี่ยน <code>requestService.js</code> ให้ดึงจากฐานข้อมูลนี้ โดย <strong>frontend ไม่ต้องแก้อะไรเลย</strong></p>
+  </div>
+
+  <h3>9.3 JOIN ร่วมกับ WHERE</h3>
+
+<pre><code><span class="c-key">SELECT</span> r.id, u.name, r.details
+<span class="c-key">FROM</span> requests r
+<span class="c-key">JOIN</span> users u <span class="c-key">ON</span> u.id = r.requester_id
+<span class="c-key">WHERE</span> u.department = <span class="c-str">'วิศวกรรมซอฟต์แวร์'</span>
+<span class="c-key">ORDER BY</span> r.id;</code></pre>
+
+  <p><strong>สังเกตว่ากรองด้วยคอลัมน์จากตาราง <code>users</code> ได้</strong> ทั้งที่เริ่มจาก <code>requests</code> — เพราะ <code>JOIN</code> ทำให้ทั้งสองตารางกลายเป็นตารางเดียวชั่วคราว</p>
+
+  <h3>9.4 JOIN กับ LEFT JOIN</h3>
+
+  <table class="d">
+    <tr><th>แบบ</th><th>คืนอะไร</th><th>ใช้เมื่อ</th></tr>
+    <tr><td><code>JOIN</code></td><td>เฉพาะแถวที่<strong>จับคู่ได้</strong>ทั้งสองฝั่ง</td><td>ต้องการเฉพาะคำร้องที่มีผู้แจ้งอยู่จริง</td></tr>
+    <tr><td><code>LEFT JOIN</code></td><td>ทุกแถวจากตารางซ้าย <strong>แม้จับคู่ไม่ได้</strong> (ฝั่งขวาเป็น NULL)</td><td>ต้องการรายชื่อผู้ใช้ทุกคน <strong>รวมคนที่ยังไม่เคยแจ้ง</strong></td></tr>
+  </table>
+
+<pre><code><span class="c-com">-- ใครแจ้งกี่รายการ — คนที่ยังไม่เคยแจ้งต้องติดมาด้วย จึงต้องใช้ LEFT JOIN</span>
+<span class="c-key">SELECT</span> u.name, <span class="c-fn">COUNT</span>(r.id) <span class="c-key">AS</span> total
+<span class="c-key">FROM</span> users u
+<span class="c-key">LEFT JOIN</span> requests r <span class="c-key">ON</span> r.requester_id = u.id
+<span class="c-key">GROUP BY</span> u.id
+<span class="c-key">ORDER BY</span> total <span class="c-key">DESC</span>;</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 กับดักของ JOIN — ลืม ON</span>
+    <p style="margin:0">ถ้าเขียน <code>FROM requests, users</code> โดยไม่บอกเงื่อนไขการเชื่อม จะได้ <strong>ทุกแถวจับคู่กับทุกแถว</strong><br>
+    requests 5 แถว × users 4 แถว = <strong>20 แถว</strong> ที่ไม่มีความหมายอะไรเลย · และไม่มี error บอก<br>
+    <small>ถ้าผลลัพธ์ออกมาเยอะผิดปกติ ให้ตรวจ <code>ON</code> เป็นอันดับแรก</small></p>
+  </div>
+
+
+  <h3>9.5 JOIN จับคู่ทีละแถวอย่างไร</h3>
+
+  <figure>
+    <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="กลไกการจับคู่ของ JOIN">
+      <style>
+        .jt{font:600 11px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .js2{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .jm{font:500 9.5px 'IBM Plex Mono',monospace}
+      </style>
+      <text x="20" y="16" class="jm" fill="#186B8C" style="letter-spacing:.07em">requests (ตารางซ้าย — ไล่ทีละแถว)</text>
+      <rect x="20" y="22" width="250" height="22" fill="#DDEEF5" stroke="#186B8C"/>
+      <text x="34" y="38" class="jm" fill="#0F4C63">id</text><text x="130" y="38" class="jm" fill="#0F4C63">requester_id</text>
+      <rect x="20" y="44" width="250" height="22" fill="#fff" stroke="#DBE7E0"/>
+      <text x="34" y="60" class="js2">REQ-001</text><text x="130" y="60" class="jm" fill="#186B8C">1</text>
+      <rect x="20" y="66" width="250" height="22" fill="#fff" stroke="#DBE7E0"/>
+      <text x="34" y="82" class="js2">REQ-002</text><text x="130" y="82" class="jm" fill="#186B8C">2</text>
+      <rect x="20" y="88" width="250" height="22" fill="#fff" stroke="#DBE7E0"/>
+      <text x="34" y="104" class="js2">REQ-004</text><text x="130" y="104" class="jm" fill="#186B8C">1</text>
+
+      <text x="440" y="16" class="jm" fill="#1E7A54" style="letter-spacing:.07em">users (ตารางขวา — หาแถวที่ตรง)</text>
+      <rect x="440" y="22" width="250" height="22" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="454" y="38" class="jm" fill="#14503A">id</text><text x="530" y="38" class="jm" fill="#14503A">name</text>
+      <rect x="440" y="44" width="250" height="22" fill="#fff" stroke="#DBE7E0"/>
+      <text x="454" y="60" class="jm" fill="#1E7A54">1</text><text x="530" y="60" class="js2">สมชาย ใจดี</text>
+      <rect x="440" y="66" width="250" height="22" fill="#fff" stroke="#DBE7E0"/>
+      <text x="454" y="82" class="jm" fill="#1E7A54">2</text><text x="530" y="82" class="js2">สุภาวดี รักเรียน</text>
+
+      <path d="M274 55 L436 55" stroke="#A8620E" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <path d="M274 77 L436 77" stroke="#A8620E" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <path d="M274 99 C 340 99, 360 60, 436 57" stroke="#A8620E" stroke-width="1.4" stroke-dasharray="4 3" fill="none"/>
+      <text x="330" y="128" class="jm" fill="#A8620E">ON u.id = r.requester_id</text>
+
+      <text x="20" y="160" class="jm" fill="#6B3B96" style="letter-spacing:.07em">ผลลัพธ์ — รวมเป็นตารางเดียวชั่วคราว</text>
+      <rect x="20" y="166" width="500" height="22" fill="#F1EAF8" stroke="#6B3B96"/>
+      <text x="34" y="182" class="jm" fill="#4A2A6B">id</text><text x="150" y="182" class="jm" fill="#4A2A6B">requesterName</text><text x="340" y="182" class="jm" fill="#4A2A6B">status</text>
+      <rect x="20" y="188" width="500" height="22" fill="#fff" stroke="#DBE7E0"/>
+      <text x="34" y="204" class="js2">REQ-001</text><text x="150" y="204" class="js2">สมชาย ใจดี</text><text x="340" y="204" class="js2">pending</text>
+      <rect x="20" y="210" width="500" height="22" fill="#fff" stroke="#DBE7E0"/>
+      <text x="34" y="226" class="js2">REQ-002</text><text x="150" y="226" class="js2">สุภาวดี รักเรียน</text><text x="340" y="226" class="js2">in-progress</text>
+      <rect x="20" y="232" width="500" height="22" fill="#fff" stroke="#DBE7E0"/>
+      <text x="34" y="248" class="js2">REQ-004</text><text x="150" y="248" class="js2">สมชาย ใจดี</text><text x="340" y="248" class="js2">pending</text>
+
+      <rect x="20" y="266" width="720" height="46" rx="7" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.3"/>
+      <text x="40" y="286" class="jt" fill="#14503A">สังเกต — "สมชาย ใจดี" ปรากฏ 2 ครั้งในผลลัพธ์</text>
+      <text x="40" y="303" class="js2">แต่เก็บในฐานข้อมูลแค่ครั้งเดียว · JOIN สร้างซ้ำตอนอ่าน ไม่ใช่ตอนเก็บ — นี่คือประโยชน์ของการแยกตาราง</text>
+    </svg>
+    <figcaption><b>ภาพที่ 5</b>JOIN ไล่ดูทีละแถวของตารางซ้าย แล้วหาแถวที่ตรงในตารางขวา</figcaption>
+  </figure>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 9</span>
+    <ul>
+      <li><code>JOIN ... ON</code> รวมสองตารางเป็นตารางเดียวชั่วคราว</li>
+      <li>ใช้ alias (<code>r</code>, <code>u</code>) เพื่อระบุว่าคอลัมน์มาจากตารางไหน</li>
+      <li>กรองด้วยคอลัมน์จากตารางไหนก็ได้หลัง JOIN แล้ว</li>
+      <li><code>LEFT JOIN</code> เก็บแถวที่จับคู่ไม่ได้ไว้ด้วย</li>
+      <li>JOIN <strong>สร้างข้อมูลซ้ำตอนอ่าน ไม่ใช่ตอนเก็บ</strong> — นี่คือประโยชน์ของการแยกตาราง</li>
+      <li><strong>ผลของ JOIN = รูปแบบที่ API ส่งให้ React</strong> — เป็นสะพานไปสัปดาห์หน้า</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 10 ════════ -->
+<section class="ch" id="c10">
+  <p class="ch-num">บทที่ 10 · กลุ่มที่ 4 <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
+  <h2>schema.sql · เอกสาร · ทดสอบ constraint</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <h3>10.1 ทำไมต้องมี schema.sql</h3>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">เรามีไฟล์ <code>campus.db</code> ที่ใช้งานได้แล้ว — <strong>ทำไมยังต้องเก็บไฟล์ <code>schema.sql</code> ไว้อีก</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>เพราะ <code>campus.db</code> เป็น<strong>ไฟล์ไบนารี</strong> — เปิดอ่านด้วยตาไม่ได้ และ <strong>git บอกไม่ได้ว่าเปลี่ยนอะไรไป</strong></p>
+      <p style="margin:0"><code>schema.sql</code> เป็นข้อความ จึงทำให้ — ① เห็นประวัติการเปลี่ยนโครงสร้างใน git · ② คนอื่นสร้างฐานข้อมูลเหมือนกันได้ · ③ ถ้าไฟล์ฐานข้อมูลเสียก็สร้างใหม่ได้</p>
+    </div>
+  </details>
+
+  <h3>10.2 schema.sql ต้องรันซ้ำได้</h3>
+
+<pre><code><span class="c-com">-- ลบของเดิมก่อน เพื่อให้รันซ้ำได้โดยไม่ error</span>
+<span class="c-com">-- ⚠ ลบ requests ก่อน เพราะมันอ้างถึง users</span>
+<span class="c-key">DROP TABLE IF EXISTS</span> requests;
+<span class="c-key">DROP TABLE IF EXISTS</span> users;
+
+<span class="c-key">CREATE TABLE</span> users ( ... );
+<span class="c-key">CREATE TABLE</span> requests ( ... );
+
+<span class="c-key">INSERT INTO</span> users ... ;
+<span class="c-key">INSERT INTO</span> requests ... ;</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ลำดับการลบสำคัญ</span>
+    <p style="margin:0">ต้องลบ <code>requests</code> <strong>ก่อน</strong> <code>users</code> เสมอ<br>
+    เพราะ <code>requests</code> มี Foreign Key ชี้ไป <code>users</code> — ถ้าลบ <code>users</code> ก่อน จะเหลือคำร้องที่ชี้ไปหาตารางที่ไม่มีแล้ว<br>
+    <strong>กฎง่าย ๆ — ลบฝั่งที่ "ชี้ไปหา" ก่อน แล้วค่อยลบฝั่งที่ "ถูกชี้"</strong></p>
+  </div>
+
+  <h3>10.3 ทดสอบว่า constraint ทำงานจริง (CP25)</h3>
+
+  <p>การเขียน constraint ไว้ไม่ได้แปลว่ามันทำงาน — <strong>ต้องพิสูจน์ด้วยการลองทำผิดแล้วดูว่าถูกปฏิเสธจริงไหม</strong></p>
+
+  <table class="d">
+    <tr><th>ทดสอบ</th><th>ต้องได้ error</th></tr>
+    <tr><td>ใส่คำร้องที่ <code>requester_id</code> ไม่มีจริง</td><td><code>FOREIGN KEY constraint failed</code></td></tr>
+    <tr><td>ใส่ <code>status</code> นอกรายการที่กำหนด</td><td><code>CHECK constraint failed</code></td></tr>
+    <tr><td>ใส่อีเมลซ้ำกับคนที่มีอยู่</td><td><code>UNIQUE constraint failed</code></td></tr>
+    <tr><td>ใส่คำร้องที่ <code>id</code> ซ้ำ</td><td><code>UNIQUE constraint failed</code></td></tr>
+    <tr><td>ใส่คำร้องโดยไม่ระบุ <code>location</code></td><td><code>NOT NULL constraint failed</code></td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 การทดสอบที่ดีคือการทดสอบว่ามันปฏิเสธได้</span>
+    <p style="margin:0">เหมือนที่เราทำใน Week 06 — ทดสอบว่า API ตอบ <strong>400 เมื่อข้อมูลไม่ครบ</strong> ไม่ใช่แค่ทดสอบว่าตอบ 201 เมื่อข้อมูลถูก<br>
+    <strong>ระบบที่ดีต้องปฏิเสธสิ่งที่ผิดได้ ไม่ใช่แค่รับสิ่งที่ถูก</strong></p>
+  </div>
+
+
+  <h3>10.5 แผนผังฐานข้อมูลที่ต้องส่ง</h3>
+
+  <p>ภาพนี้คือ<strong>ข้อกำหนดของงานสัปดาห์นี้</strong> — ฐานข้อมูลที่คุณสร้างต้องมีหน้าตาแบบนี้</p>
+
+  <figure>
+    <svg viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="แผนผังฐานข้อมูล campus.db ฉบับเต็ม">
+  <style>.st{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .ss{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .sm{font:500 10px 'IBM Plex Mono',monospace;fill:#14251E}</style>
+
+  <rect x="20" y="20" width="400" height="26" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.6"/>
+  <text x="36" y="38" class="st" fill="#186B8C">📋 ตาราง users — ผู้แจ้งคำร้อง</text>
+  <rect x="20" y="58" width="400" height="22" fill="#FBF0E2" stroke="#A8620E"/><text x="30" y="74" class="sm">🔑 id</text><text x="170" y="74" class="sm" fill="#54685E">INTEGER</text><text x="255" y="74" class="ss">PRIMARY KEY AUTOINCREMENT</text><rect x="20" y="80" width="400" height="22" fill="#fff" stroke="#D5DDE5"/><text x="30" y="96" class="sm">name</text><text x="170" y="96" class="sm" fill="#54685E">TEXT</text><text x="255" y="96" class="ss">NOT NULL</text><rect x="20" y="102" width="400" height="22" fill="#fff" stroke="#D5DDE5"/><text x="30" y="118" class="sm">department</text><text x="170" y="118" class="sm" fill="#54685E">TEXT</text><text x="255" y="118" class="ss">NOT NULL</text><rect x="20" y="124" width="400" height="22" fill="#fff" stroke="#D5DDE5"/><text x="30" y="140" class="sm">email</text><text x="170" y="140" class="sm" fill="#54685E">TEXT</text><text x="255" y="140" class="ss">NOT NULL UNIQUE</text>
+  <text x="20" y="166" class="ss">1 คน แจ้งได้หลายคำร้อง</text>
+
+  <rect x="460" y="20" width="400" height="26" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.6"/>
+  <text x="476" y="38" class="st" fill="#1E7A54">📋 ตาราง requests — คำร้องขอใช้บริการ</text>
+  <rect x="460" y="58" width="400" height="22" fill="#FBF0E2" stroke="#A8620E"/><text x="470" y="74" class="sm">🔑 id</text><text x="610" y="74" class="sm" fill="#54685E">TEXT</text><text x="695" y="74" class="ss">PRIMARY KEY</text><rect x="460" y="80" width="400" height="22" fill="#F1EAF8" stroke="#6B3B96"/><text x="470" y="96" class="sm">🔗 requester_id</text><text x="610" y="96" class="sm" fill="#54685E">INTEGER</text><text x="695" y="96" class="ss">NOT NULL → users(id)</text><rect x="460" y="102" width="400" height="22" fill="#fff" stroke="#D5DDE5"/><text x="470" y="118" class="sm">request_type</text><text x="610" y="118" class="sm" fill="#54685E">TEXT</text><text x="695" y="118" class="ss">NOT NULL · CHECK 4 ค่า</text><rect x="460" y="124" width="400" height="22" fill="#fff" stroke="#D5DDE5"/><text x="470" y="140" class="sm">location</text><text x="610" y="140" class="sm" fill="#54685E">TEXT</text><text x="695" y="140" class="ss">NOT NULL</text><rect x="460" y="146" width="400" height="22" fill="#fff" stroke="#D5DDE5"/><text x="470" y="162" class="sm">details</text><text x="610" y="162" class="sm" fill="#54685E">TEXT</text><text x="695" y="162" class="ss">NOT NULL</text><rect x="460" y="168" width="400" height="22" fill="#fff" stroke="#D5DDE5"/><text x="470" y="184" class="sm">priority</text><text x="610" y="184" class="sm" fill="#54685E">TEXT</text><text x="695" y="184" class="ss">DEFAULT 'normal' · CHECK</text><rect x="460" y="190" width="400" height="22" fill="#fff" stroke="#D5DDE5"/><text x="470" y="206" class="sm">status</text><text x="610" y="206" class="sm" fill="#54685E">TEXT</text><text x="695" y="206" class="ss">DEFAULT 'pending' · CHECK</text><rect x="460" y="212" width="400" height="22" fill="#fff" stroke="#D5DDE5"/><text x="470" y="228" class="sm">created_at</text><text x="610" y="228" class="sm" fill="#54685E">TEXT</text><text x="695" y="228" class="ss">DEFAULT เวลาปัจจุบัน</text>
+  <text x="460" y="254" class="ss">1 คำร้อง มีผู้แจ้งคนเดียว</text>
+
+  <path d="M424 69 C 440 69, 440 91, 456 91" stroke="#6B3B96" stroke-width="2" fill="none" stroke-dasharray="5 3"/>
+  <circle cx="424" cy="69" r="3.5" fill="#6B3B96"/>
+  <text x="430" y="60" class="sm" fill="#6B3B96">1</text>
+  <text x="430" y="108" class="sm" fill="#6B3B96">หลาย</text>
+
+  <rect x="20" y="276" width="840" height="48" rx="8" fill="#FBF0E2" stroke="#A8620E" stroke-width="1.5"/>
+  <text x="40" y="296" class="st" fill="#A8620E">ค่าที่ CHECK บังคับ</text>
+  <text x="40" y="314" class="sm">request_type: แจ้งซ่อม · บริการบัญชีผู้ใช้ · ขอใช้อุปกรณ์ · อื่น ๆ   |   priority: normal · urgent   |   status: pending · in-progress · completed</text>
+
+  <rect x="20" y="334" width="840" height="54" rx="8" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.5"/>
+  <text x="40" y="354" class="st" fill="#B23A2E">⚠ นี่คือข้อกำหนดของงานที่ต้องส่ง — สัปดาห์ที่ 10 จะใช้โครงนี้ตรง ๆ</text>
+  <text x="40" y="374" class="ss">ถ้าตั้งชื่อคอลัมน์ต่างจากนี้ โค้ดที่เขียนสัปดาห์หน้าจะใช้ไม่ได้ · ชื่อต้องตรงทุกตัวอักษร</text>
+</svg>
+    <figcaption><b>ภาพที่ 6</b>โครงสร้างเต็มของ <code>campus.db</code> — 2 ตาราง · 12 คอลัมน์ · เชื่อมด้วย Foreign Key</figcaption>
+  </figure>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ชื่อคอลัมน์ต้องตรงทุกตัวอักษร</span>
+    <p style="margin:0">สัปดาห์ที่ 10 จะเขียนโค้ดที่อ้างชื่อคอลัมน์เหล่านี้ตรง ๆ เช่น <code>r.request_type AS requestType</code><br>
+    ถ้าตั้งชื่อเป็น <code>requestType</code> หรือ <code>type</code> แทน <strong>โค้ดสัปดาห์หน้าจะใช้ไม่ได้ทันที</strong><br>
+    <small>ในงานจริงก็เป็นแบบนี้ — เมื่อตกลง schema แล้ว การเปลี่ยนชื่อคอลัมน์กระทบทุกคนที่ใช้ฐานข้อมูลนั้น</small></p>
+  </div>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไมฝั่งฐานข้อมูลใช้ <code>request_type</code> แต่ API ใช้ <code>requestType</code></span>
+    <p style="margin:0">เป็น<strong>ธรรมเนียมคนละฝั่ง</strong> — ฐานข้อมูลนิยมขีดล่าง (snake_case) · JavaScript นิยมตัวใหญ่กลางคำ (camelCase)<br>
+    เราไม่ฝืนธรรมเนียมทั้งสองฝั่ง แต่ใช้ <code>AS</code> แปลงตอนดึงออกมา — <strong>สัปดาห์หน้าจะได้ใช้จริง</strong></p>
+  </div>
+
+  <h3>10.4 Checkpoint ทั้งหมดของสัปดาห์นี้</h3>
+
+  <table class="d">
+    <tr><th style="width:80px">CP</th><th>ทำอะไร</th><th style="width:70px">อ่านบท</th><th style="width:56px">ที่ไหน</th></tr>
+    <tr><td><strong>CP17</strong></td><td>เขียน SQL ครั้งแรก — SELECT · WHERE · ORDER BY</td><td>4, 5</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP18</strong></td><td>ออกแบบตาราง — ทำไมต้องแยก</td><td>2, 7</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP19</strong></td><td>สร้างฐานข้อมูลจริง — CREATE TABLE + INSERT</td><td>3, 6</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP20</strong></td><td>CRUD ครบ — INSERT · UPDATE · DELETE</td><td>6</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP21</strong></td><td>JOIN — ดึงข้อมูล 2 ตารางมารวมกัน</td><td>8, 9</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP22</strong></td><td>เขียน <code>queries.sql</code> ตอบโจทย์ 8 ข้อ</td><td>4, 5, 9</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP23</strong></td><td>ทำ <code>schema.sql</code> ให้รันใหม่ได้ทั้งหมด</td><td>10</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP24</strong></td><td>เขียน <code>DATA_MODEL.md</code> อธิบายเหตุผล</td><td>7, 8</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP25</strong></td><td>ทดสอบ constraint ทั้ง 5 แบบ</td><td>3, 10</td><td><span class="wheretag home">🏠</span></td></tr>
+  </table>
+
+  <div class="box inclass">
+    <span class="h">🏫 ทำในห้อง · CP17–CP21</span>
+    <p style="margin:0">จบคาบทุกคนมี <strong><code>campus.db</code> ของตัวเองที่ query ได้จริง</strong> — เขียน SELECT, INSERT, UPDATE, DELETE และ JOIN เป็น</p>
+  </div>
+
+  <div class="box takehome">
+    <span class="h">🏠 ทำที่บ้าน · CP22–CP25</span>
+    <p style="margin:0">ส่ง 4 ไฟล์ — <code>campus.db</code> · <code>schema.sql</code> · <code>queries.sql</code> · <code>DATA_MODEL.md</code><br>
+    ผ่าน branch <code>unit4/week-09</code> + tag <code>lab-08-submission-v1</code></p>
+  </div>
+
+  <div class="box next">
+    <span class="h">🟦 สัปดาห์หน้าจะทำอะไร</span>
+    <p style="margin:0">เอา <strong><code>campus.db</code> และ <code>queries.sql</code> ที่ทำสัปดาห์นี้</strong> ไปใส่ใน API ของ Week 07<br>
+    <strong>query ที่เขียนวันนี้จะกลายเป็นโค้ดในสัปดาห์หน้า</strong> — และเราจะแก้แค่ <code>requestService.js</code> ไฟล์เดียว · controller, route และ React ไม่ต้องแตะเลย</p>
+  </div>
+</section>
+
+<footer>
+  <span>ENGSE203 · หน่วยที่ 4 · ฐานข้อมูลและการบูรณาการระบบ Full-Stack</span>
+  <span class="m">Week 09 · CLO5 · เอกสารประกอบการสอน</span>
+</footer>
+
+</div>
+</body>
+</html>

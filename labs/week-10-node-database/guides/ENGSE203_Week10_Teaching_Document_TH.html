@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENGSE203 Week 10 — เอกสารประกอบการสอน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1F6F3; --card:#FFFFFF; --ink:#14251E; --ink-soft:#54685E;
+  --track:#BFD2C8; --a:#A8620E; --a-tint:#FBF0E2; --b:#186B8C; --b-tint:#DDEEF5;
+  --loading:#B5771A; --success:#1E7A54; --error:#B23A2E; --rule:#DBE7E0;
+  --code-bg:#1E1408; --vio:#6B3B96; --vio-tint:#F1EAF8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  line-height:1.78;padding:0 20px 80px;-webkit-font-smoothing:antialiased;}
+.doc{max-width:860px;margin:0 auto}
+
+.cover{padding:64px 0 40px;border-bottom:3px solid var(--a)}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.2em;color:var(--a);text-transform:uppercase}
+.cover h1{font-size:clamp(30px,5vw,46px);font-weight:700;line-height:1.15;
+  letter-spacing:-.02em;margin:14px 0 8px}
+.cover .subtitle{font-size:19px;color:var(--ink-soft);font-weight:300;margin-bottom:28px}
+.meta{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px}
+.meta th{text-align:left;font-weight:600;padding:7px 14px 7px 0;width:190px;
+  vertical-align:top;color:var(--ink-soft);font-size:13px}
+.meta td{padding:7px 0;border-bottom:1px solid var(--rule)}
+.meta tr:first-child td,.meta tr:first-child th{border-top:1px solid var(--rule)}
+
+.bigidea{background:var(--ink);color:#fff;padding:24px 26px;border-radius:4px;margin-top:8px}
+.bigidea .lab{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;
+  opacity:.65;text-transform:uppercase;margin-bottom:8px}
+.bigidea p{font-size:17px;line-height:1.6}
+.bigidea code{font-family:'IBM Plex Mono',monospace;font-size:15px;
+  background:rgba(255,255,255,.14);padding:1px 7px;border-radius:3px}
+
+.howto{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:26px;margin:36px 0}
+.howto h2{font-size:19px;margin-bottom:14px}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;font-size:14px;margin-top:14px}
+.legend .k{font-weight:600;white-space:nowrap}
+.newbie{background:var(--a-tint);border-left:3px solid var(--a);padding:16px 20px;
+  border-radius:0 6px 6px 0;margin-top:18px;font-size:14.5px}
+.wheretag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:middle}
+.wheretag.home{background:#FDF2E6;color:#8A5A0E;border:1px solid #E8C99A}
+.wheretag.room{background:#E4F1EA;color:#14503A;border:1px solid #A8D4BE}
+
+.ch{margin-top:60px;padding-top:8px}
+.ch-num{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:.16em;color:var(--a);text-transform:uppercase;
+  display:flex;align-items:center;gap:12px}
+.ch-num::after{content:"";flex:1;height:1px;background:var(--rule)}
+.ch h2{font-size:28px;font-weight:700;line-height:1.25;margin:12px 0 6px;letter-spacing:-.01em}
+.ch .readtime{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  color:var(--track);letter-spacing:.06em;margin-bottom:22px}
+.ch h3{font-size:19px;font-weight:600;margin:32px 0 10px}
+p{margin-bottom:14px}
+ul,ol{margin:0 0 16px 22px}
+li{margin-bottom:7px}
+strong{font-weight:600}
+em{font-style:normal;background:linear-gradient(transparent 62%,var(--a-tint) 62%)}
+
+code{font-family:'IBM Plex Mono',monospace;font-size:.88em;
+  background:#F5EADA;padding:2px 6px;border-radius:3px;color:#7A4708}
+pre{background:var(--code-bg);color:#E4EFE9;border-radius:4px;
+  padding:20px 22px;overflow-x:auto;margin:16px 0;font-size:13.5px;line-height:1.7}
+pre code{background:none;padding:0;color:inherit;font-size:13.5px}
+.c-key{color:#F0B872}.c-str{color:#E9C08A}.c-com{color:#6E8A7E;font-style:italic}
+.c-fn{color:#8FD0EC}.c-bad{color:#F0968C}.c-hl{color:#FFE08A;font-weight:600}
+.c-num{color:#D9A0E8}
+
+.term{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--b);
+  border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0}
+.term .w{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--b);
+  font-size:15px;margin-bottom:4px}
+.term p{margin:0;font-size:14.5px}
+
+table.d{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0}
+table.d th{text-align:left;background:#F5EADA;padding:10px 12px;
+  font-weight:600;font-size:13px;border-bottom:2px solid var(--track)}
+table.d td{padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.d tr:hover td{background:#FAFCFB}
+
+figure{margin:30px 0;background:var(--card);border:1px solid var(--rule);
+  border-radius:4px;padding:24px 22px 16px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:13px;color:var(--ink-soft);margin-top:16px;padding-top:12px;border-top:1px solid var(--rule)}
+figcaption b{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  letter-spacing:.1em;color:var(--a);display:block;margin-bottom:4px;text-transform:uppercase}
+
+.box{border-radius:4px;padding:20px 22px;margin:22px 0;font-size:14.5px}
+.box .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px;display:block}
+.box p:last-child{margin-bottom:0}
+.predict{background:var(--a-tint);border-left:3px solid var(--a)}
+.predict .h{color:var(--a)}
+.pitfall{background:#FBEBE8;border-left:3px solid var(--error)}
+.pitfall .h{color:var(--error)}
+.note{background:#FDF4E3;border-left:3px solid var(--loading)}
+.note .h{color:var(--loading)}
+.next{background:var(--b-tint);border-left:3px solid var(--b)}
+.next .h{color:var(--b)}
+.analogy{background:var(--vio-tint);border-left:3px solid var(--vio)}
+.analogy .h{color:var(--vio)}
+.inclass{background:#E4F1EA;border-left:3px solid var(--a)}
+.inclass .h{color:var(--a)}
+.takehome{background:#FDF2E6;border-left:3px solid var(--loading)}
+.takehome .h{color:var(--loading)}
+.challenge{background:var(--vio-tint);border-left:3px solid var(--vio)}
+.challenge .h{color:var(--vio)}
+
+details{background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  padding:14px 18px;margin:14px 0;font-size:14.5px}
+details summary{cursor:pointer;font-weight:600;font-size:14.5px;list-style:none;
+  display:flex;align-items:center;gap:9px}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸";color:var(--a);font-size:13px;transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+details .ans{margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-weight:300}
+details .ans p:last-child{margin-bottom:0}
+
+.recap{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--ink);
+  border-radius:4px;padding:22px;margin:30px 0 0}
+.recap .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px;display:block}
+.recap ul{margin-bottom:0;margin-left:20px}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--rule);
+  font-size:12.5px;color:var(--ink-soft);font-weight:300;display:flex;
+  justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer .m{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.05em}
+
+.toc{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:24px 26px;margin:28px 0}
+.toc h2{font-size:17px;margin-bottom:8px}
+.toc .toc-note{font-size:13px;color:var(--ink-soft);margin-bottom:16px;font-weight:300}
+.toc ol{margin:0 0 0 20px;font-size:14.5px}
+.toc li{margin-bottom:6px}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+.toc a:hover{border-bottom-color:var(--a);color:var(--a)}
+.toc .t{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--track);margin-left:6px}
+.toc .grp{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--a);margin:14px 0 6px}
+
+@media print{
+  body{background:#fff;padding:0}
+  figure,.box,.recap,details,table.d,.term{break-inside:avoid}
+  .ch{break-before:page}
+  details{border:none}details summary::before{content:""}
+  details .ans{display:block}
+}
+@media (max-width:640px){
+  .meta th{width:auto;display:block;padding-bottom:0}
+  .meta td{display:block;padding-top:2px}
+  .cover{padding:36px 0 28px}
+  .legend{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+
+<!-- ════════ COVER ════════ -->
+<header class="cover">
+  <p class="eyebrow">ENGSE203 · หน่วยที่ 4 · Week 10</p>
+  <h1>เชื่อม Node เข้ากับฐานข้อมูล<br>แก้แค่ไฟล์เดียว</h1>
+  <p class="subtitle">node:sqlite · JOIN ใน service · แปลงชื่อเป็น id · Parameterized Query · SQL Injection</p>
+
+  <table class="meta">
+    <tr><th>รายวิชา</th><td>ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์</td></tr>
+    <tr><th>ต่อจาก</th><td>Week 09 — <code>campus.db</code> และ <code>queries.sql</code> ที่ทำไว้ · Week 07 — API ที่เชื่อมกับ React แล้ว</td></tr>
+    <tr><th>หน่วยที่</th><td>4 · ฐานข้อมูลและการบูรณาการระบบ Full-Stack (สัปดาห์ 9–11)</td></tr>
+    <tr><th>Checkpoints</th><td>CP26 · CP27 · CP28 · CP29 · CP30 · CP31 · CP32 · CP33 · CP34</td></tr>
+    <tr><th>เครื่องมือ</th><td><code>node:sqlite</code> (มากับ Node 22) · ไม่ต้องติดตั้งอะไรเพิ่ม</td></tr>
+    <tr><th>ประเมินผล</th><td>CLO5 (หลัก) · CLO6 (รอง)</td></tr>
+  </table>
+
+  <div class="bigidea">
+    <span class="lab">แนวคิดแกนกลางของคาบนี้</span>
+    <p><strong>query ที่เขียนสัปดาห์ที่แล้ว กลายเป็นโค้ดวันนี้</strong><br>
+    <code>และแก้แค่ requestService.js ไฟล์เดียว</code></p>
+  </div>
+</header>
+
+<!-- ════════ HOW TO READ ════════ -->
+<section class="howto">
+  <h2>วิธีอ่านเอกสารนี้</h2>
+  <p>สัปดาห์นี้คือ<strong>ครึ่งหลังของหน่วยที่ 4</strong> — สัปดาห์ที่แล้วเราเรียน SQL โดยไม่แตะโค้ดเลย วันนี้เอา SQL นั้นมาใส่ในโปรแกรมจริง</p>
+
+  <div class="newbie">
+    <strong>สิ่งที่ต้องมีติดตัวมาจากสัปดาห์ที่แล้ว</strong> — ไฟล์ <code>campus.db</code> และ <code>queries.sql</code> ของคุณเอง
+    <br><br>
+    <strong>ถ้าไม่มี ไม่ต้องตกใจ</strong> — ผู้สอนมีไฟล์สำรองให้ · แต่จะเสียโอกาสได้เห็นว่า query ที่ตัวเองเขียนกลายเป็นโค้ดจริง ซึ่งเป็นจุดที่สนุกที่สุดของสัปดาห์นี้
+  </div>
+
+  <h2 style="margin-top:26px">รูปแบบการเรียน</h2>
+  <table class="d">
+    <tr><th>ระดับ</th><th>ทำที่ไหน</th><th>คืออะไร</th></tr>
+    <tr><td><span class="wheretag room">🏫 ในห้อง</span></td><td>ในคาบ ให้เสร็จ</td><td>CP26–CP30 · เปลี่ยน service ให้ใช้ฐานข้อมูล จนแอปทำงานเหมือนเดิม</td></tr>
+    <tr><td><span class="wheretag home">🏠 ที่บ้าน</span></td><td>ภายใน 5 วัน</td><td>CP31–CP34 · SQL injection · error handling · test · contract</td></tr>
+    <tr><td>⭐ Challenge</td><td>ไม่บังคับ</td><td>endpoint ของ users · transaction · index</td></tr>
+  </table>
+
+  <div class="legend">
+    <span class="k">🟩 ทายก่อนอ่านต่อ</span><span>หยุดคิดก่อน อย่าเพิ่งดูคำตอบ</span>
+    <span class="k">🟦 ศัพท์ที่ต้องรู้</span><span>คำใหม่พร้อมคำอธิบาย</span>
+    <span class="k">🟪 เทียบกับของที่คุ้น</span><span>อุปมากับสิ่งที่เจอในชีวิตจริง</span>
+    <span class="k">🟥 กับดักที่พบบ่อย</span><span>ความผิดพลาดที่เจอจริงตอนทดลองทำ</span>
+    <span class="k">▸ เฉลย/ดูเพิ่ม</span><span>กดเพื่อเปิด</span>
+  </div>
+</section>
+
+<!-- ════════ TOC ════════ -->
+<nav class="toc">
+  <h2>สารบัญ</h2>
+  <p class="toc-note">9 บท · อ่านบท 1–2 ก่อนเข้าคาบ ที่เหลืออ่านตอนลงมือทำ</p>
+
+  <p class="grp">กลุ่ม 1 · ต่อ Node เข้ากับฐานข้อมูล</p>
+  <ol>
+    <li><a href="#c1">สถานะปัจจุบัน — service ยังอ่านไฟล์อยู่</a><span class="t">8 นาที</span></li>
+    <li><a href="#c2">node:sqlite — เปิดฐานข้อมูลจากโค้ด</a><span class="t">11 นาที</span></li>
+    <li><a href="#c3">กับดัก path สัมพัทธ์</a><span class="t">9 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 2 · เขียน Service ใหม่</p>
+  <ol start="4">
+    <li><a href="#c4">อ่านข้อมูล — เอา JOIN จากสัปดาห์ที่แล้วมาใช้</a><span class="t">12 นาที</span></li>
+    <li><a href="#c5">แปลงชื่อเป็น id — หน้าที่ของ Service</a><span class="t">12 นาที</span></li>
+    <li><a href="#c6">เขียนข้อมูล — INSERT · UPDATE · DELETE</a><span class="t">10 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 3 · ปลอดภัยและพร้อมใช้จริง <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
+  <ol start="7">
+    <li><a href="#c7">Parameterized Query และ SQL Injection</a><span class="t">12 นาที</span></li>
+    <li><a href="#c8">จัดการ Error จากฐานข้อมูล</a><span class="t">9 นาที</span></li>
+    <li><a href="#c9">ทดสอบ เอกสาร และสรุปหน่วยที่ 4</a><span class="t">9 นาที</span></li>
+  </ol>
+</nav>
+
+<!-- ════════ CH 1 ════════ -->
+<section class="ch" id="c1">
+  <p class="ch-num">บทที่ 1 · กลุ่มที่ 1</p>
+  <h2>สถานะปัจจุบัน — service ยังอ่านไฟล์อยู่</h2>
+  <p class="readtime">เวลาอ่าน ≈ 8 นาที</p>
+
+  <p>ตอนนี้เรามีของครบแล้วทั้งสองฝั่ง แต่ยังไม่ได้ต่อกัน</p>
+
+  <figure>
+    <svg viewBox="0 0 760 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="สถานะก่อนเชื่อมฐานข้อมูล">
+      <style>
+        .t1{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s1{font:300 11px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .m1{font:500 11px 'IBM Plex Mono',monospace}
+      </style>
+      <text x="20" y="20" class="m1" fill="#186B8C" style="letter-spacing:.08em">WEEK 07 · API ที่ทำงานอยู่</text>
+      <rect x="20" y="30" width="330" height="170" rx="10" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5"/>
+      <rect x="42" y="52" width="286" height="28" rx="5" fill="#fff" stroke="#BFD2C8"/>
+      <text x="58" y="71" class="s1">React (5173) — ไม่ต้องแก้</text>
+      <rect x="42" y="86" width="286" height="28" rx="5" fill="#fff" stroke="#BFD2C8"/>
+      <text x="58" y="105" class="s1">route + controller — ไม่ต้องแก้</text>
+      <rect x="42" y="120" width="286" height="30" rx="5" fill="#FBF0E2" stroke="#A8620E" stroke-width="2"/>
+      <text x="58" y="140" class="m1" fill="#7A4708">requestService.js</text>
+      <text x="42" y="170" class="s1">อ่านไฟล์ JSON · ข้อมูลอยู่ในไฟล์เดียว</text>
+      <text x="42" y="188" class="s1" fill="#A8620E">← ไฟล์เดียวที่ต้องแก้สัปดาห์นี้</text>
+
+      <text x="430" y="20" class="m1" fill="#1E7A54" style="letter-spacing:.08em">WEEK 09 · ฐานข้อมูลที่สร้างไว้</text>
+      <rect x="430" y="30" width="310" height="170" rx="10" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5"/>
+      <rect x="452" y="52" width="266" height="28" rx="5" fill="#fff" stroke="#BFD2C8"/>
+      <text x="468" y="71" class="m1" fill="#14503A">campus.db</text>
+      <rect x="452" y="86" width="266" height="28" rx="5" fill="#fff" stroke="#BFD2C8"/>
+      <text x="468" y="105" class="s1">ตาราง users + requests</text>
+      <rect x="452" y="120" width="266" height="30" rx="5" fill="#fff" stroke="#BFD2C8"/>
+      <text x="468" y="140" class="m1" fill="#14503A">queries.sql</text>
+      <text x="452" y="170" class="s1">query ที่ทดสอบแล้วว่าใช้ได้</text>
+      <text x="452" y="188" class="s1" fill="#1E7A54">← จะกลายเป็นโค้ดวันนี้</text>
+
+      <path d="M356 115 L372 115 M408 115 L424 115" stroke="#C084FC" stroke-width="2.5" stroke-dasharray="7 5"/>
+      <circle cx="390" cy="115" r="15" fill="#F1EAF8" stroke="#6B3B96" stroke-width="2"/>
+      <text x="390" y="121" text-anchor="middle" style="font:700 15px sans-serif;fill:#6B3B96">?</text>
+
+      <rect x="20" y="218" width="720" height="44" rx="8" fill="#F1EAF8" stroke="#6B3B96"/>
+      <text x="380" y="240" text-anchor="middle" class="t1" fill="#6B3B96">งานวันนี้ — ต่อสองอย่างนี้เข้าด้วยกัน</text>
+      <text x="380" y="256" text-anchor="middle" class="s1" fill="#6B3B96">โดยแก้แค่ requestService.js ไฟล์เดียว · ที่เหลือไม่ต้องแตะเลย</text>
+    </svg>
+    <figcaption><b>ภาพที่ 1</b>API ของ Week 07 และฐานข้อมูลของ Week 09 — วันนี้ต่อเข้าด้วยกันโดยแก้ชั้นเดียว</figcaption>
+  </figure>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้าเปลี่ยน <code>requestService.js</code> ให้ดึงข้อมูลจากฐานข้อมูลแทนไฟล์ JSON — <strong>ต้องแก้ไฟล์อื่นอีกกี่ไฟล์</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ศูนย์ไฟล์</strong> — controller, route, middleware, และ React ทั้งโฟลเดอร์ไม่ต้องแก้เลย</p>
+      <p style="margin:0">เงื่อนไขเดียวคือ <strong>signature ของทุกฟังก์ชันต้องเหมือนเดิม</strong> · นี่คือครั้งที่ 4 แล้วที่เราได้ประโยชน์จากการแยกชั้น</p>
+    </div>
+  </details>
+
+  <h3>1.1 ครั้งที่ 4 ของรูปแบบเดิม</h3>
+
+  <table class="d">
+    <tr><th>เมื่อไร</th><th>เปลี่ยนจาก</th><th>เป็น</th><th>แก้กี่ชั้น</th></tr>
+    <tr><td>Week 05</td><td>ข้อมูลตั้งต้น (seed)</td><td>localStorage</td><td>1</td></tr>
+    <tr><td>Week 06</td><td>ตัวแปรใน memory</td><td>ไฟล์ JSON</td><td>1</td></tr>
+    <tr><td>Week 07</td><td>localStorage</td><td>เรียก API</td><td>1</td></tr>
+    <tr style="background:#FBF0E2"><td><strong>วันนี้</strong></td><td><strong>ไฟล์ JSON</strong></td><td><strong>ฐานข้อมูล SQLite</strong></td><td><strong>1</strong></td></tr>
+  </table>
+
+  <h3>1.2 สิ่งที่ต้องแก้ใน service</h3>
+
+  <table class="d">
+    <tr><th>ฟังก์ชัน</th><th>เดิมทำอะไร</th><th>ใหม่ทำอะไร</th></tr>
+    <tr><td><code>loadSeed()</code></td><td>อ่านไฟล์ JSON เข้า array</td><td>เปิดฐานข้อมูล + เปิด foreign key</td></tr>
+    <tr><td><code>findAll()</code></td><td><code>array.filter()</code></td><td><code>SELECT ... JOIN ... WHERE</code></td></tr>
+    <tr><td><code>findById()</code></td><td><code>array.find()</code></td><td><code>SELECT ... WHERE r.id = ?</code></td></tr>
+    <tr><td><code>create()</code></td><td><code>array.push()</code> + เขียนไฟล์</td><td><code>INSERT</code> + <strong>แปลงชื่อเป็น id</strong></td></tr>
+    <tr><td><code>updateStatus()</code></td><td>แก้ object ใน array</td><td><code>UPDATE ... WHERE id = ?</code></td></tr>
+    <tr><td><code>remove()</code></td><td><code>array.splice()</code></td><td><code>DELETE ... WHERE id = ?</code></td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 สังเกตว่าไม่มีการเขียนไฟล์แล้ว</span>
+    <p style="margin:0">ตอน Week 06 เราต้องเรียก <code>persist()</code> ทุกครั้งที่ข้อมูลเปลี่ยน · <strong>ฐานข้อมูลจัดการเรื่องนี้ให้เอง</strong> — <code>INSERT</code> เสร็จก็บันทึกลงดิสก์แล้ว ไม่ต้องสั่งเพิ่ม</p>
+  </div>
+
+
+  <h3>1.3 ลำดับชั้นของระบบหลังบ้าน — เทียบกับไฟล์จริง</h3>
+
+  <p>ถึงสัปดาห์นี้ระบบหลังบ้านของเรามีชั้นครบแล้ว · แต่ละชั้น<strong>รู้เรื่องของตัวเองเท่านั้น</strong></p>
+
+  <figure>
+    <svg viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ลำดับชั้นของระบบหลังบ้านเทียบกับโฟลเดอร์และไฟล์">
+      <style>
+        .lt{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .ls{font:300 10.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .lm{font:500 10px 'IBM Plex Mono',monospace}
+      </style>
+      <defs>
+        <marker id="ld" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+          <path d="M0 0 L7 4 L0 8" fill="none" stroke="#8FA69A" stroke-width="1.4"/></marker>
+        <marker id="lu" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+          <path d="M0 0 L7 4 L0 8" fill="none" stroke="#1E7A54" stroke-width="1.4"/></marker>
+      </defs>
+
+      <text x="26" y="16" class="lm" fill="#186B8C" style="letter-spacing:.07em">FRONTEND · เครื่องผู้ใช้</text>
+      <rect x="20" y="22" width="410" height="40" rx="7" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.3"/>
+      <text x="38" y="40" class="lt">React Component · Page</text>
+      <text x="38" y="55" class="ls">เรียก service ของตัวเอง — ไม่รู้จัก HTTP</text>
+      <text x="446" y="45" class="lm" fill="#186B8C">frontend/src/pages/</text>
+
+      <rect x="20" y="68" width="410" height="40" rx="7" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.3"/>
+      <text x="38" y="86" class="lt">requestService.js (ฝั่ง React)</text>
+      <text x="38" y="101" class="ls">รู้ว่า endpoint ไหนใช้ทำอะไร</text>
+      <text x="446" y="91" class="lm" fill="#186B8C">frontend/src/services/</text>
+
+      <path d="M225 112 L225 132" stroke="#8FA69A" stroke-width="1.5" marker-end="url(#ld)"/>
+      <text x="238" y="127" class="lm" fill="#A8620E">HTTP request</text>
+
+      <text x="26" y="152" class="lm" fill="#1E7A54" style="letter-spacing:.07em">BACKEND · เซิร์ฟเวอร์</text>
+      <rect x="20" y="158" width="410" height="38" rx="7" fill="#FBF0E2" stroke="#A8620E" stroke-width="1.3"/>
+      <text x="38" y="175" class="lt">Middleware — cors · morgan · express.json</text>
+      <text x="38" y="190" class="ls">ทำงานกับทุกคำขอ ตามลำดับที่เขียน</text>
+      <text x="446" y="181" class="lm" fill="#A8620E">api/src/app.js</text>
+
+      <path d="M225 200 L225 212" stroke="#8FA69A" stroke-width="1.5" marker-end="url(#ld)"/>
+      <rect x="20" y="216" width="410" height="38" rx="7" fill="#E4F2F7" stroke="#2E7D9A" stroke-width="1.3"/>
+      <text x="38" y="233" class="lt">Route — จับคู่ method + path</text>
+      <text x="38" y="248" class="ls">ไม่มีตรรกะ · แค่ส่งต่อให้ controller</text>
+      <text x="446" y="239" class="lm" fill="#2E7D9A">api/src/routes/</text>
+
+      <path d="M225 258 L225 270" stroke="#8FA69A" stroke-width="1.5" marker-end="url(#ld)"/>
+      <rect x="20" y="274" width="410" height="38" rx="7" fill="#F1EAF8" stroke="#6B3B96" stroke-width="1.3"/>
+      <text x="38" y="291" class="lt">Controller — ประสานและตัดสิน status code</text>
+      <text x="38" y="306" class="ls">รู้จัก req/res · <tspan fill="#6B3B96" font-weight="600">ไม่รู้จัก SQL</tspan></text>
+      <text x="446" y="297" class="lm" fill="#6B3B96">api/src/controllers/</text>
+
+      <path d="M225 316 L225 328" stroke="#8FA69A" stroke-width="1.5" marker-end="url(#ld)"/>
+      <rect x="20" y="332" width="410" height="42" rx="7" fill="#DFF0E7" stroke="#1E7A54" stroke-width="2"/>
+      <text x="38" y="350" class="lt">Service — จัดการข้อมูล ⭐ ไฟล์เดียวที่แก้สัปดาห์นี้</text>
+      <text x="38" y="366" class="ls"><tspan fill="#1E7A54" font-weight="600">ไม่รู้จัก req/res</tspan> · รู้จัก SQL ที่เดียวในระบบ</text>
+      <text x="446" y="343" class="lm" fill="#1E7A54">api/src/services/</text>
+
+      <rect x="540" y="355" width="200" height="46" rx="7" fill="#FBF0E2" stroke="#A8620E" stroke-width="1.5"/>
+      <text x="640" y="374" text-anchor="middle" class="lt">🗄️ campus.db</text>
+      <text x="640" y="391" text-anchor="middle" class="lm" fill="#A8620E">api/data/</text>
+      <path d="M434 360 L494 360 L494 378 L536 378" stroke="#A8620E" stroke-width="1.6" fill="none"/>
+
+      <path d="M14 352 L8 352 L8 42 L14 42" stroke="#1E7A54" stroke-width="1.4" fill="none" marker-end="url(#lu)"/>
+      <text x="4" y="210" class="lm" fill="#1E7A54" transform="rotate(-90 4 210)">คำตอบย้อนกลับทางเดิม</text>
+
+      <rect x="20" y="390" width="720" height="34" rx="7" fill="#F7F9FB" stroke="#D5DDE5"/>
+      <text x="380" y="411" text-anchor="middle" class="ls">แต่ละชั้นรู้เรื่องของตัวเองเท่านั้น → เปลี่ยนชั้นล่างสุดได้โดยชั้นบนไม่กระทบ</text>
+    </svg>
+    <figcaption><b>ภาพที่ 2</b>ลำดับชั้นของระบบเทียบกับโฟลเดอร์จริง — คำขอเดินลง คำตอบย้อนขึ้นทางเดิม</figcaption>
+  </figure>
+
+  <h3>1.4 แต่ละชั้นรู้อะไรและไม่รู้อะไร</h3>
+
+  <table class="d">
+    <tr><th>ชั้น</th><th>รู้จัก</th><th><strong>ไม่รู้จัก</strong></th><th>ไฟล์</th></tr>
+    <tr><td>Middleware</td><td>คำขอทุกคำขอ</td><td>ไม่รู้ว่าเป็น route ไหน</td><td><code>app.js</code></td></tr>
+    <tr><td>Route</td><td>method + path</td><td>ไม่รู้ว่าข้อมูลเก็บที่ไหน</td><td><code>routes/</code></td></tr>
+    <tr><td>Controller</td><td><code>req</code> · <code>res</code> · status code</td><td><strong>ไม่รู้จัก SQL</strong></td><td><code>controllers/</code></td></tr>
+    <tr><td>Service</td><td>SQL · โครงสร้างตาราง</td><td><strong>ไม่รู้จัก <code>req</code>/<code>res</code></strong></td><td><code>services/</code></td></tr>
+  </table>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 ช่องขวาสำคัญกว่าช่องซ้าย</span>
+    <p style="margin:0">สิ่งที่แต่ละชั้น <strong>ไม่รู้</strong> คือสิ่งที่ทำให้เปลี่ยนชั้นอื่นได้โดยไม่กระทบกัน</p>
+    <p style="margin:8px 0 0"><strong>เพราะ service ไม่รู้จัก <code>req</code>/<code>res</code></strong> → เปลี่ยนจากไฟล์ JSON เป็นฐานข้อมูลได้โดย controller ไม่ต้องแก้<br>
+    <strong>เพราะ controller ไม่รู้จัก SQL</strong> → เปลี่ยนจาก SQLite เป็น MongoDB ในสัปดาห์หน้าก็ยังไม่ต้องแก้</p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 สัญญาณว่ากำลังทำผิดทาง</span>
+    <p style="margin:0">ถ้าเขียนไปแล้วรู้สึกว่า<strong>ต้องแก้ controller ด้วย</strong> — ให้หยุดแล้วตรวจก่อน<br>
+    แปลว่า signature ของ service เปลี่ยนไปแล้ว ซึ่งผิดข้อตกลงของสัปดาห์นี้<br>
+    <small>เช่น เปลี่ยนให้คืน <code>{ rows: [...] }</code> แทน array ตรง ๆ หรือเปลี่ยนเป็น async</small></p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 1</span>
+    <ul>
+      <li>เรามี API ที่ทำงานอยู่ (W07) และฐานข้อมูลที่สร้างไว้ (W09) แต่ยังไม่ได้ต่อกัน</li>
+      <li>แก้แค่ <code>requestService.js</code> ไฟล์เดียว — ที่เหลือไม่ต้องแตะ</li>
+      <li>เงื่อนไขเดียวคือ <strong>signature ต้องเหมือนเดิม</strong></li>
+      <li>ไม่ต้องเขียนไฟล์เองแล้ว — ฐานข้อมูลบันทึกให้เอง</li>
+      <li><strong>แต่ละชั้นรู้เรื่องของตัวเองเท่านั้น</strong> — สิ่งที่ไม่รู้คือสิ่งที่ทำให้เปลี่ยนชั้นอื่นได้</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 2 ════════ -->
+<section class="ch" id="c2">
+  <p class="ch-num">บทที่ 2 · กลุ่มที่ 1</p>
+  <h2>node:sqlite — เปิดฐานข้อมูลจากโค้ด</h2>
+  <p class="readtime">เวลาอ่าน ≈ 11 นาที</p>
+
+  <div class="term">
+    <div class="w">node:sqlite</div>
+    <p>โมดูลที่<strong>มากับ Node.js 22 อยู่แล้ว</strong> ใช้เปิดและสั่งงานฐานข้อมูล SQLite ได้โดย <strong>ไม่ต้อง <code>npm install</code> อะไรเลย</strong></p>
+  </div>
+
+  <h3>2.1 เปิดฐานข้อมูล</h3>
+
+<pre><code><span class="c-key">import</span> { DatabaseSync } <span class="c-key">from</span> <span class="c-str">'node:sqlite'</span>;
+
+<span class="c-key">const</span> db = <span class="c-key">new</span> <span class="c-fn">DatabaseSync</span>(<span class="c-str">'./data/campus.db'</span>);
+db.<span class="c-fn">exec</span>(<span class="c-str">'PRAGMA foreign_keys = ON'</span>);   <span class="c-com">// ⚠ ต้องสั่งทุกครั้ง</span></code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ลืม <code>PRAGMA foreign_keys = ON</code> = constraint ไม่ทำงานเลย</span>
+    <p style="margin:0">เรื่องนี้ย้ำมาตั้งแต่สัปดาห์ที่แล้ว และยังสำคัญตรงนี้ — <strong>ต้องสั่งทุกครั้งที่เปิดฐานข้อมูล</strong> ไม่ใช่สั่งครั้งเดียวแล้วจำไปตลอด<br>
+    ถ้าลืม จะใส่ <code>requester_id</code> มั่วเข้าไปได้โดยไม่มี error บอก</p>
+  </div>
+
+  <h3>2.2 สามวิธีสั่งงานฐานข้อมูล</h3>
+
+  <table class="d">
+    <tr><th>คำสั่ง</th><th>ใช้เมื่อ</th><th>คืนอะไร</th></tr>
+    <tr><td><code>db.exec(sql)</code></td><td>รัน SQL ที่ไม่ต้องการผลลัพธ์ · หลายคำสั่งพร้อมกัน</td><td>ไม่คืนอะไร</td></tr>
+    <tr><td><code>db.prepare(sql).all(...)</code></td><td>ต้องการ<strong>หลายแถว</strong></td><td>array ของ object</td></tr>
+    <tr><td><code>db.prepare(sql).get(...)</code></td><td>ต้องการ<strong>แถวเดียว</strong></td><td>object หรือ <code>undefined</code></td></tr>
+    <tr><td><code>db.prepare(sql).run(...)</code></td><td>INSERT · UPDATE · DELETE</td><td><code>{ changes, lastInsertRowid }</code></td></tr>
+  </table>
+
+<pre><code><span class="c-com">// หลายแถว</span>
+<span class="c-key">const</span> rows = db.<span class="c-fn">prepare</span>(<span class="c-str">'SELECT * FROM requests'</span>).<span class="c-fn">all</span>();
+
+<span class="c-com">// แถวเดียว</span>
+<span class="c-key">const</span> one = db.<span class="c-fn">prepare</span>(<span class="c-str">'SELECT * FROM requests WHERE id = ?'</span>).<span class="c-fn">get</span>(<span class="c-str">'REQ-001'</span>);
+
+<span class="c-com">// เปลี่ยนแปลงข้อมูล</span>
+<span class="c-key">const</span> result = db.<span class="c-fn">prepare</span>(<span class="c-str">'DELETE FROM requests WHERE id = ?'</span>).<span class="c-fn">run</span>(<span class="c-str">'REQ-006'</span>);
+console.<span class="c-fn">log</span>(result.changes);   <span class="c-com">// ลบไปกี่แถว — ใช้เช็คว่าเจอหรือไม่</span></code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 <code>result.changes</code> ใช้แทนการเช็คว่าพบหรือไม่</span>
+    <p style="margin:0">ถ้า <code>changes === 0</code> แปลว่า<strong>ไม่มีแถวไหนตรงเงื่อนไข</strong> — ใช้ตัดสินว่าควรคืน <code>null</code> เพื่อให้ controller ตอบ 404<br>
+    ไม่ต้อง <code>SELECT</code> เช็คก่อนแล้วค่อย <code>UPDATE</code> — สั่งครั้งเดียวแล้วดู <code>changes</code> พอ</p>
+  </div>
+
+  <h3>2.3 ทำไมชื่อ <code>DatabaseSync</code></h3>
+
+  <div class="term">
+    <div class="w">Sync (synchronous)</div>
+    <p>ทำงาน<strong>เสร็จทันที</strong> ไม่ต้อง <code>await</code> · ต่างจาก <code>fetch()</code> ที่ต้องรอ</p>
+  </div>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ตอน Week 07 เราเรียก API ต้องใช้ <code>await</code> ทุกครั้ง — <strong>ทำไมเรียกฐานข้อมูลไม่ต้อง</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>เพราะ <strong>ไฟล์ฐานข้อมูลอยู่ในเครื่องเดียวกัน</strong> — อ่านจากดิสก์เสร็จในเสี้ยววินาที ไม่ต้องรอ</p>
+      <p style="margin:0">ส่วน API ของ Week 07 อยู่คนละโปรแกรม (และอาจคนละเครื่อง) ต้องส่งข้อมูลผ่านเครือข่าย จึงต้องรอ<br>
+      <strong>สัปดาห์หน้าเราจะเจอ MongoDB ที่อยู่คนละเครื่องจริง ๆ แล้วจะได้เห็นว่าทำไมต้อง async</strong></p>
+    </div>
+  </details>
+
+  <div class="box note">
+    <span class="h">🟨 ผลดีที่ตามมา — controller ไม่ต้องแก้</span>
+    <p style="margin:0">เพราะ service ยังเป็น sync เหมือนเดิม · ถ้าเปลี่ยนเป็น async ทุกฟังก์ชัน controller จะต้องเติม <code>await</code> ทุกบรรทัด<br>
+    <strong>นี่คือเหตุผลที่สัปดาห์นี้แก้ไฟล์เดียวได้จริง</strong></p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 จะเห็น ExperimentalWarning</span>
+    <p style="margin:0"><code>node:sqlite</code> ยังเป็นฟีเจอร์ทดลองใน Node 22 · รันแล้วจะขึ้นคำเตือนทุกครั้ง<br>
+    <strong>ไม่ใช่ error</strong> — ซ่อนได้ด้วย <code>node --disable-warning=ExperimentalWarning</code> ซึ่งใส่ไว้ใน <code>package.json</code> ให้แล้ว</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 2</span>
+    <ul>
+      <li><code>node:sqlite</code> มากับ Node 22 — ไม่ต้องติดตั้งอะไรเพิ่ม</li>
+      <li>สั่งงาน 4 แบบ — <code>exec</code> · <code>all</code> (หลายแถว) · <code>get</code> (แถวเดียว) · <code>run</code> (เปลี่ยนข้อมูล)</li>
+      <li><code>result.changes</code> บอกว่ากระทบกี่แถว — ใช้เช็คว่าพบหรือไม่</li>
+      <li>เป็น <strong>sync</strong> เพราะไฟล์อยู่ในเครื่อง — controller จึงไม่ต้องแก้</li>
+      <li>อย่าลืม <code>PRAGMA foreign_keys = ON</code> ทุกครั้งที่เปิด</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 3 ════════ -->
+<section class="ch" id="c3">
+  <p class="ch-num">บทที่ 3 · กลุ่มที่ 1</p>
+  <h2>กับดัก path สัมพัทธ์</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที · เรื่องเล็กที่ทำให้เสียเวลามากที่สุด</p>
+
+  <p>บทนี้สั้นแต่สำคัญ เพราะเป็นปัญหาที่<strong>หาสาเหตุยากที่สุด</strong>ของสัปดาห์นี้</p>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p>เขียนแบบนี้ใน <code>requestService.js</code></p>
+<pre style="margin:10px 0 0"><code><span class="c-key">const</span> DB_FILE = <span class="c-str">'./data/campus.db'</span>;</code></pre>
+    <p style="margin:10px 0 0"><code>npm run dev</code> ทำงานปกติ แต่พอรัน checker กลับ error ว่าหาตารางไม่เจอ — <strong>เพราะอะไร</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><code>./</code> ไม่ได้หมายถึง "โฟลเดอร์ที่ไฟล์นี้อยู่" แต่หมายถึง <strong>"โฟลเดอร์ที่รันคำสั่ง"</strong></p>
+      <table class="d" style="margin:10px 0 0">
+        <tr><th>รันจากไหน</th><th><code>./data/campus.db</code> ชี้ไปที่</th></tr>
+        <tr><td><code>npm run dev</code> (ใน <code>api/</code>)</td><td><code>api/data/campus.db</code> ✓</td></tr>
+        <tr><td>checker (ใน root)</td><td><code>data/campus.db</code> ✗ ไม่มีไฟล์นี้</td></tr>
+      </table>
+      <p style="margin:10px 0 0">พอไม่มีไฟล์ SQLite จะ<strong>สร้างไฟล์เปล่าให้เอง</strong>โดยไม่บ่น — แล้วค่อยพังตอน query เพราะไม่มีตาราง</p>
+    </div>
+  </details>
+
+  <h3>3.1 วิธีแก้ — อ้างจากตำแหน่งไฟล์</h3>
+
+<pre><code><span class="c-key">import</span> path <span class="c-key">from</span> <span class="c-str">'node:path'</span>;
+<span class="c-key">import</span> { fileURLToPath } <span class="c-key">from</span> <span class="c-str">'node:url'</span>;
+
+<span class="c-com">// ตำแหน่งของ "ไฟล์นี้" ไม่ใช่ตำแหน่งที่รันคำสั่ง</span>
+<span class="c-key">const</span> HERE = path.<span class="c-fn">dirname</span>(<span class="c-fn">fileURLToPath</span>(import.meta.url));
+<span class="c-key">const</span> API_ROOT = path.<span class="c-fn">resolve</span>(HERE, <span class="c-str">'../..'</span>);
+<span class="c-key">const</span> DB_FILE = process.env.DB_FILE ?? path.<span class="c-fn">join</span>(API_ROOT, <span class="c-str">'data'</span>, <span class="c-str">'campus.db'</span>);</code></pre>
+
+  <table class="d">
+    <tr><th>ส่วน</th><th>ทำอะไร</th></tr>
+    <tr><td><code>import.meta.url</code></td><td>URL ของไฟล์นี้ เช่น <code>file:///.../services/requestService.js</code></td></tr>
+    <tr><td><code>fileURLToPath()</code></td><td>แปลง URL เป็น path ปกติ</td></tr>
+    <tr><td><code>path.dirname()</code></td><td>ตัดชื่อไฟล์ออก เหลือแต่โฟลเดอร์</td></tr>
+    <tr><td><code>path.resolve(HERE, '../..')</code></td><td>ถอยขึ้นไป 2 ชั้น (<code>services/</code> → <code>src/</code> → <code>api/</code>)</td></tr>
+    <tr><td><code>process.env.DB_FILE ??</code></td><td>ให้ตั้งค่าจากภายนอกได้ (บทเรียนจาก Week 07)</td></tr>
+  </table>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับของที่คุ้น</span>
+    <p style="margin:0"><strong><code>./data</code> เหมือนบอกว่า "ร้านข้าง ๆ"</strong> — ขึ้นกับว่าคุณยืนอยู่ตรงไหน คำตอบเปลี่ยนไปเรื่อย<br>
+    <strong><code>path.join(API_ROOT, 'data')</code> เหมือนบอกที่อยู่เต็ม</strong> — ยืนตรงไหนก็หาเจอที่เดียวกัน</p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ทำไมปัญหานี้หายาก</span>
+    <p style="margin:0"><strong>SQLite ไม่บ่นเมื่อไฟล์ไม่มี</strong> — มันสร้างฐานข้อมูลเปล่าให้เลย<br>
+    error ที่ได้จึงเป็น <code>no such table: requests</code> ซึ่งทำให้คิดว่า <em>"ลืมสร้างตาราง"</em> ทั้งที่จริง ๆ คือ <strong>เปิดไฟล์ผิดตัว</strong><br>
+    <strong>วิธีตรวจเร็ว</strong> — <code>console.log(DB_FILE)</code> ดูว่าชี้ไปที่ไหนจริง ๆ</p>
+  </div>
+
+  <h3>3.2 เชื่อมกับ Week 07</h3>
+
+  <div class="box note">
+    <span class="h">🟨 ใช้ <code>process.env.DB_FILE</code> ด้วยเสมอ</span>
+    <p style="margin:0">เพื่อให้ตั้งค่าจากภายนอกได้ — เหมือน <code>PORT</code> และ <code>CORS_ORIGIN</code> ที่เรียนใน Week 07 บทที่ 4<br>
+    <strong>ประโยชน์จริง</strong> — ตอนเขียน test จะได้ชี้ไปฐานข้อมูลทดสอบแยก ไม่ไปแก้ข้อมูลจริง</p>
+  </div>
+
+
+  <h3>3.5 สคริปต์สร้างฐานข้อมูล — <code>npm run db:setup</code></h3>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">เพื่อนของคุณ clone โปรเจกต์ไปจาก GitHub แล้วรัน <code>npm run dev</code> — <strong>จะเกิดอะไรขึ้น</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>ขึ้นกับว่าคุณ commit <code>campus.db</code> ไปด้วยหรือไม่</p>
+      <ul style="margin:8px 0 0 20px">
+        <li><strong>ถ้า commit ไป</strong> — ใช้ได้ทันที แต่ทุกคนจะใช้ข้อมูลชุดเดียวกัน และ git จะดู diff ของไฟล์ไบนารีไม่ได้</li>
+        <li><strong>ถ้าไม่ได้ commit</strong> — SQLite สร้างไฟล์เปล่าให้ แล้วพังตอน query เพราะไม่มีตาราง</li>
+      </ul>
+      <p style="margin:8px 0 0"><strong>ทางออกคือมีสคริปต์สร้างฐานข้อมูลจาก <code>schema.sql</code></strong> — ใครก็ตั้งต้นได้เหมือนกัน</p>
+    </div>
+  </details>
+
+  <h4 style="margin-top:16px">ทำไมต้องมีสคริปต์ ทั้งที่ <code>loadSeed()</code> สร้างให้อยู่แล้ว</h4>
+
+  <table class="d">
+    <tr><th>สถานการณ์</th><th><code>loadSeed()</code></th><th><code>npm run db:setup</code></th></tr>
+    <tr><td>เปิด server ครั้งแรก ไม่มีไฟล์</td><td>สร้างให้อัตโนมัติ</td><td>—</td></tr>
+    <tr><td><strong>อยากล้างข้อมูลเริ่มใหม่</strong></td><td style="color:var(--error)">ทำไม่ได้ — มีตารางแล้วจะข้าม</td><td style="color:var(--success)"><code>--force</code></td></tr>
+    <tr><td><strong>สร้างฐานข้อมูลทดสอบแยก</strong></td><td style="color:var(--error)">ทำไม่ได้</td><td style="color:var(--success)"><code>DB_FILE=...</code></td></tr>
+    <tr><td><strong>ตรวจว่า schema ถูกต้อง</strong></td><td style="color:var(--error)">ไม่บอกอะไร</td><td style="color:var(--success)">รายงานตาราง · จำนวนแถว · Foreign Key</td></tr>
+    <tr><td>ทำงานโดยไม่ต้องเปิด server</td><td style="color:var(--error)">ต้องเปิด</td><td style="color:var(--success)">รันได้เลย</td></tr>
+  </table>
+
+  <h4 style="margin-top:16px">วิธีใช้</h4>
+
+<pre><code><span class="c-com"># สร้างฐานข้อมูล (ถ้ามีอยู่แล้วจะไม่ทำอะไร)</span>
+npm run db:setup
+
+<span class="c-com"># ลบของเดิมแล้วสร้างใหม่ — ใช้ตอนอยากเริ่มจากข้อมูลตั้งต้น</span>
+npm run db:reset
+
+<span class="c-com"># สร้างฐานข้อมูลทดสอบแยก — ใช้ตอนเขียน test</span>
+DB_FILE=./data/test.db npm run db:setup</code></pre>
+
+  <p><strong>ผลที่ได้</strong></p>
+
+<pre><code>  ฐานข้อมูล : /.../api/data/campus.db
+  schema    : /.../api/data/schema.sql
+
+  ✓ สร้างฐานข้อมูลสำเร็จ
+
+    requests       5 แถว
+    users          4 แถว
+
+  ✓ Foreign Key: requests.requester_id → users.id</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 บรรทัดสุดท้ายมีประโยชน์กว่าที่คิด</span>
+    <p style="margin:0">มันยืนยันว่า <strong>Foreign Key ถูกตั้งไว้จริงใน schema</strong><br>
+    ถ้าขึ้น <code>⚠ ไม่พบ Foreign Key</code> แปลว่า <code>schema.sql</code> จากสัปดาห์ที่แล้วยังไม่ครบ — <strong>รู้ตั้งแต่ตอนนี้ดีกว่าไปเจอตอน CP29</strong></p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 สคริปต์นี้ก็ใช้บทเรียนเรื่อง path</span>
+    <p style="margin:0">สังเกตว่ามันใช้ <code>fileURLToPath(import.meta.url)</code> เหมือนกัน — เพราะรันจาก <code>api/</code> ผ่าน npm แต่ต้องหาไฟล์ให้เจอไม่ว่าจะรันจากไหน<br>
+    <strong>ทุกที่ที่อ้างถึงไฟล์ในโปรเจกต์ ต้องใช้หลักการเดียวกัน</strong></p>
+  </div>
+
+  <h4 style="margin-top:16px">แล้วควร commit <code>campus.db</code> ขึ้น git ไหม</h4>
+
+  <table class="d">
+    <tr><th></th><th>commit</th><th>ไม่ commit</th></tr>
+    <tr><td>ข้อดี</td><td>clone มาใช้ได้ทันที</td><td>git สะอาด · แต่ละคนมีข้อมูลของตัวเอง</td></tr>
+    <tr><td>ข้อเสีย</td><td>ไฟล์ไบนารี ดู diff ไม่ได้ · ชนกันบ่อยเวลา merge</td><td>ต้องรัน <code>db:setup</code> ก่อนใช้</td></tr>
+    <tr><td>งานจริง</td><td style="color:var(--error)">ไม่ commit</td><td style="color:var(--success)"><strong>มาตรฐาน</strong></td></tr>
+    <tr><td><strong>วิชานี้</strong></td><td colspan="2"><strong>ให้ commit</strong> — เพราะผู้สอนต้องตรวจข้อมูลที่คุณสร้าง และไฟล์เล็กมาก</td></tr>
+  </table>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 3</span>
+    <ul>
+      <li><code>./</code> หมายถึง<strong>โฟลเดอร์ที่รันคำสั่ง</strong> ไม่ใช่โฟลเดอร์ของไฟล์</li>
+      <li>ใช้ <code>fileURLToPath(import.meta.url)</code> เพื่ออ้างจากตำแหน่งไฟล์</li>
+      <li><strong>SQLite สร้างไฟล์เปล่าให้เองเมื่อไม่เจอ</strong> — จึงพังตอน query ไม่ใช่ตอนเปิด</li>
+      <li>รองรับ <code>process.env.DB_FILE</code> ไว้ด้วย เพื่อใช้ตอน test</li>
+      <li><strong><code>npm run db:setup</code></strong> สร้างฐานข้อมูลจาก <code>schema.sql</code> — ใครก็ตั้งต้นได้เหมือนกัน</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 4 ════════ -->
+<section class="ch" id="c4">
+  <p class="ch-num">บทที่ 4 · กลุ่มที่ 2</p>
+  <h2>อ่านข้อมูล — เอา JOIN จากสัปดาห์ที่แล้วมาใช้</h2>
+  <p class="readtime">เวลาอ่าน ≈ 12 นาที</p>
+
+  <p>ตรงนี้คือจุดที่ <strong>query ที่เขียนสัปดาห์ที่แล้วกลายเป็นโค้ด</strong></p>
+
+  <h3>4.1 ปัญหาที่ต้องแก้</h3>
+
+  <table class="d">
+    <tr><th></th><th>ฐานข้อมูลเก็บ</th><th>frontend ต้องการ</th></tr>
+    <tr><td>ผู้แจ้ง</td><td><code>requester_id: 1</code></td><td><code>requesterName: "สมชาย ใจดี"</code></td></tr>
+    <tr><td>ประเภท</td><td><code>request_type</code></td><td><code>requestType</code></td></tr>
+  </table>
+
+  <p>สองรูปแบบนี้ไม่ตรงกัน — และ <strong>เราจะไม่แก้ frontend</strong> เพราะสัญญาไว้แล้ว</p>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 ทางออก — ใช้ JOIN + AS ที่เรียนไปแล้ว</span>
+<pre style="margin:10px 0 0"><code><span class="c-key">const</span> SELECT_SHAPE = <span class="c-str">`
+  SELECT r.id,
+         u.name          AS requesterName,
+         r.request_type  AS requestType,
+         r.location,
+         r.details,
+         r.priority,
+         r.status
+  FROM requests r
+  JOIN users u ON u.id = r.requester_id`</span>;</code></pre>
+    <p style="margin:10px 0 0">เก็บไว้เป็นค่าคงที่ตัวเดียว แล้วเอาไปต่อ <code>WHERE</code> ตามต้องการ — <strong>ไม่ต้องเขียน JOIN ซ้ำในทุกฟังก์ชัน</strong></p>
+  </div>
+
+  <h3>4.2 <code>findAll()</code></h3>
+
+<pre><code><span class="c-key">export function</span> <span class="c-fn">findAll</span>({ status } = {}) {
+  <span class="c-key">return</span> status
+    ? db.<span class="c-fn">prepare</span>(<span class="c-str">`${SELECT_SHAPE} WHERE r.status = ? ORDER BY r.id`</span>).<span class="c-fn">all</span>(status)
+    : db.<span class="c-fn">prepare</span>(<span class="c-str">`${SELECT_SHAPE} ORDER BY r.id`</span>).<span class="c-fn">all</span>();
+}</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 สังเกตให้ดี — ค่า <code>status</code> ไม่ได้ต่อเข้าไปใน SQL</span>
+    <p style="margin:0"><code>${SELECT_SHAPE}</code> ต่อได้เพราะเป็น<strong>โค้ดของเราเอง</strong> ที่เขียนไว้ตายตัว<br>
+    แต่ <code>status</code> มาจากผู้ใช้ จึงต้องส่งผ่าน <code>?</code> เท่านั้น — <strong>บทที่ 7 จะอธิบายว่าทำไม</strong></p>
+  </div>
+
+  <h3>4.3 <code>findById()</code></h3>
+
+<pre><code><span class="c-key">export function</span> <span class="c-fn">findById</span>(id) {
+  <span class="c-key">return</span> db.<span class="c-fn">prepare</span>(<span class="c-str">`${SELECT_SHAPE} WHERE r.id = ?`</span>).<span class="c-fn">get</span>(id) ?? <span class="c-key">null</span>;
+}</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ต้องมี <code>?? null</code></span>
+    <p style="margin:0"><code>.get()</code> คืน <code>undefined</code> เมื่อไม่พบ · แต่ <strong>Week 07 เราสัญญาไว้ว่าจะคืน <code>null</code></strong><br>
+    ถ้าลืมใส่ <code>?? null</code> controller จะยังตอบ 404 ได้ (เพราะ <code>undefined</code> เป็น falsy) แต่<strong>ผิดสัญญาที่เขียนไว้ใน API contract</strong> และอาจพังตอนเอาไปใช้ที่อื่น</p>
+  </div>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้าใช้ <code>LEFT JOIN</code> แทน <code>JOIN</code> ใน <code>SELECT_SHAPE</code> — <strong>จะต่างกันอย่างไร</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>ผลลัพธ์<strong>เหมือนกัน</strong>ในกรณีปกติ เพราะ <code>requester_id</code> มี <code>NOT NULL</code> และ Foreign Key บังคับว่าต้องมีอยู่จริง — คำร้องทุกใบจึงจับคู่ได้เสมอ</p>
+      <p style="margin:0"><strong>แต่ <code>JOIN</code> ธรรมดาดีกว่าตรงนี้</strong> — ถ้าวันหนึ่งข้อมูลเสียจนมีคำร้องที่ชี้ไปหาคนที่ไม่มีจริง <code>JOIN</code> จะทำให้รายการนั้นหายไป ซึ่งสังเกตง่ายกว่าการเห็น <code>requesterName: null</code> ที่อาจหลุดไปแสดงบนหน้าจอ</p>
+    </div>
+  </details>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 4</span>
+    <ul>
+      <li>ใช้ <code>JOIN</code> + <code>AS</code> แปลงรูปแบบฐานข้อมูลให้ตรงกับที่ frontend ต้องการ</li>
+      <li>เก็บ <code>SELECT_SHAPE</code> ไว้ตัวเดียว ไม่เขียน JOIN ซ้ำ</li>
+      <li>ค่าจากผู้ใช้ส่งผ่าน <code>?</code> เสมอ ไม่ต่อเข้า SQL</li>
+      <li><code>.get()</code> ต้องมี <code>?? null</code> เพื่อรักษาสัญญาจาก Week 07</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 5 ════════ -->
+<section class="ch" id="c5">
+  <p class="ch-num">บทที่ 5 · กลุ่มที่ 2</p>
+  <h2>แปลงชื่อเป็น id — หน้าที่ของ Service</h2>
+  <p class="readtime">เวลาอ่าน ≈ 12 นาที · บทที่สำคัญที่สุดของสัปดาห์</p>
+
+  <p>สัปดาห์ที่แล้วเราสรุปไว้ว่า <em>"โครงในฐานข้อมูลไม่จำเป็นต้องเหมือนรูปแบบที่ API ส่งออก นี่คือหน้าที่ของชั้น service"</em></p>
+
+  <p><strong>บทนี้คือตอนที่ประโยคนั้นกลายเป็นโค้ดจริง</strong></p>
+
+  <h3>5.1 ปัญหา</h3>
+
+  <p>frontend ส่งมาแบบนี้ (ไม่เปลี่ยนตั้งแต่ Week 05)</p>
+
+<pre><code>{ <span class="c-str">"requesterName"</span>: <span class="c-str">"สมชาย ใจดี"</span>, <span class="c-str">"requestType"</span>: <span class="c-str">"แจ้งซ่อม"</span>, ... }</code></pre>
+
+  <p>แต่ตาราง <code>requests</code> เก็บ <code>requester_id</code> เป็นตัวเลข</p>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">มี 3 ทางเลือก — <strong>ทางไหนดีที่สุด และทำไมอีกสองทางไม่ดี</strong></p>
+    <ol style="margin:10px 0 0 22px">
+      <li>ให้ frontend ส่ง <code>requester_id</code> มาแทน</li>
+      <li>เก็บ <code>requesterName</code> เป็นคอลัมน์ในตาราง <code>requests</code> ด้วย</li>
+      <li>ให้ service หา <code>id</code> จากชื่อเอง</li>
+    </ol>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <table class="d" style="margin:0">
+        <tr><th>ทางเลือก</th><th>ปัญหา</th></tr>
+        <tr><td>① frontend ส่ง id</td><td><strong>ต้องแก้ frontend</strong> — เสียคำสัญญาที่ให้ไว้ตั้งแต่ Week 05 · และผู้ใช้ไม่รู้จัก id อยู่แล้ว ต้องทำหน้าจอเลือกคนเพิ่ม</td></tr>
+        <tr><td>② เก็บชื่อซ้ำด้วย</td><td><strong>กลับไปมีข้อมูลซ้ำ</strong> — เสียบทเรียนทั้งหมดของสัปดาห์ที่แล้ว · เปลี่ยนชื่อทีต้องแก้หลายที่อีก</td></tr>
+        <tr style="background:#DFF0E7"><td><strong>③ service แปลงให้</strong></td><td><strong>ไม่มีใครเสียอะไร</strong> — frontend เหมือนเดิม ฐานข้อมูลไม่ซ้ำ</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>5.2 <code>resolveUserId()</code></h3>
+
+<pre><code><span class="c-com">/** แปลงชื่อผู้แจ้งเป็น id — ถ้ายังไม่มีในระบบก็สร้างให้ */</span>
+<span class="c-key">function</span> <span class="c-fn">resolveUserId</span>(name) {
+  <span class="c-key">const</span> found = db.<span class="c-fn">prepare</span>(<span class="c-str">'SELECT id FROM users WHERE name = ?'</span>).<span class="c-fn">get</span>(name);
+  <span class="c-key">if</span> (found) <span class="c-key">return</span> found.id;
+
+  <span class="c-key">const</span> slug = Date.<span class="c-fn">now</span>().<span class="c-fn">toString</span>(<span class="c-num">36</span>);
+  <span class="c-key">return</span> db.<span class="c-fn">prepare</span>(<span class="c-str">'INSERT INTO users (name, department, email) VALUES (?, ?, ?)'</span>)
+           .<span class="c-fn">run</span>(name, <span class="c-str">'ไม่ระบุ'</span>, <span class="c-str">`user-${slug}@rmutl.ac.th`</span>).lastInsertRowid;
+}</code></pre>
+
+  <table class="d">
+    <tr><th>บรรทัด</th><th>ทำอะไร</th></tr>
+    <tr><td><code>SELECT id ... WHERE name = ?</code></td><td>หาว่ามีคนชื่อนี้อยู่แล้วไหม</td></tr>
+    <tr><td><code>if (found) return found.id</code></td><td>มีแล้ว — ใช้ id เดิม ไม่สร้างซ้ำ</td></tr>
+    <tr><td><code>INSERT INTO users ...</code></td><td>ยังไม่มี — สร้างให้</td></tr>
+    <tr><td><code>lastInsertRowid</code></td><td>id ที่ฐานข้อมูลเพิ่งสร้าง (จาก <code>AUTOINCREMENT</code>)</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไม email ต้องมี <code>slug</code></span>
+    <p style="margin:0">เพราะ <code>users.email</code> มี <code>UNIQUE</code> — ถ้าใส่ค่าเดิมทุกครั้งจะชนกันตั้งแต่คนที่สอง<br>
+    <code>Date.now().toString(36)</code> ให้ค่าที่ไม่ซ้ำโดยไม่ต้องคิดมาก · <strong>นี่คือทางออกชั่วคราวของวิชาเรียน</strong> — ระบบจริงต้องให้ผู้ใช้กรอกอีเมลเอง</p>
+  </div>
+
+  <h3>5.3 <code>create()</code></h3>
+
+<pre><code><span class="c-key">export function</span> <span class="c-fn">create</span>(input) {
+  <span class="c-key">const</span> id = <span class="c-fn">nextId</span>();
+  db.<span class="c-fn">prepare</span>(
+    <span class="c-str">`INSERT INTO requests (id, requester_id, request_type, location, details, priority)
+     VALUES (?, ?, ?, ?, ?, ?)`</span>
+  ).<span class="c-fn">run</span>(
+    id,
+    <span class="c-fn">resolveUserId</span>(input.requesterName.<span class="c-fn">trim</span>()),   <span class="c-com">// ← แปลงตรงนี้</span>
+    input.requestType,
+    input.location.<span class="c-fn">trim</span>(),
+    input.details.<span class="c-fn">trim</span>(),
+    input.priority ?? <span class="c-str">'normal'</span>
+  );
+  <span class="c-key">return</span> <span class="c-fn">findById</span>(id);   <span class="c-com">// คืนรูปแบบที่ frontend ต้องการ</span>
+}</code></pre>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 สังเกตความสมมาตร</span>
+    <p style="margin:0"><strong>ขาเข้า</strong> — <code>resolveUserId()</code> แปลง <em>ชื่อ → id</em> ก่อนเก็บ<br>
+    <strong>ขาออก</strong> — <code>JOIN</code> แปลง <em>id → ชื่อ</em> ก่อนส่งกลับ<br><br>
+    <strong>service ทำหน้าที่เป็นล่ามระหว่างสองภาษา</strong> — ภาษาของฐานข้อมูล (ไม่ซ้ำ ประหยัด) กับภาษาของผู้ใช้ (อ่านเข้าใจ)</p>
+  </div>
+
+  <h3>5.4 <code>nextId()</code> — สร้างรหัสถัดไป</h3>
+
+<pre><code><span class="c-key">function</span> <span class="c-fn">nextId</span>() {
+  <span class="c-key">const</span> row = db.<span class="c-fn">prepare</span>(
+    <span class="c-str">"SELECT id FROM requests WHERE id LIKE 'REQ-%' ORDER BY id DESC LIMIT 1"</span>
+  ).<span class="c-fn">get</span>();
+  <span class="c-key">const</span> n = row ? <span class="c-fn">Number</span>(<span class="c-fn">String</span>(row.id).<span class="c-fn">replace</span>(<span class="c-str">'REQ-'</span>, <span class="c-str">''</span>)) + <span class="c-num">1</span> : <span class="c-num">1</span>;
+  <span class="c-key">return</span> <span class="c-str">`REQ-${<span class="c-fn">String</span>(n).<span class="c-fn">padStart</span>(<span class="c-num">3</span>, <span class="c-str">'0'</span>)}`</span>;
+}</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 วิธีนี้ใช้ได้ในวิชาเรียน แต่ไม่ปลอดภัยในระบบจริง</span>
+    <p style="margin:0">ถ้ามีคนสร้างคำร้อง<strong>พร้อมกัน</strong> ทั้งสองอาจอ่านได้ <code>REQ-005</code> แล้วสร้าง <code>REQ-006</code> ทั้งคู่ — ชนกัน<br>
+    <strong>Primary Key จะปฏิเสธคนที่สอง</strong> จึงไม่ถึงกับข้อมูลเสีย แต่ผู้ใช้จะเจอ error โดยไม่ผิดอะไร<br>
+    <small>ระบบจริงใช้ <code>AUTOINCREMENT</code> หรือ UUID · เราใช้รหัสที่คนอ่านได้เพราะเป็นข้อกำหนดของโจทย์ตั้งแต่ Week 05</small></p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 5</span>
+    <ul>
+      <li>frontend ส่งชื่อมา แต่ฐานข้อมูลเก็บ id — <strong>service เป็นตัวแปลง</strong></li>
+      <li><code>resolveUserId()</code> หา id จากชื่อ · ไม่มีก็สร้างใหม่</li>
+      <li><code>lastInsertRowid</code> คือ id ที่ฐานข้อมูลเพิ่งสร้างให้</li>
+      <li><strong>ขาเข้าแปลงชื่อเป็น id · ขาออกแปลง id เป็นชื่อ</strong> — สมมาตรกัน</li>
+      <li><code>create()</code> จบด้วย <code>findById()</code> เพื่อคืนรูปแบบที่ frontend ต้องการ</li>
+    </ul>
+  </div>
+</section>
+<!-- ════════ CH 6 ════════ -->
+<section class="ch" id="c6">
+  <p class="ch-num">บทที่ 6 · กลุ่มที่ 2</p>
+  <h2>เขียนข้อมูล — INSERT · UPDATE · DELETE</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <p>สองฟังก์ชันที่เหลือตรงไปตรงมากว่า <code>create()</code> เพราะไม่ต้องแปลงชื่อ</p>
+
+  <h3>6.1 <code>updateStatus()</code></h3>
+
+<pre><code><span class="c-key">export function</span> <span class="c-fn">updateStatus</span>(id, status) {
+  <span class="c-key">const</span> result = db.<span class="c-fn">prepare</span>(<span class="c-str">'UPDATE requests SET status = ? WHERE id = ?'</span>)
+                   .<span class="c-fn">run</span>(status, id);
+  <span class="c-key">return</span> result.changes ? <span class="c-fn">findById</span>(id) : <span class="c-key">null</span>;
+}</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 <code>result.changes</code> บอกว่าพบหรือไม่</span>
+    <p style="margin:0">ถ้าไม่มีแถวไหนตรง <code>changes</code> จะเป็น <code>0</code> → คืน <code>null</code> → controller ตอบ 404<br>
+    <strong>ไม่ต้อง <code>SELECT</code> เช็คก่อน</strong> — สั่ง <code>UPDATE</code> ครั้งเดียวแล้วดูผลพอ · ประหยัดกว่าและไม่มีช่องว่างระหว่างสองคำสั่ง</p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ลำดับของ <code>?</code> ต้องตรงกับลำดับใน SQL</span>
+<pre style="margin:10px 0"><code><span class="c-com">-- SQL: SET status = ?  WHERE id = ?</span>
+.<span class="c-fn">run</span>(status, id)   <span class="c-com">// ✅ ถูก — status มาก่อน id</span>
+.<span class="c-fn">run</span>(id, status)   <span class="c-bad">// ❌ ผิด — สลับกัน</span></code></pre>
+    <p style="margin:0">ถ้าสลับ จะ<strong>ไม่มี error</strong> แต่ไม่มีแถวไหนตรงเงื่อนไข → คืน <code>null</code> → ได้ 404 ทั้งที่คำร้องมีอยู่จริง<br>
+    <strong>เป็นบั๊กที่หาสาเหตุยาก</strong> เพราะดูเหมือนแค่ "ไม่พบข้อมูล"</p>
+  </div>
+
+  <h3>6.2 <code>remove()</code></h3>
+
+<pre><code><span class="c-key">export function</span> <span class="c-fn">remove</span>(id) {
+  <span class="c-key">const</span> target = <span class="c-fn">findById</span>(id);      <span class="c-com">// ① หาก่อน</span>
+  <span class="c-key">if</span> (!target) <span class="c-key">return null</span>;          <span class="c-com">// ② ไม่พบ → null</span>
+  db.<span class="c-fn">prepare</span>(<span class="c-str">'DELETE FROM requests WHERE id = ?'</span>).<span class="c-fn">run</span>(id);
+  <span class="c-key">return</span> target;                     <span class="c-com">// ③ คืนของที่ลบ</span>
+}</code></pre>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0"><code>updateStatus</code> ใช้ <code>result.changes</code> เช็ค แต่ <code>remove</code> กลับ <code>findById</code> ก่อน — <strong>ทำไมต่างกัน</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>เพราะ <strong>Week 07 กำหนดว่า <code>remove()</code> ต้องคืนรายการที่ลบ</strong> — ซึ่งต้องอ่านมาก่อนลบ ไม่งั้นข้อมูลหายไปแล้ว</p>
+      <p style="margin:0">ส่วน <code>updateStatus()</code> คืนรายการ<strong>หลัง</strong>แก้ จึงอ่านทีหลังได้ · <strong>signature กำหนดวิธีเขียน ไม่ใช่เราเลือกตามใจ</strong></p>
+    </div>
+  </details>
+
+  <h3>6.3 ⭐ Transaction — ทำให้สำเร็จหรือล้มเหลวพร้อมกัน</h3>
+
+  <div class="term">
+    <div class="w">Transaction</div>
+    <p>กลุ่มคำสั่งที่ต้อง<strong>สำเร็จทั้งหมดหรือไม่สำเร็จเลย</strong> · ถ้าคำสั่งใดพัง ระบบจะย้อนทุกอย่างกลับเหมือนไม่เคยทำ</p>
+  </div>
+
+  <div class="box predict">
+    <span class="h">🟩 ปัญหาที่ซ่อนอยู่ใน <code>create()</code></span>
+    <p style="margin:0">ถ้า <code>resolveUserId()</code> สร้าง user ใหม่สำเร็จ แต่ <code>INSERT INTO requests</code> ล้มเหลว (เช่น <code>request_type</code> ผิด CHECK) — <strong>จะเกิดอะไรขึ้น</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>จะเหลือ <strong>user ที่ไม่มีคำร้องเลยค้างอยู่ในฐานข้อมูล</strong> — เป็นขยะที่ไม่มีใครใช้และไม่มีใครรู้ว่ามาจากไหน</p>
+      <p style="margin:0">ยิ่งเกิดบ่อยยิ่งสะสม · และตาราง <code>users</code> จะมีคนปลอมปนกับคนจริง</p>
+    </div>
+  </details>
+
+<pre><code><span class="c-key">export function</span> <span class="c-fn">create</span>(input) {
+  <span class="c-key">const</span> id = <span class="c-fn">nextId</span>();
+  db.<span class="c-fn">exec</span>(<span class="c-str">'BEGIN'</span>);               <span class="c-com">// ① เริ่ม transaction</span>
+  <span class="c-key">try</span> {
+    <span class="c-key">const</span> requesterId = <span class="c-fn">resolveUserId</span>(input.requesterName.<span class="c-fn">trim</span>());
+    db.<span class="c-fn">prepare</span>(<span class="c-str">`INSERT INTO requests (...) VALUES (...)`</span>).<span class="c-fn">run</span>(...);
+    db.<span class="c-fn">exec</span>(<span class="c-str">'COMMIT'</span>);            <span class="c-com">// ② สำเร็จทั้งคู่ → ยืนยัน</span>
+  } <span class="c-key">catch</span> (err) {
+    db.<span class="c-fn">exec</span>(<span class="c-str">'ROLLBACK'</span>);          <span class="c-com">// ③ พัง → ย้อนกลับทั้งหมด</span>
+    <span class="c-key">throw</span> err;
+  }
+  <span class="c-key">return</span> <span class="c-fn">findById</span>(id);
+}</code></pre>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับของที่คุ้น</span>
+    <p style="margin:0"><strong>เหมือนการโอนเงิน</strong> — หักจากบัญชีหนึ่งแล้วเพิ่มอีกบัญชีหนึ่ง · ถ้าทำได้แค่ครึ่งเดียวคือหายนะ<br>
+    transaction รับประกันว่า <strong>จะไม่มีสถานะครึ่ง ๆ กลาง ๆ</strong></p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 6</span>
+    <ul>
+      <li><code>result.changes</code> บอกว่ากระทบกี่แถว — ใช้แทนการ SELECT เช็คก่อน</li>
+      <li><strong>ลำดับของ <code>?</code> ต้องตรงกับใน SQL</strong> — สลับแล้วไม่มี error แต่ผลผิด</li>
+      <li><code>remove()</code> ต้อง <code>findById</code> ก่อนลบ เพราะ signature กำหนดให้คืนของที่ลบ</li>
+      <li>⭐ transaction ทำให้หลายคำสั่ง <strong>สำเร็จทั้งหมดหรือไม่สำเร็จเลย</strong></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 7 ════════ -->
+<section class="ch" id="c7">
+  <p class="ch-num">บทที่ 7 · กลุ่มที่ 3 <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
+  <h2>Parameterized Query และ SQL Injection</h2>
+  <p class="readtime">เวลาอ่าน ≈ 12 นาที · เรื่องความปลอดภัยที่ต้องรู้จริง</p>
+
+  <p>ถึงตอนนี้เราใช้ <code>?</code> มาตลอดโดยยังไม่ได้อธิบายว่าทำไม — บทนี้คือคำตอบ</p>
+
+  <h3>7.1 ถ้าต่อ string เข้า SQL จะเกิดอะไร</h3>
+
+<pre><code><span class="c-com">// ❌ อันตราย — ต่อค่าจากผู้ใช้เข้า SQL โดยตรง</span>
+<span class="c-key">const</span> rows = db.<span class="c-fn">prepare</span>(
+  <span class="c-bad">`SELECT * FROM requests WHERE status = '${status}'`</span>
+).<span class="c-fn">all</span>();</code></pre>
+
+  <p>ถ้าผู้ใช้ส่ง <code>status</code> มาเป็น</p>
+
+<pre><code>x' OR '1'='1</code></pre>
+
+  <p>SQL ที่ได้จริงจะกลายเป็น</p>
+
+<pre><code><span class="c-key">SELECT</span> * <span class="c-key">FROM</span> requests <span class="c-key">WHERE</span> status = <span class="c-str">'x'</span> <span class="c-bad">OR '1'='1'</span></code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 <code>'1'='1'</code> เป็นจริงเสมอ</span>
+    <p style="margin:0">เงื่อนไขทั้งหมดจึงเป็นจริงทุกแถว — <strong>คืนข้อมูลทั้งตารางออกไป</strong> แม้ผู้ใช้จะไม่มีสิทธิ์เห็น<br>
+    และถ้าส่ง <code>'; DROP TABLE requests; --</code> มา <strong>ตารางอาจหายทั้งตาราง</strong></p>
+  </div>
+
+  <div class="term">
+    <div class="w">SQL Injection</div>
+    <p>การโจมตีโดย<strong>แทรกคำสั่ง SQL เข้าไปในค่าที่ผู้ใช้กรอก</strong> · เป็นช่องโหว่ที่พบบ่อยที่สุดอันดับต้น ๆ ของเว็บแอปพลิเคชันมานานหลายสิบปี</p>
+  </div>
+
+  <h3>7.2 Parameterized query แก้ปัญหาอย่างไร</h3>
+
+<pre><code><span class="c-com">// ✅ ปลอดภัย</span>
+<span class="c-key">const</span> rows = db.<span class="c-fn">prepare</span>(
+  <span class="c-str">'SELECT * FROM requests WHERE status = ?'</span>
+).<span class="c-fn">all</span>(status);</code></pre>
+
+  <p><code>?</code> ไม่ใช่การ "แทนที่ข้อความ" — <strong>ฐานข้อมูลแยกคำสั่งกับข้อมูลออกจากกันตั้งแต่ต้น</strong></p>
+
+  <table class="d">
+    <tr><th></th><th>ต่อ string</th><th>parameterized</th></tr>
+    <tr><td>ฐานข้อมูลได้รับ</td><td>SQL ก้อนเดียวที่ปนค่าผู้ใช้</td><td>โครง SQL + ค่า <strong>แยกกัน</strong></td></tr>
+    <tr><td>ค่า <code>x' OR '1'='1</code></td><td>ถูกตีความเป็น<strong>คำสั่ง</strong></td><td>ถูกตีความเป็น<strong>ข้อความธรรมดา</strong></td></tr>
+    <tr><td>ผลลัพธ์</td><td style="color:var(--error)">คืนทั้งตาราง</td><td style="color:var(--success)"><strong>คืน 0 แถว</strong></td></tr>
+  </table>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับของที่คุ้น</span>
+    <p style="margin:0"><strong>ต่อ string = เขียนจดหมายแล้วให้คนอื่นเติมข้อความลงกลางประโยค</strong> — เขาเติมประโยคใหม่แทรกเข้ามาได้<br>
+    <strong>parameterized = มีแบบฟอร์มที่เว้นช่องไว้</strong> — เขากรอกได้แค่ในช่อง จะเขียนล้นออกมาเป็นคำสั่งไม่ได้</p>
+  </div>
+
+  <h3>7.3 ทดลองเอง (CP31)</h3>
+
+  <p>ยิงคำสั่งเหล่านี้ใส่ API ของตัวเองแล้วดูผล</p>
+
+  <table class="d">
+    <tr><th>ยิงอะไร</th><th>ต้องได้</th></tr>
+    <tr><td><code>GET /api/requests?status=x' OR '1'='1</code></td><td><strong>0 รายการ</strong></td></tr>
+    <tr><td><code>GET /api/requests?status='; DROP TABLE requests; --</code></td><td><strong>0 รายการ</strong> และตารางยังอยู่</td></tr>
+    <tr><td><code>GET /api/requests?status=pending' OR status='completed</code></td><td><strong>0 รายการ</strong></td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไมทดสอบเองสำคัญ</span>
+    <p style="margin:0">เพราะ <strong>โค้ดที่ปลอดภัยกับโค้ดที่ไม่ปลอดภัย หน้าตาต่างกันแค่นิดเดียว</strong> — ใช้ <code>?</code> กับใช้ <code>${}</code><br>
+    การได้เห็นด้วยตาว่าอันหนึ่งกันได้ อีกอันหลุด จะจำได้นานกว่าการอ่าน</p>
+  </div>
+
+  <h3>7.4 สิ่งที่ <code>?</code> ใช้แทนไม่ได้</h3>
+
+<pre><code><span class="c-com">// ❌ ใช้ ? แทนชื่อคอลัมน์หรือชื่อตารางไม่ได้</span>
+db.<span class="c-fn">prepare</span>(<span class="c-bad">'SELECT * FROM requests ORDER BY ?'</span>).<span class="c-fn">all</span>(sortBy);</code></pre>
+
+  <p><code>?</code> ใช้แทนได้เฉพาะ <strong>ค่า</strong> ไม่ใช่ <strong>โครงสร้างของคำสั่ง</strong></p>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 ถ้าจำเป็นต้องให้ผู้ใช้เลือกคอลัมน์เรียง</span>
+<pre style="margin:10px 0 0"><code><span class="c-com">// ตรวจกับรายการที่อนุญาตก่อนเสมอ (allowlist)</span>
+<span class="c-key">const</span> ALLOWED = [<span class="c-str">'id'</span>, <span class="c-str">'status'</span>, <span class="c-str">'priority'</span>, <span class="c-str">'created_at'</span>];
+<span class="c-key">const</span> col = ALLOWED.<span class="c-fn">includes</span>(sortBy) ? sortBy : <span class="c-str">'id'</span>;
+db.<span class="c-fn">prepare</span>(<span class="c-str">`SELECT * FROM requests ORDER BY ${col}`</span>).<span class="c-fn">all</span>();</code></pre>
+    <p style="margin:10px 0 0"><strong>หลักการ</strong> — ถ้าต้องต่อ string จริง ๆ ให้ต่อได้เฉพาะค่าที่<strong>เราอนุญาตไว้ล่วงหน้า</strong> ไม่ใช่ค่าที่ผู้ใช้ส่งมาตรง ๆ</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 7</span>
+    <ul>
+      <li>ต่อ string เข้า SQL = เปิดช่องให้แทรกคำสั่ง (SQL injection)</li>
+      <li><code>?</code> ทำให้ฐานข้อมูล<strong>แยกคำสั่งกับข้อมูลออกจากกัน</strong></li>
+      <li>ค่าที่แทรกมาจะถูกมองเป็น<strong>ข้อความธรรมดา</strong> ไม่ใช่คำสั่ง</li>
+      <li><code>?</code> ใช้แทนได้เฉพาะ<strong>ค่า</strong> ไม่ใช่ชื่อคอลัมน์หรือตาราง</li>
+      <li>ถ้าต้องต่อ string ให้ใช้ <strong>allowlist</strong> เท่านั้น</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 8 ════════ -->
+<section class="ch" id="c8">
+  <p class="ch-num">บทที่ 8 · กลุ่มที่ 3 <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
+  <h2>จัดการ Error จากฐานข้อมูล</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <p>ฐานข้อมูลมี constraint ที่จะปฏิเสธข้อมูลผิด — คำถามคือ <strong>เมื่อถูกปฏิเสธแล้ว ผู้ใช้ควรเห็นอะไร</strong></p>
+
+  <h3>8.1 error ที่อาจเกิดจากฐานข้อมูล</h3>
+
+  <table class="d">
+    <tr><th>ข้อความ error</th><th>เกิดเมื่อ</th><th>ใครผิด</th><th>ควรตอบ</th></tr>
+    <tr><td><code>FOREIGN KEY constraint failed</code></td><td>ชี้ไปหาแถวที่ไม่มีจริง</td><td>ผู้ใช้</td><td><strong>400</strong></td></tr>
+    <tr><td><code>CHECK constraint failed</code></td><td>ค่านอกรายการที่กำหนด</td><td>ผู้ใช้</td><td><strong>400</strong></td></tr>
+    <tr><td><code>UNIQUE constraint failed</code></td><td>ค่าซ้ำกับที่มีอยู่</td><td>ผู้ใช้</td><td><strong>409</strong> หรือ 400</td></tr>
+    <tr><td><code>NOT NULL constraint failed</code></td><td>ไม่ได้ใส่ค่าที่จำเป็น</td><td>ผู้ใช้</td><td><strong>400</strong></td></tr>
+    <tr><td><code>no such table</code></td><td>ฐานข้อมูลยังไม่ถูกสร้าง</td><td><strong>เซิร์ฟเวอร์</strong></td><td><strong>500</strong></td></tr>
+  </table>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้าไม่จัดการอะไรเลย error จากฐานข้อมูลจะไปจบที่ <code>errorHandler</code> ของ Week 06 ซึ่งตอบ <strong>500</strong> ทั้งหมด — <strong>มีอะไรไม่ดี</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>500 แปลว่า "เซิร์ฟเวอร์ผิด"</strong> — แต่กรณีเหล่านี้ส่วนใหญ่ <strong>ผู้ใช้ส่งข้อมูลผิดมาเอง</strong></p>
+      <p style="margin:0">ผลที่ตามมา — ① ผู้ใช้ไม่รู้ว่าต้องแก้อะไร เพราะ 500 บอกแค่ "ระบบพัง" · ② ทีมจะเห็น 500 เยอะในระบบเฝ้าระวังแล้วตกใจ ทั้งที่ระบบปกติดี</p>
+    </div>
+  </details>
+
+  <h3>8.2 แปลง error ให้เป็น status ที่เหมาะสม</h3>
+
+<pre><code><span class="c-com">// ใน service — จับ error จากฐานข้อมูลแล้วใส่ status ให้</span>
+<span class="c-key">import</span> { AppError } <span class="c-key">from</span> <span class="c-str">'../middleware/errorHandler.js'</span>;
+
+<span class="c-key">function</span> <span class="c-fn">toAppError</span>(err) {
+  <span class="c-key">const</span> m = err.message ?? <span class="c-str">''</span>;
+  <span class="c-key">if</span> (m.<span class="c-fn">includes</span>(<span class="c-str">'FOREIGN KEY'</span>))  <span class="c-key">return new</span> <span class="c-fn">AppError</span>(<span class="c-str">'อ้างถึงข้อมูลที่ไม่มีอยู่จริง'</span>, <span class="c-num">400</span>);
+  <span class="c-key">if</span> (m.<span class="c-fn">includes</span>(<span class="c-str">'CHECK'</span>))        <span class="c-key">return new</span> <span class="c-fn">AppError</span>(<span class="c-str">'ค่าที่ส่งมาไม่อยู่ในรายการที่กำหนด'</span>, <span class="c-num">400</span>);
+  <span class="c-key">if</span> (m.<span class="c-fn">includes</span>(<span class="c-str">'UNIQUE'</span>))       <span class="c-key">return new</span> <span class="c-fn">AppError</span>(<span class="c-str">'ข้อมูลนี้มีอยู่แล้วในระบบ'</span>, <span class="c-num">409</span>);
+  <span class="c-key">return</span> err;   <span class="c-com">// error อื่นปล่อยผ่าน → errorHandler ตอบ 500</span>
+}</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 ใช้ <code>AppError</code> ที่ทำไว้ตั้งแต่ Week 07</span>
+    <p style="margin:0">ตอนนั้นเป็น Challenge ที่หลายคนข้าม — <strong>ตอนนี้ได้ใช้จริงแล้ว</strong><br>
+    <code>errorHandler</code> จะอ่าน <code>err.status</code> แล้วตอบตามนั้น · ไม่ต้องแก้ <code>errorHandler</code> เลย</p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 อย่าส่งข้อความ error ของฐานข้อมูลตรง ๆ ให้ผู้ใช้</span>
+    <p style="margin:0"><code>FOREIGN KEY constraint failed</code> บอก<strong>โครงสร้างภายในของระบบ</strong> — ผู้ใช้ทั่วไปไม่เข้าใจ และคนไม่หวังดีจะได้ข้อมูลไปหาช่องโหว่<br>
+    <strong>แปลเป็นภาษาคนเสมอ</strong> — หลักการเดียวกับ <code>apiClient</code> ที่ทำใน Week 07 บทที่ 7</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 8</span>
+    <ul>
+      <li>constraint ส่วนใหญ่พังเพราะ<strong>ผู้ใช้ส่งข้อมูลผิด</strong> — ควรตอบ 4xx ไม่ใช่ 500</li>
+      <li>ใช้ <code>AppError</code> จาก Week 07 กำหนด status เอง</li>
+      <li><code>errorHandler</code> ไม่ต้องแก้ — มันอ่าน <code>err.status</code> อยู่แล้ว</li>
+      <li><strong>แปลข้อความ error เป็นภาษาคน</strong> ไม่ส่งของฐานข้อมูลตรง ๆ</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 9 ════════ -->
+<section class="ch" id="c9">
+  <p class="ch-num">บทที่ 9 · กลุ่มที่ 3 <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
+  <h2>ทดสอบ เอกสาร และสรุปหน่วยที่ 4</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <h3>9.1 ทดสอบกับฐานข้อมูลจริง (CP33)</h3>
+
+  <p>Week 07 เราเขียน test ด้วย supertest ไว้แล้ว — ตอนนี้ test เดิม<strong>ยิงเข้าฐานข้อมูลจริง</strong>โดยไม่ต้องแก้</p>
+
+<pre><code><span class="c-fn">test</span>(<span class="c-str">'คืน requesterName ไม่ใช่ requester_id'</span>, <span class="c-key">async</span> () =&gt; {
+  <span class="c-key">const</span> r = <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">get</span>(<span class="c-str">'/api/requests'</span>);
+  assert.<span class="c-fn">ok</span>(<span class="c-str">'requesterName'</span> <span class="c-key">in</span> r.body[<span class="c-num">0</span>]);
+  assert.<span class="c-fn">ok</span>(!(<span class="c-str">'requester_id'</span> <span class="c-key">in</span> r.body[<span class="c-num">0</span>]));
+});
+
+<span class="c-fn">test</span>(<span class="c-str">'SQL injection ผ่าน ?status= ไม่หลุด'</span>, <span class="c-key">async</span> () =&gt; {
+  <span class="c-key">const</span> evil = <span class="c-fn">encodeURIComponent</span>(<span class="c-str">"x' OR '1'='1"</span>);
+  <span class="c-key">const</span> r = <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">get</span>(<span class="c-str">`/api/requests?status=${evil}`</span>);
+  assert.<span class="c-fn">equal</span>(r.body.length, <span class="c-num">0</span>);
+});</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 test ที่เขียนข้อมูลจะไปแก้ฐานข้อมูลจริง</span>
+    <p style="margin:0">ถ้า test สร้างคำร้องแล้วไม่ลบทิ้ง ข้อมูลจะสะสมทุกครั้งที่รัน<br>
+    <strong>วิธีแก้</strong> — ใช้ <code>process.env.DB_FILE</code> ชี้ไปฐานข้อมูลทดสอบแยก (นี่คือเหตุผลที่บทที่ 3 ให้รองรับตัวแปรนี้ไว้)</p>
+  </div>
+
+  <h3>9.2 อัปเดต API Contract (CP34)</h3>
+
+  <p>API ยังตอบเหมือนเดิมทุกอย่าง — <strong>แต่ข้างในเปลี่ยนไปแล้ว</strong> จึงต้องบันทึกไว้</p>
+
+  <table class="d">
+    <tr><th>เพิ่มหัวข้อ</th><th>เขียนอะไร</th></tr>
+    <tr><td>Data Model</td><td>ตาราง 2 ตาราง คอลัมน์ ชนิด constraint</td></tr>
+    <tr><td>ข้อสังเกต</td><td><strong>โครงในฐานข้อมูลไม่เหมือนรูปแบบที่ API ส่งออก</strong> และ service เป็นตัวแปลง</td></tr>
+    <tr><td>พฤติกรรมของ POST</td><td>ถ้าส่งชื่อที่ยังไม่มีในระบบ จะสร้าง user ใหม่ให้อัตโนมัติ</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 ข้อสุดท้ายสำคัญ</span>
+    <p style="margin:0">เป็น<strong>พฤติกรรมที่คนอื่นเดาไม่ได้</strong>จากการดู endpoint อย่างเดียว · ถ้าไม่เขียนไว้ คนที่มาใช้ API ต่อจะไม่รู้ว่าการ POST อาจสร้างผู้ใช้ใหม่<br>
+    <strong>contract มีไว้บอกสิ่งที่เดาไม่ได้</strong> ไม่ใช่แค่ลอกรายการ endpoint</p>
+  </div>
+
+  <h3>9.3 สรุปหน่วยที่ 4 (สองสัปดาห์)</h3>
+
+  <figure>
+    <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="สรุปหน่วยที่ 4">
+      <style>
+        .t9{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .s9{font:300 11px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+      </style>
+      <text x="45" y="22" style="font:600 10.5px 'IBM Plex Mono',monospace;fill:#A8620E;letter-spacing:.08em">WEEK 09</text>
+      <rect x="25" y="30" width="330" height="150" rx="10" fill="#FBF0E2" stroke="#A8620E" stroke-width="1.5"/>
+      <text x="45" y="58" class="t9" style="font-size:16px">เรียน SQL</text>
+      <text x="45" y="84" class="s9">• ตาราง · Primary Key · constraint</text>
+      <text x="45" y="105" class="s9">• SELECT · WHERE · ORDER BY</text>
+      <text x="45" y="126" class="s9">• INSERT · UPDATE · DELETE</text>
+      <text x="45" y="147" class="s9">• Foreign Key · JOIN</text>
+      <text x="45" y="170" class="s9" fill="#A8620E">ไม่แตะโค้ดเลย</text>
+
+      <text x="425" y="22" style="font:600 10.5px 'IBM Plex Mono',monospace;fill:#186B8C;letter-spacing:.08em">WEEK 10</text>
+      <rect x="405" y="30" width="330" height="150" rx="10" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5"/>
+      <text x="425" y="58" class="t9" style="font-size:16px">เอา SQL ไปใส่ในโปรแกรม</text>
+      <text x="425" y="84" class="s9">• node:sqlite เปิดฐานข้อมูล</text>
+      <text x="425" y="105" class="s9">• JOIN ใน service · แปลงชื่อเป็น id</text>
+      <text x="425" y="126" class="s9">• parameterized query</text>
+      <text x="425" y="147" class="s9">• error handling · test · contract</text>
+      <text x="425" y="170" class="s9" fill="#186B8C">แก้ไฟล์เดียว</text>
+
+      <path d="M358 105 L400 105" stroke="#6B3B96" stroke-width="2.5" marker-end="url(#a9)"/>
+      <rect x="25" y="192" width="710" height="34" rx="8" fill="#F1EAF8" stroke="#6B3B96"/>
+      <text x="380" y="214" text-anchor="middle" class="t9" fill="#6B3B96">ระบบ Full-Stack ที่เก็บข้อมูลในฐานข้อมูลจริง — React · API · Database</text>
+      <defs><marker id="a9" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#6B3B96"/></marker></defs>
+    </svg>
+    <figcaption><b>ภาพที่ 3</b>Week 09 เรียน SQL · Week 10 เอาไปใช้จริง — รวมเป็นระบบ Full-Stack ที่สมบูรณ์</figcaption>
+  </figure>
+
+  <h3>9.4 Checkpoint ทั้งหมดของสัปดาห์นี้</h3>
+
+  <table class="d">
+    <tr><th style="width:80px">CP</th><th>ทำอะไร</th><th style="width:70px">อ่านบท</th><th style="width:56px">ที่ไหน</th></tr>
+    <tr><td><strong>CP26</strong></td><td>เปิดฐานข้อมูลจาก Node ด้วย <code>node:sqlite</code></td><td>2</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP27</strong></td><td>แก้ path ให้อ้างจากตำแหน่งไฟล์</td><td>3</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP28</strong></td><td><code>findAll</code> + <code>findById</code> ด้วย JOIN</td><td>4</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP29</strong></td><td><code>create</code> แปลงชื่อเป็น id</td><td>5</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP30</strong></td><td><code>updateStatus</code> + <code>remove</code> · checker 36/36</td><td>6</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP31</strong></td><td>ทดสอบ SQL injection · พิสูจน์ว่ากันได้</td><td>7</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP32</strong></td><td>แปลง error จากฐานข้อมูลเป็น status ที่เหมาะสม</td><td>8</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP33</strong></td><td>เขียน test ที่ยิงเข้าฐานข้อมูลจริง</td><td>9</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP34</strong></td><td>อัปเดต <code>API_CONTRACT.md</code></td><td>9</td><td><span class="wheretag home">🏠</span></td></tr>
+  </table>
+
+  <div class="box inclass">
+    <span class="h">🏫 ทำในห้อง · CP26–CP30</span>
+    <p style="margin:0">จบคาบ <strong>แอปทำงานเหมือนเดิมทุกอย่าง แต่ข้อมูลอยู่ในฐานข้อมูลแล้ว</strong> — และ checker ของ Week 07 ยังผ่าน 36/36</p>
+  </div>
+
+  <div class="box takehome">
+    <span class="h">🏠 ทำที่บ้าน · CP31–CP34</span>
+    <p style="margin:0">ทำให้ปลอดภัยและพร้อมใช้จริง · ส่งผ่าน branch <code>unit4/week-10</code> + tag <code>lab-10-submission-v1</code></p>
+  </div>
+
+  <div class="box next">
+    <span class="h">🟦 สัปดาห์หน้าจะทำอะไร</span>
+    <p style="margin:0"><strong>MongoDB</strong> — ฐานข้อมูลที่เก็บข้อมูลคนละแบบ และ<strong>อยู่คนละเครื่อง</strong><br>
+    ตรงนั้นเราจะได้เห็นว่า<strong>ทำไม service ถึงควรเป็น async</strong> — เพราะการรอข้อมูลข้ามเครือข่ายเป็นเรื่องจริง ไม่ใช่การบังคับ<br>
+    และจะได้เปรียบเทียบว่า SQL กับ NoSQL เหมาะกับงานแบบไหน</p>
+  </div>
+</section>
+
+<footer>
+  <span>ENGSE203 · หน่วยที่ 4 · ฐานข้อมูลและการบูรณาการระบบ Full-Stack</span>
+  <span class="m">Week 10 · CLO5 · เอกสารประกอบการสอน</span>
+</footer>
+
+</div>
+</body>
+</html>

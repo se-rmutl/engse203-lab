@@ -1,4 +1,4 @@
-# LAB 11 — Unit Testing & Debugging Report
+# LAB 12 — Unit Testing & Debugging Report
 
 **สัปดาห์ที่ 12** · หน่วยที่ 5 คุณภาพซอฟต์แวร์ การทดสอบ และความพร้อมก่อนใช้งาน  
 **รูปแบบงาน:** รายบุคคล  

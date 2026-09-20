@@ -1,0 +1,1700 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A1F16">
+<title>ENGSE203 Week 09 — Interactive Slides (โครงบท)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --font-scale:1;
+  --deep-950:#140C04; --deep-900:#221708; --deep-850:#2E1F0C; --deep-800:#3D2A12;
+  --ink:#EAF6EF; --muted:#A9C7B8; --dim:#6E8F7C;
+  --green:#FBBF24; --green-2:#22C55E; --cyan:#38D7ED; --amber:#FBBF24;
+  --red:#FB7185; --blue:#7AA5FF; --violet:#C084FC; --pink:#F472B6;
+  --panel:rgba(15,42,30,.74); --line:rgba(169,199,184,.24);
+  --shadow:0 24px 70px rgba(0,0,0,.44); --radius:20px;
+  font-size:calc(16px * var(--font-scale));
+}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0}
+body{overflow:hidden;color:var(--ink);
+  background:radial-gradient(circle at 14% 14%,rgba(251,191,36,.15),transparent 32%),
+  radial-gradient(circle at 84% 80%,rgba(192,132,252,.12),transparent 34%),#120A04;
+  font-family:'IBM Plex Sans Thai','Noto Sans Thai',Tahoma,sans-serif;}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+.app{min-height:100%;display:grid;place-items:center;position:relative}
+.stage{position:relative;width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));
+  aspect-ratio:16/9;overflow:hidden;background:var(--deep-900);box-shadow:var(--shadow);isolation:isolate;}
+.stage::before{content:"";position:absolute;inset:0;z-index:-2;
+  background:linear-gradient(135deg,rgba(255,255,255,.03),transparent 42%),
+  radial-gradient(circle at 80% 8%,rgba(74,222,128,.16),transparent 26%),
+  linear-gradient(160deg,var(--deep-900),#081b12 64%,#123024)}
+.stage::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.16;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 88%)}
+
+.slide{position:absolute;inset:0;display:none;padding:3.8% 5% 5.6%;overflow:hidden;flex-direction:column}
+.slide.active{display:flex;animation:enter .26s ease-out}
+@keyframes enter{from{opacity:.25;transform:translateX(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.active{animation:none}}
+
+.slide-id{position:absolute;top:2.8%;right:5%;font-family:'IBM Plex Mono',monospace;
+  font-size:.74rem;letter-spacing:.14em;color:var(--muted);opacity:.65}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;width:fit-content;color:var(--green);
+  font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.88rem;margin-bottom:.5rem}
+.eyebrow.amber{color:var(--amber)} .eyebrow.cyan{color:var(--cyan)}
+.eyebrow.red{color:var(--red)} .eyebrow.violet{color:var(--violet)}
+
+h1{font-size:3.3rem;line-height:1.1;margin:0 0 .7rem;font-weight:700;letter-spacing:-.015em}
+h2{font-size:2.35rem;line-height:1.16;margin:0 0 .7rem;font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.4rem;margin:0 0 .35rem;font-weight:600}
+p{margin:0 0 .6rem;line-height:1.5;font-size:1.3rem}
+.lead{font-size:1.6rem;color:var(--muted);font-weight:300;line-height:1.45}
+.muted{color:var(--muted)}
+small{font-size:1rem;color:var(--muted)}
+strong{font-weight:600}
+code{font-family:'IBM Plex Mono',monospace;font-size:.9em;background:rgba(74,222,128,.15);
+  padding:.08em .38em;border-radius:5px;color:#bff5d0}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.15rem 1.35rem}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:.75rem}
+.center{justify-content:center}
+
+/* SVG figure */
+.fig{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.fig svg{width:100%;height:100%;max-height:100%;display:block}
+.figcap{font-size:1.05rem;color:var(--muted);text-align:center;margin-top:.3rem}
+svg text{font-family:'IBM Plex Sans Thai',sans-serif}
+.svg-t{font-size:15px;font-weight:600;fill:#EAF6EF}
+.svg-s{font-size:12.5px;font-weight:300;fill:#A9C7B8}
+.svg-m{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500}
+.svg-lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em}
+.svg-big{font-size:19px;font-weight:700;fill:#EAF6EF}
+
+table{width:100%;border-collapse:collapse;font-size:1.22rem}
+th{text-align:left;padding:.6rem .75rem;color:var(--green);font-weight:600;
+  border-bottom:2px solid var(--line);font-size:1.08rem}
+td{padding:.6rem .75rem;border-bottom:1px solid rgba(169,199,184,.14);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+
+.chip{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .78rem;border-radius:999px;
+  font-size:1.02rem;font-weight:600;border:1px solid var(--line);background:rgba(74,222,128,.1);color:var(--green)}
+.chip.a{color:var(--amber);background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.32)}
+.chip.c{color:var(--cyan);background:rgba(56,215,237,.1);border-color:rgba(56,215,237,.32)}
+.chip.v{color:var(--violet);background:rgba(192,132,252,.1);border-color:rgba(192,132,252,.32)}
+.chip.r{color:var(--red);background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.32)}
+
+.where{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.98rem;font-weight:600;
+  padding:.24rem .72rem;border-radius:8px}
+.where.room{background:rgba(74,222,128,.16);color:#bff5d0;border:1px solid rgba(74,222,128,.4)}
+.where.home{background:rgba(251,191,36,.14);color:#ffe1a8;border:1px solid rgba(251,191,36,.4)}
+
+.title-slide{justify-content:center}
+.brandline{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.2rem}
+
+pre{background:rgba(4,16,11,.9);border:1px solid var(--line);border-radius:14px;
+  padding:.95rem 1.15rem;overflow:auto;font-size:1.08rem;line-height:1.55;margin:.35rem 0}
+pre code{background:none;padding:0;color:#d6efe0;font-size:1.08rem}
+.k{color:#8FE3A8}.s{color:#E9C88A}.c{color:#7EA592;font-style:italic}.f{color:#8FD0EC}
+.n{color:#D9A0E8}.hl{color:#FFE08A;font-weight:600}.bad{color:#FB7185}
+
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.g21{display:grid;grid-template-columns:1.4fr 1fr;gap:.9rem}
+.card{border:1px solid var(--line);border-radius:16px;padding:1rem 1.15rem;background:rgba(4,16,11,.5)}
+.card .ic{font-size:1.8rem;margin-bottom:.3rem}
+.card h3{font-size:1.25rem;margin-bottom:.25rem}
+.card p{font-size:1.06rem;margin:0;color:var(--muted)}
+.card.room{border-color:rgba(74,222,128,.4)}
+.card.home{border-color:rgba(251,191,36,.4)}
+.card.ch{border-color:rgba(192,132,252,.4)}
+
+.flow{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:.3rem 0}
+.flow .step{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35);
+  border-radius:12px;padding:.55rem .95rem;font-weight:600;font-size:1.1rem}
+.flow .arr{color:var(--muted);font-size:1.25rem}
+
+.analogy{background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.34);border-radius:var(--radius);padding:1rem 1.25rem}
+.note{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.34);border-radius:var(--radius);padding:1rem 1.25rem}
+.win{background:rgba(74,222,128,.09);border:1px solid rgba(74,222,128,.36);border-radius:var(--radius);padding:1rem 1.25rem}
+.wrong{background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.36);border-radius:var(--radius);padding:1rem 1.25rem}
+.term{background:rgba(56,215,237,.08);border-left:4px solid var(--cyan);border-radius:0 14px 14px 0;padding:.9rem 1.2rem}
+.term .w{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--cyan);font-size:1.2rem;margin-bottom:.2rem}
+.term p{margin:0;font-size:1.15rem}
+
+.iact{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.3);border-radius:var(--radius);padding:1rem 1.25rem}
+.opts{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.45rem}
+.opt{background:rgba(15,42,30,.92);border:1px solid var(--line);border-radius:12px;
+  padding:.55rem 1rem;font-size:1.15rem;transition:all .15s}
+.opt:hover{border-color:var(--green);background:rgba(74,222,128,.14)}
+.opt.ok{border-color:var(--green);background:rgba(74,222,128,.2);color:#c9f7d8}
+.opt.no{border-color:var(--red);background:rgba(251,113,133,.2);color:#ffd4da}
+.fb{margin-top:.5rem;font-size:1.1rem;min-height:1.4rem;color:var(--muted)}
+.fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+
+.reveal{border:1px dashed var(--line);border-radius:14px;padding:.7rem 1rem;background:rgba(4,16,11,.5)}
+.reveal button{background:none;border:none;color:var(--green);font-weight:600;font-size:1.15rem;padding:0}
+.reveal .ans{display:none;margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--line);font-size:1.15rem}
+.reveal.open .ans{display:block}
+
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.pgbox{border:1px solid var(--line);border-radius:14px;background:rgba(4,16,11,.8);overflow:hidden}
+.pghead{background:rgba(169,199,184,.09);padding:.42rem .8rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.95rem;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--line)}
+.pgbody{padding:.8rem;font-family:'IBM Plex Mono',monospace;font-size:1rem;line-height:1.5;
+  min-height:130px;word-break:break-all;color:#d6efe0;white-space:pre-wrap}
+.reqbtns{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem}
+.reqbtns button{background:rgba(15,42,30,.92);border:1px solid var(--line);border-radius:9px;
+  padding:.38rem .75rem;font-family:'IBM Plex Mono',monospace;font-size:.98rem;color:var(--muted)}
+.reqbtns button:hover{border-color:var(--green);color:var(--green)}
+.reqbtns button.m-get{color:#8FE3A8;border-color:rgba(74,222,128,.4)}
+.reqbtns button.m-post{color:#E9C88A;border-color:rgba(251,191,36,.4)}
+.reqbtns button.m-del{color:#FB7185;border-color:rgba(251,113,133,.4)}
+.stcode{font-family:'IBM Plex Mono',monospace;font-weight:600}
+.stcode.ok{color:var(--green)} .stcode.warn{color:var(--amber)} .stcode.err{color:var(--red)}
+
+.bigtime{font-family:'IBM Plex Mono',monospace;font-size:2.8rem;font-weight:600;line-height:1;color:var(--amber)}
+.timerbtns{display:flex;gap:.45rem;margin-top:.5rem}
+.timerbtns button{background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.4);
+  color:var(--amber);border-radius:10px;padding:.38rem .85rem;font-size:1rem;font-weight:600}
+.labstop{background:linear-gradient(150deg,rgba(251,191,36,.13),rgba(15,42,30,.82));border:1px solid rgba(251,191,36,.4)}
+
+ul{margin:.15rem 0 .4rem 1.25rem;padding:0}
+li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
+
+.bar{position:fixed;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.08);z-index:40}
+.bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));width:0;transition:width .25s}
+.hud{position:fixed;bottom:16px;right:18px;display:flex;gap:.42rem;align-items:center;z-index:41}
+.hud button{background:rgba(15,42,30,.94);border:1px solid var(--line);border-radius:10px;
+  padding:.3rem .62rem;font-size:.88rem;color:var(--muted)}
+.hud button:hover{color:var(--green);border-color:var(--green)}
+.counter{font-family:'IBM Plex Mono',monospace;font-size:.86rem;color:var(--muted);padding:0 .32rem}
+.toc{position:fixed;inset:0;background:rgba(4,12,8,.97);z-index:50;display:none;padding:3.5vh 5vw;overflow:auto}
+.toc.open{display:block}
+.toc h3{color:var(--green);margin-bottom:.9rem;font-size:1.25rem;letter-spacing:.08em;text-transform:uppercase}
+.toc ol{columns:3;column-gap:2.2rem;margin:0;padding-left:1.3rem;font-size:1.05rem}
+.toc li{margin-bottom:.42rem;break-inside:avoid}
+.toc a{color:var(--ink);text-decoration:none;opacity:.85}
+.toc a:hover{color:var(--green);opacity:1}
+.toc .tag{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--dim);margin-left:.35rem}
+@media (max-width:900px){.toc ol{columns:2}}
+
+/* ── โครงบท ── */
+.chapbadge{position:absolute;top:2.8%;left:5%;display:flex;align-items:center;gap:.5rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.76rem;font-weight:600;letter-spacing:.08em;
+  color:var(--green);background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);
+  padding:.22rem .7rem;border-radius:999px}
+.chapbadge .of{color:var(--muted);font-weight:400}
+.chapbadge.home{color:var(--amber);background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.32)}
+.divider{justify-content:center;align-items:flex-start}
+.divider .grp{font-family:'IBM Plex Mono',monospace;font-size:.95rem;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem}
+.divider .bignum{font-family:'IBM Plex Mono',monospace;font-size:6rem;font-weight:700;
+  line-height:1;color:var(--green);margin-bottom:.4rem;letter-spacing:-.04em}
+.divider .bignum.home{color:var(--amber)}
+.divider h2{font-size:3rem;margin-bottom:.6rem}
+.divider .whatfor{font-size:1.4rem;color:var(--muted);font-weight:300;max-width:46ch;line-height:1.5}
+.divider .mins{margin-top:1.6rem;display:flex;gap:.6rem;flex-wrap:wrap}
+.recap{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.35);
+  border-radius:var(--radius);padding:1.2rem 1.5rem}
+.recap h3{color:var(--green);font-size:1.3rem;margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.6rem}
+.recap ul{margin:0 0 0 1.3rem}
+.recap li{font-size:1.24rem;margin-bottom:.45rem}
+.nextup{background:rgba(56,215,237,.08);border:1px solid rgba(56,215,237,.35);
+  border-radius:var(--radius);padding:.9rem 1.3rem;font-size:1.2rem}
+.nextup b{color:var(--cyan)}
+.whybox{background:rgba(192,132,252,.1);border:1px solid rgba(192,132,252,.4);
+  border-radius:var(--radius);padding:1.2rem 1.5rem}
+.whybox .q{font-size:1.5rem;font-weight:600;color:var(--violet);margin-bottom:.5rem}
+.whybox p{font-size:1.28rem;margin:0}
+.track{display:flex;gap:.3rem;flex-wrap:wrap;justify-content:center;margin-top:.5rem}
+.track span{width:26px;height:6px;border-radius:3px;background:rgba(169,199,184,.2)}
+.track span.done{background:var(--green)}
+.track span.now{background:var(--cyan);box-shadow:0 0 8px rgba(56,215,237,.5)}
+.track span.home{background:rgba(251,191,36,.4)}
+/* ── Interactive: Layer Tracer ── */
+.lt{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.5rem 0}
+.lt-col{background:rgba(4,14,20,.5);border:1px solid rgba(169,199,184,.25);border-radius:var(--radius);padding:.7rem .9rem}
+.lt-col h4{font-size:1rem;color:var(--muted);margin:0 0 .5rem;font-family:'IBM Plex Mono',monospace;
+  letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.lt-step{display:flex;align-items:flex-start;gap:.6rem;padding:.5rem .6rem;margin-bottom:.35rem;
+  border-radius:8px;border:1px solid transparent;transition:all .25s;opacity:.4}
+.lt-step.on{opacity:1;background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.45)}
+.lt-step.done{opacity:.75;background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.25)}
+.lt-step .n{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:rgba(169,199,184,.2);
+  display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;
+  font-family:'IBM Plex Mono',monospace}
+.lt-step.on .n{background:var(--amber);color:#1a1205}
+.lt-step.done .n{background:var(--green);color:#04120c}
+.lt-step .txt{flex:1;min-width:0}
+.lt-step .nm{font-size:1.02rem;font-weight:600;line-height:1.3}
+.lt-step .fl{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--cyan);
+  word-break:break-all;line-height:1.3}
+.lt-step .ds{font-size:.9rem;color:var(--muted);line-height:1.35;margin-top:.15rem}
+.lt-out{background:rgba(4,14,20,.75);border-left:3px solid var(--cyan);border-radius:6px;
+  padding:.6rem .8rem;font-family:'IBM Plex Mono',monospace;font-size:.85rem;
+  min-height:150px;white-space:pre-wrap;line-height:1.5;color:var(--ink)}
+.lt-out .dim{color:var(--muted)}
+.lt-out .hi{color:var(--amber)}
+.lt-out .ok{color:var(--green)}
+
+/* ── Interactive: Query Stepper ── */
+.qs-tbl{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:.85rem}
+.qs-tbl th{background:rgba(251,191,36,.14);color:var(--amber);padding:.3rem .5rem;text-align:left;
+  border:1px solid rgba(169,199,184,.2);font-weight:600}
+.qs-tbl td{padding:.28rem .5rem;border:1px solid rgba(169,199,184,.15);transition:all .3s}
+.qs-tbl tr.out td{opacity:.22;text-decoration:line-through}
+.qs-tbl tr.keep td{background:rgba(74,222,128,.14)}
+.qs-tbl td.drop{opacity:.2}
+.qs-tbl td.pick{background:rgba(56,215,237,.16);color:var(--cyan)}
+.qs-stage{display:flex;gap:.4rem;flex-wrap:wrap;margin:.5rem 0}
+.qs-stage button{font-size:.92rem}
+.qs-note{background:rgba(56,215,237,.1);border-left:3px solid var(--cyan);border-radius:6px;
+  padding:.5rem .8rem;font-size:1.02rem;margin-top:.5rem;min-height:2.6rem}
+
+/* ── Interactive: JOIN visual ── */
+.jn{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
+.jn-t{font-family:'IBM Plex Mono',monospace;font-size:.84rem;width:100%;border-collapse:collapse}
+.jn-t th{background:rgba(169,199,184,.14);padding:.28rem .45rem;text-align:left;
+  border:1px solid rgba(169,199,184,.2);font-size:.78rem}
+.jn-t td{padding:.26rem .45rem;border:1px solid rgba(169,199,184,.15);transition:all .3s}
+.jn-t tr.lit td{background:rgba(251,191,36,.2);box-shadow:inset 0 0 0 1px rgba(251,191,36,.5)}
+.jn-res{margin-top:.6rem}
+.jn-res tr.new td{background:rgba(74,222,128,.16)}
+
+/* ── Interactive: Injection compare ── */
+.inj{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.5rem}
+.inj-box{border-radius:var(--radius);padding:.7rem .9rem;border:1px solid}
+.inj-box.bad{background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.4)}
+.inj-box.good{background:rgba(74,222,128,.09);border-color:rgba(74,222,128,.4)}
+.inj-box h4{margin:0 0 .4rem;font-size:1.02rem}
+.inj-sql{font-family:'IBM Plex Mono',monospace;font-size:.8rem;background:rgba(4,14,20,.6);
+  border-radius:5px;padding:.45rem .6rem;line-height:1.5;word-break:break-all;min-height:4.2rem}
+.inj-sql .ev{color:#FB7185;font-weight:700}
+.inj-sql .pm{color:var(--cyan)}
+.inj-r{margin-top:.4rem;font-size:1rem;font-weight:600}
+
+</style>
+</head>
+<body>
+<div class="app"><div class="stage" id="stage">
+
+<section class="slide title-slide active" data-title="เปิดบทเรียน">
+  <span class="eyebrow">หน่วยที่ 4 · สัปดาห์ที่ 9 · เริ่มหน่วยใหม่</span>
+  <h1>ฐานข้อมูลเชิงสัมพันธ์<br>และภาษา SQL</h1>
+  <p class="lead">10 บท · 4 กลุ่ม · วันนี้ไม่แตะโค้ด Node เลยแม้แต่บรรทัดเดียว</p>
+  <div class="brandline">
+    <span class="chip">ตาราง &amp; Primary Key</span><span class="chip c">SELECT · WHERE</span>
+    <span class="chip a">INSERT · UPDATE · DELETE</span><span class="chip v">Foreign Key &amp; JOIN</span>
+  </div>
+  <p style="margin-top:1.4rem"><small>→ / Space ไปต่อ · T สารบัญ · F เต็มจอ · A+ A− ปรับขนาด</small></p>
+</section>
+
+<section class="slide" data-title="🗺️ แผนที่คาบนี้">
+  <span class="slide-id">W09 · MAP</span>
+  <span class="eyebrow cyan">อ่านก่อน — เพื่อให้รู้ว่าเราอยู่ตรงไหนตลอดคาบ</span>
+  <h2>คาบนี้มี 10 บท แบ่งเป็น 4 กลุ่ม</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="card room"><div class="ic">❓</div><h3>กลุ่ม 1 · บท 1–3</h3><p><strong>ทำไมต้องมีฐานข้อมูล</strong><br>ปัญหาของไฟล์ JSON · ตาราง/PK · constraint</p></div>
+      <div class="card" style="border-color:rgba(56,215,237,.45)"><div class="ic">⌨️</div><h3>กลุ่ม 2 · บท 4–6</h3><p><strong>เขียน SQL</strong><br>SELECT · WHERE/ORDER BY · CRUD</p></div>
+      <div class="card" style="border-color:rgba(192,132,252,.45)"><div class="ic">🔗</div><h3>กลุ่ม 3 · บท 7–9</h3><p><strong>ความสัมพันธ์</strong><br>ทำไมต้องแยกตาราง · Foreign Key · JOIN</p></div>
+      <div class="card home"><div class="ic">🚀</div><h3>กลุ่ม 4 · บท 10</h3><p><strong>ทำให้พร้อมใช้จริง</strong><br>schema.sql · เอกสาร · ทดสอบ constraint</p></div>
+    </div>
+    <div class="panel" style="border-color:rgba(251,191,36,.45)">
+      <p style="margin:0;font-size:1.22rem"><strong style="color:var(--amber)">วันนี้ไม่แตะโค้ด Node เลย</strong> — อยู่กับ SQL อย่างเดียวทั้งคาบ เพื่อให้คล่องก่อน · <strong>สัปดาห์หน้าค่อยเอา SQL ที่เขียนเป็นแล้วไปใส่ในโปรแกรม</strong></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="วิธีเรียนสัปดาห์นี้">
+  <span class="slide-id">W09 · ORIENT</span>
+  <span class="eyebrow amber">เครื่องมือ 3 ขั้น</span>
+  <h2>เริ่มจากออนไลน์ ไปจบที่ไฟล์ของตัวเอง</h2>
+  <div class="body center">
+    <table style="font-size:1.16rem">
+      <tr><th style="width:70px">ขั้น</th><th>เครื่องมือ</th><th style="width:130px">ใช้ตอน</th><th>ทำไมตรงนี้</th></tr>
+      <tr><td><strong>①</strong></td><td><strong>SQL playground ออนไลน์</strong></td><td>CP17</td><td>เปิดปุ๊บพิมพ์ได้เลย <strong>ไม่ต้องติดตั้งอะไร</strong></td></tr>
+      <tr><td><strong>②</strong></td><td><strong>VS Code + SQLite extension</strong></td><td>CP19–CP21</td><td>เครื่องมือจริงที่จะใช้สัปดาห์หน้า</td></tr>
+      <tr><td><strong>③</strong></td><td><code>campus.db</code> ของตัวเอง</td><td>ปิดคาบ</td><td><strong>เป็นอินพุตของสัปดาห์ที่ 10</strong></td></tr>
+    </table>
+    <div class="three">
+      <div class="card room"><div class="ic">🏫</div><h3>ในห้อง · CP17–CP21</h3><p>เขียน SQL เป็น · สร้างฐานข้อมูลของตัวเองได้</p></div>
+      <div class="card home"><div class="ic">🏠</div><h3>ที่บ้าน · CP22–CP25</h3><p>queries · schema.sql · เอกสาร · ทดสอบ constraint</p></div>
+      <div class="card ch"><div class="ic">⭐</div><h3>Challenge</h3><p>GROUP BY · LEFT JOIN · INDEX</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="📌 ขอบเขตของสัปดาห์นี้">
+  <span class="slide-id">W09 · SCOPE</span>
+  <span class="eyebrow violet">อ่านก่อน — เพื่อไม่ให้กังวลว่าต้องรู้ทุกอย่าง</span>
+  <h2>เราจะเรียนฐานข้อมูลแค่ครั้งเดียว</h2>
+  <div class="body center">
+    <div class="whybox">
+      <p class="q">วิชานี้ไม่ใช่วิชาฐานข้อมูล — คุณจะได้เรียนเต็ม ๆ เทอมหน้า</p>
+      <p>สัปดาห์นี้สนใจเรื่องเดียว — <strong>ทำอย่างไรให้ API ที่สร้างไว้เก็บข้อมูลลงฐานข้อมูลได้</strong><br>
+      จึงเลือกเรียนเฉพาะสิ่งที่ต้องใช้จริง และข้ามทฤษฎีลึกไปก่อน</p>
+    </div>
+    <div class="g2">
+      <div class="panel" style="border-color:rgba(74,222,128,.45)">
+        <h3 style="color:var(--green)">✅ เรียนสัปดาห์นี้</h3>
+        <ul style="margin-bottom:0;font-size:1.12rem">
+          <li>ตาราง · แถว · คอลัมน์ · Primary Key</li>
+          <li>ชนิดข้อมูล 4 แบบ · constraint 6 ตัว</li>
+          <li><strong>SELECT · WHERE · ORDER BY</strong></li>
+          <li><strong>INSERT · UPDATE · DELETE</strong></li>
+          <li>Foreign Key · <strong>JOIN สองตาราง</strong></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-color:rgba(169,199,184,.3)">
+        <h3 style="color:var(--muted)">⏭ ข้ามไปก่อน (เทอมหน้า)</h3>
+        <ul style="margin-bottom:0;font-size:1.12rem;opacity:.8">
+          <li>Normalization 1NF–3NF อย่างเป็นทางการ</li>
+          <li>Transaction และ ACID</li>
+          <li>trigger · view · stored procedure</li>
+          <li>subquery ซ้อนชั้น · window function</li>
+          <li>JOIN สามตารางขึ้นไป · self join</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note"><p style="margin:0"><strong>SQL ที่ต้องเขียนได้จริงมีแค่ 6 คำสั่ง</strong> — <code>SELECT</code> · <code>INSERT</code> · <code>UPDATE</code> · <code>DELETE</code> · <code>CREATE TABLE</code> · <code>JOIN</code><br>
+    <small>เหมือน Week 06 ที่ไม่ได้เรียน Express ทุกฟีเจอร์ — เรียนเท่าที่ต้องใช้ แล้วลงมือทำให้ได้จริง</small></p></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 1 · จากไฟล์ JSON สู่ฐานข้อมูล">
+  <span class="grp">กลุ่ม 1 · ทำไมต้องมีฐานข้อมูล</span>
+  <p class="bignum">01</p>
+  <h2>จากไฟล์ JSON สู่ฐานข้อมูล</h2>
+  <p class="whatfor">Week 06 เราเก็บข้อมูลลงไฟล์ JSON แล้วมันก็ใช้ได้ — แล้วทำไมยังต้องมีฐานข้อมูลอีก</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 9 นาที</span></div>
+  <div class="track"><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="Quiz: ไฟล์ JSON พอไหม">
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 10</span> · ทำไมต้องมี DB</span>
+  <span class="eyebrow amber">ลองคิดก่อน</span>
+  <h2>ถ้ามีคำร้อง 50,000 รายการในไฟล์เดียว</h2>
+  <div class="body center">
+    <div class="iact" data-quiz="q1">
+      <p style="margin:0 0 .3rem"><strong>อยากดู "คำร้องที่ยังไม่เสร็จ" 3 รายการ — โปรแกรมต้องทำอะไร</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">อ่านเฉพาะ 3 รายการที่ต้องการ</button>
+        <button class="opt" data-a="1">อ่านทั้ง 50,000 รายการเข้ามาก่อน แล้วค่อยกรอง</button>
+        <button class="opt" data-a="0">ไฟล์ JSON ค้นหาให้เองได้</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="wrong"><p style="margin:0">ต่อให้คำตอบมีแค่ 3 รายการ ก็ต้องอ่านทั้งไฟล์อยู่ดี · <strong>และถ้ามีคนขอพร้อมกัน 10 คน ก็อ่านทั้งไฟล์ 10 รอบ</strong></p></div>
+    <div class="analogy">
+      <p style="margin:0;font-size:1.25rem"><strong>ไฟล์ JSON = สมุดจดเล่มเดียว</strong> — จดเร็ว แต่หาอะไรทีต้องพลิกทั้งเล่ม และสองคนเขียนพร้อมกันต้องแย่งสมุด<br>
+      <strong>ฐานข้อมูล = ตู้เอกสารที่มีระบบ</strong> — มีดัชนี หลายคนหยิบพร้อมกันได้ และมีกฎว่าอะไรใส่ช่องไหนได้</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide " data-title="ปัญหา 4 อย่าง">
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 10</span> · ทำไมต้องมี DB</span>
+  <span class="eyebrow red">สิ่งที่ไฟล์ JSON ทำไม่ได้</span>
+  <h2>ฐานข้อมูลให้อะไรเพิ่ม</h2>
+  <div class="body center">
+    <table style="font-size:1.18rem">
+      <tr><th style="width:250px">ปัญหาของไฟล์ JSON</th><th>ฐานข้อมูลแก้ให้อย่างไร</th></tr>
+      <tr><td><strong>ช้าเมื่อข้อมูลเยอะ</strong></td><td>ค้นเฉพาะที่ต้องการ ไม่ต้องอ่านทั้งหมด</td></tr>
+      <tr><td><strong>เขียนพร้อมกันแล้วพัง</strong></td><td>จัดการการเขียนพร้อมกันให้เอง</td></tr>
+      <tr><td><strong>ไม่มีใครตรวจความถูกต้อง</strong></td><td><strong>บังคับกฎเอง</strong> (constraint)</td></tr>
+      <tr><td><strong>ข้อมูลซ้ำและไม่ตรงกัน</strong></td><td><strong>เชื่อมข้อมูลข้ามตารางได้</strong> (relationship)</td></tr>
+    </table>
+    <div class="note"><p style="margin:0"><strong>SQLite</strong> — เก็บทั้งฐานไว้ใน<strong>ไฟล์เดียว</strong> ไม่ต้องติดตั้งเซิร์ฟเวอร์ · Node 22 มีมาให้แล้ว · <strong>commit ขึ้น git ได้</strong> · ใช้ SQL มาตรฐานเหมือนฐานข้อมูลตัวใหญ่</p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 1">
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 10</span> · ทำไมต้องมี DB</span>
+  
+  <h2>จบบทที่ 1 — ทำไมต้องมี DB</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>ไฟล์ JSON ใช้ได้ตอนข้อมูลน้อย แต่มีปัญหา 4 อย่างเมื่อระบบโตขึ้น</li><li>ฐานข้อมูลค้นเร็ว · จัดการการเขียนพร้อมกัน · <strong>บังคับกฎเอง</strong> · เชื่อมข้ามตารางได้</li><li>SQLite เก็บทั้งฐานไว้ในไฟล์เดียว ไม่ต้องติดตั้งเซิร์ฟเวอร์</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 2 — ฐานข้อมูลเก็บข้อมูลหน้าตาอย่างไร</div>
+    <div class="track"><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 2 · ตาราง แถว คอลัมน์ และ Primary Key">
+  <span class="grp">กลุ่ม 1 · ทำไมต้องมีฐานข้อมูล</span>
+  <p class="bignum">02</p>
+  <h2>ตาราง แถว คอลัมน์ และ Primary Key</h2>
+  <p class="whatfor">ฐานข้อมูลเชิงสัมพันธ์เก็บข้อมูลเป็นตาราง — หน้าตาเหมือนที่คุณคุ้นเคย แต่มีกฎมากกว่า</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 10 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span></div>
+</section>
+
+<section class="slide" data-title="🗂️ ฐานข้อมูลประกอบด้วยอะไร">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 10</span> · ตาราง &amp; PK</span>
+  <span class="eyebrow cyan">เห็นภาพรวมก่อนลงรายละเอียด</span>
+  <h2>ฐานข้อมูลประกอบด้วยอะไรบ้าง</h2>
+  <div class="fig">
+    <svg viewBox="0 0 880 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ฐานข้อมูลประกอบด้วยอะไรบ้าง">
+  <style>
+    .at{font:600 13px 'IBM Plex Sans Thai',sans-serif;fill:#E8F2EC} .as{font:300 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#A9C7B8} .am{font:500 11px 'IBM Plex Mono',monospace}
+  </style>
+  <defs><marker id="anslide" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+    <path d="M0 0 L7 4 L0 8" fill="none" stroke="#A9C7B8" stroke-width="1.5"/></marker></defs>
+
+  <!-- ชั้น 1 ฐานข้อมูล -->
+  <rect x="20" y="16" width="840" height="86" rx="10" fill="rgba(251,191,36,.14)" stroke="#FBBF24" stroke-width="2"/>
+  <text x="40" y="40" class="am" fill="#FBBF24" style="letter-spacing:.07em">① DATABASE · ฐานข้อมูล</text>
+  <text x="40" y="60" class="at">campus.db — ไฟล์เดียวที่เก็บทุกอย่าง</text>
+  <text x="40" y="78" class="as">ข้างในมีได้หลายตาราง · คัดลอกไฟล์นี้ไป เท่ากับย้ายข้อมูลทั้งหมด</text>
+  <text x="40" y="94" class="am" fill="#FBBF24">api/data/campus.db</text>
+
+  <!-- ชั้น 2 ตาราง -->
+  <rect x="45" y="118" width="380" height="74" rx="9" fill="rgba(56,215,237,.14)" stroke="#38D7ED" stroke-width="1.8"/>
+  <text x="63" y="140" class="am" fill="#38D7ED" style="letter-spacing:.07em">② TABLE · ตาราง</text>
+  <text x="63" y="160" class="at">users</text>
+  <text x="63" y="178" class="as">เก็บข้อมูล "คน" · 4 คอลัมน์</text>
+
+  <rect x="455" y="118" width="380" height="74" rx="9" fill="rgba(56,215,237,.14)" stroke="#38D7ED" stroke-width="1.8"/>
+  <text x="473" y="140" class="am" fill="#38D7ED" style="letter-spacing:.07em">② TABLE · ตาราง</text>
+  <text x="473" y="160" class="at">requests</text>
+  <text x="473" y="178" class="as">เก็บข้อมูล "คำร้อง" · 8 คอลัมน์</text>
+
+  <path d="M235 104 L235 114" stroke="#A9C7B8" stroke-width="1.5" marker-end="url(#anslide)"/>
+  <path d="M645 104 L645 114" stroke="#A9C7B8" stroke-width="1.5" marker-end="url(#anslide)"/>
+  <text x="740" y="112" class="as">ตารางเดียวกัน อยู่ในฐานข้อมูลเดียวกัน</text>
+
+  <!-- ชั้น 3 คอลัมน์ + แถว -->
+  <path d="M235 194 L235 210" stroke="#A9C7B8" stroke-width="1.5" marker-end="url(#anslide)"/>
+  <text x="40" y="228" class="am" fill="#C084FC" style="letter-spacing:.07em">③ COLUMN · คอลัมน์ — ชนิดข้อมูลเดียวกันทั้งแถว (บนลงล่าง)</text>
+
+  <rect x="40" y="236" width="800" height="26" fill="rgba(192,132,252,.14)" stroke="#C084FC" stroke-width="1.5"/>
+  <text x="56" y="254" class="am" fill="#C084FC">id</text>
+  <text x="140" y="254" class="am" fill="#C084FC">requester_id</text>
+  <text x="290" y="254" class="am" fill="#C084FC">request_type</text>
+  <text x="450" y="254" class="am" fill="#C084FC">location</text>
+  <text x="600" y="254" class="am" fill="#C084FC">priority</text>
+  <text x="720" y="254" class="am" fill="#C084FC">status</text>
+
+  <rect x="40" y="262" width="800" height="26" fill="rgba(74,222,128,.14)" stroke="#4ADE80" stroke-width="1.8"/>
+  <text x="56" y="280" class="as">REQ-001</text><text x="140" y="280" class="as">1</text>
+  <text x="290" y="280" class="as">แจ้งซ่อม</text><text x="450" y="280" class="as">ห้อง 301</text>
+  <text x="600" y="280" class="as">urgent</text><text x="720" y="280" class="as">pending</text>
+
+  <rect x="40" y="288" width="800" height="24" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.25)"/>
+  <text x="56" y="305" class="as">REQ-002</text><text x="140" y="305" class="as">2</text>
+  <text x="290" y="305" class="as">บริการบัญชีผู้ใช้</text><text x="450" y="305" class="as">อาคารวิศวฯ</text>
+  <text x="600" y="305" class="as">normal</text><text x="720" y="305" class="as">in-progress</text>
+
+  <rect x="40" y="312" width="800" height="24" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.25)"/>
+  <text x="56" y="329" class="as">REQ-003</text><text x="140" y="329" class="as">3</text>
+  <text x="290" y="329" class="as">ขอใช้อุปกรณ์</text><text x="450" y="329" class="as">ห้องประชุม 2</text>
+  <text x="600" y="329" class="as">normal</text><text x="720" y="329" class="as">completed</text>
+
+  <path d="M848 275 L862 275 L862 262 M862 275 L862 288" stroke="#4ADE80" stroke-width="1.8" fill="none"/>
+  <text x="866" y="279" class="am" fill="#4ADE80" transform="rotate(90 866 279)">แถว</text>
+
+  <text x="40" y="358" class="am" fill="#4ADE80" style="letter-spacing:.07em">④ ROW / RECORD · แถว — ข้อมูล 1 รายการ (ซ้ายไปขวา)</text>
+
+  <!-- ชั้น 5 ค่า -->
+  <rect x="40" y="374" width="270" height="76" rx="8" fill="rgba(20,12,4,.35)" stroke="rgba(169,199,184,.25)"/>
+  <text x="58" y="396" class="am" fill="#A9C7B8" style="letter-spacing:.07em">⑤ VALUE · ค่าในช่อง</text>
+  <text x="58" y="416" class="at">"แจ้งซ่อม"</text>
+  <text x="58" y="434" class="as">จุดตัดของ 1 แถว กับ 1 คอลัมน์</text>
+
+  <rect x="330" y="374" width="250" height="76" rx="8" fill="rgba(20,12,4,.35)" stroke="rgba(169,199,184,.25)"/>
+  <text x="348" y="396" class="am" fill="#FBBF24" style="letter-spacing:.07em">🔑 PRIMARY KEY</text>
+  <text x="348" y="416" class="at">requests.id</text>
+  <text x="348" y="434" class="as">ระบุแถวได้ไม่ซ้ำกัน</text>
+
+  <rect x="600" y="374" width="240" height="76" rx="8" fill="rgba(20,12,4,.35)" stroke="rgba(169,199,184,.25)"/>
+  <text x="618" y="396" class="am" fill="#38D7ED" style="letter-spacing:.07em">🔗 FOREIGN KEY</text>
+  <text x="618" y="416" class="at">requests.requester_id</text>
+  <text x="618" y="434" class="as">ชี้ไปหา users.id</text>
+</svg>
+  </div>
+  <p class="figcap"><strong>ฐานข้อมูล 1 ไฟล์ → หลายตาราง → แต่ละตารางมีคอลัมน์และแถว → จุดตัดคือค่าในช่อง</strong></p>
+</section>
+
+<section class="slide " data-title="โครงสร้างตาราง">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 10</span> · ตาราง & PK</span>
+  <span class="eyebrow ">เทียบกับสิ่งที่เคยใช้</span>
+  <h2>ตาราง = array ของ object</h2>
+  <div class="body center">
+    <table style="font-size:1.2rem">
+      <tr><th>ใน JavaScript (Week 06)</th><th>ในฐานข้อมูล</th></tr>
+      <tr><td>array ของ object</td><td><strong>ตาราง</strong> (table)</td></tr>
+      <tr><td>object 1 ตัว</td><td><strong>แถว</strong> (row)</td></tr>
+      <tr><td>property ของ object</td><td><strong>คอลัมน์</strong> (column)</td></tr>
+    </table>
+    <div class="wrong">
+      <p style="margin:0"><strong>ความต่างที่สำคัญ</strong> — ใน JavaScript แต่ละ object <strong>มี property ไม่เหมือนกันก็ได้</strong><br>
+      แต่ในตาราง <strong>ทุกแถวต้องมีคอลัมน์เหมือนกันหมด</strong> · ถ้าแถวไหนไม่มีค่าจะเก็บเป็น <code>NULL</code> แต่ช่องนั้นยังมีอยู่</p>
+    </div>
+    <div class="win"><p style="margin:0"><strong>Primary Key</strong> — คอลัมน์ที่ใช้ระบุแถวได้<strong>ไม่ซ้ำกัน</strong> · ห้ามซ้ำ ห้ามเป็น NULL · ทุกตารางควรมี</p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="เลือกอะไรเป็น PK">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 10</span> · ตาราง & PK</span>
+  <span class="eyebrow amber">การตัดสินใจที่สำคัญ</span>
+  <h2>เลือก Primary Key ให้ถูก</h2>
+  <div class="body center">
+    <table style="font-size:1.18rem">
+      <tr><th>ตัวเลือก</th><th style="width:130px">ดีไหม</th><th>เพราะอะไร</th></tr>
+      <tr><td>เลขที่ระบบสร้างให้</td><td style="color:var(--green)"><strong>ดีที่สุด</strong></td><td>ไม่มีทางซ้ำ ไม่เปลี่ยน ไม่ต้องคิดเอง</td></tr>
+      <tr><td>รหัสที่ออกแบบเอง <code>REQ-001</code></td><td style="color:var(--green)">ดี</td><td>คนอ่านเข้าใจ ใช้อ้างอิงจริงได้</td></tr>
+      <tr><td>อีเมล</td><td style="color:var(--amber)">พอได้</td><td>ไม่ซ้ำจริง แต่ <strong>เปลี่ยนได้</strong></td></tr>
+      <tr><td>ชื่อ-นามสกุล</td><td style="color:var(--red)"><strong>ไม่ดี</strong></td><td>ซ้ำได้ · เปลี่ยนได้ · สะกดผิดได้</td></tr>
+    </table>
+    <div class="note">
+      <p style="margin:0"><strong>โปรเจกต์ของเราใช้ทั้งสองแบบ</strong><br>
+      <code>users.id</code> เป็น<strong>ตัวเลข</strong> เพราะผู้ใช้ไม่ต้องเห็น · <code>requests.id</code> เป็น <code>REQ-001</code> เพราะ<strong>ผู้ใช้เห็นและใช้อ้างอิงจริง</strong></p>
+    </div>
+    <div class="nextup"><b>หลักการ →</b> เลือก PK ที่ <strong>ไม่เปลี่ยน</strong> · อย่าใช้สิ่งที่แก้ได้ — เดี๋ยวบทที่ 8 จะเห็นว่าทำไมสำคัญ</div>
+  </div>
+</section>
+
+<section class="slide" data-title="เทียบกับ Excel">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 10</span> · ตาราง &amp; PK</span>
+  <span class="eyebrow amber">เทียบกับของที่คุ้นเคย</span>
+  <h2>เหมือน Excel แต่มีกฎ</h2>
+  <div class="body center">
+    <table style="font-size:1.24rem">
+      <tr><th style="width:230px">ใน Excel</th><th style="width:230px">ในฐานข้อมูล</th><th>ใน JavaScript (W06)</th></tr>
+      <tr><td>ไฟล์ .xlsx</td><td><strong>Database</strong></td><td>—</td></tr>
+      <tr><td>แต่ละ sheet</td><td><strong>Table</strong></td><td>array ของ object</td></tr>
+      <tr><td>หัวคอลัมน์</td><td><strong>Column</strong></td><td>property</td></tr>
+      <tr><td>แต่ละบรรทัด</td><td><strong>Row / Record</strong></td><td>object 1 ตัว</td></tr>
+      <tr><td>ช่องเดียว</td><td><strong>Value</strong></td><td>ค่าของ property</td></tr>
+    </table>
+    <div class="g2">
+      <div class="win">
+        <h3 style="color:var(--green)">✓ ฐานข้อมูลทำได้ แต่ Excel ทำไม่ได้ดี</h3>
+        <ul style="margin-bottom:0;font-size:1.14rem">
+          <li><strong>บังคับกฎ</strong> — ใส่ค่าผิดไม่ได้</li>
+          <li><strong>เชื่อมข้ามตาราง</strong> ด้วย Foreign Key</li>
+          <li>หลายคนเขียนพร้อมกันได้</li>
+        </ul>
+      </div>
+      <div class="wrong" style="margin:0">
+        <h3 style="color:var(--red);margin:0 0 .4rem">✕ ต่างจาก JavaScript ตรงไหน</h3>
+        <p style="margin:0;font-size:1.14rem">ใน JS แต่ละ object <strong>มี property ไม่เหมือนกันก็ได้</strong><br>
+        แต่ในตาราง <strong>ทุกแถวต้องมีคอลัมน์เหมือนกันหมด</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 2">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 10</span> · ตาราง & Primary Key</span>
+  
+  <h2>จบบทที่ 2 — ตาราง & Primary Key</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>ตาราง = array ของ object · แถว = object · คอลัมน์ = property</li><li>ต่างจาก JavaScript ตรงที่ <strong>ทุกแถวต้องมีคอลัมน์เหมือนกันหมด</strong></li><li>Primary Key ระบุแถวได้ไม่ซ้ำ · ห้ามซ้ำ ห้ามเป็น NULL</li><li>เลือก PK ที่ <strong>ไม่เปลี่ยน</strong> — อย่าใช้ชื่อหรือสิ่งที่แก้ได้</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 3 — ฐานข้อมูลบังคับกฎอะไรได้บ้าง</div>
+    <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 3 · ชนิดข้อมูลและข้อกำหนด">
+  <span class="grp">กลุ่ม 1 · ทำไมต้องมีฐานข้อมูล</span>
+  <p class="bignum">03</p>
+  <h2>ชนิดข้อมูลและข้อกำหนด</h2>
+  <p class="whatfor">ตอนสร้างตารางเราไม่ได้บอกแค่ว่ามีคอลัมน์อะไร แต่บอกด้วยว่าแต่ละคอลัมน์ยอมรับอะไรได้บ้าง</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 10 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="constraint 6 แบบ">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 10</span> · ชนิด & constraint</span>
+  <span class="eyebrow ">กฎที่ฐานข้อมูลบังคับเอง</span>
+  <h2>Constraint — ด่านสุดท้ายที่ไม่มีใครข้ามได้</h2>
+  <div class="body center">
+    <table style="font-size:1.16rem">
+      <tr><th style="width:190px">Constraint</th><th>บังคับอะไร</th><th>ใช้ที่ไหน</th></tr>
+      <tr><td><code>PRIMARY KEY</code></td><td>ไม่ซ้ำ + ไม่เป็น NULL</td><td><code>users.id</code></td></tr>
+      <tr><td><code>NOT NULL</code></td><td>ต้องมีค่าเสมอ</td><td><code>location</code> · <code>details</code></td></tr>
+      <tr><td><code>UNIQUE</code></td><td>ห้ามซ้ำกับแถวอื่น</td><td><code>users.email</code></td></tr>
+      <tr><td><code>DEFAULT</code></td><td>ถ้าไม่ใส่ ใช้ค่านี้</td><td><code>status</code> = <code>'pending'</code></td></tr>
+      <tr><td><code>CHECK</code></td><td>ค่าต้องตรงเงื่อนไข</td><td><code>status</code> ต้องเป็น 1 ใน 3</td></tr>
+      <tr><td><code>FOREIGN KEY</code></td><td>ต้องมีอยู่จริงในอีกตาราง</td><td><code>requester_id</code></td></tr>
+    </table>
+    <div class="iact" data-quiz="q2">
+      <p style="margin:0 0 .3rem"><strong>เรามี validation ที่ API แล้วตั้งแต่ Week 06 — ทำไมยังต้องมี CHECK อีก</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">ซ้ำซ้อน ไม่จำเป็น</button>
+        <button class="opt" data-a="1">API ไม่ใช่ทางเดียวที่ข้อมูลเข้าฐานข้อมูลได้</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="win"><p style="margin:0">ข้อมูลอาจเข้ามาทาง — <strong>สคริปต์นำเข้า · คนแก้ด้วยมือ · ระบบอื่นที่มาเชื่อมทีหลัง · โค้ดที่เขียนผิดในอนาคต</strong><br>validation ที่ API ให้ข้อความดี ๆ กับผู้ใช้ · constraint เป็นด่านสุดท้าย — <strong>ป้องกันสองชั้นดีกว่าชั้นเดียว</strong></p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 3">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 10</span> · ชนิด & constraint</span>
+  
+  <h2>จบบทที่ 3 — ชนิด & constraint</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>SQLite มี 4 ชนิดหลัก — <code>TEXT</code> · <code>INTEGER</code> · <code>REAL</code> · <code>BLOB</code></li><li>constraint คือกฎที่ <strong>ฐานข้อมูลบังคับเอง</strong> ไม่ว่าข้อมูลจะเข้ามาทางไหน</li><li>มี validation ที่ API แล้วก็ยังควรมี constraint — <strong>ป้องกันสองชั้น</strong></li><li>ต้องสั่ง <code>PRAGMA foreign_keys = ON</code> ไม่งั้น FK ไม่ทำงาน</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือ CP17</strong> — เขียน SQL ครั้งแรก</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span></div>
+  </div>
+</section>
+<section class="slide" data-title="🏫 CP17 เขียน SQL ครั้งแรก">
+  <span class="chapbadge">🏫 ลงมือทำ · CP17</span>
+  <span class="eyebrow amber">ขั้นที่ ① · ออนไลน์ ไม่ต้องติดตั้งอะไร</span>
+  <h2>CP17 · เขียน SQL ครั้งแรก</h2>
+  <div class="body center">
+        <div class="wrong" style="margin-bottom:.6rem"><p style="margin:0"><strong>⚠ ก่อนพิมพ์ SELECT — ต้องวาง seed ก่อน</strong><br>
+      playground เริ่มเป็นฐานข้อมูลเปล่า · คัดลอก <code>lab09/starter/playground-seed.sql</code> วางแล้วกด Run ก่อน<br>
+      ไม่งั้น <code>SELECT * FROM requests</code> จะได้ <code>no such table</code></p></div>
+    <div class="whybox">
+      <p class="q">ทำไมเริ่มที่ออนไลน์ ไม่เริ่มที่ VS Code เลย</p>
+      <p>เพราะ<strong>การติดตั้งเครื่องมือกินเวลาคาบมากที่สุด</strong> และมักมีคนติดปัญหาจนตกขบวน<br>
+      เปิดเว็บพิมพ์ SQL ได้เลย — <strong>ทุกคนได้เขียน SQL ตัวแรกภายใน 2 นาที</strong> · เดี๋ยวค่อยย้ายมา VS Code ตอน CP19</p>
+    </div>
+    <pre style="margin:0;font-size:1.05rem"><code><span class="c">-- ① ดูข้อมูลทั้งหมด</span>
+<span class="k">SELECT</span> * <span class="k">FROM</span> requests;
+
+<span class="c">-- ② เอาเฉพาะบางคอลัมน์</span>
+<span class="k">SELECT</span> id, location, status <span class="k">FROM</span> requests;
+
+<span class="c">-- ③ กรองด้วย WHERE</span>
+<span class="k">SELECT</span> * <span class="k">FROM</span> requests <span class="k">WHERE</span> status = <span class="s">'pending'</span>;</code></pre>
+    <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — เขียน SELECT ได้ · กรองด้วย WHERE ได้ · เรียงด้วย ORDER BY ได้ · <strong>เห็นผลลัพธ์เปลี่ยนตามที่พิมพ์</strong></p></div>
+  </div>
+</section>
+<section class="slide" data-title="🌐 SQL playground ใช้ฟรีที่ไหน">
+  <span class="chapbadge">🏫 ลงมือทำ · CP17</span>
+  <span class="eyebrow cyan">ขั้นที่ ① · ไม่ต้องติดตั้งอะไร</span>
+  <h2>SQL playground ออนไลน์ใช้ฟรีที่ไหน</h2>
+  <div class="body center">
+    <div class="whybox">
+      <p class="q">เกณฑ์ที่ใช้เลือก</p>
+      <p>ต้องเป็น <strong>SQLite แท้</strong> — เพราะสัปดาห์หน้าเราใช้ <code>node:sqlite</code> ถ้าคนละเครื่องยนต์ syntax จะต่าง<br>
+      และต้อง <strong>ไม่ต้องสมัครสมาชิก</strong> — ไม่งั้นเสียเวลาคาบไปกับการสร้างบัญชี</p>
+    </div>
+    <table style="font-size:1.16rem">
+      <tr><th style="width:230px">เว็บ</th><th>เครื่องยนต์</th><th>เหมาะกับเราไหม</th></tr>
+      <tr style="background:rgba(74,222,128,.12)"><td><strong>sqlime.org</strong></td><td><strong>SQLite แท้</strong> ทำงานในเบราว์เซอร์</td><td><strong>⭐ แนะนำ</strong> — ข้อมูลไม่ออกจากเครื่อง · โหลดไฟล์ <code>.db</code> ได้</td></tr>
+      <tr><td>sqliteonline.com</td><td>SQLite แท้</td><td>ใช้ได้ — หน้าตาใกล้โปรแกรมจริง</td></tr>
+      <tr><td>db-fiddle.com</td><td>เลือกได้ มี SQLite</td><td>สำรอง — ต้องเลือกเครื่องยนต์ให้ถูก</td></tr>
+      <tr><td>W3Schools Try SQL</td><td style="color:var(--red)">เครื่องยนต์ของตัวเอง</td><td style="color:var(--red)"><strong>ไม่เหมาะ</strong> — ไม่ใช่ SQLite</td></tr>
+    </table>
+    <div class="wrong"><p style="margin:0"><strong>⚠ ข้อควรระวังของทุกเจ้า</strong> — ปิดหน้าเว็บแล้วข้อมูลหาย · ต้องวาง <code>CREATE TABLE</code> ใหม่ทุกรอบ · <strong>งานที่ส่งต้องทำจาก VS Code เท่านั้น</strong></p></div>
+  </div>
+</section>
+<section class="slide" data-title="🔌 ถ้าเน็ตล่ม — ทางสำรอง">
+  <span class="chapbadge">🏫 ลงมือทำ · CP17</span>
+  <span class="eyebrow amber">แผนสำรองที่ไม่ต้องใช้เน็ต</span>
+  <h2>Node 22 มี SQLite มาให้แล้ว</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:1.02rem"><code><span class="c">// try.mjs — สนามซ้อม SQL แบบออฟไลน์</span>
+<span class="k">import</span> { DatabaseSync } <span class="k">from</span> <span class="s">'node:sqlite'</span>;
+<span class="k">const</span> db = <span class="k">new</span> <span class="f">DatabaseSync</span>(<span class="s">':memory:'</span>);   <span class="c">// เก็บใน RAM ไม่สร้างไฟล์</span>
+
+db.<span class="f">exec</span>(<span class="s">`
+  CREATE TABLE requests (id TEXT, status TEXT, priority TEXT);
+  INSERT INTO requests VALUES ('REQ-001','pending','urgent');
+  INSERT INTO requests VALUES ('REQ-002','completed','normal');
+`</span>);
+
+<span class="c">// เปลี่ยน SQL บรรทัดนี้แล้วรันใหม่ได้เรื่อย ๆ</span>
+console.<span class="f">table</span>(db.<span class="f">prepare</span>(<span class="s">"SELECT * FROM requests WHERE status = 'pending'"</span>).<span class="f">all</span>());</code></pre>
+    <pre style="margin:0;font-size:1.05rem"><code>node --disable-warning=ExperimentalWarning try.mjs</code></pre>
+    <div class="win"><p style="margin:0"><strong><code>console.table()</code> แสดงผลเป็นตารางสวย ๆ ใน terminal</strong> · <code>':memory:'</code> = เก็บใน RAM ปิดแล้วหาย เหมือน playground<br>
+    <strong>ข้อดี — เป็น SQLite ตัวเดียวกับที่ใช้จริงสัปดาห์หน้าแน่นอน ไม่มีทาง syntax ต่าง</strong></p></div>
+  </div>
+</section>
+
+
+<section class="slide divider" data-title="บทที่ 4 · SELECT — อ่านข้อมูลออกมา">
+  <span class="grp">กลุ่ม 2 · เขียน SQL</span>
+  <p class="bignum">04</p>
+  <h2>SELECT — อ่านข้อมูลออกมา</h2>
+  <p class="whatfor">SQL ต่างจาก JavaScript ตรงที่บอกว่า "อยากได้อะไร" ไม่ใช่ "หาอย่างไร"</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 11 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="SQL vs JavaScript">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 10</span> · SELECT</span>
+  <span class="eyebrow violet">ความต่างที่ต้องเข้าใจ</span>
+  <h2>บอกว่าอยากได้อะไร ไม่ใช่บอกวิธีหา</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="panel" style="border-color:rgba(122,165,255,.4)">
+        <h3 style="color:var(--blue)">JavaScript — บอกวิธีทำ</h3>
+        <pre style="margin:.25rem 0 0;font-size:1rem"><code><span class="k">const</span> result = requests
+  .<span class="f">filter</span>(r =&gt; r.status === <span class="s">'pending'</span>);</code></pre>
+        <p style="margin:.6rem 0 0;font-size:1.1rem">เราบอกขั้นตอน — วนลูป เช็คทีละตัว เก็บใส่ array ใหม่</p>
+      </div>
+      <div class="panel" style="border-color:rgba(251,191,36,.45)">
+        <h3 style="color:var(--amber)">SQL — บอกแค่ผลที่อยากได้</h3>
+        <pre style="margin:.25rem 0 0;font-size:1rem"><code><span class="k">SELECT</span> * <span class="k">FROM</span> requests
+<span class="k">WHERE</span> status = <span class="s">'pending'</span>;</code></pre>
+        <p style="margin:.6rem 0 0;font-size:1.1rem"><strong>ฐานข้อมูลคิดวิธีที่เร็วที่สุดให้เอง</strong> — จะใช้ index ไหม อ่านแบบไหน</p>
+      </div>
+    </div>
+    <div class="note"><p style="margin:0"><strong><code>AS</code> เปลี่ยนชื่อคอลัมน์ตอนดึงออกมา</strong> — ในฐานข้อมูลนิยม <code>request_type</code> แต่ JavaScript นิยม <code>requestType</code><br>
+    <code>SELECT request_type <strong>AS</strong> requestType FROM requests;</code> ← <strong>สัปดาห์หน้าจะได้ใช้จริง</strong></p></div>
+    <div class="wrong"><p style="margin:0"><strong><code>SELECT *</code> ใช้ตอนสำรวจ · ระบุชื่อคอลัมน์ตอนเขียนโค้ดจริง</strong> — ถ้ามีคนเพิ่มคอลัมน์ใหม่ โค้ดจะได้ข้อมูลเกินมาโดยไม่รู้ตัว และถ้าคอลัมน์นั้นมีรหัสผ่านก็หลุดไปด้วย</p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 4">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 10</span> · SELECT</span>
+  
+  <h2>จบบทที่ 4 — SELECT</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>SQL บอกว่า<strong>อยากได้อะไร</strong> ไม่ใช่บอกวิธีหา</li><li><code>SELECT คอลัมน์ FROM ตาราง</code> คือรูปแบบพื้นฐาน</li><li><code>SELECT *</code> ใช้ตอนสำรวจ · ระบุชื่อคอลัมน์ตอนเขียนโค้ดจริง</li><li><code>AS</code> เปลี่ยนชื่อคอลัมน์ — <strong>จะได้ใช้จริงสัปดาห์หน้า</strong></li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 5 — กรองและเรียงให้ได้ดั่งใจ</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 5 · WHERE และ ORDER BY">
+  <span class="grp">กลุ่ม 2 · เขียน SQL</span>
+  <p class="bignum">05</p>
+  <h2>WHERE และ ORDER BY</h2>
+  <p class="whatfor">ตัวดำเนินการที่ใช้บ่อยที่สุด และกับดัก 3 อันที่คนเขียน JavaScript มาก่อนมักพลาด</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 12 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="กับดัก 3 อันของ WHERE">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 10</span> · WHERE & ORDER BY</span>
+  <span class="eyebrow red">คนเขียน JS มาก่อนมักพลาด</span>
+  <h2>SQL ไม่เหมือน JavaScript ตรงไหน</h2>
+  <div class="body center">
+    <div class="wrong"><p style="margin:0"><strong>① ใช้ <code>==</code> แบบ JavaScript</strong> — SQL ใช้ <code>=</code> <strong>ตัวเดียว</strong> ในการเปรียบเทียบ · เขียน <code>==</code> จะ error</p></div>
+    <div class="wrong">
+      <p style="margin:0"><strong>② ใช้ <code>= NULL</code></strong> — ต้องใช้ <code>IS NULL</code> เท่านั้น<br>
+      <small><code>= NULL</code> จะ<strong>ไม่เจออะไรเลยและไม่มี error บอก</strong> เพราะ NULL แปลว่า "ไม่รู้ค่า" ซึ่งเทียบเท่ากับอะไรไม่ได้</small></p>
+    </div>
+    <div class="wrong"><p style="margin:0"><strong>③ ใช้เครื่องหมายคำพูดคู่</strong> — SQL ใช้คำพูด<strong>เดี่ยว</strong> <code>'pending'</code> สำหรับข้อความ · คำพูดคู่ใช้กับชื่อคอลัมน์ ไม่ใช่ค่า</p></div>
+    <table style="font-size:1.14rem">
+      <tr><th style="width:150px">ตัวดำเนินการ</th><th>ตัวอย่าง</th></tr>
+      <tr><td><code>AND</code> / <code>OR</code></td><td><code>priority = 'urgent' AND status = 'pending'</code></td></tr>
+      <tr><td><code>IN</code></td><td><code>status IN ('pending','in-progress')</code></td></tr>
+      <tr><td><code>LIKE</code></td><td><code>details LIKE '%ไม่ทำงาน%'</code> — <code>%</code> คือ "อะไรก็ได้"</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="slide " data-title="ลำดับคำสั่ง">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 10</span> · WHERE & ORDER BY</span>
+  <span class="eyebrow ">บังคับตายตัว</span>
+  <h2>สลับลำดับไม่ได้</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:1.15rem"><code><span class="k">SELECT</span>   คอลัมน์      <span class="c">-- เอาอะไร</span>
+<span class="k">FROM</span>     ตาราง        <span class="c">-- จากไหน</span>
+<span class="k">WHERE</span>    เงื่อนไข      <span class="c">-- กรองยังไง</span>
+<span class="k">ORDER BY</span> คอลัมน์      <span class="c">-- เรียงยังไง</span>
+<span class="k">LIMIT</span>    จำนวน;       <span class="c">-- เอากี่อัน</span></code></pre>
+    <div class="wrong"><p style="margin:0">เขียน <code>ORDER BY</code> ก่อน <code>WHERE</code> จะ <strong>error ทันที</strong></p></div>
+    <div class="iact" data-quiz="q3">
+      <p style="margin:0 0 .3rem"><strong><code>ORDER BY priority DESC</code> จะเรียง <code>'urgent'</code> กับ <code>'normal'</code> อย่างไร</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="1">urgent มาก่อน เพราะ u มาหลัง n ตามตัวอักษร</button>
+        <button class="opt" data-a="0">urgent มาก่อน เพราะ SQL รู้ว่ามันสำคัญกว่า</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="note"><p style="margin:0"><strong>ที่ได้ผลถูกเป็นความบังเอิญ</strong> — ถ้าวันหนึ่งเพิ่มระดับ <code>'critical'</code> ที่ควรมาก่อน urgent จะเรียงผิดทันที เพราะ <code>c</code> มาก่อน <code>n</code> และ <code>u</code><br>
+    <small>วิธีที่ถูกคือเก็บลำดับความสำคัญเป็นตัวเลขแยกไว้ — แต่เกินขอบเขตสัปดาห์นี้</small></p></div>
+  </div>
+</section>
+
+
+<section class="slide" data-title="🎮 SQL ทำงานทีละขั้นอย่างไร">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 10</span> · WHERE &amp; ORDER BY</span>
+  <span class="eyebrow amber">ลองเล่น — กดดูว่าฐานข้อมูลทำอะไรทีละขั้น</span>
+  <h2>คำสั่งเดียว แต่ทำงาน 4 ขั้น</h2>
+  <div class="body">
+    <pre style="margin:0 0 .4rem;font-size:1.02rem"><code><span class="k">SELECT</span> id, requester
+<span class="k">FROM</span> requests
+<span class="k">WHERE</span> status = <span class="s">'pending'</span>
+<span class="k">ORDER BY</span> priority <span class="k">DESC</span>;</code></pre>
+    <div class="iact">
+      <div class="qs-stage">
+        <button data-qs="0">ข้อมูลตั้งต้น</button>
+        <button data-qs="1">① FROM</button>
+        <button data-qs="2">② WHERE</button>
+        <button data-qs="3">③ ORDER BY</button>
+        <button data-qs="4">④ SELECT</button>
+      </div>
+      <table class="qs-tbl" id="qsTbl"></table>
+      <div class="qs-note" id="qsNote"></div>
+    </div>
+    <p style="text-align:center"><small><strong>สังเกตว่า <code>SELECT</code> ทำงานเป็นขั้นสุดท้าย</strong> — ทั้งที่เขียนไว้บรรทัดแรก · ฐานข้อมูลกรองและเรียงก่อน แล้วค่อยเลือกคอลัมน์</small></p>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 5">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 10</span> · WHERE & ORDER BY</span>
+  
+  <h2>จบบทที่ 5 — WHERE & ORDER BY</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li><code>WHERE</code> กรองแถว · ใช้ <code>=</code> ตัวเดียว และคำพูด<strong>เดี่ยว</strong></li><li><code>NULL</code> ต้องใช้ <code>IS NULL</code> ไม่ใช่ <code>= NULL</code></li><li><code>LIKE</code> กับ <code>%</code> ค้นจากคำบางส่วน</li><li>ลำดับบังคับตายตัว — SELECT · FROM · WHERE · ORDER BY · LIMIT</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 6 — เปลี่ยนแปลงข้อมูล ไม่ใช่แค่อ่าน</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 6 · INSERT / UPDATE / DELETE">
+  <span class="grp">กลุ่ม 2 · เขียน SQL</span>
+  <p class="bignum">06</p>
+  <h2>INSERT / UPDATE / DELETE</h2>
+  <p class="whatfor">สามคำสั่งนี้ตรงกับ POST / PUT / DELETE ที่เราทำใน API มาแล้ว — พร้อมกับดักที่อันตรายที่สุดของคาบ</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 11 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="ตรงกับ API ที่เคยทำ">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 10</span> · CRUD</span>
+  <span class="eyebrow ">เชื่อมกับ Week 06</span>
+  <h2>SQL กับ HTTP Method ตรงกันพอดี</h2>
+  <div class="body center">
+    <table style="font-size:1.22rem">
+      <tr><th>SQL</th><th>HTTP Method (Week 06)</th><th>ทำอะไร</th></tr>
+      <tr><td><code style="color:var(--green)">SELECT</code></td><td><code style="color:var(--green)">GET</code></td><td>อ่าน</td></tr>
+      <tr><td><code style="color:var(--blue)">INSERT</code></td><td><code style="color:var(--blue)">POST</code></td><td>สร้างใหม่</td></tr>
+      <tr><td><code style="color:var(--amber)">UPDATE</code></td><td><code style="color:var(--amber)">PUT</code></td><td>แก้ไข</td></tr>
+      <tr><td><code style="color:var(--red)">DELETE</code></td><td><code style="color:var(--red)">DELETE</code></td><td>ลบ</td></tr>
+    </table>
+    <pre style="margin:0;font-size:1.02rem"><code><span class="k">INSERT INTO</span> requests (id, requester_id, request_type, location, details)
+<span class="k">VALUES</span> (<span class="s">'REQ-006'</span>, <span class="n">2</span>, <span class="s">'แจ้งซ่อม'</span>, <span class="s">'ห้อง 401'</span>, <span class="s">'ไฟกะพริบตลอดเวลา'</span>);</code></pre>
+    <div class="note"><p style="margin:0"><strong>ไม่ต้องใส่ทุกคอลัมน์</strong> — ไม่ได้ใส่ <code>priority</code>, <code>status</code>, <code>created_at</code> เพราะมี <code>DEFAULT</code><br>
+    ฐานข้อมูลเติม <code>'normal'</code>, <code>'pending'</code> และเวลาปัจจุบันให้เอง</p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="⚠ ลืม WHERE">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 10</span> · CRUD</span>
+  <span class="eyebrow red">กับดักที่อันตรายที่สุดของคาบนี้</span>
+  <h2>ลืม WHERE = กระทบทุกแถว</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:1.1rem"><code><span class="bad">UPDATE requests SET status = 'completed';</span>   <span class="c">-- ไม่มี WHERE</span></code></pre>
+    <div class="wrong">
+      <p style="margin:0;font-size:1.3rem">คำสั่งนี้จะ <strong>เปลี่ยนสถานะของคำร้องทุกรายการในระบบ</strong><br>
+      <strong>ไม่มี error · ไม่มีคำเตือน · และย้อนกลับไม่ได้</strong></p>
+    </div>
+    <div class="whybox">
+      <p class="q">นิสัยที่ต้องสร้างตั้งแต่วันนี้</p>
+      <p>ลอง <code>SELECT</code> ด้วยเงื่อนไขเดียวกัน<strong>ก่อนเสมอ</strong> เพื่อดูว่าจะกระทบกี่แถว</p>
+    </div>
+    <pre style="margin:0;font-size:1.02rem"><code><span class="c">-- ① ดูก่อนว่าจะกระทบกี่แถว</span>
+<span class="k">SELECT</span> * <span class="k">FROM</span> requests <span class="k">WHERE</span> id = <span class="s">'REQ-001'</span>;
+
+<span class="c">-- ② ถ้าถูกต้องแล้วค่อยเปลี่ยนเป็น UPDATE</span>
+<span class="k">UPDATE</span> requests <span class="k">SET</span> status = <span class="s">'in-progress'</span> <span class="k">WHERE</span> id = <span class="s">'REQ-001'</span>;</code></pre>
+    <div class="note"><p style="margin:0"><code>DELETE FROM requests;</code> อันตรายกว่าอีก เพราะข้อมูลหายไปเลย · <strong>ใช้วิธีเดียวกัน — SELECT ดูก่อนเสมอ</strong></p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 6">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 10</span> · CRUD</span>
+  
+  <h2>จบบทที่ 6 — CRUD</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li><code>INSERT</code> · <code>UPDATE</code> · <code>DELETE</code> ตรงกับ POST · PUT · DELETE ที่ทำใน API</li><li>ไม่ต้องใส่คอลัมน์ที่มี <code>DEFAULT</code> — ฐานข้อมูลเติมให้เอง</li><li><strong>ลืม <code>WHERE</code> = กระทบทุกแถว และย้อนกลับไม่ได้</strong></li><li>นิสัยที่ต้องสร้าง — <code>SELECT</code> ดูก่อนเสมอ</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือ CP19 และ CP20</strong> — ย้ายมา VS Code สร้างฐานข้อมูลจริง</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 CP19–CP20">
+  <span class="chapbadge">🏫 ลงมือทำ · CP19 + CP20</span>
+  <span class="eyebrow amber">ขั้นที่ ② · ย้ายมา VS Code</span>
+  <h2>CP19 · สร้างฐานข้อมูลจริง &nbsp;|&nbsp; CP20 · CRUD ครบ</h2>
+  <div class="body center">
+    <div class="whybox">
+      <p class="q">ทำไมต้องย้ายจากออนไลน์มา VS Code</p>
+      <p>เพราะ online playground บางเจ้ามี syntax ต่างจาก SQLite แท้เล็กน้อย — <strong>ไม่ควรให้ติดนิสัย</strong><br>
+      และ <strong>VS Code คือเครื่องมือที่จะใช้จริงในสัปดาห์หน้า</strong> ตอนต่อ Node เข้ากับฐานข้อมูลนี้</p>
+    </div>
+    <table style="font-size:1.16rem">
+      <tr><th style="width:110px">CP</th><th>ทำอะไร</th><th style="width:250px">✓ ผ่านเมื่อ</th></tr>
+      <tr><td><strong>CP19</strong></td><td><code>CREATE TABLE</code> ทั้ง 2 ตาราง + <code>INSERT</code> ข้อมูลตั้งต้น</td><td>มี <code>campus.db</code> ที่มี users 4 คน · requests 5 รายการ</td></tr>
+      <tr><td><strong>CP20</strong></td><td><code>INSERT</code> · <code>UPDATE</code> · <code>DELETE</code> ของตัวเอง</td><td>เพิ่ม/แก้/ลบ ได้ · ตรวจผลด้วย SELECT ทุกครั้ง</td></tr>
+    </table>
+    <div class="wrong"><p style="margin:0"><strong>⚠ อย่าลืม <code>PRAGMA foreign_keys = ON;</code></strong> ทุกครั้งที่เปิดฐานข้อมูล — ไม่งั้น Foreign Key จะไม่ทำงานเลย</p></div>
+  </div>
+</section>
+<section class="slide divider" data-title="บทที่ 7 · ทำไมต้องแยกตาราง">
+  <span class="grp">กลุ่ม 3 · ความสัมพันธ์ระหว่างตาราง</span>
+  <p class="bignum">07</p>
+  <h2>ทำไมต้องแยกตาราง</h2>
+  <p class="whatfor">บทที่สำคัญที่สุดของสัปดาห์ — เรามีตารางเดียวก็ใช้ได้แล้ว แล้วทำไมต้องแยก users ออกมาอีก</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 11 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="Quiz: เปลี่ยนชื่อต้องแก้กี่ที่">
+  <span class="chapbadge">บทที่ 7 <span class="of">/ 10</span> · ทำไมต้องแยกตาราง</span>
+  <span class="eyebrow amber">คำถามที่ตอบทั้งบท</span>
+  <h2>ถ้าเก็บชื่อไว้ในทุกคำร้อง</h2>
+  <div class="body center">
+    <div class="iact" data-quiz="q4">
+      <p style="margin:0 0 .3rem"><strong>สมชายแจ้งไว้ 20 รายการ แล้ววันหนึ่งเขาเปลี่ยนชื่อ — ต้องแก้กี่ที่</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">1 ที่</button>
+        <button class="opt" data-a="1">20 ที่</button>
+        <button class="opt" data-a="0">ไม่ต้องแก้ ระบบจัดการเอง</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="wrong">
+      <p style="margin:0;font-size:1.25rem">และถ้า<strong>แก้ไม่ครบ</strong> ฐานข้อมูลจะมีทั้งชื่อเก่าและชื่อใหม่ปนกัน<br>
+      ค้นด้วยชื่อใหม่จะได้ไม่ครบ · ทำรายงานจะเห็นเป็นคนละคน · <strong>และไม่มีใครรู้ว่าข้อมูลผิดจนกว่าจะมีคนสังเกตเห็น</strong></p>
+    </div>
+    <div class="panel" style="border-color:rgba(192,132,252,.45)">
+      <p style="margin:0;font-size:1.2rem"><strong style="color:var(--violet)">Update anomaly</strong> — ปัญหาที่ <strong>แก้ข้อมูลที่เดียวไม่พอ ต้องแก้หลายที่</strong> และมีโอกาสแก้ไม่ครบ<br>
+      เป็นเหตุผลหลักที่ทำให้ต้องแยกตาราง</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide " data-title="เทียบตารางเดียวกับสองตาราง">
+  <span class="chapbadge">บทที่ 7 <span class="of">/ 10</span> · ทำไมต้องแยกตาราง</span>
+  <span class="eyebrow ">เห็นภาพ</span>
+  <h2>แยกแล้วต่างกันอย่างไร</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="เปรียบเทียบ">
+      <text x="30" y="20" class="svg-lbl" fill="#FB7185">✕ ตารางเดียว — ชื่อซ้ำทุกแถว</text>
+      <rect x="30" y="30" width="840" height="26" fill="rgba(251,113,133,.16)" stroke="#FB7185"/>
+      <text x="48" y="48" class="svg-m" fill="#FB7185">id</text>
+      <text x="170" y="48" class="svg-m" fill="#FB7185">requester_name</text>
+      <text x="420" y="48" class="svg-m" fill="#FB7185">location</text>
+      <text x="680" y="48" class="svg-m" fill="#FB7185">status</text>
+      <rect x="30" y="56" width="840" height="24" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.2)"/>
+      <text x="48" y="73" class="svg-s">REQ-001</text><text x="170" y="73" class="svg-s" fill="#FB7185">สมชาย ใจดี</text>
+      <text x="420" y="73" class="svg-s">ห้อง 301</text><text x="680" y="73" class="svg-s">pending</text>
+      <rect x="30" y="80" width="840" height="24" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.2)"/>
+      <text x="48" y="97" class="svg-s">REQ-004</text><text x="170" y="97" class="svg-s" fill="#FB7185">สมชาย ใจดี</text>
+      <text x="420" y="97" class="svg-s">ห้อง 302</text><text x="680" y="97" class="svg-s">pending</text>
+      <rect x="30" y="104" width="840" height="24" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.2)"/>
+      <text x="48" y="121" class="svg-s">REQ-009</text><text x="170" y="121" class="svg-s" fill="#FB7185">สมชาย ใจดี</text>
+      <text x="420" y="121" class="svg-s">ห้องสมุด</text><text x="680" y="121" class="svg-s">completed</text>
+      <text x="170" y="146" class="svg-s" fill="#FB7185">↑ ชื่อเดียวกันเก็บซ้ำ 3 ครั้ง · เปลี่ยนชื่อทีต้องแก้ 3 ที่</text>
+
+      <text x="30" y="184" class="svg-lbl" fill="#FBBF24">✓ สองตาราง — ชื่อเก็บที่เดียว</text>
+      <rect x="30" y="194" width="360" height="26" fill="rgba(251,191,36,.16)" stroke="#FBBF24"/>
+      <text x="48" y="212" class="svg-m" fill="#FBBF24">users.id</text>
+      <text x="170" y="212" class="svg-m" fill="#FBBF24">name</text>
+      <rect x="30" y="220" width="360" height="24" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.2)"/>
+      <text x="48" y="237" class="svg-s">1</text><text x="170" y="237" class="svg-s" fill="#FBBF24">สมชาย ใจดี</text>
+      <text x="48" y="264" class="svg-s" fill="#FBBF24">↑ เก็บครั้งเดียว · แก้ที่นี่ที่เดียว ถูกทั้งระบบ</text>
+
+      <rect x="460" y="194" width="410" height="26" fill="rgba(251,191,36,.16)" stroke="#FBBF24"/>
+      <text x="478" y="212" class="svg-m" fill="#FBBF24">requests.id</text>
+      <text x="620" y="212" class="svg-m" fill="#FBBF24">requester_id</text>
+      <text x="780" y="212" class="svg-m" fill="#FBBF24">location</text>
+      <rect x="460" y="220" width="410" height="24" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.2)"/>
+      <text x="478" y="237" class="svg-s">REQ-001</text><text x="620" y="237" class="svg-s" fill="#7AA5FF">1</text><text x="780" y="237" class="svg-s">ห้อง 301</text>
+      <rect x="460" y="244" width="410" height="24" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.2)"/>
+      <text x="478" y="261" class="svg-s">REQ-004</text><text x="620" y="261" class="svg-s" fill="#7AA5FF">1</text><text x="780" y="261" class="svg-s">ห้อง 302</text>
+      <rect x="460" y="268" width="410" height="24" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.2)"/>
+      <text x="478" y="285" class="svg-s">REQ-009</text><text x="620" y="285" class="svg-s" fill="#7AA5FF">1</text><text x="780" y="285" class="svg-s">ห้องสมุด</text>
+      <path d="M396 234 L456 234" stroke="#7AA5FF" stroke-width="2" stroke-dasharray="5 4"/>
+      <text x="426" y="222" text-anchor="middle" class="svg-s" fill="#7AA5FF">FK</text>
+    </svg>
+  </div>
+  <p class="figcap">แยกแล้วชื่อเก็บที่เดียว · คำร้องเก็บแค่ตัวเลขที่ชี้ไปหา — <strong>แก้ชื่อที่เดียวถูกทั้งระบบ</strong></p>
+</section>
+
+<section class="slide " data-title="หลักการเดียวกับที่เคยทำ">
+  <span class="chapbadge">บทที่ 7 <span class="of">/ 10</span> · ทำไมต้องแยกตาราง</span>
+  <span class="eyebrow violet">เชื่อมกับสิ่งที่เรียนมา</span>
+  <h2>อย่าเขียนของเดิมซ้ำ</h2>
+  <div class="body center">
+    <div class="analogy">
+      <p style="margin:0;font-size:1.28rem">นี่คือ<strong>หลักการเดียวกับที่เราทำมาแล้ว 2 ครั้ง</strong> แค่คนละที่</p>
+    </div>
+    <table style="font-size:1.18rem">
+      <tr><th style="width:140px">เมื่อไร</th><th>แยกอะไรออกมา</th><th>เพื่อไม่ให้ซ้ำอะไร</th></tr>
+      <tr><td>Week 05</td><td><strong>Service Layer</strong></td><td>ไม่ให้ทุก component เขียนวิธีอ่านข้อมูลเอง</td></tr>
+      <tr><td>Week 07</td><td><strong>apiClient</strong></td><td>ไม่ให้ทุกฟังก์ชันเขียน <code>fetch</code> เอง</td></tr>
+      <tr style="background:rgba(251,191,36,.12)"><td><strong>สัปดาห์นี้</strong></td><td><strong>ตาราง users</strong></td><td><strong>ไม่ให้ข้อมูลผู้ใช้ซ้ำในทุกคำร้อง</strong></td></tr>
+    </table>
+    <div class="note">
+      <p style="margin:0"><strong>แล้วแยกมากเกินไปได้ไหม</strong> — ได้ · ถ้าแยกทุกอย่าง จะต้อง JOIN หลายสิบตารางกว่าจะได้ข้อมูลชุดเดียว<br>
+      <strong>หลักการ</strong> — แยกเมื่อข้อมูลนั้น<strong>ถูกใช้ซ้ำ</strong>และ<strong>เปลี่ยนแปลงได้</strong> · <code>location</code> ไม่แยกเพราะแต่ละคำร้องเป็นคนละที่ ไม่ได้ใช้ซ้ำ</p>
+    </div>
+  </div>
+</section>
+
+
+<section class="slide" data-title="เห็นภาพ update anomaly">
+  <span class="chapbadge">บทที่ 7 <span class="of">/ 10</span> · ทำไมต้องแยกตาราง</span>
+  <span class="eyebrow red">เห็นภาพว่าเกิดอะไรจริง ๆ</span>
+  <h2>แก้ไม่ครบแล้วเป็นอย่างไร</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ปัญหาเมื่อแก้ชื่อไม่ครบ">
+      <text x="30" y="20" class="svg-lbl" fill="#FB7185">✕ ตารางเดียว — สมชายขอเปลี่ยนชื่อเป็น "สมชาย ใจงาม"</text>
+      <rect x="30" y="30" width="400" height="24" fill="rgba(251,113,133,.16)" stroke="#FB7185"/>
+      <text x="46" y="47" class="svg-m" fill="#FB7185">id</text><text x="150" y="47" class="svg-m" fill="#FB7185">requester_name</text>
+      <rect x="30" y="54" width="400" height="22" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.2)"/>
+      <text x="46" y="70" class="svg-s">REQ-001</text><text x="150" y="70" class="svg-s" fill="#4ADE80">สมชาย ใจงาม ✓</text>
+      <rect x="30" y="76" width="400" height="22" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.2)"/>
+      <text x="46" y="92" class="svg-s">REQ-004</text><text x="150" y="92" class="svg-s" fill="#4ADE80">สมชาย ใจงาม ✓</text>
+      <rect x="30" y="98" width="400" height="22" fill="rgba(251,113,133,.14)" stroke="#FB7185"/>
+      <text x="46" y="114" class="svg-s">REQ-009</text><text x="150" y="114" class="svg-s" fill="#FB7185">สมชาย ใจดี ✕ ลืมแก้</text>
+      <text x="30" y="142" class="svg-s" fill="#FB7185">→ ค้นด้วยชื่อใหม่ได้ 2 จาก 3 · รายงานเห็นเป็น 2 คน · ไม่มีใครรู้ว่าผิด</text>
+
+      <text x="490" y="20" class="svg-lbl" fill="#FBBF24">✓ สองตาราง — แก้ที่เดียว</text>
+      <rect x="490" y="30" width="200" height="24" fill="rgba(251,191,36,.16)" stroke="#FBBF24"/>
+      <text x="506" y="47" class="svg-m" fill="#FBBF24">users.id</text><text x="580" y="47" class="svg-m" fill="#FBBF24">name</text>
+      <rect x="490" y="54" width="200" height="22" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.2)"/>
+      <text x="506" y="70" class="svg-s">1</text><text x="580" y="70" class="svg-s" fill="#4ADE80">สมชาย ใจงาม ✓</text>
+      <text x="490" y="94" class="svg-s" fill="#FBBF24">แก้แถวเดียว จบ</text>
+
+      <rect x="720" y="30" width="150" height="24" fill="rgba(251,191,36,.16)" stroke="#FBBF24"/>
+      <text x="734" y="47" class="svg-m" fill="#FBBF24">requester_id</text>
+      <rect x="720" y="54" width="150" height="22" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.2)"/><text x="734" y="70" class="svg-s" fill="#7AA5FF">1</text>
+      <rect x="720" y="76" width="150" height="22" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.2)"/><text x="734" y="92" class="svg-s" fill="#7AA5FF">1</text>
+      <rect x="720" y="98" width="150" height="22" fill="rgba(20,12,4,.5)" stroke="rgba(169,199,184,.2)"/><text x="734" y="114" class="svg-s" fill="#7AA5FF">1</text>
+      <path d="M694 66 L716 66" stroke="#7AA5FF" stroke-width="1.6" stroke-dasharray="4 3"/>
+      <text x="720" y="142" class="svg-s" fill="#FBBF24">ทั้ง 3 แถวชี้ไปที่เดียว → เห็นชื่อใหม่ทันที</text>
+
+      <rect x="30" y="170" width="840" height="60" rx="10" fill="rgba(192,132,252,.12)" stroke="#C084FC" stroke-width="2"/>
+      <text x="450" y="194" text-anchor="middle" class="svg-t" fill="#C084FC">Update anomaly — แก้ข้อมูลที่เดียวไม่พอ ต้องแก้หลายที่</text>
+      <text x="450" y="216" text-anchor="middle" class="svg-s" fill="#C084FC">ยิ่งข้อมูลเยอะ ยิ่งพลาดง่าย · และไม่มี error บอกว่าผิด</text>
+
+      <rect x="30" y="244" width="840" height="72" rx="10" fill="rgba(74,222,128,.1)" stroke="rgba(74,222,128,.4)"/>
+      <text x="50" y="268" class="svg-t" fill="#4ADE80">หลักการเดียวกับที่เราทำมาแล้ว 2 ครั้ง</text>
+      <text x="50" y="290" class="svg-s">Week 05 แยก Service Layer — ไม่ให้ทุก component เขียนวิธีอ่านข้อมูลเอง</text>
+      <text x="50" y="308" class="svg-s">Week 07 แยก apiClient — ไม่ให้ทุกฟังก์ชันเขียน fetch เอง</text>
+    </svg>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 7">
+  <span class="chapbadge">บทที่ 7 <span class="of">/ 10</span> · ทำไมต้องแยกตาราง</span>
+  
+  <h2>จบบทที่ 7 — ทำไมต้องแยกตาราง</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>เก็บชื่อซ้ำทุกแถวทำให้เกิด <strong>update anomaly</strong> — แก้ที่เดียวไม่พอ</li><li>แยกแล้วเก็บที่เดียว แก้ที่เดียว ถูกทั้งระบบ</li><li>หลักการเดียวกับ Service Layer และ apiClient — <strong>อย่าเขียนของเดิมซ้ำ</strong></li><li>แยกเมื่อข้อมูล<strong>ถูกใช้ซ้ำและเปลี่ยนแปลงได้</strong> ไม่ใช่แยกทุกอย่าง</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 8 — แล้วเชื่อมสองตารางเข้าด้วยกันอย่างไร</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 8 · Foreign Key">
+  <span class="grp">กลุ่ม 3 · ความสัมพันธ์ระหว่างตาราง</span>
+  <p class="bignum">08</p>
+  <h2>Foreign Key</h2>
+  <p class="whatfor">คอลัมน์ที่ชี้ไปยังอีกตาราง และฐานข้อมูลจะตรวจให้ว่าสิ่งที่ชี้ไปมีอยู่จริง</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 10 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="Foreign Key ป้องกันอะไร">
+  <span class="chapbadge">บทที่ 8 <span class="of">/ 10</span> · Foreign Key</span>
+  <span class="eyebrow ">กลไกการทำงาน</span>
+  <h2>ฐานข้อมูลตรวจให้ว่ามีอยู่จริง</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:1.05rem"><code><span class="k">CREATE TABLE</span> requests (
+  id            <span class="k">TEXT PRIMARY KEY</span>,
+  requester_id  <span class="k">INTEGER NOT NULL</span>,
+  ...
+  <span class="hl">FOREIGN KEY (requester_id) REFERENCES users(id)</span>
+);</code></pre>
+    <p style="text-align:center;font-size:1.2rem">อ่านว่า — <em>"<code>requester_id</code> ต้องเป็นค่าที่มีอยู่ในคอลัมน์ <code>id</code> ของตาราง <code>users</code>"</em></p>
+    <table style="font-size:1.16rem">
+      <tr><th>ถ้าลองทำ</th><th style="width:280px">ฐานข้อมูลจะ</th></tr>
+      <tr><td>ใส่คำร้องที่ <code>requester_id = 999</code> (ไม่มีคนนี้)</td><td style="color:var(--green)"><strong>ปฏิเสธ</strong> — FOREIGN KEY constraint failed</td></tr>
+      <tr><td>ลบผู้ใช้ที่ยังมีคำร้องค้างอยู่</td><td style="color:var(--green)"><strong>ปฏิเสธ</strong> — ไม่ให้เกิดข้อมูลกำพร้า</td></tr>
+      <tr><td>ลบผู้ใช้ที่ไม่มีคำร้องเลย</td><td>อนุญาต</td></tr>
+    </table>
+    <div class="wrong"><p style="margin:0"><strong>⚠ SQLite ปิดการตรวจ FK ไว้เป็นค่าเริ่มต้น</strong> — ต้องสั่ง <code>PRAGMA foreign_keys = ON;</code> <strong>ทุกครั้งที่เปิดฐานข้อมูล</strong> ไม่งั้นคำสั่งที่ควรถูกปฏิเสธจะผ่านหมด และคุณจะไม่รู้เลยว่าข้อมูลเสียแล้ว</p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="ทำไมชี้ด้วยตัวเลข">
+  <span class="chapbadge">บทที่ 8 <span class="of">/ 10</span> · Foreign Key</span>
+  <span class="eyebrow amber">ย้อนกลับไปบทที่ 2</span>
+  <h2>ทำไมไม่ชี้ด้วยชื่อ จะได้อ่านง่าย</h2>
+  <div class="body center">
+    <div class="iact" data-quiz="q5">
+      <p style="margin:0 0 .3rem"><strong>ทำไมไม่ให้ <code>requests</code> เก็บ <code>requester_name</code> แล้วชี้ไปที่ <code>users.name</code></strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">เก็บชื่อเปลืองที่กว่าตัวเลข</button>
+        <button class="opt" data-a="1">ชื่อเปลี่ยนได้ — พอเปลี่ยนแล้วความเชื่อมโยงขาดทันที</button>
+        <button class="opt" data-a="0">SQL ไม่รองรับการชี้ด้วยข้อความ</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="win">
+      <p style="margin:0;font-size:1.25rem">ถ้าสมชายเปลี่ยนชื่อ ค่าใน <code>users.name</code> เปลี่ยน แต่ <code>requests.requester_name</code> ยังเป็นชื่อเก่า — <strong>ความเชื่อมโยงขาด</strong><br>
+      แต่ <code>users.id</code> เป็นตัวเลขที่<strong>ไม่มีวันเปลี่ยน</strong> · เปลี่ยนชื่อกี่ครั้งก็ยังเป็นคนเดิม id เดิม</p>
+    </div>
+    <div class="nextup"><b>นี่คือเหตุผลที่บทที่ 2 บอกว่า →</b> อย่าเลือกสิ่งที่แก้ได้มาเป็น Primary Key</div>
+    <div class="note"><p style="margin:0"><strong>FK อยู่ตารางไหน</strong> — ในความสัมพันธ์หนึ่งต่อหลาย <strong>FK อยู่ฝั่ง "หลาย" เสมอ</strong><br>
+    <small>ถ้าให้ <code>users</code> เก็บ <code>request_id</code> จะเก็บได้แค่คำร้องเดียวต่อคน · แจ้ง 20 รายการต้องมี 20 คอลัมน์</small></p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 8">
+  <span class="chapbadge">บทที่ 8 <span class="of">/ 10</span> · Foreign Key</span>
+  
+  <h2>จบบทที่ 8 — Foreign Key</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>FK ชี้ไปยัง Primary Key ของอีกตาราง · ฐานข้อมูลตรวจให้ว่ามีอยู่จริง</li><li>ป้องกันทั้ง<strong>ใส่ค่าที่ไม่มีจริง</strong> และ<strong>ลบข้อมูลที่ยังมีคนอ้างถึง</strong></li><li>ต้องสั่ง <code>PRAGMA foreign_keys = ON</code> ทุกครั้งที่เปิดฐานข้อมูล</li><li>ชี้ด้วย <strong>id ที่ไม่เปลี่ยน</strong> · FK อยู่ฝั่ง "หลาย" เสมอ</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 9 — แยกแล้วจะดึงมาดูพร้อมกันอย่างไร</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class="home"></span></div>
+  </div>
+</section>
+<section class="slide divider" data-title="บทที่ 9 · JOIN — ดึงข้อมูลสองตารางมารวมกัน">
+  <span class="grp">กลุ่ม 3 · ความสัมพันธ์ระหว่างตาราง</span>
+  <p class="bignum">09</p>
+  <h2>JOIN — ดึงข้อมูลสองตารางมารวมกัน</h2>
+  <p class="whatfor">เราแยกข้อมูลเพื่อไม่ให้ซ้ำ แต่เวลาใช้งานจริงต้องการเห็นพร้อมกัน</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 12 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="รูปแบบของ JOIN">
+  <span class="chapbadge">บทที่ 9 <span class="of">/ 10</span> · JOIN</span>
+  <span class="eyebrow ">อ่านทีละบรรทัด</span>
+  <h2>JOIN ... ON — เชื่อมตรงไหน</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:1.1rem"><code><span class="k">SELECT</span> r.id,
+       u.name <span class="k">AS</span> requesterName,
+       r.status
+<span class="k">FROM</span> requests r
+<span class="k">JOIN</span> users u <span class="hl">ON</span> u.id = r.requester_id;</code></pre>
+    <table style="font-size:1.16rem">
+      <tr><th style="width:280px">บรรทัด</th><th>หมายความว่า</th></tr>
+      <tr><td><code>FROM requests r</code></td><td>เริ่มจากตาราง requests · ตั้งชื่อย่อว่า <code>r</code></td></tr>
+      <tr><td><code>JOIN users u</code></td><td>เอาตาราง users มาต่อ · ตั้งชื่อย่อว่า <code>u</code></td></tr>
+      <tr><td><code>ON u.id = r.requester_id</code></td><td><strong>เชื่อมตรงไหน</strong> — แถวที่ค่าตรงกัน</td></tr>
+    </table>
+    <div class="note"><p style="margin:0"><strong>ชื่อย่อ (alias) จำเป็นเมื่อสองตารางมีคอลัมน์ชื่อเหมือนกัน</strong> — ทั้งสองตารางมี <code>id</code> · ถ้าไม่ระบุว่า <code>r.id</code> หรือ <code>u.id</code> ฐานข้อมูลจะไม่รู้ว่าหมายถึงอันไหน</p></div>
+    <div class="wrong"><p style="margin:0"><strong>⚠ ลืม <code>ON</code></strong> — เขียน <code>FROM requests, users</code> เฉย ๆ จะได้ <strong>ทุกแถวจับคู่กับทุกแถว</strong> · 5 × 4 = 20 แถวที่ไม่มีความหมาย และ<strong>ไม่มี error บอก</strong><br><small>ผลลัพธ์เยอะผิดปกติ → ตรวจ ON เป็นอันดับแรก</small></p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="⭐ ผลของ JOIN">
+  <span class="chapbadge">บทที่ 9 <span class="of">/ 10</span> · JOIN</span>
+  <span class="eyebrow violet">จุดสำคัญที่สุดของสัปดาห์นี้</span>
+  <h2>ผลลัพธ์นี้คุณเคยเห็นมาแล้ว</h2>
+  <div class="body center">
+    <table style="font-size:1.2rem">
+      <tr><th>id</th><th>requesterName</th><th>status</th></tr>
+      <tr><td>REQ-001</td><td>สมชาย ใจดี</td><td>pending</td></tr>
+      <tr><td>REQ-002</td><td>สุภาวดี รักเรียน</td><td>in-progress</td></tr>
+      <tr><td>REQ-004</td><td>สมชาย ใจดี</td><td>pending</td></tr>
+    </table>
+    <div class="win">
+      <p style="margin:0 0 .5rem;font-size:1.3rem"><strong>เทียบกับข้อมูลที่ API ส่งให้ React ตอน Week 07</strong></p>
+      <pre style="margin:0;font-size:1.02rem"><code>{ <span class="s">"id"</span>: <span class="s">"REQ-001"</span>, <span class="s">"requesterName"</span>: <span class="s">"สมชาย ใจดี"</span>, <span class="s">"status"</span>: <span class="s">"pending"</span> }</code></pre>
+      <p style="margin:.5rem 0 0;font-size:1.3rem"><strong>เหมือนกันทุกประการ</strong></p>
+    </div>
+    <div class="whybox">
+      <p class="q">แปลว่าอะไร</p>
+      <p><strong>โครงสร้างในฐานข้อมูลไม่จำเป็นต้องเหมือนรูปแบบที่ API ส่งออก</strong><br>
+      ในฐานข้อมูลแยก 2 ตารางเพื่อไม่ให้ซ้ำ · ตอนส่งออกรวมกลับเป็นก้อนเดียวเพื่อให้ฝั่งผู้ใช้ทำงานง่าย<br>
+      <strong>นี่คือหน้าที่ของชั้น service ที่เราแยกไว้ตั้งแต่ Week 06</strong></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide " data-title="JOIN กับ LEFT JOIN">
+  <span class="chapbadge">บทที่ 9 <span class="of">/ 10</span> · JOIN</span>
+  <span class="eyebrow amber">ความต่างที่ต้องรู้</span>
+  <h2>เลือกใช้ให้ถูก</h2>
+  <div class="body center">
+    <table style="font-size:1.18rem">
+      <tr><th style="width:170px">แบบ</th><th>คืนอะไร</th><th>ใช้เมื่อ</th></tr>
+      <tr><td><code>JOIN</code></td><td>เฉพาะแถวที่<strong>จับคู่ได้</strong>ทั้งสองฝั่ง</td><td>ต้องการเฉพาะคำร้องที่มีผู้แจ้งอยู่จริง</td></tr>
+      <tr><td><code>LEFT JOIN</code></td><td>ทุกแถวจากตารางซ้าย <strong>แม้จับคู่ไม่ได้</strong></td><td>ต้องการผู้ใช้ทุกคน <strong>รวมคนที่ยังไม่เคยแจ้ง</strong></td></tr>
+    </table>
+    <pre style="margin:0;font-size:1.02rem"><code><span class="c">-- ใครแจ้งกี่รายการ — คนที่ยังไม่เคยแจ้งต้องติดมาด้วย</span>
+<span class="k">SELECT</span> u.name, <span class="f">COUNT</span>(r.id) <span class="k">AS</span> total
+<span class="k">FROM</span> users u
+<span class="hl">LEFT JOIN</span> requests r <span class="k">ON</span> r.requester_id = u.id
+<span class="k">GROUP BY</span> u.id
+<span class="k">ORDER BY</span> total <span class="k">DESC</span>;</code></pre>
+    <div class="note"><p style="margin:0"><strong>ถ้าใช้ <code>JOIN</code> ธรรมดา</strong> คนที่ยังไม่เคยแจ้งจะหายไปจากรายงาน — ซึ่งอาจเป็นข้อมูลที่เราอยากรู้ที่สุด</p></div>
+  </div>
+</section>
+
+
+<section class="slide" data-title="🎮 JOIN จับคู่อย่างไร">
+  <span class="chapbadge">บทที่ 9 <span class="of">/ 10</span> · JOIN</span>
+  <span class="eyebrow amber">ลองเล่น — กดดูการจับคู่ทีละแถว</span>
+  <h2>JOIN ทำงานอย่างไร</h2>
+  <div class="body">
+    <pre style="margin:0 0 .4rem;font-size:1rem"><code><span class="k">SELECT</span> r.id, u.name <span class="k">AS</span> requesterName, r.status
+<span class="k">FROM</span> requests r <span class="k">JOIN</span> users u <span class="hl">ON u.id = r.requester_id</span>;</code></pre>
+    <div class="iact">
+      <div class="reqbtns" style="margin-bottom:.5rem">
+        <button id="jnNext" class="m-get">▸ จับคู่แถวถัดไป</button>
+        <button id="jnReset">↺ เริ่มใหม่</button>
+      </div>
+      <div class="jn">
+        <div>
+          <div style="font-size:.9rem;color:var(--muted);margin-bottom:.2rem">ตาราง users</div>
+          <table class="jn-t" id="jnU"></table>
+        </div>
+        <div>
+          <div style="font-size:.9rem;color:var(--muted);margin-bottom:.2rem">ตาราง requests</div>
+          <table class="jn-t" id="jnR"></table>
+        </div>
+      </div>
+      <div class="jn-res">
+        <div style="font-size:.9rem;color:var(--green);margin-bottom:.2rem">ผลลัพธ์ที่ได้</div>
+        <table class="jn-t" id="jnO"></table>
+      </div>
+      <div class="qs-note" id="jnNote"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 9">
+  <span class="chapbadge">บทที่ 9 <span class="of">/ 10</span> · JOIN</span>
+  
+  <h2>จบบทที่ 9 — JOIN</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li><code>JOIN ... ON</code> รวมสองตารางเป็นตารางเดียวชั่วคราว</li><li>ใช้ alias (<code>r</code>, <code>u</code>) เพื่อระบุว่าคอลัมน์มาจากตารางไหน</li><li><code>LEFT JOIN</code> เก็บแถวที่จับคู่ไม่ได้ไว้ด้วย</li><li><strong>ผลของ JOIN = รูปแบบที่ API ส่งให้ React</strong> — สะพานไปสัปดาห์หน้า</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือ CP21</strong> — แล้วเข้ากลุ่ม 4</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 CP21 JOIN">
+  <span class="chapbadge">🏫 ลงมือทำ · CP21</span>
+  <span class="eyebrow amber">checkpoint สุดท้ายในห้อง</span>
+  <h2>CP21 · JOIN สองตารางเข้าด้วยกัน</h2>
+  <div class="body center">
+    <table style="font-size:1.16rem">
+      <tr><th style="width:70px">ข้อ</th><th>เขียน query ที่</th></tr>
+      <tr><td>①</td><td>แสดงคำร้องพร้อม<strong>ชื่อผู้แจ้ง</strong></td></tr>
+      <tr><td>②</td><td>แสดงคำร้องพร้อม<strong>ชื่อและภาควิชา</strong></td></tr>
+      <tr><td>③</td><td>กรองเฉพาะคำร้องของ<strong>ภาควิชาหนึ่ง</strong> (JOIN + WHERE)</td></tr>
+      <tr><td>④</td><td>ตั้งชื่อคอลัมน์ด้วย <code>AS</code> ให้ออกมาเป็น <code>requesterName</code></td></tr>
+    </table>
+    <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — ข้อ ④ ได้ผลลัพธ์<strong>หน้าตาเหมือนข้อมูลที่ API ส่งให้ React ตอน Week 07</strong></p></div>
+    <div class="nextup"><b>จบงานในห้องแล้ว →</b> เหลืออีก 1 บท ที่จะเรียนตอนนี้ แล้วไปทำที่บ้าน</div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏠 กลุ่ม 4 · เรียนในห้อง ทำที่บ้าน">
+  <span class="slide-id">W09 · GROUP 4</span>
+  <span class="eyebrow amber">บทสุดท้าย</span>
+  <h2>กลุ่ม 4 · ทำให้พร้อมใช้จริง</h2>
+  <div class="body center">
+    <div class="whybox">
+      <p class="q">ทำไมต้องเรียนตอนนี้ ทั้งที่ไปทำที่บ้าน</p>
+      <p>งานที่บ้านสัปดาห์นี้ไม่ใช่แค่ "ทำเพิ่ม" — แต่เป็นการ<strong>ส่งมอบของจริงให้สัปดาห์ที่ 10</strong><br>
+      ถ้า <code>schema.sql</code> รันไม่ได้ หรือ constraint ไม่ทำงาน <strong>สัปดาห์หน้าจะเริ่มไม่ได้</strong></p>
+    </div>
+    <div class="three">
+      <div class="card home"><div class="ic">📜</div><h3>schema.sql</h3><p>รันแล้วสร้างฐานข้อมูลใหม่ได้ทั้งหมด และ<strong>รันซ้ำได้</strong><br><strong>→ 🏠 CP23</strong></p></div>
+      <div class="card home"><div class="ic">📝</div><h3>DATA_MODEL.md</h3><p>อธิบายเหตุผลการออกแบบ ไม่ใช่แค่รายการคอลัมน์<br><strong>→ 🏠 CP24</strong></p></div>
+      <div class="card home"><div class="ic">🛡️</div><h3>ทดสอบ constraint</h3><p>พิสูจน์ว่าฐานข้อมูล<strong>ปฏิเสธข้อมูลเสียได้จริง</strong><br><strong>→ 🏠 CP25</strong></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 10 · schema.sql · เอกสาร · ทดสอบ constraint">
+  <span class="grp">กลุ่ม 4 · ทำให้พร้อมใช้จริง</span>
+  <p class="bignum home">10</p>
+  <h2>schema.sql · เอกสาร · ทดสอบ constraint</h2>
+  <p class="whatfor">สามอย่างที่ทำให้ฐานข้อมูลของคุณส่งต่อให้คนอื่นได้ และพิสูจน์ได้ว่ามันทำงานจริง</p>
+  <div class="mins"><span class="chip a">🏠 เรียนในห้อง · ทำที่บ้าน</span><span class="chip c">≈ 10 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span></div>
+</section>
+
+<section class="slide " data-title="ทำไมต้องมี schema.sql">
+  <span class="chapbadge home">บทที่ 10 <span class="of">/ 10</span> · พร้อมใช้จริง</span>
+  <span class="eyebrow violet">เหตุผลก่อน</span>
+  <h2>มี campus.db แล้ว ทำไมต้องมีอีกไฟล์</h2>
+  <div class="body center">
+    <div class="iact" data-quiz="q6">
+      <p style="margin:0 0 .3rem"><strong>เรามี <code>campus.db</code> ที่ใช้งานได้แล้ว — ทำไมยังต้องเก็บ <code>schema.sql</code></strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">สำรองข้อมูลเผื่อไฟล์หาย</button>
+        <button class="opt" data-a="1">campus.db เป็นไฟล์ไบนารี — git บอกไม่ได้ว่าเปลี่ยนอะไร</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="win">
+      <p style="margin:0;font-size:1.22rem"><code>schema.sql</code> เป็น<strong>ข้อความ</strong> จึงทำให้ —<br>
+      ① เห็น<strong>ประวัติการเปลี่ยนโครงสร้าง</strong>ใน git · ② คนอื่นสร้างฐานข้อมูลเหมือนกันได้ · ③ ถ้าไฟล์ฐานข้อมูลเสียก็สร้างใหม่ได้</p>
+    </div>
+    <pre style="margin:0;font-size:1.02rem"><code><span class="c">-- ต้องรันซ้ำได้ ⚠ ลบ requests ก่อน เพราะมันอ้างถึง users</span>
+<span class="k">DROP TABLE IF EXISTS</span> requests;
+<span class="k">DROP TABLE IF EXISTS</span> users;
+
+<span class="k">CREATE TABLE</span> users ( ... );
+<span class="k">CREATE TABLE</span> requests ( ... );
+<span class="k">INSERT INTO</span> users ... ;</code></pre>
+    <div class="wrong"><p style="margin:0"><strong>⚠ ลำดับการลบสำคัญ</strong> — <strong>ลบฝั่งที่ "ชี้ไปหา" ก่อน แล้วค่อยลบฝั่งที่ "ถูกชี้"</strong><br><small>ถ้าลบ users ก่อน จะเหลือคำร้องที่ชี้ไปหาตารางที่ไม่มีแล้ว</small></p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="ทดสอบว่ามันปฏิเสธได้">
+  <span class="chapbadge home">บทที่ 10 <span class="of">/ 10</span> · พร้อมใช้จริง</span>
+  <span class="eyebrow red">CP25</span>
+  <h2>constraint ทำงานจริงไหม ต้องพิสูจน์</h2>
+  <div class="body center">
+    <div class="whybox">
+      <p class="q">เขียน constraint ไว้ ไม่ได้แปลว่ามันทำงาน</p>
+      <p><strong>ต้องลองทำผิดแล้วดูว่าถูกปฏิเสธจริงไหม</strong> — โดยเฉพาะ Foreign Key ที่ถ้าลืม <code>PRAGMA</code> จะเงียบไปเลย</p>
+    </div>
+    <table style="font-size:1.16rem">
+      <tr><th>ทดสอบ</th><th style="width:330px">ต้องได้ error</th></tr>
+      <tr><td>ใส่คำร้องที่ <code>requester_id</code> ไม่มีจริง</td><td><code>FOREIGN KEY constraint failed</code></td></tr>
+      <tr><td>ใส่ <code>status</code> นอกรายการ</td><td><code>CHECK constraint failed</code></td></tr>
+      <tr><td>ใส่อีเมลซ้ำ</td><td><code>UNIQUE constraint failed</code></td></tr>
+      <tr><td>ใส่คำร้องที่ <code>id</code> ซ้ำ</td><td><code>UNIQUE constraint failed</code></td></tr>
+      <tr><td>ไม่ระบุ <code>location</code></td><td><code>NOT NULL constraint failed</code></td></tr>
+    </table>
+    <div class="note"><p style="margin:0"><strong>เหมือนที่ทำใน Week 06</strong> — ทดสอบว่า API ตอบ <strong>400 เมื่อข้อมูลไม่ครบ</strong> ไม่ใช่แค่ทดสอบว่าตอบ 201 เมื่อข้อมูลถูก<br>
+    <strong>ระบบที่ดีต้องปฏิเสธสิ่งที่ผิดได้ ไม่ใช่แค่รับสิ่งที่ถูก</strong></p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 10">
+  <span class="chapbadge home">บทที่ 10 <span class="of">/ 10</span> · พร้อมใช้จริง</span>
+  
+  <h2>จบบทที่ 10 — พร้อมใช้จริง</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li><code>schema.sql</code> เป็นข้อความ — git ดู diff ได้ · สร้างใหม่ได้ · ส่งต่อคนอื่นได้</li><li>ต้อง<strong>รันซ้ำได้</strong> · ลบฝั่งที่ชี้ไปหาก่อนเสมอ</li><li><code>DATA_MODEL.md</code> อธิบาย<strong>เหตุผล</strong> ไม่ใช่แค่รายการคอลัมน์</li><li>ทดสอบว่า constraint <strong>ปฏิเสธได้จริง</strong> ไม่ใช่แค่เขียนไว้</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> สรุปงานที่บ้าน แล้วปิดคาบ</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span></div>
+  </div>
+</section>
+
+<section class="slide" data-title="📐 แผนผังฐานข้อมูลที่ต้องส่ง">
+  <span class="chapbadge home">บทที่ 10 <span class="of">/ 10</span> · พร้อมใช้จริง</span>
+  <span class="eyebrow red">นี่คือข้อกำหนดของงาน — ไม่ใช่แค่ตัวอย่าง</span>
+  <h2>ฐานข้อมูลที่ต้องส่งต้องมีหน้าตาแบบนี้</h2>
+  <div class="fig">
+    <svg viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="แผนผังฐานข้อมูล campus.db ฉบับเต็ม">
+  <style>.st{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#E8F2EC} .ss{font:300 11px 'IBM Plex Sans Thai',sans-serif;fill:#A9C7B8} .sm{font:500 10.5px 'IBM Plex Mono',monospace;fill:#E8F2EC}</style>
+
+  <rect x="20" y="20" width="400" height="26" fill="rgba(56,215,237,.16)" stroke="#38D7ED" stroke-width="1.6"/>
+  <text x="36" y="38" class="st" fill="#38D7ED">📋 ตาราง users — ผู้แจ้งคำร้อง</text>
+  <rect x="20" y="58" width="400" height="22" fill="rgba(251,191,36,.16)" stroke="#FBBF24"/><text x="30" y="74" class="sm">🔑 id</text><text x="170" y="74" class="sm" fill="#A9C7B8">INTEGER</text><text x="255" y="74" class="ss">PRIMARY KEY AUTOINCREMENT</text><rect x="20" y="80" width="400" height="22" fill="rgba(20,12,4,.45)" stroke="rgba(169,199,184,.22)"/><text x="30" y="96" class="sm">name</text><text x="170" y="96" class="sm" fill="#A9C7B8">TEXT</text><text x="255" y="96" class="ss">NOT NULL</text><rect x="20" y="102" width="400" height="22" fill="rgba(20,12,4,.45)" stroke="rgba(169,199,184,.22)"/><text x="30" y="118" class="sm">department</text><text x="170" y="118" class="sm" fill="#A9C7B8">TEXT</text><text x="255" y="118" class="ss">NOT NULL</text><rect x="20" y="124" width="400" height="22" fill="rgba(20,12,4,.45)" stroke="rgba(169,199,184,.22)"/><text x="30" y="140" class="sm">email</text><text x="170" y="140" class="sm" fill="#A9C7B8">TEXT</text><text x="255" y="140" class="ss">NOT NULL UNIQUE</text>
+  <text x="20" y="166" class="ss">1 คน แจ้งได้หลายคำร้อง</text>
+
+  <rect x="460" y="20" width="400" height="26" fill="rgba(74,222,128,.16)" stroke="#4ADE80" stroke-width="1.6"/>
+  <text x="476" y="38" class="st" fill="#4ADE80">📋 ตาราง requests — คำร้องขอใช้บริการ</text>
+  <rect x="460" y="58" width="400" height="22" fill="rgba(251,191,36,.16)" stroke="#FBBF24"/><text x="470" y="74" class="sm">🔑 id</text><text x="610" y="74" class="sm" fill="#A9C7B8">TEXT</text><text x="695" y="74" class="ss">PRIMARY KEY</text><rect x="460" y="80" width="400" height="22" fill="rgba(192,132,252,.16)" stroke="#C084FC"/><text x="470" y="96" class="sm">🔗 requester_id</text><text x="610" y="96" class="sm" fill="#A9C7B8">INTEGER</text><text x="695" y="96" class="ss">NOT NULL → users(id)</text><rect x="460" y="102" width="400" height="22" fill="rgba(20,12,4,.45)" stroke="rgba(169,199,184,.22)"/><text x="470" y="118" class="sm">request_type</text><text x="610" y="118" class="sm" fill="#A9C7B8">TEXT</text><text x="695" y="118" class="ss">NOT NULL · CHECK 4 ค่า</text><rect x="460" y="124" width="400" height="22" fill="rgba(20,12,4,.45)" stroke="rgba(169,199,184,.22)"/><text x="470" y="140" class="sm">location</text><text x="610" y="140" class="sm" fill="#A9C7B8">TEXT</text><text x="695" y="140" class="ss">NOT NULL</text><rect x="460" y="146" width="400" height="22" fill="rgba(20,12,4,.45)" stroke="rgba(169,199,184,.22)"/><text x="470" y="162" class="sm">details</text><text x="610" y="162" class="sm" fill="#A9C7B8">TEXT</text><text x="695" y="162" class="ss">NOT NULL</text><rect x="460" y="168" width="400" height="22" fill="rgba(20,12,4,.45)" stroke="rgba(169,199,184,.22)"/><text x="470" y="184" class="sm">priority</text><text x="610" y="184" class="sm" fill="#A9C7B8">TEXT</text><text x="695" y="184" class="ss">DEFAULT 'normal' · CHECK</text><rect x="460" y="190" width="400" height="22" fill="rgba(20,12,4,.45)" stroke="rgba(169,199,184,.22)"/><text x="470" y="206" class="sm">status</text><text x="610" y="206" class="sm" fill="#A9C7B8">TEXT</text><text x="695" y="206" class="ss">DEFAULT 'pending' · CHECK</text><rect x="460" y="212" width="400" height="22" fill="rgba(20,12,4,.45)" stroke="rgba(169,199,184,.22)"/><text x="470" y="228" class="sm">created_at</text><text x="610" y="228" class="sm" fill="#A9C7B8">TEXT</text><text x="695" y="228" class="ss">DEFAULT เวลาปัจจุบัน</text>
+  <text x="460" y="254" class="ss">1 คำร้อง มีผู้แจ้งคนเดียว</text>
+
+  <path d="M424 69 C 440 69, 440 91, 456 91" stroke="#C084FC" stroke-width="2" fill="none" stroke-dasharray="5 3"/>
+  <circle cx="424" cy="69" r="3.5" fill="#C084FC"/>
+  <text x="430" y="60" class="sm" fill="#C084FC">1</text>
+  <text x="430" y="108" class="sm" fill="#C084FC">หลาย</text>
+
+  <rect x="20" y="276" width="840" height="48" rx="8" fill="rgba(251,191,36,.16)" stroke="#FBBF24" stroke-width="1.5"/>
+  <text x="40" y="296" class="st" fill="#FBBF24">ค่าที่ CHECK บังคับ</text>
+  <text x="40" y="314" class="sm">request_type: แจ้งซ่อม · บริการบัญชีผู้ใช้ · ขอใช้อุปกรณ์ · อื่น ๆ   |   priority: normal · urgent   |   status: pending · in-progress · completed</text>
+
+  <rect x="20" y="334" width="840" height="54" rx="8" fill="rgba(251,113,133,.12)" stroke="#FB7185" stroke-width="1.5"/>
+  <text x="40" y="354" class="st" fill="#FB7185">⚠ นี่คือข้อกำหนดของงานที่ต้องส่ง — สัปดาห์ที่ 10 จะใช้โครงนี้ตรง ๆ</text>
+  <text x="40" y="374" class="ss">ถ้าตั้งชื่อคอลัมน์ต่างจากนี้ โค้ดที่เขียนสัปดาห์หน้าจะใช้ไม่ได้ · ชื่อต้องตรงทุกตัวอักษร</text>
+</svg>
+  </div>
+  <p class="figcap"><strong>ชื่อคอลัมน์ต้องตรงทุกตัวอักษร</strong> — สัปดาห์ที่ 10 จะเขียนโค้ดอ้างชื่อเหล่านี้ตรง ๆ</p>
+</section>
+
+<section class="slide" data-title="📦 ส่งมอบให้สัปดาห์ที่ 10">
+  <span class="chapbadge home">บทที่ 10 <span class="of">/ 10</span> · พร้อมใช้จริง</span>
+  <span class="eyebrow amber">ทำไมงานที่บ้านสัปดาห์นี้คิดเป็น 70%</span>
+  <h2>งานสัปดาห์นี้คือวัตถุดิบของสัปดาห์หน้า</h2>
+  <div class="body center">
+    <table style="font-size:1.2rem">
+      <tr><th style="width:190px">ไฟล์</th><th>คืออะไร</th><th style="width:290px">สัปดาห์ที่ 10 เอาไปทำอะไร</th></tr>
+      <tr><td><code>campus.db</code></td><td>ฐานข้อมูลที่มีข้อมูลพร้อมใช้</td><td><strong>Node เปิดไฟล์นี้โดยตรง</strong></td></tr>
+      <tr><td><code>schema.sql</code></td><td>คำสั่งสร้างฐานข้อมูลใหม่ทั้งหมด</td><td><strong>สคริปต์ตั้งค่าเรียกไฟล์นี้</strong></td></tr>
+      <tr><td><code>queries.sql</code></td><td>คำสั่งค้นหาที่ทดสอบแล้ว</td><td><strong>คัดลอกไปใส่ใน service ได้เลย</strong></td></tr>
+      <tr><td><code>DATA_MODEL.md</code></td><td>เอกสารอธิบายการออกแบบ</td><td>อ้างอิงตอนเขียนโค้ด</td></tr>
+    </table>
+    <div class="whybox">
+      <p class="q">ไม่ใช่ "การบ้านให้ฝึกเพิ่ม"</p>
+      <p>ถ้า <code>schema.sql</code> รันไม่ได้ หรือตั้งชื่อคอลัมน์ไม่ตรง — <strong>สัปดาห์หน้าจะเริ่มไม่ได้</strong><br>
+      และในงานจริงก็เป็นแบบนี้ — เมื่อตกลง schema แล้ว การเปลี่ยนชื่อคอลัมน์กระทบทุกคนที่ใช้ฐานข้อมูลนั้น</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏠 สรุปงานที่บ้าน">
+  <span class="slide-id">W09 · TAKE-HOME</span>
+  <span class="eyebrow amber">งานที่ต้องทำต่อ</span>
+  <h2>ส่ง 4 ไฟล์ — CP22 ถึง CP25</h2>
+  <div class="body center">
+    <table style="font-size:1.2rem">
+      <tr><th style="width:90px">CP</th><th>ไฟล์</th><th>ทำอะไร</th></tr>
+      <tr><td><strong>CP22</strong></td><td><code>queries.sql</code></td><td>คำสั่งค้นหาตอบโจทย์ 8 ข้อ ที่<strong>ทดสอบแล้วว่ารันได้</strong></td></tr>
+      <tr><td><strong>CP23</strong></td><td><code>schema.sql</code></td><td>รันแล้วสร้างฐานข้อมูลได้ทั้งหมด และรันซ้ำได้</td></tr>
+      <tr><td><strong>CP24</strong></td><td><code>DATA_MODEL.md</code></td><td>อธิบายเหตุผลการออกแบบ</td></tr>
+      <tr><td><strong>CP25</strong></td><td>บันทึกผลทดสอบ</td><td>พิสูจน์ว่า constraint ปฏิเสธได้จริงทั้ง 5 แบบ</td></tr>
+    </table>
+    <div class="panel" style="border-color:rgba(192,132,252,.4)">
+      <h3 style="color:var(--violet)">⭐ Challenge (คะแนนเพิ่ม)</h3>
+      <p style="margin:0;font-size:1.2rem"><code>GROUP BY</code> + <code>COUNT</code> สรุปข้อมูล · <code>LEFT JOIN</code> รวมคนที่ยังไม่เคยแจ้ง · <code>CREATE INDEX</code> ให้ค้นเร็วขึ้น</p>
+    </div>
+    <div class="note"><p style="margin:0"><strong>ส่ง</strong> — branch <code>unit4/week-09</code> · tag <code>lab-08-submission-v1</code> · <code>node check-week09.mjs</code> เป้าหมาย 27/30 (30/30 ถ้าทำ Challenge)</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="ก้าวต่อไป">
+  <span class="slide-id">W09 · END</span>
+  <span class="eyebrow violet">สะพานไปสัปดาห์ที่ 10</span>
+  <h2>สิ่งที่ทำวันนี้จะกลายเป็นโค้ดสัปดาห์หน้า</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="win">
+        <h3 style="color:var(--amber)">✓ ตอนนี้คุณทำได้แล้ว</h3>
+        <ul style="margin-bottom:0">
+          <li>ออกแบบตารางและความสัมพันธ์</li>
+          <li>เขียน SELECT · WHERE · ORDER BY</li>
+          <li>INSERT · UPDATE · DELETE</li>
+          <li>JOIN สองตารางเข้าด้วยกัน</li>
+        </ul>
+      </div>
+      <div class="panel" style="border-color:rgba(192,132,252,.4)">
+        <h3 style="color:var(--violet)">→ สัปดาห์ที่ 10</h3>
+        <ul style="margin-bottom:0">
+          <li>เอา <code>campus.db</code> ไปใส่ใน API</li>
+          <li><strong>query ที่เขียนวันนี้กลายเป็นโค้ด</strong></li>
+          <li><strong>แก้แค่ <code>requestService.js</code></strong></li>
+          <li>controller · route · React ไม่ต้องแตะ</li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel" style="border-color:rgba(56,215,237,.45);background:rgba(56,215,237,.08)">
+      <p style="margin:0;font-size:1.26rem"><strong style="color:var(--cyan)">รูปแบบเดิมที่เกิดขึ้นอีกครั้ง</strong> — Week 05 เปลี่ยน seed เป็น localStorage · Week 07 เปลี่ยน localStorage เป็น API · Week 06 เปลี่ยน memory เป็นไฟล์ JSON · <strong>สัปดาห์หน้าเปลี่ยนไฟล์ JSON เป็นฐานข้อมูล</strong><br>
+      <strong>ทุกครั้งแก้แค่ชั้นเดียว เพราะเราแยกชั้นไว้ดีตั้งแต่ต้น</strong></p>
+    </div>
+  </div>
+</section>
+</div></div>
+<div class="bar"><i id="progress"></i></div>
+<div class="hud">
+  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 59</span><button id="btnNext">→</button>
+  <button id="btnToc">สารบัญ</button><button id="btnMinus">A−</button><button id="btnPlus">A+</button><button id="btnFull">เต็มจอ</button>
+</div>
+<div class="toc" id="toc" role="dialog"><h3>สารบัญ — กด T หรือ Esc ปิด</h3><ol id="tocList"></ol></div>
+
+<script>
+(function(){
+  'use strict';
+  const slides=Array.from(document.querySelectorAll('.slide'));let cur=0;
+  function show(i){cur=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach((s,n)=>s.classList.toggle('active',n===cur));
+    document.getElementById('counter').textContent=(cur+1)+' / '+slides.length;
+    document.getElementById('progress').style.width=((cur+1)/slides.length*100)+'%';
+    history.replaceState(null,'','#s'+(cur+1));}
+  const next=()=>show(cur+1),prev=()=>show(cur-1);
+  document.getElementById('btnNext').onclick=next;document.getElementById('btnPrev').onclick=prev;
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT')return;
+    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
+    else if(e.key==='ArrowLeft'){e.preventDefault();prev();}
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+    else if(e.key.toLowerCase()==='t')toggleToc();else if(e.key==='Escape')setToc(false);
+    else if(e.key.toLowerCase()==='f')toggleFull();
+    else if(e.key==='+'||e.key==='=')setScale(scale+.06);else if(e.key==='-')setScale(scale-.06);});
+  const tocEl=document.getElementById('toc'),list=document.getElementById('tocList');
+  slides.forEach((s,i)=>{const li=document.createElement('li'),a=document.createElement('a');
+    a.href='#s'+(i+1);a.textContent=s.dataset.title||('สไลด์ '+(i+1));
+    a.onclick=e=>{e.preventDefault();show(i);setToc(false);};li.appendChild(a);
+    const id=s.querySelector('.slide-id');
+    if(id){const t=document.createElement('span');t.className='tag';t.textContent=id.textContent;li.appendChild(t);}
+    list.appendChild(li);});
+  function setToc(o){tocEl.classList.toggle('open',o);}
+  function toggleToc(){setToc(!tocEl.classList.contains('open'));}
+  document.getElementById('btnToc').onclick=toggleToc;
+  let scale=1;
+  function setScale(v){scale=Math.max(.8,Math.min(1.4,v));document.documentElement.style.setProperty('--font-scale',scale);}
+  document.getElementById('btnPlus').onclick=()=>setScale(scale+.06);
+  document.getElementById('btnMinus').onclick=()=>setScale(scale-.06);
+  function toggleFull(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}
+  document.getElementById('btnFull').onclick=toggleFull;
+  document.querySelectorAll('[data-quiz]').forEach(q=>{const fb=q.querySelector('.fb');
+    q.querySelectorAll('.opt').forEach(b=>{b.onclick=()=>{const ok=b.dataset.a==='1';
+      b.classList.add(ok?'ok':'no');
+      if(ok){fb.textContent='✓ ถูกต้อง';fb.className='fb ok';q.querySelectorAll('.opt').forEach(x=>x.disabled=true);}
+      else{fb.textContent='✕ ยังไม่ใช่ ลองใหม่';fb.className='fb no';}};});});
+  document.querySelectorAll('[data-reveal]').forEach(b=>{b.querySelector('button').onclick=()=>b.classList.toggle('open');});
+
+
+  // ══ Layer Tracer — ตามรอยคำขอผ่านชั้นต่าง ๆ ══
+  const ltSteps = [
+    { nm:'① เบราว์เซอร์ส่งคำขอ', fl:'frontend/src/services/requestService.js',
+      ds:'React เรียก service ของตัวเอง — ไม่รู้ว่าข้างหลังเป็นอะไร',
+      out:'<span class="dim">// ฝั่ง React</span>\nawait getRequests({ status: \'pending\' })\n\n<span class="dim">→ ยิง HTTP ออกไป</span>\n<span class="hi">GET /api/requests?status=pending</span>' },
+    { nm:'② Middleware', fl:'api/src/app.js',
+      ds:'cors → morgan → express.json() ทำงานตามลำดับก่อนถึง route',
+      out:'<span class="dim">// app.js — ไล่จากบนลงล่าง</span>\napp.use(cors(...))        <span class="dim">→ ผ่าน</span>\napp.use(morgan(...))      <span class="dim">→ บันทึก log</span>\napp.use(express.json())   <span class="dim">→ แปลง body</span>\n\n<span class="ok">✓ ส่งต่อด้วย next()</span>' },
+    { nm:'③ Route จับคู่', fl:'api/src/routes/requestRoutes.js',
+      ds:'จับคู่ method + path แล้วส่งต่อให้ controller — ไม่มีตรรกะอะไรเลย',
+      out:'<span class="dim">// หา route ที่ตรงจากบนลงล่าง</span>\nrouter.get(\'/\', controller.listRequests)  <span class="ok">← ตรง</span>\n\n<span class="dim">req.query = { status: \'pending\' }</span>' },
+    { nm:'④ Controller', fl:'api/src/controllers/requestController.js',
+      ds:'อ่านคำขอ · เรียก service · ตัดสิน status code — ไม่รู้จัก SQL',
+      out:'const { status } = req.query;\nconst data = service.findAll({ status });\n\n<span class="dim">// ตัดสินใจเรื่อง HTTP ที่นี่ที่เดียว</span>\nres.status(<span class="hi">200</span>).json(data);' },
+    { nm:'⑤ Service', fl:'api/src/services/requestService.js',
+      ds:'แปลงคำขอเป็น SQL — ไม่รู้จัก req/res เลย จึงเปลี่ยนฐานข้อมูลได้ง่าย',
+      out:'<span class="dim">// ที่เดียวที่รู้จัก SQL</span>\ndb.prepare(`\n  SELECT r.id, u.name AS <span class="hi">requesterName</span>, ...\n  FROM requests r\n  JOIN users u ON u.id = r.requester_id\n  WHERE r.status = <span class="hi">?</span>\n`).all(status)' },
+    { nm:'⑥ ฐานข้อมูล', fl:'api/data/campus.db',
+      ds:'หาแถวที่ตรง แล้วรวมสองตารางเข้าด้วยกันด้วย JOIN',
+      out:'<span class="dim">// SQLite ทำงาน</span>\nrequests ─┐\n          ├─ JOIN บน requester_id\nusers ────┘\n\n<span class="ok">พบ 2 แถว</span>' },
+    { nm:'⑦ ย้อนกลับขึ้นไป', fl:'ชั้นเดิม ย้อนทางกลับ',
+      ds:'service คืน array → controller ใส่ status → React ได้ข้อมูลรูปแบบเดิม',
+      out:'[\n  { "id": "REQ-001",\n    "<span class="hi">requesterName</span>": "สมชาย ใจดี",\n    "status": "pending" },\n  ...\n]\n\n<span class="ok">✓ frontend ได้รูปแบบเดิม ไม่ต้องแก้อะไร</span>' },
+  ];
+  const ltList = document.getElementById('ltList');
+  const ltOut  = document.getElementById('ltOut');
+  let ltAt = -1;
+  function ltRender() {
+    if (!ltList) return;
+    ltList.innerHTML = ltSteps.map((s, i) =>
+      `<div class="lt-step ${i === ltAt ? 'on' : (i < ltAt ? 'done' : '')}">
+        <span class="n">${i + 1}</span>
+        <span class="txt"><span class="nm">${s.nm}</span>
+        <span class="fl">${s.fl}</span>
+        <span class="ds">${s.ds}</span></span>
+      </div>`).join('');
+    ltOut.innerHTML = ltAt < 0 ? '<span class="dim">— กดปุ่มเพื่อเริ่มตามรอยคำขอ —</span>' : ltSteps[ltAt].out;
+  }
+  document.getElementById('ltNext')?.addEventListener('click', () => {
+    ltAt = Math.min(ltAt + 1, ltSteps.length - 1); ltRender();
+  });
+  document.getElementById('ltReset')?.addEventListener('click', () => { ltAt = -1; ltRender(); });
+  ltRender();
+
+  // ══ Query Stepper — SQL ทำงานทีละขั้นอย่างไร ══
+  const qsRows = [
+    { id:'REQ-001', requester:'สมชาย ใจดี',      status:'pending',     priority:'urgent' },
+    { id:'REQ-002', requester:'สุภาวดี รักเรียน', status:'in-progress', priority:'normal' },
+    { id:'REQ-003', requester:'ธนกฤต ตั้งใจ',    status:'completed',   priority:'normal' },
+    { id:'REQ-004', requester:'สมชาย ใจดี',      status:'pending',     priority:'urgent' },
+    { id:'REQ-005', requester:'ปรียา ขยันยิ่ง',   status:'pending',     priority:'normal' },
+  ];
+  const qsCols = ['id','requester','status','priority'];
+  const qsNotes = [
+    'ยังไม่ทำอะไร — นี่คือข้อมูลทั้งหมดในตาราง <code>requests</code>',
+    '<b>① FROM requests</b> — หยิบทุกแถวมาก่อน (5 แถว) · ฐานข้อมูลยังไม่ได้กรองอะไร',
+    '<b>② WHERE status = \'pending\'</b> — ตัดแถวที่ไม่ตรงทิ้ง เหลือ <b>3 แถว</b>',
+    '<b>③ ORDER BY priority DESC</b> — เรียงใหม่ · urgent มาก่อน normal',
+    '<b>④ SELECT id, requester</b> — เลือกเฉพาะคอลัมน์ที่ขอ · ที่เหลือไม่ส่งกลับ',
+  ];
+  let qsAt = 0;
+  function qsRender() {
+    const el = document.getElementById('qsTbl'); if (!el) return;
+    let rows = qsRows.map((r, i) => ({ ...r, _i: i }));
+    if (qsAt >= 3) rows = rows.filter(r => r.status === 'pending');
+    if (qsAt >= 3) rows.sort((a, b) => (a.priority === b.priority) ? 0 : (a.priority === 'urgent' ? -1 : 1));
+    const cut = qsAt >= 4;
+    el.innerHTML =
+      `<tr>${qsCols.map(c => `<th${cut && c!=='id' && c!=='requester' ? ' style="opacity:.2"' : ''}>${c}</th>`).join('')}</tr>` +
+      qsRows.map((r) => {
+        const kept = qsAt < 2 ? null : (r.status === 'pending');
+        if (qsAt >= 3 && !kept) return '';
+        const cls = qsAt === 2 ? (kept ? 'keep' : 'out') : '';
+        return `<tr class="${cls}">${qsCols.map(c =>
+          `<td class="${cut && c!=='id' && c!=='requester' ? 'drop' : (cut ? 'pick' : '')}">${r[c]}</td>`).join('')}</tr>`;
+      }).join('') +
+      (qsAt >= 3 ? rows.map(r => `<tr class="keep">${qsCols.map(c =>
+        `<td class="${cut && c!=='id' && c!=='requester' ? 'drop' : (cut ? 'pick' : '')}">${r[c]}</td>`).join('')}</tr>`).join('') : '');
+    document.getElementById('qsNote').innerHTML = qsNotes[qsAt];
+    document.querySelectorAll('[data-qs]').forEach(b =>
+      b.classList.toggle('m-get', Number(b.dataset.qs) === qsAt));
+  }
+  document.querySelectorAll('[data-qs]').forEach(b =>
+    b.addEventListener('click', () => { qsAt = Number(b.dataset.qs); qsRender(); }));
+  qsRender();
+
+  // ══ JOIN visual ══
+  const jnUsers = [ {id:1,name:'สมชาย ใจดี'}, {id:2,name:'สุภาวดี รักเรียน'}, {id:3,name:'ธนกฤต ตั้งใจ'} ];
+  const jnReq = [
+    {id:'REQ-001', rid:1, status:'pending'},
+    {id:'REQ-002', rid:2, status:'in-progress'},
+    {id:'REQ-004', rid:1, status:'pending'},
+  ];
+  let jnAt = -1;
+  function jnRender() {
+    const u = document.getElementById('jnU'), r = document.getElementById('jnR'), o = document.getElementById('jnO');
+    if (!u) return;
+    const cur = jnAt >= 0 && jnAt < jnReq.length ? jnReq[jnAt] : null;
+    u.innerHTML = '<tr><th>id</th><th>name</th></tr>' + jnUsers.map(x =>
+      `<tr class="${cur && cur.rid === x.id ? 'lit' : ''}"><td>${x.id}</td><td>${x.name}</td></tr>`).join('');
+    r.innerHTML = '<tr><th>id</th><th>requester_id</th><th>status</th></tr>' + jnReq.map((x, i) =>
+      `<tr class="${jnAt === i ? 'lit' : ''}"><td>${x.id}</td><td>${x.rid}</td><td>${x.status}</td></tr>`).join('');
+    const done = jnReq.slice(0, jnAt + 1);
+    o.innerHTML = '<tr><th>id</th><th>requesterName</th><th>status</th></tr>' + (done.length
+      ? done.map((x, i) => {
+          const nm = jnUsers.find(y => y.id === x.rid)?.name ?? '—';
+          return `<tr class="${i === jnAt ? 'new' : ''}"><td>${x.id}</td><td>${nm}</td><td>${x.status}</td></tr>`;
+        }).join('')
+      : '<tr><td colspan="3" style="opacity:.5">— กดปุ่มเพื่อจับคู่ทีละแถว —</td></tr>');
+    const n = document.getElementById('jnNote');
+    n.innerHTML = jnAt < 0 ? 'JOIN ทำงานโดย<b>ไล่ดูทีละแถว</b>ของตาราง <code>requests</code> แล้วหาแถวใน <code>users</code> ที่ <code>id</code> ตรงกับ <code>requester_id</code>'
+      : (cur ? `แถว <b>${cur.id}</b> มี <code>requester_id = ${cur.rid}</code> → หาใน <code>users</code> เจอ <b>${jnUsers.find(y=>y.id===cur.rid)?.name}</b> → รวมเป็นแถวใหม่`
+             : 'จับคู่ครบแล้ว — <b>สังเกตว่า สมชาย ใจดี ปรากฏ 2 ครั้งในผลลัพธ์ แต่เก็บไว้ในฐานข้อมูลแค่ครั้งเดียว</b>');
+  }
+  document.getElementById('jnNext')?.addEventListener('click', () => {
+    jnAt = Math.min(jnAt + 1, jnReq.length); jnRender();
+  });
+  document.getElementById('jnReset')?.addEventListener('click', () => { jnAt = -1; jnRender(); });
+  jnRender();
+
+  // ══ SQL Injection compare ══
+  const injCases = {
+    ok:    { label:'pending',        rows:3, safeRows:3 },
+    evil1: { label:"x' OR '1'='1",   rows:5, safeRows:0 },
+    evil2: { label:"'; DROP TABLE requests; --", rows:-1, safeRows:0 },
+  };
+  document.querySelectorAll('[data-inj]').forEach(b => b.addEventListener('click', () => {
+    const c = injCases[b.dataset.inj];
+    const esc = (s) => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+    document.getElementById('injBadSql').innerHTML =
+      `SELECT * FROM requests\nWHERE status = '<span class="ev">${esc(c.label)}</span>'`;
+    document.getElementById('injGoodSql').innerHTML =
+      `SELECT * FROM requests\nWHERE status = <span class="pm">?</span>\n<span style="opacity:.6">ค่าที่ส่งแยกต่างหาก:</span> "${esc(c.label)}"`;
+    document.getElementById('injBadR').innerHTML = c.rows === -1
+      ? '<span style="color:#FB7185">✕ ตาราง requests ถูกลบทิ้ง</span>'
+      : (c.rows === 5 ? '<span style="color:#FB7185">✕ คืน 5 แถว — ข้อมูลทั้งตารางหลุด</span>'
+                      : `<span style="color:var(--green)">คืน ${c.rows} แถว (ปกติ)</span>`);
+    document.getElementById('injGoodR').innerHTML = c.safeRows === 0 && c.rows !== 3
+      ? '<span style="color:var(--green)">✓ คืน 0 แถว — ถูกมองเป็นข้อความธรรมดา</span>'
+      : `<span style="color:var(--green)">✓ คืน ${c.safeRows} แถว (ปกติ)</span>`;
+  }));
+
+  const timers={};
+  function fmt(s){const m=Math.floor(Math.abs(s)/60),x=Math.abs(s)%60;
+    return(s<0?'-':'')+String(m).padStart(2,'0')+':'+String(x).padStart(2,'0');}
+  setInterval(()=>{Object.keys(timers).forEach(id=>{const t=timers[id];if(!t||!t.running)return;
+    t.left--;const el=document.getElementById(id);el.textContent=fmt(t.left);
+    el.style.color=t.left<=0?'var(--red)':'var(--amber)';});},1000);
+  document.querySelectorAll('[data-timer]').forEach(b=>{b.onclick=()=>{
+    const id=b.dataset.timer,act=b.dataset.act,el=document.getElementById(id);
+    if(!timers[id])timers[id]={left:(+b.dataset.min||30)*60,running:false};
+    const t=timers[id];
+    if(act==='start')t.running=true;else if(act==='pause')t.running=false;
+    else if(act==='reset'){t.running=false;t.left=(+b.dataset.min||30)*60;el.textContent=fmt(t.left);el.style.color='var(--amber)';}};});
+  const m=location.hash.match(/^#s(\d+)$/);show(m?+m[1]-1:0);
+})();
+</script>
+</body>
+</html>

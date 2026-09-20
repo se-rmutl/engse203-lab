@@ -1,4 +1,4 @@
-# LAB 14 — Team Full-Stack Sprint 2 & Demo
+# LAB 15 — Team Full-Stack Sprint 2 & Demo
 
 **สัปดาห์ที่ 15** · หน่วยที่ 6 การพัฒนาแบบข้ามแพลตฟอร์มและโครงงานบูรณาการ  
 **รูปแบบงาน:** กลุ่ม  
