@@ -27,6 +27,16 @@
 | สไลด์ Week 09 (49 หน้า · 10 บท) | [เปิดสไลด์](https://se-rmutl.github.io/engse203/week09) |
 | เอกสารประกอบการสอน (10 บท) | [เปิดเอกสาร](https://se-rmutl.github.io/engse203/week09/week09-teaching-doc.html) |
 
+### หน้าจอ Live-Coding (ใช้ในคาบ)
+
+| Checkpoint | ทำอะไร | เปิด |
+|---|---|---|
+| CP17 | เขียน SQL ครั้งแรก — SELECT · WHERE · ORDER BY | [เปิด](https://se-rmutl.github.io/engse203/week09/guides/ENGSE203_Week09_CP17_LiveCoding.html) |
+| CP19–20 | สร้างฐานข้อมูลจริง + CRUD | [เปิด](https://se-rmutl.github.io/engse203/week09/guides/ENGSE203_Week09_CP19-20_LiveCoding.html) |
+| CP21 | JOIN สองตารางเข้าด้วยกัน | [เปิด](https://se-rmutl.github.io/engse203/week09/guides/ENGSE203_Week09_CP21_LiveCoding.html) |
+
+> CP18 (ออกแบบตาราง) ทำบนกระดาษ ไม่มีหน้า live-coding
+
 > ไฟล์ต้นฉบับอยู่ใน `guides/` ของโฟลเดอร์นี้ — clone ไปเปิดออฟไลน์ได้
 
 ---
@@ -152,8 +162,26 @@ week-09-sql-fundamentals/
 │   ├── ENGSE203_Week09_Teaching_Document_TH.html   ← 10 บท
 │   ├── ENGSE203_Week09_Slides.html                 ← 49 สไลด์ · 10 บท
 │   └── ENGSE203_Week09_Blueprint_TH.md
-
+└── _instructor-private/                ⚠ สำหรับผู้สอนเท่านั้น
 ```
 
 ---
 
+## สำหรับผู้สอน
+
+| ไฟล์ | ใช้ทำอะไร |
+|---|---|
+| [Instructor Step Script](_instructor-private/ENGSE203_Week09_Instructor_Step_Script_TH.md) | สคริปต์ 300 นาที + Hint Ladder + แผนสำรอง |
+| `_instructor-private/reference-solution/` | เฉลยครบ (checker 30/30) |
+
+**ตรวจก่อนสอน**
+
+```bash
+cd _instructor-private/reference-solution
+node --disable-warning=ExperimentalWarning check-week09.mjs | tail -6   # ต้องได้ 30/30
+
+cd ../../lab09/starter
+node --disable-warning=ExperimentalWarning check-week09.mjs | tail -6   # ต้องได้ 4/30
+```
+
+⚠ **`_instructor-private/` ต้องไม่เผยแพร่ให้นักศึกษา**

@@ -1,5 +1,156 @@
 # Changelog
 
+## v7.8.0 — ตรวจ Week 11 ครั้งสุดท้าย · แก้จุดที่ตกหล่น
+
+**จากการตรวจครบก่อนปิด Week 11 พบและแก้**
+
+- **ส่วน "ส่งอย่างไร (frontend+backend)" หายไป** — ตอนแก้ CP43 (v7.7) replace บล็อกทับส่วนนี้โดยไม่ตั้งใจ → กู้กลับ: push ทั้ง repo · ตาราง commit/ไม่ commit · วิดีโอ 2 ช่วง · เกณฑ์คะแนน A4
+- **starter checker เป็นเวอร์ชันเก่า (/34)** — reference เป็น /36 หลังปรับ CP43 · denominator ไม่ตรง → ก็อป checker ใหม่ · starter 18/36 → reference 36/36
+- **เลข checker เป้าหมายเก่าตกค้าง** — README (30/34, 34/34) · step script (34/34, 18/34) · README_LAB_CODE (18/34, 34/34) → แก้เป็น 32/36 · 36/36 · 18/36 ทุกที่
+
+### ตรวจครบทุกมิติ (ผ่านหมด)
+
+- โครง 11 ชิ้นครบเท่า W09/W10
+- checker: reference W11 36/36 · W10 31/31 · W07 36/36 · starter 18/36
+- สไลด์ 39 หน้า · เอกสาร 9 บท · marker ชี้ทิศถูก · JS valid
+- ลิงก์ live-coding ครบทั้ง README + In-class guide
+- ชื่อโฟลเดอร์ week-11-fullstack-integration · guide LAB11 · ไม่มี mongodb นำหน้า
+- เนื้อหาทาง C ครบ: CP43 จำลอง production บังคับ · Render จับมือทำเป็น Challenge · ephemeral เป็นบทเรียน
+- starter เปิด server ได้ก่อนทำ TODO
+
+## v7.7.0 — ปรับ deploy เป็นทาง C (จำลองในเครื่องบังคับ + Render จับมือทำเป็น Challenge)
+
+**เหตุผล** — นักศึกษายังไม่เคยใช้ cloud/ไม่เคย set server · deploy เดิมกระโดดไป cloud เร็วเกินไป (แค่ "push แล้วเชื่อม Render" 4 บรรทัด)
+
+### CP43 เปลี่ยนจาก "deploy" เป็น "จำลอง production ในเครื่อง" (ทุกคนทำ)
+
+- `npm run build` + `NODE_ENV=production npm start` → เปิดพอร์ตเดียวได้ทั้งเว็บและ API
+- อุปมา "ซ้อมใหญ่ก่อนแสดงจริง" — เข้าใจ production เต็มโดยไม่ต้องใช้ cloud
+- ไม่มีใครตกขบวนเพราะปัญหาเน็ต/บัญชี
+
+### Challenge — Render จับมือทำละเอียด 5 ขั้น (สำหรับคนพร้อม)
+
+- สมัคร (Sign in with GitHub ไม่ต้องบัตรเครดิต) → New Web Service → กรอกค่าตามตาราง → รอ build → ได้ URL
+- บอกชัดว่าเห็นหน้าจออะไร กดปุ่มไหน region ไหน (Singapore)
+- **ระบุ 2 ข้อจำกัด free tier ตรง ๆ** เป็นบทเรียน: cold start 30–60 วิ (ไม่ใช่พัง) · ephemeral filesystem ทำให้ SQLite หายทุก restart → โยงบท 7 ว่าทำไมระบบใหญ่ใช้ DB แยกเครื่อง
+- (ข้อมูล Render ปัจจุบัน 2026: free spin down 15 นาที · ไม่ต้องบัตรเครดิต · region Singapore)
+
+### ปรับให้สอดคล้อง
+
+- เอกสารบท 7: เพิ่มหัวข้อ 7.1 "จำลอง production ในเครื่อง" ก่อน · cloud เป็นก้าวถัดไป (อ่านเข้าใจภาพ)
+- สไลด์: เพิ่มสไลด์ "จำลอง production ในเครื่อง" (39 หน้า) · deploy cloud = Challenge
+- checker CP43: ตรวจ production build (dist/) + static serving แทนบังคับ deploy config · reference 34 → 36/36
+- step script + blueprint: CP43 = จำลอง production · deploy Render สาธิตได้ ไม่บังคับ
+
+## v7.6.0 — เปลี่ยนชื่อโฟลเดอร์ Week 11 · เพิ่มลิงก์ live-coding · ปรับวิธีส่งงาน A4
+
+### ① เปลี่ยนชื่อโฟลเดอร์ (MongoDB เป็นภาคผนวกแล้ว)
+
+- `week-11-mongodb-fullstack` → **`week-11-fullstack-integration`** (ชื่อตรงเนื้อหาจริง)
+- แก้ทุกลิงก์ใน README หลัก · README W11 · เว็บ
+- README W11: แก้หมายเหตุให้ชัดว่า MongoDB เป็นภาคผนวก (บท 8 อ่านเพิ่มเติม)
+
+### ② เพิ่มลิงก์ Live-Coding ใน In-Class Guide ทั้ง 3 สัปดาห์
+
+- เดิม In-Class guide (W09/W10/W11) ไม่มีลิงก์ไป live-coding เลย (มีแต่ใน README)
+- เพิ่มตาราง "หน้าจอ Live-Coding" — W09 3 ลิงก์ · W10 5 · W11 5
+
+### ③ ปรับวิธีส่งงาน A4 (Week 11) — frontend + backend
+
+- อธิบายว่าโปรเจกต์มีทั้ง `frontend/` + `api/` ใน repo เดียว → push ทั้ง repo ครั้งเดียว
+- ตารางบอกชัดว่า commit อะไร / ไม่ commit อะไร (node_modules, .env, dist)
+- **CP42 วิดีโอ 2 ช่วง** — ช่วง A สาธิตระบบ · **ช่วง B อธิบาย source code** (พิสูจน์ว่าเข้าใจ ไม่ใช่แค่ทำตาม)
+- เพิ่มเกณฑ์คะแนน A4 — อธิบาย source 30%
+
+### ④ อื่น ๆ ที่เจอและแก้
+
+- ปุ่ม GitHub ในเว็บ (roadmap) ยังใช้เลข LAB เก่า (เลื่อน 1) — แก้ให้เลข LAB = สัปดาห์ทุกปุ่ม
+
+### ตรวจแล้ว
+
+- checker W11 34/34 หลังเปลี่ยนชื่อ · ไม่ regression
+- ลิงก์ live-coding ใน guide ทั้ง 3 สัปดาห์ชี้ไฟล์จริง
+- ไม่มีชื่อโฟลเดอร์เก่าตกค้าง (นอก CHANGELOG)
+
+## v7.5.0 — เพิ่ม SVG และ interactive ใน Week 11 ให้เข้มข้นเท่า Week 09/10
+
+**เหตุผล** — Week 11 สไลด์น้อยไป (33 หน้า) SVG/interactive บางกว่าสัปดาห์อื่น
+
+### สไลด์ 33 → 38 หน้า
+
+- **Config Tracer** (interactive) — กดสลับ dev/production เห็นว่า config อ่านค่าต่างกันแต่โค้ดไม่เปลี่ยน
+- **Request Router** (interactive) — กดดูว่าแต่ละ path (/ vs /api) ไปไหนตอน production
+- **SVG การเดินทางของ config** — .env → process.env → config → โค้ด
+- **SVG deploy pipeline** — push → build → start → health → ออนไลน์
+- **quiz health check** — DB พังควรตอบ 200 หรือ 503
+- SVG ในสไลด์ 2 → 4 · interactive 5 → 12 · whybox 3 → 4
+
+### เอกสาร 5 → 7 SVG
+
+- **SVG config flow** (บท 3) — ค่าไหลทางเดียว ตั้งต้นทาง อ่านปลายทาง
+- **SVG health check flow** (บท 4) — cloud เรียก → เช็ค DB → 200/503
+- **predict box บท 2** — สลับลำดับเปิด frontend ก่อน API จะเกิดอะไร
+- predict 7 → 8
+
+### ตรวจแล้ว
+
+- marker ทุก SVG ชี้ทิศถูก (render ยืนยันด้วยตา)
+- JS สไลด์ valid · interactive ใหม่ทั้ง 2 ตัว element + handler ครบ
+- checker ไม่กระทบ (แก้แค่สไลด์/เอกสาร)
+
+## v7.4.0 — สร้างสัปดาห์ที่ 11 ครบชุด · ปิดหน่วยที่ 4
+
+**บูรณาการเป็นระบบจริงที่ deploy ได้** — ตัด MongoDB/async ออกจากการลงมือ (เหลือบทอ่านเพิ่มเติม) ตามที่ตกลง
+
+### ชิ้นงานครบชุด (เท่า Week 09/10)
+
+- **starter + reference + checker** — check-week11.mjs (starter 18/34 → reference 34/34) · W10 31/31 · W07 36/36 ไม่ regression
+- **เอกสารประกอบการสอน** 9 บท · 5 SVG (ระบบ 3 ชั้น · dev vs prod · SQL/NoSQL · sync/async · เส้นทาง Unit 4)
+- **สไลด์** 33 หน้า · 9 บท · interactive health check (กดดู 200/503) · quiz 3 ข้อ
+- **LAB Guide** In-Class (CP35–39) + Take-Home (งาน A4 · CP40–43)
+- **Step Script** 300 นาที
+- **Live-Coding** 5 ไฟล์ CP35–39 · footer/nav/hud/copy ครบ
+
+### เนื้อหา
+
+- CP35 รันระบบ 3 ชั้น · CP36 env config · CP37 health check · CP38 error+logging · CP39 production build
+- บท 8 อ่านเพิ่มเติม — SQL/NoSQL/async (รู้จัก ไม่ลงมือ) · ตอบ CLO5
+- reference: config.js · healthRoutes.js · getDbStatus() · production static serving · render.yaml · README · DATABASE_CHOICES.md · DEMO.md · CI
+
+### ปิดหน่วยที่ 4
+
+- roadmap เว็บ: สัปดาห์ 11 จาก "เร็ว ๆ นี้" → ลิงก์จริง
+- README หลัก: แถว 11 + ชื่อ LAB
+- สรุป Unit 4 — เปลี่ยนแหล่งข้อมูล 4 ครั้ง แก้ชั้นเดียวทุกครั้ง
+
+## v7.3.0 — เติม Live-Coding Week 09 + จัดไฟล์ starter Week 10 ให้ตรงเรื่องราว
+
+### ① เพิ่ม Live-Coding Week 09 (ให้สมมาตรกับ Week 07/10)
+
+- สร้าง 3 ไฟล์ตามที่ลงมือจริงในคาบ — CP17 (SELECT/WHERE/ORDER BY) · CP19–20 (สร้างตาราง + CRUD) · CP21 (JOIN)
+- CP18 (ออกแบบตาราง) ทำบนกระดาษ ไม่มีหน้า live-coding
+- footer/nav/hud ครบเหมือน Week 07/10 · CP17 มีขั้น ⓪ วาง playground-seed ก่อน
+- เพิ่มตาราง live-coding ใน README สัปดาห์ 9 และแถวสัปดาห์ 9 ในตารางสื่อหลัก
+
+### ② จัดไฟล์ starter Week 10 ให้ตรงเรื่องราว "รับของจากสัปดาห์ที่ 9"
+
+- **ย้าย schema.sql ออกจาก starter** — นักศึกษาต้องเอามาจากงาน W09 ของตัวเอง (starter เดิมแจกให้เลย ขัดกับบทเรียน)
+- ย้ายไป `_instructor-private/backup/` พร้อม campus.db สำรอง + README อธิบายว่าแจกเมื่อไร (เฉพาะคนที่จำเป็น)
+- เพิ่มขั้น ⓪ "รับของจากสัปดาห์ที่ 9" ใน LAB10 In-Class Guide
+- `npm run db:setup` แจ้ง error ชัดเมื่อไม่มี schema ("ขอไฟล์สำรองจากผู้สอน")
+
+### ③ ลบไฟล์ JSON เก่าที่ค้างใน starter Week 10
+
+- ลบ `requests.json` + `initialRequests.json` (W10 ใช้ฐานข้อมูลแล้ว ไฟล์เก่าทำให้สับสน)
+- แก้ `.gitignore`: เอา requests.json ออก · เพิ่ม test.db · campus.db commit ได้ (ตามคู่มือ)
+- เพิ่มโน้ต commit campus.db ใน LAB10 Take-Home (ให้ตรงกับ W09)
+
+### ตรวจแล้ว
+
+- checker: W09 30/30 · W10 31/31 · W07 36/36 (ไม่ regression)
+- live-coding W09 ทั้ง 3 ไฟล์: footer/nav/hud/copy ครบ · nav ชี้ไฟล์จริง · JS valid
+- เส้นทางกู้คืน (backup → db:setup) ทำงานจริง
+
 ## v7.2.0 — เพิ่ม playground-seed.sql สำหรับ CP17
 
 **เหตุผล** — CP17 ให้นักศึกษารัน `SELECT * FROM requests` บน SQL playground (sqlime.org) แต่ playground เริ่มเป็นฐานข้อมูลเปล่า · ถ้ายังไม่สร้างตารางจะได้ `no such table: requests` · และ `schema.sql` ใน starter เป็น TODO (ยังเขียนไม่เสร็จ) จึงใช้ตอน CP17 ไม่ได้
@@ -34,7 +185,7 @@
 |---|---|
 | `week-09-sqlite-crud` | `week-09-sql-fundamentals` |
 | `week-10-mongodb-mongoose` | `week-10-node-database` |
-| `week-11-fullstack-integration` | `week-11-mongodb-fullstack` |
+| `week-11-fullstack-integration` | `week-11-fullstack-integration` |
 
 ### เลข LAB = เลขสัปดาห์ (ทุกที่)
 

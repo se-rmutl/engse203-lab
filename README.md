@@ -93,7 +93,7 @@ git push -u origin main
 | 8 | สอบกลางภาค | รายบุคคล | ทฤษฎีและปฏิบัติ JavaScript, React, REST API | [รายละเอียดขอบเขต](./labs/week-08-midterm/) |
 | 9 | LAB 09 — ฐานข้อมูลเชิงสัมพันธ์และภาษา SQL | รายบุคคล | data model 2 ตาราง, constraint, SQL CRUD, JOIN | [เปิด LAB 09](./labs/week-09-sql-fundamentals/) |
 | 10 | LAB 10 — เชื่อม Node เข้ากับฐานข้อมูล | รายบุคคล | node:sqlite, JOIN ใน service, parameterized query | [เปิด LAB 10](./labs/week-10-node-database/) |
-| 11 | LAB 11 — Individual Full-Stack Integration | รายบุคคล | React + API + Database working end-to-end | [เปิด LAB 11](./labs/week-11-mongodb-fullstack/) |
+| 11 | LAB 11 — บูรณาการเป็นระบบจริงที่ deploy ได้ | รายบุคคล (A4) | integration, config, health check, production build | รายบุคคล | React + API + Database working end-to-end | [เปิด LAB 11](./labs/week-11-fullstack-integration/) |
 | 12 | LAB 12 — Unit Testing & Debugging Report | รายบุคคล | test case, unit test, debugging/logging evidence | [เปิด LAB 12](./labs/week-12-testing-debugging/) |
 | 13 | LAB 13 — Quality, Security & Delivery Readiness | รายบุคคล | validation, `.env`, security checklist, documentation | [เปิด LAB 13](./labs/week-13-quality-security/) |
 | 14 | LAB 14 — Cross-platform Product Sprint 1 | กลุ่ม | team plan, issue, branch, PR, cross-platform plan | [เปิด LAB 14](./labs/week-14-team-sprint-1/) |
@@ -128,9 +128,10 @@ Week 04 มีสองเส้นทางที่ไม่ควรสลั
 | 5B | [เปิด](https://se-rmutl.github.io/engse203/week05b) | [เปิด](https://se-rmutl.github.io/engse203/week05b/week05b-teaching-doc.html) | CP04a · CP04a-3 · CP04b · Cleanup · CP05b+CP06 — [ดูใน LAB 05](./labs/week-05-react-mini-app/) |
 | 6 | [เปิด](https://se-rmutl.github.io/engse203/week06) · [บทนำ API](https://se-rmutl.github.io/engse203/week06/guides/ENGSE203_API_Foundations_Slides.html) | [เปิด](https://se-rmutl.github.io/engse203/week06/week06-teaching-doc.html) | CP00–CP05 — [ดูใน LAB 06](./labs/week-06-express-api-foundation/) |
 | 7 | [เปิด](https://se-rmutl.github.io/engse203/week07) | [เปิด](https://se-rmutl.github.io/engse203/week07/week07-teaching-doc.html) | CP09–CP12 — [ดูใน LAB 07](./labs/week-07-rest-validation/) |
-| 9 | [เปิด](https://se-rmutl.github.io/engse203/week09) | [เปิด](https://se-rmutl.github.io/engse203/week09/week09-teaching-doc.html) | — (สัปดาห์นี้ไม่มี live-coding) |
+| 9 | [เปิด](https://se-rmutl.github.io/engse203/week09) | [เปิด](https://se-rmutl.github.io/engse203/week09/week09-teaching-doc.html) | CP17, CP19–20, CP21 — [ดูใน LAB 09](./labs/week-09-sql-fundamentals/) |
 | 10 | [เปิด](https://se-rmutl.github.io/engse203/week10) | [เปิด](https://se-rmutl.github.io/engse203/week10/week10-teaching-doc.html) | CP26–CP30 — [ดูใน LAB 10](./labs/week-10-node-database/) |
-| 11+ | เผยแพร่ก่อนถึงสัปดาห์นั้น | — | — |
+| 11 | [เปิด](https://se-rmutl.github.io/engse203/week11) | [เปิด](https://se-rmutl.github.io/engse203/week11/week11-teaching-doc.html) | CP35–CP39 — [ดูใน LAB 11](./labs/week-11-fullstack-integration/) |
+| 12+ | เผยแพร่ก่อนถึงสัปดาห์นั้น | — | — |
 
 **เว็บไซต์รายวิชา** — [se-rmutl.github.io/engse203](https://se-rmutl.github.io/engse203/)
 

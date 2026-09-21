@@ -401,6 +401,8 @@ npm test
 
 ## คำสั่ง git
 
+> **ต้อง commit ไฟล์ `campus.db` ด้วย** — เหมือนสัปดาห์ที่ 9 · ผู้สอนต้องตรวจข้อมูล และ SQLite เป็นไฟล์เดียวขนาดเล็ก
+
 ```bash
 git switch -c unit4/week-10
 git add -A

@@ -5,6 +5,20 @@
 
 ---
 
+## 🖥️ หน้าจอ Live-Coding (ฉายประกอบการสอน)
+
+ระหว่างสอนแต่ละ CP เปิดหน้าจอ live-coding คู่กันได้ — มีโค้ดทีละขั้น กล่องเตือนกับดัก และเช็คลิสต์
+
+| Checkpoint | เนื้อหา | เปิด |
+|---|---|---|
+| CP17 | เขียน SQL ครั้งแรก — SELECT · WHERE · ORDER BY | [เปิด](https://se-rmutl.github.io/engse203/week09/guides/ENGSE203_Week09_CP17_LiveCoding.html) |
+| CP19-20 | สร้างฐานข้อมูลจริง + CRUD | [เปิด](https://se-rmutl.github.io/engse203/week09/guides/ENGSE203_Week09_CP19-20_LiveCoding.html) |
+| CP21 | JOIN สองตารางเข้าด้วยกัน | [เปิด](https://se-rmutl.github.io/engse203/week09/guides/ENGSE203_Week09_CP21_LiveCoding.html) |
+
+> ไฟล์ต้นฉบับอยู่ใน  ของ LAB นี้ · เปิดออฟไลน์ได้
+
+---
+
 ## อ่านก่อนเริ่ม
 
 สัปดาห์นี้เป็น **เรื่องใหม่ทั้งหมด** — คุณยังไม่เคยเจอ SQL มาก่อน และจะได้เรียนวิชาฐานข้อมูลเต็ม ๆ ในเทอมหน้า

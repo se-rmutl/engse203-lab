@@ -5,6 +5,22 @@
 
 ---
 
+## 🖥️ หน้าจอ Live-Coding (ฉายประกอบการสอน)
+
+ระหว่างสอนแต่ละ CP เปิดหน้าจอ live-coding คู่กันได้ — มีโค้ดทีละขั้น กล่องเตือนกับดัก และเช็คลิสต์
+
+| Checkpoint | เนื้อหา | เปิด |
+|---|---|---|
+| CP26 | เปิดฐานข้อมูลจาก Node | [เปิด](https://se-rmutl.github.io/engse203/week10/guides/ENGSE203_Week10_CP26_LiveCoding.html) |
+| CP27 | กับดัก path สัมพัทธ์ | [เปิด](https://se-rmutl.github.io/engse203/week10/guides/ENGSE203_Week10_CP27_LiveCoding.html) |
+| CP28 | findAll + findById ด้วย JOIN | [เปิด](https://se-rmutl.github.io/engse203/week10/guides/ENGSE203_Week10_CP28_LiveCoding.html) |
+| CP29 | create แปลงชื่อเป็น id | [เปิด](https://se-rmutl.github.io/engse203/week10/guides/ENGSE203_Week10_CP29_LiveCoding.html) |
+| CP30 | CRUD ครบ + พิสูจน์ว่าไม่พัง | [เปิด](https://se-rmutl.github.io/engse203/week10/guides/ENGSE203_Week10_CP30_LiveCoding.html) |
+
+> ไฟล์ต้นฉบับอยู่ใน  ของ LAB นี้ · เปิดออฟไลน์ได้
+
+---
+
 ## อ่านก่อนเริ่ม
 
 สัปดาห์นี้คือ**ครึ่งหลังของหน่วยที่ 4** — สัปดาห์ที่แล้วเรียน SQL โดยไม่แตะโค้ด วันนี้เอา SQL นั้นมาใส่ในโปรแกรมจริง
@@ -70,6 +86,27 @@ node -v          # ต้อง >= 22.12.0
 `node:sqlite` ยังเป็นฟีเจอร์ทดลอง จะขึ้นคำเตือนทุกครั้งที่รัน
 
 **ไม่ใช่ error** — `package.json` ใส่ `--disable-warning=ExperimentalWarning` ให้แล้ว
+
+---
+
+## ⓪ รับของจากสัปดาห์ที่ 9 ก่อน
+
+สัปดาห์นี้ต่อยอดจากฐานข้อมูลที่สร้างไว้สัปดาห์ที่แล้ว · **ต้องเอาไฟล์มาวางก่อน**
+
+| ไฟล์ | เอามาจาก | วางไว้ที่ |
+|---|---|---|
+| `schema.sql` | งาน W09 ของตัวเอง | `lab10/starter/api/data/schema.sql` |
+| `campus.db` | งาน W09 ของตัวเอง (ถ้ามี) | `lab10/starter/api/data/campus.db` |
+
+```bash
+# ถ้ามีแค่ schema.sql — สร้าง campus.db จากมัน
+cd lab10/starter/api
+cp /path/to/week09/schema.sql data/schema.sql
+npm run db:setup
+```
+
+> **starter ไม่มี schema.sql ให้** — เพราะเป็นของที่คุณสร้างเองสัปดาห์ที่แล้ว
+> **ถ้าทำ W09 ไม่เสร็จ** — ขอไฟล์สำรองจากผู้สอน แล้ววางที่ `data/schema.sql`
 
 ---
 

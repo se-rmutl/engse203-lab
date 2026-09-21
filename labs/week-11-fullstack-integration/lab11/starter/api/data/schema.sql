@@ -56,3 +56,7 @@ INSERT INTO requests (id, requester_id, request_type, location, details, priorit
   ('REQ-003', 3, 'ขอใช้อุปกรณ์',      'ห้องประชุม 2',            'ขอยืมโปรเจกเตอร์สำหรับนำเสนอโครงงาน',  'normal', 'completed'),
   ('REQ-004', 1, 'แจ้งซ่อม',          'ห้องปฏิบัติการ 302',      'คอมพิวเตอร์เครื่องที่ 5 เปิดไม่ติด',    'urgent', 'pending'),
   ('REQ-005', 4, 'อื่น ๆ',             'ห้องสมุด ชั้น 2',         'ขอเพิ่มปลั๊กไฟบริเวณโต๊ะอ่านหนังสือ',  'normal', 'pending');
+
+-- ⭐ Challenge: index ให้การค้นด้วย status และ requester เร็วขึ้น
+CREATE INDEX IF NOT EXISTS idx_requests_status ON requests(status);
+CREATE INDEX IF NOT EXISTS idx_requests_requester ON requests(requester_id);

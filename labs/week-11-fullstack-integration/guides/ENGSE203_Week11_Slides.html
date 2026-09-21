@@ -1,0 +1,1245 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A1F16">
+<title>ENGSE203 Week 11 — Interactive Slides (โครงบท)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --font-scale:1;
+  --deep-950:#140C04; --deep-900:#221708; --deep-850:#2E1F0C; --deep-800:#3D2A12;
+  --ink:#EAF6EF; --muted:#A9C7B8; --dim:#6E8F7C;
+  --green:#FBBF24; --green-2:#22C55E; --cyan:#38D7ED; --amber:#FBBF24;
+  --red:#FB7185; --blue:#7AA5FF; --violet:#C084FC; --pink:#F472B6;
+  --panel:rgba(15,42,30,.74); --line:rgba(169,199,184,.24);
+  --shadow:0 24px 70px rgba(0,0,0,.44); --radius:20px;
+  font-size:calc(16px * var(--font-scale));
+}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0}
+body{overflow:hidden;color:var(--ink);
+  background:radial-gradient(circle at 14% 14%,rgba(251,191,36,.15),transparent 32%),
+  radial-gradient(circle at 84% 80%,rgba(192,132,252,.12),transparent 34%),#120A04;
+  font-family:'IBM Plex Sans Thai','Noto Sans Thai',Tahoma,sans-serif;}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+.app{min-height:100%;display:grid;place-items:center;position:relative}
+.stage{position:relative;width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));
+  aspect-ratio:16/9;overflow:hidden;background:var(--deep-900);box-shadow:var(--shadow);isolation:isolate;}
+.stage::before{content:"";position:absolute;inset:0;z-index:-2;
+  background:linear-gradient(135deg,rgba(255,255,255,.03),transparent 42%),
+  radial-gradient(circle at 80% 8%,rgba(74,222,128,.16),transparent 26%),
+  linear-gradient(160deg,var(--deep-900),#081b12 64%,#123024)}
+.stage::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.16;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 88%)}
+
+.slide{position:absolute;inset:0;display:none;padding:3.8% 5% 5.6%;overflow:hidden;flex-direction:column}
+.slide.active{display:flex;animation:enter .26s ease-out}
+@keyframes enter{from{opacity:.25;transform:translateX(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.active{animation:none}}
+
+.slide-id{position:absolute;top:2.8%;right:5%;font-family:'IBM Plex Mono',monospace;
+  font-size:.74rem;letter-spacing:.14em;color:var(--muted);opacity:.65}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;width:fit-content;color:var(--green);
+  font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.88rem;margin-bottom:.5rem}
+.eyebrow.amber{color:var(--amber)} .eyebrow.cyan{color:var(--cyan)}
+.eyebrow.red{color:var(--red)} .eyebrow.violet{color:var(--violet)}
+
+h1{font-size:3.3rem;line-height:1.1;margin:0 0 .7rem;font-weight:700;letter-spacing:-.015em}
+h2{font-size:2.35rem;line-height:1.16;margin:0 0 .7rem;font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.4rem;margin:0 0 .35rem;font-weight:600}
+p{margin:0 0 .6rem;line-height:1.5;font-size:1.3rem}
+.lead{font-size:1.6rem;color:var(--muted);font-weight:300;line-height:1.45}
+.muted{color:var(--muted)}
+small{font-size:1rem;color:var(--muted)}
+strong{font-weight:600}
+code{font-family:'IBM Plex Mono',monospace;font-size:.9em;background:rgba(74,222,128,.15);
+  padding:.08em .38em;border-radius:5px;color:#bff5d0}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.15rem 1.35rem}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:.75rem}
+.center{justify-content:center}
+
+/* SVG figure */
+.fig{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.fig svg{width:100%;height:100%;max-height:100%;display:block}
+.figcap{font-size:1.05rem;color:var(--muted);text-align:center;margin-top:.3rem}
+svg text{font-family:'IBM Plex Sans Thai',sans-serif}
+.svg-t{font-size:15px;font-weight:600;fill:#EAF6EF}
+.svg-s{font-size:12.5px;font-weight:300;fill:#A9C7B8}
+.svg-m{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500}
+.svg-lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em}
+.svg-big{font-size:19px;font-weight:700;fill:#EAF6EF}
+
+table{width:100%;border-collapse:collapse;font-size:1.22rem}
+th{text-align:left;padding:.6rem .75rem;color:var(--green);font-weight:600;
+  border-bottom:2px solid var(--line);font-size:1.08rem}
+td{padding:.6rem .75rem;border-bottom:1px solid rgba(169,199,184,.14);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+
+.chip{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .78rem;border-radius:999px;
+  font-size:1.02rem;font-weight:600;border:1px solid var(--line);background:rgba(74,222,128,.1);color:var(--green)}
+.chip.a{color:var(--amber);background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.32)}
+.chip.c{color:var(--cyan);background:rgba(56,215,237,.1);border-color:rgba(56,215,237,.32)}
+.chip.v{color:var(--violet);background:rgba(192,132,252,.1);border-color:rgba(192,132,252,.32)}
+.chip.r{color:var(--red);background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.32)}
+
+.where{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.98rem;font-weight:600;
+  padding:.24rem .72rem;border-radius:8px}
+.where.room{background:rgba(74,222,128,.16);color:#bff5d0;border:1px solid rgba(74,222,128,.4)}
+.where.home{background:rgba(251,191,36,.14);color:#ffe1a8;border:1px solid rgba(251,191,36,.4)}
+
+.title-slide{justify-content:center}
+.brandline{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.2rem}
+
+pre{background:rgba(4,16,11,.9);border:1px solid var(--line);border-radius:14px;
+  padding:.95rem 1.15rem;overflow:auto;font-size:1.08rem;line-height:1.55;margin:.35rem 0}
+pre code{background:none;padding:0;color:#d6efe0;font-size:1.08rem}
+.k{color:#8FE3A8}.s{color:#E9C88A}.c{color:#7EA592;font-style:italic}.f{color:#8FD0EC}
+.n{color:#D9A0E8}.hl{color:#FFE08A;font-weight:600}.bad{color:#FB7185}
+
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.g21{display:grid;grid-template-columns:1.4fr 1fr;gap:.9rem}
+.card{border:1px solid var(--line);border-radius:16px;padding:1rem 1.15rem;background:rgba(4,16,11,.5)}
+.card .ic{font-size:1.8rem;margin-bottom:.3rem}
+.card h3{font-size:1.25rem;margin-bottom:.25rem}
+.card p{font-size:1.06rem;margin:0;color:var(--muted)}
+.card.room{border-color:rgba(74,222,128,.4)}
+.card.home{border-color:rgba(251,191,36,.4)}
+.card.ch{border-color:rgba(192,132,252,.4)}
+
+.flow{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:.3rem 0}
+.flow .step{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35);
+  border-radius:12px;padding:.55rem .95rem;font-weight:600;font-size:1.1rem}
+.flow .arr{color:var(--muted);font-size:1.25rem}
+
+.analogy{background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.34);border-radius:var(--radius);padding:1rem 1.25rem}
+.note{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.34);border-radius:var(--radius);padding:1rem 1.25rem}
+.win{background:rgba(74,222,128,.09);border:1px solid rgba(74,222,128,.36);border-radius:var(--radius);padding:1rem 1.25rem}
+.wrong{background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.36);border-radius:var(--radius);padding:1rem 1.25rem}
+.term{background:rgba(56,215,237,.08);border-left:4px solid var(--cyan);border-radius:0 14px 14px 0;padding:.9rem 1.2rem}
+.term .w{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--cyan);font-size:1.2rem;margin-bottom:.2rem}
+.term p{margin:0;font-size:1.15rem}
+
+.iact{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.3);border-radius:var(--radius);padding:1rem 1.25rem}
+.opts{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.45rem}
+.opt{background:rgba(15,42,30,.92);border:1px solid var(--line);border-radius:12px;
+  padding:.55rem 1rem;font-size:1.15rem;transition:all .15s}
+.opt:hover{border-color:var(--green);background:rgba(74,222,128,.14)}
+.opt.ok{border-color:var(--green);background:rgba(74,222,128,.2);color:#c9f7d8}
+.opt.no{border-color:var(--red);background:rgba(251,113,133,.2);color:#ffd4da}
+.fb{margin-top:.5rem;font-size:1.1rem;min-height:1.4rem;color:var(--muted)}
+.fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+
+.reveal{border:1px dashed var(--line);border-radius:14px;padding:.7rem 1rem;background:rgba(4,16,11,.5)}
+.reveal button{background:none;border:none;color:var(--green);font-weight:600;font-size:1.15rem;padding:0}
+.reveal .ans{display:none;margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--line);font-size:1.15rem}
+.reveal.open .ans{display:block}
+
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.pgbox{border:1px solid var(--line);border-radius:14px;background:rgba(4,16,11,.8);overflow:hidden}
+.pghead{background:rgba(169,199,184,.09);padding:.42rem .8rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.95rem;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--line)}
+.pgbody{padding:.8rem;font-family:'IBM Plex Mono',monospace;font-size:1rem;line-height:1.5;
+  min-height:130px;word-break:break-all;color:#d6efe0;white-space:pre-wrap}
+.reqbtns{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem}
+.reqbtns button{background:rgba(15,42,30,.92);border:1px solid var(--line);border-radius:9px;
+  padding:.38rem .75rem;font-family:'IBM Plex Mono',monospace;font-size:.98rem;color:var(--muted)}
+.reqbtns button:hover{border-color:var(--green);color:var(--green)}
+.reqbtns button.m-get{color:#8FE3A8;border-color:rgba(74,222,128,.4)}
+.reqbtns button.m-post{color:#E9C88A;border-color:rgba(251,191,36,.4)}
+.reqbtns button.m-del{color:#FB7185;border-color:rgba(251,113,133,.4)}
+.stcode{font-family:'IBM Plex Mono',monospace;font-weight:600}
+.stcode.ok{color:var(--green)} .stcode.warn{color:var(--amber)} .stcode.err{color:var(--red)}
+
+.bigtime{font-family:'IBM Plex Mono',monospace;font-size:2.8rem;font-weight:600;line-height:1;color:var(--amber)}
+.timerbtns{display:flex;gap:.45rem;margin-top:.5rem}
+.timerbtns button{background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.4);
+  color:var(--amber);border-radius:10px;padding:.38rem .85rem;font-size:1rem;font-weight:600}
+.labstop{background:linear-gradient(150deg,rgba(251,191,36,.13),rgba(15,42,30,.82));border:1px solid rgba(251,191,36,.4)}
+
+ul{margin:.15rem 0 .4rem 1.25rem;padding:0}
+li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
+
+.bar{position:fixed;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.08);z-index:40}
+.bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));width:0;transition:width .25s}
+.hud{position:fixed;bottom:16px;right:18px;display:flex;gap:.42rem;align-items:center;z-index:41}
+.hud button{background:rgba(15,42,30,.94);border:1px solid var(--line);border-radius:10px;
+  padding:.3rem .62rem;font-size:.88rem;color:var(--muted)}
+.hud button:hover{color:var(--green);border-color:var(--green)}
+.counter{font-family:'IBM Plex Mono',monospace;font-size:.86rem;color:var(--muted);padding:0 .32rem}
+.toc{position:fixed;inset:0;background:rgba(4,12,8,.97);z-index:50;display:none;padding:3.5vh 5vw;overflow:auto}
+.toc.open{display:block}
+.toc h3{color:var(--green);margin-bottom:.9rem;font-size:1.25rem;letter-spacing:.08em;text-transform:uppercase}
+.toc ol{columns:3;column-gap:2.2rem;margin:0;padding-left:1.3rem;font-size:1.05rem}
+.toc li{margin-bottom:.42rem;break-inside:avoid}
+.toc a{color:var(--ink);text-decoration:none;opacity:.85}
+.toc a:hover{color:var(--green);opacity:1}
+.toc .tag{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--dim);margin-left:.35rem}
+@media (max-width:900px){.toc ol{columns:2}}
+
+/* ── โครงบท ── */
+.chapbadge{position:absolute;top:2.8%;left:5%;display:flex;align-items:center;gap:.5rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.76rem;font-weight:600;letter-spacing:.08em;
+  color:var(--green);background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);
+  padding:.22rem .7rem;border-radius:999px}
+.chapbadge .of{color:var(--muted);font-weight:400}
+.chapbadge.home{color:var(--amber);background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.32)}
+.divider{justify-content:center;align-items:flex-start}
+.divider .grp{font-family:'IBM Plex Mono',monospace;font-size:.95rem;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem}
+.divider .bignum{font-family:'IBM Plex Mono',monospace;font-size:6rem;font-weight:700;
+  line-height:1;color:var(--green);margin-bottom:.4rem;letter-spacing:-.04em}
+.divider .bignum.home{color:var(--amber)}
+.divider h2{font-size:3rem;margin-bottom:.6rem}
+.divider .whatfor{font-size:1.4rem;color:var(--muted);font-weight:300;max-width:46ch;line-height:1.5}
+.divider .mins{margin-top:1.6rem;display:flex;gap:.6rem;flex-wrap:wrap}
+.recap{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.35);
+  border-radius:var(--radius);padding:1.2rem 1.5rem}
+.recap h3{color:var(--green);font-size:1.3rem;margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.6rem}
+.recap ul{margin:0 0 0 1.3rem}
+.recap li{font-size:1.24rem;margin-bottom:.45rem}
+.nextup{background:rgba(56,215,237,.08);border:1px solid rgba(56,215,237,.35);
+  border-radius:var(--radius);padding:.9rem 1.3rem;font-size:1.2rem}
+.nextup b{color:var(--cyan)}
+.whybox{background:rgba(192,132,252,.1);border:1px solid rgba(192,132,252,.4);
+  border-radius:var(--radius);padding:1.2rem 1.5rem}
+.whybox .q{font-size:1.5rem;font-weight:600;color:var(--violet);margin-bottom:.5rem}
+.whybox p{font-size:1.28rem;margin:0}
+.track{display:flex;gap:.3rem;flex-wrap:wrap;justify-content:center;margin-top:.5rem}
+.track span{width:26px;height:6px;border-radius:3px;background:rgba(169,199,184,.2)}
+.track span.done{background:var(--green)}
+.track span.now{background:var(--cyan);box-shadow:0 0 8px rgba(56,215,237,.5)}
+.track span.home{background:rgba(251,191,36,.4)}
+/* ── Interactive: Layer Tracer ── */
+.lt{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.5rem 0}
+.lt-col{background:rgba(4,14,20,.5);border:1px solid rgba(169,199,184,.25);border-radius:var(--radius);padding:.7rem .9rem}
+.lt-col h4{font-size:1rem;color:var(--muted);margin:0 0 .5rem;font-family:'IBM Plex Mono',monospace;
+  letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.lt-step{display:flex;align-items:flex-start;gap:.6rem;padding:.5rem .6rem;margin-bottom:.35rem;
+  border-radius:8px;border:1px solid transparent;transition:all .25s;opacity:.4}
+.lt-step.on{opacity:1;background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.45)}
+.lt-step.done{opacity:.75;background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.25)}
+.lt-step .n{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:rgba(169,199,184,.2);
+  display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;
+  font-family:'IBM Plex Mono',monospace}
+.lt-step.on .n{background:var(--amber);color:#1a1205}
+.lt-step.done .n{background:var(--green);color:#04120c}
+.lt-step .txt{flex:1;min-width:0}
+.lt-step .nm{font-size:1.02rem;font-weight:600;line-height:1.3}
+.lt-step .fl{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--cyan);
+  word-break:break-all;line-height:1.3}
+.lt-step .ds{font-size:.9rem;color:var(--muted);line-height:1.35;margin-top:.15rem}
+.lt-out{background:rgba(4,14,20,.75);border-left:3px solid var(--cyan);border-radius:6px;
+  padding:.6rem .8rem;font-family:'IBM Plex Mono',monospace;font-size:.85rem;
+  min-height:150px;white-space:pre-wrap;line-height:1.5;color:var(--ink)}
+.lt-out .dim{color:var(--muted)}
+.lt-out .hi{color:var(--amber)}
+.lt-out .ok{color:var(--green)}
+
+/* ── Interactive: Query Stepper ── */
+.qs-tbl{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:.85rem}
+.qs-tbl th{background:rgba(251,191,36,.14);color:var(--amber);padding:.3rem .5rem;text-align:left;
+  border:1px solid rgba(169,199,184,.2);font-weight:600}
+.qs-tbl td{padding:.28rem .5rem;border:1px solid rgba(169,199,184,.15);transition:all .3s}
+.qs-tbl tr.out td{opacity:.22;text-decoration:line-through}
+.qs-tbl tr.keep td{background:rgba(74,222,128,.14)}
+.qs-tbl td.drop{opacity:.2}
+.qs-tbl td.pick{background:rgba(56,215,237,.16);color:var(--cyan)}
+.qs-stage{display:flex;gap:.4rem;flex-wrap:wrap;margin:.5rem 0}
+.qs-stage button{font-size:.92rem}
+.qs-note{background:rgba(56,215,237,.1);border-left:3px solid var(--cyan);border-radius:6px;
+  padding:.5rem .8rem;font-size:1.02rem;margin-top:.5rem;min-height:2.6rem}
+
+/* ── Interactive: JOIN visual ── */
+.jn{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
+.jn-t{font-family:'IBM Plex Mono',monospace;font-size:.84rem;width:100%;border-collapse:collapse}
+.jn-t th{background:rgba(169,199,184,.14);padding:.28rem .45rem;text-align:left;
+  border:1px solid rgba(169,199,184,.2);font-size:.78rem}
+.jn-t td{padding:.26rem .45rem;border:1px solid rgba(169,199,184,.15);transition:all .3s}
+.jn-t tr.lit td{background:rgba(251,191,36,.2);box-shadow:inset 0 0 0 1px rgba(251,191,36,.5)}
+.jn-res{margin-top:.6rem}
+.jn-res tr.new td{background:rgba(74,222,128,.16)}
+
+/* ── Interactive: Injection compare ── */
+.inj{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.5rem}
+.inj-box{border-radius:var(--radius);padding:.7rem .9rem;border:1px solid}
+.inj-box.bad{background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.4)}
+.inj-box.good{background:rgba(74,222,128,.09);border-color:rgba(74,222,128,.4)}
+.inj-box h4{margin:0 0 .4rem;font-size:1.02rem}
+.inj-sql{font-family:'IBM Plex Mono',monospace;font-size:.8rem;background:rgba(4,14,20,.6);
+  border-radius:5px;padding:.45rem .6rem;line-height:1.5;word-break:break-all;min-height:4.2rem}
+.inj-sql .ev{color:#FB7185;font-weight:700}
+.inj-sql .pm{color:var(--cyan)}
+.inj-r{margin-top:.4rem;font-size:1rem;font-weight:600}
+
+/* ── Config Tracer ── */
+.ct{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.5rem 0}
+.ct-col{background:rgba(4,14,20,.5);border:1px solid rgba(169,199,184,.25);border-radius:var(--radius);padding:.7rem .9rem}
+.ct-col h4{font-size:.98rem;color:var(--muted);margin:0 0 .5rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.ct-row{display:flex;align-items:center;gap:.5rem;padding:.4rem .5rem;margin-bottom:.3rem;border-radius:7px;border:1px solid transparent;font-family:'IBM Plex Mono',monospace;font-size:.88rem;transition:all .3s;opacity:.35}
+.ct-row.on{opacity:1;background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.4)}
+.ct-row .kv{flex:1;min-width:0}
+.ct-row .k{color:var(--cyan)}
+.ct-row .v{color:var(--ink)}
+.ct-out{background:rgba(4,14,20,.7);border-left:3px solid var(--amber);border-radius:6px;padding:.6rem .8rem;font-family:'IBM Plex Mono',monospace;font-size:.86rem;min-height:120px;white-space:pre-wrap;line-height:1.55}
+.ct-out .dim{color:var(--muted)} .ct-out .hi{color:var(--amber)} .ct-out .ok{color:var(--green)}
+.ct-stage{display:flex;gap:.4rem;flex-wrap:wrap;margin:.5rem 0}
+
+/* ── Request Router ── */
+.rr{margin:.5rem 0}
+.rr-in{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem}
+.rr-in button{font-family:'IBM Plex Mono',monospace;font-size:.9rem}
+.rr-flow{display:flex;align-items:stretch;gap:0;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(169,199,184,.25);min-height:120px}
+.rr-node{flex:1;padding:.7rem;display:flex;flex-direction:column;justify-content:center;text-align:center;border-right:1px solid rgba(169,199,184,.2);transition:all .3s;opacity:.3}
+.rr-node:last-child{border-right:none}
+.rr-node.on{opacity:1}
+.rr-node.hit{background:rgba(74,222,128,.14)}
+.rr-node .ic{font-size:1.5rem;margin-bottom:.3rem}
+.rr-node .nm{font-size:.92rem;font-weight:600}
+.rr-node .ds{font-size:.8rem;color:var(--muted);margin-top:.2rem;font-family:'IBM Plex Mono',monospace}
+.rr-out{margin-top:.5rem;padding:.5rem .8rem;border-radius:6px;font-size:1.02rem;min-height:2.4rem;background:rgba(56,215,237,.1);border-left:3px solid var(--cyan)}
+
+</style>
+</head>
+<body>
+<div class="app"><div class="stage" id="stage">
+
+<section class="slide title-slide active" data-title="เปิดบทเรียน">
+  <span class="eyebrow">หน่วยที่ 4 · สัปดาห์ที่ 11 · ปิดหน่วย</span>
+  <h1>บูรณาการเป็นระบบจริง<br>ที่ deploy ได้</h1>
+  <p class="lead">"รันได้บนเครื่องเรา" กับ "พร้อมใช้จริง" ต่างกันตรงไหน</p>
+  <div class="brandline">
+    <span class="chip">ประกอบ 3 ชั้น</span><span class="chip c">config &amp; health</span>
+    <span class="chip a">error &amp; logging</span><span class="chip v">production build</span>
+  </div>
+  <p style="margin-top:1.4rem"><small>→ / Space ไปต่อ · T สารบัญ · F เต็มจอ · A+ A− ปรับขนาด</small></p>
+</section>
+
+<section class="slide" data-title="🗺️ แผนที่คาบนี้">
+  <span class="slide-id">W11 · MAP</span>
+  <span class="eyebrow cyan">คาบปิดหน่วยที่ 4</span>
+  <h2>9 บท · 3 กลุ่ม</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="card room"><div class="ic">🔗</div><h3>กลุ่ม 1 · บท 1–3</h3><p><strong>ระบบทั้งสามชั้น</strong><br>ภาพรวม · รันครบวงจร · env config</p></div>
+      <div class="card" style="border-color:rgba(56,215,237,.45)"><div class="ic">🛠️</div><h3>กลุ่ม 2 · บท 4–6</h3><p><strong>ทำให้พร้อมใช้จริง</strong><br>health check · error/log · build</p></div>
+      <div class="card home"><div class="ic">🚀</div><h3>กลุ่ม 3 · บท 7–9</h3><p><strong>ปิดหน่วย</strong><br>deploy · อ่านเพิ่มเติม · สรุป</p></div>
+    </div>
+    <div class="panel" style="border-color:rgba(251,191,36,.45)">
+      <p style="margin:0;font-size:1.22rem"><strong style="color:var(--amber)">ไม่มีเรื่องใหม่ใหญ่</strong> — เอาระบบ 3 ชั้นจาก Week 10 มา<strong>ขัดให้สมบูรณ์จนพร้อมส่งมอบจริง</strong></p>
+    </div>
+    <p style="text-align:center"><small><strong>MongoDB / async</strong> อยู่ในบท 8 "อ่านเพิ่มเติม" — รู้จักว่ามี ไม่ต้องลงมือ</small></p>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 1 · ภาพรวม Full-Stack">
+  <span class="grp">กลุ่ม 1 · ระบบทั้งสามชั้น</span>
+  <p class="bignum">01</p>
+  <h2>ภาพรวม Full-Stack</h2>
+  <p class="whatfor">ถอยมามองทั้งระบบพร้อมกัน ว่าข้อมูลเดินทางครบวงจรอย่างไร</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 9 นาที</span></div>
+  <div class="track"><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="ระบบ 3 ชั้นครบวงจร">
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 9</span> · ภาพรวม Full-Stack</span>
+  <span class="eyebrow ">เห็นทั้งระบบ</span>
+  <h2>request ไหลลง response ไหลขึ้น</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ระบบ 3 ชั้น">
+      <defs>
+        <marker id="s1d" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#FBBF24" stroke-width="1.8"/></marker>
+        <marker id="s1u" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#4ADE80" stroke-width="1.8"/></marker>
+      </defs>
+      <rect x="40" y="60" width="230" height="90" rx="12" fill="rgba(56,215,237,.14)" stroke="#38D7ED" stroke-width="2"/>
+      <text x="155" y="90" text-anchor="middle" class="svg-t" style="font-size:16px">① React</text>
+      <text x="155" y="114" text-anchor="middle" class="svg-s">frontend · พอร์ต 5173</text>
+      <text x="155" y="134" text-anchor="middle" class="svg-m" fill="#38D7ED">หน้าจอผู้ใช้</text>
+      <rect x="335" y="60" width="230" height="90" rx="12" fill="rgba(251,191,36,.14)" stroke="#FBBF24" stroke-width="2"/>
+      <text x="450" y="90" text-anchor="middle" class="svg-t" style="font-size:16px">② Express API</text>
+      <text x="450" y="114" text-anchor="middle" class="svg-s">พอร์ต 3001</text>
+      <text x="450" y="134" text-anchor="middle" class="svg-m" fill="#FBBF24">route·controller·service</text>
+      <rect x="630" y="60" width="230" height="90" rx="12" fill="rgba(74,222,128,.14)" stroke="#4ADE80" stroke-width="2"/>
+      <text x="745" y="90" text-anchor="middle" class="svg-t" style="font-size:16px">③ SQLite</text>
+      <text x="745" y="114" text-anchor="middle" class="svg-s">campus.db</text>
+      <text x="745" y="134" text-anchor="middle" class="svg-m" fill="#4ADE80">เก็บข้อมูลถาวร</text>
+      <path d="M272 88 L332 88" stroke="#FBBF24" stroke-width="2" marker-end="url(#s1d)"/>
+      <text x="302" y="78" text-anchor="middle" class="svg-m" fill="#FBBF24">HTTP</text>
+      <path d="M567 88 L627 88" stroke="#FBBF24" stroke-width="2" marker-end="url(#s1d)"/>
+      <text x="597" y="78" text-anchor="middle" class="svg-m" fill="#FBBF24">SQL</text>
+      <path d="M627 122 L567 122" stroke="#4ADE80" stroke-width="2" marker-end="url(#s1u)"/>
+      <text x="597" y="140" text-anchor="middle" class="svg-m" fill="#4ADE80">rows</text>
+      <path d="M332 122 L272 122" stroke="#4ADE80" stroke-width="2" marker-end="url(#s1u)"/>
+      <text x="302" y="140" text-anchor="middle" class="svg-m" fill="#4ADE80">JSON</text>
+      <text x="450" y="185" text-anchor="middle" class="svg-s">ทั้งหมดเกิดในเสี้ยววินาที — ผู้ใช้เห็นแค่ "กดแล้วข้อมูลขึ้น"</text>
+    </svg>
+  </div>
+  <div class="whybox">
+    <p class="q">"รันได้บนเครื่องเรา" ยังไม่พอ</p>
+    <p>ระบบนี้รันดีตอน dev · แต่เอาไปเครื่องอื่น/cloud จะเจอ — <strong>พอร์ตชนกัน · CORS ต่างโดเมน · path ต่าง · frontend ยังไม่ build</strong><br>
+    <strong>งานสัปดาห์นี้แก้ทั้งหมดนี้</strong></p>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 1">
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 9</span> · ภาพรวม Full-Stack</span>
+  
+  <h2>จบบทที่ 1 — ภาพรวม Full-Stack</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>ระบบ 3 ชั้น — React ↔ Express ↔ SQLite</li><li>request ไหลลง · response ไหลขึ้น</li><li><strong>"รันได้บนเครื่องเรา" ยังไม่พอ</strong> — ต้องรันที่อื่นได้ด้วย</li><li>งานสัปดาห์นี้ — แก้สิ่งที่ทำให้ไปรันที่อื่นไม่ได้</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 2 — เปิดระบบทั้ง 3 ชั้นพร้อมกัน</div>
+    <div class="track"><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 2 · รันระบบครบวงจร">
+  <span class="grp">กลุ่ม 1 · ระบบทั้งสามชั้น</span>
+  <p class="bignum">02</p>
+  <h2>รันระบบครบวงจร</h2>
+  <p class="whatfor">เปิดทั้ง 3 ส่วนให้ทำงานพร้อมกัน ก่อนขัดให้สมบูรณ์</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 9 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="เปิดจากล่างขึ้นบน">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 9</span> · รันครบวงจร</span>
+  <span class="eyebrow ">ลำดับสำคัญ</span>
+  <h2>ฐานข้อมูล → API → frontend</h2>
+  <div class="body center">
+    <table style="font-size:1.2rem">
+      <tr><th>ลำดับ</th><th>เปิดอะไร</th><th>คำสั่ง</th><th>ทำไม</th></tr>
+      <tr><td>①</td><td>ฐานข้อมูล</td><td><code>npm run db:setup</code></td><td>ต้องมี campus.db ก่อน</td></tr>
+      <tr><td>②</td><td>API</td><td><code>npm run dev</code> (api)</td><td>frontend ต้องมี API ให้เรียก</td></tr>
+      <tr><td>③</td><td>frontend</td><td><code>npm run dev</code> (frontend)</td><td>เปิดท้ายสุด</td></tr>
+    </table>
+    <div class="analogy"><p style="margin:0;font-size:1.24rem"><strong>เหมือนร้านอาหาร</strong> — คลังวัตถุดิบ (DB) → ครัว (API) → หน้าร้าน (frontend) · เปิดจากหลังไปหน้า</p></div>
+    <div class="note"><p style="margin:0"><strong>dev ต้อง 2 terminal</strong> — API กับ frontend เป็นคนละ process · Vite มี hot reload แก้โค้ดเห็นผลทันที<br>
+    <small>แต่ production จะรวมเป็นพอร์ตเดียว — บทที่ 6</small></p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 2">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 9</span> · รันครบวงจร</span>
+  
+  <h2>จบบทที่ 2 — รันครบวงจร</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>เปิดล่างขึ้นบน — DB → API → frontend</li><li>dev ต้อง 2 terminal · Vite hot reload</li><li>ตรวจครบวงจร — เพิ่มข้อมูลจากหน้าเว็บแล้วเห็นบันทึกจริง</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือ CP35</strong> — รันระบบ 3 ชั้น</div>
+    <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 CP35 รันระบบ 3 ชั้น">
+  <span class="chapbadge">🏫 ลงมือทำ · CP35</span>
+  <span class="eyebrow amber">checkpoint แรก</span>
+  <h2>CP35 · รันระบบ full-stack ครบ 3 ชั้น</h2>
+  <div class="body center">
+    <table style="font-size:1.18rem">
+      <tr><th>ตรวจ</th><th>ทำอย่างไร</th><th>ต้องเห็น</th></tr>
+      <tr><td>ฐานข้อมูล</td><td>มี <code>campus.db</code></td><td>ไฟล์อยู่จริง</td></tr>
+      <tr><td>API</td><td><code>curl localhost:3001/api/requests</code></td><td>JSON 5 รายการ</td></tr>
+      <tr><td>frontend</td><td>เปิด <code>localhost:5173</code></td><td>Dashboard แสดงข้อมูล</td></tr>
+      <tr><td>ครบวงจร</td><td>เพิ่มคำร้องจากหน้าเว็บ</td><td>บันทึกและแสดงจริง</td></tr>
+    </table>
+    <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — เปิดทั้ง 3 ส่วนพร้อมกัน แล้วเพิ่ม/ดู/ลบ/เปลี่ยนสถานะได้ครบวงจร</p></div>
+  </div>
+</section>
+<section class="slide divider" data-title="บทที่ 3 · Environment Variable">
+  <span class="grp">กลุ่ม 1 · ระบบทั้งสามชั้น</span>
+  <p class="bignum">03</p>
+  <h2>Environment Variable</h2>
+  <p class="whatfor">ค่าที่กำหนดจากภายนอกโค้ด เปลี่ยนตามเครื่องได้ — หัวใจของการ deploy</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 11 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="ทำไมห้าม hardcode">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 9</span> · env config</span>
+  <span class="eyebrow amber">ลองคิด</span>
+  <h2>hardcode port แล้ว deploy ไม่ได้</h2>
+  <div class="body center">
+    <div class="iact" data-quiz="q1">
+      <p style="margin:0 0 .3rem"><strong>เขียน <code>app.listen(3001)</code> แล้ว deploy บน cloud ที่กำหนดพอร์ตให้เอง — เกิดอะไร</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">cloud ปรับให้เป็น 3001 อัตโนมัติ</button>
+        <button class="opt" data-a="1">ฟังผิดพอร์ต → cloud เข้าไม่ถึง → deploy ไม่สำเร็จ</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <pre style="margin:0;font-size:1.02rem"><code><span class="c">// config.js — อ่าน env ที่เดียว ที่อื่น import จากนี่</span>
+<span class="k">export const</span> config = {
+  env:        process.env.NODE_ENV ?? <span class="s">'development'</span>,
+  isProd:     process.env.NODE_ENV === <span class="s">'production'</span>,
+  port:       <span class="f">Number</span>(process.env.PORT ?? <span class="n">3001</span>),
+  corsOrigin: process.env.CORS_ORIGIN ?? <span class="s">'http://localhost:5173'</span>,
+};</code></pre>
+    <div class="win"><p style="margin:0"><strong>รวม config ที่เดียว</strong> — ① เห็นครบว่าต้องการ env อะไร · ② มี <code>??</code> default ทุกตัว ลืมตั้งก็รันได้ · ③ ที่อื่นเขียน <code>config.port</code> อ่านง่าย</p></div>
+    <div class="wrong"><p style="margin:0"><strong>⚠ ห้าม commit <code>.env</code></strong> — มักมีค่าลับ · ใช้ <code>.env.example</code> ที่มีแต่ชื่อตัวแปร ไม่มีค่าจริง</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🎮 config เดินทางอย่างไร">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 9</span> · env config</span>
+  <span class="eyebrow amber">ลองเล่น — กดสลับ dev/production</span>
+  <h2>โค้ดเดิม ทำงานถูกทั้ง dev และ cloud</h2>
+  <div class="body">
+    <div class="iact">
+      <div class="ct-stage">
+        <button data-ct="dev" class="m-get">💻 development (เครื่องเรา)</button>
+        <button data-ct="prod" class="m-del">☁️ production (cloud)</button>
+      </div>
+      <div class="ct">
+        <div class="ct-col"><h4>process.env ที่ตั้งไว้</h4><div id="ctRows"></div></div>
+        <div class="ct-col"><h4>config อ่านได้เป็น</h4><div class="ct-out" id="ctOut"></div></div>
+      </div>
+    </div>
+    <div class="note"><p style="margin:0"><strong>สังเกต — โค้ดไม่เปลี่ยนเลย</strong> · dev ไม่ตั้ง env ก็ใช้ default (<code>??</code>) · cloud ตั้ง env มา config ก็อ่านค่าจริง · <strong>นี่คือเหตุผลที่ต้องอ่านจาก env ไม่ใช่ hardcode</strong></p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="การเดินทางของ config">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 9</span> · env config</span>
+  <span class="eyebrow cyan">เห็นภาพ</span>
+  <h2>.env → process.env → config → โค้ด</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="การเดินทางของ config">
+      <defs><marker id="cfa" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#FBBF24" stroke-width="1.8"/></marker></defs>
+      <rect x="20" y="70" width="180" height="80" rx="10" fill="rgba(169,199,184,.1)" stroke="#8FA69A" stroke-width="1.6"/>
+      <text x="110" y="98" text-anchor="middle" class="svg-t">.env</text>
+      <text x="110" y="120" text-anchor="middle" class="svg-m" fill="#8FA69A">PORT=10000</text>
+      <text x="110" y="137" text-anchor="middle" class="svg-s">(หรือ cloud ตั้งให้)</text>
+      <rect x="250" y="70" width="180" height="80" rx="10" fill="rgba(56,215,237,.12)" stroke="#38D7ED" stroke-width="1.6"/>
+      <text x="340" y="98" text-anchor="middle" class="svg-t">process.env</text>
+      <text x="340" y="122" text-anchor="middle" class="svg-m" fill="#38D7ED">Node อ่านเข้ามา</text>
+      <rect x="480" y="70" width="180" height="80" rx="10" fill="rgba(251,191,36,.14)" stroke="#FBBF24" stroke-width="2"/>
+      <text x="570" y="98" text-anchor="middle" class="svg-t">config.js</text>
+      <text x="570" y="120" text-anchor="middle" class="svg-m" fill="#FBBF24">?? ค่า default</text>
+      <text x="570" y="137" text-anchor="middle" class="svg-s">รวมที่เดียว</text>
+      <rect x="710" y="70" width="180" height="80" rx="10" fill="rgba(74,222,128,.14)" stroke="#4ADE80" stroke-width="1.6"/>
+      <text x="800" y="98" text-anchor="middle" class="svg-t">โค้ด</text>
+      <text x="800" y="120" text-anchor="middle" class="svg-m" fill="#4ADE80">config.port</text>
+      <text x="800" y="137" text-anchor="middle" class="svg-s">อ่านง่าย</text>
+      <path d="M202 110 L248 110" stroke="#FBBF24" stroke-width="2" marker-end="url(#cfa)"/>
+      <path d="M432 110 L478 110" stroke="#FBBF24" stroke-width="2" marker-end="url(#cfa)"/>
+      <path d="M662 110 L708 110" stroke="#FBBF24" stroke-width="2" marker-end="url(#cfa)"/>
+      <text x="450" y="185" text-anchor="middle" class="svg-s">เปลี่ยนแค่ต้นทาง (.env / cloud) — โค้ดปลายทางไม่ต้องแก้</text>
+    </svg>
+  </div>
+  <p class="figcap"><strong>ค่าไหลทางเดียว</strong> — ตั้งที่ต้นทาง อ่านที่ปลายทาง · config.js เป็นจุดรวมที่มี default</p>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 3">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 9</span> · env config</span>
+  
+  <h2>จบบทที่ 3 — env config</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>env variable = ค่าจากภายนอก เปลี่ยนตามเครื่องได้</li><li>รวม config ไฟล์เดียว — เห็นครบ มี default ครบ</li><li><code>NODE_ENV</code> แยก dev/production</li><li><strong>ห้าม commit <code>.env</code></strong> — ใช้ <code>.env.example</code></li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือ CP36</strong> — แล้วเข้ากลุ่ม 2</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 4 · Health Check">
+  <span class="grp">กลุ่ม 2 · ทำให้พร้อมใช้จริง</span>
+  <p class="bignum">04</p>
+  <h2>Health Check</h2>
+  <p class="whatfor">endpoint ที่บอกว่าระบบยังทำงานปกติไหม โดยไม่ต้องเปิดหน้าเว็บดู</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 10 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="interactive health">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 9</span> · Health Check</span>
+  <span class="eyebrow amber">ลองเล่น</span>
+  <h2>ระบบบอกสถานะตัวเอง</h2>
+  <div class="body center">
+    <div class="iact">
+      <div class="reqbtns" style="margin-bottom:.5rem">
+        <button data-hc="ok" class="m-get">DB ปกติ</button>
+        <button data-hc="down" class="m-del">DB ต่อไม่ได้</button>
+      </div>
+      <pre id="hcOut" style="margin:0;font-size:1.05rem;min-height:190px"><span class="c">// กดปุ่มด้านบนเพื่อดูว่า /api/health ตอบอะไร</span></pre>
+    </div>
+    <div class="note"><p style="margin:0"><strong>บรรทัด <code>database.connected</code> สำคัญที่สุด</strong> — API เปิดอยู่ไม่ได้แปลว่าใช้ได้ · ถ้าต่อ DB ไม่ได้ ระบบก็ทำงานจริงไม่ได้<br>
+    <strong>ตอบ 200 เมื่อปกติ · 503 เมื่อทำงานได้ไม่เต็มที่</strong> — เพื่อให้ cloud รู้ว่ายังไม่พร้อม</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Quiz: health ตอบ code ไหน">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 9</span> · Health Check</span>
+  <span class="eyebrow amber">ลองคิด</span>
+  <h2>ต่อ DB ไม่ได้ — health ควรตอบ code ไหน</h2>
+  <div class="body center">
+    <div class="iact" data-quiz="qh">
+      <p style="margin:0 0 .3rem"><strong>API เปิดอยู่ แต่ต่อฐานข้อมูลไม่ได้ · health check ควรตอบ HTTP อะไร</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">200 — เพราะ API ยังเปิดอยู่</button>
+        <button class="opt" data-a="1">503 — เพราะระบบทำงานได้ไม่เต็มที่</button>
+        <button class="opt" data-a="0">404 — เพราะหาข้อมูลไม่เจอ</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="whybox">
+      <p class="q">ทำไม 503 ไม่ใช่ 200</p>
+      <p>ถ้าตอบ 200 ทั้งที่ DB พัง — cloud จะคิดว่าระบบปกติแล้ว<strong>ส่งผู้ใช้เข้ามาเจอ error</strong><br>
+      503 (Service Unavailable) บอก cloud ว่า "ยังไม่พร้อม อย่าเพิ่งส่งคนเข้ามา"</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 4">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 9</span> · Health Check</span>
+  
+  <h2>จบบทที่ 4 — Health Check</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>endpoint ที่บอกว่าระบบพร้อมไหม โดยไม่ต้องเปิดหน้าเว็บ</li><li>cloud เรียกอัตโนมัติเพื่อเช็คว่า deploy สำเร็จ</li><li>ต้องเช็คถึง<strong>ฐานข้อมูล</strong> ไม่ใช่แค่ API เปิด</li><li>ตอบ 200 ปกติ · <strong>503 เมื่อไม่เต็มที่</strong></li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 5 — จัดการเมื่อมีอะไรผิดพลาด</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 5 · Error Handling และ Logging">
+  <span class="grp">กลุ่ม 2 · ทำให้พร้อมใช้จริง</span>
+  <p class="bignum">05</p>
+  <h2>Error Handling และ Logging</h2>
+  <p class="whatfor">ระบบที่พร้อมใช้จริงต้องจัดการเมื่อผิดพลาดได้ดี ไม่ใช่แค่ทำงานตอนทุกอย่างถูก</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 10 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="อย่าส่ง error เต็มให้ผู้ใช้">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 9</span> · Error & Logging</span>
+  <span class="eyebrow red">production ต่างจาก dev</span>
+  <h2>log แยก dev/production</h2>
+  <div class="body center">
+    <div class="iact" data-quiz="q2">
+      <p style="margin:0 0 .3rem"><strong>production เกิด error ที่ไม่คาดคิด — ส่งรายละเอียดเต็มให้ผู้ใช้ไหม</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">ส่ง เพื่อให้ผู้ใช้แจ้ง bug ได้ละเอียด</button>
+        <button class="opt" data-a="1">ไม่ส่ง — บอกโครงสร้างภายในให้คนไม่หวังดี</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <pre style="margin:0;font-size:1.05rem"><code><span class="c">// morgan logging แยกตามสภาพแวดล้อม</span>
+app.<span class="f">use</span>(<span class="f">morgan</span>(config.isProd ? <span class="s">'combined'</span> : <span class="s">'dev'</span>));</code></pre>
+    <table style="font-size:1.14rem">
+      <tr><th>รูปแบบ</th><th>หน้าตา</th><th>ใช้ตอน</th></tr>
+      <tr><td><code>dev</code></td><td><code>GET /api/requests 200 5ms</code> (มีสี)</td><td>debug เร็ว</td></tr>
+      <tr><td><code>combined</code></td><td>IP · เวลา · user-agent ครบ</td><td>เก็บวิเคราะห์</td></tr>
+    </table>
+    <div class="analogy"><p style="margin:0"><strong>เหมือนกล้องวงจรปิด</strong> — dev = ดูสดหน้าจอ · production = บันทึกเก็บไว้ย้อนดูตอนระบบมีปัญหา<br>
+    <small>log คือสิ่งเดียวที่บอกได้ว่าเกิดอะไรตอนระบบรันบน cloud ที่เราไม่ได้นั่งดู</small></p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 5">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 9</span> · Error & Logging</span>
+  
+  <h2>จบบทที่ 5 — Error & Logging</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>error handling มีครบตั้งแต่ Week 06/10</li><li>production <strong>ไม่ส่งรายละเอียด error ให้ผู้ใช้</strong> — เก็บใน log</li><li>logging แยก dev (<code>dev</code>) / production (<code>combined</code>)</li><li>log คือสิ่งเดียวที่บอกว่าเกิดอะไรตอนรันบน cloud</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 6 — dev ต่างจาก production อย่างไร</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+  </div>
+</section>
+<section class="slide" data-title="🏫 CP36-38 ลงมือ">
+  <span class="chapbadge">🏫 ลงมือทำ · CP36–CP38</span>
+  <span class="eyebrow amber">ใช้ความรู้บท 3–5</span>
+  <h2>CP36–38 · config · health · error</h2>
+  <div class="body center">
+    <table style="font-size:1.16rem">
+      <tr><th>CP</th><th>ทำอะไร</th><th>✓ ผ่านเมื่อ</th></tr>
+      <tr><td><strong>CP36</strong></td><td>รวม config อ่าน env</td><td>ไม่มี hardcode · <code>config.port/corsOrigin</code></td></tr>
+      <tr><td><strong>CP37</strong></td><td><code>GET /api/health</code></td><td>ตอบ status + database.connected</td></tr>
+      <tr><td><strong>CP38</strong></td><td>error + logging</td><td>404 · 400 · log แยก dev/prod</td></tr>
+    </table>
+    <div class="win"><p style="margin:0"><strong>✓ ยืนยัน</strong> — <code>curl localhost:3001/api/health</code> ได้ status ok · ปิด DB แล้วได้ 503 · checker W07/W10 ยังผ่าน</p></div>
+    <div class="note"><p style="margin:0"><strong>health check เป็นของใหม่ · config/error ต่อยอดจาก Week 07/10</strong> — ส่วนใหญ่คือจัดระเบียบให้พร้อม production</p></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 6 · Production Build">
+  <span class="grp">กลุ่ม 2 · ทำให้พร้อมใช้จริง</span>
+  <p class="bignum">06</p>
+  <h2>Production Build</h2>
+  <p class="whatfor">ความต่างที่ใหญ่ที่สุดระหว่าง "รันบนเครื่องเรา" กับ "พร้อมใช้จริง"</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 11 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="dev vs production">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 9</span> · Production Build</span>
+  <span class="eyebrow ">เห็นภาพ</span>
+  <h2>2 server แยก vs พอร์ตเดียว</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="panel" style="border-color:rgba(56,215,237,.4)">
+        <h3 style="color:var(--cyan)">DEVELOPMENT</h3>
+        <p style="margin:0;font-size:1.12rem">React dev server (5173) + API (3001)<br><strong>2 server แยก</strong> · hot reload<br>เหมาะกับตอนพัฒนา</p>
+      </div>
+      <div class="panel" style="border-color:rgba(74,222,128,.45)">
+        <h3 style="color:var(--green)">PRODUCTION</h3>
+        <p style="margin:0;font-size:1.12rem">build frontend เป็น static<br><strong>API เสิร์ฟทั้งหมดพอร์ตเดียว</strong><br>/ → เว็บ · /api → API</p>
+      </div>
+    </div>
+    <pre style="margin:0;font-size:1rem"><code><span class="c">// app.js — เฉพาะ production</span>
+<span class="k">if</span> (config.isProd &amp;&amp; <span class="f">existsSync</span>(config.staticDir)) {
+  app.<span class="f">use</span>(express.<span class="f">static</span>(config.staticDir));
+  app.<span class="f">get</span>(<span class="s">/^\/(?!api).*/</span>, (req,res) =&gt; res.<span class="f">sendFile</span>(indexHtml));
+}</code></pre>
+    <div class="note"><p style="margin:0"><strong><code>/^\/(?!api).*/</code></strong> — คืน index.html ทุก path ยกเว้น <code>/api</code> (React Router จัดการต่อ)<br>
+    <strong>⚠ แก้ frontend ต้อง build ใหม่</strong> — production ไม่มี hot reload</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🎮 production เสิร์ฟอะไร">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 9</span> · Production Build</span>
+  <span class="eyebrow amber">ลองเล่น — กดดูว่าแต่ละ path ไปไหน</span>
+  <h2>พอร์ตเดียว แต่แยก / กับ /api อย่างไร</h2>
+  <div class="body">
+    <div class="iact">
+      <div class="rr-in">
+        <button data-rr="home" class="m-get">GET /</button>
+        <button data-rr="about">GET /about</button>
+        <button data-rr="api" class="m-post">GET /api/requests</button>
+        <button data-rr="health" class="m-post">GET /api/health</button>
+      </div>
+      <div class="rr-flow" id="rrFlow"></div>
+      <div class="rr-out" id="rrOut"></div>
+    </div>
+    <div class="note"><p style="margin:0"><strong>กฎเดียว</strong> — path ขึ้นต้น <code>/api</code> เข้า API · ที่เหลือคืน <code>index.html</code> ให้ React Router จัดการ · <strong>นี่คือหน้าที่ของ <code>/^\/(?!api).*/</code></strong></p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 6">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 9</span> · Production Build</span>
+  
+  <h2>จบบทที่ 6 — Production Build</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>dev = 2 server (hot reload) · production = build static พอร์ตเดียว</li><li><code>npm run build</code> แปลง React เป็น static ใน <code>dist/</code></li><li>API เสิร์ฟ dist + คืน index.html ทุก path ยกเว้น <code>/api</code></li><li><strong>แก้ frontend ต้อง build ใหม่</strong></li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือ CP39</strong> — build production</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 CP39 build">
+  <span class="chapbadge">🏫 ลงมือทำ · CP39</span>
+  <span class="eyebrow amber">checkpoint สุดท้ายในห้อง</span>
+  <h2>CP39 · production build</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:1.05rem"><code><span class="c"># build frontend เป็น static</span>
+cd frontend &amp;&amp; npm run build      <span class="c"># → dist/</span>
+
+<span class="c"># รัน API แบบ production — เสิร์ฟ frontend ด้วย</span>
+cd ../api &amp;&amp; NODE_ENV=production npm start
+<span class="c"># เปิด http://localhost:3001 ได้ทั้งเว็บและ API</span></code></pre>
+    <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — เปิดพอร์ตเดียว (3001) ได้ทั้งหน้าเว็บและ API · <code>/api/health</code> บอก <code>env: production</code></p></div>
+    <div class="wrong"><p style="margin:0"><strong>นี่คือหัวใจของสัปดาห์นี้</strong> — จาก 2 server ตอน dev เหลือ 1 server พร้อม deploy · เห็นความต่างของ "รันได้" กับ "พร้อมใช้จริง"</p></div>
+  </div>
+</section>
+<section class="slide" data-title="🏠 กลุ่ม 3 · ปิดหน่วย">
+  <span class="slide-id">W11 · GROUP 3</span>
+  <span class="eyebrow amber">3 บทสุดท้าย · งาน A4</span>
+  <h2>กลุ่ม 3 · ปิดหน่วยที่ 4</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="card home"><div class="ic">🚀</div><h3>บท 7 · Deploy</h3><p>เอาระบบขึ้นให้คนอื่นใช้<br><strong>→ 🏠 CP43</strong></p></div>
+      <div class="card home"><div class="ic">📚</div><h3>บท 8 · อ่านเพิ่มเติม</h3><p>SQL/NoSQL/async<br><strong>→ 🏠 CP41</strong></p></div>
+      <div class="card home"><div class="ic">🎬</div><h3>บท 9 · สรุป + A4</h3><p>README · demo · ปิดหน่วย<br><strong>→ 🏠 CP40,42</strong></p></div>
+    </div>
+    <div class="note"><p style="margin:0"><strong>งาน A4 Full-Stack Integration</strong> — ส่ง README + คำตอบบทอ่าน + วิดีโอสาธิต + deploy</p></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 7 · Deploy">
+  <span class="grp">กลุ่ม 3 · ปิดหน่วย</span>
+  <p class="bignum home">07</p>
+  <h2>Deploy</h2>
+  <p class="whatfor">เอาระบบขึ้นเครื่องที่เข้าถึงจากอินเทอร์เน็ต ให้คนอื่นใช้ได้</p>
+  <div class="mins"><span class="chip a">🏠 เรียนในห้อง · ทำที่บ้าน</span><span class="chip c">≈ 10 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span><span class="home"></span></div>
+</section>
+
+<section class="slide" data-title="🏫 จำลอง production ในเครื่อง">
+  <span class="chapbadge home">บทที่ 7 <span class="of">/ 9</span> · Deploy</span>
+  <span class="eyebrow amber">CP43 · ทุกคนทำ</span>
+  <h2>จำลอง production ในเครื่อง — ก้าวแรกก่อน cloud</h2>
+  <div class="body center">
+    <div class="whybox">
+      <p class="q">ยังไม่ต้องขึ้น cloud — จำลองสิ่งที่ cloud จะทำ ในเครื่องเราก่อน</p>
+      <p>เข้าใจ production เต็มที่โดยไม่ต้องสมัครอะไร · <strong>เหมือนซ้อมใหญ่ก่อนแสดงจริง</strong></p>
+    </div>
+    <pre style="margin:0;font-size:1.08rem"><code><span class="c"># ① build frontend เป็น static</span>
+cd frontend &amp;&amp; npm run build
+
+<span class="c"># ② รัน API แบบ production</span>
+cd ../api &amp;&amp; NODE_ENV=production npm start
+<span class="c"># เปิด http://localhost:3001 ได้ทั้งเว็บและ API!</span></code></pre>
+    <div class="win"><p style="margin:0;font-size:1.24rem"><strong>นี่คือสิ่งที่ cloud จะทำให้อัตโนมัติ</strong><br>
+    cloud รับโค้ด → รัน 2 คำสั่งนี้ → เปิดพอร์ตให้คนทั้งโลกเข้าถึง · <strong>เราทำเองในเครื่องได้ = เข้าใจ production จริง</strong></p></div>
+    <div class="note"><p style="margin:0"><strong>deploy ขึ้น cloud จริงเป็น Challenge</strong> — ใครอยากเห็นระบบออนไลน์ให้เพื่อนเปิดจากมือถือ มีคู่มือ Render จับมือทำใน Take-Home</p></div>
+  </div>
+</section>
+
+<section class="slide " data-title="เตรียม deploy">
+  <span class="chapbadge home">บทที่ 7 <span class="of">/ 9</span> · Deploy</span>
+  <span class="eyebrow ">ทุกอย่างในบท 3–6 คือการเตรียม</span>
+  <h2>บอก cloud ว่าต้องทำอะไร</h2>
+  <div class="body center">
+    <table style="font-size:1.16rem">
+      <tr><th>เตรียมจากบท</th><th>จำเป็นตอน deploy เพราะ</th></tr>
+      <tr><td>config อ่าน env (บท 3)</td><td>cloud กำหนดพอร์ตผ่าน env</td></tr>
+      <tr><td>health check (บท 4)</td><td>cloud เช็คว่า deploy สำเร็จ</td></tr>
+      <tr><td>error handling (บท 5)</td><td>ไม่ให้ระบบล่มทั้งระบบ</td></tr>
+      <tr><td>production build (บท 6)</td><td>เสิร์ฟพอร์ตเดียว cloud จัดการง่าย</td></tr>
+    </table>
+    <pre style="margin:0;font-size:.98rem"><code><span class="c"># render.yaml</span>
+buildCommand: cd frontend &amp;&amp; npm run build &amp;&amp; cd ../api &amp;&amp; npm install
+startCommand: cd api &amp;&amp; npm start
+envVars: [ NODE_ENV=production ]</code></pre>
+    <div class="whybox"><p class="q">SQLite บน cloud ephemeral อาจหาย</p>
+    <p>cloud หลายเจ้าล้างไฟล์ทุก restart → <code>campus.db</code> หาย · ทางแก้: persistent disk หรือ<strong>ฐานข้อมูลแยกเครื่อง</strong> — เป็นเหตุผลที่โลกจริงมักใช้ DB แยก (โยงบทอ่านเพิ่มเติม)</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="deploy ทำงานอย่างไร">
+  <span class="chapbadge home">บทที่ 7 <span class="of">/ 9</span> · Deploy</span>
+  <span class="eyebrow cyan">เห็นภาพ</span>
+  <h2>จาก push ถึงเว็บออนไลน์</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="deploy pipeline">
+      <defs><marker id="dpa" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#C084FC" stroke-width="1.8"/></marker></defs>
+      <rect x="20" y="80" width="150" height="70" rx="10" fill="rgba(169,199,184,.1)" stroke="#8FA69A" stroke-width="1.6"/>
+      <text x="95" y="108" text-anchor="middle" class="svg-t">① push</text>
+      <text x="95" y="130" text-anchor="middle" class="svg-m" fill="#8FA69A">GitHub</text>
+      <rect x="200" y="80" width="150" height="70" rx="10" fill="rgba(56,215,237,.12)" stroke="#38D7ED" stroke-width="1.6"/>
+      <text x="275" y="108" text-anchor="middle" class="svg-t">② อ่าน config</text>
+      <text x="275" y="130" text-anchor="middle" class="svg-m" fill="#38D7ED">render.yaml</text>
+      <rect x="380" y="80" width="150" height="70" rx="10" fill="rgba(251,191,36,.14)" stroke="#FBBF24" stroke-width="1.6"/>
+      <text x="455" y="102" text-anchor="middle" class="svg-t">③ build</text>
+      <text x="455" y="122" text-anchor="middle" class="svg-s">frontend → dist</text>
+      <text x="455" y="138" text-anchor="middle" class="svg-s">install api</text>
+      <rect x="560" y="80" width="150" height="70" rx="10" fill="rgba(74,222,128,.14)" stroke="#4ADE80" stroke-width="1.6"/>
+      <text x="635" y="102" text-anchor="middle" class="svg-t">④ start</text>
+      <text x="635" y="122" text-anchor="middle" class="svg-s">NODE_ENV=</text>
+      <text x="635" y="138" text-anchor="middle" class="svg-s">production</text>
+      <rect x="740" y="80" width="150" height="70" rx="10" fill="rgba(192,132,252,.14)" stroke="#C084FC" stroke-width="2"/>
+      <text x="815" y="102" text-anchor="middle" class="svg-t">⑤ health</text>
+      <text x="815" y="122" text-anchor="middle" class="svg-s">check ผ่าน</text>
+      <text x="815" y="138" text-anchor="middle" class="svg-s">→ ออนไลน์!</text>
+      <path d="M172 115 L198 115" stroke="#C084FC" stroke-width="2" marker-end="url(#dpa)"/>
+      <path d="M352 115 L378 115" stroke="#C084FC" stroke-width="2" marker-end="url(#dpa)"/>
+      <path d="M532 115 L558 115" stroke="#C084FC" stroke-width="2" marker-end="url(#dpa)"/>
+      <path d="M712 115 L738 115" stroke="#C084FC" stroke-width="2" marker-end="url(#dpa)"/>
+      <text x="450" y="190" text-anchor="middle" class="svg-s">ทุกขั้นใช้สิ่งที่เตรียมในบท 3–6 — config · build · health check</text>
+    </svg>
+  </div>
+  <p class="figcap"><strong>health check คือด่านสุดท้าย</strong> — cloud เช็คว่าผ่านก่อนถึงจะส่งผู้ใช้เข้ามา</p>
+</section>
+
+<section class="slide " data-title="✓ สรุปบทที่ 7">
+  <span class="chapbadge home">บทที่ 7 <span class="of">/ 9</span> · Deploy</span>
+  
+  <h2>จบบทที่ 7 — Deploy</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>deploy = เอาระบบขึ้นเครื่องที่เข้าถึงจากเน็ตได้</li><li>ทุกอย่างในบท 3–6 คือการเตรียม deploy</li><li><code>render.yaml</code> บอก cloud ว่า build/start อย่างไร</li><li>SQLite บน cloud อาจหาย — เหตุผลที่โลกจริงใช้ DB แยกเครื่อง</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 8 — อ่านเพิ่มเติม ทางเลือกฐานข้อมูล</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span><span class="home"></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 8 · อ่านเพิ่มเติม: ทางเลือกฐานข้อมูล">
+  <span class="grp">กลุ่ม 3 · ปิดหน่วย</span>
+  <p class="bignum home">08</p>
+  <h2>อ่านเพิ่มเติม: ทางเลือกฐานข้อมูล</h2>
+  <p class="whatfor">รู้จัก SQL/NoSQL/async ว่ามีและต่างอย่างไร โดยไม่ต้องลงมือเขียน</p>
+  <div class="mins"><span class="chip a">🏠 เรียนในห้อง · ทำที่บ้าน</span><span class="chip c">≈ 11 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span></div>
+</section>
+
+<section class="slide " data-title="SQL vs NoSQL vs async">
+  <span class="chapbadge home">บทที่ 8 <span class="of">/ 9</span> · อ่านเพิ่มเติม</span>
+  <span class="eyebrow violet">รู้จัก ไม่ต้องทำ</span>
+  <h2>มีทางเลือกอื่น ต่างกันอย่างไร</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="panel" style="border-color:rgba(74,222,128,.4)">
+        <h3 style="color:var(--green)">SQL (SQLite) — ที่เราใช้</h3>
+        <p style="margin:0;font-size:1.1rem">ตาราง/แถว · โครงตายตัว · มีความสัมพันธ์<br><strong>เหมาะกับข้อมูลที่มีโครงชัด</strong></p>
+      </div>
+      <div class="panel" style="border-color:rgba(192,132,252,.4)">
+        <h3 style="color:var(--violet)">NoSQL (MongoDB)</h3>
+        <p style="margin:0;font-size:1.1rem">collection/document · ยืดหยุ่น<br><strong>เหมาะกับข้อมูลไม่มีโครงตายตัว</strong></p>
+      </div>
+    </div>
+    <div class="iact" data-quiz="q3">
+      <p style="margin:0 0 .3rem"><strong>ถ้าเปลี่ยนไป MongoDB จะกระทบชั้นไหน (นึกถึง 4 ครั้งที่แก้ชั้นเดียว)</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">service เท่านั้น เหมือนทุกครั้ง</button>
+        <button class="opt" data-a="1">service + controller (เพราะ async ต้องเติม await)</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <div class="wrong"><p style="margin:0"><strong>บทเรียนสำคัญ</strong> — การแยกชั้นช่วยได้มาก แต่การเปลี่ยน "สัญญา" ของชั้น (sync→async) ยังกระทบผู้เรียกเสมอ · <strong>ครั้งนี้จึงกระทบ controller ด้วย ต่างจาก 4 ครั้งก่อน</strong></p></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 9 · สรุปหน่วยที่ 4 ทั้งหน่วย">
+  <span class="grp">กลุ่ม 3 · ปิดหน่วย</span>
+  <p class="bignum home">09</p>
+  <h2>สรุปหน่วยที่ 4 ทั้งหน่วย</h2>
+  <p class="whatfor">จากไม่รู้จัก SQL ถึงระบบ full-stack ที่ deploy ได้จริง</p>
+  <div class="mins"><span class="chip a">🏠 เรียนในห้อง · ทำที่บ้าน</span><span class="chip c">≈ 8 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span></div>
+</section>
+
+<section class="slide " data-title="แยกชั้นดี เปลี่ยนได้ง่าย">
+  <span class="chapbadge home">บทที่ 9 <span class="of">/ 9</span> · สรุป Unit 4</span>
+  <span class="eyebrow green">บทเรียนใหญ่</span>
+  <h2>เปลี่ยนแหล่งข้อมูล 4 ครั้ง แก้ชั้นเดียวทุกครั้ง</h2>
+  <div class="body center">
+    <table style="font-size:1.2rem">
+      <tr><th>ครั้ง</th><th>เปลี่ยนจาก</th><th>เป็น</th><th>แก้กี่ชั้น</th></tr>
+      <tr><td>Week 05</td><td>seed</td><td>localStorage</td><td style="color:var(--green)">1</td></tr>
+      <tr><td>Week 06</td><td>memory</td><td>ไฟล์ JSON</td><td style="color:var(--green)">1</td></tr>
+      <tr><td>Week 07</td><td>localStorage</td><td>API</td><td style="color:var(--green)">1</td></tr>
+      <tr><td>Week 10</td><td>ไฟล์ JSON</td><td>SQLite</td><td style="color:var(--green)">1</td></tr>
+    </table>
+    <div class="win"><p style="margin:0;font-size:1.24rem"><strong>ทำได้เพราะแยกชั้นชัดตั้งแต่ต้น</strong><br>
+    frontend ไม่รู้ว่าข้อมูลมาจากไหน · controller ไม่รู้จัก SQL · service ไม่รู้จัก req/res</p></div>
+    <div class="whybox"><p class="q">และสัปดาห์นี้เพิ่มบทเรียน</p>
+    <p><strong>"ทำงานได้" (dev) ต่างจาก "พร้อมใช้จริง" (production)</strong> — config จาก env · health check · log · build เสิร์ฟพอร์ตเดียว</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏠 งาน A4 + ปิดหน่วย">
+  <span class="slide-id">W11 · A4</span>
+  <span class="eyebrow amber">งานที่ต้องส่ง</span>
+  <h2>งาน A4 · CP40–CP43</h2>
+  <div class="body center">
+    <table style="font-size:1.2rem">
+      <tr><th>CP</th><th>ทำอะไร</th></tr>
+      <tr><td><strong>CP40</strong></td><td>README ระบบ full-stack — สถาปัตยกรรม + วิธีรัน</td></tr>
+      <tr><td><strong>CP41</strong></td><td>ตอบ 3 คำถามจากบทอ่านเพิ่มเติม</td></tr>
+      <tr><td><strong>CP42</strong></td><td>วิดีโอ/ภาพสาธิตระบบครบวงจร</td></tr>
+      <tr><td><strong>CP43</strong></td><td>deploy หรือเตรียม deploy package</td></tr>
+    </table>
+    <div class="note"><p style="margin:0"><strong>ส่ง</strong> — branch <code>unit4/week-11</code> · tag <code>lab-11-submission-v1</code> · <code>node check-week11.mjs</code> เป้าหมาย 32/36 (36/36 ถ้าทำ Challenge)</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="ก้าวต่อไป">
+  <span class="slide-id">W11 · END</span>
+  <span class="eyebrow violet">หน่วยที่ 4 จบแล้ว</span>
+  <h2>ต่อไป — หน่วยที่ 5</h2>
+  <div class="body center">
+    <div class="fig">
+      <svg viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="เส้นทางหน่วยที่ 4">
+        <defs><marker id="ea" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#C084FC" stroke-width="1.8"/></marker></defs>
+        <rect x="30" y="50" width="200" height="70" rx="10" fill="rgba(251,191,36,.12)" stroke="#FBBF24" stroke-width="1.6"/>
+        <text x="130" y="80" text-anchor="middle" class="svg-t">สัปดาห์ 9</text>
+        <text x="130" y="102" text-anchor="middle" class="svg-s">เรียน SQL</text>
+        <rect x="270" y="50" width="200" height="70" rx="10" fill="rgba(56,215,237,.12)" stroke="#38D7ED" stroke-width="1.6"/>
+        <text x="370" y="80" text-anchor="middle" class="svg-t">สัปดาห์ 10</text>
+        <text x="370" y="102" text-anchor="middle" class="svg-s">เชื่อม Node + DB</text>
+        <rect x="510" y="50" width="200" height="70" rx="10" fill="rgba(74,222,128,.14)" stroke="#4ADE80" stroke-width="2"/>
+        <text x="610" y="80" text-anchor="middle" class="svg-t">สัปดาห์ 11</text>
+        <text x="610" y="102" text-anchor="middle" class="svg-s">ระบบจริง deploy ได้</text>
+        <rect x="750" y="50" width="130" height="70" rx="10" fill="rgba(192,132,252,.14)" stroke="#C084FC" stroke-width="2"/>
+        <text x="815" y="80" text-anchor="middle" class="svg-t">หน่วย 5</text>
+        <text x="815" y="102" text-anchor="middle" class="svg-s">คุณภาพ+ปลอดภัย</text>
+        <path d="M232 85 L268 85" stroke="#C084FC" stroke-width="2" marker-end="url(#ea)"/>
+        <path d="M472 85 L508 85" stroke="#C084FC" stroke-width="2" marker-end="url(#ea)"/>
+        <path d="M712 85 L748 85" stroke="#C084FC" stroke-width="2" marker-end="url(#ea)"/>
+      </svg>
+    </div>
+    <div class="panel" style="border-color:rgba(192,132,252,.45)">
+      <h3 style="color:var(--violet)">→ หน่วยที่ 5 · คุณภาพและความปลอดภัยของซอฟต์แวร์</h3>
+      <p style="margin:0;font-size:1.22rem">ทดสอบอัตโนมัติเชิงลึก · จัดการข้อผิดพลาด · ความปลอดภัย<br>
+      <strong>ระบบ full-stack ที่ประกอบเสร็จสัปดาห์นี้ จะเป็นฐานให้เรียนเรื่องคุณภาพต่อไป</strong></p>
+    </div>
+  </div>
+</section>
+</div></div>
+<div class="bar"><i id="progress"></i></div>
+<div class="hud">
+  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 39</span><button id="btnNext">→</button>
+  <button id="btnToc">สารบัญ</button><button id="btnMinus">A−</button><button id="btnPlus">A+</button><button id="btnFull">เต็มจอ</button>
+</div>
+<div class="toc" id="toc" role="dialog"><h3>สารบัญ — กด T หรือ Esc ปิด</h3><ol id="tocList"></ol></div>
+
+<script>
+(function(){
+  'use strict';
+  const slides=Array.from(document.querySelectorAll('.slide'));let cur=0;
+  function show(i){cur=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach((s,n)=>s.classList.toggle('active',n===cur));
+    document.getElementById('counter').textContent=(cur+1)+' / '+slides.length;
+    document.getElementById('progress').style.width=((cur+1)/slides.length*100)+'%';
+    history.replaceState(null,'','#s'+(cur+1));}
+  const next=()=>show(cur+1),prev=()=>show(cur-1);
+  document.getElementById('btnNext').onclick=next;document.getElementById('btnPrev').onclick=prev;
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT')return;
+    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
+    else if(e.key==='ArrowLeft'){e.preventDefault();prev();}
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+    else if(e.key.toLowerCase()==='t')toggleToc();else if(e.key==='Escape')setToc(false);
+    else if(e.key.toLowerCase()==='f')toggleFull();
+    else if(e.key==='+'||e.key==='=')setScale(scale+.06);else if(e.key==='-')setScale(scale-.06);});
+  const tocEl=document.getElementById('toc'),list=document.getElementById('tocList');
+  slides.forEach((s,i)=>{const li=document.createElement('li'),a=document.createElement('a');
+    a.href='#s'+(i+1);a.textContent=s.dataset.title||('สไลด์ '+(i+1));
+    a.onclick=e=>{e.preventDefault();show(i);setToc(false);};li.appendChild(a);
+    const id=s.querySelector('.slide-id');
+    if(id){const t=document.createElement('span');t.className='tag';t.textContent=id.textContent;li.appendChild(t);}
+    list.appendChild(li);});
+  function setToc(o){tocEl.classList.toggle('open',o);}
+  function toggleToc(){setToc(!tocEl.classList.contains('open'));}
+  document.getElementById('btnToc').onclick=toggleToc;
+  let scale=1;
+  function setScale(v){scale=Math.max(.8,Math.min(1.4,v));document.documentElement.style.setProperty('--font-scale',scale);}
+  document.getElementById('btnPlus').onclick=()=>setScale(scale+.06);
+  document.getElementById('btnMinus').onclick=()=>setScale(scale-.06);
+  function toggleFull(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}
+  document.getElementById('btnFull').onclick=toggleFull;
+
+  // ══ Health Check interactive ══
+  const hcData = {
+    ok: '<span class="c">// GET /api/health → 200 OK</span>\n{\n  "status": <span class="s">"ok"</span>,\n  "env": <span class="s">"production"</span>,\n  "uptime": <span class="n">3600</span>,\n  "database": {\n    "connected": <span class="k">true</span>,   <span class="c">// ← สำคัญสุด</span>\n    "driver": <span class="s">"sqlite"</span>,\n    "tables": <span class="n">3</span>\n  }\n}',
+    down: '<span class="c">// GET /api/health → 503 Service Unavailable</span>\n{\n  "status": <span class="s">"degraded"</span>,\n  "env": <span class="s">"production"</span>,\n  "uptime": <span class="n">3600</span>,\n  "database": {\n    "connected": <span style="color:#FB7185">false</span>,   <span class="c">// ← ต่อ DB ไม่ได้</span>\n    "reason": <span class="s">"no such file: campus.db"</span>\n  }\n}\n\n<span style="color:#FB7185">→ cloud เห็น 503 จะไม่ส่งผู้ใช้เข้ามา</span>'
+  };
+  document.querySelectorAll('[data-hc]').forEach(function(b){
+    b.onclick=function(){
+      var out=document.getElementById('hcOut');
+      if(out) out.innerHTML=hcData[b.dataset.hc];
+    };
+  });
+
+
+  // ══ Config Tracer — env เดินทางอย่างไร ══
+  const ctScenarios = {
+    dev: { label:'development (เครื่องเรา)', rows:[
+      ['NODE_ENV','(ไม่ตั้ง)'],['PORT','(ไม่ตั้ง)'],['CORS_ORIGIN','(ไม่ตั้ง)']],
+      out:'<span class="dim">// ไม่ตั้ง env → config ใช้ค่า default (??)</span>\nconfig.env        = <span class="hi">"development"</span>\nconfig.isProd     = false\nconfig.port       = <span class="hi">3001</span>   <span class="dim">// default</span>\nconfig.corsOrigin = <span class="hi">"http://localhost:5173"</span>\n\n<span class="ok">✓ รันบนเครื่องเราได้ทันที ไม่ต้องตั้งอะไร</span>' },
+    prod: { label:'production (cloud)', rows:[
+      ['NODE_ENV','production'],['PORT','10000'],['CORS_ORIGIN','https://myapp.com']],
+      out:'<span class="dim">// cloud ตั้ง env ให้ → config อ่านค่าจริง</span>\nconfig.env        = <span class="hi">"production"</span>\nconfig.isProd     = <span class="ok">true</span>   <span class="dim">// → เสิร์ฟ static, log combined</span>\nconfig.port       = <span class="hi">10000</span>  <span class="dim">// cloud กำหนด</span>\nconfig.corsOrigin = <span class="hi">"https://myapp.com"</span>\n\n<span class="ok">✓ โค้ดเดิม ทำงานถูกกับ cloud โดยไม่ต้องแก้</span>' },
+  };
+  function ctRender(key) {
+    const sc = ctScenarios[key]; if (!sc) return;
+    const rows = document.getElementById('ctRows');
+    const out = document.getElementById('ctOut');
+    if (!rows) return;
+    rows.innerHTML = sc.rows.map(([k,v]) =>
+      `<div class="ct-row on"><span class="kv"><span class="k">process.env.${k}</span> = <span class="v">${v}</span></span></div>`).join('');
+    out.innerHTML = sc.out;
+    document.querySelectorAll('[data-ct]').forEach(b => b.classList.toggle('m-get', b.dataset.ct === key));
+  }
+  document.querySelectorAll('[data-ct]').forEach(b => b.addEventListener('click', () => ctRender(b.dataset.ct)));
+  ctRender('dev');
+
+  // ══ Request Router — production เสิร์ฟ / vs /api ══
+  const rrCases = {
+    home:   { path:'/',              hitApi:false, note:'ไม่ขึ้นต้น /api → คืน <b>index.html</b> (React Router จัดการต่อ)' },
+    about:  { path:'/about',         hitApi:false, note:'ไม่ขึ้นต้น /api → คืน <b>index.html</b> · React แสดงหน้า about เอง' },
+    api:    { path:'/api/requests',  hitApi:true,  note:'ขึ้นต้น /api → เข้า <b>API จริง</b> คืน JSON ข้อมูล' },
+    health: { path:'/api/health',    hitApi:true,  note:'ขึ้นต้น /api → เข้า <b>health check</b> คืนสถานะระบบ' },
+  };
+  function rrRender(key) {
+    const c = rrCases[key]; if (!c) return;
+    const flow = document.getElementById('rrFlow');
+    const out = document.getElementById('rrOut');
+    if (!flow) return;
+    const staticHit = !c.hitApi, apiHit = c.hitApi;
+    flow.innerHTML =
+      `<div class="rr-node on"><span class="ic">🌐</span><span class="nm">คำขอเข้ามา</span><span class="ds">${c.path}</span></div>
+       <div class="rr-node on"><span class="ic">🔀</span><span class="nm">Express ตัดสิน</span><span class="ds">/api หรือไม่?</span></div>
+       <div class="rr-node ${apiHit?'on hit':''}"><span class="ic">⚙️</span><span class="nm">API route</span><span class="ds">→ JSON</span></div>
+       <div class="rr-node ${staticHit?'on hit':''}"><span class="ic">📄</span><span class="nm">static / index.html</span><span class="ds">→ หน้าเว็บ</span></div>`;
+    out.innerHTML = c.note;
+    document.querySelectorAll('[data-rr]').forEach(b => b.classList.toggle('m-get', b.dataset.rr === key));
+  }
+  document.querySelectorAll('[data-rr]').forEach(b => b.addEventListener('click', () => rrRender(b.dataset.rr)));
+  rrRender('home');
+
+  document.querySelectorAll('[data-quiz]').forEach(q=>{const fb=q.querySelector('.fb');
+    q.querySelectorAll('.opt').forEach(b=>{b.onclick=()=>{const ok=b.dataset.a==='1';
+      b.classList.add(ok?'ok':'no');
+      if(ok){fb.textContent='✓ ถูกต้อง';fb.className='fb ok';q.querySelectorAll('.opt').forEach(x=>x.disabled=true);}
+      else{fb.textContent='✕ ยังไม่ใช่ ลองใหม่';fb.className='fb no';}};});});
+  document.querySelectorAll('[data-reveal]').forEach(b=>{b.querySelector('button').onclick=()=>b.classList.toggle('open');});
+
+
+  // ══ Layer Tracer — ตามรอยคำขอผ่านชั้นต่าง ๆ ══
+  const ltSteps = [
+    { nm:'① เบราว์เซอร์ส่งคำขอ', fl:'frontend/src/services/requestService.js',
+      ds:'React เรียก service ของตัวเอง — ไม่รู้ว่าข้างหลังเป็นอะไร',
+      out:'<span class="dim">// ฝั่ง React</span>\nawait getRequests({ status: \'pending\' })\n\n<span class="dim">→ ยิง HTTP ออกไป</span>\n<span class="hi">GET /api/requests?status=pending</span>' },
+    { nm:'② Middleware', fl:'api/src/app.js',
+      ds:'cors → morgan → express.json() ทำงานตามลำดับก่อนถึง route',
+      out:'<span class="dim">// app.js — ไล่จากบนลงล่าง</span>\napp.use(cors(...))        <span class="dim">→ ผ่าน</span>\napp.use(morgan(...))      <span class="dim">→ บันทึก log</span>\napp.use(express.json())   <span class="dim">→ แปลง body</span>\n\n<span class="ok">✓ ส่งต่อด้วย next()</span>' },
+    { nm:'③ Route จับคู่', fl:'api/src/routes/requestRoutes.js',
+      ds:'จับคู่ method + path แล้วส่งต่อให้ controller — ไม่มีตรรกะอะไรเลย',
+      out:'<span class="dim">// หา route ที่ตรงจากบนลงล่าง</span>\nrouter.get(\'/\', controller.listRequests)  <span class="ok">← ตรง</span>\n\n<span class="dim">req.query = { status: \'pending\' }</span>' },
+    { nm:'④ Controller', fl:'api/src/controllers/requestController.js',
+      ds:'อ่านคำขอ · เรียก service · ตัดสิน status code — ไม่รู้จัก SQL',
+      out:'const { status } = req.query;\nconst data = service.findAll({ status });\n\n<span class="dim">// ตัดสินใจเรื่อง HTTP ที่นี่ที่เดียว</span>\nres.status(<span class="hi">200</span>).json(data);' },
+    { nm:'⑤ Service', fl:'api/src/services/requestService.js',
+      ds:'แปลงคำขอเป็น SQL — ไม่รู้จัก req/res เลย จึงเปลี่ยนฐานข้อมูลได้ง่าย',
+      out:'<span class="dim">// ที่เดียวที่รู้จัก SQL</span>\ndb.prepare(`\n  SELECT r.id, u.name AS <span class="hi">requesterName</span>, ...\n  FROM requests r\n  JOIN users u ON u.id = r.requester_id\n  WHERE r.status = <span class="hi">?</span>\n`).all(status)' },
+    { nm:'⑥ ฐานข้อมูล', fl:'api/data/campus.db',
+      ds:'หาแถวที่ตรง แล้วรวมสองตารางเข้าด้วยกันด้วย JOIN',
+      out:'<span class="dim">// SQLite ทำงาน</span>\nrequests ─┐\n          ├─ JOIN บน requester_id\nusers ────┘\n\n<span class="ok">พบ 2 แถว</span>' },
+    { nm:'⑦ ย้อนกลับขึ้นไป', fl:'ชั้นเดิม ย้อนทางกลับ',
+      ds:'service คืน array → controller ใส่ status → React ได้ข้อมูลรูปแบบเดิม',
+      out:'[\n  { "id": "REQ-001",\n    "<span class="hi">requesterName</span>": "สมชาย ใจดี",\n    "status": "pending" },\n  ...\n]\n\n<span class="ok">✓ frontend ได้รูปแบบเดิม ไม่ต้องแก้อะไร</span>' },
+  ];
+  const ltList = document.getElementById('ltList');
+  const ltOut  = document.getElementById('ltOut');
+  let ltAt = -1;
+  function ltRender() {
+    if (!ltList) return;
+    ltList.innerHTML = ltSteps.map((s, i) =>
+      `<div class="lt-step ${i === ltAt ? 'on' : (i < ltAt ? 'done' : '')}">
+        <span class="n">${i + 1}</span>
+        <span class="txt"><span class="nm">${s.nm}</span>
+        <span class="fl">${s.fl}</span>
+        <span class="ds">${s.ds}</span></span>
+      </div>`).join('');
+    ltOut.innerHTML = ltAt < 0 ? '<span class="dim">— กดปุ่มเพื่อเริ่มตามรอยคำขอ —</span>' : ltSteps[ltAt].out;
+  }
+  document.getElementById('ltNext')?.addEventListener('click', () => {
+    ltAt = Math.min(ltAt + 1, ltSteps.length - 1); ltRender();
+  });
+  document.getElementById('ltReset')?.addEventListener('click', () => { ltAt = -1; ltRender(); });
+  ltRender();
+
+  // ══ Query Stepper — SQL ทำงานทีละขั้นอย่างไร ══
+  const qsRows = [
+    { id:'REQ-001', requester:'สมชาย ใจดี',      status:'pending',     priority:'urgent' },
+    { id:'REQ-002', requester:'สุภาวดี รักเรียน', status:'in-progress', priority:'normal' },
+    { id:'REQ-003', requester:'ธนกฤต ตั้งใจ',    status:'completed',   priority:'normal' },
+    { id:'REQ-004', requester:'สมชาย ใจดี',      status:'pending',     priority:'urgent' },
+    { id:'REQ-005', requester:'ปรียา ขยันยิ่ง',   status:'pending',     priority:'normal' },
+  ];
+  const qsCols = ['id','requester','status','priority'];
+  const qsNotes = [
+    'ยังไม่ทำอะไร — นี่คือข้อมูลทั้งหมดในตาราง <code>requests</code>',
+    '<b>① FROM requests</b> — หยิบทุกแถวมาก่อน (5 แถว) · ฐานข้อมูลยังไม่ได้กรองอะไร',
+    '<b>② WHERE status = \'pending\'</b> — ตัดแถวที่ไม่ตรงทิ้ง เหลือ <b>3 แถว</b>',
+    '<b>③ ORDER BY priority DESC</b> — เรียงใหม่ · urgent มาก่อน normal',
+    '<b>④ SELECT id, requester</b> — เลือกเฉพาะคอลัมน์ที่ขอ · ที่เหลือไม่ส่งกลับ',
+  ];
+  let qsAt = 0;
+  function qsRender() {
+    const el = document.getElementById('qsTbl'); if (!el) return;
+    let rows = qsRows.map((r, i) => ({ ...r, _i: i }));
+    if (qsAt >= 3) rows = rows.filter(r => r.status === 'pending');
+    if (qsAt >= 3) rows.sort((a, b) => (a.priority === b.priority) ? 0 : (a.priority === 'urgent' ? -1 : 1));
+    const cut = qsAt >= 4;
+    el.innerHTML =
+      `<tr>${qsCols.map(c => `<th${cut && c!=='id' && c!=='requester' ? ' style="opacity:.2"' : ''}>${c}</th>`).join('')}</tr>` +
+      qsRows.map((r) => {
+        const kept = qsAt < 2 ? null : (r.status === 'pending');
+        if (qsAt >= 3 && !kept) return '';
+        const cls = qsAt === 2 ? (kept ? 'keep' : 'out') : '';
+        return `<tr class="${cls}">${qsCols.map(c =>
+          `<td class="${cut && c!=='id' && c!=='requester' ? 'drop' : (cut ? 'pick' : '')}">${r[c]}</td>`).join('')}</tr>`;
+      }).join('') +
+      (qsAt >= 3 ? rows.map(r => `<tr class="keep">${qsCols.map(c =>
+        `<td class="${cut && c!=='id' && c!=='requester' ? 'drop' : (cut ? 'pick' : '')}">${r[c]}</td>`).join('')}</tr>`).join('') : '');
+    document.getElementById('qsNote').innerHTML = qsNotes[qsAt];
+    document.querySelectorAll('[data-qs]').forEach(b =>
+      b.classList.toggle('m-get', Number(b.dataset.qs) === qsAt));
+  }
+  document.querySelectorAll('[data-qs]').forEach(b =>
+    b.addEventListener('click', () => { qsAt = Number(b.dataset.qs); qsRender(); }));
+  qsRender();
+
+  // ══ JOIN visual ══
+  const jnUsers = [ {id:1,name:'สมชาย ใจดี'}, {id:2,name:'สุภาวดี รักเรียน'}, {id:3,name:'ธนกฤต ตั้งใจ'} ];
+  const jnReq = [
+    {id:'REQ-001', rid:1, status:'pending'},
+    {id:'REQ-002', rid:2, status:'in-progress'},
+    {id:'REQ-004', rid:1, status:'pending'},
+  ];
+  let jnAt = -1;
+  function jnRender() {
+    const u = document.getElementById('jnU'), r = document.getElementById('jnR'), o = document.getElementById('jnO');
+    if (!u) return;
+    const cur = jnAt >= 0 && jnAt < jnReq.length ? jnReq[jnAt] : null;
+    u.innerHTML = '<tr><th>id</th><th>name</th></tr>' + jnUsers.map(x =>
+      `<tr class="${cur && cur.rid === x.id ? 'lit' : ''}"><td>${x.id}</td><td>${x.name}</td></tr>`).join('');
+    r.innerHTML = '<tr><th>id</th><th>requester_id</th><th>status</th></tr>' + jnReq.map((x, i) =>
+      `<tr class="${jnAt === i ? 'lit' : ''}"><td>${x.id}</td><td>${x.rid}</td><td>${x.status}</td></tr>`).join('');
+    const done = jnReq.slice(0, jnAt + 1);
+    o.innerHTML = '<tr><th>id</th><th>requesterName</th><th>status</th></tr>' + (done.length
+      ? done.map((x, i) => {
+          const nm = jnUsers.find(y => y.id === x.rid)?.name ?? '—';
+          return `<tr class="${i === jnAt ? 'new' : ''}"><td>${x.id}</td><td>${nm}</td><td>${x.status}</td></tr>`;
+        }).join('')
+      : '<tr><td colspan="3" style="opacity:.5">— กดปุ่มเพื่อจับคู่ทีละแถว —</td></tr>');
+    const n = document.getElementById('jnNote');
+    n.innerHTML = jnAt < 0 ? 'JOIN ทำงานโดย<b>ไล่ดูทีละแถว</b>ของตาราง <code>requests</code> แล้วหาแถวใน <code>users</code> ที่ <code>id</code> ตรงกับ <code>requester_id</code>'
+      : (cur ? `แถว <b>${cur.id}</b> มี <code>requester_id = ${cur.rid}</code> → หาใน <code>users</code> เจอ <b>${jnUsers.find(y=>y.id===cur.rid)?.name}</b> → รวมเป็นแถวใหม่`
+             : 'จับคู่ครบแล้ว — <b>สังเกตว่า สมชาย ใจดี ปรากฏ 2 ครั้งในผลลัพธ์ แต่เก็บไว้ในฐานข้อมูลแค่ครั้งเดียว</b>');
+  }
+  document.getElementById('jnNext')?.addEventListener('click', () => {
+    jnAt = Math.min(jnAt + 1, jnReq.length); jnRender();
+  });
+  document.getElementById('jnReset')?.addEventListener('click', () => { jnAt = -1; jnRender(); });
+  jnRender();
+
+  // ══ SQL Injection compare ══
+  const injCases = {
+    ok:    { label:'pending',        rows:3, safeRows:3 },
+    evil1: { label:"x' OR '1'='1",   rows:5, safeRows:0 },
+    evil2: { label:"'; DROP TABLE requests; --", rows:-1, safeRows:0 },
+  };
+  document.querySelectorAll('[data-inj]').forEach(b => b.addEventListener('click', () => {
+    const c = injCases[b.dataset.inj];
+    const esc = (s) => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+    document.getElementById('injBadSql').innerHTML =
+      `SELECT * FROM requests\nWHERE status = '<span class="ev">${esc(c.label)}</span>'`;
+    document.getElementById('injGoodSql').innerHTML =
+      `SELECT * FROM requests\nWHERE status = <span class="pm">?</span>\n<span style="opacity:.6">ค่าที่ส่งแยกต่างหาก:</span> "${esc(c.label)}"`;
+    document.getElementById('injBadR').innerHTML = c.rows === -1
+      ? '<span style="color:#FB7185">✕ ตาราง requests ถูกลบทิ้ง</span>'
+      : (c.rows === 5 ? '<span style="color:#FB7185">✕ คืน 5 แถว — ข้อมูลทั้งตารางหลุด</span>'
+                      : `<span style="color:var(--green)">คืน ${c.rows} แถว (ปกติ)</span>`);
+    document.getElementById('injGoodR').innerHTML = c.safeRows === 0 && c.rows !== 3
+      ? '<span style="color:var(--green)">✓ คืน 0 แถว — ถูกมองเป็นข้อความธรรมดา</span>'
+      : `<span style="color:var(--green)">✓ คืน ${c.safeRows} แถว (ปกติ)</span>`;
+  }));
+
+  const timers={};
+  function fmt(s){const m=Math.floor(Math.abs(s)/60),x=Math.abs(s)%60;
+    return(s<0?'-':'')+String(m).padStart(2,'0')+':'+String(x).padStart(2,'0');}
+  setInterval(()=>{Object.keys(timers).forEach(id=>{const t=timers[id];if(!t||!t.running)return;
+    t.left--;const el=document.getElementById(id);el.textContent=fmt(t.left);
+    el.style.color=t.left<=0?'var(--red)':'var(--amber)';});},1000);
+  document.querySelectorAll('[data-timer]').forEach(b=>{b.onclick=()=>{
+    const id=b.dataset.timer,act=b.dataset.act,el=document.getElementById(id);
+    if(!timers[id])timers[id]={left:(+b.dataset.min||30)*60,running:false};
+    const t=timers[id];
+    if(act==='start')t.running=true;else if(act==='pause')t.running=false;
+    else if(act==='reset'){t.running=false;t.left=(+b.dataset.min||30)*60;el.textContent=fmt(t.left);el.style.color='var(--amber)';}};});
+  const m=location.hash.match(/^#s(\d+)$/);show(m?+m[1]-1:0);
+})();
+</script>
+</body>
+</html>

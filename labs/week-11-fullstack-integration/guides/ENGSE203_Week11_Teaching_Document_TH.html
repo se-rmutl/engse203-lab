@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENGSE203 Week 11 — เอกสารประกอบการสอน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1F6F3; --card:#FFFFFF; --ink:#14251E; --ink-soft:#54685E;
+  --track:#BFD2C8; --a:#A8620E; --a-tint:#FBF0E2; --b:#186B8C; --b-tint:#DDEEF5;
+  --loading:#B5771A; --success:#1E7A54; --error:#B23A2E; --rule:#DBE7E0;
+  --code-bg:#1E1408; --vio:#6B3B96; --vio-tint:#F1EAF8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  line-height:1.78;padding:0 20px 80px;-webkit-font-smoothing:antialiased;}
+.doc{max-width:860px;margin:0 auto}
+
+.cover{padding:64px 0 40px;border-bottom:3px solid var(--a)}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.2em;color:var(--a);text-transform:uppercase}
+.cover h1{font-size:clamp(30px,5vw,46px);font-weight:700;line-height:1.15;
+  letter-spacing:-.02em;margin:14px 0 8px}
+.cover .subtitle{font-size:19px;color:var(--ink-soft);font-weight:300;margin-bottom:28px}
+.meta{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px}
+.meta th{text-align:left;font-weight:600;padding:7px 14px 7px 0;width:190px;
+  vertical-align:top;color:var(--ink-soft);font-size:13px}
+.meta td{padding:7px 0;border-bottom:1px solid var(--rule)}
+.meta tr:first-child td,.meta tr:first-child th{border-top:1px solid var(--rule)}
+
+.bigidea{background:var(--ink);color:#fff;padding:24px 26px;border-radius:4px;margin-top:8px}
+.bigidea .lab{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;
+  opacity:.65;text-transform:uppercase;margin-bottom:8px}
+.bigidea p{font-size:17px;line-height:1.6}
+.bigidea code{font-family:'IBM Plex Mono',monospace;font-size:15px;
+  background:rgba(255,255,255,.14);padding:1px 7px;border-radius:3px}
+
+.howto{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:26px;margin:36px 0}
+.howto h2{font-size:19px;margin-bottom:14px}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;font-size:14px;margin-top:14px}
+.legend .k{font-weight:600;white-space:nowrap}
+.newbie{background:var(--a-tint);border-left:3px solid var(--a);padding:16px 20px;
+  border-radius:0 6px 6px 0;margin-top:18px;font-size:14.5px}
+.wheretag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:middle}
+.wheretag.home{background:#FDF2E6;color:#8A5A0E;border:1px solid #E8C99A}
+.wheretag.room{background:#E4F1EA;color:#14503A;border:1px solid #A8D4BE}
+
+.ch{margin-top:60px;padding-top:8px}
+.ch-num{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:.16em;color:var(--a);text-transform:uppercase;
+  display:flex;align-items:center;gap:12px}
+.ch-num::after{content:"";flex:1;height:1px;background:var(--rule)}
+.ch h2{font-size:28px;font-weight:700;line-height:1.25;margin:12px 0 6px;letter-spacing:-.01em}
+.ch .readtime{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  color:var(--track);letter-spacing:.06em;margin-bottom:22px}
+.ch h3{font-size:19px;font-weight:600;margin:32px 0 10px}
+p{margin-bottom:14px}
+ul,ol{margin:0 0 16px 22px}
+li{margin-bottom:7px}
+strong{font-weight:600}
+em{font-style:normal;background:linear-gradient(transparent 62%,var(--a-tint) 62%)}
+
+code{font-family:'IBM Plex Mono',monospace;font-size:.88em;
+  background:#F5EADA;padding:2px 6px;border-radius:3px;color:#7A4708}
+pre{background:var(--code-bg);color:#E4EFE9;border-radius:4px;
+  padding:20px 22px;overflow-x:auto;margin:16px 0;font-size:13.5px;line-height:1.7}
+pre code{background:none;padding:0;color:inherit;font-size:13.5px}
+.c-key{color:#F0B872}.c-str{color:#E9C08A}.c-com{color:#6E8A7E;font-style:italic}
+.c-fn{color:#8FD0EC}.c-bad{color:#F0968C}.c-hl{color:#FFE08A;font-weight:600}
+.c-num{color:#D9A0E8}
+
+.term{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--b);
+  border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0}
+.term .w{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--b);
+  font-size:15px;margin-bottom:4px}
+.term p{margin:0;font-size:14.5px}
+
+table.d{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0}
+table.d th{text-align:left;background:#F5EADA;padding:10px 12px;
+  font-weight:600;font-size:13px;border-bottom:2px solid var(--track)}
+table.d td{padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.d tr:hover td{background:#FAFCFB}
+
+figure{margin:30px 0;background:var(--card);border:1px solid var(--rule);
+  border-radius:4px;padding:24px 22px 16px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:13px;color:var(--ink-soft);margin-top:16px;padding-top:12px;border-top:1px solid var(--rule)}
+figcaption b{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  letter-spacing:.1em;color:var(--a);display:block;margin-bottom:4px;text-transform:uppercase}
+
+.box{border-radius:4px;padding:20px 22px;margin:22px 0;font-size:14.5px}
+.box .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px;display:block}
+.box p:last-child{margin-bottom:0}
+.predict{background:var(--a-tint);border-left:3px solid var(--a)}
+.predict .h{color:var(--a)}
+.pitfall{background:#FBEBE8;border-left:3px solid var(--error)}
+.pitfall .h{color:var(--error)}
+.note{background:#FDF4E3;border-left:3px solid var(--loading)}
+.note .h{color:var(--loading)}
+.next{background:var(--b-tint);border-left:3px solid var(--b)}
+.next .h{color:var(--b)}
+.analogy{background:var(--vio-tint);border-left:3px solid var(--vio)}
+.analogy .h{color:var(--vio)}
+.inclass{background:#E4F1EA;border-left:3px solid var(--a)}
+.inclass .h{color:var(--a)}
+.takehome{background:#FDF2E6;border-left:3px solid var(--loading)}
+.takehome .h{color:var(--loading)}
+.challenge{background:var(--vio-tint);border-left:3px solid var(--vio)}
+.challenge .h{color:var(--vio)}
+
+details{background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  padding:14px 18px;margin:14px 0;font-size:14.5px}
+details summary{cursor:pointer;font-weight:600;font-size:14.5px;list-style:none;
+  display:flex;align-items:center;gap:9px}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸";color:var(--a);font-size:13px;transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+details .ans{margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-weight:300}
+details .ans p:last-child{margin-bottom:0}
+
+.recap{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--ink);
+  border-radius:4px;padding:22px;margin:30px 0 0}
+.recap .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px;display:block}
+.recap ul{margin-bottom:0;margin-left:20px}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--rule);
+  font-size:12.5px;color:var(--ink-soft);font-weight:300;display:flex;
+  justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer .m{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.05em}
+
+.toc{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:24px 26px;margin:28px 0}
+.toc h2{font-size:17px;margin-bottom:8px}
+.toc .toc-note{font-size:13px;color:var(--ink-soft);margin-bottom:16px;font-weight:300}
+.toc ol{margin:0 0 0 20px;font-size:14.5px}
+.toc li{margin-bottom:6px}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+.toc a:hover{border-bottom-color:var(--a);color:var(--a)}
+.toc .t{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--track);margin-left:6px}
+.toc .grp{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--a);margin:14px 0 6px}
+
+@media print{
+  body{background:#fff;padding:0}
+  figure,.box,.recap,details,table.d,.term{break-inside:avoid}
+  .ch{break-before:page}
+  details{border:none}details summary::before{content:""}
+  details .ans{display:block}
+}
+@media (max-width:640px){
+  .meta th{width:auto;display:block;padding-bottom:0}
+  .meta td{display:block;padding-top:2px}
+  .cover{padding:36px 0 28px}
+  .legend{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+
+<!-- ════════ COVER ════════ -->
+<header class="cover">
+  <p class="eyebrow">ENGSE203 · หน่วยที่ 4 · Week 11 · ปิดหน่วย</p>
+  <h1>บูรณาการเป็นระบบจริง<br>ที่ deploy ได้</h1>
+  <p class="subtitle">ประกอบ 3 ชั้น · environment config · health check · error handling · production build</p>
+
+  <table class="meta">
+    <tr><th>รายวิชา</th><td>ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์</td></tr>
+    <tr><th>ต่อจาก</th><td>Week 10 — API ที่ใช้ฐานข้อมูล SQLite</td></tr>
+    <tr><th>หน่วยที่</th><td>4 · ปิดหน่วย (สัปดาห์ 9–11)</td></tr>
+    <tr><th>Checkpoints</th><td>CP35 · CP36 · CP37 · CP38 · CP39 · CP40 · CP41 · CP42 · CP43</td></tr>
+    <tr><th>เครื่องมือ</th><td>ระบบ full-stack จาก Week 10 · ไม่ต้องติดตั้งอะไรเพิ่ม</td></tr>
+    <tr><th>ประเมินผล</th><td>CLO3 · CLO4 · CLO5 · งาน A4 Full-Stack Integration</td></tr>
+  </table>
+
+  <div class="bigidea">
+    <span class="lab">แนวคิดแกนกลางของคาบนี้</span>
+    <p><strong>ระบบที่รันได้ใน dev กับระบบที่ deploy ได้จริง ต่างกันตรงไหน</strong><br>
+    <code>ประกอบ 3 ชั้นให้พร้อมส่งมอบ</code></p>
+  </div>
+</header>
+
+<!-- ════════ HOW TO READ ════════ -->
+<section class="howto">
+  <h2>วิธีอ่านเอกสารนี้</h2>
+  <p>สัปดาห์นี้คือ<strong>คาบปิดหน่วยที่ 4</strong> — ไม่มีเรื่องใหม่ใหญ่ ๆ แต่เอาระบบ 3 ชั้นที่ต่อกันมาแล้ว <strong>ขัดให้สมบูรณ์จนพร้อมส่งมอบจริง</strong></p>
+
+  <div class="newbie">
+    <strong>ไม่ต้องติดตั้งอะไรเพิ่ม</strong> — ใช้ระบบ full-stack จาก Week 10 เป็นตัวตั้งต้น · งานคือทำให้มัน<strong>พร้อมใช้จริง</strong> ไม่ใช่แค่ "รันได้บนเครื่องเรา"
+    <br><br>
+    <strong>เรื่อง MongoDB และ async</strong> ที่เคยเกริ่นไว้ — อยู่ในบท "อ่านเพิ่มเติม" (บท 8) ให้อ่านเข้าใจว่ามีทางเลือกนี้ โดย<strong>ไม่ต้องลงมือเขียน</strong>
+  </div>
+
+  <h2 style="margin-top:26px">รูปแบบการเรียน</h2>
+  <table class="d">
+    <tr><th>ระดับ</th><th>ทำที่ไหน</th><th>คืออะไร</th></tr>
+    <tr><td><span class="wheretag room">🏫 ในห้อง</span></td><td>ในคาบ ให้เสร็จ</td><td>CP35–CP39 · ประกอบระบบ + config + health + build</td></tr>
+    <tr><td><span class="wheretag home">🏠 ที่บ้าน</span></td><td>งาน A4</td><td>CP40–CP43 · README · demo · deploy</td></tr>
+    <tr><td>⭐ Challenge</td><td>ไม่บังคับ</td><td>deploy จริง · CI · ลองต่อ MongoDB</td></tr>
+  </table>
+
+  <div class="legend">
+    <span class="k">🟩 ทายก่อนอ่านต่อ</span><span>หยุดคิดก่อน อย่าเพิ่งดูคำตอบ</span>
+    <span class="k">🟦 ศัพท์ที่ต้องรู้</span><span>คำใหม่พร้อมคำอธิบาย</span>
+    <span class="k">🟪 เทียบกับของที่คุ้น</span><span>อุปมากับสิ่งที่เจอจริง</span>
+    <span class="k">🟥 กับดักที่พบบ่อย</span><span>ความผิดพลาดที่เจอจริง</span>
+    <span class="k">▸ เฉลย/ดูเพิ่ม</span><span>กดเพื่อเปิด</span>
+  </div>
+</section>
+
+<!-- ════════ TOC ════════ -->
+<nav class="toc">
+  <h2>สารบัญ</h2>
+  <p class="toc-note">9 บท · อ่านบท 1–3 ก่อนเข้าคาบ ที่เหลืออ่านตอนลงมือทำ</p>
+
+  <p class="grp">กลุ่ม 1 · ระบบทั้งสามชั้น</p>
+  <ol>
+    <li><a href="#c1">ภาพรวม Full-Stack — 3 ชั้นคุยกันครบวงจร</a><span class="t">9 นาที</span></li>
+    <li><a href="#c2">รันระบบครบวงจร — เปิด 3 ส่วนพร้อมกัน</a><span class="t">9 นาที</span></li>
+    <li><a href="#c3">Environment Variable — แยก dev/production</a><span class="t">11 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 2 · ทำให้พร้อมใช้จริง</p>
+  <ol start="4">
+    <li><a href="#c4">Health Check — ระบบบอกสถานะตัวเอง</a><span class="t">10 นาที</span></li>
+    <li><a href="#c5">Error Handling และ Logging ครบวงจร</a><span class="t">10 นาที</span></li>
+    <li><a href="#c6">Production Build — dev ต่างจาก production</a><span class="t">11 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 3 · ปิดหน่วย <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
+  <ol start="7">
+    <li><a href="#c7">Deploy — เอาระบบขึ้นให้คนอื่นใช้</a><span class="t">10 นาที</span></li>
+    <li><a href="#c8">อ่านเพิ่มเติม — ทางเลือกฐานข้อมูล (SQL/NoSQL/async)</a><span class="t">11 นาที</span></li>
+    <li><a href="#c9">สรุปหน่วยที่ 4 ทั้งหน่วย</a><span class="t">8 นาที</span></li>
+  </ol>
+</nav>
+
+<!-- ════════ CH 1 ════════ -->
+<section class="ch" id="c1">
+  <p class="ch-num">บทที่ 1 · กลุ่มที่ 1</p>
+  <h2>ภาพรวม Full-Stack — 3 ชั้นคุยกันครบวงจร</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <p>ตลอด 3 สัปดาห์เราต่อทีละชั้น — สัปดาห์นี้ถอยมามองทั้งระบบพร้อมกันว่าข้อมูลเดินทางอย่างไร</p>
+
+  <figure>
+    <svg viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ระบบ full-stack สามชั้นครบวงจร">
+      <style>
+        .ft{font:600 12.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .fs{font:300 10.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .fm{font:500 10px 'IBM Plex Mono',monospace}
+      </style>
+      <defs>
+        <marker id="fd" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#A8620E" stroke-width="1.6"/></marker>
+        <marker id="fu" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#1E7A54" stroke-width="1.6"/></marker>
+      </defs>
+
+      <rect x="40" y="30" width="220" height="90" rx="10" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.6"/>
+      <text x="60" y="54" class="fm" fill="#186B8C" style="letter-spacing:.06em">① FRONTEND</text>
+      <text x="60" y="76" class="ft">React (พอร์ต 5173)</text>
+      <text x="60" y="96" class="fs">หน้าจอผู้ใช้ · เรียก API</text>
+      <text x="60" y="112" class="fm" fill="#186B8C">frontend/</text>
+
+      <rect x="270" y="30" width="220" height="90" rx="10" fill="#FBF0E2" stroke="#A8620E" stroke-width="1.6"/>
+      <text x="290" y="54" class="fm" fill="#A8620E" style="letter-spacing:.06em">② API</text>
+      <text x="290" y="76" class="ft">Express (พอร์ต 3001)</text>
+      <text x="290" y="96" class="fs">route · controller · service</text>
+      <text x="290" y="112" class="fm" fill="#A8620E">api/src/</text>
+
+      <rect x="500" y="30" width="220" height="90" rx="10" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.6"/>
+      <text x="520" y="54" class="fm" fill="#1E7A54" style="letter-spacing:.06em">③ DATABASE</text>
+      <text x="520" y="76" class="ft">SQLite</text>
+      <text x="520" y="96" class="fs">เก็บข้อมูลถาวร</text>
+      <text x="520" y="112" class="fm" fill="#1E7A54">api/data/campus.db</text>
+
+      <path d="M262 62 L268 62" stroke="#A8620E" stroke-width="0"/>
+      <path d="M262 58 L268 58 L268 58 L268 58" stroke="#A8620E" stroke-width="0"/>
+      <path d="M260 60 L270 60" stroke="#A8620E" stroke-width="1.8" marker-end="url(#fd)"/>
+      <text x="266" y="46" text-anchor="middle" class="fm" fill="#A8620E">HTTP</text>
+      <path d="M490 60 L500 60" stroke="#A8620E" stroke-width="1.8" marker-end="url(#fd)"/>
+      <text x="495" y="46" text-anchor="middle" class="fm" fill="#A8620E">SQL</text>
+
+      <path d="M500 92 L490 92" stroke="#1E7A54" stroke-width="1.8" marker-end="url(#fu)"/>
+      <text x="495" y="108" text-anchor="middle" class="fm" fill="#1E7A54">rows</text>
+      <path d="M270 92 L260 92" stroke="#1E7A54" stroke-width="1.8" marker-end="url(#fu)"/>
+      <text x="266" y="108" text-anchor="middle" class="fm" fill="#1E7A54">JSON</text>
+
+      <text x="380" y="160" text-anchor="middle" class="ft" fill="#6B3B96">ตัวอย่างครบวงจร — ผู้ใช้กดดูรายการคำร้อง</text>
+
+      <rect x="40" y="176" width="680" height="238" rx="10" fill="#FAFCFB" stroke="#DBE7E0"/>
+      <text x="60" y="200" class="fs">① React เรียก <tspan class="fm" fill="#186B8C">getRequests()</tspan> → ยิง <tspan class="fm" fill="#A8620E">GET /api/requests</tspan></text>
+      <text x="60" y="226" class="fs">② API รับที่ route → controller → service</text>
+      <text x="60" y="252" class="fs">③ service สั่ง <tspan class="fm" fill="#1E7A54">SELECT ... JOIN ...</tspan> ไปที่ SQLite</text>
+      <text x="60" y="278" class="fs">④ SQLite คืน rows กลับมาที่ service</text>
+      <text x="60" y="304" class="fs">⑤ service แปลงเป็น JSON (requesterName) → controller → <tspan class="fm" fill="#A8620E">res.json()</tspan></text>
+      <text x="60" y="330" class="fs">⑥ React รับ JSON → แสดงบนหน้าจอ</text>
+      <rect x="60" y="348" width="640" height="48" rx="8" fill="#F1EAF8" stroke="#6B3B96"/>
+      <text x="380" y="370" text-anchor="middle" class="ft" fill="#6B3B96">ทั้ง 6 ขั้นเกิดในเสี้ยววินาที — ผู้ใช้เห็นแค่ "กดแล้วข้อมูลขึ้น"</text>
+      <text x="380" y="388" text-anchor="middle" class="fs" fill="#6B3B96">งานของสัปดาห์นี้ — ทำให้ทั้ง 6 ขั้นนี้พร้อมทำงานบนเครื่องคนอื่น ไม่ใช่แค่เครื่องเรา</text>
+    </svg>
+    <figcaption><b>ภาพที่ 1</b>ระบบ full-stack 3 ชั้น — request ไหลลง (ส้ม) response ไหลขึ้น (เขียว)</figcaption>
+  </figure>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ระบบนี้รันได้ดีบนเครื่องเราตอน dev — <strong>แต่ถ้าเอาไปรันบนเครื่องคนอื่น (หรือ cloud) จะเจอปัญหาอะไรบ้าง</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>ปัญหาที่พบบ่อย —</p>
+      <ul style="margin:8px 0 0 20px">
+        <li><strong>พอร์ตชนกัน</strong> — เครื่องอื่นอาจใช้ 3001 อยู่แล้ว · เราจึง hardcode พอร์ตไม่ได้</li>
+        <li><strong>ที่อยู่ frontend ต่างกัน</strong> — CORS origin บนเครื่องเราคือ localhost แต่บน cloud เป็นโดเมนจริง</li>
+        <li><strong>path ของไฟล์ต่างกัน</strong> — เครื่องอื่นวางโปรเจกต์คนละที่</li>
+        <li><strong>frontend ยังไม่ build</strong> — dev รัน 2 server แต่ production ต้อง build เป็นไฟล์ static</li>
+      </ul>
+      <p style="margin:8px 0 0"><strong>สัปดาห์นี้แก้ทั้งหมดนี้ทีละข้อ</strong></p>
+    </div>
+  </details>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 1</span>
+    <ul>
+      <li>ระบบมี 3 ชั้น — React (frontend) ↔ Express (API) ↔ SQLite (database)</li>
+      <li>request ไหลลง · response ไหลขึ้น · ทั้งหมดเกิดในเสี้ยววินาที</li>
+      <li><strong>"รันได้บนเครื่องเรา" ยังไม่พอ</strong> — ต้องรันได้บนเครื่องคนอื่นด้วย</li>
+      <li>งานสัปดาห์นี้ — แก้สิ่งที่ทำให้ระบบไปรันที่อื่นไม่ได้</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 2 ════════ -->
+<section class="ch" id="c2">
+  <p class="ch-num">บทที่ 2 · กลุ่มที่ 1</p>
+  <h2>รันระบบครบวงจร — เปิด 3 ส่วนพร้อมกัน</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <p>ก่อนขัดให้สมบูรณ์ ต้องเปิดทั้งระบบให้ทำงานพร้อมกันก่อน (CP35)</p>
+
+  <h3>2.1 ลำดับการเปิด — ล่างขึ้นบน</h3>
+
+  <table class="d">
+    <tr><th>ลำดับ</th><th>เปิดอะไร</th><th>คำสั่ง</th><th>ทำไมลำดับนี้</th></tr>
+    <tr><td>①</td><td>ฐานข้อมูล</td><td><code>npm run db:setup</code></td><td>ต้องมี campus.db ก่อน API เปิด</td></tr>
+    <tr><td>②</td><td>API</td><td><code>npm run dev</code> (ใน api/)</td><td>frontend ต้องมี API ให้เรียก</td></tr>
+    <tr><td>③</td><td>frontend</td><td><code>npm run dev</code> (ใน frontend/)</td><td>เปิดท้ายสุด</td></tr>
+  </table>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับร้านอาหาร</span>
+    <p style="margin:0"><strong>ฐานข้อมูล = คลังวัตถุดิบ</strong> · <strong>API = ครัว</strong> · <strong>frontend = หน้าร้าน</strong><br>
+    ต้องมีวัตถุดิบก่อน ครัวถึงทำอาหารได้ · หน้าร้านถึงเปิดรับลูกค้าได้ — เปิดจากหลังไปหน้า</p>
+  </div>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้าเปิด frontend ก่อน API (สลับลำดับ) — <strong>จะเกิดอะไรขึ้นเมื่อ Dashboard พยายามโหลดข้อมูล</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>frontend เปิดได้ แต่ <strong>Dashboard จะแสดง error หรือว่างเปล่า</strong> เพราะยิง API ไปแล้วไม่มีใครรับ (connection refused)</p>
+      <p style="margin:0">พอเปิด API ทีหลังแล้วรีเฟรช ก็ใช้ได้ · แต่<strong>เปิดตามลำดับ (DB → API → frontend) จะไม่เจอปัญหานี้เลย</strong></p>
+    </div>
+  </details>
+
+  <h3>2.2 ต้องเปิด 2 terminal</h3>
+
+  <p>dev รัน API กับ frontend เป็นคนละ process — จึงต้องมี 2 terminal เปิดค้างไว้</p>
+
+<pre><code><span class="c-com"># terminal 1 — API</span>
+<span class="c-key">cd</span> api &amp;&amp; npm run dev
+<span class="c-com"># → http://localhost:3001</span>
+
+<span class="c-com"># terminal 2 — frontend</span>
+<span class="c-key">cd</span> frontend &amp;&amp; npm run dev
+<span class="c-com"># → http://localhost:5173</span></code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไม dev ต้องแยก 2 server</span>
+    <p style="margin:0">Vite (ตัวรัน React) มี dev server ที่ <strong>โหลดหน้าใหม่อัตโนมัติเมื่อแก้โค้ด</strong> (hot reload) · แยกจาก API เพื่อให้แก้ frontend แล้วเห็นผลทันทีโดยไม่กระทบ API<br>
+    <strong>แต่ตอน production เราจะรวมเป็น server เดียว</strong> — บทที่ 6 จะอธิบาย</p>
+  </div>
+
+  <h3>2.3 ตรวจว่าทั้ง 3 ชั้นทำงาน</h3>
+
+  <table class="d">
+    <tr><th>ตรวจอะไร</th><th>ทำอย่างไร</th><th>ต้องเห็น</th></tr>
+    <tr><td>ฐานข้อมูล</td><td>มีไฟล์ <code>campus.db</code></td><td>ไฟล์อยู่จริง</td></tr>
+    <tr><td>API</td><td><code>curl localhost:3001/api/requests</code></td><td>JSON 5 รายการ</td></tr>
+    <tr><td>frontend</td><td>เปิด <code>localhost:5173</code></td><td>Dashboard แสดงข้อมูล</td></tr>
+    <tr><td>เชื่อมครบวงจร</td><td>เพิ่มคำร้องจากหน้าเว็บ</td><td>ข้อมูลบันทึกและแสดง</td></tr>
+  </table>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 2</span>
+    <ul>
+      <li>เปิดจากล่างขึ้นบน — ฐานข้อมูล → API → frontend</li>
+      <li>dev ต้อง 2 terminal เพราะ API กับ frontend เป็นคนละ process</li>
+      <li>Vite dev server มี hot reload — แก้โค้ดเห็นผลทันที</li>
+      <li>ตรวจครบวงจร — เพิ่มข้อมูลจากหน้าเว็บแล้วเห็นบันทึกจริง</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 3 ════════ -->
+<section class="ch" id="c3">
+  <p class="ch-num">บทที่ 3 · กลุ่มที่ 1</p>
+  <h2>Environment Variable — แยก dev/production</h2>
+  <p class="readtime">เวลาอ่าน ≈ 11 นาที</p>
+
+  <div class="term">
+    <div class="w">Environment Variable</div>
+    <p>ค่าที่<strong>กำหนดจากภายนอกโค้ด</strong> — เปลี่ยนได้ตามเครื่องที่รัน โดยไม่ต้องแก้โค้ด · เก็บใน <code>process.env</code></p>
+  </div>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้าเขียนพอร์ตตรง ๆ ในโค้ด <code>app.listen(3001)</code> แล้วเอาไป deploy บน cloud ที่กำหนดพอร์ตให้เอง — <strong>จะเกิดอะไรขึ้น</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>Cloud ส่วนใหญ่ (Render, Railway, Heroku) <strong>กำหนดพอร์ตให้ผ่าน <code>process.env.PORT</code></strong> — ไม่ใช่ให้เราเลือก</p>
+      <p style="margin:0">ถ้า hardcode <code>3001</code> ระบบจะฟังผิดพอร์ต → cloud เข้าไม่ถึง → <strong>deploy ไม่สำเร็จ</strong> · ต้องอ่านจาก <code>process.env.PORT ?? 3001</code></p>
+    </div>
+  </details>
+
+  <h3>3.1 รวม config ไว้ที่เดียว</h3>
+
+  <p>ปัญหาของการอ่าน <code>process.env</code> กระจายทั่วโค้ด — หายาก แก้ยาก ลืมง่าย · แก้ด้วยการรวมไว้ไฟล์เดียว</p>
+
+<pre><code><span class="c-com">// config.js — อ่าน env ที่เดียว ที่อื่น import จากนี่</span>
+<span class="c-key">export const</span> config = {
+  env:        process.env.NODE_ENV ?? <span class="c-str">'development'</span>,
+  isProd:     process.env.NODE_ENV === <span class="c-str">'production'</span>,
+  port:       <span class="c-fn">Number</span>(process.env.PORT ?? <span class="c-num">3001</span>),
+  corsOrigin: process.env.CORS_ORIGIN ?? <span class="c-str">'http://localhost:5173'</span>,
+  dbFile:     process.env.DB_FILE ?? <span class="c-str">'...'</span>,
+};</code></pre>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 ทำไมรวมที่เดียวดีกว่า</span>
+    <p style="margin:0">① เห็นทั้งหมดว่าระบบต้องการ env อะไรบ้าง — ในไฟล์เดียว<br>
+    ② มี <code>??</code> ค่า default ทุกตัว — ลืมตั้งก็ยังรันได้<br>
+    ③ ที่อื่นเขียน <code>config.port</code> — อ่านง่ายกว่า <code>process.env.PORT</code> กระจาย</p>
+  </div>
+
+
+  <figure>
+    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="การเดินทางของ config">
+      <style>.cft{font:600 11px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .cfs{font:300 9.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .cfm{font:500 9px 'IBM Plex Mono',monospace}</style>
+      <defs><marker id="cff" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#A8620E" stroke-width="1.5"/></marker></defs>
+      <rect x="20" y="60" width="150" height="70" rx="8" fill="#F5F7F6" stroke="#B8C4BD"/>
+      <text x="95" y="86" text-anchor="middle" class="cft">.env / cloud</text>
+      <text x="95" y="106" text-anchor="middle" class="cfm" fill="#8A9691">PORT=10000</text>
+      <text x="95" y="120" text-anchor="middle" class="cfs">ตั้งที่ต้นทาง</text>
+      <rect x="210" y="60" width="150" height="70" rx="8" fill="#DDEEF5" stroke="#186B8C"/>
+      <text x="285" y="86" text-anchor="middle" class="cft">process.env</text>
+      <text x="285" y="108" text-anchor="middle" class="cfm" fill="#186B8C">Node อ่านเข้ามา</text>
+      <rect x="400" y="60" width="150" height="70" rx="8" fill="#FBF0E2" stroke="#A8620E" stroke-width="1.8"/>
+      <text x="475" y="86" text-anchor="middle" class="cft">config.js</text>
+      <text x="475" y="106" text-anchor="middle" class="cfm" fill="#A8620E">?? default</text>
+      <text x="475" y="120" text-anchor="middle" class="cfs">รวมที่เดียว</text>
+      <rect x="590" y="60" width="150" height="70" rx="8" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="665" y="86" text-anchor="middle" class="cft">โค้ด</text>
+      <text x="665" y="108" text-anchor="middle" class="cfm" fill="#1E7A54">config.port</text>
+      <text x="665" y="122" text-anchor="middle" class="cfs">อ่านง่าย</text>
+      <path d="M172 95 L206 95" stroke="#A8620E" stroke-width="1.6" marker-end="url(#cff)"/>
+      <path d="M362 95 L396 95" stroke="#A8620E" stroke-width="1.6" marker-end="url(#cff)"/>
+      <path d="M552 95 L586 95" stroke="#A8620E" stroke-width="1.6" marker-end="url(#cff)"/>
+      <text x="380" y="165" text-anchor="middle" class="cfs">เปลี่ยนแค่ต้นทาง — โค้ดปลายทางไม่ต้องแก้</text>
+    </svg>
+    <figcaption><b>ภาพที่ 2</b>ค่า config ไหลทางเดียว — ตั้งที่ต้นทาง (.env/cloud) อ่านที่ปลายทาง (โค้ด)</figcaption>
+  </figure>
+
+  <h3>3.2 <code>NODE_ENV</code> — ตัวแยก dev/production</h3>
+
+  <table class="d">
+    <tr><th></th><th>development</th><th>production</th></tr>
+    <tr><td>ตั้งค่า</td><td>ค่าเริ่มต้น</td><td><code>NODE_ENV=production</code></td></tr>
+    <tr><td>logging</td><td><code>dev</code> — สั้น อ่านง่าย</td><td><code>combined</code> — ละเอียด เก็บ log</td></tr>
+    <tr><td>frontend</td><td>รัน dev server แยก</td><td>เสิร์ฟไฟล์ build</td></tr>
+    <tr><td>error</td><td>แสดงรายละเอียดเต็ม</td><td>ซ่อนรายละเอียดภายใน</td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 อย่า commit ไฟล์ .env</span>
+    <p style="margin:0"><code>.env</code> มักมีค่าลับ (รหัสผ่าน ฐานข้อมูล key) — <strong>ต้องอยู่ใน <code>.gitignore</code></strong><br>
+    แทนที่ด้วย <code>.env.example</code> ที่มีแต่<strong>ชื่อตัวแปร ไม่มีค่าจริง</strong> — บอกคนอื่นว่าต้องตั้งอะไรบ้าง</p>
+  </div>
+
+  <div class="box note">
+    <span class="h">🟨 เชื่อมกับ Week 07</span>
+    <p style="margin:0">เราใช้ <code>process.env.PORT</code> และ <code>CORS_ORIGIN</code> มาตั้งแต่ Week 07 แล้ว · สัปดาห์นี้แค่<strong>จัดระเบียบให้รวมที่เดียว</strong>และเพิ่ม <code>NODE_ENV</code> เข้ามาแยกสภาพแวดล้อม</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 3</span>
+    <ul>
+      <li>Environment variable = ค่าที่กำหนดจากภายนอก เปลี่ยนตามเครื่องได้</li>
+      <li>รวม config ไว้ไฟล์เดียว — เห็นครบ มี default ครบ</li>
+      <li><code>NODE_ENV</code> แยก dev/production — กระทบ logging, frontend, error</li>
+      <li><strong>ห้าม commit <code>.env</code></strong> — ใช้ <code>.env.example</code> แทน</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 4 ════════ -->
+<section class="ch" id="c4">
+  <p class="ch-num">บทที่ 4 · กลุ่มที่ 2</p>
+  <h2>Health Check — ระบบบอกสถานะตัวเอง</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <div class="term">
+    <div class="w">Health Check</div>
+    <p>endpoint พิเศษที่<strong>บอกว่าระบบยังทำงานปกติไหม</strong> — โดยไม่ต้องเปิดหน้าเว็บดู · มักเป็น <code>GET /api/health</code></p>
+  </div>
+
+  <h3>4.1 ทำไมต้องมี</h3>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">deploy ระบบขึ้น cloud แล้ว — <strong>cloud จะรู้ได้อย่างไรว่า deploy สำเร็จและระบบพร้อมรับผู้ใช้</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>Cloud <strong>เรียก health check endpoint อัตโนมัติ</strong> — ถ้าตอบ 200 แปลว่าพร้อม ถ้าไม่ตอบหรือตอบ error แปลว่ายังไม่พร้อม (จะไม่ส่งผู้ใช้เข้ามา)</p>
+      <p style="margin:0">โดยไม่มี health check cloud จะเดาว่าระบบพร้อมหรือไม่ไม่ได้ · และเราเองก็ต้องเปิดหน้าเว็บเช็คเอง ซึ่งไม่อัตโนมัติ</p>
+    </div>
+  </details>
+
+  <h3>4.2 health check ที่ดีบอกอะไรบ้าง</h3>
+
+<pre><code><span class="c-com">// GET /api/health</span>
+{
+  <span class="c-str">"status"</span>: <span class="c-str">"ok"</span>,              <span class="c-com">// ระบบพร้อมไหม</span>
+  <span class="c-str">"env"</span>: <span class="c-str">"production"</span>,       <span class="c-com">// สภาพแวดล้อมไหน</span>
+  <span class="c-str">"uptime"</span>: <span class="c-num">3600</span>,            <span class="c-com">// เปิดมากี่วินาที</span>
+  <span class="c-str">"database"</span>: {
+    <span class="c-str">"connected"</span>: <span class="c-key">true</span>,       <span class="c-com">// ต่อ DB ได้ไหม ← สำคัญสุด</span>
+    <span class="c-str">"driver"</span>: <span class="c-str">"sqlite"</span>,
+    <span class="c-str">"tables"</span>: <span class="c-num">3</span>
+  }
+}</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 บรรทัด <code>database.connected</code> สำคัญที่สุด</span>
+    <p style="margin:0">API เปิดอยู่ไม่ได้แปลว่าระบบใช้ได้ — <strong>ถ้าต่อฐานข้อมูลไม่ได้ ระบบก็ทำงานจริงไม่ได้</strong><br>
+    health check ที่ดีจึงต้องเช็คถึงฐานข้อมูล ไม่ใช่แค่ตอบว่า "API เปิดอยู่"</p>
+  </div>
+
+
+  <figure>
+    <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="health check ทำงานอย่างไร">
+      <style>.hft{font:600 11px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .hfs{font:300 9.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .hfm{font:500 9px 'IBM Plex Mono',monospace}</style>
+      <defs><marker id="hff" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#6B3B96" stroke-width="1.5"/></marker></defs>
+      <rect x="20" y="70" width="150" height="66" rx="8" fill="#F1EAF8" stroke="#6B3B96"/>
+      <text x="95" y="98" text-anchor="middle" class="hft">☁️ cloud</text>
+      <text x="95" y="118" text-anchor="middle" class="hfm" fill="#6B3B96">GET /api/health</text>
+      <rect x="210" y="70" width="170" height="66" rx="8" fill="#FBF0E2" stroke="#A8620E"/>
+      <text x="295" y="94" text-anchor="middle" class="hft">API เช็คตัวเอง</text>
+      <text x="295" y="114" text-anchor="middle" class="hfm" fill="#A8620E">getDbStatus()</text>
+      <rect x="420" y="70" width="150" height="66" rx="8" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="495" y="94" text-anchor="middle" class="hft">ต่อ DB ได้?</text>
+      <text x="495" y="114" text-anchor="middle" class="hfm" fill="#1E7A54">connected: ?</text>
+      <rect x="610" y="44" width="130" height="42" rx="8" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.8"/>
+      <text x="675" y="63" text-anchor="middle" class="hft" style="font-size:12px">✓ 200 ok</text>
+      <text x="675" y="78" text-anchor="middle" class="hfs">cloud ส่งคนเข้า</text>
+      <rect x="610" y="120" width="130" height="42" rx="8" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.8"/>
+      <text x="675" y="139" text-anchor="middle" class="hft" style="font-size:12px" fill="#8F2B21">✕ 503</text>
+      <text x="675" y="154" text-anchor="middle" class="hfs" fill="#8F2B21">ยังไม่ส่งคน</text>
+      <path d="M172 103 L206 103" stroke="#6B3B96" stroke-width="1.6" marker-end="url(#hff)"/>
+      <path d="M382 103 L416 103" stroke="#6B3B96" stroke-width="1.6" marker-end="url(#hff)"/>
+      <path d="M572 96 L606 72" stroke="#1E7A54" stroke-width="1.6" marker-end="url(#hff)"/>
+      <path d="M572 110 L606 134" stroke="#B23A2E" stroke-width="1.6" marker-end="url(#hff)"/>
+      <text x="380" y="188" text-anchor="middle" class="hfs">cloud ใช้ผลนี้ตัดสินว่าจะส่งผู้ใช้เข้ามาไหม</text>
+    </svg>
+    <figcaption><b>ภาพที่ 3</b>cloud เรียก health check → API เช็คถึง DB → ตอบ 200 (พร้อม) หรือ 503 (ยังไม่พร้อม)</figcaption>
+  </figure>
+
+  <h3>4.3 status code ต้องสื่อความหมาย</h3>
+
+  <table class="d">
+    <tr><th>สถานการณ์</th><th>status field</th><th>HTTP code</th></tr>
+    <tr><td>ทุกอย่างปกติ</td><td><code>"ok"</code></td><td><strong>200</strong></td></tr>
+    <tr><td>API เปิดแต่ต่อ DB ไม่ได้</td><td><code>"degraded"</code></td><td><strong>503</strong> Service Unavailable</td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 อย่าตอบ 200 เสมอ</span>
+    <p style="margin:0">ถ้าต่อ DB ไม่ได้แต่ยังตอบ 200 — cloud จะคิดว่าระบบปกติแล้วส่งผู้ใช้เข้ามา · ผู้ใช้จะเจอ error<br>
+    <strong>ตอบ 503 เมื่อระบบทำงานได้ไม่เต็มที่</strong> เพื่อให้ cloud รู้ว่ายังไม่พร้อม</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 4</span>
+    <ul>
+      <li>health check = endpoint ที่บอกว่าระบบพร้อมไหม โดยไม่ต้องเปิดหน้าเว็บ</li>
+      <li>cloud เรียกอัตโนมัติเพื่อเช็คว่า deploy สำเร็จ</li>
+      <li>ต้องเช็คถึง<strong>ฐานข้อมูล</strong> ไม่ใช่แค่ว่า API เปิดอยู่</li>
+      <li>ตอบ 200 เมื่อปกติ · <strong>503 เมื่อทำงานได้ไม่เต็มที่</strong></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 5 ════════ -->
+<section class="ch" id="c5">
+  <p class="ch-num">บทที่ 5 · กลุ่มที่ 2</p>
+  <h2>Error Handling และ Logging ครบวงจร</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <p>ระบบที่พร้อมใช้จริงต้อง<strong>จัดการเมื่อมีอะไรผิดพลาด</strong>ได้ดี — ไม่ใช่แค่ทำงานตอนทุกอย่างถูก</p>
+
+  <h3>5.1 error handling — เรามีแล้วตั้งแต่ Week 06</h3>
+
+  <p>สัปดาห์นี้ไม่ได้เริ่มใหม่ — แค่ตรวจว่าครบวงจรจริง</p>
+
+  <table class="d">
+    <tr><th>มีไหม</th><th>ทำอะไร</th><th>จาก</th></tr>
+    <tr><td><code>errorHandler</code></td><td>จับ error รวมศูนย์ ตอบ JSON</td><td>Week 06</td></tr>
+    <tr><td><code>notFound</code></td><td>route ที่ไม่มี → 404</td><td>Week 06</td></tr>
+    <tr><td>validation</td><td>ข้อมูลไม่ครบ → 400</td><td>Week 06</td></tr>
+    <tr><td>constraint → status</td><td>DB ปฏิเสธ → 400 ไม่ใช่ 500</td><td>Week 10</td></tr>
+  </table>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ตอน production ถ้าเกิด error ที่เราไม่ได้คาดไว้ (เช่น bug ในโค้ด) — <strong>ควรส่งรายละเอียด error เต็ม ๆ กลับไปให้ผู้ใช้ไหม</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ไม่ควร</strong> — รายละเอียด error (stack trace, ชื่อไฟล์, query) บอก<strong>โครงสร้างภายในระบบ</strong> ซึ่งคนไม่หวังดีเอาไปหาช่องโหว่ได้</p>
+      <p style="margin:0"><strong>dev</strong> แสดงเต็มเพื่อ debug · <strong>production</strong> ตอบแค่ "เกิดข้อผิดพลาด" แล้ว<strong>เก็บรายละเอียดไว้ใน log</strong>ฝั่งเซิร์ฟเวอร์แทน</p>
+    </div>
+  </details>
+
+  <h3>5.2 logging — dev ต่างจาก production</h3>
+
+<pre><code><span class="c-com">// app.js — morgan logging แยกตามสภาพแวดล้อม</span>
+app.<span class="c-fn">use</span>(<span class="c-fn">morgan</span>(config.isProd ? <span class="c-str">'combined'</span> : <span class="c-str">'dev'</span>));</code></pre>
+
+  <table class="d">
+    <tr><th>รูปแบบ</th><th>หน้าตา</th><th>ใช้ตอน</th></tr>
+    <tr><td><code>dev</code></td><td><code>GET /api/requests 200 5ms</code> (มีสี)</td><td>development — อ่านเร็วตอน debug</td></tr>
+    <tr><td><code>combined</code></td><td>IP · เวลา · user-agent · ครบ</td><td>production — เก็บวิเคราะห์ทีหลัง</td></tr>
+  </table>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับกล้องวงจรปิด</span>
+    <p style="margin:0"><strong>dev log = ดูสดหน้าจอ</strong> — เห็นสิ่งที่เกิดตอนนี้ เอาไว้ debug<br>
+    <strong>production log = บันทึกเก็บไว้</strong> — ย้อนดูได้ว่าเกิดอะไรตอนไหน ใครเข้ามา · จำเป็นตอนระบบมีปัญหาแล้วต้องสืบ</p>
+  </div>
+
+  <div class="box note">
+    <span class="h">🟨 log ที่ดีช่วยตอนระบบพัง</span>
+    <p style="margin:0">ตอน dev เราเห็น error ทันทีบนจอ · แต่ production ระบบรันบน cloud เราไม่ได้นั่งดู<br>
+    <strong>log คือสิ่งเดียวที่บอกได้ว่าเกิดอะไรขึ้น</strong>เมื่อผู้ใช้แจ้งว่าระบบมีปัญหา</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 5</span>
+    <ul>
+      <li>error handling เรามีครบตั้งแต่ Week 06/10 — สัปดาห์นี้ตรวจว่าครบวงจร</li>
+      <li>production <strong>ไม่ส่งรายละเอียด error ให้ผู้ใช้</strong> — เก็บใน log แทน</li>
+      <li>logging แยก dev (<code>dev</code>) / production (<code>combined</code>)</li>
+      <li>log คือสิ่งเดียวที่บอกได้ว่าเกิดอะไรตอนระบบรันบน cloud</li>
+    </ul>
+  </div>
+</section>
+<!-- ════════ CH 6 ════════ -->
+<section class="ch" id="c6">
+  <p class="ch-num">บทที่ 6 · กลุ่มที่ 2</p>
+  <h2>Production Build — dev ต่างจาก production</h2>
+  <p class="readtime">เวลาอ่าน ≈ 11 นาที</p>
+
+  <p>นี่คือความต่างที่ใหญ่ที่สุดระหว่าง "รันได้บนเครื่องเรา" กับ "พร้อมใช้จริง"</p>
+
+  <figure>
+    <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="dev เทียบกับ production">
+      <style>
+        .pt{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .ps{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .pm{font:500 9.5px 'IBM Plex Mono',monospace}
+      </style>
+      <text x="30" y="20" class="pm" fill="#186B8C" style="letter-spacing:.06em">DEVELOPMENT — 2 server แยกกัน</text>
+      <rect x="30" y="30" width="700" height="120" rx="10" fill="#F7FAFB" stroke="#BFD6E0"/>
+      <rect x="55" y="55" width="180" height="70" rx="8" fill="#DDEEF5" stroke="#186B8C"/>
+      <text x="145" y="82" text-anchor="middle" class="pt">React dev server</text>
+      <text x="145" y="102" text-anchor="middle" class="pm" fill="#186B8C">พอร์ต 5173</text>
+      <text x="145" y="117" text-anchor="middle" class="ps">hot reload</text>
+      <rect x="525" y="55" width="180" height="70" rx="8" fill="#FBF0E2" stroke="#A8620E"/>
+      <text x="615" y="82" text-anchor="middle" class="pt">Express API</text>
+      <text x="615" y="102" text-anchor="middle" class="pm" fill="#A8620E">พอร์ต 3001</text>
+      <path d="M237 90 L523 90" stroke="#8FA69A" stroke-width="1.5" stroke-dasharray="5 3"/>
+      <text x="380" y="82" text-anchor="middle" class="ps">เบราว์เซอร์คุยกับ 2 พอร์ต</text>
+      <text x="380" y="140" text-anchor="middle" class="ps">แก้โค้ด frontend แล้วเห็นผลทันที — เหมาะกับตอนพัฒนา</text>
+
+      <text x="30" y="185" class="pm" fill="#1E7A54" style="letter-spacing:.06em">PRODUCTION — server เดียว</text>
+      <rect x="30" y="195" width="700" height="130" rx="10" fill="#F5FAF7" stroke="#A8D4BE"/>
+      <rect x="55" y="220" width="150" height="80" rx="8" fill="#EDF3F0" stroke="#8FB0A0"/>
+      <text x="130" y="245" text-anchor="middle" class="pt">React build</text>
+      <text x="130" y="263" text-anchor="middle" class="pm" fill="#1E7A54">frontend/dist/</text>
+      <text x="130" y="280" text-anchor="middle" class="ps">ไฟล์ static</text>
+      <text x="130" y="294" text-anchor="middle" class="ps">(HTML/JS/CSS)</text>
+      <path d="M207 260 L253 260" stroke="#1E7A54" stroke-width="1.5"/>
+      <rect x="255" y="220" width="220" height="80" rx="8" fill="#DFF0E7" stroke="#1E7A54" stroke-width="2"/>
+      <text x="365" y="245" text-anchor="middle" class="pt">Express API</text>
+      <text x="365" y="264" text-anchor="middle" class="pm" fill="#1E7A54">พอร์ตเดียว (3001)</text>
+      <text x="365" y="281" text-anchor="middle" class="ps">เสิร์ฟทั้ง static + API</text>
+      <text x="365" y="295" text-anchor="middle" class="ps">/ → เว็บ · /api → API</text>
+      <path d="M477 260 L523 260" stroke="#8FA69A" stroke-width="1.5"/>
+      <rect x="525" y="230" width="180" height="60" rx="8" fill="#fff" stroke="#BFD2C8"/>
+      <text x="615" y="255" text-anchor="middle" class="pt">ผู้ใช้</text>
+      <text x="615" y="274" text-anchor="middle" class="ps">เข้าพอร์ตเดียว ได้ครบ</text>
+    </svg>
+    <figcaption><b>ภาพที่ 4</b>dev รัน 2 server แยกกัน · production build frontend เป็น static แล้ว API เสิร์ฟทั้งหมดจากพอร์ตเดียว</figcaption>
+  </figure>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ทำไม production ต้องรวมเป็นพอร์ตเดียว — <strong>รัน 2 server แยกเหมือน dev ไม่ได้หรือ</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>ได้ แต่ยุ่งกว่าและมีปัญหา —</p>
+      <ul style="margin:8px 0 0 20px">
+        <li>ต้องจ่ายค่า cloud 2 ที่ · ตั้งค่า 2 ที่</li>
+        <li>เจอปัญหา CORS ตลอด เพราะคนละโดเมน</li>
+        <li>dev server ของ Vite <strong>ไม่ได้ออกแบบมาให้รัน production</strong> — ช้าและไม่ปลอดภัย</li>
+      </ul>
+      <p style="margin:8px 0 0"><strong>build เป็น static แล้วให้ API เสิร์ฟ</strong> — ง่ายกว่า ถูกกว่า เร็วกว่า · เป็นวิธีมาตรฐาน</p>
+    </div>
+  </details>
+
+  <h3>6.1 build frontend</h3>
+
+<pre><code><span class="c-key">cd</span> frontend
+npm run build
+<span class="c-com"># → สร้างโฟลเดอร์ dist/ ที่มี HTML/JS/CSS พร้อมใช้</span></code></pre>
+
+  <div class="term">
+    <div class="w">Build</div>
+    <p>แปลงโค้ด React (JSX หลายไฟล์) เป็น <strong>ไฟล์ static ที่เบราว์เซอร์เปิดได้ตรง ๆ</strong> — รวมไฟล์ ย่อขนาด ปรับให้เร็ว</p>
+  </div>
+
+  <h3>6.2 ให้ API เสิร์ฟ static ตอน production</h3>
+
+<pre><code><span class="c-com">// app.js — เฉพาะตอน production</span>
+<span class="c-key">if</span> (config.isProd &amp;&amp; <span class="c-fn">existsSync</span>(config.staticDir)) {
+  app.<span class="c-fn">use</span>(express.<span class="c-fn">static</span>(config.staticDir));      <span class="c-com">// เสิร์ฟ dist/</span>
+  app.<span class="c-fn">get</span>(<span class="c-str">/^\/(?!api).*/</span>, (req, res) =&gt; {           <span class="c-com">// ทุก path ที่ไม่ใช่ /api</span>
+    res.<span class="c-fn">sendFile</span>(<span class="c-fn">path.join</span>(config.staticDir, <span class="c-str">'index.html'</span>));
+  });
+}</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไมต้อง <code>/^\/(?!api).*/</code></span>
+    <p style="margin:0">React Router จัดการ path ฝั่ง frontend เอง (เช่น <code>/about</code>) · เราจึงต้องคืน <code>index.html</code> ให้ทุก path <strong>ยกเว้น <code>/api</code></strong> ที่เป็นของ API จริง<br>
+    ถ้าไม่แยก <code>/api</code> ออก จะคืนหน้าเว็บแทนข้อมูล API</p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 อย่าลืม build ใหม่เมื่อแก้ frontend</span>
+    <p style="margin:0">production เสิร์ฟจาก <code>dist/</code> ที่ build ไว้ — <strong>แก้โค้ด frontend แล้วไม่ build ใหม่ ผู้ใช้จะเห็นของเก่า</strong><br>
+    ต่างจาก dev ที่ hot reload ให้อัตโนมัติ</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 6</span>
+    <ul>
+      <li>dev = 2 server แยก (hot reload) · production = build static แล้ว API เสิร์ฟพอร์ตเดียว</li>
+      <li><code>npm run build</code> แปลง React เป็นไฟล์ static ใน <code>dist/</code></li>
+      <li>API เสิร์ฟ <code>dist/</code> + คืน index.html ทุก path ยกเว้น <code>/api</code></li>
+      <li><strong>แก้ frontend ต้อง build ใหม่</strong> — production ไม่มี hot reload</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 7 ════════ -->
+<section class="ch" id="c7">
+  <p class="ch-num">บทที่ 7 · กลุ่มที่ 3 <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
+  <h2>Deploy — เอาระบบขึ้นให้คนอื่นใช้</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <div class="term">
+    <div class="w">Deploy</div>
+    <p>เอาระบบขึ้นไปรันบน<strong>เครื่องที่เข้าถึงได้จากอินเทอร์เน็ต</strong> — เพื่อให้คนอื่นใช้ได้ ไม่ใช่แค่บนเครื่องเรา</p>
+  </div>
+
+  <h3>7.1 ก้าวแรก — จำลอง production ในเครื่องเรา</h3>
+
+  <p><strong>ก่อนขึ้น cloud จริง เราจำลองสิ่งที่ cloud จะทำ ในเครื่องเราเองได้</strong> — เข้าใจ production เต็มที่โดยไม่ต้องสมัครอะไร</p>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับซ้อมก่อนแสดงจริง</span>
+    <p style="margin:0"><strong>จำลอง production ในเครื่อง = ซ้อมใหญ่</strong> — ทำทุกอย่างเหมือนงานจริงแต่ยังอยู่ในห้องซ้อม · <strong>deploy ขึ้น cloud = แสดงจริงต่อหน้าคนดู</strong><br>
+    ถ้าซ้อมผ่าน โอกาสแสดงจริงผ่านก็สูง</p>
+  </div>
+
+<pre><code><span class="c-com"># ① build frontend เป็น static</span>
+<span class="c-key">cd</span> frontend &amp;&amp; npm run build
+
+<span class="c-com"># ② รัน API แบบ production — เสิร์ฟ frontend ที่ build แล้ว</span>
+<span class="c-key">cd</span> ../api &amp;&amp; NODE_ENV=production npm start
+<span class="c-com"># เปิด http://localhost:3001 ได้ทั้งเว็บและ API จากพอร์ตเดียว</span></code></pre>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 นี่คือสิ่งที่ cloud จะทำให้อัตโนมัติ</span>
+    <p style="margin:0">cloud รับโค้ดเรา → รัน 2 คำสั่งข้างบนนี้ให้ → เปิดพอร์ตให้คนทั้งโลกเข้าถึง<br>
+    <strong>เราทำ 2 ขั้นแรกเองได้ในเครื่อง</strong> — เข้าใจ production โดยไม่ต้องพึ่ง cloud · <strong>คาบนี้ทุกคนทำแค่นี้ (CP43)</strong></p>
+  </div>
+
+  <div class="box note">
+    <span class="h">🟨 deploy จริงขึ้น cloud เป็น Challenge (ไม่บังคับ)</span>
+    <p style="margin:0">นักศึกษาส่วนใหญ่ยังไม่เคยใช้ cloud — เราจึง<strong>เข้าใจ production ให้แน่นในเครื่องก่อน</strong> · ใครอยากเห็นระบบตัวเองออนไลน์จริงให้เพื่อนเปิดจากมือถือได้ ทำ Challenge ในคู่มือ Take-Home ที่มีคู่มือ Render จับมือทำทีละขั้น</p>
+  </div>
+
+  <h3>7.2 ถ้าจะขึ้น cloud จริง — cloud ทำอะไรให้</h3>
+
+  <p>ส่วนนี้อ่านเพื่อ<strong>เข้าใจภาพ</strong> ว่า cloud ทำงานอย่างไร (ไม่ต้องลงมือ)</p>
+
+  <h3 style="display:none">7.1 สิ่งที่ต้องมีก่อน deploy</h3>
+
+  <p>ทุกอย่างที่ทำมาในบท 3–6 คือการเตรียม deploy</p>
+
+  <table class="d">
+    <tr><th>เตรียมแล้วจากบท</th><th>ทำไมจำเป็นตอน deploy</th></tr>
+    <tr><td>config อ่าน env (บท 3)</td><td>cloud กำหนดพอร์ต/ค่าผ่าน env</td></tr>
+    <tr><td>health check (บท 4)</td><td>cloud เช็คว่า deploy สำเร็จ</td></tr>
+    <tr><td>error handling (บท 5)</td><td>ไม่ให้ระบบล่มทั้งระบบเมื่อมี error เดียว</td></tr>
+    <tr><td>production build (บท 6)</td><td>เสิร์ฟจากพอร์ตเดียว — cloud จัดการง่าย</td></tr>
+  </table>
+
+  <h4>cloud อ่านคำสั่งจาก render.yaml</h4>
+
+<pre><code><span class="c-com"># render.yaml — บอก Render ว่า build และ start อย่างไร</span>
+services:
+  - type: web
+    buildCommand: cd frontend &amp;&amp; npm install &amp;&amp; npm run build &amp;&amp; cd ../api &amp;&amp; npm install
+    startCommand: cd api &amp;&amp; npm start
+    envVars:
+      - key: NODE_ENV
+        value: production</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 build บน cloud ทำตามลำดับที่เราวางไว้</span>
+    <p style="margin:0">① build frontend เป็น static · ② ติดตั้ง dependencies ของ API · ③ start API แบบ production (ซึ่งเสิร์ฟ static ให้ด้วย)<br>
+    <strong>เป็นลำดับเดียวกับที่เราทำเองในบท 6</strong> แค่ให้ cloud ทำแทน</p>
+  </div>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ฐานข้อมูล SQLite เป็นไฟล์ในเครื่อง — <strong>เมื่อ deploy บน cloud ที่ restart บ่อย จะเกิดปัญหาอะไร</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>cloud หลายเจ้า<strong>ล้างไฟล์ทุกครั้งที่ restart/deploy ใหม่</strong> (ephemeral filesystem) — ข้อมูลใน <code>campus.db</code> จะหาย</p>
+      <p style="margin:0"><strong>ทางแก้</strong> — ① ใช้ persistent disk (cloud บางเจ้ามีให้) · ② ย้ายไปฐานข้อมูลที่แยกต่างหาก (เช่น MongoDB Atlas หรือ PostgreSQL cloud) · <strong>ซึ่งเป็นเหตุผลหนึ่งที่โลกจริงมักใช้ฐานข้อมูลแยกเครื่อง</strong> — โยงกับบทอ่านเพิ่มเติมถัดไป</p>
+    </div>
+  </details>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 7</span>
+    <ul>
+      <li>deploy = เอาระบบขึ้นเครื่องที่เข้าถึงจากอินเทอร์เน็ตได้</li>
+      <li>ทุกอย่างในบท 3–6 คือการเตรียม deploy</li>
+      <li><code>render.yaml</code> บอก cloud ว่า build/start อย่างไร</li>
+      <li>SQLite บน cloud ephemeral อาจหาย — เป็นเหตุผลที่โลกจริงใช้ DB แยกเครื่อง</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 8 ════════ -->
+<section class="ch" id="c8">
+  <p class="ch-num">บทที่ 8 · กลุ่มที่ 3 <span class="wheretag home">🏠 อ่านเพิ่มเติม</span></p>
+  <h2>อ่านเพิ่มเติม — ทางเลือกฐานข้อมูล (SQL / NoSQL / async)</h2>
+  <p class="readtime">เวลาอ่าน ≈ 11 นาที · ไม่ต้องลงมือเขียน</p>
+
+  <div class="box note">
+    <span class="h">🟨 บทนี้ให้ "รู้จัก" ไม่ใช่ "ทำ"</span>
+    <p style="margin:0">เราเลือกใช้ SQLite มาตลอดหน่วย และมันเหมาะกับงานเรา · บทนี้บอกให้รู้ว่า<strong>มีทางเลือกอื่น</strong> ต่างกันอย่างไร ไปเรียนต่อได้ที่ไหน — เพื่อไม่ให้คิดว่า SQLite คือคำตอบเดียว</p>
+  </div>
+
+  <h3>8.1 SQL เทียบกับ NoSQL</h3>
+
+  <figure>
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SQL เทียบ NoSQL">
+      <style>
+        .st{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .ss{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .sm{font:500 9.5px 'IBM Plex Mono',monospace}
+      </style>
+      <text x="30" y="20" class="sm" fill="#1E7A54" style="letter-spacing:.06em">SQL (SQLite) — ตาราง/แถว</text>
+      <rect x="30" y="28" width="340" height="26" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="46" y="45" class="sm" fill="#14503A">id | requester_id | status | priority</text>
+      <rect x="30" y="54" width="340" height="22" fill="#fff" stroke="#DBE7E0"/>
+      <text x="46" y="70" class="ss">REQ-001 | 1 | pending | urgent</text>
+      <rect x="30" y="76" width="340" height="22" fill="#fff" stroke="#DBE7E0"/>
+      <text x="46" y="92" class="ss">REQ-002 | 2 | completed | normal</text>
+      <text x="30" y="118" class="ss">✓ ทุกแถวมีคอลัมน์เหมือนกัน · โครงตายตัว · มีความสัมพันธ์</text>
+
+      <text x="410" y="20" class="sm" fill="#6B3B96" style="letter-spacing:.06em">NoSQL (MongoDB) — collection/document</text>
+      <rect x="410" y="28" width="320" height="70" fill="#F1EAF8" stroke="#6B3B96"/>
+      <text x="424" y="45" class="sm" fill="#4A2A6B">{ id: "REQ-001", requester: {...},</text>
+      <text x="424" y="60" class="sm" fill="#4A2A6B">  status: "pending", tags: [...] }</text>
+      <text x="424" y="80" class="sm" fill="#4A2A6B">{ id: "REQ-002", note: "...",</text>
+      <text x="424" y="92" class="sm" fill="#4A2A6B">  status: "done" }  ← field ต่างกันได้</text>
+      <text x="410" y="118" class="ss">✓ แต่ละ document มี field ต่างกันได้ · ยืดหยุ่น · ไม่มีโครงบังคับ</text>
+
+      <rect x="30" y="140" width="700" height="96" rx="8" fill="#FAFCFB" stroke="#DBE7E0"/>
+      <text x="50" y="162" class="st">เลือกอันไหนเมื่อไร</text>
+      <text x="50" y="184" class="ss">• ข้อมูลมีโครงชัด + มีความสัมพันธ์ (เช่น ระบบเรา) → <tspan fill="#1E7A54" font-weight="600">SQL</tspan></text>
+      <text x="50" y="204" class="ss">• ข้อมูลไม่มีโครงตายตัว + แต่ละรายการต่างกันมาก (เช่น log, เอกสารหลากหลาย) → <tspan fill="#6B3B96" font-weight="600">NoSQL</tspan></text>
+      <text x="50" y="224" class="ss">• ไม่มีอันไหน "ดีกว่า" เสมอ — ขึ้นกับ<tspan font-weight="600">ลักษณะข้อมูล</tspan></text>
+    </svg>
+    <figcaption><b>ภาพที่ 5</b>SQL เก็บเป็นตารางโครงตายตัว · NoSQL เก็บเป็น document ที่ยืดหยุ่น</figcaption>
+  </figure>
+
+  <h3>8.2 ทำไมวิชานี้เลือก SQLite</h3>
+
+  <p>ข้อมูลเรา (users, requests) <strong>มีโครงชัดและมีความสัมพันธ์กัน</strong> — คำร้องชี้ไปหาผู้ใช้ด้วย foreign key</p>
+
+  <table class="d">
+    <tr><th>ลักษณะข้อมูลเรา</th><th>SQL ตอบโจทย์เพราะ</th></tr>
+    <tr><td>โครงชัด (ทุกคำร้องมี field เดียวกัน)</td><td>schema บังคับโครงได้</td></tr>
+    <tr><td>มีความสัมพันธ์ (คำร้อง→ผู้ใช้)</td><td>foreign key + JOIN</td></tr>
+    <tr><td>ต้องการความถูกต้อง</td><td>constraint ปฏิเสธข้อมูลผิด</td></tr>
+  </table>
+
+  <h3>8.3 async — เมื่อฐานข้อมูลอยู่คนละเครื่อง</h3>
+
+  <p>เราใช้ SQLite แบบ sync มาตลอด เพราะ<strong>ไฟล์อยู่ในเครื่องเดียวกัน อ่านเสร็จทันที</strong></p>
+
+  <figure>
+    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="sync เทียบ async">
+      <style>
+        .at{font:600 11px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .as{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .amn{font:500 9.5px 'IBM Plex Mono',monospace}
+      </style>
+      <text x="30" y="20" class="amn" fill="#1E7A54" style="letter-spacing:.06em">SYNC — SQLite (ไฟล์ในเครื่อง)</text>
+      <rect x="30" y="30" width="700" height="50" rx="8" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="46" y="52" class="as">โค้ดสั่ง → <tspan class="amn" fill="#14503A">db.prepare(sql).all()</tspan> → ได้ผลทันที → บรรทัดถัดไป</text>
+      <text x="46" y="70" class="as">ไม่ต้องรอ · ไม่ต้อง await</text>
+
+      <text x="30" y="110" class="amn" fill="#6B3B96" style="letter-spacing:.06em">ASYNC — MongoDB Atlas (คนละเครื่อง)</text>
+      <rect x="30" y="120" width="700" height="60" rx="8" fill="#F1EAF8" stroke="#6B3B96"/>
+      <text x="46" y="142" class="as">โค้ดสั่ง → ส่งคำขอข้ามเครือข่าย → <tspan fill="#6B3B96" font-weight="600">... รอ ...</tspan> → ได้ผล → บรรทัดถัดไป</text>
+      <text x="46" y="162" class="as"><tspan class="amn" fill="#4A2A6B">await collection.find().toArray()</tspan> — ต้อง await เพราะต้องรอเครือข่าย</text>
+      <text x="46" y="176" class="as">ระหว่างรอ โปรแกรมทำอย่างอื่นได้ ไม่ค้าง</text>
+    </svg>
+    <figcaption><b>ภาพที่ 6</b>sync ได้ผลทันที · async ต้องรอเครือข่าย จึงใช้ <code>await</code></figcaption>
+  </figure>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้าเปลี่ยนจาก SQLite เป็น MongoDB จริง — <strong>จะกระทบชั้นไหนบ้าง</strong> (นึกถึง 4 ครั้งที่ผ่านมาที่แก้ชั้นเดียว)</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <table class="d" style="margin:0">
+        <tr><th>ชั้น</th><th>กระทบไหม</th></tr>
+        <tr><td>frontend</td><td>❌ ไม่ — ยังเรียก API เดิม</td></tr>
+        <tr><td>service</td><td>✅ เขียนใหม่ให้ใช้ MongoDB</td></tr>
+        <tr><td><strong>controller</strong></td><td>⚠ <strong>กระทบ</strong> — ต้องเติม <code>await</code> เพราะ service เป็น async</td></tr>
+      </table>
+      <p style="margin:8px 0 0"><strong>ต่างจาก 4 ครั้งก่อนที่แก้ชั้นเดียว</strong> — เพราะครั้งนี้เปลี่ยน sync→async ซึ่งเป็นการเปลี่ยน "สัญญา" ของ service จึงกระทบผู้เรียก (controller)</p>
+      <p style="margin:8px 0 0">นี่คือบทเรียนสำคัญ — <strong>การแยกชั้นช่วยได้มาก แต่การเปลี่ยนสัญญาของชั้น (sync/async) ยังกระทบผู้เรียกเสมอ</strong></p>
+    </div>
+  </details>
+
+  <h3>8.4 ไปเรียนต่อที่ไหน</h3>
+
+  <table class="d">
+    <tr><th>อยากรู้เรื่อง</th><th>ไปที่</th></tr>
+    <tr><td>SQL เชิงลึก (normalization, transaction, index)</td><td>วิชาฐานข้อมูลเทอมหน้า</td></tr>
+    <tr><td>MongoDB</td><td>MongoDB University (ฟรี) · เอกสาร Mongoose</td></tr>
+    <tr><td>async/await เชิงลึก</td><td>MDN JavaScript · Promise</td></tr>
+  </table>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 8</span>
+    <ul>
+      <li>SQL เก็บตารางโครงตายตัว · NoSQL เก็บ document ยืดหยุ่น</li>
+      <li>เลือกตาม<strong>ลักษณะข้อมูล</strong> — ไม่มีอันไหนดีกว่าเสมอ</li>
+      <li>วิชานี้เลือก SQLite เพราะข้อมูลมีโครงและความสัมพันธ์ชัด</li>
+      <li>async ใช้เมื่อต้อง<strong>รอ</strong> (เครือข่าย) · เปลี่ยนไป MongoDB กระทบ controller เพราะ async</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 9 ════════ -->
+<section class="ch" id="c9">
+  <p class="ch-num">บทที่ 9 · กลุ่มที่ 3 <span class="wheretag home">🏠 ปิดหน่วย</span></p>
+  <h2>สรุปหน่วยที่ 4 ทั้งหน่วย</h2>
+  <p class="readtime">เวลาอ่าน ≈ 8 นาที</p>
+
+  <h3>9.1 เราเดินทางมาถึงไหน</h3>
+
+  <figure>
+    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="เส้นทางหน่วยที่ 4">
+      <style>
+        .ut{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .us{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+      </style>
+      <defs><marker id="ua" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#C084FC" stroke-width="1.8"/></marker></defs>
+      <rect x="20" y="50" width="210" height="80" rx="10" fill="#FBF0E2" stroke="#A8620E" stroke-width="1.6"/>
+      <text x="125" y="76" text-anchor="middle" class="ut">สัปดาห์ 9</text>
+      <text x="125" y="98" text-anchor="middle" class="us">เรียน SQL</text>
+      <text x="125" y="114" text-anchor="middle" class="us">ไม่แตะโค้ด</text>
+      <rect x="275" y="50" width="210" height="80" rx="10" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.6"/>
+      <text x="380" y="76" text-anchor="middle" class="ut">สัปดาห์ 10</text>
+      <text x="380" y="98" text-anchor="middle" class="us">เชื่อม Node + DB</text>
+      <text x="380" y="114" text-anchor="middle" class="us">แก้ไฟล์เดียว</text>
+      <rect x="530" y="50" width="210" height="80" rx="10" fill="#DFF0E7" stroke="#1E7A54" stroke-width="2"/>
+      <text x="635" y="76" text-anchor="middle" class="ut">สัปดาห์ 11</text>
+      <text x="635" y="98" text-anchor="middle" class="us">ประกอบเป็นระบบจริง</text>
+      <text x="635" y="114" text-anchor="middle" class="us">พร้อม deploy</text>
+      <path d="M232 90 L273 90" stroke="#C084FC" stroke-width="2" marker-end="url(#ua)"/>
+      <path d="M487 90 L528 90" stroke="#C084FC" stroke-width="2" marker-end="url(#ua)"/>
+      <text x="380" y="165" text-anchor="middle" class="ut" fill="#6B3B96">จากไม่รู้จัก SQL → มีระบบ full-stack ที่ deploy ได้จริง</text>
+    </svg>
+    <figcaption><b>ภาพที่ 7</b>เส้นทางหน่วยที่ 4 — จากเรียน SQL ถึงระบบที่พร้อมส่งมอบ</figcaption>
+  </figure>
+
+  <h3>9.2 บทเรียนใหญ่ของทั้งหน่วย — แยกชั้นดี เปลี่ยนได้ง่าย</h3>
+
+  <p>ตลอดวิชานี้เราเปลี่ยนแหล่งข้อมูล <strong>4 ครั้ง</strong> — ทุกครั้งแก้แค่ชั้นเดียว</p>
+
+  <table class="d">
+    <tr><th>ครั้ง</th><th>เปลี่ยนจาก</th><th>เป็น</th><th>แก้กี่ชั้น</th></tr>
+    <tr><td>Week 05</td><td>ข้อมูลตั้งต้น</td><td>localStorage</td><td>1</td></tr>
+    <tr><td>Week 06</td><td>ตัวแปรใน memory</td><td>ไฟล์ JSON</td><td>1</td></tr>
+    <tr><td>Week 07</td><td>localStorage</td><td>เรียก API</td><td>1</td></tr>
+    <tr><td>Week 10</td><td>ไฟล์ JSON</td><td>SQLite</td><td>1</td></tr>
+  </table>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 ทำไมทำได้</span>
+    <p style="margin:0">เพราะเรา<strong>แยกชั้นชัดเจน</strong>ตั้งแต่ต้น — แต่ละชั้นรู้เรื่องของตัวเองเท่านั้น<br>
+    <strong>frontend ไม่รู้ว่าข้อมูลมาจากไหน · controller ไม่รู้จัก SQL · service ไม่รู้จัก req/res</strong><br>
+    เมื่อเปลี่ยนแหล่งข้อมูล จึงกระทบแค่ชั้นที่รู้จักแหล่งข้อมูลนั้น</p>
+  </div>
+
+  <h3>9.3 และสัปดาห์นี้เพิ่มบทเรียน — "ทำงานได้" ต่างจาก "พร้อมใช้จริง"</h3>
+
+  <table class="d">
+    <tr><th>ทำงานได้ (dev)</th><th>พร้อมใช้จริง (production)</th></tr>
+    <tr><td>รันบนเครื่องเรา</td><td>รันบนเครื่องคนอื่นได้</td></tr>
+    <tr><td>hardcode ค่าได้</td><td>config จาก env</td></tr>
+    <tr><td>เปิดหน้าเว็บเช็คเอง</td><td>health check อัตโนมัติ</td></tr>
+    <tr><td>เห็น error บนจอ</td><td>เก็บใน log</td></tr>
+    <tr><td>2 server แยก</td><td>build เสิร์ฟพอร์ตเดียว</td></tr>
+  </table>
+
+  <h3>9.4 Checkpoint ทั้งหมดของสัปดาห์นี้</h3>
+
+  <table class="d">
+    <tr><th style="width:80px">CP</th><th>ทำอะไร</th><th style="width:70px">อ่านบท</th><th style="width:56px">ที่ไหน</th></tr>
+    <tr><td><strong>CP35</strong></td><td>รันระบบ full-stack ครบ 3 ชั้น</td><td>1, 2</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP36</strong></td><td>จัดการ config ด้วย env</td><td>3</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP37</strong></td><td>health check endpoint</td><td>4</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP38</strong></td><td>error handling + logging ครบวงจร</td><td>5</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP39</strong></td><td>production build</td><td>6</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP40</strong></td><td>README ระบบ full-stack</td><td>1, 9</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP41</strong></td><td>ตอบคำถามจากบทอ่านเพิ่มเติม</td><td>8</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP42</strong></td><td>บันทึกสาธิตระบบครบวงจร (A4)</td><td>ทั้งหมด</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP43</strong></td><td>deploy หรือเตรียม deploy</td><td>7</td><td><span class="wheretag home">🏠</span></td></tr>
+  </table>
+
+  <div class="box inclass">
+    <span class="h">🏫 ทำในห้อง · CP35–CP39</span>
+    <p style="margin:0">จบคาบมีระบบ full-stack ที่ <strong>config ถูกต้อง · มี health check · error ครบ · build ได้</strong> — พร้อม deploy</p>
+  </div>
+
+  <div class="box takehome">
+    <span class="h">🏠 งาน A4 · CP40–CP43</span>
+    <p style="margin:0">ส่ง README + คำตอบบทอ่าน + วิดีโอสาธิต + deploy · ผ่าน branch <code>unit4/week-11</code> + tag <code>lab-11-submission-v1</code></p>
+  </div>
+
+  <div class="box next">
+    <span class="h">🟦 หน่วยที่ 4 จบแล้ว — ต่อไปคืออะไร</span>
+    <p style="margin:0">หน่วยที่ 5 · <strong>คุณภาพและความปลอดภัยของซอฟต์แวร์</strong> — ทดสอบอัตโนมัติเชิงลึก · จัดการข้อผิดพลาด · ความปลอดภัย<br>
+    ระบบ full-stack ที่ประกอบเสร็จสัปดาห์นี้จะเป็นฐานให้เรียนเรื่องคุณภาพต่อไป</p>
+  </div>
+</section>
+
+<footer>
+  <span>ENGSE203 · หน่วยที่ 4 · ฐานข้อมูลและการบูรณาการระบบ Full-Stack</span>
+  <span class="m">Week 11 · CLO3·4·5 · เอกสารประกอบการสอน · ปิดหน่วย</span>
+</footer>
+
+</div>
+</body>
+</html>
