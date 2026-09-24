@@ -745,7 +745,7 @@ git push -u origin unit4/week-11</code></pre>
   <h3>10.1 deploy reference solution เป็นเดโมประจำวิชา</h3>
   <p>แนะนำให้ deploy ไว้ 1 ตัวก่อนเปิดภาคเรียน — ใช้ฉายในคาบและเป็นตัวเทียบเวลานักศึกษาติดปัญหา</p>
 <pre><code><span class="c-com"># ① คัดลอก reference ออกมาเป็น repo ใหม่ (โปรเจกต์อยู่ที่ root → Root Directory เว้นว่าง)</span>
-cp -r labs/week-11-fullstack-integration/_instructor-private/reference-solution ~/campus-demo
+cp -r labs/week-11-fullstack-integration/ ~/campus-demo
 <span class="c-key">cd</span> ~/campus-demo
 rm -rf node_modules api/node_modules frontend/node_modules frontend/dist
 
@@ -762,7 +762,7 @@ git push -u origin main</code></pre>
 
   <div class="box pitfall">
     <span class="h">🟥 อย่า deploy จาก Course Repository โดยตรง</span>
-    <p style="margin:0">reference อยู่ใน <code>_instructor-private/</code> · ถ้าเชื่อม Render กับ Course Repository ต้องให้สิทธิ์อ่านทั้ง repo · แยกเป็น repo เดโมปลอดภัยกว่า</p>
+    <p style="margin:0">ถ้าเชื่อม Render กับ Course Repository ต้องให้สิทธิ์อ่านทั้ง repo · แยกเป็น repo เดโมปลอดภัยกว่า</p>
   </div>
 
   <h3>10.2 ก่อนเข้าคาบ</h3>

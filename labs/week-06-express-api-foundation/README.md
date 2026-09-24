@@ -170,30 +170,6 @@ week-06-express-api-foundation/
 │   ├── ENGSE203_Week06_Teaching_Document_TH.html   ← 13 บท · 9 ภาพ
 │   └── ENGSE203_Week06_Slides.html                 ← 66 สไลด์ · 12 บท · 11 SVG
 ├── live-coding/                       ← 6 หน้าจอสำหรับฉายในคาบ
-└── _instructor-private/               ⚠ สำหรับผู้สอนเท่านั้น
 ```
 
 ---
-
-## สำหรับผู้สอน
-
-| ไฟล์ | ใช้ทำอะไร |
-|---|---|
-| [Instructor Step Script](_instructor-private/ENGSE203_Week06_Instructor_Step_Script_TH.md) | สคริปต์การสอน 300 นาที + Hint Ladder + แผนสำรอง |
-| `_instructor-private/reference-solution/` | เฉลยครบทุก CP รวม Challenge (28/28) |
-| `live-coding/*.html` | หน้าจอฉายทีละ checkpoint |
-| `guides/ENGSE203_API_Foundations_Slides.html` | **บทนำ 20 สไลด์** — ใช้ต้นคาบก่อนเข้าเนื้อหา (~30 นาที) |
-| `guides/ENGSE203_Week06_Slides.html` | สไลด์หลัก **66 หน้า · 12 บท** — มีสไลด์คั่นบทและสรุปท้ายบททุกบท |
-
-**ตรวจก่อนสอน**
-
-```bash
-cd _instructor-private/reference-solution && npm ci
-node scripts/check-project.mjs | tail -5             # ต้องได้ 28/28
-
-cd ../../lab06/starter && npm ci
-node scripts/check-project.mjs --inclass | tail -3   # ต้องได้ 10/23
-npm run dev                                          # ต้องเปิดได้แม้ยังไม่ทำ TODO
-```
-
-⚠ **`_instructor-private/` ต้องไม่เผยแพร่ให้นักศึกษา** — ถ้า repo เป็น public ให้ย้ายออกหรือใส่ `.gitignore`

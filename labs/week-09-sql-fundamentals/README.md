@@ -162,26 +162,6 @@ week-09-sql-fundamentals/
 │   ├── ENGSE203_Week09_Teaching_Document_TH.html   ← 10 บท
 │   ├── ENGSE203_Week09_Slides.html                 ← 49 สไลด์ · 10 บท
 │   └── ENGSE203_Week09_Blueprint_TH.md
-└── _instructor-private/                ⚠ สำหรับผู้สอนเท่านั้น
 ```
 
 ---
-
-## สำหรับผู้สอน
-
-| ไฟล์ | ใช้ทำอะไร |
-|---|---|
-| [Instructor Step Script](_instructor-private/ENGSE203_Week09_Instructor_Step_Script_TH.md) | สคริปต์ 300 นาที + Hint Ladder + แผนสำรอง |
-| `_instructor-private/reference-solution/` | เฉลยครบ (checker 30/30) |
-
-**ตรวจก่อนสอน**
-
-```bash
-cd _instructor-private/reference-solution
-node --disable-warning=ExperimentalWarning check-week09.mjs | tail -6   # ต้องได้ 30/30
-
-cd ../../lab09/starter
-node --disable-warning=ExperimentalWarning check-week09.mjs | tail -6   # ต้องได้ 4/30
-```
-
-⚠ **`_instructor-private/` ต้องไม่เผยแพร่ให้นักศึกษา**
