@@ -1,0 +1,16 @@
+# dependencies
+node_modules/
+
+# ค่าลับ — ห้าม commit (commit เฉพาะ .env.example และ frontend/.env.production)
+.env
+.env.local
+*.local
+
+# build output — สร้างใหม่ได้ทุกครั้ง
+frontend/dist/
+
+# ฐานข้อมูลทดสอบ (campus.db ต้อง commit ตามคู่มือ)
+api/data/test.db
+
+.DS_Store
+*.log

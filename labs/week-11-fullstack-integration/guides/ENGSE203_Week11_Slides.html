@@ -724,12 +724,56 @@ app.<span class="f">use</span>(<span class="f">morgan</span>(config.isProd ? <sp
   </div>
 </section>
 
+<section class="slide" data-title="⚠ กับดัก production 2 ข้อ">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 9</span> · Production Build</span>
+  <span class="eyebrow red">จำลองในเครื่องผ่าน — แต่ขึ้น cloud แล้วพัง</span>
+  <h2>localhost คือเครื่องของ "คนที่เปิดเว็บ"</h2>
+  <div class="body">
+    <div class="fig">
+      <svg viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="กับดัก localhost">
+        <defs>
+          <marker id="tpr" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#FB7185" stroke-width="1.8"/></marker>
+          <marker id="tpg" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#4ADE80" stroke-width="1.8"/></marker>
+        </defs>
+        <rect x="20" y="14" width="220" height="74" rx="10" fill="rgba(169,199,184,.1)" stroke="#8FA69A" stroke-width="1.5"/>
+        <text x="130" y="42" text-anchor="middle" class="svg-t">📱 มือถือเพื่อน</text>
+        <text x="130" y="66" text-anchor="middle" class="svg-m" fill="#FB7185">fetch localhost:3001</text>
+        <path d="M242 51 L318 51" stroke="#FB7185" stroke-width="2" marker-end="url(#tpr)"/>
+        <rect x="322" y="14" width="558" height="74" rx="10" fill="rgba(251,113,133,.12)" stroke="#FB7185" stroke-width="1.8"/>
+        <text x="601" y="42" text-anchor="middle" class="svg-t">ไปหา localhost ของมือถือเอง — ไม่มี server</text>
+        <text x="601" y="66" text-anchor="middle" class="svg-s">หน้าเว็บขึ้น · แต่ Dashboard ว่าง</text>
+        <rect x="20" y="112" width="220" height="74" rx="10" fill="rgba(169,199,184,.1)" stroke="#8FA69A" stroke-width="1.5"/>
+        <text x="130" y="140" text-anchor="middle" class="svg-t">📱 มือถือเพื่อน</text>
+        <text x="130" y="164" text-anchor="middle" class="svg-m" fill="#4ADE80">fetch /api/requests</text>
+        <path d="M242 149 L318 149" stroke="#4ADE80" stroke-width="2" marker-end="url(#tpg)"/>
+        <rect x="322" y="112" width="558" height="74" rx="10" fill="rgba(74,222,128,.12)" stroke="#4ADE80" stroke-width="1.8"/>
+        <text x="601" y="140" text-anchor="middle" class="svg-t">เบราว์เซอร์เติมโดเมนของหน้าเว็บให้เอง</text>
+        <text x="601" y="164" text-anchor="middle" class="svg-s">ถึง Express ตัวเดียวกับที่ส่งหน้าเว็บ → ได้ข้อมูล</text>
+      </svg>
+    </div>
+    <div class="iact" data-quiz="qtrap">
+      <p style="margin:0 0 .3rem"><strong>ทดสอบในเครื่องที่พอร์ต 3001 แล้วข้อมูลขึ้นครบ — ทำไมบน cloud ถึงว่าง</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">cloud บล็อก CORS</button>
+        <button class="opt" data-a="1">bundle ฝัง localhost:3001 ซึ่งในเครื่องเราบังเอิญถูก</button>
+        <button class="opt" data-a="0">ฐานข้อมูลบน cloud ว่างเปล่า</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <table style="font-size:1.08rem">
+      <tr><th>กับดัก</th><th>แก้</th></tr>
+      <tr><td>① bundle ฝัง <code>localhost:3001</code></td><td><code>frontend/.env.production</code> → <code>VITE_API_BASE_URL=</code> (ว่าง)</td></tr>
+      <tr><td>② <code>app.get('/')</code> จาก Week 06 ชิงหน้าแรก → เห็น JSON</td><td>ย้ายข้อความต้อนรับไป <code>/api</code> · <code>/</code> ตอบ JSON เฉพาะ dev</td></tr>
+    </table>
+  </div>
+</section>
+
 <section class="slide " data-title="✓ สรุปบทที่ 6">
   <span class="chapbadge">บทที่ 6 <span class="of">/ 9</span> · Production Build</span>
   
   <h2>จบบทที่ 6 — Production Build</h2>
   <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>dev = 2 server (hot reload) · production = build static พอร์ตเดียว</li><li><code>npm run build</code> แปลง React เป็น static ใน <code>dist/</code></li><li>API เสิร์ฟ dist + คืน index.html ทุก path ยกเว้น <code>/api</code></li><li><strong>แก้ frontend ต้อง build ใหม่</strong></li></ul></div>
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>dev = 2 server (hot reload) · production = build static พอร์ตเดียว</li><li><code>npm run build</code> แปลง React เป็น static ใน <code>dist/</code></li><li>API เสิร์ฟ dist + คืน index.html ทุก path ยกเว้น <code>/api</code></li><li><strong>แก้ frontend ต้อง build ใหม่</strong></li><li>กับดัก: bundle ฝัง localhost · route <code>/</code> ชิงหน้าแรก</li></ul></div>
     <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือ CP39</strong> — build production</div>
     <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span><span class="home"></span><span class="home"></span></div>
   </div>
@@ -740,14 +784,18 @@ app.<span class="f">use</span>(<span class="f">morgan</span>(config.isProd ? <sp
   <span class="eyebrow amber">checkpoint สุดท้ายในห้อง</span>
   <h2>CP39 · production build</h2>
   <div class="body center">
-    <pre style="margin:0;font-size:1.05rem"><code><span class="c"># build frontend เป็น static</span>
-cd frontend &amp;&amp; npm run build      <span class="c"># → dist/</span>
+    <pre style="margin:0;font-size:1rem"><code><span class="c"># ① app.js — ย้ายข้อความต้อนรับไป /api · production เสิร์ฟ dist + catch-all</span>
+<span class="c"># ② frontend/.env.production</span>
+VITE_API_BASE_URL=
 
-<span class="c"># รัน API แบบ production — เสิร์ฟ frontend ด้วย</span>
-cd ../api &amp;&amp; NODE_ENV=production npm start
-<span class="c"># เปิด http://localhost:3001 ได้ทั้งเว็บและ API</span></code></pre>
-    <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — เปิดพอร์ตเดียว (3001) ได้ทั้งหน้าเว็บและ API · <code>/api/health</code> บอก <code>env: production</code></p></div>
-    <div class="wrong"><p style="margin:0"><strong>นี่คือหัวใจของสัปดาห์นี้</strong> — จาก 2 server ตอน dev เหลือ 1 server พร้อม deploy · เห็นความต่างของ "รันได้" กับ "พร้อมใช้จริง"</p></div>
+<span class="c"># ③ build แล้วตรวจว่าไม่มี localhost ใน bundle</span>
+cd frontend &amp;&amp; npm run build
+grep -l "localhost:3001" dist/assets/*.js      <span class="c"># ต้องไม่มีผลลัพธ์</span>
+
+<span class="c"># ④ รันแบบ production</span>
+cd ../api &amp;&amp; NODE_ENV=production npm start</code></pre>
+    <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — เปิด <code>:3001/</code> เห็น<strong>หน้าเว็บ</strong> (ไม่ใช่ JSON) · <code>/about</code> ได้หน้าเว็บ · <code>/api/health</code> บอก <code>env: production</code> · <code>--inclass</code> <strong>17/17</strong></p></div>
+    <div class="wrong"><p style="margin:0"><strong>หัวใจของสัปดาห์นี้</strong> — จาก 2 server ตอน dev เหลือ 1 server พร้อม deploy · และรู้จักกับดักที่ในเครื่องมองไม่เห็น</p></div>
   </div>
 </section>
 <section class="slide" data-title="🏠 กลุ่ม 3 · ปิดหน่วย">
@@ -782,12 +830,10 @@ cd ../api &amp;&amp; NODE_ENV=production npm start
       <p class="q">ยังไม่ต้องขึ้น cloud — จำลองสิ่งที่ cloud จะทำ ในเครื่องเราก่อน</p>
       <p>เข้าใจ production เต็มที่โดยไม่ต้องสมัครอะไร · <strong>เหมือนซ้อมใหญ่ก่อนแสดงจริง</strong></p>
     </div>
-    <pre style="margin:0;font-size:1.08rem"><code><span class="c"># ① build frontend เป็น static</span>
-cd frontend &amp;&amp; npm run build
-
-<span class="c"># ② รัน API แบบ production</span>
-cd ../api &amp;&amp; NODE_ENV=production npm start
-<span class="c"># เปิด http://localhost:3001 ได้ทั้งเว็บและ API!</span></code></pre>
+    <pre style="margin:0;font-size:1.02rem"><code><span class="c"># ซ้อมให้เหมือน cloud — NODE_ENV=production ตั้งแต่ build · พอร์ตไม่ใช่ 3001</span>
+NODE_ENV=production npm run build
+NODE_ENV=production PORT=10000 npm start
+<span class="c"># เปิด http://localhost:10000 ได้ทั้งเว็บและ API</span></code></pre>
     <div class="win"><p style="margin:0;font-size:1.24rem"><strong>นี่คือสิ่งที่ cloud จะทำให้อัตโนมัติ</strong><br>
     cloud รับโค้ด → รัน 2 คำสั่งนี้ → เปิดพอร์ตให้คนทั้งโลกเข้าถึง · <strong>เราทำเองในเครื่องได้ = เข้าใจ production จริง</strong></p></div>
     <div class="note"><p style="margin:0"><strong>deploy ขึ้น cloud จริงเป็น Challenge</strong> — ใครอยากเห็นระบบออนไลน์ให้เพื่อนเปิดจากมือถือ มีคู่มือ Render จับมือทำใน Take-Home</p></div>
@@ -806,10 +852,12 @@ cd ../api &amp;&amp; NODE_ENV=production npm start
       <tr><td>error handling (บท 5)</td><td>ไม่ให้ระบบล่มทั้งระบบ</td></tr>
       <tr><td>production build (บท 6)</td><td>เสิร์ฟพอร์ตเดียว cloud จัดการง่าย</td></tr>
     </table>
-    <pre style="margin:0;font-size:.98rem"><code><span class="c"># render.yaml</span>
-buildCommand: cd frontend &amp;&amp; npm run build &amp;&amp; cd ../api &amp;&amp; npm install
-startCommand: cd api &amp;&amp; npm start
-envVars: [ NODE_ENV=production ]</code></pre>
+    <pre style="margin:0;font-size:.96rem"><code><span class="c"># ค่าที่กรอกบน Render (หรือ render.yaml)</span>
+rootDir: labs/week-11/source
+buildCommand: npm install &amp;&amp; npm run build      <span class="c"># build ใช้ --include=dev</span>
+startCommand: npm start
+healthCheckPath: /api/health
+envVars: NODE_ENV=production · NODE_VERSION=22   <span class="c"># ไม่ต้องตั้ง PORT</span></code></pre>
     <div class="whybox"><p class="q">SQLite บน cloud ephemeral อาจหาย</p>
     <p>cloud หลายเจ้าล้างไฟล์ทุก restart → <code>campus.db</code> หาย · ทางแก้: persistent disk หรือ<strong>ฐานข้อมูลแยกเครื่อง</strong> — เป็นเหตุผลที่โลกจริงมักใช้ DB แยก (โยงบทอ่านเพิ่มเติม)</p></div>
   </div>
@@ -850,12 +898,49 @@ envVars: [ NODE_ENV=production ]</code></pre>
   <p class="figcap"><strong>health check คือด่านสุดท้าย</strong> — cloud เช็คว่าผ่านก่อนถึงจะส่งผู้ใช้เข้ามา</p>
 </section>
 
+<section class="slide" data-title="⭐⭐ ข้อมูลถาวรด้วย Turso">
+  <span class="chapbadge home">บทที่ 7 <span class="of">/ 9</span> · Deploy</span>
+  <span class="eyebrow violet">Challenge ⭐⭐ · ไม่บังคับ</span>
+  <h2>ข้อมูลหายทุก restart — ย้ายฐานข้อมูลออกไปนอกเครื่อง</h2>
+  <div class="body">
+    <div class="fig">
+      <svg viewBox="0 0 900 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Render กับ Turso">
+        <defs><marker id="tsa" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#C084FC" stroke-width="1.8"/></marker></defs>
+        <rect x="20" y="20" width="380" height="150" rx="12" fill="rgba(251,191,36,.10)" stroke="#FBBF24" stroke-width="1.6"/>
+        <text x="210" y="50" text-anchor="middle" class="svg-t">Render · เครื่องชั่วคราว</text>
+        <text x="210" y="82" text-anchor="middle" class="svg-s">Express + หน้าเว็บ</text>
+        <text x="210" y="112" text-anchor="middle" class="svg-s">restart · redeploy · หลับแล้วตื่น</text>
+        <text x="210" y="142" text-anchor="middle" class="svg-m" fill="#FB7185">ไฟล์ campus.db กลับเป็นตาม git</text>
+        <path d="M402 95 L494 95" stroke="#C084FC" stroke-width="2" marker-end="url(#tsa)"/>
+        <text x="448" y="82" text-anchor="middle" class="svg-m" fill="#C084FC">SQL + token</text>
+        <rect x="498" y="20" width="382" height="150" rx="12" fill="rgba(192,132,252,.14)" stroke="#C084FC" stroke-width="2"/>
+        <text x="689" y="50" text-anchor="middle" class="svg-t">Turso · SQLite บนอินเทอร์เน็ต</text>
+        <text x="689" y="82" text-anchor="middle" class="svg-s">schema.sql · query เดิมทั้งหมด</text>
+        <text x="689" y="112" text-anchor="middle" class="svg-s">free tier · ไม่ต้องใช้บัตรเครดิต</text>
+        <text x="689" y="142" text-anchor="middle" class="svg-m" fill="#4ADE80">ข้อมูลถาวร</text>
+      </svg>
+    </div>
+    <div class="iact" data-quiz="qturso">
+      <p style="margin:0 0 .3rem"><strong>เปลี่ยนจาก campus.db ไป Turso — ต้องแก้กี่ชั้น</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">2 ชั้น (service + controller) เหมือน MongoDB</button>
+        <button class="opt" data-a="1">ชั้นเดียว — service (libsql เป็น sync เหมือน node:sqlite)</button>
+        <button class="opt" data-a="0">3 ชั้น เพราะฐานข้อมูลอยู่คนละเครื่อง</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+    <pre style="margin:0;font-size:.98rem"><code><span class="c"># เลือกด้วย env — แนวคิดเดียวกับบทที่ 3</span>
+TURSO_DATABASE_URL=libsql://campus-xxx.turso.io     <span class="c"># ไม่ใส่ = ใช้ campus.db</span>
+TURSO_AUTH_TOKEN=eyJ...                              <span class="c"># รหัสผ่าน · ห้าม commit</span></code></pre>
+  </div>
+</section>
+
 <section class="slide " data-title="✓ สรุปบทที่ 7">
   <span class="chapbadge home">บทที่ 7 <span class="of">/ 9</span> · Deploy</span>
   
   <h2>จบบทที่ 7 — Deploy</h2>
   <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>deploy = เอาระบบขึ้นเครื่องที่เข้าถึงจากเน็ตได้</li><li>ทุกอย่างในบท 3–6 คือการเตรียม deploy</li><li><code>render.yaml</code> บอก cloud ว่า build/start อย่างไร</li><li>SQLite บน cloud อาจหาย — เหตุผลที่โลกจริงใช้ DB แยกเครื่อง</li></ul></div>
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>deploy = เอาระบบขึ้นเครื่องที่เข้าถึงจากเน็ตได้</li><li>ทุกอย่างในบท 3–6 คือการเตรียม deploy</li><li><code>render.yaml</code> บอก cloud ว่า build/start อย่างไร</li><li>SQLite บน cloud อาจหาย — เหตุผลที่โลกจริงใช้ DB แยกเครื่อง</li><li>⭐⭐ Turso — ฐานข้อมูลแยกเครื่อง ข้อมูลถาวร · แก้ service ชั้นเดียว</li></ul></div>
     <div class="nextup"><b>ต่อไป →</b> บทที่ 8 — อ่านเพิ่มเติม ทางเลือกฐานข้อมูล</div>
     <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class="home"></span><span class="home"></span></div>
   </div>
@@ -917,6 +1002,7 @@ envVars: [ NODE_ENV=production ]</code></pre>
       <tr><td>Week 06</td><td>memory</td><td>ไฟล์ JSON</td><td style="color:var(--green)">1</td></tr>
       <tr><td>Week 07</td><td>localStorage</td><td>API</td><td style="color:var(--green)">1</td></tr>
       <tr><td>Week 10</td><td>ไฟล์ JSON</td><td>SQLite</td><td style="color:var(--green)">1</td></tr>
+      <tr><td>Week 11 ⭐⭐</td><td>ไฟล์ SQLite</td><td>Turso</td><td style="color:var(--green)">1</td></tr>
     </table>
     <div class="win"><p style="margin:0;font-size:1.24rem"><strong>ทำได้เพราะแยกชั้นชัดตั้งแต่ต้น</strong><br>
     frontend ไม่รู้ว่าข้อมูลมาจากไหน · controller ไม่รู้จัก SQL · service ไม่รู้จัก req/res</p></div>
@@ -934,10 +1020,10 @@ envVars: [ NODE_ENV=production ]</code></pre>
       <tr><th>CP</th><th>ทำอะไร</th></tr>
       <tr><td><strong>CP40</strong></td><td>README ระบบ full-stack — สถาปัตยกรรม + วิธีรัน</td></tr>
       <tr><td><strong>CP41</strong></td><td>ตอบ 3 คำถามจากบทอ่านเพิ่มเติม</td></tr>
-      <tr><td><strong>CP42</strong></td><td>วิดีโอ/ภาพสาธิตระบบครบวงจร</td></tr>
-      <tr><td><strong>CP43</strong></td><td>deploy หรือเตรียม deploy package</td></tr>
+      <tr><td><strong>CP42</strong></td><td>วิดีโอ 2 ช่วง — สาธิต + อธิบาย source</td></tr>
+      <tr><td><strong>CP43</strong></td><td>จำลอง production ในเครื่อง (deploy Render = Challenge)</td></tr>
     </table>
-    <div class="note"><p style="margin:0"><strong>ส่ง</strong> — branch <code>unit4/week-11</code> · tag <code>lab-11-submission-v1</code> · <code>node check-week11.mjs</code> เป้าหมาย 32/36 (36/36 ถ้าทำ Challenge)</p></div>
+    <div class="note"><p style="margin:0"><strong>ส่ง</strong> — branch <code>unit4/week-11</code> · tag <code>lab-11-submission-v1</code> · <code>node check-week11.mjs</code> เป้าหมาย 37/41 (41/41 ถ้าทำ Challenge)</p></div>
   </div>
 </section>
 
@@ -976,7 +1062,7 @@ envVars: [ NODE_ENV=production ]</code></pre>
 </div></div>
 <div class="bar"><i id="progress"></i></div>
 <div class="hud">
-  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 39</span><button id="btnNext">→</button>
+  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 41</span><button id="btnNext">→</button>
   <button id="btnToc">สารบัญ</button><button id="btnMinus">A−</button><button id="btnPlus">A+</button><button id="btnFull">เต็มจอ</button>
 </div>
 <div class="toc" id="toc" role="dialog"><h3>สารบัญ — กด T หรือ Esc ปิด</h3><ol id="tocList"></ol></div>

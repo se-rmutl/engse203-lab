@@ -41,7 +41,7 @@
 
 | ตรวจ | ต้องได้ |
 |---|---|
-| `node check-week11.mjs --inclass` | **15/15** |
+| `node check-week11.mjs --inclass` | **17/17** |
 | `node check-week10.mjs` | **31/31 — ไม่ regression** |
 | `node check-week07.mjs` | **36/36** |
 
@@ -66,6 +66,18 @@
 ## เป้าหมาย
 
 เปิดทั้ง 3 ส่วนให้ทำงานพร้อมกัน ก่อนขัดให้สมบูรณ์
+
+## ⓪ ตั้งต้นโฟลเดอร์ใน Student Repository
+
+งานสัปดาห์นี้อยู่ที่ `labs/week-11/source/` — คัดลอกงานสัปดาห์ 10 มาเป็นจุดเริ่มต้น
+
+```bash
+# รันที่ root ของ Student Repository
+cp -r labs/week-10/source labs/week-11/source
+cd labs/week-11/source
+```
+
+> ถ้างาน Week 10 ไม่สมบูรณ์ ใช้ `lab11/starter/` จาก Course Repository แทน (ขอไฟล์สำรองจากผู้สอนได้)
 
 ## ① เตรียมฐานข้อมูล
 
@@ -302,49 +314,88 @@ app.use(morgan(config.isProd ? 'combined' : 'dev'));
 | development | production |
 |---|---|
 | 2 server แยก (5173 + 3001) | build static แล้ว API เสิร์ฟพอร์ตเดียว |
+| frontend เรียก API ที่ `http://localhost:3001` | frontend เรียก API ด้วย path สัมพัทธ์ `/api/...` |
 | hot reload | ต้อง build ใหม่เมื่อแก้ |
 
-## ① build frontend
+## ① ให้ API เสิร์ฟหน้าเว็บตอน production
+
+```js
+// app.js — แทนส่วน "④ route" เดิม
+import path from 'node:path';
+import { existsSync } from 'node:fs';
+
+// route ของ API ทั้งหมดอยู่ใต้ /api — รวมถึงข้อความต้อนรับ
+app.get('/api', (req, res) => {
+  res.json({ message: 'Campus Service API is running', version: '3.0.0' });
+});
+app.use('/api/health', healthRoutes);
+app.use('/api/requests', requestRoutes);
+app.use('/api/users', userRoutes);
+
+if (config.isProd && existsSync(config.staticDir)) {
+  app.use(express.static(config.staticDir));
+  // ทุก path ที่ไม่ขึ้นต้นด้วย /api → คืน index.html (React Router จัดการต่อ)
+  app.get(/^\/(?!api).*/, (req, res) => {
+    res.sendFile(path.join(config.staticDir, 'index.html'));
+  });
+} else {
+  // dev: หน้าเว็บอยู่ที่ Vite (5173) · / ของ API ตอบข้อความบอกทางแทน
+  app.get('/', (req, res) => res.json({ message: 'API (dev) — หน้าเว็บอยู่ที่พอร์ต 5173' }));
+}
+```
+
+### ⚠ กับดัก ① — route `/` เดิมจะ "ชิง" หน้าแรก
+
+route `app.get('/')` ที่ตอบ JSON มีมาตั้งแต่ Week 06 · ถ้าปล่อยไว้ก่อน static **ผู้ใช้เปิด URL จะเห็น JSON แทนหน้าเว็บ**
+Express ตรวจ route ตามลำดับที่ลงทะเบียน — ตัวแรกที่ตรงชนะ
+
+## ② บอก frontend ว่า production ให้เรียก API ด้วย path สัมพัทธ์
+
+สร้างไฟล์ `frontend/.env.production`
+
+```bash
+# ใช้ตอน npm run build (production) เท่านั้น
+# ค่าว่าง = เรียก /api/... บน origin เดียวกับหน้าเว็บ
+VITE_API_BASE_URL=
+```
+
+### ⚠ กับดัก ② — `localhost` ในโค้ดที่ build แล้ว
+
+`apiClient.js` ใช้ `VITE_API_BASE_URL ?? 'http://localhost:3001'` · ถ้าไม่มีไฟล์นี้ ค่า `localhost:3001` จะถูก**ฝังลงใน bundle**
+
+| ทดสอบที่ไหน | เกิดอะไร |
+|---|---|
+| เครื่องเรา พอร์ต 3001 | **ดูเหมือนทำงาน** — เพราะ localhost:3001 บังเอิญคือ server ตัวเดียวกัน |
+| cloud | **ข้อมูลไม่ขึ้น** — เบราว์เซอร์ผู้ใช้ยิงไปหา localhost ของ**เครื่องผู้ใช้เอง** |
+
+> Vite อ่าน `.env.production` ตอน build และให้ความสำคัญ**เหนือ** `.env.local` · ส่วนตอน `npm run dev` ยังใช้ `localhost:3001` ตามเดิม
+> ไฟล์นี้ไม่มีค่าลับ — **commit ได้**
+
+## ③ build frontend
 
 ```bash
 cd frontend && npm run build
 # → สร้าง dist/ ที่มี HTML/JS/CSS พร้อมใช้
+
+grep -l "localhost:3001" dist/assets/*.js   # ต้องไม่มีผลลัพธ์
 ```
 
-## ② ให้ API เสิร์ฟ static ตอน production
-
-```js
-// app.js — เฉพาะ production
-import express from 'express';
-import path from 'node:path';
-import { existsSync } from 'node:fs';
-
-if (config.isProd && existsSync(config.staticDir)) {
-  app.use(express.static(config.staticDir));
-  // ทุก path ที่ไม่ใช่ /api → คืน index.html (React Router จัดการต่อ)
-  app.get(/^\/(?!api).*/, (req, res) => {
-    res.sendFile(path.join(config.staticDir, 'index.html'));
-  });
-}
-```
-
-### ⚠ ทำไมต้อง `/^\/(?!api).*/`
-
-React Router จัดการ path ฝั่ง frontend เอง · ต้องคืน `index.html` ทุก path **ยกเว้น `/api`** ที่เป็นของ API จริง
-
-## ③ รัน production mode
+## ④ รัน production mode
 
 ```bash
-cd api && NODE_ENV=production npm start
+cd ../api && NODE_ENV=production npm start
 # เปิด http://localhost:3001 ได้ทั้งเว็บและ API
 ```
 
+> 🪟 Windows PowerShell: `$env:NODE_ENV="production"; npm start`
+
 ### ✓ ผ่าน CP39 เมื่อ
 
-- [ ] `npm run build` สร้าง `frontend/dist/`
-- [ ] เปิดพอร์ตเดียว (3001) ได้ทั้งหน้าเว็บและ API
+- [ ] เปิด `http://localhost:3001/` เห็น**หน้าเว็บ** (ไม่ใช่ JSON)
+- [ ] เปิด `http://localhost:3001/about` เห็นหน้าเว็บ (React Router ทำงาน)
 - [ ] `/api/health` บอก `env: production`
-- [ ] `node check-week11.mjs --inclass` ผ่าน **15/15**
+- [ ] bundle ไม่มี `localhost:3001`
+- [ ] `node check-week11.mjs --inclass` ผ่าน **17/17**
 
 ### ⚠ แก้ frontend ต้อง build ใหม่
 
@@ -352,14 +403,14 @@ production เสิร์ฟจาก `dist/` ที่ build ไว้ — แ
 
 ### 💬 คำถามที่ต้องตอบได้
 
-> ทำไม production ต้องรวมเป็นพอร์ตเดียว แทนที่จะรัน 2 server เหมือน dev
+> ทำไมทดสอบในเครื่องที่พอร์ต 3001 แล้ว "ดูเหมือนผ่าน" ทั้งที่ bundle ยังฝัง localhost อยู่ — และจะรู้ได้อย่างไรก่อนขึ้น cloud
 
 ---
 
 # ตรวจงานตอนจบคาบ
 
 ```bash
-node --disable-warning=ExperimentalWarning check-week11.mjs --inclass   # 15/15
+node --disable-warning=ExperimentalWarning check-week11.mjs --inclass   # 17/17
 node --disable-warning=ExperimentalWarning check-week10.mjs             # 31/31
 node --disable-warning=ExperimentalWarning check-week07.mjs             # 36/36
 ```
@@ -374,6 +425,9 @@ node --disable-warning=ExperimentalWarning check-week07.mjs             # 36/36
 | deploy แล้ว cloud เข้าไม่ถึง | hardcode พอร์ต — ต้องอ่าน `process.env.PORT` |
 | health ตอบ 200 ทั้งที่ DB พัง | ลืมเช็ค `db.connected` แล้วตั้ง 503 |
 | production เปิด / ได้แต่ API พัง | ลืม `(?!api)` — static route กิน /api ไปด้วย |
+| production เปิด `/` แล้วได้ JSON | route `app.get('/')` เดิมอยู่ก่อน static — ย้ายไป `/api` (CP39 ①) |
+| production หน้าเว็บขึ้นแต่ไม่มีข้อมูล | bundle ฝัง `localhost:3001` — เพิ่ม `frontend/.env.production` (CP39 ②) |
+| `vite: not found` ตอน build | `npm install` ถูกข้าม devDependencies เพราะ `NODE_ENV=production` — ใช้ `--include=dev` |
 | แก้ frontend แล้วไม่เปลี่ยน | ลืม build ใหม่ (production ไม่ hot reload) |
 | checker W10 พัง | แก้อะไรกระทบ service core — ตรวจว่าเพิ่มแค่ getDbStatus |
 
@@ -381,7 +435,7 @@ node --disable-warning=ExperimentalWarning check-week07.mjs             # 36/36
 
 ## เช็คลิสต์ก่อนออกจากห้อง
 
-- [ ] `check-week11.mjs --inclass` ผ่าน **15/15**
+- [ ] `check-week11.mjs --inclass` ผ่าน **17/17**
 - [ ] `check-week10.mjs` และ `check-week07.mjs` ยังผ่าน
 - [ ] health check ตอบ status ok + database connected
 - [ ] production build เปิดพอร์ตเดียวได้ทั้งเว็บและ API

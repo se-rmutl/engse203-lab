@@ -16,8 +16,9 @@
 
 | สื่อ | เปิด |
 |---|---|
-| สไลด์ Week 11 (33 หน้า · 9 บท) | [เปิดสไลด์](https://se-rmutl.github.io/engse203/week11) |
+| สไลด์ Week 11 (41 หน้า · 9 บท) | [เปิดสไลด์](https://se-rmutl.github.io/engse203/week11) |
 | เอกสารประกอบการสอน (9 บท) | [เปิดเอกสาร](https://se-rmutl.github.io/engse203/week11/week11-teaching-doc.html) |
+| **คู่มือ Deploy ขึ้น Render** (มีภาพประกอบ · ผู้สอนและนักศึกษา) | [เปิดคู่มือ](https://se-rmutl.github.io/engse203/week11/deploy-guide.html) |
 
 ### หน้าจอ Live-Coding (ใช้ในคาบ)
 
@@ -67,11 +68,16 @@ hardcode ค่าได้              config จาก env
 | **CP40** | README ระบบ full-stack | 🏠 |
 | **CP41** | ตอบคำถามจากบทอ่านเพิ่มเติม | 🏠 |
 | **CP42** | วิดีโอสาธิตครบวงจร (A4) | 🏠 |
-| **CP43** | deploy หรือเตรียม deploy | 🏠 |
+| **CP43** | จำลอง production ในเครื่อง (deploy Render = Challenge) | 🏠 |
+| ⭐ | deploy จริงขึ้น Render | 🏠 ไม่บังคับ |
+| ⭐⭐ | ข้อมูลถาวรด้วย Turso (SQLite บนอินเทอร์เน็ต · แก้ service ชั้นเดียว) | 🏠 ไม่บังคับ |
 
 ---
 
 ## เริ่มทำ LAB
+
+> **ทำงานใน Student Repository ที่ `labs/week-11/source/`** (เหมือนสัปดาห์ 7–10) — ตั้งต้นด้วย `cp -r labs/week-10/source labs/week-11/source`
+> ถ้างานสัปดาห์ 10 ไม่สมบูรณ์ ใช้ `lab11/starter/` ด้านล่างแทน
 
 ```bash
 cd lab11/starter/api
@@ -86,8 +92,8 @@ cd lab11/starter/frontend && npm install && npm run dev
 
 ```bash
 # ตรวจงาน — รันจาก lab11/starter/
-node --disable-warning=ExperimentalWarning check-week11.mjs --inclass   # 15/15
-node --disable-warning=ExperimentalWarning check-week11.mjs            # 32/36
+node --disable-warning=ExperimentalWarning check-week11.mjs --inclass   # 17/17
+node --disable-warning=ExperimentalWarning check-week11.mjs            # 37/41
 node --disable-warning=ExperimentalWarning check-week10.mjs            # 31/31
 node --disable-warning=ExperimentalWarning check-week07.mjs            # 36/36
 ```
@@ -109,7 +115,7 @@ cd ../api && NODE_ENV=production npm start
 | `README.md` | CP40 |
 | `DATABASE_CHOICES.md` | CP41 |
 | `DEMO.md` + ลิงก์วิดีโอ | CP42 |
-| deploy config | CP43 |
+| root `package.json` (build/start) · `frontend/.env.production` | CP43 |
 
 ```bash
 git switch -c unit4/week-11
@@ -140,6 +146,6 @@ week-11-fullstack-integration/
 | ไฟล์ | ใช้ทำอะไร |
 |---|---|
 | [Step Script](_instructor-private/ENGSE203_Week11_Instructor_Step_Script_TH.md) | สคริปต์ 300 นาที |
-| `_instructor-private/reference-solution/` | เฉลย (checker 36/36) |
+| `_instructor-private/reference-solution/` | เฉลย (checker 41/41) |
 
 ⚠ **`_instructor-private/` ห้ามเผยแพร่ให้นักศึกษา**

@@ -95,13 +95,14 @@ node -v          # ต้อง >= 22.12.0
 
 | ไฟล์ | เอามาจาก | วางไว้ที่ |
 |---|---|---|
-| `schema.sql` | งาน W09 ของตัวเอง | `lab10/starter/api/data/schema.sql` |
-| `campus.db` | งาน W09 ของตัวเอง (ถ้ามี) | `lab10/starter/api/data/campus.db` |
+| `schema.sql` | `labs/week-09/source/schema.sql` | `labs/week-10/source/api/data/schema.sql` |
+| `campus.db` | สร้างใหม่ด้วย `npm run db:setup` | `labs/week-10/source/api/data/campus.db` |
 
 ```bash
 # ถ้ามีแค่ schema.sql — สร้าง campus.db จากมัน
 cd lab10/starter/api
-cp /path/to/week09/schema.sql data/schema.sql
+# รันจาก labs/week-10/source/api ใน Student Repository
+cp ../../../week-09/source/schema.sql data/schema.sql
 npm run db:setup
 ```
 

@@ -8,7 +8,7 @@
 ## ตรวจก่อนเริ่ม
 
 ```bash
-node --disable-warning=ExperimentalWarning check-week11.mjs --inclass   # ต้องได้ 15/15
+node --disable-warning=ExperimentalWarning check-week11.mjs --inclass   # ต้องได้ 17/17
 ```
 
 ถ้ายังไม่ครบ ให้ทำงานในห้องให้จบก่อน — งาน A4 ต่อยอดจากระบบที่ประกอบเสร็จแล้ว
@@ -17,14 +17,58 @@ node --disable-warning=ExperimentalWarning check-week11.mjs --inclass   # ต้
 
 ## งาน A4 คืออะไร
 
-งานบูรณาการปิดหน่วยที่ 4 — **ส่งมอบระบบ full-stack ที่ทำงานได้จริง พร้อมหลักฐาน**
+งานบูรณาการปิดหน่วยที่ 4 — **ส่งมอบระบบ full-stack ที่ทำงานได้จริง พร้อมหลักฐาน และอธิบาย source ของตัวเองได้**
 
-| CP | ทำอะไร | เวลาโดยประมาณ |
-|---|---|---|
-| **CP40** | เขียน README ระบบ full-stack | 40 นาที |
-| **CP41** | ตอบคำถามจากบทอ่านเพิ่มเติม | 40 นาที |
-| **CP42** | บันทึกวิดีโอ/ภาพสาธิต | 50 นาที |
-| **CP43** | จำลอง production ในเครื่อง | 45 นาที |
+| CP | ทำอะไร | เวลาโดยประมาณ | บังคับ |
+|---|---|---|---|
+| **CP40** | เขียน README ระบบ full-stack | 40 นาที | ✅ |
+| **CP41** | ตอบคำถามจากบทอ่านเพิ่มเติม | 40 นาที | ✅ |
+| **CP42** | วิดีโอนำเสนอ — สาธิต + อธิบาย source | 60 นาที | ✅ |
+| **CP43** | จำลอง production ในเครื่อง | 45 นาที | ✅ |
+| ⭐ | deploy จริงขึ้น Render | 60 นาที | ไม่บังคับ |
+| ⭐⭐ | ข้อมูลถาวรด้วย Turso (ต่อจาก ⭐) | 45 นาที | ไม่บังคับ |
+
+> 📘 **คู่มือ Deploy แบบมีภาพประกอบ** — https://se-rmutl.github.io/engse203/week11/deploy-guide.html
+> อธิบายทีละขั้นว่าระบบทำงานอย่างไรตอน production และขึ้น Render อย่างไร
+
+---
+
+## โครงสร้างที่ต้องมีใน Student Repository
+
+เหมือนสัปดาห์ก่อน ๆ — งานสัปดาห์นี้อยู่ที่ **`labs/week-11/source/`** · ตั้งต้นโดยคัดลอก `labs/week-10/source/` มา
+
+```bash
+# รันที่ root ของ Student Repository
+cp -r labs/week-10/source labs/week-11/source
+```
+
+```
+labs/week-11/source/                 ← ถ้า deploy ขึ้น Render นี่คือ "Root Directory"
+├── api/
+│   ├── data/schema.sql · campus.db
+│   ├── src/
+│   │   ├── config.js                ← CP36
+│   │   ├── routes/healthRoutes.js   ← CP37
+│   │   └── app.js                   ← CP38 · CP39
+│   ├── .env.example
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   ├── .env.example
+│   ├── .env.production              ← CP39 (commit ไฟล์นี้ — ไม่มีค่าลับ)
+│   └── package.json
+├── package.json                     ← CP43 script build + start
+├── README.md                        ← CP40
+├── DATABASE_CHOICES.md              ← CP41
+├── DEMO.md                          ← CP42
+├── check-week07.mjs · check-week10.mjs · check-week11.mjs
+├── evidence/
+│   └── images/
+│       ├── production-one-port.png  ← เปิด :3001 เห็นหน้าเว็บ
+│       └── health-production.png    ← /api/health แสดง env: production
+├── AI_USAGE.md
+└── .gitignore                       ← node_modules/, .env, .env.local, frontend/dist/
+```
 
 ---
 
@@ -32,17 +76,17 @@ node --disable-warning=ExperimentalWarning check-week11.mjs --inclass   # ต้
 
 **🏠 40 นาที**
 
-README ที่ดีทำให้คนอื่น (รวมถึงตัวเราในอนาคต) เข้าใจและรันระบบได้
+README ที่ดีทำให้คนอื่น (รวมถึงตัวเราในอนาคต) เข้าใจและรันระบบได้โดยไม่ต้องถาม
 
 ## ต้องมีหัวข้อ
 
 | หัวข้อ | เขียนอะไร |
 |---|---|
 | ภาพรวม | ระบบทำอะไร · ใช้เทคโนโลยีอะไร |
-| **สถาปัตยกรรม 3 ชั้น** | React ↔ API ↔ DB · แต่ละชั้นทำอะไร |
-| วิธีรัน (dev) | ขั้นตอนเปิดทั้ง 3 ส่วน |
-| วิธีรัน (production) | build + start |
-| Environment Variables | ตารางตัวแปรที่ต้องตั้ง |
+| **สถาปัตยกรรม 3 ชั้น** | React ↔ API ↔ DB · แต่ละชั้นทำอะไร อยู่โฟลเดอร์ไหน |
+| วิธีรัน (dev) | ขั้นตอนเปิดทั้ง 3 ส่วน (2 terminal) |
+| **วิธีรัน (production)** | `npm run build` แล้ว `NODE_ENV=production npm start` |
+| Environment Variables | ตารางตัวแปรที่ต้องตั้ง และค่าเริ่มต้น |
 | การตัดสินใจออกแบบ | ทำไมแยก 3 ชั้น · ทำไมเลือก SQLite |
 
 ## ตัวอย่างส่วนสถาปัตยกรรม
@@ -57,7 +101,7 @@ README ที่ดีทำให้คนอื่น (รวมถึงต�
 | ชั้น | หน้าที่ | โฟลเดอร์ |
 |---|---|---|
 | Frontend | หน้าจอผู้ใช้ | frontend/ |
-| API | route·controller·service | api/src/ |
+| API | route · controller · service | api/src/ |
 | Database | เก็บข้อมูล | api/data/ |
 ```
 
@@ -122,7 +166,7 @@ README ที่ดีทำให้คนอื่น (รวมถึงต�
 | ดู · เพิ่ม · เปลี่ยนสถานะ · ลบคำร้อง | CRUD ครบวงจร |
 | `GET /api/health` แสดงสถานะ | ระบบบอกสถานะตัวเอง |
 | ปิด-เปิดเซิร์ฟเวอร์ใหม่ ข้อมูลยังอยู่ | ข้อมูลถาวรจริง |
-| production build เปิดพอร์ตเดียว | พร้อมใช้จริง |
+| production mode เปิดพอร์ตเดียว (3001) | พร้อมใช้จริง |
 
 ### ช่วง B · อธิบาย source code (≈ 4–5 นาที)
 
@@ -135,7 +179,7 @@ README ที่ดีทำให้คนอื่น (รวมถึงต�
 | **service คุยกับฐานข้อมูลอย่างไร** | `api/src/services/requestService.js` |
 | **config อ่านจาก env อย่างไร** | `api/src/config.js` |
 | **health check เช็คอะไร** | `api/src/routes/healthRoutes.js` |
-| **production ต่างจาก dev อย่างไร** | `api/src/app.js` (static serving) |
+| **production ต่างจาก dev อย่างไร** | `api/src/app.js` · `frontend/.env.production` |
 
 > **คำแนะนำ** — ไม่ต้องอ่านโค้ดทีละบรรทัด · เล่าเป็น "เมื่อผู้ใช้กดเพิ่มคำร้อง เกิดอะไรขึ้นตั้งแต่ frontend จนถึงฐานข้อมูล แล้วย้อนกลับ"
 
@@ -143,8 +187,10 @@ README ที่ดีทำให้คนอื่น (รวมถึงต�
 
 | รูปแบบ | หมายเหตุ |
 |---|---|
-| วิดีโอเดียว 2 ช่วง (YouTube unlisted / Drive / Loom) | **แนะนำ** — ต่อเนื่องดูง่าย |
+| วิดีโอเดียว 2 ช่วง (YouTube unlisted / Google Drive / Loom) | **แนะนำ** — ใส่ timestamp ของแต่ละช่วง |
 | 2 วิดีโอแยก (สาธิต + อธิบาย) | ได้ · ใส่ทั้ง 2 ลิงก์ |
+
+> ⚠ ถ้าใช้ Google Drive ต้องตั้งสิทธิ์ **"ทุกคนที่มีลิงก์ดูได้"** — ไม่งั้นผู้สอนเปิดไม่ได้
 
 ## บันทึกใน DEMO.md
 
@@ -153,165 +199,370 @@ README ที่ดีทำให้คนอื่น (รวมถึงต�
 
 ## ช่วง A — สาธิตระบบ
 🔗 (ลิงก์ · หรือ timestamp ถ้าวิดีโอเดียว)
-- [x] เปิด 3 ชั้น · CRUD · health · production build
+- [x] เปิด 3 ชั้น · CRUD · health · production mode
 
 ## ช่วง B — อธิบาย source
 🔗 (ลิงก์ · หรือ timestamp)
 - [x] frontend → API → service → DB
 - [x] config · health check · production vs dev
+
+## Live Demo (ถ้าทำ Challenge)
+🔗 https://xxxx.onrender.com
+ฐานข้อมูล: SQLite ไฟล์ (รีเซ็ตเมื่อ restart) / Turso (ข้อมูลถาวร)
 ```
 
 ### ✓ ผ่าน CP42 เมื่อ
 
 - [ ] มีวิดีโอครบทั้งช่วง A (สาธิต) และช่วง B (อธิบาย source)
 - [ ] ช่วง B เปิดโค้ดจริงและอธิบายการไหลของข้อมูล
-- [ ] มี `DEMO.md` พร้อมลิงก์
+- [ ] มี `DEMO.md` พร้อมลิงก์ที่เปิดได้
+
+---
 
 # CP43 · จำลอง production ในเครื่อง
 
 **🏠 45 นาที · ทุกคนต้องทำ**
 
-> **สัปดาห์นี้เราไม่ deploy ขึ้น cloud จริง** (นักศึกษาส่วนใหญ่ยังไม่เคยใช้ cloud) — แต่เราจะ **จำลองสิ่งที่ cloud จะทำ ในเครื่องเราเอง** · เข้าใจ production เต็มที่ก่อน แล้วค่อยลอง cloud จริงเป็น Challenge
+> **สัปดาห์นี้ไม่บังคับ deploy ขึ้น cloud** — แต่จะ **จำลองสิ่งที่ cloud จะทำ ในเครื่องเราเอง ให้เหมือนที่สุด**
+> ถ้าผ่านขั้นนี้ครบ การขึ้น Render จริง (Challenge) แทบไม่มีอะไรต้องแก้เพิ่ม
 
-## จำลอง production คืออะไร
+## ① เพิ่ม script ที่ root ของโปรเจกต์
 
-ตอน dev เรารัน 2 server แยก (frontend 5173 + API 3001) · **ตอน production ทั้งระบบรวมเป็นเซิร์ฟเวอร์เดียว** — นี่คือสิ่งที่ cloud จะทำให้ · เราทำเองในเครื่องได้เลย
+cloud ต้องการ **คำสั่ง build 1 คำสั่ง และคำสั่ง start 1 คำสั่ง** — เราจึงรวมไว้ที่ `package.json` ระดับบนสุด
 
-```bash
-# ① build frontend เป็นไฟล์ static
-cd frontend && npm run build          # → สร้าง dist/
-
-# ② รัน API แบบ production — เสิร์ฟ frontend ที่ build แล้วด้วย
-cd ../api && NODE_ENV=production npm start
+```json
+{
+  "name": "campus-service",
+  "private": true,
+  "engines": { "node": ">=22.13.0" },
+  "scripts": {
+    "build": "npm install --include=dev --prefix frontend && npm run build --prefix frontend && npm install --prefix api",
+    "start": "npm start --prefix api",
+    "check": "node --disable-warning=ExperimentalWarning check-week11.mjs"
+  },
+  "devDependencies": { "supertest": "^7.2.2" }
+}
 ```
 
-## ตรวจว่าจำลอง production สำเร็จ
+### ⚠ ทำไมต้องมี `--include=dev`
 
-เปิดเบราว์เซอร์ไป **`http://localhost:3001`** (พอร์ตเดียว) แล้วตรวจ
+cloud ตั้ง `NODE_ENV=production` ไว้**ตั้งแต่ขั้น build** · เมื่อเป็นแบบนั้น `npm install` จะ**ข้าม devDependencies** — แต่ Vite (ตัว build React) เป็น devDependency!
 
-| เปิด | ต้องได้ |
+| ไม่ใส่ `--include=dev` | ใส่ `--include=dev` |
 |---|---|
-| `http://localhost:3001/` | **หน้าเว็บ React** (ไม่ใช่แค่ API) |
-| `http://localhost:3001/api/requests` | JSON ข้อมูลคำร้อง |
-| `http://localhost:3001/api/health` | `{ "env": "production", ... }` |
+| `vite: not found` → build ล้ม | Vite ถูกติดตั้ง → build ผ่าน |
 
-> **ต่างจาก dev อย่างไร** — dev ต้องเปิด 2 พอร์ต (5173 + 3001) · production เปิดพอร์ตเดียว (3001) ได้ทั้งเว็บและ API เพราะ frontend ถูก build แล้ว API เสิร์ฟให้
+## ② ทดสอบให้เหมือน cloud ที่สุด
 
-## บันทึกความเข้าใจใน README
+```bash
+cd labs/week-11/source
 
-เพิ่มหัวข้อ "วิธีรัน production" ใน README (ต่อจาก CP40) — อธิบายว่า
+# build แบบที่ cloud ทำ (NODE_ENV=production ตั้งแต่ build)
+NODE_ENV=production npm run build
 
-- ต้อง `npm run build` frontend ก่อน
-- `NODE_ENV=production` ทำให้ API เสิร์ฟ static + log แบบ combined
-- เปิดพอร์ตเดียวได้ทั้งเว็บและ API
+# start แบบที่ cloud ทำ (cloud กำหนดพอร์ตเอง — จำลองด้วยพอร์ตอื่นที่ไม่ใช่ 3001)
+NODE_ENV=production PORT=10000 npm start
+```
 
-## ⚠ เตรียมพร้อมสำหรับ deploy จริง (ไม่ต้องทำตอนนี้)
+> ⚠ **ซ้อมเสร็จแล้วคืนสภาพ dev** — build ในโหมด production จะ**ลบเครื่องมือทดสอบ** (vitest) ออกจาก `api/node_modules`
+> ```bash
+> npm install --prefix api     # คืน devDependencies ก่อนรัน npm test หรือกลับไปพัฒนาต่อ
+> ```
 
-โปรเจกต์เรามี `render.yaml` และ `.env.example` ให้แล้ว — พร้อม deploy เมื่อไรก็ได้ · **Challenge ด้านล่างมีคู่มือจับมือทำ** สำหรับคนที่อยากลองขึ้น cloud จริง
+> 💡 **ใช้พอร์ต 10000 แทน 3001 เพราะอะไร** — ถ้าโค้ดยัง hardcode 3001 อยู่ที่ไหนสักแห่ง จะเจอปัญหาทันทีในเครื่อง ไม่ต้องรอไปเจอบน cloud
+
+> 🪟 **Windows (PowerShell)** — ตั้งตัวแปรทีละบรรทัดแทน:
+> ```powershell
+> $env:NODE_ENV="production"; npm run build; $env:PORT="10000"; npm start
+> ```
+
+## ③ ตรวจ 4 จุด
+
+| เปิด | ต้องได้ | ถ้าไม่ได้ |
+|---|---|---|
+| `http://localhost:10000/` | **หน้าเว็บ React** | ได้ JSON → route `/` ชิงหน้าแรก (CP39 ③) |
+| `http://localhost:10000/about` | หน้าเว็บ React | ได้ 404 → ยังไม่มี catch-all ที่คืน index.html |
+| `http://localhost:10000/api/health` | `"env": "production"` | ไม่ได้ตั้ง NODE_ENV |
+| เพิ่มคำร้องจากหน้าเว็บ | บันทึกได้ | ดู DevTools → Network ว่ายิงไป `localhost:3001` ไหม |
+
+## ④ ตรวจ bundle ด้วยตาตัวเอง
+
+```bash
+grep -l "localhost:3001" frontend/dist/assets/*.js
+```
+
+**ต้องไม่มีผลลัพธ์** · ถ้ามีไฟล์โผล่มา แปลว่ายังไม่มี `frontend/.env.production` (CP39)
 
 ### ✓ ผ่าน CP43 เมื่อ
 
-- [ ] `npm run build` สร้าง `frontend/dist/` สำเร็จ
-- [ ] `NODE_ENV=production npm start` เปิด **พอร์ตเดียว** ได้ทั้งเว็บและ API
-- [ ] `/api/health` บอก `env: production`
-- [ ] README มีหัวข้อวิธีรัน production
+- [ ] root `package.json` มี script `build` (ใช้ `--include=dev`) และ `start`
+- [ ] ทดสอบด้วย `NODE_ENV=production` + `PORT=10000` ผ่านครบ 4 จุด
+- [ ] bundle ไม่มี `localhost:3001`
+- [ ] README มีหัวข้อ "วิธีรัน production"
+- [ ] screenshot 2 ภาพใน `evidence/images/`
 
 ### 💬 คำถามที่ต้องตอบได้
 
-> ทำไม production รวมเป็นพอร์ตเดียว แทนที่จะรัน 2 server เหมือน dev · และ cloud ทำอะไรที่เราจำลองในเครื่องนี้
+> ทำไมตอนทดสอบในเครื่องด้วยพอร์ต 3001 แอปดูเหมือนทำงานได้ แต่ถ้าขึ้น cloud โดยไม่มี `.env.production` ข้อมูลจะไม่ขึ้น
 
 ---
 
-# ⭐ Challenge
+# ⭐ Challenge — deploy จริงขึ้น Render
 
-## ① ⭐⭐ deploy จริงขึ้น Render (จับมือทำ)
+**ไม่บังคับ · สำหรับคนที่อยากเห็นระบบตัวเองออนไลน์จริง**
 
-**สำหรับคนที่อยากเห็นระบบตัวเองออนไลน์จริง** — เพื่อนเปิดจากมือถือได้ · ไม่ต้อง set server เอง Render จัดการ Linux ให้หมด
+> 📘 คู่มือฉบับเต็มพร้อมภาพประกอบ — https://se-rmutl.github.io/engse203/week11/deploy-guide.html
 
-> **ต้องมี** — บัญชี GitHub (มีแล้วจากวิชานี้) · อีเมลสำหรับสมัคร Render · อินเทอร์เน็ต
+## ต้องมีก่อนเริ่ม
 
-### ขั้นที่ 1 — push โปรเจกต์ขึ้น GitHub
+- [ ] CP43 ผ่านครบ (ทดสอบ `NODE_ENV=production PORT=10000` แล้ว)
+- [ ] push ขึ้น GitHub แล้ว (branch `unit4/week-11`)
+- [ ] ไม่ต้องใช้บัตรเครดิต · ไม่ต้อง set server เอง — Render จัดการ Linux ให้
 
-```bash
-git push origin unit4/week-11
-```
-ต้องมี repo บน GitHub ที่มีทั้ง `frontend/` และ `api/`
+## ขั้นที่ 1 — สมัคร Render
 
-### ขั้นที่ 2 — สมัคร Render
+1. เปิด **https://render.com** → **Get Started**
+2. เลือก **GitHub** เพื่อเข้าสู่ระบบด้วยบัญชี GitHub เดิม
+3. อนุญาตให้ Render อ่าน repository ของคุณ (เลือกเฉพาะ Student Repository ได้)
 
-1. เปิด **https://render.com** → กด **Get Started** (มุมขวาบน)
-2. เลือก **Sign in with GitHub** (ใช้บัญชีเดิม ไม่ต้องสร้างใหม่)
-3. อนุญาต (Authorize) ให้ Render เข้าถึง GitHub
-4. **ไม่ต้องใส่บัตรเครดิต** — free tier ไม่ต้องใช้
+## ขั้นที่ 2 — สร้าง Web Service
 
-### ขั้นที่ 3 — สร้าง Web Service
+1. บน Dashboard กด **New** → **Web Service**
+2. เลือก Student Repository ของคุณ → **Connect**
+3. กรอกตามตารางนี้ **ให้ตรงทุกช่อง**
 
-1. บนหน้า Dashboard กด **New +** → เลือก **Web Service**
-2. เลือก repo `engse203-lab` ของคุณ → กด **Connect**
-3. Render จะอ่าน `render.yaml` ให้อัตโนมัติ · ถ้าถามให้ตั้งค่าเอง กรอกตามนี้
+| ช่อง | ค่า | ทำไม |
+|---|---|---|
+| Name | `campus-service-<รหัสนักศึกษา>` | ใช้เป็นส่วนหนึ่งของ URL |
+| Region | **Singapore** | ใกล้ไทยที่สุด |
+| Branch | `unit4/week-11` | branch ที่มีงานสัปดาห์นี้ |
+| **Root Directory** | `labs/week-11/source` | ⚠ โปรเจกต์ไม่ได้อยู่ที่ root ของ repo |
+| Runtime / Language | **Node** | |
+| Build Command | `npm install && npm run build` | ใช้ script จาก CP43 |
+| Start Command | `npm start` | ใช้ script จาก CP43 |
+| Instance Type | **Free** | |
 
-| ช่อง | ใส่อะไร |
+4. ส่วน **Environment Variables** เพิ่ม 2 ตัว
+
+| Key | Value | ทำไม |
+|---|---|---|
+| `NODE_ENV` | `production` | เปิดโหมด production (เสิร์ฟหน้าเว็บ · log combined) |
+| `NODE_VERSION` | `22` | `node:sqlite` ต้องใช้ Node 22.13 ขึ้นไป |
+
+> ⚠ **ไม่ต้องเพิ่ม `PORT`** — Render กำหนดให้เอง และ `config.js` อ่านจาก `process.env.PORT` อยู่แล้ว
+
+5. เปิด **Advanced** → **Health Check Path** ใส่ `/api/health`
+6. กด **Deploy Web Service**
+
+## ขั้นที่ 3 — ดู log ระหว่าง deploy (2–5 นาที)
+
+| สิ่งที่เห็นใน log | แปลว่า |
 |---|---|
-| Name | `campus-service` (หรือชื่อที่ชอบ) |
-| Region | Singapore (ใกล้ไทยสุด) |
-| Branch | `unit4/week-11` |
-| Build Command | `cd frontend && npm install && npm run build && cd ../api && npm install` |
-| Start Command | `cd api && npm start` |
-| Instance Type | **Free** |
+| `Using Node.js version 22.x` | NODE_VERSION ทำงาน |
+| `npm run build` → `✓ built in ...` | build frontend ผ่าน |
+| `Campus Service API พร้อมที่ ...:10000` | server start แล้ว |
+| **Your service is live 🎉** | health check ผ่าน · เปิดให้ใช้งาน |
 
-4. Environment → เพิ่ม `NODE_ENV` = `production`
-5. กด **Create Web Service**
+## ขั้นที่ 4 — ตรวจว่าใช้ได้จริง
 
-### ขั้นที่ 4 — รอ build (ประมาณ 2–5 นาที)
+| เปิด | ต้องได้ |
+|---|---|
+| `https://<name>.onrender.com/` | หน้าเว็บ React |
+| `https://<name>.onrender.com/api/health` | `"env": "production"` |
+| เพิ่มคำร้องจากหน้าเว็บ | บันทึกได้ |
+| **ส่ง URL ให้เพื่อนเปิดจากมือถือ** | เปิดได้ 🎉 |
 
-- Render จะแสดง log สด — เห็น `npm install`, `npm run build` ทำงาน
-- เมื่อขึ้น **"Your service is live 🎉"** = สำเร็จ
-- ได้ URL แบบ `https://campus-service-xxxx.onrender.com`
+## ⚠ 2 เรื่องที่ไม่ใช่บั๊ก
 
-### ขั้นที่ 5 — ตรวจว่าใช้ได้จริง
+**① เปิดครั้งแรกช้า 30–60 วินาที** — free tier "หลับ" หลังไม่มีคนเข้า 15 นาที · พอมีคนเปิดจะ "ตื่น" ใช้เวลาสักครู่
 
-- เปิด URL นั้น → เห็นหน้าเว็บ React
-- เปิด `URL/api/health` → เห็น `env: production`
-- **ส่ง URL ให้เพื่อนเปิดจากมือถือ** — ได้เห็นระบบตัวเองออนไลน์จริง!
+**② ข้อมูลที่เพิ่มจะกลับเป็นค่าตั้งต้นเมื่อ restart/redeploy** — free tier ใช้ ephemeral filesystem · `campus.db` จะกลับเป็นไฟล์ที่ commit ไว้
 
-### ⚠ 2 เรื่องที่ต้องรู้ (ไม่ใช่บั๊ก)
+> **ข้อ ② คือบทเรียนจริง** — เพราะแบบนี้ระบบใหญ่จึงใช้ฐานข้อมูลแยกเครื่อง (PostgreSQL/MongoDB cloud) ไม่เก็บข้อมูลเป็นไฟล์ข้าง API · โยงกับบทที่ 7–8
 
-**① เปิดครั้งแรกช้า 30–60 วินาที** — free tier ของ Render จะ "หลับ" หลังไม่มีคนเข้า 15 นาที · พอมีคนเปิดจะ "ตื่น" ใช้เวลาสักครู่ · Render แสดงหน้า loading ระหว่างรอ · **นี่คือปกติของ free tier ไม่ใช่ระบบพัง**
+## ตารางแก้ปัญหา
 
-**② ข้อมูลที่เพิ่มบนเว็บจะหายเมื่อ Render restart** — เพราะ free tier ใช้ ephemeral filesystem (ไฟล์หายทุก restart) · `campus.db` ที่เพิ่มข้อมูลใหม่จะกลับไปเป็นข้อมูลตั้งต้น
+| อาการใน log / หน้าเว็บ | สาเหตุ | แก้ |
+|---|---|---|
+| `Could not read package.json` / `ENOENT` | Root Directory ผิด | ตั้งเป็น `labs/week-11/source` |
+| `vite: not found` | ไม่มี `--include=dev` | แก้ script build (CP43 ①) |
+| `No such built-in module: node:sqlite` | Node เก่ากว่า 22.13 | เพิ่ม `NODE_VERSION=22` |
+| deploy ค้าง แล้วขึ้น health check failed | `/api/health` ตอบ 503 หรือ path ผิด | ดู log ว่า DB เปิดได้ไหม · ตรวจ Health Check Path |
+| เปิด URL แล้วเห็น JSON | route `/` ชิงหน้าแรก | CP39 ③ |
+| หน้าเว็บขึ้นแต่ไม่มีข้อมูล · Network ยิงไป `localhost:3001` | ไม่มี `frontend/.env.production` | CP39 ② |
+| แก้โค้ดแล้วเว็บไม่เปลี่ยน | ยังไม่ได้ push | push แล้วรอ auto-deploy |
 
-> **ข้อ ② คือบทเรียนสำคัญ** — โยงกับบทที่ 7 เรื่อง "SQLite บน cloud ephemeral อาจหาย" · **นี่คือเหตุผลจริงที่ระบบใหญ่ใช้ฐานข้อมูลแยกเครื่อง** (PostgreSQL/MongoDB cloud) ไม่ใช่ไฟล์ในเครื่องเดียวกับ API · ถ้าอยากแก้จริงต้องใช้ฐานข้อมูลแยก ซึ่งอยู่นอกขอบเขตหน่วยนี้
-
-### บันทึกใน README
+## บันทึกใน README และ DEMO.md
 
 ```markdown
 ## Live Demo
 🔗 https://campus-service-xxxx.onrender.com
 
-หมายเหตุ: free tier — เปิดครั้งแรกช้า 30–60 วิ (service ตื่นจาก sleep)
-ข้อมูลที่เพิ่มจะรีเซ็ตเมื่อ restart (ephemeral filesystem)
+หมายเหตุ: Render free tier — เปิดครั้งแรกช้า 30–60 วินาที
+ข้อมูลที่เพิ่มจะกลับเป็นค่าตั้งต้นเมื่อ restart (ephemeral filesystem)
 ```
 
-## ② CI — รัน checker อัตโนมัติ
+---
+
+# ⭐⭐ Challenge — ข้อมูลถาวรด้วย Turso
+
+**ไม่บังคับ · ทำต่อจาก Challenge Render · สำหรับคนที่อยากให้ข้อมูลไม่หายเมื่อ Render restart**
+
+> 📘 ภาพประกอบและคำอธิบายเต็ม — คู่มือ Deploy ส่วนที่ 11
+
+## ทำไมต้องทำ
+
+บน Render free tier ไฟล์ `campus.db` จะกลับเป็นเวอร์ชันใน git ทุกครั้งที่ restart · ทางแก้ของระบบจริงคือ**ย้ายฐานข้อมูลไปไว้คนละเครื่องกับ API**
+
+**Turso** คือบริการฐานข้อมูลที่ใช้ SQLite (ภาษา SQL เดียวกับที่เรียนสัปดาห์ 9) · มี free tier ถาวร ไม่ต้องใช้บัตรเครดิต
+
+| | ก่อน (SQLite ไฟล์) | หลัง (Turso) |
+|---|---|---|
+| ฐานข้อมูลอยู่ที่ | ไฟล์ในเครื่องเดียวกับ API | server ของ Turso บนอินเทอร์เน็ต |
+| Render restart | ข้อมูลที่เพิ่ม**หาย** | ข้อมูล**อยู่ครบ** |
+| SQL · schema.sql · query | — | **ใช้ของเดิมได้ทั้งหมด** |
+| ต้องแก้โค้ด | — | service ไฟล์เดียว (ชั้นเดียว) |
+
+## ขั้นที่ 1 — สร้างฐานข้อมูลบน Turso
+
+1. เปิด **https://turso.tech** → **Sign Up** → เลือกเข้าสู่ระบบด้วย **GitHub**
+2. ในหน้า Dashboard สร้างฐานข้อมูลใหม่ (Create Database)
+   - Name: `campus-<รหัสนักศึกษา>`
+   - Location: เลือกที่**ใกล้ Singapore ที่สุด**ที่มีให้เลือก (Render ของเราอยู่ Singapore)
+3. เข้าไปที่ฐานข้อมูลนั้น แล้วคัดลอก 2 ค่า
+
+| ค่า | หน้าตา | เก็บไว้ใน |
+|---|---|---|
+| **Database URL** | `libsql://campus-xxxx.turso.io` | `TURSO_DATABASE_URL` |
+| **Auth Token** (สร้างใหม่ · สิทธิ์ read & write) | ข้อความยาว ๆ ขึ้นต้น `eyJ...` | `TURSO_AUTH_TOKEN` |
+
+> ⚠ **token = รหัสผ่านของฐานข้อมูล** — ห้ามใส่ในโค้ด ห้าม commit ห้ามแปะในแชท · ถ้าเผลอหลุด ให้ลบ token เดิมใน Dashboard แล้วสร้างใหม่
+> ชื่อเมนูบนหน้าเว็บ Turso อาจเปลี่ยนได้ — หา "Create Token" หรือ "Generate Token" ในหน้าฐานข้อมูล
+
+**ไม่ต้องสร้างตารางเอง** — ตอนเปิดแอปครั้งแรก `loadSeed()` จะเห็นว่ายังไม่มีตาราง แล้วรัน `schema.sql` ให้ (ได้ข้อมูลตั้งต้น 5 รายการ)
+
+## ขั้นที่ 2 — ติดตั้ง libsql
+
+```bash
+cd labs/week-11/source
+npm install libsql --prefix api
+```
+
+`libsql` คือไลบรารีของ Turso ที่มี `prepare().all()` · `.get()` · `.run()` หน้าตา**เหมือน `node:sqlite`** — query ทุกตัวใน service ใช้ต่อได้ทันที
+
+> ⚠ ต้องเป็น `dependencies` (ไม่ใช่ devDependencies) — ไม่งั้นบน Render จะหาไม่เจอ · คำสั่งข้างบนใส่ให้ถูกที่แล้ว
+
+## ขั้นที่ 3 — ให้ service เลือกฐานข้อมูลตาม env
+
+แก้ `api/src/services/requestService.js` **ไฟล์เดียว** — แนวคิดเดียวกับ config ในบทที่ 3: *ค่าจาก env เป็นตัวตัดสิน*
+
+```js
+let db;
+let driver = 'sqlite';
+
+// ไม่มี TURSO_DATABASE_URL → ไฟล์ campus.db ในเครื่อง (เหมือนเดิม)
+// มี TURSO_DATABASE_URL    → ต่อ Turso ผ่านเน็ต
+async function openDatabase() {
+  const url = process.env.TURSO_DATABASE_URL;
+  if (url) {
+    const { default: Database } = await import('libsql');   // โหลดเฉพาะตอนใช้ Turso
+    driver = 'turso';
+    return new Database(url, { authToken: process.env.TURSO_AUTH_TOKEN });
+  }
+  driver = 'sqlite';
+  return new DatabaseSync(DB_FILE);
+}
+
+export async function loadSeed() {
+  db = await openDatabase();          // ← เดิม: db = new DatabaseSync(DB_FILE);
+  // ... ส่วนที่เหลือเหมือนเดิมทุกบรรทัด
+}
+```
+
+และใน `getDbStatus()` เปลี่ยน `driver: 'sqlite'` เป็น `driver` — health check จะบอกได้ว่าตอนนี้ใช้ฐานข้อมูลไหน
+
+### 💬 สังเกต
+
+- controller · route · frontend **ไม่แตะเลย** — เปลี่ยนแหล่งข้อมูลครั้งที่ 5 ก็ยังแก้ชั้นเดียว
+- ทำได้เพราะ `libsql` เป็นแบบ **sync** เหมือน `node:sqlite` · ต่างจาก MongoDB (บทที่ 8) ที่เป็น async จึงกระทบ controller ด้วย
+
+## ขั้นที่ 4 — ทดสอบในเครื่อง
+
+ใส่ค่าจริงใน `api/.env` (ไฟล์นี้อยู่ใน .gitignore อยู่แล้ว)
+
+```bash
+TURSO_DATABASE_URL=libsql://campus-xxxx.turso.io
+TURSO_AUTH_TOKEN=eyJ...
+```
+
+```bash
+cd api && npm run dev
+curl http://localhost:3001/api/health     # "driver":"turso" · "connected":true
+```
+
+เพิ่มคำร้อง 1 รายการจากหน้าเว็บ → หยุดแล้วเปิด `npm run dev` ใหม่ ข้อมูลต้องยังอยู่ · ถ้าหน้า Dashboard ของ Turso มีเมนูดูข้อมูลหรือ SQL shell ลองเปิดดูตาราง `requests` จะเห็นข้อมูลอยู่บน server
+
+> 💡 **checker ใช้ฐานข้อมูลในเครื่องเสมอ** (ไม่อ่านค่า Turso) — รัน checker ได้ตามปกติ ไม่มีข้อมูลทดสอบไปปนใน Turso
+
+## ขั้นที่ 5 — ตั้งค่าบน Render
+
+1. เข้า service บน Render → **Environment**
+2. เพิ่ม 2 ตัวแปร `TURSO_DATABASE_URL` และ `TURSO_AUTH_TOKEN` (ค่าเดียวกับขั้นที่ 4)
+3. **Save Changes** → Render จะ deploy ใหม่ให้
+4. `git push` โค้ดที่แก้ในขั้นที่ 2–3 (ถ้ายังไม่ได้ push)
+
+## ขั้นที่ 6 — พิสูจน์ว่าข้อมูลถาวร
+
+| ทำ | ต้องเห็น |
+|---|---|
+| เปิด `URL/api/health` | `"driver":"turso"` |
+| เพิ่มคำร้องจากมือถือ | บันทึกได้ |
+| Render → **Manual Deploy** → Deploy latest commit | รอ live อีกครั้ง |
+| เปิดหน้าเว็บอีกครั้ง | **คำร้องที่เพิ่มยังอยู่** ✅ (ก่อนทำ Challenge นี้ จะหาย) |
+
+บันทึกการพิสูจน์นี้ในวิดีโอช่วง A หรือ screenshot `evidence/images/turso-persist.png`
+
+## ตารางแก้ปัญหา
+
+| อาการ (ดูใน log) | สาเหตุ | แก้ |
+|---|---|---|
+| `401 Unauthorized` · `The JWT is invalid` | token ผิด หรือถูกลบไปแล้ว | สร้าง token ใหม่ แล้วแก้ค่าใน .env / Render |
+| `401` · `Auth string does not conform` | ไม่ได้ตั้ง `TURSO_AUTH_TOKEN` | เพิ่มตัวแปรให้ครบ 2 ตัว |
+| `Cannot find package 'libsql'` | ไม่ได้ติดตั้ง หรืออยู่ใน devDependencies | `npm install libsql --prefix api` แล้ว push `api/package.json` |
+| server ไม่ขึ้น · deploy ค้างที่ health check | URL พิมพ์ผิด · ต่อ Turso ไม่ได้ | คัดลอก URL จาก Dashboard ใหม่ · ดู log ขั้น Start |
+| `"driver":"sqlite"` ทั้งที่ตั้งค่าแล้ว | ตัวแปรยังว่าง หรือ Render ยังไม่ deploy ใหม่ | ตรวจค่าใน Environment · Manual Deploy |
+| หน้าเว็บช้ากว่าเดิม | ทุก query วิ่งผ่านเน็ต | เลือก Location ของ Turso ให้ใกล้ Singapore · เป็นเรื่องปกติของฐานข้อมูลแยกเครื่อง |
+| ข้อมูลในเครื่องกับบน Render ไม่ตรงกัน | เครื่องเราใช้ campus.db · Render ใช้ Turso | ปกติ — เป็นคนละฐานข้อมูล (ถ้าใส่ค่า Turso ใน .env ด้วย ก็จะเห็นชุดเดียวกัน) |
+
+> **อยากกลับไปใช้ไฟล์ในเครื่อง** — ลบ 2 ตัวแปรออก (หรือเว้นว่าง) แอปจะกลับไปใช้ `campus.db` ทันที ไม่ต้องแก้โค้ด
+
+---
+
+# ⭐ Challenge อื่น ๆ
+
+## CI — รัน checker อัตโนมัติ
 
 ```yaml
-# .github/workflows/check.yml
-name: LAB Check
+# .github/workflows/week11-check.yml  (วางที่ root ของ Student Repository)
+name: Week 11 Check
 on: [push]
 jobs:
   check:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: labs/week-11/source
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
-      - run: cd api && npm install && npm run db:setup
-      - run: node --disable-warning=ExperimentalWarning check-week11.mjs
+      - run: npm install && npm run build
+      - run: npm run check
 ```
 
-## ③ ลองต่อ MongoDB Atlas
+## ลองต่อ MongoDB Atlas
 
-ตามบทอ่านเพิ่มเติม — สำหรับคนที่อยากลองของจริง (ไม่บังคับ)
+ตามบทอ่านเพิ่มเติม (บทที่ 8) — สำหรับคนที่อยากลองของจริง ไม่บังคับ
 
 ---
 
@@ -320,22 +571,26 @@ jobs:
 ## ตรวจให้ครบก่อนส่ง
 
 ```bash
-node --disable-warning=ExperimentalWarning check-week11.mjs   # เป้าหมาย 32/36
+cd labs/week-11/source
+node --disable-warning=ExperimentalWarning check-week11.mjs   # เป้าหมาย 37/41
 node --disable-warning=ExperimentalWarning check-week10.mjs   # ต้องยัง 31/31
 node --disable-warning=ExperimentalWarning check-week07.mjs   # ต้องยัง 36/36
 ```
 
-**เป้าหมาย 32/36** (36/36 ถ้าทำ Challenge ครบ)
+**เป้าหมาย 37/41** — ผ่านทุกข้อในห้องและที่บ้าน (41/41 ถ้าทำ Challenge ครบ)
+
+> ⚠ ข้อ CP39 ที่ตรวจ bundle ต้อง `npm run build` ก่อนรัน checker
 
 ## ส่งอย่างไร — โปรเจกต์มีทั้ง frontend และ backend
 
-ระบบเรามี 2 ส่วน (`frontend/` + `api/`) อยู่ใน **repo เดียวกัน** — ส่งทั้ง repo ครั้งเดียว
+ระบบเรามี 2 ส่วน (`frontend/` + `api/`) อยู่ใน **โฟลเดอร์เดียวกัน** `labs/week-11/source/` — ส่งทั้งหมดครั้งเดียว
 
-### ① ส่ง source code — push ทั้ง repo
+### ① ส่ง source code
 
 ```bash
 git switch -c unit4/week-11
 git add -A                    # เก็บทั้ง frontend/ และ api/
+git status                    # ตรวจ: ต้องไม่เห็น node_modules, .env, .env.local, dist
 git commit -m "LAB11 (A4): ระบบ full-stack พร้อมใช้จริง"
 git push -u origin unit4/week-11
 git tag lab-11-submission-v1 && git push origin lab-11-submission-v1
@@ -346,47 +601,40 @@ git tag lab-11-submission-v1 && git push origin lab-11-submission-v1
 | commit | ไม่ commit (อยู่ใน .gitignore) |
 |---|---|
 | `frontend/src/` · `api/src/` · `api/data/campus.db` | `node_modules/` |
-| `README.md` · `DATABASE_CHOICES.md` · `DEMO.md` | `.env` (ค่าลับ) |
-| `render.yaml` | `frontend/dist/` (build ใหม่ได้) |
-
-> **ตรวจก่อน push** — `git status` ควรเห็นทั้งไฟล์ใน `frontend/` และ `api/` · ไม่มี `node_modules` หรือ `.env`
+| `frontend/.env.production` · `.env.example` ทั้งสองฝั่ง | `.env` · `.env.local` (ค่าลับ) |
+| root `package.json` · `README.md` · `DATABASE_CHOICES.md` · `DEMO.md` | `frontend/dist/` (build ใหม่ได้) |
 
 ### ② ส่งวิดีโอนำเสนอ
 
-ใส่ลิงก์วิดีโอ (ช่วง A สาธิต + ช่วง B อธิบาย source) ไว้ใน `DEMO.md` ที่ push ขึ้นไป
+ใส่ลิงก์วิดีโอ (ช่วง A + ช่วง B) ไว้ใน `DEMO.md` ที่ push ขึ้นไป
 
-### ③ สรุปไฟล์ที่ต้องมีใน repo
-
-| ไฟล์ | จาก CP |
-|---|---|
-| `README.md` (สถาปัตยกรรม + วิธีรัน + production) | CP40, CP43 |
-| `DATABASE_CHOICES.md` (ตอบ 3 คำถาม) | CP41 |
-| `DEMO.md` (ลิงก์วิดีโอ 2 ช่วง) | CP42 |
-| ระบบ full-stack ที่ทำงาน (frontend + api) | CP35–39 |
-
-### เกณฑ์การให้คะแนน A4
+### ③ เกณฑ์การให้คะแนน A4
 
 | ส่วน | สัดส่วน |
 |---|---|
 | ระบบทำงานครบวงจร (checker + สาธิต ช่วง A) | 40% |
 | **อธิบาย source ได้ (วิดีโอ ช่วง B)** | 30% |
 | README + คำตอบบทอ่าน | 20% |
-| production-ready (จำลอง production ในเครื่อง) | 10% |
+| production-ready (CP43 จำลอง production ผ่านครบ) | 10% |
+| ⭐ deploy จริงบน Render | +โบนัส |
+| ⭐⭐ ข้อมูลถาวรด้วย Turso (พิสูจน์ด้วย Manual Deploy) | +โบนัสเพิ่ม |
 
 > **ช่วง B สำคัญ** — ผู้สอนดูว่าอธิบายการไหลของข้อมูลได้ไหม · ทำระบบได้แต่อธิบายไม่ได้ = ยังไม่เข้าใจจริง
+
+## ใช้ AI ได้ แต่ต้องเป็นเจ้าของงาน
+
+กรอก `AI_USAGE.md` ว่าถามอะไร ใช้คำตอบส่วนไหน แก้เองตรงไหน (รูปแบบเดียวกับสัปดาห์ 7)
 
 ---
 
 ## ปิดหน่วยที่ 4 แล้ว 🎉
 
-สามสัปดาห์ที่ผ่านมา —
+| สัปดาห์ | ทำอะไร | โฟลเดอร์ใน Student Repository |
+|---|---|---|
+| 9 | เรียน SQL · ออกแบบและสร้างฐานข้อมูล | `labs/week-09/source/` |
+| 10 | เชื่อม Node เข้ากับฐานข้อมูล | `labs/week-10/source/` |
+| **11** | **ประกอบเป็นระบบจริงที่พร้อม deploy** | `labs/week-11/source/` |
 
-| สัปดาห์ | ทำอะไร |
-|---|---|
-| 9 | เรียน SQL · ออกแบบและสร้างฐานข้อมูล |
-| 10 | เชื่อม Node เข้ากับฐานข้อมูล |
-| **11** | **ประกอบเป็นระบบจริงที่ deploy ได้** |
-
-**บทเรียนใหญ่** — แยกชั้นดี เปลี่ยนแหล่งข้อมูลได้โดยกระทบชั้นเดียว (4 ครั้ง) · และ "ทำงานได้" ต่างจาก "พร้อมใช้จริง"
+**บทเรียนใหญ่** — แยกชั้นดี เปลี่ยนแหล่งข้อมูลได้โดยกระทบชั้นเดียว (4 ครั้ง) · และ "ทำงานได้บนเครื่องเรา" ต่างจาก "พร้อมใช้จริง"
 
 **ต่อไป** — หน่วยที่ 5 · คุณภาพและความปลอดภัยของซอฟต์แวร์ · ระบบที่ประกอบเสร็จนี้จะเป็นฐานเรียนต่อ

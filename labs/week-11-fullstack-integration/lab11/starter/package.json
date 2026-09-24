@@ -1,5 +1,14 @@
 {
-  "dependencies": {
+  "name": "campus-service",
+  "private": true,
+  "description": "ENGSE203 Week 11 — ระบบ full-stack (starter)",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "check": "node --disable-warning=ExperimentalWarning check-week11.mjs"
+  },
+  "devDependencies": {
     "supertest": "^7.2.2"
   }
 }

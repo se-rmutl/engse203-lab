@@ -259,7 +259,7 @@ REQ-001 | สมชาย ใจดี | pending
 
 ## บันทึกผล
 
-สร้างหัวข้อในไฟล์ `DATA_MODEL.md` หรือแยกเป็น `CONSTRAINT_TEST.md` ก็ได้
+สร้างหัวข้อในไฟล์ `DATA_MODEL.md` หรือแยกเป็น `evidence/CONSTRAINT_TEST.md` ก็ได้
 
 ```markdown
 ## ผลการทดสอบ Constraint
@@ -347,6 +347,35 @@ node --disable-warning=ExperimentalWarning check-week09.mjs
 
 **เป้าหมาย 27/30** (30/30 ถ้าทำ Challenge ครบ)
 
+## โครงสร้างที่ต้องมีใน Student Repository
+
+เหมือนสัปดาห์ก่อน ๆ — งานสัปดาห์นี้อยู่ที่ **`labs/week-09/source/`** ของ Student Repository
+
+```
+labs/week-09/source/
+├── campus.db                 ← CP19–CP21 (commit ไฟล์นี้ด้วย)
+├── schema.sql                ← CP23 · สัปดาห์ 10 จะใช้ไฟล์นี้
+├── queries.sql               ← CP22 · สัปดาห์ 10 จะคัดลอก query ไปใช้
+├── DATA_MODEL.md             ← CP24
+├── check-week09.mjs
+├── evidence/
+│   ├── CONSTRAINT_TEST.md    ← CP25 (หรือเขียนเป็นหัวข้อใน DATA_MODEL.md)
+│   └── images/
+│       ├── schema-in-vscode.png   ← ตาราง 2 ตารางใน SQLite extension
+│       └── join-result.png        ← ผลของ query JOIN
+├── AI_USAGE.md
+└── .gitignore
+```
+
+> **ไฟล์ 3 ตัวแรกคือวัตถุดิบของสัปดาห์ 10** — ถ้าวางไม่ครบ สัปดาห์หน้าจะเริ่มไม่ได้
+
+## Screenshot ที่ต้องมี
+
+| ไฟล์ | ถ่ายอะไร |
+|---|---|
+| `schema-in-vscode.png` | VS Code SQLite extension แสดงตาราง `users` และ `requests` |
+| `join-result.png` | ผลของ query JOIN ที่มีคอลัมน์ `requesterName` |
+
 ## ไฟล์ที่ต้องส่ง
 
 | ไฟล์ | จาก CP |
@@ -370,6 +399,8 @@ git tag lab-09-submission-v1 && git push origin lab-09-submission-v1
 > เพราะสัปดาห์หน้าต้องใช้ไฟล์นี้ และ SQLite เป็นไฟล์เดียวขนาดเล็ก จึงเก็บใน git ได้
 
 ## ใช้ AI ได้ แต่ต้องเป็นเจ้าของงาน
+
+กรอก `AI_USAGE.md` ว่าถามอะไร ใช้คำตอบส่วนไหน แก้เองตรงไหน (รูปแบบเดียวกับสัปดาห์ 7)
 
 ผู้สอนจะ **สุ่มให้เขียน query สดจากฐานข้อมูลของคุณเอง** · ถ้าเขียนไม่ได้ คะแนนส่วนนั้นจะถูกทบทวน
 

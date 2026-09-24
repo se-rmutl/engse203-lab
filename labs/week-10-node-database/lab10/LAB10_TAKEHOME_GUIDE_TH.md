@@ -84,7 +84,7 @@ curl http://localhost:3001/api/requests
 
 ## ④ บันทึกผล
 
-เพิ่มหัวข้อใน `API_CONTRACT.md` หรือสร้าง `SECURITY_TEST.md` แยก
+เพิ่มหัวข้อใน `API_CONTRACT.md` หรือสร้าง `evidence/SECURITY_TEST.md` แยก
 
 ```markdown
 ## ผลการทดสอบ SQL Injection
@@ -399,6 +399,40 @@ npm test
 
 **เป้าหมาย 28/31** (31/31 ถ้าทำ Challenge ครบ)
 
+## โครงสร้างที่ต้องมีใน Student Repository
+
+งานสัปดาห์นี้อยู่ที่ **`labs/week-10/source/`** — ตั้งต้นโดยคัดลอกโปรเจกต์ Week 07 มา แล้ววางไฟล์จาก Week 09
+
+```
+labs/week-10/source/
+├── api/
+│   ├── data/
+│   │   ├── schema.sql          ← คัดลอกจาก labs/week-09/source/schema.sql
+│   │   └── campus.db           ← สร้างด้วย npm run db:setup (commit ด้วย)
+│   ├── scripts/setup-db.mjs
+│   ├── src/services/requestService.js   ← ไฟล์เดียวที่แก้ (CP26–CP30)
+│   ├── tests/api.test.js       ← CP33
+│   ├── .env.example
+│   └── package.json
+├── frontend/                   ← เหมือน Week 07 · ไม่ต้องแก้
+├── API_CONTRACT.md             ← CP34
+├── check-week07.mjs · check-week10.mjs
+├── evidence/
+│   ├── SECURITY_TEST.md        ← CP31 (หรือเขียนเป็นหัวข้อใน API_CONTRACT.md)
+│   └── images/
+│       ├── app-from-database.png   ← Dashboard แสดงข้อมูลจากฐานข้อมูล
+│       └── checker-week07.png      ← check-week07 ยังผ่าน 36/36
+├── AI_USAGE.md
+└── .gitignore                  ← node_modules/, .env, .env.local
+```
+
+## Screenshot ที่ต้องมี
+
+| ไฟล์ | ถ่ายอะไร |
+|---|---|
+| `app-from-database.png` | Dashboard แสดงข้อมูล (มาจาก campus.db) |
+| `checker-week07.png` | ผล `node check-week07.mjs` ยังผ่าน 36/36 — หลักฐานว่าแก้ไฟล์เดียว |
+
 ## คำสั่ง git
 
 > **ต้อง commit ไฟล์ `campus.db` ด้วย** — เหมือนสัปดาห์ที่ 9 · ผู้สอนต้องตรวจข้อมูล และ SQLite เป็นไฟล์เดียวขนาดเล็ก
@@ -412,6 +446,8 @@ git tag lab-10-submission-v1 && git push origin lab-10-submission-v1
 ```
 
 ## ใช้ AI ได้ แต่ต้องเป็นเจ้าของงาน
+
+กรอก `AI_USAGE.md` ว่าถามอะไร ใช้คำตอบส่วนไหน แก้เองตรงไหน (รูปแบบเดียวกับสัปดาห์ 7)
 
 ผู้สอนจะ **สุ่มให้แก้ query สดหรืออธิบายว่าทำไมต้องแปลงชื่อเป็น id** · ถ้าอธิบายไม่ได้ คะแนนส่วนนั้นจะถูกทบทวน
 

@@ -760,14 +760,19 @@ npm run build
     <p>แปลงโค้ด React (JSX หลายไฟล์) เป็น <strong>ไฟล์ static ที่เบราว์เซอร์เปิดได้ตรง ๆ</strong> — รวมไฟล์ ย่อขนาด ปรับให้เร็ว</p>
   </div>
 
-  <h3>6.2 ให้ API เสิร์ฟ static ตอน production</h3>
+  <h3>6.2 ให้ API เสิร์ฟหน้าเว็บตอน production</h3>
 
-<pre><code><span class="c-com">// app.js — เฉพาะตอน production</span>
+<pre><code><span class="c-com">// app.js — route ของ API ทั้งหมดอยู่ใต้ /api (รวมข้อความต้อนรับ)</span>
+app.<span class="c-fn">get</span>(<span class="c-str">'/api'</span>, (req, res) =&gt; res.<span class="c-fn">json</span>({ message: <span class="c-str">'Campus Service API is running'</span> }));
+app.<span class="c-fn">use</span>(<span class="c-str">'/api/requests'</span>, requestRoutes);
+
 <span class="c-key">if</span> (config.isProd &amp;&amp; <span class="c-fn">existsSync</span>(config.staticDir)) {
-  app.<span class="c-fn">use</span>(express.<span class="c-fn">static</span>(config.staticDir));      <span class="c-com">// เสิร์ฟ dist/</span>
+  app.<span class="c-fn">use</span>(express.<span class="c-fn">static</span>(config.staticDir));      <span class="c-com">// เสิร์ฟไฟล์ใน dist/</span>
   app.<span class="c-fn">get</span>(<span class="c-str">/^\/(?!api).*/</span>, (req, res) =&gt; {           <span class="c-com">// ทุก path ที่ไม่ใช่ /api</span>
-    res.<span class="c-fn">sendFile</span>(<span class="c-fn">path.join</span>(config.staticDir, <span class="c-str">'index.html'</span>));
+    res.<span class="c-fn">sendFile</span>(path.<span class="c-fn">join</span>(config.staticDir, <span class="c-str">'index.html'</span>));
   });
+} <span class="c-key">else</span> {
+  app.<span class="c-fn">get</span>(<span class="c-str">'/'</span>, ...);   <span class="c-com">// dev เท่านั้น — หน้าเว็บอยู่ที่ Vite พอร์ต 5173</span>
 }</code></pre>
 
   <div class="box note">
@@ -782,6 +787,65 @@ npm run build
     ต่างจาก dev ที่ hot reload ให้อัตโนมัติ</p>
   </div>
 
+
+  <h3>6.3 กับดัก 2 ข้อที่เจอเฉพาะ production</h3>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">รัน <code>NODE_ENV=production npm start</code> แล้วเปิด <code>localhost:3001</code> — หน้าเว็บขึ้น ข้อมูลขึ้นครบ · <strong>แต่พอ deploy ขึ้น cloud เพื่อนเปิดจากมือถือ หน้าเว็บขึ้นแต่ Dashboard ว่าง</strong> · เกิดจากอะไร</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><code>apiClient.js</code> ใช้ <code>VITE_API_BASE_URL ?? 'http://localhost:3001'</code> · ถ้าตอน build ไม่ได้บอกค่าอื่น คำว่า <code>localhost:3001</code> จะถูก<strong>ฝังลงในไฟล์ JS ที่ build แล้ว</strong></p>
+      <p style="margin:0"><strong>localhost หมายถึงเครื่องของคนที่เปิดเว็บ</strong> · ในเครื่องเรามันบังเอิญเป็น server ตัวเดียวกัน จึงดูเหมือนทำงาน · แต่บนมือถือเพื่อน localhost คือมือถือเอง ซึ่งไม่มี server</p>
+    </div>
+  </details>
+
+  <figure>
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="กับดัก localhost ใน bundle">
+      <style>.l6t{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .l6s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .l6m{font:500 9.5px 'IBM Plex Mono',monospace}</style>
+      <defs>
+        <marker id="l6r" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#B23A2E" stroke-width="1.5"/></marker>
+        <marker id="l6g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#1E7A54" stroke-width="1.5"/></marker>
+      </defs>
+      <text x="20" y="20" class="l6m" fill="#B23A2E">✕ bundle: fetch('http://localhost:3001/api/...')</text>
+      <rect x="20" y="30" width="200" height="84" rx="9" fill="#F5F7F6" stroke="#8A9691"/>
+      <text x="120" y="56" text-anchor="middle" class="l6t">📱 มือถือเพื่อน</text>
+      <text x="120" y="76" text-anchor="middle" class="l6s">หน้าเว็บโหลดได้</text>
+      <text x="120" y="96" text-anchor="middle" class="l6m" fill="#B23A2E">ยิง localhost:3001</text>
+      <path d="M222 72 L300 72" stroke="#B23A2E" stroke-width="1.6" marker-end="url(#l6r)"/>
+      <rect x="304" y="34" width="436" height="76" rx="9" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.6"/>
+      <text x="522" y="62" text-anchor="middle" class="l6t" fill="#8F2B21">ไปหา localhost ของ "มือถือเอง" — ไม่มี server</text>
+      <text x="522" y="84" text-anchor="middle" class="l6s" fill="#8F2B21">connection refused → Dashboard ว่าง</text>
+
+      <text x="20" y="146" class="l6m" fill="#1E7A54">✓ frontend/.env.production มี VITE_API_BASE_URL= (ค่าว่าง) → bundle: fetch('/api/...')</text>
+      <rect x="20" y="156" width="200" height="84" rx="9" fill="#F5F7F6" stroke="#8A9691"/>
+      <text x="120" y="182" text-anchor="middle" class="l6t">📱 มือถือเพื่อน</text>
+      <text x="120" y="202" text-anchor="middle" class="l6s">หน้าเว็บโหลดได้</text>
+      <text x="120" y="222" text-anchor="middle" class="l6m" fill="#1E7A54">ยิง /api/requests</text>
+      <path d="M222 198 L300 198" stroke="#1E7A54" stroke-width="1.6" marker-end="url(#l6g)"/>
+      <rect x="304" y="160" width="436" height="76" rx="9" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.6"/>
+      <text x="522" y="186" text-anchor="middle" class="l6t" fill="#14503A">เบราว์เซอร์เติมโดเมนของหน้าเว็บให้เอง</text>
+      <text x="522" y="208" text-anchor="middle" class="l6s">ถึง Express ตัวเดียวกับที่ส่งหน้าเว็บมา → ได้ข้อมูล ✓</text>
+    </svg>
+    <figcaption><b>ภาพที่ 5</b>"localhost" คือเครื่องของคนที่เปิดเว็บ — production ต้องเรียก API ด้วย path สัมพัทธ์</figcaption>
+  </figure>
+
+<pre><code><span class="c-com"># frontend/.env.production — Vite ใช้ตอน npm run build · มีผลเหนือ .env.local</span>
+VITE_API_BASE_URL=</code></pre>
+
+  <table class="d">
+    <tr><th>กับดัก</th><th>อาการบน cloud</th><th>แก้</th></tr>
+    <tr><td>① bundle ฝัง <code>localhost:3001</code></td><td>หน้าเว็บขึ้น แต่ไม่มีข้อมูล</td><td><code>frontend/.env.production</code> ค่าว่าง</td></tr>
+    <tr><td>② route <code>app.get('/')</code> ตอบ JSON (มีมาตั้งแต่ Week 06)</td><td>เปิด URL เห็น JSON แทนหน้าเว็บ</td><td>ย้ายข้อความต้อนรับไป <code>/api</code> · <code>/</code> ตอบ JSON เฉพาะ dev</td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ทำไมหายาก — ทดสอบในเครื่องไม่เห็นอาการ</span>
+    <p style="margin:0">Express ตรวจ route <strong>ตามลำดับที่ลงทะเบียน ตัวแรกที่ตรงชนะ</strong> · และ localhost ในเครื่องเราบังเอิญถูก · checker สัปดาห์นี้จึงตรวจทั้ง 2 ข้อให้ และคู่มือ deploy มีวิธีจำลองแบบเข้มงวดที่เผยปัญหาก่อนขึ้น cloud</p>
+  </div>
   <div class="recap">
     <span class="h">สรุปบทที่ 6</span>
     <ul>
@@ -789,6 +853,7 @@ npm run build
       <li><code>npm run build</code> แปลง React เป็นไฟล์ static ใน <code>dist/</code></li>
       <li>API เสิร์ฟ <code>dist/</code> + คืน index.html ทุก path ยกเว้น <code>/api</code></li>
       <li><strong>แก้ frontend ต้อง build ใหม่</strong> — production ไม่มี hot reload</li>
+      <li>กับดัก production: bundle ฝัง localhost (แก้ด้วย <code>.env.production</code>) · route <code>/</code> ชิงหน้าแรก (ย้ายไป <code>/api</code>)</li>
     </ul>
   </div>
 </section>
@@ -797,94 +862,185 @@ npm run build
 <section class="ch" id="c7">
   <p class="ch-num">บทที่ 7 · กลุ่มที่ 3 <span class="wheretag home">🏠 ทำที่บ้าน</span></p>
   <h2>Deploy — เอาระบบขึ้นให้คนอื่นใช้</h2>
-  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+  <p class="readtime">เวลาอ่าน ≈ 12 นาที</p>
 
   <div class="term">
     <div class="w">Deploy</div>
     <p>เอาระบบขึ้นไปรันบน<strong>เครื่องที่เข้าถึงได้จากอินเทอร์เน็ต</strong> — เพื่อให้คนอื่นใช้ได้ ไม่ใช่แค่บนเครื่องเรา</p>
   </div>
 
-  <h3>7.1 ก้าวแรก — จำลอง production ในเครื่องเรา</h3>
-
-  <p><strong>ก่อนขึ้น cloud จริง เราจำลองสิ่งที่ cloud จะทำ ในเครื่องเราเองได้</strong> — เข้าใจ production เต็มที่โดยไม่ต้องสมัครอะไร</p>
+  <h3>7.1 ก้าวแรก — จำลอง production ในเครื่องเรา (CP43 · ทุกคนทำ)</h3>
 
   <div class="box analogy">
-    <span class="h">🟪 เทียบกับซ้อมก่อนแสดงจริง</span>
-    <p style="margin:0"><strong>จำลอง production ในเครื่อง = ซ้อมใหญ่</strong> — ทำทุกอย่างเหมือนงานจริงแต่ยังอยู่ในห้องซ้อม · <strong>deploy ขึ้น cloud = แสดงจริงต่อหน้าคนดู</strong><br>
-    ถ้าซ้อมผ่าน โอกาสแสดงจริงผ่านก็สูง</p>
+    <span class="h">🟪 เทียบกับซ้อมใหญ่ก่อนแสดงจริง</span>
+    <p style="margin:0"><strong>จำลอง production ในเครื่อง = ซ้อมใหญ่</strong> · <strong>deploy ขึ้น cloud = แสดงจริง</strong> — ถ้าซ้อมเหมือนจริงทุกอย่าง แสดงจริงก็ผ่าน</p>
   </div>
 
-<pre><code><span class="c-com"># ① build frontend เป็น static</span>
-<span class="c-key">cd</span> frontend &amp;&amp; npm run build
+  <p>cloud ต้องการ <strong>คำสั่ง build 1 คำสั่ง และ start 1 คำสั่ง</strong> — จึงรวมไว้ที่ <code>package.json</code> ระดับบนสุดของโปรเจกต์</p>
 
-<span class="c-com"># ② รัน API แบบ production — เสิร์ฟ frontend ที่ build แล้ว</span>
-<span class="c-key">cd</span> ../api &amp;&amp; NODE_ENV=production npm start
-<span class="c-com"># เปิด http://localhost:3001 ได้ทั้งเว็บและ API จากพอร์ตเดียว</span></code></pre>
+<pre><code><span class="c-com">// package.json (ระดับบนสุด)</span>
+<span class="c-str">"scripts"</span>: {
+  <span class="c-str">"build"</span>: <span class="c-str">"npm install --include=dev --prefix frontend &amp;&amp; npm run build --prefix frontend &amp;&amp; npm install --prefix api"</span>,
+  <span class="c-str">"start"</span>: <span class="c-str">"npm start --prefix api"</span>
+}</code></pre>
 
-  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
-    <span class="h" style="color:var(--a)">🟩 นี่คือสิ่งที่ cloud จะทำให้อัตโนมัติ</span>
-    <p style="margin:0">cloud รับโค้ดเรา → รัน 2 คำสั่งข้างบนนี้ให้ → เปิดพอร์ตให้คนทั้งโลกเข้าถึง<br>
-    <strong>เราทำ 2 ขั้นแรกเองได้ในเครื่อง</strong> — เข้าใจ production โดยไม่ต้องพึ่ง cloud · <strong>คาบนี้ทุกคนทำแค่นี้ (CP43)</strong></p>
-  </div>
-
-  <div class="box note">
-    <span class="h">🟨 deploy จริงขึ้น cloud เป็น Challenge (ไม่บังคับ)</span>
-    <p style="margin:0">นักศึกษาส่วนใหญ่ยังไม่เคยใช้ cloud — เราจึง<strong>เข้าใจ production ให้แน่นในเครื่องก่อน</strong> · ใครอยากเห็นระบบตัวเองออนไลน์จริงให้เพื่อนเปิดจากมือถือได้ ทำ Challenge ในคู่มือ Take-Home ที่มีคู่มือ Render จับมือทำทีละขั้น</p>
-  </div>
-
-  <h3>7.2 ถ้าจะขึ้น cloud จริง — cloud ทำอะไรให้</h3>
-
-  <p>ส่วนนี้อ่านเพื่อ<strong>เข้าใจภาพ</strong> ว่า cloud ทำงานอย่างไร (ไม่ต้องลงมือ)</p>
-
-  <h3 style="display:none">7.1 สิ่งที่ต้องมีก่อน deploy</h3>
-
-  <p>ทุกอย่างที่ทำมาในบท 3–6 คือการเตรียม deploy</p>
-
-  <table class="d">
-    <tr><th>เตรียมแล้วจากบท</th><th>ทำไมจำเป็นตอน deploy</th></tr>
-    <tr><td>config อ่าน env (บท 3)</td><td>cloud กำหนดพอร์ต/ค่าผ่าน env</td></tr>
-    <tr><td>health check (บท 4)</td><td>cloud เช็คว่า deploy สำเร็จ</td></tr>
-    <tr><td>error handling (บท 5)</td><td>ไม่ให้ระบบล่มทั้งระบบเมื่อมี error เดียว</td></tr>
-    <tr><td>production build (บท 6)</td><td>เสิร์ฟจากพอร์ตเดียว — cloud จัดการง่าย</td></tr>
-  </table>
-
-  <h4>cloud อ่านคำสั่งจาก render.yaml</h4>
-
-<pre><code><span class="c-com"># render.yaml — บอก Render ว่า build และ start อย่างไร</span>
-services:
-  - type: web
-    buildCommand: cd frontend &amp;&amp; npm install &amp;&amp; npm run build &amp;&amp; cd ../api &amp;&amp; npm install
-    startCommand: cd api &amp;&amp; npm start
-    envVars:
-      - key: NODE_ENV
-        value: production</code></pre>
-
-  <div class="box note">
-    <span class="h">🟨 build บน cloud ทำตามลำดับที่เราวางไว้</span>
-    <p style="margin:0">① build frontend เป็น static · ② ติดตั้ง dependencies ของ API · ③ start API แบบ production (ซึ่งเสิร์ฟ static ให้ด้วย)<br>
-    <strong>เป็นลำดับเดียวกับที่เราทำเองในบท 6</strong> แค่ให้ cloud ทำแทน</p>
-  </div>
+<pre><code><span class="c-com"># ซ้อมให้เหมือน cloud: NODE_ENV=production ตั้งแต่ build · ใช้พอร์ตที่ไม่ใช่ 3001</span>
+NODE_ENV=production npm run build
+NODE_ENV=production PORT=10000 npm start
+<span class="c-com"># เปิด http://localhost:10000 ได้ทั้งเว็บและ API</span></code></pre>
 
   <div class="box predict">
     <span class="h">🟩 ทายก่อนอ่านต่อ</span>
-    <p style="margin:0">ฐานข้อมูล SQLite เป็นไฟล์ในเครื่อง — <strong>เมื่อ deploy บน cloud ที่ restart บ่อย จะเกิดปัญหาอะไร</strong></p>
+    <p style="margin:0">ทำไม script <code>build</code> ต้องมี <code>--include=dev</code> — <code>npm install</code> เฉย ๆ ไม่พอหรือ</p>
   </div>
 
   <details>
     <summary>เฉลย</summary>
     <div class="ans">
-      <p>cloud หลายเจ้า<strong>ล้างไฟล์ทุกครั้งที่ restart/deploy ใหม่</strong> (ephemeral filesystem) — ข้อมูลใน <code>campus.db</code> จะหาย</p>
-      <p style="margin:0"><strong>ทางแก้</strong> — ① ใช้ persistent disk (cloud บางเจ้ามีให้) · ② ย้ายไปฐานข้อมูลที่แยกต่างหาก (เช่น MongoDB Atlas หรือ PostgreSQL cloud) · <strong>ซึ่งเป็นเหตุผลหนึ่งที่โลกจริงมักใช้ฐานข้อมูลแยกเครื่อง</strong> — โยงกับบทอ่านเพิ่มเติมถัดไป</p>
+      <p>cloud ตั้ง <code>NODE_ENV=production</code> ไว้<strong>ตั้งแต่ขั้น build</strong> · เมื่อเป็นแบบนั้น <code>npm install</code> จะ<strong>ข้าม devDependencies</strong> — แต่ Vite ซึ่งใช้ build React เป็น devDependency</p>
+      <p style="margin:0">ผลคือ build ล้มด้วย <code>vite: not found</code> · <code>--include=dev</code> บังคับให้ติดตั้ง devDependencies ของ frontend เสมอ</p>
     </div>
   </details>
 
+  <h3>7.2 cloud ทำอะไรให้เรา (อ่านเพื่อเข้าใจภาพ · deploy จริงเป็น Challenge)</h3>
+
+  <figure>
+    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ขั้นตอนที่ Render ทำ">
+      <style>.r7t{font:600 11px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .r7s{font:300 9.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .r7m{font:500 9px 'IBM Plex Mono',monospace}</style>
+      <defs><marker id="r7a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#6B3B96" stroke-width="1.5"/></marker></defs>
+      <rect x="10" y="30" width="130" height="100" rx="9" fill="#F5F7F6" stroke="#8A9691"/>
+      <text x="75" y="54" text-anchor="middle" class="r7t">① GitHub</text>
+      <text x="75" y="76" text-anchor="middle" class="r7s">git push</text>
+      <text x="75" y="96" text-anchor="middle" class="r7s">cloud เห็นแค่ที่ push</text>
+      <rect x="160" y="30" width="140" height="100" rx="9" fill="#DDEEF5" stroke="#186B8C"/>
+      <text x="230" y="54" text-anchor="middle" class="r7t">② เตรียมเครื่อง</text>
+      <text x="230" y="76" text-anchor="middle" class="r7s">Linux + Node 22</text>
+      <text x="230" y="96" text-anchor="middle" class="r7m" fill="#186B8C">cd Root Directory</text>
+      <rect x="320" y="30" width="140" height="100" rx="9" fill="#FBF0E2" stroke="#A8620E"/>
+      <text x="390" y="54" text-anchor="middle" class="r7t">③ Build</text>
+      <text x="390" y="76" text-anchor="middle" class="r7m" fill="#A8620E">npm install</text>
+      <text x="390" y="94" text-anchor="middle" class="r7m" fill="#A8620E">npm run build</text>
+      <rect x="480" y="30" width="130" height="100" rx="9" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="545" y="54" text-anchor="middle" class="r7t">④ Start</text>
+      <text x="545" y="76" text-anchor="middle" class="r7m" fill="#1E7A54">npm start</text>
+      <text x="545" y="96" text-anchor="middle" class="r7s">ฟังที่ PORT ของ cloud</text>
+      <rect x="630" y="30" width="120" height="100" rx="9" fill="#F1EAF8" stroke="#6B3B96" stroke-width="1.8"/>
+      <text x="690" y="54" text-anchor="middle" class="r7t">⑤ Health</text>
+      <text x="690" y="76" text-anchor="middle" class="r7m" fill="#6B3B96">/api/health</text>
+      <text x="690" y="96" text-anchor="middle" class="r7s">2xx → live</text>
+      <path d="M142 80 L156 80" stroke="#6B3B96" stroke-width="1.6" marker-end="url(#r7a)"/>
+      <path d="M302 80 L316 80" stroke="#6B3B96" stroke-width="1.6" marker-end="url(#r7a)"/>
+      <path d="M462 80 L476 80" stroke="#6B3B96" stroke-width="1.6" marker-end="url(#r7a)"/>
+      <path d="M612 80 L626 80" stroke="#6B3B96" stroke-width="1.6" marker-end="url(#r7a)"/>
+      <text x="380" y="166" text-anchor="middle" class="r7s">ขั้น ③–⑤ คือคำสั่งเดียวกับที่ซ้อมใน 7.1 · ต่างกันแค่เครื่องที่รัน</text>
+    </svg>
+    <figcaption><b>ภาพที่ 6</b>สิ่งที่ Render ทำหลัง push — และใช้ทุกอย่างที่เตรียมในบท 3–6</figcaption>
+  </figure>
+
+  <table class="d">
+    <tr><th>เตรียมจากบท</th><th>cloud ใช้ตอน</th></tr>
+    <tr><td>config อ่าน <code>PORT</code> จาก env (บท 3)</td><td>④ Start — cloud กำหนดพอร์ตเอง (Render ใช้ 10000)</td></tr>
+    <tr><td>health check (บท 4)</td><td>⑤ — ตอบ 2xx ถึงจะเปิดให้ใช้งาน</td></tr>
+    <tr><td>error handling + log (บท 5)</td><td>หลัง live — log คือทางเดียวที่รู้ว่าเกิดอะไร</td></tr>
+    <tr><td>production build + <code>.env.production</code> (บท 6)</td><td>③ Build และตอนผู้ใช้เปิดเว็บ</td></tr>
+  </table>
+
+  <h4 style="margin-top:14px">ค่าที่กรอกบน Render (Web Service)</h4>
+<pre><code><span class="c-com"># render.yaml — บันทึกค่าเดียวกับที่กรอกในฟอร์ม</span>
+services:
+  - type: web
+    runtime: node
+    plan: free
+    region: singapore
+    rootDir: labs/week-11/source      <span class="c-com"># โปรเจกต์อยู่ในโฟลเดอร์นี้ของ Student Repository</span>
+    buildCommand: npm install &amp;&amp; npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION              <span class="c-com"># node:sqlite ต้องใช้ Node 22.13 ขึ้นไป</span>
+        value: "22"
+      <span class="c-com"># ไม่ต้องตั้ง PORT — cloud กำหนดให้</span></code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 คู่มือ deploy ฉบับเต็ม</span>
+    <p style="margin:0">ขั้นตอนกรอกฟอร์มทีละช่อง · วิธีอ่าน log · ตารางแก้ปัญหา · อยู่ใน <strong>คู่มือ Deploy ขึ้น Render</strong> (ลิงก์ในหน้า LAB 11)</p>
+  </div>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ฐานข้อมูล SQLite เป็นไฟล์ในเครื่อง — <strong>เมื่อ deploy บน cloud ที่ restart บ่อย จะเกิดอะไรกับข้อมูลที่ผู้ใช้เพิ่ม</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>free tier ของ Render ใช้ <strong>ephemeral filesystem</strong> — ไฟล์กลับเป็นสภาพตาม git ทุกครั้งที่ restart/redeploy · ข้อมูลที่ผู้ใช้เพิ่มใน <code>campus.db</code> จะหาย</p>
+      <p style="margin:0">นี่คือเหตุผลที่ระบบจริงเก็บข้อมูลใน<strong>ฐานข้อมูลที่แยกเครื่อง</strong> — โยงกับบทอ่านเพิ่มเติมถัดไป</p>
+    </div>
+  </details>
+
+
+  <h3>7.3 ทำให้ข้อมูลถาวร — ย้ายฐานข้อมูลออกไปนอกเครื่อง (Challenge ⭐⭐)</h3>
+
+  <p>ถ้าข้อมูลหายเพราะไฟล์อยู่บนเครื่องชั่วคราว ทางแก้ของระบบจริงคือ<strong>ให้ฐานข้อมูลอยู่คนละเครื่องกับ API</strong> · <strong>Turso</strong> เป็นบริการฐานข้อมูล SQLite บนอินเทอร์เน็ต มี free tier — ใช้ <code>schema.sql</code> และ query เดิมได้ทั้งหมด</p>
+
+  <figure>
+    <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="แยกฐานข้อมูลไปไว้ที่ Turso">
+      <style>.t7t{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .t7s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .t7m{font:500 9.5px 'IBM Plex Mono',monospace}</style>
+      <defs><marker id="t7a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#6B3B96" stroke-width="1.5"/></marker></defs>
+      <text x="20" y="20" class="t7m" fill="#B23A2E">ก่อน · ฐานข้อมูลอยู่บนเครื่องชั่วคราว</text>
+      <rect x="20" y="30" width="330" height="70" rx="9" fill="#FBF0E2" stroke="#A8620E"/>
+      <text x="185" y="56" text-anchor="middle" class="t7t">Render: Express + campus.db</text>
+      <text x="185" y="78" text-anchor="middle" class="t7s" fill="#8F2B21">restart → ไฟล์กลับเป็นตาม git · ข้อมูลที่เพิ่มหาย</text>
+
+      <text x="20" y="130" class="t7m" fill="#1E7A54">หลัง · ฐานข้อมูลอยู่คนละเครื่อง</text>
+      <rect x="20" y="140" width="330" height="60" rx="9" fill="#FBF0E2" stroke="#A8620E"/>
+      <text x="185" y="166" text-anchor="middle" class="t7t">Render: Express</text>
+      <text x="185" y="186" text-anchor="middle" class="t7s">restart ได้ตามสบาย — ไม่มีข้อมูลอยู่ที่นี่</text>
+      <path d="M352 170 L436 170" stroke="#6B3B96" stroke-width="1.6" marker-end="url(#t7a)"/>
+      <text x="394" y="160" text-anchor="middle" class="t7m" fill="#6B3B96">SQL + token</text>
+      <rect x="440" y="130" width="300" height="76" rx="9" fill="#F1EAF8" stroke="#6B3B96" stroke-width="1.8"/>
+      <text x="590" y="156" text-anchor="middle" class="t7t">Turso · ฐานข้อมูล SQLite</text>
+      <text x="590" y="176" text-anchor="middle" class="t7s" fill="#14503A">ข้อมูลถาวร · schema.sql เดิม</text>
+      <text x="590" y="194" text-anchor="middle" class="t7m" fill="#6B3B96">libsql://campus-xxx.turso.io</text>
+
+      <rect x="440" y="30" width="300" height="70" rx="9" fill="#FAFCFB" stroke="#DBE7E0"/>
+      <text x="590" y="56" text-anchor="middle" class="t7s">เลือกด้วย env — แนวคิดเดียวกับบทที่ 3</text>
+      <text x="590" y="78" text-anchor="middle" class="t7m" fill="#54685E">ไม่มี TURSO_DATABASE_URL → campus.db</text>
+    </svg>
+    <figcaption><b>ภาพที่ 7</b>ย้ายฐานข้อมูลไปไว้นอกเครื่องชั่วคราว — API restart ได้โดยข้อมูลไม่หาย</figcaption>
+  </figure>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้าเปลี่ยนจาก <code>campus.db</code> เป็น Turso — <strong>ต้องแก้กี่ชั้น</strong> (นึกถึง 4 ครั้งที่ผ่านมา และบทที่ 8 ที่เปลี่ยนไป MongoDB แล้วกระทบ 2 ชั้น)</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ชั้นเดียว — service</strong> · ไลบรารี <code>libsql</code> ของ Turso มี <code>prepare().all() · .get() · .run()</code> แบบ <strong>sync</strong> หน้าตาเดียวกับ <code>node:sqlite</code> · query ทุกตัวใช้ต่อได้ controller ไม่ต้องเติม <code>await</code></p>
+<pre><code><span class="c-key">async function</span> <span class="c-fn">openDatabase</span>() {
+  <span class="c-key">if</span> (process.env.TURSO_DATABASE_URL) {
+    <span class="c-key">const</span> { default: Database } = <span class="c-key">await import</span>(<span class="c-str">'libsql'</span>);
+    <span class="c-key">return new</span> <span class="c-fn">Database</span>(process.env.TURSO_DATABASE_URL,
+                        { authToken: process.env.TURSO_AUTH_TOKEN });
+  }
+  <span class="c-key">return new</span> <span class="c-fn">DatabaseSync</span>(DB_FILE);           <span class="c-com">// เหมือนเดิม</span>
+}</code></pre>
+      <p style="margin:0">นี่คือครั้งที่ 5 ที่เปลี่ยนแหล่งข้อมูลแล้วแก้ชั้นเดียว · ขั้นตอนเต็มอยู่ในคู่มือ Take-Home และคู่มือ Deploy ส่วนที่ 11</p>
+    </div>
+  </details>
   <div class="recap">
     <span class="h">สรุปบทที่ 7</span>
     <ul>
-      <li>deploy = เอาระบบขึ้นเครื่องที่เข้าถึงจากอินเทอร์เน็ตได้</li>
-      <li>ทุกอย่างในบท 3–6 คือการเตรียม deploy</li>
-      <li><code>render.yaml</code> บอก cloud ว่า build/start อย่างไร</li>
-      <li>SQLite บน cloud ephemeral อาจหาย — เป็นเหตุผลที่โลกจริงใช้ DB แยกเครื่อง</li>
+      <li>ซ้อม production ในเครื่องก่อนเสมอ — <code>NODE_ENV=production</code> ตั้งแต่ build · พอร์ต 10000</li>
+      <li>root <code>package.json</code> มี <code>build</code> (ใช้ <code>--include=dev</code>) และ <code>start</code></li>
+      <li>cloud ทำ 5 ขั้น: push → เตรียมเครื่อง → build → start → health check</li>
+      <li>SQLite บน free tier ข้อมูลไม่ถาวร — เหตุผลที่ระบบจริงใช้ DB แยกเครื่อง</li>
+      <li>Challenge ⭐⭐: ย้ายไป Turso (SQLite บนอินเทอร์เน็ต) — แก้ service ชั้นเดียว เลือกด้วย env</li>
     </ul>
   </div>
 </section>
@@ -932,7 +1088,7 @@ services:
       <text x="50" y="204" class="ss">• ข้อมูลไม่มีโครงตายตัว + แต่ละรายการต่างกันมาก (เช่น log, เอกสารหลากหลาย) → <tspan fill="#6B3B96" font-weight="600">NoSQL</tspan></text>
       <text x="50" y="224" class="ss">• ไม่มีอันไหน "ดีกว่า" เสมอ — ขึ้นกับ<tspan font-weight="600">ลักษณะข้อมูล</tspan></text>
     </svg>
-    <figcaption><b>ภาพที่ 5</b>SQL เก็บเป็นตารางโครงตายตัว · NoSQL เก็บเป็น document ที่ยืดหยุ่น</figcaption>
+    <figcaption><b>ภาพที่ 8</b>SQL เก็บเป็นตารางโครงตายตัว · NoSQL เก็บเป็น document ที่ยืดหยุ่น</figcaption>
   </figure>
 
   <h3>8.2 ทำไมวิชานี้เลือก SQLite</h3>
@@ -968,7 +1124,7 @@ services:
       <text x="46" y="162" class="as"><tspan class="amn" fill="#4A2A6B">await collection.find().toArray()</tspan> — ต้อง await เพราะต้องรอเครือข่าย</text>
       <text x="46" y="176" class="as">ระหว่างรอ โปรแกรมทำอย่างอื่นได้ ไม่ค้าง</text>
     </svg>
-    <figcaption><b>ภาพที่ 6</b>sync ได้ผลทันที · async ต้องรอเครือข่าย จึงใช้ <code>await</code></figcaption>
+    <figcaption><b>ภาพที่ 9</b>sync ได้ผลทันที · async ต้องรอเครือข่าย จึงใช้ <code>await</code></figcaption>
   </figure>
 
   <div class="box predict">
@@ -989,6 +1145,17 @@ services:
       <p style="margin:8px 0 0">นี่คือบทเรียนสำคัญ — <strong>การแยกชั้นช่วยได้มาก แต่การเปลี่ยนสัญญาของชั้น (sync/async) ยังกระทบผู้เรียกเสมอ</strong></p>
     </div>
   </details>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 สิ่งที่กำหนดว่ากระทบกี่ชั้น — sync หรือ async ไม่ใช่ SQL หรือ NoSQL</span>
+    <table class="d" style="margin:8px 0 6px">
+      <tr><th>เปลี่ยนไป</th><th>ภาษา</th><th>ไลบรารี</th><th>กระทบ</th></tr>
+      <tr><td>Turso (Challenge ⭐⭐ บทที่ 7)</td><td>SQL เดิม</td><td><code>libsql</code> — sync</td><td>service <strong>ชั้นเดียว</strong></td></tr>
+      <tr><td>Postgres (Neon · Supabase)</td><td>SQL (ต่างเล็กน้อย)</td><td><code>pg</code> — async</td><td>service + controller</td></tr>
+      <tr><td>MongoDB Atlas</td><td>ไม่ใช่ SQL</td><td><code>mongodb</code> — async</td><td>service + controller</td></tr>
+    </table>
+    <p style="margin:0">ฐานข้อมูลอยู่คนละเครื่องเหมือนกันทั้ง 3 แบบ · แต่ <code>libsql</code> ซ่อนการรอเครือข่ายไว้ให้ดูเหมือน sync — "สัญญา" ของ service จึงไม่เปลี่ยน</p>
+  </div>
 
   <h3>8.4 ไปเรียนต่อที่ไหน</h3>
 
@@ -1041,7 +1208,7 @@ services:
       <path d="M487 90 L528 90" stroke="#C084FC" stroke-width="2" marker-end="url(#ua)"/>
       <text x="380" y="165" text-anchor="middle" class="ut" fill="#6B3B96">จากไม่รู้จัก SQL → มีระบบ full-stack ที่ deploy ได้จริง</text>
     </svg>
-    <figcaption><b>ภาพที่ 7</b>เส้นทางหน่วยที่ 4 — จากเรียน SQL ถึงระบบที่พร้อมส่งมอบ</figcaption>
+    <figcaption><b>ภาพที่ 10</b>เส้นทางหน่วยที่ 4 — จากเรียน SQL ถึงระบบที่พร้อมส่งมอบ</figcaption>
   </figure>
 
   <h3>9.2 บทเรียนใหญ่ของทั้งหน่วย — แยกชั้นดี เปลี่ยนได้ง่าย</h3>
@@ -1054,6 +1221,7 @@ services:
     <tr><td>Week 06</td><td>ตัวแปรใน memory</td><td>ไฟล์ JSON</td><td>1</td></tr>
     <tr><td>Week 07</td><td>localStorage</td><td>เรียก API</td><td>1</td></tr>
     <tr><td>Week 10</td><td>ไฟล์ JSON</td><td>SQLite</td><td>1</td></tr>
+      <tr style="background:#F8F4FB"><td>Week 11 ⭐⭐</td><td>ไฟล์ SQLite</td><td>Turso (ฐานข้อมูลแยกเครื่อง)</td><td>1</td></tr>
   </table>
 
   <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
@@ -1085,8 +1253,8 @@ services:
     <tr><td><strong>CP39</strong></td><td>production build</td><td>6</td><td><span class="wheretag room">🏫</span></td></tr>
     <tr style="background:#FDF7EF"><td><strong>CP40</strong></td><td>README ระบบ full-stack</td><td>1, 9</td><td><span class="wheretag home">🏠</span></td></tr>
     <tr style="background:#FDF7EF"><td><strong>CP41</strong></td><td>ตอบคำถามจากบทอ่านเพิ่มเติม</td><td>8</td><td><span class="wheretag home">🏠</span></td></tr>
-    <tr style="background:#FDF7EF"><td><strong>CP42</strong></td><td>บันทึกสาธิตระบบครบวงจร (A4)</td><td>ทั้งหมด</td><td><span class="wheretag home">🏠</span></td></tr>
-    <tr style="background:#FDF7EF"><td><strong>CP43</strong></td><td>deploy หรือเตรียม deploy</td><td>7</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP42</strong></td><td>วิดีโอนำเสนอ — สาธิต + อธิบาย source (A4)</td><td>ทั้งหมด</td><td><span class="wheretag home">🏠</span></td></tr>
+    <tr style="background:#FDF7EF"><td><strong>CP43</strong></td><td>จำลอง production ในเครื่อง (deploy จริงเป็น Challenge)</td><td>7</td><td><span class="wheretag home">🏠</span></td></tr>
   </table>
 
   <div class="box inclass">
@@ -1096,7 +1264,7 @@ services:
 
   <div class="box takehome">
     <span class="h">🏠 งาน A4 · CP40–CP43</span>
-    <p style="margin:0">ส่ง README + คำตอบบทอ่าน + วิดีโอสาธิต + deploy · ผ่าน branch <code>unit4/week-11</code> + tag <code>lab-11-submission-v1</code></p>
+    <p style="margin:0">ส่ง README + คำตอบบทอ่าน + วิดีโอ (สาธิต + อธิบาย source) + จำลอง production · ผ่าน branch <code>unit4/week-11</code> + tag <code>lab-11-submission-v1</code></p>
   </div>
 
   <div class="box next">

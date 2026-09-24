@@ -137,64 +137,95 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
   <p class="eyebrow">ENGSE203 · Week 11 · Checkpoint 39</p>
   <h1>production build <span class="where">🏫 ทำในห้อง</span></h1>
   <p class="sub">หัวใจของสัปดาห์นี้ · 45 นาที · We do</p>
-  <div class="pills"><span class="pill a">TODO W11-STATIC</span><span class="pill ">build</span><span class="pill v">⭐ พอร์ตเดียว</span></div>
+  <div class="pills"><span class="pill a">TODO W11-STATIC</span><span class="pill ">.env.production</span><span class="pill v">⭐ พอร์ตเดียว</span></div>
 </header>
 
-<nav class="jump"><a href="#s1">① build</a><a href="#s2">② เสิร์ฟ static</a><a href="#s3">③ รัน production</a><a href="#done">ผ่าน CP</a></nav>
+<nav class="jump"><a href="#s1">① ดูอาการก่อน</a><a href="#s2">② app.js</a><a href="#s3">③ .env.production</a><a href="#s4">④ build + ตรวจ</a><a href="#s5">⑤ รัน production</a><a href="#done">ผ่าน CP</a></nav>
 
 <div class="step" id="s1">
-  <div class="step-head"><span class="num">①</span><h2>build frontend</h2><span class="file">frontend/</span></div>
+  <div class="step-head"><span class="num">①</span><h2>ดูอาการก่อนแก้ — 2 กับดัก</h2></div>
   <div class="step-body">
-    <p class="say">แปลง React เป็นไฟล์ static พร้อมใช้</p>
-  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>cd frontend &amp;&amp; npm run build
-<span class="c"># → สร้าง dist/ ที่มี HTML/JS/CSS</span></code></pre></div>
-  <div class="check"><b>เปิด dist/ ดู</b> — เห็นว่า React กลายเป็นไฟล์ธรรมดาที่เบราว์เซอร์เปิดตรง ๆ ได้</div>
+    <p class="say"><b>อย่าเพิ่งแก้</b> — ให้เห็นอาการจริงก่อน จะจำได้ว่าทำไมต้องแก้</p>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="c"># กับดัก ① — build ตอนยังไม่มี .env.production</span>
+cd frontend &amp;&amp; npm run build
+grep -l "localhost:3001" dist/assets/*.js      <span class="c"># เจอไฟล์ = localhost ถูกฝังใน bundle</span>
+
+<span class="c"># กับดัก ② — เปิดหน้าแรกในโหมด production</span>
+cd ../api &amp;&amp; NODE_ENV=production npm start
+curl http://localhost:3001/                     <span class="c"># ได้ JSON แทนหน้าเว็บ!</span></code></pre></div>
+  <div class="warn"><b>localhost คือเครื่องของคนที่เปิดเว็บ</b> — ในเครื่องเราบังเอิญเป็น server ตัวเดียวกัน จึงดูเหมือนทำงาน · บนมือถือเพื่อนจะว่างเปล่า</div>
 
   </div>
 </div>
 <div class="step" id="s2">
-  <div class="step-head"><span class="num">②</span><h2>ให้ API เสิร์ฟ static</h2><span class="file">app.js</span></div>
+  <div class="step-head"><span class="num">②</span><h2>app.js — API ใต้ /api · production เสิร์ฟหน้าเว็บ</h2><span class="file">api/src/app.js</span></div>
   <div class="step-body">
-    <p class="say">เฉพาะตอน production — dev ไม่ต้อง (มี Vite dev server แยก)</p>
-  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">import</span> express <span class="k">from</span> <span class="s">'express'</span>;
-<span class="k">import</span> path <span class="k">from</span> <span class="s">'node:path'</span>;
+    <p class="say">Express ตรวจ route ตามลำดับ <b>ตัวแรกที่ตรงชนะ</b> — route <code>/</code> เดิมจึงชิงหน้าแรก</p>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">import</span> path <span class="k">from</span> <span class="s">'node:path'</span>;
 <span class="k">import</span> { existsSync } <span class="k">from</span> <span class="s">'node:fs'</span>;
+
+app.<span class="f">get</span>(<span class="s">'/api'</span>, (req, res) =&gt; res.<span class="f">json</span>({ message: <span class="s">'Campus Service API is running'</span> }));
+app.<span class="f">use</span>(<span class="s">'/api/health'</span>, healthRoutes);
+app.<span class="f">use</span>(<span class="s">'/api/requests'</span>, requestRoutes);
+app.<span class="f">use</span>(<span class="s">'/api/users'</span>, userRoutes);
 
 <span class="k">if</span> (config.isProd &amp;&amp; <span class="f">existsSync</span>(config.staticDir)) {
   app.<span class="f">use</span>(express.<span class="f">static</span>(config.staticDir));
-  <span class="c">// ทุก path ที่ไม่ใช่ /api → คืน index.html</span>
-  app.<span class="f">get</span>(<span class="hl">/^\/(?!api).*/</span>, (req, res) =&gt; {
-    res.<span class="f">sendFile</span>(path.<span class="f">join</span>(config.staticDir, <span class="s">'index.html'</span>));
-  });
+  app.<span class="f">get</span>(<span class="hl">/^\/(?!api).*/</span>, (req, res) =&gt;
+    res.<span class="f">sendFile</span>(path.<span class="f">join</span>(config.staticDir, <span class="s">'index.html'</span>)));
+} <span class="k">else</span> {
+  app.<span class="f">get</span>(<span class="s">'/'</span>, (req, res) =&gt; res.<span class="f">json</span>({ message: <span class="s">'API (dev) — หน้าเว็บอยู่ที่พอร์ต 5173'</span> }));
 }</code></pre></div>
-  <div class="warn"><b>ทำไม <code>(?!api)</code></b> — React Router จัดการ path ฝั่ง frontend เอง · ต้องคืน index.html ทุก path <b>ยกเว้น /api</b> ที่เป็นของ API จริง · ไม่งั้น static route กิน /api ไปหมด</div>
+  <div class="check"><b><code>(?!api)</code></b> — ทุก path ที่ไม่ขึ้นต้นด้วย /api ได้ index.html ให้ React Router จัดการ · <code>/api/nope</code> ยังได้ JSON 404 เหมือนเดิม</div>
 
   </div>
 </div>
 <div class="step" id="s3">
-  <div class="step-head"><span class="num">③</span><h2>รัน production mode</h2></div>
+  <div class="step-head"><span class="num">③</span><h2>frontend/.env.production</h2><span class="file">frontend/</span></div>
   <div class="step-body">
-    <p class="say">⭐ moment ของสัปดาห์นี้ — จาก 2 server เหลือ 1</p>
-  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>cd api &amp;&amp; NODE_ENV=production npm start
-<span class="c"># เปิด http://localhost:3001 ได้ทั้งเว็บและ API!</span></code></pre></div>
-  <div class="check"><b>เปิด :3001 ในเบราว์เซอร์</b> — เห็นทั้งหน้าเว็บ (/) และ API (/api/requests) จากพอร์ตเดียว<br><code>/api/health</code> บอก <code>env: production</code></div>
+    <p class="say">บอก Vite ว่าตอน build ให้เรียก API ด้วย path สัมพัทธ์</p>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="c"># frontend/.env.production</span>
+VITE_API_BASE_URL=</code></pre></div>
+  <div class="check">Vite ใช้ไฟล์นี้ตอน <code>npm run build</code> และมีผล<b>เหนือ</b> <code>.env.local</code> · ตอน <code>npm run dev</code> ยังใช้ localhost:3001 ตามเดิม · <b>commit ไฟล์นี้ได้</b> (ไม่มีค่าลับ)</div>
+
+  </div>
+</div>
+<div class="step" id="s4">
+  <div class="step-head"><span class="num">④</span><h2>build ใหม่ แล้วตรวจ bundle</h2></div>
+  <div class="step-body">
+    <p class="say"></p>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>cd frontend &amp;&amp; npm run build
+grep -l "localhost:3001" dist/assets/*.js      <span class="c"># ต้องไม่มีผลลัพธ์</span></code></pre></div>
+  <div class="warn"><b>แก้ frontend ต้อง build ใหม่ทุกครั้ง</b> — production เสิร์ฟจาก dist/ ไม่มี hot reload</div>
+
+  </div>
+</div>
+<div class="step" id="s5">
+  <div class="step-head"><span class="num">⑤</span><h2>รัน production — ⭐ moment ของสัปดาห์นี้</h2></div>
+  <div class="step-body">
+    <p class="say">จาก 2 server เหลือ 1</p>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>cd ../api &amp;&amp; NODE_ENV=production npm start
+
+<span class="c"># อีก terminal</span>
+curl http://localhost:3001/ | grep 'id="root"'   <span class="c"># เจอ = หน้าเว็บ</span>
+curl http://localhost:3001/api/health            <span class="c"># "env":"production"</span></code></pre></div>
+  <div class="check"><b>เปิด <code>:3001</code> ในเบราว์เซอร์</b> · เปิด <code>/about</code> · เพิ่มคำร้อง 1 รายการ · ดู DevTools → Network ว่ายิง <code>/api/requests</code> ของพอร์ตเดียวกัน</div>
 
   </div>
 </div>
 <div class="step" id="done">
   <div class="step-head"><span class="num">✓</span><h2>ผ่าน CP39 เมื่อ</h2></div>
   <div class="step-body">
-    <p class="say">ตรวจ 4 ข้อ · ปิดงานในห้อง</p>
-  <div class="check">☐ npm run build สร้าง dist/<br>☐ พอร์ตเดียวได้ทั้งเว็บและ API<br>☐ /api/health บอก env production<br>☐ <code>check-week11.mjs --inclass</code> ผ่าน 15/15</div>
-  <div class="warn"><b>⚠ แก้ frontend ต้อง build ใหม่</b> — production ไม่มี hot reload</div>
-  <p class="say"><b>คำถาม</b> — ทำไม production รวมพอร์ตเดียว แทนรัน 2 server เหมือน dev</p>
+    <p class="say">ตรวจ 5 ข้อ · ปิดงานในห้อง</p>
+  <div class="check">☐ <code>/</code> ได้หน้าเว็บ (ไม่ใช่ JSON)<br>☐ <code>/about</code> ได้หน้าเว็บ<br>☐ bundle ไม่มี localhost:3001<br>☐ <code>/api/health</code> บอก env production<br>☐ <code>check-week11.mjs --inclass</code> ผ่าน <b>17/17</b></div>
+  <p class="say"><b>คำถาม</b> — ทำไมทดสอบในเครื่องแล้ว "ดูเหมือนผ่าน" ทั้งที่ bundle ยังฝัง localhost</p>
 
   </div>
 </div>
 
 
 <footer><span>ENGSE203 · Week 11 · CP39 production build · เอกสารสำหรับฉายบนจอ</span>
-<span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน Week 11 บทที่ 6</span></footer>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน Week 11 บทที่ 6 · คู่มือ Deploy ส่วนที่ 3</span></footer>
 <div class="nav">
   <a href="ENGSE203_Week11_CP35_LiveCoding.html">CP35</a>
   <a href="ENGSE203_Week11_CP36_LiveCoding.html">CP36</a>

@@ -11,6 +11,24 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// ── supertest อยู่ใน devDependencies ของ api/ — หาได้ทั้งจาก root และจาก api/ ──
+import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
+async function loadSupertest() {
+  try { return (await import('supertest')).default; }
+  catch {
+    const req = createRequire(path.join(ROOT, 'api', 'package.json'));
+    return (await import(pathToFileURL(req.resolve('supertest')).href)).default;
+  }
+}
+
+// ── ใช้ฐานข้อมูลชั่วคราว — checker ไม่เขียนข้อมูลทดสอบลง campus.db ที่ต้อง commit ──
+import { tmpdir } from 'node:os';
+import { rmSync as rmCheckDb } from 'node:fs';
+const CHECK_DB = path.join(tmpdir(), `engse203-check-${process.pid}.db`);
+if (!process.env.DB_FILE) process.env.DB_FILE = CHECK_DB;
+process.on('exit', () => { try { rmCheckDb(CHECK_DB, { force: true }); } catch {} });
+
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const INCLASS = process.argv.includes('--inclass');
 const results = [];
@@ -28,7 +46,7 @@ async function setup() {
   try {
     const mod = await import('./api/src/app.js');
     const svc = await import('./api/src/services/requestService.js');
-    request = (await import('supertest')).default;
+    request = await loadSupertest();
     await svc.loadSeed();
     app = mod.createApp();
     return true;

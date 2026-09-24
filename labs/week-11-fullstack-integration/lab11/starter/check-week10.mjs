@@ -11,6 +11,27 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// ── supertest อยู่ใน devDependencies ของ api/ — หาได้ทั้งจาก root และจาก api/ ──
+import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
+async function loadSupertest() {
+  try { return (await import('supertest')).default; }
+  catch {
+    const req = createRequire(path.join(ROOT, 'api', 'package.json'));
+    return (await import(pathToFileURL(req.resolve('supertest')).href)).default;
+  }
+}
+
+// ── ใช้ฐานข้อมูลชั่วคราว — checker ไม่เขียนข้อมูลทดสอบลง campus.db ที่ต้อง commit ──
+import { tmpdir } from 'node:os';
+import { rmSync as rmCheckDb } from 'node:fs';
+const CHECK_DB = path.join(tmpdir(), `engse203-check-${process.pid}.db`);
+if (!process.env.DB_FILE) process.env.DB_FILE = CHECK_DB;
+// ⚠ checker ใช้ฐานข้อมูลในเครื่องเสมอ — ไม่เขียนข้อมูลทดสอบขึ้น Turso (Challenge ⭐⭐)
+delete process.env.TURSO_DATABASE_URL;
+delete process.env.TURSO_AUTH_TOKEN;
+process.on('exit', () => { try { rmCheckDb(CHECK_DB, { force: true }); } catch {} });
+
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const INCLASS = process.argv.includes('--inclass');
 const results = [];
@@ -27,7 +48,7 @@ rec('STRUCT', 'inclass', 'มี service ที่ api/src/services/requestServi
 const svc = strip(await read('api/src/services/requestService.js'));
 
 // ── CP26 · เปิดฐานข้อมูลด้วย node:sqlite ──
-rec('CP26', 'inclass', 'service เรียกใช้ node:sqlite', has(svc, "node:sqlite", 'DatabaseSync'),
+rec('CP26', 'inclass', 'service เรียกใช้ node:sqlite', has(svc, "node:sqlite|libsql", 'DatabaseSync|new Database'),
   'ต้อง import { DatabaseSync } from "node:sqlite"');
 rec('CP26', 'inclass', 'เปิด PRAGMA foreign_keys = ON', has(svc, 'foreign_keys'),
   'ไม่งั้น Foreign Key จะไม่ทำงาน');
@@ -61,7 +82,7 @@ async function setup() {
   try {
     const svcMod = await import('./api/src/services/requestService.js');
     const appMod = await import('./api/src/app.js');
-    request = (await import('supertest')).default;
+    request = await loadSupertest();
     await svcMod.loadSeed();
     app = appMod.createApp();
     return true;

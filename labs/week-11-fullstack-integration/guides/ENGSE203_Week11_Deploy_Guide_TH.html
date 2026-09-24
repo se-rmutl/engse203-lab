@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENGSE203 Week 11 — คู่มือ Deploy ขึ้น Render</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1F6F3; --card:#FFFFFF; --ink:#14251E; --ink-soft:#54685E;
+  --track:#BFD2C8; --a:#A8620E; --a-tint:#FBF0E2; --b:#186B8C; --b-tint:#DDEEF5;
+  --loading:#B5771A; --success:#1E7A54; --error:#B23A2E; --rule:#DBE7E0;
+  --code-bg:#1E1408; --vio:#6B3B96; --vio-tint:#F1EAF8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  line-height:1.78;padding:0 20px 80px;-webkit-font-smoothing:antialiased;}
+.doc{max-width:860px;margin:0 auto}
+
+.cover{padding:64px 0 40px;border-bottom:3px solid var(--a)}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.2em;color:var(--a);text-transform:uppercase}
+.cover h1{font-size:clamp(30px,5vw,46px);font-weight:700;line-height:1.15;
+  letter-spacing:-.02em;margin:14px 0 8px}
+.cover .subtitle{font-size:19px;color:var(--ink-soft);font-weight:300;margin-bottom:28px}
+.meta{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px}
+.meta th{text-align:left;font-weight:600;padding:7px 14px 7px 0;width:190px;
+  vertical-align:top;color:var(--ink-soft);font-size:13px}
+.meta td{padding:7px 0;border-bottom:1px solid var(--rule)}
+.meta tr:first-child td,.meta tr:first-child th{border-top:1px solid var(--rule)}
+
+.bigidea{background:var(--ink);color:#fff;padding:24px 26px;border-radius:4px;margin-top:8px}
+.bigidea .lab{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;
+  opacity:.65;text-transform:uppercase;margin-bottom:8px}
+.bigidea p{font-size:17px;line-height:1.6}
+.bigidea code{font-family:'IBM Plex Mono',monospace;font-size:15px;
+  background:rgba(255,255,255,.14);padding:1px 7px;border-radius:3px}
+
+.howto{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:26px;margin:36px 0}
+.howto h2{font-size:19px;margin-bottom:14px}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;font-size:14px;margin-top:14px}
+.legend .k{font-weight:600;white-space:nowrap}
+.newbie{background:var(--a-tint);border-left:3px solid var(--a);padding:16px 20px;
+  border-radius:0 6px 6px 0;margin-top:18px;font-size:14.5px}
+.wheretag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:middle}
+.wheretag.home{background:#FDF2E6;color:#8A5A0E;border:1px solid #E8C99A}
+.wheretag.room{background:#E4F1EA;color:#14503A;border:1px solid #A8D4BE}
+
+.ch{margin-top:60px;padding-top:8px}
+.ch-num{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:.16em;color:var(--a);text-transform:uppercase;
+  display:flex;align-items:center;gap:12px}
+.ch-num::after{content:"";flex:1;height:1px;background:var(--rule)}
+.ch h2{font-size:28px;font-weight:700;line-height:1.25;margin:12px 0 6px;letter-spacing:-.01em}
+.ch .readtime{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  color:var(--track);letter-spacing:.06em;margin-bottom:22px}
+.ch h3{font-size:19px;font-weight:600;margin:32px 0 10px}
+p{margin-bottom:14px}
+ul,ol{margin:0 0 16px 22px}
+li{margin-bottom:7px}
+strong{font-weight:600}
+em{font-style:normal;background:linear-gradient(transparent 62%,var(--a-tint) 62%)}
+
+code{font-family:'IBM Plex Mono',monospace;font-size:.88em;
+  background:#F5EADA;padding:2px 6px;border-radius:3px;color:#7A4708}
+pre{background:var(--code-bg);color:#E4EFE9;border-radius:4px;
+  padding:20px 22px;overflow-x:auto;margin:16px 0;font-size:13.5px;line-height:1.7}
+pre code{background:none;padding:0;color:inherit;font-size:13.5px}
+.c-key{color:#F0B872}.c-str{color:#E9C08A}.c-com{color:#6E8A7E;font-style:italic}
+.c-fn{color:#8FD0EC}.c-bad{color:#F0968C}.c-hl{color:#FFE08A;font-weight:600}
+.c-num{color:#D9A0E8}
+
+.term{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--b);
+  border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0}
+.term .w{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--b);
+  font-size:15px;margin-bottom:4px}
+.term p{margin:0;font-size:14.5px}
+
+table.d{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0}
+table.d th{text-align:left;background:#F5EADA;padding:10px 12px;
+  font-weight:600;font-size:13px;border-bottom:2px solid var(--track)}
+table.d td{padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.d tr:hover td{background:#FAFCFB}
+
+figure{margin:30px 0;background:var(--card);border:1px solid var(--rule);
+  border-radius:4px;padding:24px 22px 16px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:13px;color:var(--ink-soft);margin-top:16px;padding-top:12px;border-top:1px solid var(--rule)}
+figcaption b{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  letter-spacing:.1em;color:var(--a);display:block;margin-bottom:4px;text-transform:uppercase}
+
+.box{border-radius:4px;padding:20px 22px;margin:22px 0;font-size:14.5px}
+.box .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px;display:block}
+.box p:last-child{margin-bottom:0}
+.predict{background:var(--a-tint);border-left:3px solid var(--a)}
+.predict .h{color:var(--a)}
+.pitfall{background:#FBEBE8;border-left:3px solid var(--error)}
+.pitfall .h{color:var(--error)}
+.note{background:#FDF4E3;border-left:3px solid var(--loading)}
+.note .h{color:var(--loading)}
+.next{background:var(--b-tint);border-left:3px solid var(--b)}
+.next .h{color:var(--b)}
+.analogy{background:var(--vio-tint);border-left:3px solid var(--vio)}
+.analogy .h{color:var(--vio)}
+.inclass{background:#E4F1EA;border-left:3px solid var(--a)}
+.inclass .h{color:var(--a)}
+.takehome{background:#FDF2E6;border-left:3px solid var(--loading)}
+.takehome .h{color:var(--loading)}
+.challenge{background:var(--vio-tint);border-left:3px solid var(--vio)}
+.challenge .h{color:var(--vio)}
+
+details{background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  padding:14px 18px;margin:14px 0;font-size:14.5px}
+details summary{cursor:pointer;font-weight:600;font-size:14.5px;list-style:none;
+  display:flex;align-items:center;gap:9px}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸";color:var(--a);font-size:13px;transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+details .ans{margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-weight:300}
+details .ans p:last-child{margin-bottom:0}
+
+.recap{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--ink);
+  border-radius:4px;padding:22px;margin:30px 0 0}
+.recap .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px;display:block}
+.recap ul{margin-bottom:0;margin-left:20px}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--rule);
+  font-size:12.5px;color:var(--ink-soft);font-weight:300;display:flex;
+  justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer .m{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.05em}
+
+.toc{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:24px 26px;margin:28px 0}
+.toc h2{font-size:17px;margin-bottom:8px}
+.toc .toc-note{font-size:13px;color:var(--ink-soft);margin-bottom:16px;font-weight:300}
+.toc ol{margin:0 0 0 20px;font-size:14.5px}
+.toc li{margin-bottom:6px}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+.toc a:hover{border-bottom-color:var(--a);color:var(--a)}
+.toc .t{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--track);margin-left:6px}
+.toc .grp{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--a);margin:14px 0 6px}
+
+@media print{
+  body{background:#fff;padding:0}
+  figure,.box,.recap,details,table.d,.term{break-inside:avoid}
+  .ch{break-before:page}
+  details{border:none}details summary::before{content:""}
+  details .ans{display:block}
+}
+@media (max-width:640px){
+  .meta th{width:auto;display:block;padding-bottom:0}
+  .meta td{display:block;padding-top:2px}
+  .cover{padding:36px 0 28px}
+  .legend{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+
+<!-- ════════ COVER ════════ -->
+<header class="cover">
+  <p class="eyebrow">ENGSE203 · หน่วยที่ 4 · Week 11 · คู่มือประกอบ</p>
+  <h1>คู่มือ Deploy ระบบ Full-Stack<br>ขึ้น Render</h1>
+  <p class="subtitle">สำหรับผู้สอนและนักศึกษา · ไม่ต้องมีประสบการณ์ cloud · ไม่ต้อง set Ubuntu server เอง</p>
+
+  <table class="meta">
+    <tr><th>ใช้กับ</th><td>LAB 11 · CP39 · CP43 · Challenge deploy จริง</td></tr>
+    <tr><th>ระบบ</th><td>React (Vite) + Express 5 + SQLite (<code>node:sqlite</code>) · Node 22</td></tr>
+    <tr><th>ปลายทาง</th><td>Render — Web Service แบบ Free · region Singapore</td></tr>
+    <tr><th>ตรวจสอบแล้ว</th><td>จำลองขั้นตอนของ Render ครบทุกขั้นบนสำเนาสะอาด (clone ใหม่ · <code>NODE_ENV=production</code> ตั้งแต่ build · <code>PORT=10000</code>) · ค่าและ key อ้างอิงเอกสาร Render ปัจจุบัน</td></tr>
+  </table>
+
+  <div class="bigidea">
+    <span class="lab">หลักคิดของคู่มือนี้</span>
+    <p><strong>ถ้าจำลอง production ในเครื่องผ่านครบ — การขึ้น cloud คือการกรอกฟอร์ม 1 หน้า</strong><br>
+    <code>ปัญหาเกือบทั้งหมดเจอได้ในเครื่อง ก่อนไปเจอบน cloud</code></p>
+  </div>
+</header>
+
+<!-- ════════ QUICK CARD ════════ -->
+<section class="howto">
+  <h2>สรุป 1 หน้า — สำหรับคนที่อยากทำเลย</h2>
+
+  <h3 style="margin-top:14px">ไฟล์ 5 อย่างที่ทำให้ deploy ได้</h3>
+  <table class="d">
+    <tr><th>ไฟล์</th><th>ทำหน้าที่</th><th>ถ้าไม่มี</th></tr>
+    <tr><td><code>api/src/config.js</code></td><td>อ่าน <code>PORT</code> · <code>NODE_ENV</code> จาก env</td><td>ฟังผิดพอร์ต · cloud เข้าไม่ถึง</td></tr>
+    <tr><td><code>api/src/app.js</code></td><td>production เสิร์ฟหน้าเว็บ + catch-all · <code>/</code> ไม่ตอบ JSON</td><td>เปิด URL แล้วเห็น JSON</td></tr>
+    <tr><td><code>frontend/.env.production</code></td><td><code>VITE_API_BASE_URL=</code> (ว่าง)</td><td>หน้าเว็บขึ้นแต่ไม่มีข้อมูล</td></tr>
+    <tr><td><code>package.json</code> (ระดับบนสุด)</td><td>script <code>build</code> (มี <code>--include=dev</code>) และ <code>start</code></td><td><code>vite: not found</code></td></tr>
+    <tr><td><code>api/routes/healthRoutes.js</code></td><td><code>GET /api/health</code> ตอบ 200</td><td>deploy ค้าง · health check failed</td></tr>
+  </table>
+
+  <h3 style="margin-top:18px">ค่าที่กรอกบน Render</h3>
+  <table class="d">
+    <tr><th>ช่อง</th><th>ค่า</th></tr>
+    <tr><td>Root Directory</td><td><code>labs/week-11/source</code> (นักศึกษา) · เว้นว่างถ้าโปรเจกต์อยู่ root ของ repo</td></tr>
+    <tr><td>Build Command</td><td><code>npm install &amp;&amp; npm run build</code></td></tr>
+    <tr><td>Start Command</td><td><code>npm start</code></td></tr>
+    <tr><td>Environment</td><td><code>NODE_ENV=production</code> · <code>NODE_VERSION=22</code> · <strong>ไม่ต้องตั้ง PORT</strong></td></tr>
+    <tr><td>Health Check Path</td><td><code>/api/health</code></td></tr>
+    <tr><td>Region · Instance</td><td>Singapore · Free</td></tr>
+    <tr><td>⭐⭐ ข้อมูลถาวร (ไม่บังคับ)</td><td>เพิ่ม <code>TURSO_DATABASE_URL</code> · <code>TURSO_AUTH_TOKEN</code> — ดูส่วนที่ 11</td></tr>
+  </table>
+</section>
+
+<!-- ════════ TOC ════════ -->
+<nav class="toc">
+  <h2>สารบัญ</h2>
+  <ol>
+    <li><a href="#s1">ภาพรวม — dev · production · cloud ต่างกันอย่างไร</a></li>
+    <li><a href="#s2">ระบบทำงานอย่างไรตอน production (พอร์ตเดียว)</a></li>
+    <li><a href="#s3">3 กับดักที่ "จำลองในเครื่องผ่าน แต่ขึ้น cloud แล้วพัง"</a></li>
+    <li><a href="#s4">เตรียมโปรเจกต์ให้พร้อม deploy</a></li>
+    <li><a href="#s5">จำลอง Render ในเครื่องให้เหมือนที่สุด</a></li>
+    <li><a href="#s6">Deploy ขึ้น Render ทีละขั้น</a></li>
+    <li><a href="#s7">ตรวจหลัง deploy และอ่าน log</a></li>
+    <li><a href="#s8">ตารางแก้ปัญหา</a></li>
+    <li><a href="#s9">ข้อจำกัดของ free tier ที่ต้องรู้</a></li>
+    <li><a href="#s10">สำหรับผู้สอน — เตรียมเดโมและตรวจงาน</a></li>
+    <li><a href="#s11">Challenge ⭐⭐ — ข้อมูลถาวรด้วย Turso</a></li>
+  </ol>
+</nav>
+
+<!-- ════════ S1 ════════ -->
+<section class="ch" id="s1">
+  <p class="ch-num">ส่วนที่ 1</p>
+  <h2>ภาพรวม — dev · production · cloud ต่างกันอย่างไร</h2>
+
+  <figure>
+    <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="เทียบ dev production และ cloud">
+      <style>.a1t{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .a1s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .a1m{font:500 9.5px 'IBM Plex Mono',monospace}</style>
+      <text x="20" y="20" class="a1m" fill="#186B8C" style="letter-spacing:.06em">① DEVELOPMENT</text>
+      <rect x="20" y="30" width="230" height="200" rx="10" fill="#F4F9FB" stroke="#186B8C" stroke-width="1.4"/>
+      <rect x="38" y="48" width="194" height="46" rx="7" fill="#DDEEF5" stroke="#186B8C"/>
+      <text x="135" y="68" text-anchor="middle" class="a1t">Vite dev server</text>
+      <text x="135" y="84" text-anchor="middle" class="a1m" fill="#186B8C">localhost:5173</text>
+      <rect x="38" y="104" width="194" height="46" rx="7" fill="#FBF0E2" stroke="#A8620E"/>
+      <text x="135" y="124" text-anchor="middle" class="a1t">Express API</text>
+      <text x="135" y="140" text-anchor="middle" class="a1m" fill="#A8620E">localhost:3001</text>
+      <text x="38" y="172" class="a1s">• 2 terminal · 2 พอร์ต</text>
+      <text x="38" y="190" class="a1s">• frontend เรียก localhost:3001</text>
+      <text x="38" y="208" class="a1s">• hot reload · ใช้ตอนเขียนโค้ด</text>
+
+      <text x="265" y="20" class="a1m" fill="#1E7A54" style="letter-spacing:.06em">② PRODUCTION ในเครื่อง</text>
+      <rect x="265" y="30" width="230" height="200" rx="10" fill="#F4FAF6" stroke="#1E7A54" stroke-width="1.4"/>
+      <rect x="283" y="48" width="194" height="102" rx="7" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.6"/>
+      <text x="380" y="72" text-anchor="middle" class="a1t">Express API</text>
+      <text x="380" y="90" text-anchor="middle" class="a1m" fill="#1E7A54">localhost:3001 หรือ 10000</text>
+      <text x="380" y="112" text-anchor="middle" class="a1s">เสิร์ฟ frontend/dist</text>
+      <text x="380" y="128" text-anchor="middle" class="a1s">+ API ใต้ /api</text>
+      <text x="283" y="172" class="a1s">• 1 พอร์ต · build ก่อน</text>
+      <text x="283" y="190" class="a1s">• frontend เรียก /api (สัมพัทธ์)</text>
+      <text x="283" y="208" class="a1s">• "ซ้อมใหญ่" — CP39 · CP43</text>
+
+      <text x="510" y="20" class="a1m" fill="#6B3B96" style="letter-spacing:.06em">③ CLOUD (Render)</text>
+      <rect x="510" y="30" width="230" height="200" rx="10" fill="#F8F4FB" stroke="#6B3B96" stroke-width="1.4"/>
+      <rect x="528" y="48" width="194" height="102" rx="7" fill="#F1EAF8" stroke="#6B3B96" stroke-width="1.6"/>
+      <text x="625" y="72" text-anchor="middle" class="a1t">โค้ดชุดเดียวกับ ②</text>
+      <text x="625" y="90" text-anchor="middle" class="a1m" fill="#6B3B96">xxx.onrender.com</text>
+      <text x="625" y="112" text-anchor="middle" class="a1s">Render สร้างเครื่อง Linux</text>
+      <text x="625" y="128" text-anchor="middle" class="a1s">และรันคำสั่งแทนเรา</text>
+      <text x="528" y="172" class="a1s">• คนทั้งโลกเปิดได้ · HTTPS ให้ฟรี</text>
+      <text x="528" y="190" class="a1s">• PORT ถูกกำหนดโดย Render</text>
+      <text x="528" y="208" class="a1s">• Challenge (ไม่บังคับ)</text>
+
+      <rect x="20" y="250" width="720" height="64" rx="9" fill="#FBF0E2" stroke="#A8620E" stroke-width="1.4"/>
+      <text x="380" y="276" text-anchor="middle" class="a1t" fill="#7A4708">② กับ ③ ใช้โค้ดชุดเดียวกัน คำสั่งเดียวกัน — ต่างกันแค่ "เครื่องที่รัน"</text>
+      <text x="380" y="298" text-anchor="middle" class="a1s">ดังนั้นถ้า ② ผ่านครบ ③ จะผ่านด้วย · ถ้า ② ยังมีปัญหา ขึ้น ③ ก็เจอปัญหาเดียวกัน (แต่หาสาเหตุยากกว่า)</text>
+    </svg>
+    <figcaption><b>ภาพที่ 1</b>สามสภาพแวดล้อม — ② production ในเครื่องคือ "ซ้อมใหญ่" ของ ③ cloud</figcaption>
+  </figure>
+
+  <div class="box note">
+    <span class="h">🟨 Render ทำอะไรแทนเรา</span>
+    <p style="margin:0">Render สร้างเครื่อง Linux ให้ → ดึงโค้ดจาก GitHub → รัน Build Command → รัน Start Command → ตรวจ health check → เปิด URL ให้<br>
+    <strong>เราไม่ต้องติดตั้ง Ubuntu · ไม่ต้องตั้ง Nginx · ไม่ต้องจัดการ HTTPS</strong> — ซึ่งเป็นเหตุผลที่เหมาะกับคนที่ยังไม่เคยใช้ cloud</p>
+  </div>
+</section>
+
+<!-- ════════ S2 ════════ -->
+<section class="ch" id="s2">
+  <p class="ch-num">ส่วนที่ 2</p>
+  <h2>ระบบทำงานอย่างไรตอน production (พอร์ตเดียว)</h2>
+
+  <p>เมื่อผู้ใช้เปิด URL · Express เป็นคนตัดสินว่าแต่ละคำขอจะได้ <strong>หน้าเว็บ</strong> หรือ <strong>ข้อมูล JSON</strong></p>
+
+  <figure>
+    <svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="การไหลของคำขอตอน production">
+      <style>.a2t{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .a2s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .a2m{font:500 9.5px 'IBM Plex Mono',monospace}</style>
+      <defs>
+        <marker id="a2a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#54685E" stroke-width="1.5"/></marker>
+        <marker id="a2g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#1E7A54" stroke-width="1.5"/></marker>
+        <marker id="a2o" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#A8620E" stroke-width="1.5"/></marker>
+      </defs>
+      <rect x="20" y="140" width="130" height="70" rx="9" fill="#F5F7F6" stroke="#8A9691"/>
+      <text x="85" y="170" text-anchor="middle" class="a2t">🌐 เบราว์เซอร์</text>
+      <text x="85" y="190" text-anchor="middle" class="a2s">ผู้ใช้เปิด URL</text>
+
+      <rect x="200" y="120" width="170" height="110" rx="9" fill="#FBF0E2" stroke="#A8620E" stroke-width="1.8"/>
+      <text x="285" y="146" text-anchor="middle" class="a2t">Express (พอร์ตเดียว)</text>
+      <text x="285" y="168" text-anchor="middle" class="a2s">path ขึ้นต้นด้วย</text>
+      <text x="285" y="184" text-anchor="middle" class="a2m" fill="#A8620E">/api ?</text>
+      <text x="285" y="208" text-anchor="middle" class="a2s">ตรวจตามลำดับที่ลงทะเบียน</text>
+
+      <path d="M152 175 L196 175" stroke="#54685E" stroke-width="1.6" marker-end="url(#a2a)"/>
+
+      <rect x="440" y="30" width="300" height="130" rx="9" fill="#F4FAF6" stroke="#1E7A54" stroke-width="1.4"/>
+      <text x="458" y="52" class="a2m" fill="#1E7A54" style="letter-spacing:.05em">ใช่ → API</text>
+      <text x="458" y="74" class="a2s">/api/health · /api/requests · /api/users</text>
+      <text x="458" y="96" class="a2s">route → controller → service → SQLite</text>
+      <rect x="458" y="108" width="264" height="36" rx="6" fill="#DFF0E7" stroke="#A8D4BE"/>
+      <text x="590" y="131" text-anchor="middle" class="a2m" fill="#14503A">ตอบ JSON</text>
+
+      <rect x="440" y="190" width="300" height="150" rx="9" fill="#F4F9FB" stroke="#186B8C" stroke-width="1.4"/>
+      <text x="458" y="212" class="a2m" fill="#186B8C" style="letter-spacing:.05em">ไม่ใช่ → หน้าเว็บ</text>
+      <text x="458" y="234" class="a2s">① มีไฟล์ตรงใน dist/ ไหม (JS · CSS · รูป)</text>
+      <text x="458" y="254" class="a2s">   → express.static ส่งไฟล์นั้น</text>
+      <text x="458" y="276" class="a2s">② ไม่มี (เช่น / · /about) → ส่ง index.html</text>
+      <rect x="458" y="290" width="264" height="36" rx="6" fill="#DDEEF5" stroke="#9CC3D5"/>
+      <text x="590" y="313" text-anchor="middle" class="a2m" fill="#0F4C63">React Router แสดงหน้าที่ถูกต้อง</text>
+
+      <path d="M372 150 C 405 150, 405 95, 436 95" stroke="#1E7A54" stroke-width="1.6" fill="none" marker-end="url(#a2g)"/>
+      <path d="M372 200 C 405 200, 405 265, 436 265" stroke="#A8620E" stroke-width="1.6" fill="none" marker-end="url(#a2o)"/>
+      <text x="20" y="262" class="a2s">หน้าเว็บที่โหลดแล้วยิง</text>
+      <text x="20" y="278" class="a2m" fill="#1E7A54">fetch('/api/requests')</text>
+      <text x="20" y="294" class="a2s">กลับมาที่ Express ตัวเดิม</text>
+      <text x="20" y="310" class="a2s">(origin เดียวกัน · ไม่ต้อง CORS)</text>
+    </svg>
+    <figcaption><b>ภาพที่ 2</b>พอร์ตเดียว แยกงานด้วย path — <code>/api/*</code> ได้ JSON · ที่เหลือได้หน้าเว็บ</figcaption>
+  </figure>
+
+<pre><code><span class="c-com">// api/src/app.js — ลำดับสำคัญ: API ก่อน แล้วค่อยหน้าเว็บ</span>
+app.<span class="c-fn">get</span>(<span class="c-str">'/api'</span>, ...);                        <span class="c-com">// ข้อความต้อนรับย้ายมาอยู่ใต้ /api</span>
+app.<span class="c-fn">use</span>(<span class="c-str">'/api/health'</span>, healthRoutes);
+app.<span class="c-fn">use</span>(<span class="c-str">'/api/requests'</span>, requestRoutes);
+
+<span class="c-key">if</span> (config.isProd &amp;&amp; <span class="c-fn">existsSync</span>(config.staticDir)) {
+  app.<span class="c-fn">use</span>(express.<span class="c-fn">static</span>(config.staticDir));    <span class="c-com">// ① ไฟล์ใน dist/</span>
+  app.<span class="c-fn">get</span>(<span class="c-str">/^\/(?!api).*/</span>, (req, res) =&gt;          <span class="c-com">// ② ทุก path ที่ไม่ใช่ /api</span>
+    res.<span class="c-fn">sendFile</span>(path.<span class="c-fn">join</span>(config.staticDir, <span class="c-str">'index.html'</span>)));
+} <span class="c-key">else</span> {
+  app.<span class="c-fn">get</span>(<span class="c-str">'/'</span>, ...);                             <span class="c-com">// dev เท่านั้น — บอกว่าหน้าเว็บอยู่พอร์ต 5173</span>
+}</code></pre>
+</section>
+
+<!-- ════════ S3 ════════ -->
+<section class="ch" id="s3">
+  <p class="ch-num">ส่วนที่ 3</p>
+  <h2>3 กับดักที่ "จำลองในเครื่องผ่าน แต่ขึ้น cloud แล้วพัง"</h2>
+
+  <p>ทั้ง 3 ข้อนี้ <strong>เจอจริงตอนตรวจงานชุดนี้</strong> — และ checker สัปดาห์ 11 ตรวจให้แล้วทุกข้อ</p>
+
+  <h3>กับดัก ① — bundle ฝัง <code>localhost:3001</code></h3>
+
+  <figure>
+    <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="กับดัก localhost ใน bundle">
+      <style>.a3t{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .a3s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .a3m{font:500 9.5px 'IBM Plex Mono',monospace}</style>
+      <defs>
+        <marker id="a3r" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#B23A2E" stroke-width="1.5"/></marker>
+        <marker id="a3g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#1E7A54" stroke-width="1.5"/></marker>
+      </defs>
+      <text x="20" y="20" class="a3m" fill="#B23A2E" style="letter-spacing:.05em">✕ ไม่มี .env.production — bundle มี fetch('http://localhost:3001/api/...')</text>
+      <rect x="20" y="32" width="210" height="104" rx="9" fill="#F5F7F6" stroke="#8A9691"/>
+      <text x="125" y="56" text-anchor="middle" class="a3t">📱 มือถือเพื่อน</text>
+      <text x="125" y="76" text-anchor="middle" class="a3s">เปิด xxx.onrender.com</text>
+      <text x="125" y="94" text-anchor="middle" class="a3s">หน้าเว็บโหลดได้ ✓</text>
+      <text x="125" y="116" text-anchor="middle" class="a3m" fill="#B23A2E">ยิง localhost:3001</text>
+      <path d="M232 84 L318 84" stroke="#B23A2E" stroke-width="1.6" marker-end="url(#a3r)"/>
+      <rect x="322" y="42" width="190" height="84" rx="9" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.6"/>
+      <text x="417" y="70" text-anchor="middle" class="a3t" fill="#8F2B21">localhost ของ "มือถือเอง"</text>
+      <text x="417" y="92" text-anchor="middle" class="a3s" fill="#8F2B21">ไม่มี server · connection refused</text>
+      <text x="417" y="110" text-anchor="middle" class="a3s" fill="#8F2B21">→ Dashboard ว่าง</text>
+      <rect x="540" y="42" width="200" height="84" rx="9" fill="#FAFCFB" stroke="#DBE7E0"/>
+      <text x="640" y="68" text-anchor="middle" class="a3s">ทำไมทดสอบในเครื่องไม่เห็น</text>
+      <text x="640" y="88" text-anchor="middle" class="a3s">เพราะในเครื่องเรา localhost:3001</text>
+      <text x="640" y="106" text-anchor="middle" class="a3s">บังเอิญคือ server ตัวเดียวกัน</text>
+
+      <text x="20" y="176" class="a3m" fill="#1E7A54" style="letter-spacing:.05em">✓ มี .env.production (VITE_API_BASE_URL=) — bundle มี fetch('/api/...')</text>
+      <rect x="20" y="188" width="210" height="96" rx="9" fill="#F5F7F6" stroke="#8A9691"/>
+      <text x="125" y="214" text-anchor="middle" class="a3t">📱 มือถือเพื่อน</text>
+      <text x="125" y="236" text-anchor="middle" class="a3s">เปิด xxx.onrender.com</text>
+      <text x="125" y="260" text-anchor="middle" class="a3m" fill="#1E7A54">ยิง /api/requests</text>
+      <path d="M232 238 L318 238" stroke="#1E7A54" stroke-width="1.6" marker-end="url(#a3g)"/>
+      <rect x="322" y="192" width="418" height="92" rx="9" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.6"/>
+      <text x="531" y="212" text-anchor="middle" class="a3t" fill="#14503A">เบราว์เซอร์เติมโดเมนของหน้าเว็บให้เอง</text>
+      <text x="531" y="230" text-anchor="middle" class="a3m" fill="#1E7A54">→ xxx.onrender.com/api/requests</text>
+      <text x="531" y="252" text-anchor="middle" class="a3s">ถึง Express ตัวเดียวกับที่ส่งหน้าเว็บมา → ได้ข้อมูล ✓</text>
+      <text x="531" y="270" text-anchor="middle" class="a3s">ใช้ได้ทุกที่ ไม่ว่าจะ localhost:10000 หรือโดเมนจริง</text>
+    </svg>
+    <figcaption><b>ภาพที่ 3</b>"localhost" หมายถึงเครื่องของคนที่เปิดเว็บ — ไม่ใช่เครื่องที่รัน server</figcaption>
+  </figure>
+
+<pre><code><span class="c-com"># frontend/.env.production — ใช้ตอน npm run build เท่านั้น · commit ได้ (ไม่มีค่าลับ)</span>
+VITE_API_BASE_URL=</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไมไม่แก้ที่ .env.local</span>
+    <p style="margin:0">Vite อ่าน <code>.env.production</code> ตอน build และให้ความสำคัญ<strong>เหนือ</strong> <code>.env.local</code> · ตอน <code>npm run dev</code> ยังใช้ <code>localhost:3001</code> ตามเดิม — dev ไม่พัง</p>
+  </div>
+
+  <h3>กับดัก ② — หน้าแรก <code>/</code> ตอบ JSON</h3>
+  <p>route <code>app.get('/')</code> ที่ตอบ <code>{"message":"Campus Service API is running"}</code> มีมาตั้งแต่ Week 06 · Express ตรวจ route ตามลำดับ — <strong>ตัวแรกที่ตรงชนะ</strong> จึงชิงหน้าแรกไปก่อน static</p>
+  <p><strong>แก้</strong> — ย้ายข้อความต้อนรับไปไว้ที่ <code>/api</code> และให้ <code>/</code> ตอบ JSON เฉพาะตอน dev (ดูโค้ดในส่วนที่ 2)</p>
+
+  <h3>กับดัก ③ — <code>vite: not found</code> ตอน build บน cloud</h3>
+  <p>Render ตั้ง <code>NODE_ENV=production</code> ไว้<strong>ตั้งแต่ขั้น build</strong> · <code>npm install</code> จึงข้าม devDependencies — แต่ Vite เป็น devDependency</p>
+
+<pre><code><span class="c-com">// package.json ระดับบนสุด</span>
+<span class="c-str">"build"</span>: <span class="c-str">"npm install --include=dev --prefix frontend &amp;&amp; npm run build --prefix frontend &amp;&amp; npm install --prefix api"</span></code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ทำไมกับดักทั้ง 3 ข้อนี้หายาก</span>
+    <p style="margin:0">ทั้ง 3 ข้อ<strong>ไม่แสดงอาการ</strong>ตอนรัน <code>npm run dev</code> และส่วนใหญ่ไม่แสดงอาการแม้จำลอง production ที่พอร์ต 3001 · <strong>ส่วนที่ 5 จึงให้จำลองแบบ "เข้มงวด"</strong> — clone ใหม่ · <code>NODE_ENV=production</code> ตั้งแต่ build · ใช้พอร์ต 10000</p>
+  </div>
+</section>
+
+<!-- ════════ S4 ════════ -->
+<section class="ch" id="s4">
+  <p class="ch-num">ส่วนที่ 4</p>
+  <h2>เตรียมโปรเจกต์ให้พร้อม deploy</h2>
+
+  <h3>4.1 โครงโฟลเดอร์ใน Student Repository</h3>
+<pre><code>&lt;student-repo&gt;/
+└── labs/
+    └── week-11/
+        └── source/              ← Root Directory บน Render
+            ├── package.json     ← script build + start
+            ├── .gitignore
+            ├── api/             ← Express + SQLite
+            │   ├── data/schema.sql · campus.db
+            │   └── src/config.js · app.js · routes/healthRoutes.js
+            └── frontend/        ← React + Vite
+                └── .env.production</code></pre>
+
+  <h3>4.2 package.json ระดับบนสุด</h3>
+<pre><code>{
+  <span class="c-str">"name"</span>: <span class="c-str">"campus-service"</span>,
+  <span class="c-str">"private"</span>: <span class="c-key">true</span>,
+  <span class="c-str">"engines"</span>: { <span class="c-str">"node"</span>: <span class="c-str">"&gt;=22.13.0"</span> },
+  <span class="c-str">"scripts"</span>: {
+    <span class="c-str">"build"</span>: <span class="c-str">"npm install --include=dev --prefix frontend &amp;&amp; npm run build --prefix frontend &amp;&amp; npm install --prefix api"</span>,
+    <span class="c-str">"start"</span>: <span class="c-str">"npm start --prefix api"</span>,
+    <span class="c-str">"check"</span>: <span class="c-str">"node --disable-warning=ExperimentalWarning check-week11.mjs"</span>
+  },
+  <span class="c-str">"devDependencies"</span>: { <span class="c-str">"supertest"</span>: <span class="c-str">"^7.2.2"</span> }
+}</code></pre>
+
+  <h3>4.3 .gitignore — อะไรขึ้น GitHub อะไรไม่ขึ้น</h3>
+  <table class="d">
+    <tr><th>ขึ้น GitHub (commit)</th><th>ไม่ขึ้น (.gitignore)</th></tr>
+    <tr><td><code>api/data/campus.db</code> · <code>schema.sql</code></td><td><code>node_modules/</code></td></tr>
+    <tr><td><code>frontend/.env.production</code> · <code>.env.example</code></td><td><code>.env</code> · <code>.env.local</code></td></tr>
+    <tr><td>root <code>package.json</code></td><td><code>frontend/dist/</code> — Render build ใหม่เอง</td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ถ้าไม่ commit campus.db</span>
+    <p style="margin:0">ไม่พัง — <code>loadSeed()</code> สร้างฐานข้อมูลจาก <code>schema.sql</code> ให้ตอน start (มีข้อมูลตั้งต้น 5 รายการ) · แต่ต้องแน่ใจว่า <code>schema.sql</code> ถูก commit</p>
+  </div>
+</section>
+<!-- ════════ S5 ════════ -->
+<section class="ch" id="s5">
+  <p class="ch-num">ส่วนที่ 5</p>
+  <h2>จำลอง Render ในเครื่องให้เหมือนที่สุด</h2>
+
+  <p>ทำเหมือน Render ทุกอย่าง — <strong>ถ้าผ่านขั้นนี้ ขึ้น Render จริงจะผ่าน</strong></p>
+
+  <table class="d">
+    <tr><th>Render ทำ</th><th>เราจำลองด้วย</th></tr>
+    <tr><td>clone repo ใหม่ทุกครั้ง (ไม่มี node_modules · ไม่มี dist · ไม่มี .env.local)</td><td>clone ใหม่ไปโฟลเดอร์ชั่วคราว</td></tr>
+    <tr><td>เข้าไปที่ Root Directory</td><td><code>cd labs/week-11/source</code></td></tr>
+    <tr><td>ตั้ง <code>NODE_ENV=production</code> ตั้งแต่ build</td><td>ใส่หน้าคำสั่ง build</td></tr>
+    <tr><td>กำหนด <code>PORT</code> เอง (ค่าเริ่มต้น 10000)</td><td><code>PORT=10000</code></td></tr>
+  </table>
+
+<pre><code><span class="c-com"># ① clone ใหม่ — จำลองว่า Render เห็นแค่สิ่งที่อยู่บน GitHub</span>
+git clone &lt;url-ของ-student-repo&gt; /tmp/render-test
+<span class="c-key">cd</span> /tmp/render-test &amp;&amp; git switch unit4/week-11
+<span class="c-key">cd</span> labs/week-11/source
+
+<span class="c-com"># ② Build Command (NODE_ENV=production ตั้งแต่ build)</span>
+NODE_ENV=production npm install &amp;&amp; NODE_ENV=production npm run build
+
+<span class="c-com"># ③ Start Command</span>
+NODE_ENV=production PORT=10000 npm start</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ทำไมต้อง clone แยก</span>
+    <p style="margin:0">build ในโหมด production จะ<strong>ลบ devDependencies ของ api</strong> (เช่น vitest) · ถ้าซ้อมในโฟลเดอร์งานจริง ให้รัน <code>npm install --prefix api</code> หลังซ้อมเสร็จเพื่อคืนเครื่องมือทดสอบ</p>
+  </div>
+
+  <div class="box note">
+    <span class="h">🟨 Windows (PowerShell)</span>
+    <p style="margin:0"><code>$env:NODE_ENV="production"; npm install; npm run build</code> แล้ว <code>$env:PORT="10000"; npm start</code><br>
+    โฟลเดอร์ชั่วคราวใช้ <code>$env:TEMP\render-test</code> แทน <code>/tmp/render-test</code></p>
+  </div>
+
+  <h3>ตรวจ 5 จุด (เปิดอีก terminal)</h3>
+<pre><code>curl -s http://localhost:10000/api/health          <span class="c-com"># "status":"ok" · "env":"production"</span>
+curl -s http://localhost:10000/ | grep 'id="root"'   <span class="c-com"># ต้องเจอ — แปลว่าเป็นหน้าเว็บ</span>
+curl -s -o /dev/null -w "%{http_code}\n" http://localhost:10000/about   <span class="c-com"># 200</span>
+curl -s http://localhost:10000/api/nope            <span class="c-com"># JSON 404 — ไม่ใช่หน้าเว็บ</span>
+grep -l "localhost:3001" frontend/dist/assets/*.js  <span class="c-com"># ต้องไม่มีผลลัพธ์</span></code></pre>
+
+  <p>ผลที่ได้จากการตรวจชุดนี้ (reference solution)</p>
+<pre><code>/api/health   → 200 · env=production · database.connected=true
+/             → 200 · หน้าเว็บ React
+/about        → 200 · หน้าเว็บ React
+/requests/new → 200 · หน้าเว็บ React
+/api/requests → 200 · 5 รายการ
+/api/nope     → 404 · {"error":"ไม่พบเส้นทาง GET /api/nope"}
+POST /api/requests (same-origin) → 201 · REQ-006
+log           → combined format (มี IP · เวลา · user-agent)</code></pre>
+</section>
+
+<!-- ════════ S6 ════════ -->
+<section class="ch" id="s6">
+  <p class="ch-num">ส่วนที่ 6</p>
+  <h2>Deploy ขึ้น Render ทีละขั้น</h2>
+
+  <figure>
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ขั้นตอนที่ Render ทำ">
+      <style>.a6t{font:600 11px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .a6s{font:300 9.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .a6m{font:500 9px 'IBM Plex Mono',monospace}</style>
+      <defs><marker id="a6a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#6B3B96" stroke-width="1.5"/></marker></defs>
+      <rect x="10" y="40" width="130" height="110" rx="9" fill="#F5F7F6" stroke="#8A9691"/>
+      <text x="75" y="64" text-anchor="middle" class="a6t">① GitHub</text>
+      <text x="75" y="84" text-anchor="middle" class="a6s">git push</text>
+      <text x="75" y="102" text-anchor="middle" class="a6m" fill="#54685E">unit4/week-11</text>
+      <text x="75" y="130" text-anchor="middle" class="a6s">Render เห็นแค่ที่ push</text>
+
+      <rect x="160" y="40" width="140" height="110" rx="9" fill="#DDEEF5" stroke="#186B8C"/>
+      <text x="230" y="64" text-anchor="middle" class="a6t">② เตรียมเครื่อง</text>
+      <text x="230" y="84" text-anchor="middle" class="a6s">Linux + Node 22</text>
+      <text x="230" y="102" text-anchor="middle" class="a6m" fill="#186B8C">NODE_VERSION=22</text>
+      <text x="230" y="120" text-anchor="middle" class="a6m" fill="#186B8C">cd Root Directory</text>
+
+      <rect x="320" y="40" width="140" height="110" rx="9" fill="#FBF0E2" stroke="#A8620E"/>
+      <text x="390" y="64" text-anchor="middle" class="a6t">③ Build</text>
+      <text x="390" y="84" text-anchor="middle" class="a6m" fill="#A8620E">npm install</text>
+      <text x="390" y="100" text-anchor="middle" class="a6m" fill="#A8620E">npm run build</text>
+      <text x="390" y="120" text-anchor="middle" class="a6s">ได้ frontend/dist</text>
+      <text x="390" y="136" text-anchor="middle" class="a6s">+ api/node_modules</text>
+
+      <rect x="480" y="40" width="130" height="110" rx="9" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="545" y="64" text-anchor="middle" class="a6t">④ Start</text>
+      <text x="545" y="84" text-anchor="middle" class="a6m" fill="#1E7A54">npm start</text>
+      <text x="545" y="104" text-anchor="middle" class="a6s">ฟังที่ PORT</text>
+      <text x="545" y="120" text-anchor="middle" class="a6s">ที่ Render กำหนด</text>
+
+      <rect x="630" y="40" width="120" height="110" rx="9" fill="#F1EAF8" stroke="#6B3B96" stroke-width="1.8"/>
+      <text x="690" y="64" text-anchor="middle" class="a6t">⑤ Health</text>
+      <text x="690" y="84" text-anchor="middle" class="a6m" fill="#6B3B96">/api/health</text>
+      <text x="690" y="104" text-anchor="middle" class="a6s">ได้ 2xx</text>
+      <text x="690" y="120" text-anchor="middle" class="a6s">→ live 🎉</text>
+
+      <path d="M142 95 L156 95" stroke="#6B3B96" stroke-width="1.6" marker-end="url(#a6a)"/>
+      <path d="M302 95 L316 95" stroke="#6B3B96" stroke-width="1.6" marker-end="url(#a6a)"/>
+      <path d="M462 95 L476 95" stroke="#6B3B96" stroke-width="1.6" marker-end="url(#a6a)"/>
+      <path d="M612 95 L626 95" stroke="#6B3B96" stroke-width="1.6" marker-end="url(#a6a)"/>
+
+      <rect x="10" y="176" width="740" height="58" rx="9" fill="#FAFCFB" stroke="#DBE7E0"/>
+      <text x="380" y="200" text-anchor="middle" class="a6t">ขั้น ③ พัง → deploy ไม่เกิด เวอร์ชันเก่ายังทำงาน · ขั้น ⑤ ไม่ผ่าน → ไม่สลับไปเวอร์ชันใหม่</text>
+      <text x="380" y="220" text-anchor="middle" class="a6s">ดังนั้นอ่าน log ตามลำดับขั้นนี้ จะรู้ทันทีว่าพังที่ไหน (ส่วนที่ 7)</text>
+    </svg>
+    <figcaption><b>ภาพที่ 4</b>สิ่งที่ Render ทำหลัง push — 5 ขั้นเรียงกัน · ขั้นไหนพังก็หยุดที่ขั้นนั้น</figcaption>
+  </figure>
+
+  <h3>ขั้นที่ 1 — push งานขึ้น GitHub</h3>
+<pre><code>git switch unit4/week-11
+git push -u origin unit4/week-11</code></pre>
+
+  <h3>ขั้นที่ 2 — สมัคร Render ด้วยบัญชี GitHub</h3>
+  <ol style="margin:0 0 0 20px">
+    <li>เปิด <strong>render.com</strong> → <strong>Get Started</strong></li>
+    <li>เลือก <strong>GitHub</strong> เพื่อเข้าสู่ระบบ (ไม่ต้องใช้บัตรเครดิตสำหรับ free tier)</li>
+    <li>อนุญาตให้ Render อ่าน repository — เลือกเฉพาะ Student Repository ได้</li>
+  </ol>
+
+  <h3>ขั้นที่ 3 — สร้าง Web Service และกรอกฟอร์ม</h3>
+  <p><strong>New → Web Service</strong> → เลือก Student Repository → <strong>Connect</strong> แล้วกรอก</p>
+
+  <table class="d">
+    <tr><th>ช่อง</th><th>ค่า</th><th>หมายเหตุ</th></tr>
+    <tr><td>Name</td><td><code>campus-service-&lt;รหัส&gt;</code></td><td>เป็นส่วนหนึ่งของ URL</td></tr>
+    <tr><td>Region</td><td>Singapore</td><td>ใกล้ไทยที่สุด</td></tr>
+    <tr><td>Branch</td><td><code>unit4/week-11</code></td><td></td></tr>
+    <tr><td><strong>Root Directory</strong></td><td><code>labs/week-11/source</code></td><td>⚠ ช่องที่ลืมบ่อยที่สุด</td></tr>
+    <tr><td>Runtime / Language</td><td>Node</td><td></td></tr>
+    <tr><td>Build Command</td><td><code>npm install &amp;&amp; npm run build</code></td><td></td></tr>
+    <tr><td>Start Command</td><td><code>npm start</code></td><td></td></tr>
+    <tr><td>Instance Type</td><td>Free</td><td></td></tr>
+  </table>
+
+  <h3>ขั้นที่ 4 — Environment Variables</h3>
+  <table class="d">
+    <tr><th>Key</th><th>Value</th><th>ทำไม</th></tr>
+    <tr><td><code>NODE_ENV</code></td><td><code>production</code></td><td>เปิดการเสิร์ฟหน้าเว็บ · log แบบ combined</td></tr>
+    <tr><td><code>NODE_VERSION</code></td><td><code>22</code></td><td>service ใหม่ของ Render อาจใช้ Node รุ่นเก่ากว่า 22.13 เป็นค่าเริ่มต้น · <code>node:sqlite</code> ต้องใช้ 22.13 ขึ้นไปจึงไม่ต้องใส่ flag</td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ไม่ต้องตั้ง PORT</span>
+    <p style="margin:0">Render กำหนด <code>PORT</code> ให้เอง · <code>config.js</code> อ่าน <code>process.env.PORT</code> อยู่แล้ว · และ <code>app.listen(port)</code> ของ Node ฟังทุก interface อยู่แล้ว ไม่ต้องระบุ <code>0.0.0.0</code></p>
+  </div>
+
+  <h3>ขั้นที่ 5 — Health Check Path</h3>
+  <p>เปิด <strong>Advanced</strong> → <strong>Health Check Path</strong> ใส่ <code>/api/health</code> → กด <strong>Deploy Web Service</strong></p>
+
+  <details>
+    <summary>ทางเลือก: ใช้ Blueprint (render.yaml) แทนการกรอกฟอร์ม</summary>
+    <div class="ans">
+      <p>ไฟล์ <code>render.yaml</code> ในโปรเจกต์บันทึกค่าทั้งหมดข้างบนไว้แล้ว · <strong>Render ค้นหาไฟล์นี้ที่ root ของ repository</strong> — จึงต้องย้าย (หรือคัดลอก) ไปไว้ที่ root ของ Student Repository ก่อน แล้วใช้ <strong>New → Blueprint</strong></p>
+<pre><code>services:
+  - type: web
+    name: campus-service
+    runtime: node
+    plan: free
+    region: singapore
+    rootDir: labs/week-11/source
+    buildCommand: npm install &amp;&amp; npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"</code></pre>
+      <p style="margin:0">สำหรับมือใหม่แนะนำ<strong>กรอกฟอร์ม</strong>มากกว่า — เห็นทุกช่อง เข้าใจว่าแต่ละค่าทำอะไร</p>
+    </div>
+  </details>
+</section>
+
+<!-- ════════ S7 ════════ -->
+<section class="ch" id="s7">
+  <p class="ch-num">ส่วนที่ 7</p>
+  <h2>ตรวจหลัง deploy และอ่าน log</h2>
+
+  <h3>7.1 log ที่ควรเห็น (เรียงตามภาพที่ 4)</h3>
+  <table class="d">
+    <tr><th>ขั้น</th><th>ข้อความใน log</th><th>แปลว่า</th></tr>
+    <tr><td>②</td><td><code>Using Node.js version 22.x</code></td><td>NODE_VERSION ทำงาน</td></tr>
+    <tr><td>③</td><td><code>npm run build</code> → <code>✓ built in …</code></td><td>build frontend ผ่าน</td></tr>
+    <tr><td>④</td><td><code>Campus Service API พร้อมที่ http://localhost:10000</code></td><td>server start แล้ว (localhost ในข้อความนี้คือเครื่องของ Render — ปกติ)</td></tr>
+    <tr><td>⑤</td><td><code>Your service is live 🎉</code></td><td>health check ผ่าน</td></tr>
+  </table>
+
+  <h3>7.2 ตรวจจากเบราว์เซอร์</h3>
+  <table class="d">
+    <tr><th>เปิด</th><th>ต้องได้</th></tr>
+    <tr><td><code>https://&lt;name&gt;.onrender.com/</code></td><td>หน้าเว็บ React</td></tr>
+    <tr><td><code>…/api/health</code></td><td><code>"env":"production"</code> · <code>"connected":true</code></td></tr>
+    <tr><td>เพิ่มคำร้องจากหน้าเว็บ</td><td>บันทึกได้ · DevTools → Network ยิงไป <code>/api/requests</code> ของโดเมนเดียวกัน</td></tr>
+    <tr><td>เปิดจากมือถือ (ไม่ต่อ Wi-Fi เดียวกัน)</td><td>เปิดได้ — พิสูจน์ว่าออนไลน์จริง</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 แก้โค้ดแล้วอัปเดตอย่างไร</span>
+    <p style="margin:0">แค่ <code>git push</code> ไปที่ branch เดิม · Render จะ deploy ใหม่อัตโนมัติ (auto-deploy) · ดูความคืบหน้าในแท็บ <strong>Events</strong> และ <strong>Logs</strong></p>
+  </div>
+</section>
+
+<!-- ════════ S8 ════════ -->
+<section class="ch" id="s8">
+  <p class="ch-num">ส่วนที่ 8</p>
+  <h2>ตารางแก้ปัญหา</h2>
+
+  <table class="d">
+    <tr><th>อาการ</th><th>พังที่ขั้น</th><th>สาเหตุ</th><th>แก้</th></tr>
+    <tr><td><code>Could not read package.json</code> · <code>ENOENT</code></td><td>③</td><td>Root Directory ผิด</td><td>ตั้งเป็น <code>labs/week-11/source</code></td></tr>
+    <tr><td><code>Missing script: "build"</code></td><td>③</td><td>root <code>package.json</code> ไม่มี script</td><td>ส่วนที่ 4.2</td></tr>
+    <tr><td><code>vite: not found</code></td><td>③</td><td>devDependencies ถูกข้าม</td><td>ใส่ <code>--include=dev</code></td></tr>
+    <tr><td><code>No such built-in module: node:sqlite</code></td><td>④</td><td>Node เก่ากว่า 22.13</td><td><code>NODE_VERSION=22</code></td></tr>
+    <tr><td><code>no such table: requests</code></td><td>④</td><td>ไม่มีทั้ง campus.db และ schema.sql บน GitHub</td><td>commit <code>api/data/schema.sql</code></td></tr>
+    <tr><td>deploy นาน แล้วขึ้น health check failed</td><td>⑤</td><td><code>/api/health</code> ตอบ 503 · path ผิด · server ไม่ฟังที่ PORT</td><td>ดู log ขั้น ④ · ตรวจ Health Check Path · ตรวจว่าใช้ <code>config.port</code></td></tr>
+    <tr><td>เปิด URL เห็น JSON</td><td>ใช้งาน</td><td>route <code>/</code> ชิงหน้าแรก</td><td>ส่วนที่ 3 กับดัก ②</td></tr>
+    <tr><td>หน้าเว็บขึ้น แต่ไม่มีข้อมูล</td><td>ใช้งาน</td><td>bundle ฝัง localhost</td><td>ส่วนที่ 3 กับดัก ①</td></tr>
+    <tr><td><code>/about</code> ได้ 404</td><td>ใช้งาน</td><td>ไม่มี catch-all คืน index.html</td><td>ส่วนที่ 2</td></tr>
+    <tr><td>แก้โค้ดแล้วเว็บไม่เปลี่ยน</td><td>—</td><td>ยังไม่ได้ push · หรือ push คนละ branch</td><td>ตรวจ Branch ในหน้า Settings</td></tr>
+  </table>
+</section>
+
+<!-- ════════ S9 ════════ -->
+<section class="ch" id="s9">
+  <p class="ch-num">ส่วนที่ 9</p>
+  <h2>ข้อจำกัดของ free tier ที่ต้องรู้</h2>
+
+  <figure>
+    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ข้อจำกัด free tier">
+      <style>.a9t{font:600 11px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .a9s{font:300 9.5px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .a9m{font:500 9px 'IBM Plex Mono',monospace}</style>
+      <defs><marker id="a9a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#8A9691" stroke-width="1.5"/></marker></defs>
+      <text x="20" y="20" class="a9m" fill="#A8620E" style="letter-spacing:.05em">① หลับเมื่อไม่มีคนใช้ (spin down)</text>
+      <rect x="20" y="30" width="160" height="56" rx="8" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="100" y="54" text-anchor="middle" class="a9t">ทำงาน</text>
+      <text x="100" y="72" text-anchor="middle" class="a9s">มีคนเข้าใช้</text>
+      <path d="M182 58 L228 58" stroke="#8A9691" stroke-width="1.5" marker-end="url(#a9a)"/>
+      <text x="205" y="48" text-anchor="middle" class="a9s">15 นาที</text>
+      <rect x="232" y="30" width="140" height="56" rx="8" fill="#F5F7F6" stroke="#8A9691"/>
+      <text x="302" y="54" text-anchor="middle" class="a9t">หลับ 💤</text>
+      <text x="302" y="72" text-anchor="middle" class="a9s">ไม่มีคนเข้า</text>
+      <path d="M374 58 L420 58" stroke="#8A9691" stroke-width="1.5" marker-end="url(#a9a)"/>
+      <text x="397" y="48" text-anchor="middle" class="a9s">มีคนเปิด</text>
+      <rect x="424" y="30" width="316" height="56" rx="8" fill="#FBF0E2" stroke="#A8620E"/>
+      <text x="582" y="54" text-anchor="middle" class="a9t">ตื่น — ครั้งแรกช้าประมาณ 30–60 วินาที</text>
+      <text x="582" y="72" text-anchor="middle" class="a9s">ไม่ใช่ระบบพัง · ครั้งต่อไปเร็วตามปกติ</text>
+
+      <text x="20" y="118" class="a9m" fill="#B23A2E" style="letter-spacing:.05em">② ไฟล์ไม่ถาวร (ephemeral filesystem)</text>
+      <rect x="20" y="128" width="220" height="56" rx="8" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="130" y="152" text-anchor="middle" class="a9t">campus.db ตาม git (5 รายการ)</text>
+      <text x="130" y="170" text-anchor="middle" class="a9s">ผู้ใช้เพิ่มคำร้อง → 8 รายการ</text>
+      <path d="M242 156 L288 156" stroke="#8A9691" stroke-width="1.5" marker-end="url(#a9a)"/>
+      <text x="265" y="146" text-anchor="middle" class="a9s">restart</text>
+      <rect x="292" y="128" width="448" height="56" rx="8" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="516" y="152" text-anchor="middle" class="a9t" fill="#8F2B21">กลับเป็น 5 รายการ — ข้อมูลที่เพิ่มหาย</text>
+      <text x="516" y="170" text-anchor="middle" class="a9s" fill="#8F2B21">เกิดตอน redeploy · restart · และตอนหลับแล้วตื่น</text>
+    </svg>
+    <figcaption><b>ภาพที่ 5</b>free tier เหมาะกับการสาธิต — ไม่เหมาะกับเก็บข้อมูลจริง</figcaption>
+  </figure>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 ข้อ ② คือบทเรียน ไม่ใช่ความผิดพลาด</span>
+    <p style="margin:0">ระบบจริงจึงเก็บข้อมูลใน<strong>ฐานข้อมูลที่แยกเครื่อง</strong> (PostgreSQL · MongoDB cloud) ไม่ใช่ไฟล์ข้าง API — โยงกับบทที่ 7–8 ของเอกสารประกอบการสอน<br>
+    Render มี disk แบบถาวร แต่ใช้ได้เฉพาะแผนเสียเงิน · สำหรับวิชานี้ free tier เพียงพอสำหรับการสาธิต<br>
+    <strong>อยากให้ข้อมูลถาวรโดยไม่เสียเงิน → ส่วนที่ 11 (Turso)</strong></p>
+  </div>
+
+  <div class="box note">
+    <span class="h">🟨 โควตาและราคา</span>
+    <p style="margin:0">เงื่อนไข free tier อาจเปลี่ยนได้ · ตรวจล่าสุดที่หน้า pricing ของ Render ก่อนเริ่มภาคเรียน</p>
+  </div>
+</section>
+
+<!-- ════════ S10 ════════ -->
+<section class="ch" id="s10">
+  <p class="ch-num">ส่วนที่ 10 · สำหรับผู้สอน</p>
+  <h2>สำหรับผู้สอน — เตรียมเดโมและตรวจงาน</h2>
+
+  <h3>10.1 deploy reference solution เป็นเดโมประจำวิชา</h3>
+  <p>แนะนำให้ deploy ไว้ 1 ตัวก่อนเปิดภาคเรียน — ใช้ฉายในคาบและเป็นตัวเทียบเวลานักศึกษาติดปัญหา</p>
+<pre><code><span class="c-com"># ① คัดลอก reference ออกมาเป็น repo ใหม่ (โปรเจกต์อยู่ที่ root → Root Directory เว้นว่าง)</span>
+cp -r labs/week-11-fullstack-integration/_instructor-private/reference-solution ~/campus-demo
+<span class="c-key">cd</span> ~/campus-demo
+rm -rf node_modules api/node_modules frontend/node_modules frontend/dist
+
+<span class="c-com"># ② จำลอง Render ก่อน (ส่วนที่ 5) — ต้องผ่าน 5 จุด</span>
+NODE_ENV=production npm install &amp;&amp; NODE_ENV=production npm run build
+NODE_ENV=production PORT=10000 npm start
+
+<span class="c-com"># ③ สร้าง repo บน GitHub (private ได้) แล้ว push</span>
+git init &amp;&amp; git add -A &amp;&amp; git commit -m "ENGSE203 W11 demo"
+git branch -M main
+git remote add origin git@github.com:&lt;org&gt;/engse203-w11-demo.git
+git push -u origin main</code></pre>
+  <p>จากนั้นทำส่วนที่ 6 โดย <strong>Branch = <code>main</code></strong> และ <strong>Root Directory เว้นว่าง</strong></p>
+
+  <div class="box pitfall">
+    <span class="h">🟥 อย่า deploy จาก Course Repository โดยตรง</span>
+    <p style="margin:0">reference อยู่ใน <code>_instructor-private/</code> · ถ้าเชื่อม Render กับ Course Repository ต้องให้สิทธิ์อ่านทั้ง repo · แยกเป็น repo เดโมปลอดภัยกว่า</p>
+  </div>
+
+  <h3>10.2 ก่อนเข้าคาบ</h3>
+  <table class="d">
+    <tr><th>เมื่อไร</th><th>ทำอะไร</th></tr>
+    <tr><td>ก่อนคาบ 2–3 นาที</td><td>เปิด URL เดโม 1 ครั้งเพื่อ "ปลุก" service (ไม่งั้นจะเจอ cold start กลางคาบ)</td></tr>
+    <tr><td>ก่อนคาบ</td><td>ถ้ามีคนเพิ่มข้อมูลไว้แล้วอยากรีเซ็ต — กด <strong>Manual Deploy → Deploy latest commit</strong></td></tr>
+    <tr><td>ระหว่างสอน CP39</td><td>เปิด DevTools → Network ให้เห็นว่ายิง <code>/api/requests</code> ของโดเมนเดียวกัน</td></tr>
+  </table>
+
+  <h3>10.3 ตรวจงานนักศึกษาที่ทำ Challenge</h3>
+  <table class="d">
+    <tr><th>ตรวจ</th><th>ผ่านเมื่อ</th></tr>
+    <tr><td>URL ใน <code>DEMO.md</code></td><td>เปิดแล้วเห็นหน้าเว็บ (รอ 60 วินาทีถ้าหลับอยู่)</td></tr>
+    <tr><td><code>URL/api/health</code></td><td><code>"env":"production"</code> · <code>"connected":true</code></td></tr>
+    <tr><td>เพิ่มคำร้อง 1 รายการ</td><td>บันทึกและแสดงผลได้</td></tr>
+    <tr><td>branch ที่ deploy</td><td>ตรงกับ <code>unit4/week-11</code> ที่ส่งงาน</td></tr>
+  </table>
+
+  <h3>10.4 คำถามที่นักศึกษาจะถามบ่อย</h3>
+  <table class="d">
+    <tr><th>คำถาม</th><th>ตอบ</th></tr>
+    <tr><td>"เปิดแล้วหมุนนานมาก"</td><td>free tier หลับอยู่ · รอ 30–60 วินาที</td></tr>
+    <tr><td>"ข้อมูลที่เพิ่มหายไป"</td><td>ephemeral filesystem — เป็นบทเรียนในส่วนที่ 9</td></tr>
+    <tr><td>"ในเครื่องได้ แต่บน Render ไม่ได้"</td><td>ให้ทำส่วนที่ 5 (จำลองแบบเข้มงวด) ก่อน · มักเจอกับดักข้อใดข้อหนึ่งในส่วนที่ 3</td></tr>
+    <tr><td>"ต้องจ่ายเงินไหม"</td><td>ไม่ — Instance Type = Free ไม่ต้องใช้บัตรเครดิต</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 ขอบเขตการตรวจสอบของคู่มือนี้</span>
+    <p style="margin:0">ขั้นตอน build · start · health check ทดสอบด้วยการจำลองสภาพแวดล้อมของ Render ครบทุกขั้น (ส่วนที่ 5) บน reference solution · ชื่อช่องและเมนูบนหน้าเว็บ Render อาจเปลี่ยนตามการอัปเดตของผู้ให้บริการ — <strong>แนะนำให้ผู้สอนลอง deploy เดโมตามส่วนที่ 10.1 หนึ่งครั้งก่อนเปิดภาคเรียน</strong></p>
+  </div>
+</section>
+
+<!-- ════════ S11 ════════ -->
+<section class="ch" id="s11">
+  <p class="ch-num">ส่วนที่ 11 · Challenge ⭐⭐</p>
+  <h2>ข้อมูลถาวรด้วย Turso</h2>
+
+  <p>ส่วนที่ 9 แสดงว่าบน free tier ไฟล์ <code>campus.db</code> จะกลับเป็นเวอร์ชันใน git ทุกครั้งที่ restart · ทางแก้ของระบบจริงคือ<strong>ย้ายฐานข้อมูลไปไว้คนละเครื่องกับ API</strong> — Turso เป็นบริการฐานข้อมูลที่ใช้ SQLite จึงใช้ schema และ query เดิมได้ทั้งหมด</p>
+
+  <figure>
+    <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="สถาปัตยกรรม Render กับ Turso">
+      <style>.b1t{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .b1s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .b1m{font:500 9.5px 'IBM Plex Mono',monospace}</style>
+      <defs>
+        <marker id="b1a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#54685E" stroke-width="1.5"/></marker>
+        <marker id="b1p" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#6B3B96" stroke-width="1.5"/></marker>
+      </defs>
+      <rect x="20" y="100" width="130" height="80" rx="9" fill="#F5F7F6" stroke="#8A9691"/>
+      <text x="85" y="130" text-anchor="middle" class="b1t">📱 ผู้ใช้</text>
+      <text x="85" y="150" text-anchor="middle" class="b1s">เปิด xxx.onrender.com</text>
+      <path d="M152 140 L196 140" stroke="#54685E" stroke-width="1.6" marker-end="url(#b1a)"/>
+
+      <rect x="200" y="40" width="250" height="200" rx="10" fill="#FBF0E2" stroke="#A8620E" stroke-width="1.6"/>
+      <text x="325" y="64" text-anchor="middle" class="b1m" fill="#A8620E" style="letter-spacing:.05em">RENDER · เครื่องชั่วคราว</text>
+      <rect x="218" y="78" width="214" height="44" rx="7" fill="#FFFFFF" stroke="#E0C49A"/>
+      <text x="325" y="98" text-anchor="middle" class="b1t">Express + หน้าเว็บ</text>
+      <text x="325" y="114" text-anchor="middle" class="b1s">route → controller → service</text>
+      <rect x="218" y="132" width="214" height="44" rx="7" fill="#FFFFFF" stroke="#E0C49A" stroke-dasharray="4 3"/>
+      <text x="325" y="152" text-anchor="middle" class="b1t" fill="#8A9691">campus.db (ไม่ใช้แล้ว)</text>
+      <text x="325" y="168" text-anchor="middle" class="b1s">หายทุก restart</text>
+      <text x="325" y="200" text-anchor="middle" class="b1s">restart · redeploy · หลับแล้วตื่น</text>
+      <text x="325" y="218" text-anchor="middle" class="b1s">→ เครื่องใหม่ ไฟล์กลับเป็นตาม git</text>
+
+      <path d="M452 100 L546 100" stroke="#6B3B96" stroke-width="1.6" marker-end="url(#b1p)"/>
+      <text x="499" y="88" text-anchor="middle" class="b1m" fill="#6B3B96">SQL ผ่าน HTTPS</text>
+      <text x="499" y="120" text-anchor="middle" class="b1s">+ auth token</text>
+
+      <rect x="550" y="40" width="190" height="200" rx="10" fill="#F1EAF8" stroke="#6B3B96" stroke-width="1.8"/>
+      <text x="645" y="64" text-anchor="middle" class="b1m" fill="#6B3B96" style="letter-spacing:.05em">TURSO · ถาวร</text>
+      <text x="645" y="96" text-anchor="middle" class="b1t">ฐานข้อมูล SQLite</text>
+      <text x="645" y="116" text-anchor="middle" class="b1s">users · requests</text>
+      <text x="645" y="136" text-anchor="middle" class="b1s">schema.sql เดิม</text>
+      <text x="645" y="164" text-anchor="middle" class="b1t" fill="#14503A">✓ ข้อมูลไม่หาย</text>
+      <text x="645" y="182" text-anchor="middle" class="b1s" fill="#14503A">แม้ Render restart</text>
+      <text x="645" y="200" text-anchor="middle" class="b1m" fill="#6B3B96">libsql://campus-xxx.turso.io</text>
+    </svg>
+    <figcaption><b>ภาพที่ 6</b>API อยู่บนเครื่องชั่วคราวของ Render · ข้อมูลอยู่บน Turso — restart กี่ครั้งข้อมูลก็ไม่หาย</figcaption>
+  </figure>
+
+  <h3>11.1 ต้องแก้อะไร — service ไฟล์เดียว</h3>
+<pre><code><span class="c-com">// api/src/services/requestService.js — เลือกฐานข้อมูลจาก env (แนวคิดเดียวกับบทที่ 3)</span>
+<span class="c-key">async function</span> <span class="c-fn">openDatabase</span>() {
+  <span class="c-key">const</span> url = process.env.TURSO_DATABASE_URL;
+  <span class="c-key">if</span> (url) {
+    <span class="c-key">const</span> { default: Database } = <span class="c-key">await import</span>(<span class="c-str">'libsql'</span>);   <span class="c-com">// npm install libsql --prefix api</span>
+    driver = <span class="c-str">'turso'</span>;
+    <span class="c-key">return new</span> <span class="c-fn">Database</span>(url, { authToken: process.env.TURSO_AUTH_TOKEN });
+  }
+  driver = <span class="c-str">'sqlite'</span>;
+  <span class="c-key">return new</span> <span class="c-fn">DatabaseSync</span>(DB_FILE);
+}
+
+<span class="c-key">export async function</span> <span class="c-fn">loadSeed</span>() {
+  db = <span class="c-key">await</span> <span class="c-fn">openDatabase</span>();    <span class="c-com">// ← บรรทัดเดียวที่เปลี่ยนใน loadSeed</span>
+  ...
+}</code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไมแก้แค่ service</span>
+    <p style="margin:0"><code>libsql</code> มี <code>prepare().all() · .get() · .run()</code> แบบ <strong>sync</strong> หน้าตาเดียวกับ <code>node:sqlite</code> · query ทุกตัวใช้ต่อได้ และ controller ไม่ต้องเติม <code>await</code> — ต่างจาก MongoDB ที่เป็น async จึงกระทบ controller ด้วย (บทที่ 8)</p>
+  </div>
+
+  <h3>11.2 ขั้นตอนโดยย่อ</h3>
+  <table class="d">
+    <tr><th>ขั้น</th><th>ทำ</th><th>ได้</th></tr>
+    <tr><td>①</td><td>turso.tech → เข้าด้วย GitHub → สร้างฐานข้อมูล (Location ใกล้ Singapore)</td><td>Database URL <code>libsql://…</code></td></tr>
+    <tr><td>②</td><td>สร้าง token (read &amp; write)</td><td>Auth Token</td></tr>
+    <tr><td>③</td><td><code>npm install libsql --prefix api</code> · แก้ service ตาม 11.1</td><td>โค้ดรองรับทั้ง 2 แบบ</td></tr>
+    <tr><td>④</td><td>ใส่ 2 ค่าใน <code>api/.env</code> → <code>npm run dev</code></td><td><code>/api/health</code> บอก <code>"driver":"turso"</code></td></tr>
+    <tr><td>⑤</td><td>Render → Environment → เพิ่ม <code>TURSO_DATABASE_URL</code> · <code>TURSO_AUTH_TOKEN</code> → Save</td><td>deploy ใหม่อัตโนมัติ</td></tr>
+    <tr><td>⑥</td><td>เพิ่มข้อมูล → Manual Deploy → เปิดใหม่</td><td><strong>ข้อมูลยังอยู่</strong></td></tr>
+  </table>
+  <p>ขั้นตอนละเอียดทีละช่อง อยู่ในคู่มือ Take-Home หัวข้อ "Challenge ⭐⭐ ข้อมูลถาวรด้วย Turso"</p>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ไม่ต้องสร้างตารางบน Turso เอง</span>
+    <p style="margin:0">ตอน start ครั้งแรก <code>loadSeed()</code> ตรวจว่ายังไม่มีตาราง <code>requests</code> แล้วรัน <code>schema.sql</code> ให้ — ได้ข้อมูลตั้งต้น 5 รายการ · ครั้งต่อไปเห็นว่ามีตารางแล้ว จึงไม่รันซ้ำ (ข้อมูลที่เพิ่มไม่ถูกเขียนทับ)</p>
+  </div>
+
+  <h3>11.3 ความปลอดภัยของ token</h3>
+  <table class="d">
+    <tr><th>ทำ</th><th>ห้ามทำ</th></tr>
+    <tr><td>เก็บใน <code>api/.env</code> (อยู่ใน .gitignore) และใน Environment ของ Render</td><td>ใส่ในโค้ด · commit · แปะในแชทกลุ่ม</td></tr>
+    <tr><td>commit <code>.env.example</code> ที่มีแต่ชื่อตัวแปรค่าว่าง</td><td>ใช้ token ของเพื่อน</td></tr>
+    <tr><td>ถ้าหลุด — ลบ token เดิมใน Dashboard แล้วสร้างใหม่</td><td>ปล่อยไว้แล้วหวังว่าไม่มีใครเห็น</td></tr>
+  </table>
+
+  <h3>11.4 ตารางแก้ปัญหา</h3>
+  <table class="d">
+    <tr><th>ข้อความใน log</th><th>สาเหตุ</th><th>แก้</th></tr>
+    <tr><td><code>401 Unauthorized</code> · <code>The JWT is invalid</code></td><td>token ผิด/ถูกลบ</td><td>สร้าง token ใหม่</td></tr>
+    <tr><td><code>401</code> · <code>Auth string does not conform…</code></td><td>ไม่ได้ตั้ง <code>TURSO_AUTH_TOKEN</code></td><td>เพิ่มตัวแปรให้ครบ 2 ตัว</td></tr>
+    <tr><td><code>Cannot find package 'libsql'</code></td><td>ไม่ได้ติดตั้ง หรืออยู่ใน devDependencies</td><td><code>npm install libsql --prefix api</code> แล้ว push</td></tr>
+    <tr><td>health บอก <code>"driver":"sqlite"</code></td><td>ตัวแปรว่าง หรือยังไม่ deploy ใหม่</td><td>ตรวจ Environment · Manual Deploy</td></tr>
+    <tr><td>deploy ค้างที่ health check</td><td>URL ผิด · ต่อ Turso ไม่ได้ตอน start</td><td>คัดลอก URL ใหม่ · ดู log ขั้น ④</td></tr>
+  </table>
+
+  <h3>11.5 สำหรับผู้สอน</h3>
+  <table class="d">
+    <tr><th>เรื่อง</th><th>แนะนำ</th></tr>
+    <tr><td>reference solution</td><td>รองรับ Turso แล้ว — ไม่ตั้งตัวแปรใช้ campus.db · ตั้ง 2 ตัวแปรใช้ Turso · ใช้ทำเดโมที่ข้อมูลไม่รีเซ็ตได้</td></tr>
+    <tr><td>checker</td><td>ใช้ฐานข้อมูลชั่วคราวในเครื่องเสมอ แม้นักศึกษาตั้งค่า Turso ไว้ — ไม่มีข้อมูลทดสอบไปปนใน Turso</td></tr>
+    <tr><td>ตรวจงาน Challenge ⭐⭐</td><td><code>URL/api/health</code> ต้องบอก <code>"driver":"turso"</code> · เพิ่มข้อมูล 1 รายการ แล้วขอดูหลักฐาน Manual Deploy (วิดีโอหรือ screenshot)</td></tr>
+    <tr><td>ค่าใช้จ่าย</td><td>free tier ของ Turso ไม่ต้องใช้บัตรเครดิต · นักศึกษาแต่ละคนใช้บัญชีของตัวเอง</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 ขอบเขตการตรวจสอบของส่วนนี้</span>
+    <p style="margin:0">ทดสอบกับ <strong>sqld</strong> (server แบบ open source ตัวเดียวกับที่ Turso ใช้) ผ่าน HTTP พร้อม auth token แบบ JWT: checker ทั้ง 3 ตัวผ่านครบบนฐานข้อมูลระยะไกล · จำลอง Render (build แบบ production) แล้ว redeploy บนเครื่องใหม่ ข้อมูลยังอยู่ · token ผิดหรือไม่ใส่ได้ 401 ตามตาราง 11.4<br>
+    สิ่งที่<strong>ยังไม่ได้ทดสอบ</strong>คือบริการ Turso จริงบนอินเทอร์เน็ต (URL แบบ <code>libsql://</code>) และหน้าเว็บ Dashboard — <strong>แนะนำให้ผู้สอนลองกับบัญชีจริงหนึ่งครั้งก่อนประกาศ Challenge นี้</strong></p>
+  </div>
+</section>
+
+<footer>
+  <span>ENGSE203 · หน่วยที่ 4 · Week 11 · คู่มือ Deploy ขึ้น Render</span>
+  <span class="m">ใช้คู่กับ LAB 11 · CP39 · CP43 · Challenge</span>
+</footer>
+
+</div>
+</body>
+</html>
