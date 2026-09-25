@@ -11,6 +11,17 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// ── supertest อยู่ใน devDependencies ของ api/ — หาได้ทั้งจาก root และจาก api/ ──
+import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
+async function loadSupertest() {
+  try { return (await import('supertest')).default; }
+  catch {
+    const req = createRequire(path.join(ROOT, 'api', 'package.json'));
+    return (await import(pathToFileURL(req.resolve('supertest')).href)).default;
+  }
+}
+
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const INCLASS = process.argv.includes('--inclass');
 const results = [];
@@ -28,7 +39,7 @@ async function setup() {
   try {
     const mod = await import('./api/src/app.js');
     const svc = await import('./api/src/services/requestService.js');
-    request = (await import('supertest')).default;
+    request = await loadSupertest();
     await svc.loadSeed();
     app = mod.createApp();
     return true;

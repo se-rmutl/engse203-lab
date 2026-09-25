@@ -932,6 +932,7 @@ envVars: NODE_ENV=production · NODE_VERSION=22   <span class="c"># ไม่ต
     <pre style="margin:0;font-size:.98rem"><code><span class="c"># เลือกด้วย env — แนวคิดเดียวกับบทที่ 3</span>
 TURSO_DATABASE_URL=libsql://campus-xxx.turso.io     <span class="c"># ไม่ใส่ = ใช้ campus.db</span>
 TURSO_AUTH_TOKEN=eyJ...                              <span class="c"># รหัสผ่าน · ห้าม commit</span></code></pre>
+    <div class="wrong"><p style="margin:0"><strong>⚠ ใช้แพ็กเกจ <code>libsql</code> (sync) ไม่ใช่ <code>@libsql/client</code> (async)</strong> — ชื่อคล้ายกัน แต่ตัวหลังทำให้กระทบ controller ทั้งชุด · และโหลดด้วย <code>await import('libsql')</code> เพื่อให้เครื่องที่ไม่มี libsql ยังรันได้</p></div>
   </div>
 </section>
 

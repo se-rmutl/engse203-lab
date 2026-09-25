@@ -745,7 +745,7 @@ git push -u origin unit4/week-11</code></pre>
   <h3>10.1 deploy reference solution เป็นเดโมประจำวิชา</h3>
   <p>แนะนำให้ deploy ไว้ 1 ตัวก่อนเปิดภาคเรียน — ใช้ฉายในคาบและเป็นตัวเทียบเวลานักศึกษาติดปัญหา</p>
 <pre><code><span class="c-com"># ① คัดลอก reference ออกมาเป็น repo ใหม่ (โปรเจกต์อยู่ที่ root → Root Directory เว้นว่าง)</span>
-cp -r labs/week-11-fullstack-integration/ ~/campus-demo
+cp -r labs/week-11-fullstack-integration/_instructor-private/reference-solution ~/campus-demo
 <span class="c-key">cd</span> ~/campus-demo
 rm -rf node_modules api/node_modules frontend/node_modules frontend/dist
 
@@ -762,7 +762,7 @@ git push -u origin main</code></pre>
 
   <div class="box pitfall">
     <span class="h">🟥 อย่า deploy จาก Course Repository โดยตรง</span>
-    <p style="margin:0">ถ้าเชื่อม Render กับ Course Repository ต้องให้สิทธิ์อ่านทั้ง repo · แยกเป็น repo เดโมปลอดภัยกว่า</p>
+    <p style="margin:0">reference อยู่ใน <code>_instructor-private/</code> · ถ้าเชื่อม Render กับ Course Repository ต้องให้สิทธิ์อ่านทั้ง repo · แยกเป็น repo เดโมปลอดภัยกว่า</p>
   </div>
 
   <h3>10.2 ก่อนเข้าคาบ</h3>
@@ -866,7 +866,38 @@ git push -u origin main</code></pre>
     <p style="margin:0"><code>libsql</code> มี <code>prepare().all() · .get() · .run()</code> แบบ <strong>sync</strong> หน้าตาเดียวกับ <code>node:sqlite</code> · query ทุกตัวใช้ต่อได้ และ controller ไม่ต้องเติม <code>await</code> — ต่างจาก MongoDB ที่เป็น async จึงกระทบ controller ด้วย (บทที่ 8)</p>
   </div>
 
-  <h3>11.2 ขั้นตอนโดยย่อ</h3>
+  <h3>11.2 ข้อควรระวัง 4 ข้อ (จากการทดลองทำจริงของผู้ช่วยสอน)</h3>
+  <table class="d">
+    <tr><th>#</th><th>ข้อควรระวัง</th><th>ถ้าพลาด</th></tr>
+    <tr><td>①</td><td>script <code>build</code> ต้องมี <code>npm install --prefix api</code> และ <code>libsql</code> ต้องอยู่ใน <strong>dependencies</strong> ของ api — Render จึงติดตั้งให้ก่อน <code>npm start</code></td><td><code>Cannot find package 'libsql'</code></td></tr>
+    <tr><td>②</td><td>ใช้ <code>await import('libsql')</code> ในฟังก์ชัน ไม่ใช่ import บนหัวไฟล์ — เครื่องที่ไม่มี libsql, checker และ <code>npm test</code> ยังใช้ <code>node:sqlite</code> ได้</td><td>ทุกเครื่องที่ไม่มี libsql เปิด API ไม่ได้</td></tr>
+    <tr><td>③</td><td>ใช้แพ็กเกจ <code>libsql</code> (sync) <strong>ไม่ใช่</strong> <code>@libsql/client</code> (async) ที่เอกสาร Turso มักแนะนำ</td><td>service + controller ต้องเป็น async ทั้งชุด</td></tr>
+    <tr><td>④</td><td>URL และ token อยู่ได้แค่ <code>api/.env</code> (ใน .gitignore) และ Environment ของ Render · <code>.env.example</code> ต้องค่าว่าง</td><td>token หลุดขึ้น GitHub</td></tr>
+  </table>
+
+  <figure>
+    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="libsql กับ @libsql/client ต่างกันอย่างไร">
+      <style>.b2t{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E} .b2s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E} .b2m{font:500 9.5px 'IBM Plex Mono',monospace}</style>
+      <rect x="20" y="20" width="350" height="164" rx="10" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.8"/>
+      <text x="195" y="46" text-anchor="middle" class="b2t" fill="#14503A">✓ libsql — sync (ใช้ตัวนี้)</text>
+      <text x="40" y="76" class="b2m" fill="#14503A">db.prepare(sql).all(status)</text>
+      <text x="40" y="96" class="b2m" fill="#14503A">db.prepare(sql).get(id)</text>
+      <text x="40" y="116" class="b2m" fill="#14503A">db.prepare(sql).run(...)</text>
+      <text x="195" y="146" text-anchor="middle" class="b2s">หน้าตาเดียวกับ node:sqlite</text>
+      <text x="195" y="166" text-anchor="middle" class="b2t" fill="#14503A">แก้ service ชั้นเดียว</text>
+
+      <rect x="390" y="20" width="350" height="164" rx="10" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.8"/>
+      <text x="565" y="46" text-anchor="middle" class="b2t" fill="#8F2B21">✕ @libsql/client — async</text>
+      <text x="410" y="76" class="b2m" fill="#8F2B21">const c = createClient({ url, authToken })</text>
+      <text x="410" y="96" class="b2m" fill="#8F2B21">await c.execute({ sql, args })</text>
+      <text x="410" y="116" class="b2m" fill="#8F2B21">→ คืน Promise ทุกครั้ง</text>
+      <text x="565" y="146" text-anchor="middle" class="b2s" fill="#8F2B21">เขียน query ใหม่ทุกตัว + controller เติม await</text>
+      <text x="565" y="166" text-anchor="middle" class="b2t" fill="#8F2B21">กระทบ 2 ชั้น (แบบ MongoDB)</text>
+    </svg>
+    <figcaption><b>ภาพที่ 7</b>ชื่อคล้ายกันแต่คนละแบบ — ตัวที่เลือกกำหนดว่าต้องแก้กี่ชั้น</figcaption>
+  </figure>
+
+  <h3>11.3 ขั้นตอนโดยย่อ</h3>
   <table class="d">
     <tr><th>ขั้น</th><th>ทำ</th><th>ได้</th></tr>
     <tr><td>①</td><td>turso.tech → เข้าด้วย GitHub → สร้างฐานข้อมูล (Location ใกล้ Singapore)</td><td>Database URL <code>libsql://…</code></td></tr>
@@ -883,25 +914,26 @@ git push -u origin main</code></pre>
     <p style="margin:0">ตอน start ครั้งแรก <code>loadSeed()</code> ตรวจว่ายังไม่มีตาราง <code>requests</code> แล้วรัน <code>schema.sql</code> ให้ — ได้ข้อมูลตั้งต้น 5 รายการ · ครั้งต่อไปเห็นว่ามีตารางแล้ว จึงไม่รันซ้ำ (ข้อมูลที่เพิ่มไม่ถูกเขียนทับ)</p>
   </div>
 
-  <h3>11.3 ความปลอดภัยของ token</h3>
+  <h3>11.4 ความปลอดภัยของ token</h3>
   <table class="d">
     <tr><th>ทำ</th><th>ห้ามทำ</th></tr>
     <tr><td>เก็บใน <code>api/.env</code> (อยู่ใน .gitignore) และใน Environment ของ Render</td><td>ใส่ในโค้ด · commit · แปะในแชทกลุ่ม</td></tr>
-    <tr><td>commit <code>.env.example</code> ที่มีแต่ชื่อตัวแปรค่าว่าง</td><td>ใช้ token ของเพื่อน</td></tr>
+    <tr><td>commit <code>.env.example</code> ที่มีแต่ชื่อตัวแปร<strong>ค่าว่าง</strong></td><td>ใส่ URL หรือ token จริงใน <code>.env.example</code> · ใช้ token ของเพื่อน</td></tr>
     <tr><td>ถ้าหลุด — ลบ token เดิมใน Dashboard แล้วสร้างใหม่</td><td>ปล่อยไว้แล้วหวังว่าไม่มีใครเห็น</td></tr>
   </table>
 
-  <h3>11.4 ตารางแก้ปัญหา</h3>
+  <h3>11.5 ตารางแก้ปัญหา</h3>
   <table class="d">
     <tr><th>ข้อความใน log</th><th>สาเหตุ</th><th>แก้</th></tr>
     <tr><td><code>401 Unauthorized</code> · <code>The JWT is invalid</code></td><td>token ผิด/ถูกลบ</td><td>สร้าง token ใหม่</td></tr>
     <tr><td><code>401</code> · <code>Auth string does not conform…</code></td><td>ไม่ได้ตั้ง <code>TURSO_AUTH_TOKEN</code></td><td>เพิ่มตัวแปรให้ครบ 2 ตัว</td></tr>
-    <tr><td><code>Cannot find package 'libsql'</code></td><td>ไม่ได้ติดตั้ง หรืออยู่ใน devDependencies</td><td><code>npm install libsql --prefix api</code> แล้ว push</td></tr>
+    <tr><td><code>Cannot find package 'libsql'</code></td><td>ไม่ได้ติดตั้ง · อยู่ใน devDependencies · build ไม่ติดตั้ง api</td><td><code>npm install libsql --prefix api</code> แล้ว push · ข้อ ①</td></tr>
+    <tr><td><code>Database is not a constructor</code> · <code>db.prepare is not a function</code></td><td>ใช้ <code>@libsql/client</code></td><td>เปลี่ยนเป็น <code>libsql</code> · ข้อ ③</td></tr>
     <tr><td>health บอก <code>"driver":"sqlite"</code></td><td>ตัวแปรว่าง หรือยังไม่ deploy ใหม่</td><td>ตรวจ Environment · Manual Deploy</td></tr>
     <tr><td>deploy ค้างที่ health check</td><td>URL ผิด · ต่อ Turso ไม่ได้ตอน start</td><td>คัดลอก URL ใหม่ · ดู log ขั้น ④</td></tr>
   </table>
 
-  <h3>11.5 สำหรับผู้สอน</h3>
+  <h3>11.6 สำหรับผู้สอน</h3>
   <table class="d">
     <tr><th>เรื่อง</th><th>แนะนำ</th></tr>
     <tr><td>reference solution</td><td>รองรับ Turso แล้ว — ไม่ตั้งตัวแปรใช้ campus.db · ตั้ง 2 ตัวแปรใช้ Turso · ใช้ทำเดโมที่ข้อมูลไม่รีเซ็ตได้</td></tr>

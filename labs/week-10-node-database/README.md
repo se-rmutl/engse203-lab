@@ -183,7 +183,27 @@ week-10-node-database/
 │   ├── ENGSE203_Week10_Slides.html                 ← 49 สไลด์
 │   ├── ENGSE203_Week10_CP26–CP30_LiveCoding.html   ← 5 ไฟล์
 │   └── ENGSE203_Week09_Week10_Blueprint_TH.md
+└── _instructor-private/                ⚠ สำหรับผู้สอนเท่านั้น
 ```
 
 ---
 
+## สำหรับผู้สอน
+
+| ไฟล์ | ใช้ทำอะไร |
+|---|---|
+| [Instructor Step Script](_instructor-private/ENGSE203_Week10_Instructor_Step_Script_TH.md) | สคริปต์ 300 นาที + Hint Ladder + แผนสำรอง |
+| `_instructor-private/reference-solution/` | เฉลยครบ (checker 31/31) |
+
+**ตรวจก่อนสอน**
+
+```bash
+cd _instructor-private/reference-solution
+node --disable-warning=ExperimentalWarning check-week10.mjs | tail -6   # 31/31
+node --disable-warning=ExperimentalWarning check-week07.mjs | tail -2   # 36/36
+
+cd ../../lab10/starter
+node --disable-warning=ExperimentalWarning check-week10.mjs | tail -6   # 12/31
+```
+
+⚠ **`_instructor-private/` ต้องไม่เผยแพร่ให้นักศึกษา**

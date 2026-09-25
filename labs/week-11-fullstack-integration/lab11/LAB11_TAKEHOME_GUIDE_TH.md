@@ -423,6 +423,22 @@ grep -l "localhost:3001" frontend/dist/assets/*.js
 | SQL · schema.sql · query | — | **ใช้ของเดิมได้ทั้งหมด** |
 | ต้องแก้โค้ด | — | service ไฟล์เดียว (ชั้นเดียว) |
 
+## ⚠ ข้อควรระวัง 4 ข้อ — อ่านก่อนลงมือ
+
+จากการทดลองทำจริงของทีมผู้ช่วยสอน
+
+| # | ข้อควรระวัง | ถ้าพลาดจะเจอ |
+|---|---|---|
+| ① | **Render ต้องติดตั้ง dependency ของ `api/` ตอน build** — script `build` ใน root `package.json` ต้องมี `npm install --prefix api` (มีอยู่แล้วจาก CP43) และ `libsql` ต้องอยู่ใน **`dependencies`** ของ `api/package.json` | `Cannot find package 'libsql'` ตอน start |
+| ② | **ใช้ `await import('libsql')` (dynamic import) ในฟังก์ชัน** ไม่ใช่ `import ... from 'libsql'` บนหัวไฟล์ — เครื่องที่ยังไม่ได้ติดตั้ง libsql, checker และ `npm test` จะยังใช้ `node:sqlite` ได้ตามปกติ · libsql ถูกโหลดเฉพาะตอนตั้งค่า Turso | ถ้า import บนหัวไฟล์: ทุกเครื่องที่ไม่มี libsql เปิด API ไม่ได้เลย |
+| ③ | **ใช้แพ็กเกจ `libsql` เท่านั้น — ไม่ใช่ `@libsql/client`** · เอกสารของ Turso มักแนะนำ `@libsql/client` ซึ่งเป็น **async (Promise) ทั้งหมด** · ถ้าใช้ตัวนั้น service ทุกฟังก์ชันต้องเป็น async และ controller ต้องเติม `await` ทั้งชุด — กลายเป็นแบบเดียวกับ MongoDB ในบทที่ 8 | `Database is not a constructor` · `db.prepare is not a function` · หรือ controller ได้ Promise แทนข้อมูล |
+| ④ | **URL และ token ใส่ได้ 2 ที่เท่านั้น** — `api/.env` (อยู่ใน .gitignore) และ Environment ของ Render · `.env.example` ต้องเป็น**ค่าว่าง**เสมอ เพราะไฟล์นี้ถูก commit | token หลุดขึ้น GitHub — ใครก็แก้หรือลบข้อมูลของเราได้ |
+
+> **ตรวจข้อ ④ ก่อน push ทุกครั้ง**
+> ```bash
+> git diff --cached | grep -iE "turso|eyJ"     # ต้องไม่มีค่าจริงโผล่มา (ชื่อตัวแปรเปล่า ๆ ได้)
+> ```
+
 ## ขั้นที่ 1 — สร้างฐานข้อมูลบน Turso
 
 1. เปิด **https://turso.tech** → **Sign Up** → เลือกเข้าสู่ระบบด้วย **GitHub**
@@ -450,6 +466,8 @@ npm install libsql --prefix api
 
 `libsql` คือไลบรารีของ Turso ที่มี `prepare().all()` · `.get()` · `.run()` หน้าตา**เหมือน `node:sqlite`** — query ทุกตัวใน service ใช้ต่อได้ทันที
 
+> ⚠ **`libsql` ≠ `@libsql/client`** — ชื่อคล้ายกันแต่คนละแบบ · `libsql` เป็น sync (ใช้ตัวนี้) · `@libsql/client` เป็น async (อย่าใช้ในงานนี้)
+
 > ⚠ ต้องเป็น `dependencies` (ไม่ใช่ devDependencies) — ไม่งั้นบน Render จะหาไม่เจอ · คำสั่งข้างบนใส่ให้ถูกที่แล้ว
 
 ## ขั้นที่ 3 — ให้ service เลือกฐานข้อมูลตาม env
@@ -465,7 +483,8 @@ let driver = 'sqlite';
 async function openDatabase() {
   const url = process.env.TURSO_DATABASE_URL;
   if (url) {
-    const { default: Database } = await import('libsql');   // โหลดเฉพาะตอนใช้ Turso
+    // dynamic import — เครื่องที่ไม่ได้ติดตั้ง libsql (checker · npm test) ยังรันได้
+    const { default: Database } = await import('libsql');
     driver = 'turso';
     return new Database(url, { authToken: process.env.TURSO_AUTH_TOKEN });
   }
@@ -528,7 +547,9 @@ curl http://localhost:3001/api/health     # "driver":"turso" · "connected":true
 |---|---|---|
 | `401 Unauthorized` · `The JWT is invalid` | token ผิด หรือถูกลบไปแล้ว | สร้าง token ใหม่ แล้วแก้ค่าใน .env / Render |
 | `401` · `Auth string does not conform` | ไม่ได้ตั้ง `TURSO_AUTH_TOKEN` | เพิ่มตัวแปรให้ครบ 2 ตัว |
-| `Cannot find package 'libsql'` | ไม่ได้ติดตั้ง หรืออยู่ใน devDependencies | `npm install libsql --prefix api` แล้ว push `api/package.json` |
+| `Cannot find package 'libsql'` | ไม่ได้ติดตั้ง · อยู่ใน devDependencies · หรือ script build ไม่มี `npm install --prefix api` | `npm install libsql --prefix api` แล้ว push `api/package.json` · ตรวจ script build (ข้อควรระวัง ①) |
+| `Database is not a constructor` · `db.prepare is not a function` · หน้าเว็บได้ข้อมูลว่าง / `{}` | ติดตั้ง `@libsql/client` (async) แทน `libsql` | ถอน `@libsql/client` แล้วใช้ `libsql` (ข้อควรระวัง ③) |
+| checker / `npm test` เปิด API ไม่ได้หลังทำ Challenge | import libsql บนหัวไฟล์ | เปลี่ยนเป็น `await import('libsql')` ในฟังก์ชัน (ข้อควรระวัง ②) |
 | server ไม่ขึ้น · deploy ค้างที่ health check | URL พิมพ์ผิด · ต่อ Turso ไม่ได้ | คัดลอก URL จาก Dashboard ใหม่ · ดู log ขั้น Start |
 | `"driver":"sqlite"` ทั้งที่ตั้งค่าแล้ว | ตัวแปรยังว่าง หรือ Render ยังไม่ deploy ใหม่ | ตรวจค่าใน Environment · Manual Deploy |
 | หน้าเว็บช้ากว่าเดิม | ทุก query วิ่งผ่านเน็ต | เลือก Location ของ Turso ให้ใกล้ Singapore · เป็นเรื่องปกติของฐานข้อมูลแยกเครื่อง |

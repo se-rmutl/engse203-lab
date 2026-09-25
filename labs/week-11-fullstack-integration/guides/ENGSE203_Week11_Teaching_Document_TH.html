@@ -1033,6 +1033,14 @@ services:
       <p style="margin:0">นี่คือครั้งที่ 5 ที่เปลี่ยนแหล่งข้อมูลแล้วแก้ชั้นเดียว · ขั้นตอนเต็มอยู่ในคู่มือ Take-Home และคู่มือ Deploy ส่วนที่ 11</p>
     </div>
   </details>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ข้อควรระวัง 4 ข้อ (จากการทดลองทำจริงของผู้ช่วยสอน)</span>
+    <p style="margin:0 0 6px">① script <code>build</code> ต้องมี <code>npm install --prefix api</code> และ <code>libsql</code> อยู่ใน <strong>dependencies</strong> — Render จึงติดตั้งให้ก่อน start</p>
+    <p style="margin:0 0 6px">② ใช้ <code>await import('libsql')</code> ในฟังก์ชัน — เครื่องที่ไม่มี libsql, checker และ <code>npm test</code> ยังใช้ <code>node:sqlite</code> ได้</p>
+    <p style="margin:0 0 6px">③ ใช้ <code>libsql</code> (sync) <strong>ไม่ใช่</strong> <code>@libsql/client</code> (async) ที่เอกสาร Turso มักแนะนำ — ไม่งั้นกระทบ controller ทั้งชุด</p>
+    <p style="margin:0">④ URL และ token อยู่ได้แค่ <code>api/.env</code> และ Environment ของ Render · <code>.env.example</code> ต้องค่าว่างเสมอ</p>
+  </div>
   <div class="recap">
     <span class="h">สรุปบทที่ 7</span>
     <ul>
@@ -1151,10 +1159,11 @@ services:
     <table class="d" style="margin:8px 0 6px">
       <tr><th>เปลี่ยนไป</th><th>ภาษา</th><th>ไลบรารี</th><th>กระทบ</th></tr>
       <tr><td>Turso (Challenge ⭐⭐ บทที่ 7)</td><td>SQL เดิม</td><td><code>libsql</code> — sync</td><td>service <strong>ชั้นเดียว</strong></td></tr>
+      <tr><td>Turso เหมือนกัน แต่ใช้ <code>@libsql/client</code></td><td>SQL เดิม</td><td><code>@libsql/client</code> — async</td><td>service + controller</td></tr>
       <tr><td>Postgres (Neon · Supabase)</td><td>SQL (ต่างเล็กน้อย)</td><td><code>pg</code> — async</td><td>service + controller</td></tr>
       <tr><td>MongoDB Atlas</td><td>ไม่ใช่ SQL</td><td><code>mongodb</code> — async</td><td>service + controller</td></tr>
     </table>
-    <p style="margin:0">ฐานข้อมูลอยู่คนละเครื่องเหมือนกันทั้ง 3 แบบ · แต่ <code>libsql</code> ซ่อนการรอเครือข่ายไว้ให้ดูเหมือน sync — "สัญญา" ของ service จึงไม่เปลี่ยน</p>
+    <p style="margin:0">ฐานข้อมูลอยู่คนละเครื่องเหมือนกันทุกแบบ · <strong>แม้แต่ Turso ตัวเดียวกัน ถ้าเลือกไลบรารี async ก็กระทบ 2 ชั้น</strong> — <code>libsql</code> ซ่อนการรอเครือข่ายไว้ให้ดูเหมือน sync "สัญญา" ของ service จึงไม่เปลี่ยน</p>
   </div>
 
   <h3>8.4 ไปเรียนต่อที่ไหน</h3>

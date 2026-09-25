@@ -174,7 +174,31 @@ week-07-rest-validation/
 │   ├── ENGSE203_Week07_Slides.html                 ← 23 สไลด์ · 7 SVG
 │   └── ENGSE203_Week07_Blueprint_TH.md
 ├── live-coding/                        ← 4 หน้าจอ CP09–CP12
-
+└── _instructor-private/                ⚠ สำหรับผู้สอนเท่านั้น
 ```
 
 ---
+
+## สำหรับผู้สอน
+
+| ไฟล์ | ใช้ทำอะไร |
+|---|---|
+| [Instructor Step Script](_instructor-private/ENGSE203_Week07_Instructor_Step_Script_TH.md) | สคริปต์ 300 นาที + Hint Ladder + แผนสำรอง |
+| `_instructor-private/reference-solution/` | เฉลยครบ (checker 36/36 · test 7/7) |
+| `live-coding/*.html` | หน้าจอฉายทีละ checkpoint |
+| `guides/ENGSE203_Week07_Slides.html` | สไลด์ 23 หน้า มี CORS simulator |
+
+**ตรวจก่อนสอน**
+
+```bash
+cd _instructor-private/reference-solution
+cd api && npm ci && cp .env.example .env && cd ..
+cd frontend && npm ci && cp .env.example .env.local && cd ..
+node check-week07.mjs | tail -6          # ต้องได้ 36/36
+cd api && npm test                       # ต้องผ่าน 7/7
+
+cd ../../../lab07/starter
+node check-week07.mjs --inclass | tail -3    # ต้องได้ 10/25
+```
+
+⚠ **`_instructor-private/` ต้องไม่เผยแพร่ให้นักศึกษา**
