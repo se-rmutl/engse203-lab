@@ -23,5 +23,3 @@ export const config = {
   schemaFile: path.join(API_ROOT, 'data', 'schema.sql'),
   staticDir:  process.env.STATIC_DIR ?? path.join(API_ROOT, '..', 'frontend', 'dist'),
 };
-
-../frontend/dist/index.html

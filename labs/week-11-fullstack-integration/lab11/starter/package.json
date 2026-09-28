@@ -6,17 +6,8 @@
     "node": ">=22.13.0"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "verify": "npm run check && npm run build",
+    "build": "npm install --prefix api && npm install --prefix frontend --include=dev && npm run build --prefix frontend",
+    "start": "npm start --prefix api",
     "check": "node --disable-warning=ExperimentalWarning check-week11.mjs"
-
-  },
-  "devDependencies": {
-    "supertest": "^7.2.2",
-        "@vitejs/plugin-react": "6.0.3",
-    "vite": "8.1.5"
   }
-
 }
