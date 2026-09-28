@@ -14,6 +14,9 @@
 
   },
   "devDependencies": {
-    "supertest": "^7.2.2"
+    "supertest": "^7.2.2",
+        "@vitejs/plugin-react": "6.0.3",
+    "vite": "8.1.5"
   }
+
 }
