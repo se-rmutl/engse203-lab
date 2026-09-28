@@ -21,10 +21,17 @@ export function createApp() {
   // ③ อ่าน JSON body
   app.use(express.json());
 
-  // ④ route
-  app.get('/', (req, res) => {
-    res.json({ message: 'Campus Service API is running', version: '2.0.0' });
-  });
+  if (config.isProd && existsSync(config.staticDir)) {
+    app.use(express.static(config.staticDir));
+    // ทุก path ที่ไม่ขึ้นต้นด้วย /api → คืน index.html (React Router จัดการต่อ)
+    app.get(/^\/(?!api).*/, (req, res) => {
+      res.sendFile(path.join(config.staticDir, 'index.html'));
+    });
+  } else {
+    // dev: หน้าเว็บอยู่ที่ Vite (5173) · / ของ API ตอบข้อความบอกทางแทน
+    app.get('/', (req, res) => res.json({ message: 'API (dev) — หน้าเว็บอยู่ที่พอร์ต 5173' }));
+  }
+
   app.use('/api/health', healthRoutes);
   app.use('/api/requests', requestRoutes);
   app.use('/api/users', userRoutes);

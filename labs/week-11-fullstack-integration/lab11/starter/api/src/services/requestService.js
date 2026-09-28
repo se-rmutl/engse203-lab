@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 //   ไม่งั้น `npm run dev` (รันจาก api/) กับ checker (รันจาก root) จะหาไฟล์คนละที่
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const API_ROOT = path.resolve(HERE, '../..');
-const DB_FILE = process.env.DB_FILE ?? path.join(API_ROOT, 'data', 'campus.db');
+const DB_FILE =  process.env.DB_FILE ?? path.join(API_ROOT, 'data', 'campus.db');
 const SCHEMA_FILE = path.join(API_ROOT, 'data', 'schema.sql');
 
 let db;
@@ -54,8 +54,15 @@ export async function loadSeed() {
  *   - ถ้ายังไม่เปิด db → { connected: false }
  *   - ถ้าเปิดได้ → { connected: true, driver: 'sqlite', tables: N }
  */
+/** สถานะฐานข้อมูล — ใช้โดย health check */
 export function getDbStatus() {
-  return { connected: false, reason: 'ยังไม่ได้ทำ TODO W11-DBSTATUS' };
+  try {
+    if (!db) return { connected: false, reason: 'ยังไม่ได้เปิดฐานข้อมูล' };
+    const n = db.prepare("SELECT COUNT(*) c FROM sqlite_master WHERE type='table'").get().c;
+    return { connected: true, driver: 'sqlite', tables: n };
+  } catch (e) {
+    return { connected: false, reason: e.message };
+  }
 }
 
 export function findAll({ status } = {}) {
