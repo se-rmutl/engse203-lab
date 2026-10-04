@@ -94,12 +94,10 @@ git push -u origin main
 | 9 | LAB 09 — ฐานข้อมูลเชิงสัมพันธ์และภาษา SQL | รายบุคคล | data model 2 ตาราง, constraint, SQL CRUD, JOIN | [เปิด LAB 09](./labs/week-09-sql-fundamentals/) |
 | 10 | LAB 10 — เชื่อม Node เข้ากับฐานข้อมูล | รายบุคคล | node:sqlite, JOIN ใน service, parameterized query | [เปิด LAB 10](./labs/week-10-node-database/) |
 | 11 | LAB 11 — บูรณาการเป็นระบบจริงที่ deploy ได้ | รายบุคคล (A4) | integration, config, health check, production build | รายบุคคล | React + API + Database working end-to-end | [เปิด LAB 11](./labs/week-11-fullstack-integration/) |
-| 12 | LAB 12 — Unit Testing & Debugging Report | รายบุคคล | test case, unit test, debugging/logging evidence | [เปิด LAB 12](./labs/week-12-testing-debugging/) |
-| 13 | LAB 13 — Quality, Security & Delivery Readiness | รายบุคคล | validation, `.env`, security checklist, documentation | [เปิด LAB 13](./labs/week-13-quality-security/) |
-| 14 | LAB 14 — Cross-platform Product Sprint 1 | กลุ่ม | team plan, issue, branch, PR, cross-platform plan | [เปิด LAB 14](./labs/week-14-team-sprint-1/) |
-| 15 | LAB 15 — Team Full-Stack Sprint 2 & Demo | กลุ่ม | code review, test, README, demo, peer evaluation | [เปิด LAB 15](./labs/week-15-team-sprint-2-demo/) |
-| 16 | ทบทวนบทเรียน | รายบุคคล | checkpoint, error clinic, final preparation | [แนวทางทบทวน](./labs/week-16-review/) |
-| 17 | สอบปลายภาค | รายบุคคล | วิเคราะห์/ประยุกต์/ปรับปรุงระบบจากโจทย์ | [รายละเอียดขอบเขต](./labs/week-17-final/) |
+| 12 | LAB 12 — การทดสอบและการแก้ไขข้อผิดพลาด (เช้า) | รายบุคคล | test case ค่าขอบ, Vitest unit + integration, coverage, debug 4 bug + regression test, `DEBUG_LOG.md` | [เปิด LAB 12](./labs/week-12-testing-debugging/) |
+| 13 | LAB 13 — พัฒนาอย่างปลอดภัยและพร้อมส่งมอบ (บ่าย · A5) | รายบุคคล | validation, scrypt, JWT login, 401/403, secret + fail fast, Release Checklist | [เปิด LAB 13](./labs/week-13-quality-security/) |
+| 14–16 | **Final Term Project** (ไม่มีคาบเรียน · A6) | คู่ / กลุ่ม 3 คน | ระบบใหม่จากหัวข้อ · auth · test · CI · deploy · `v1.0.0` · Issue/PR · peer review | [เปิด Final Term Project](./labs/final-term-project/) |
+| 17 | สอบปลายภาค (A7) · Sec 1 วันที่ 19 ต.ค. · Sec 2 วันที่ 22 ต.ค. | รายบุคคล + สัมภาษณ์เป็นทีม | take-home (ชุด A/B) · ทำในห้อง · สัมภาษณ์แทนข้อเขียน | [รายละเอียด](./labs/week-17-final/) |
 
 ### Week 04 สำหรับผู้เริ่ม React
 
@@ -131,7 +129,9 @@ Week 04 มีสองเส้นทางที่ไม่ควรสลั
 | 9 | [เปิด](https://se-rmutl.github.io/engse203/week09) | [เปิด](https://se-rmutl.github.io/engse203/week09/week09-teaching-doc.html) | CP17, CP19–20, CP21 — [ดูใน LAB 09](./labs/week-09-sql-fundamentals/) |
 | 10 | [เปิด](https://se-rmutl.github.io/engse203/week10) | [เปิด](https://se-rmutl.github.io/engse203/week10/week10-teaching-doc.html) | CP26–CP30 — [ดูใน LAB 10](./labs/week-10-node-database/) |
 | 11 | [เปิด](https://se-rmutl.github.io/engse203/week11) | [เปิด](https://se-rmutl.github.io/engse203/week11/week11-teaching-doc.html) | CP35–CP39 — [ดูใน LAB 11](./labs/week-11-fullstack-integration/) |
-| 12+ | เผยแพร่ก่อนถึงสัปดาห์นั้น | — | — |
+| 12 | [เปิด](https://se-rmutl.github.io/engse203/week12) | [เปิด](https://se-rmutl.github.io/engse203/week12/week12-teaching-doc.html) | CP44–CP47 — [ดูใน LAB 12](./labs/week-12-testing-debugging/) |
+| 13 | [เปิด](https://se-rmutl.github.io/engse203/week13) | [เปิด](https://se-rmutl.github.io/engse203/week13/week13-teaching-doc.html) | CP48–CP52 — [ดูใน LAB 13](./labs/week-13-quality-security/) |
+| ปิดภาค | [สไลด์ปิดภาค](https://se-rmutl.github.io/engse203/wrapup/) — สรุปทั้งภาค · งานที่ต้องส่ง · Final Term Project · สอบปลายภาค | — | — |
 
 **เว็บไซต์รายวิชา** — [se-rmutl.github.io/engse203](https://se-rmutl.github.io/engse203/)
 
@@ -147,16 +147,16 @@ Week 04 มีสองเส้นทางที่ไม่ควรสลั
             └─ Week 3–5: Responsive UI, React Components, Routing
 
 หน่วยที่ 3  การพัฒนาส่วนหลังและ RESTful API ด้วย Node.js
-            └─ Week 6–8: Express, REST API, Validation, API Integration
+            └─ Week 6–7: Express, REST API, Validation, API Integration  (สอบกลางภาค Week 8)
 
 หน่วยที่ 4  ฐานข้อมูลและการบูรณาการระบบ Full-Stack
-            └─ Week 10–12: SQLite, MongoDB, Full-Stack Integration
+            └─ Week 9–11: SQL, node:sqlite, Full-Stack Integration, Deploy
 
 หน่วยที่ 5  คุณภาพซอฟต์แวร์ การทดสอบ และความพร้อมก่อนใช้งาน
-            └─ Week 13–14: Unit Test, Debugging, Security, Documentation
+            └─ Week 12–13 (สอนวันเดียว): Testing, Debugging, Validation, JWT, Secrets, Release Checklist
 
 หน่วยที่ 6  การพัฒนาแบบข้ามแพลตฟอร์มและโครงงานบูรณาการ
-            └─ Week 15–16: Team Sprint, Git Collaboration, Demo
+            └─ Week 14–16: Final Term Project (ไม่มีคาบเรียน · ส่งวันสอบปลายภาค Week 17)
 ```
 
 ## การประเมินผลที่เชื่อมกับงานใน Repository
@@ -164,12 +164,12 @@ Week 04 มีสองเส้นทางที่ไม่ควรสลั
 | กิจกรรม | สัดส่วน | หลักฐานจาก Repository |
 |---|---:|---|
 | A1 ความรับผิดชอบทางวิชาชีพ | 5% | แหล่งอ้างอิง, AI disclosure, ความครบถ้วน, Git history |
-| A2 Weekly LAB รายบุคคล | 25% | งาน LAB 01–10 และ LAB 12 ที่กำหนด |
-| A3 สอบกลางภาค | 15% | ตามข้อสอบและชิ้นงานในสัปดาห์ที่ 9 |
+| A2 Weekly LAB รายบุคคล | 25% | งาน LAB 01–07 · 09–10 และ LAB 12 |
+| A3 สอบกลางภาค | 15% | ตามข้อสอบและชิ้นงานในสัปดาห์ที่ 8 |
 | A4 งานบูรณาการ Full-Stack รายบุคคล | 15% | LAB 11: React + API + Database |
-| A5 งานคุณภาพและความปลอดภัย | 10% | LAB 13: test, validation, `.env`, documentation |
-| A6 Team Mini Project & Demo | 15% | LAB 14–15: issue, branch, PR, peer review, demo |
-| A7 สอบปลายภาค | 15% | ตามข้อสอบและชิ้นงานในสัปดาห์ที่ 18 |
+| A5 งานคุณภาพและความปลอดภัย | 10% | LAB 13 ในห้อง (4) + ส่วนคุณภาพของ Final Term Project (6) |
+| A6 Final Term Project | 15% | ผลงานทีม (10) + รายบุคคลตามบทบาท (5): issue, branch, PR, peer review, deploy, demo |
+| A7 สอบปลายภาค | 15% | take-home (5) + ทำในห้อง (5) + สัมภาษณ์เป็นทีม (5) · สัปดาห์ที่ 17 |
 | **รวม** | **100%** | |
 
 ## กติกาการส่งงานมาตรฐาน

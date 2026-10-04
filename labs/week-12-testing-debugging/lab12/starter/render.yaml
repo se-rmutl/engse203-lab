@@ -1,0 +1,25 @@
+# render.yaml — Render Blueprint (ตรวจตามสเปกปัจจุบัน: runtime, rootDir, healthCheckPath)
+# วิธีใช้แบบ Blueprint: ย้ายไฟล์นี้ไปไว้ที่ "root ของ Student Repository"
+# วิธีที่แนะนำสำหรับมือใหม่: สร้าง Web Service ผ่านหน้าเว็บ แล้วกรอกค่าเดียวกับไฟล์นี้
+services:
+  - type: web
+    name: campus-service
+    runtime: node
+    plan: free
+    region: singapore
+    rootDir: labs/week-11/source          # โฟลเดอร์โปรเจกต์ใน Student Repository
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health          # Render รอให้ตอบ 2xx ก่อนเปิดให้ใช้งาน
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"                       # node:sqlite ใช้ได้ไม่ต้องใส่ flag ตั้งแต่ 22.13
+      # ไม่ต้องตั้ง PORT — Render กำหนดให้เอง (ค่าเริ่มต้น 10000) และ config.js อ่านจาก process.env.PORT
+      # ⭐⭐ Challenge Turso — ข้อมูลถาวร (ไม่ใส่ = ใช้ campus.db ซึ่งจะรีเซ็ตทุก restart)
+      #   sync: false = Render จะถามค่าในหน้า Dashboard ตอนสร้าง Blueprint · ค่าไม่ถูกเขียนลงไฟล์นี้
+      # - key: TURSO_DATABASE_URL
+      #   sync: false
+      # - key: TURSO_AUTH_TOKEN
+      #   sync: false

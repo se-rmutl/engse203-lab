@@ -1,0 +1,17 @@
+# CI — รัน test ทุกครั้งที่ push และเปิด Pull Request (Final Term Project)
+# กลุ่ม 3 คน: เปิดบรรทัด "npm run build" ด้านล่างด้วย (ข้อ D8)
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --prefix api && npm install --prefix frontend
+      - run: npm test
+      # - run: npm run build

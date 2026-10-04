@@ -1,0 +1,28 @@
+# render.yaml — Render Blueprint ของ repo ทีม (โปรเจกต์อยู่ที่ root ของ repo แล้ว จึงไม่มี rootDir)
+# วิธีที่แนะนำ: Render → New → Blueprint → เลือก repo ทีม · หรือสร้าง Web Service เองแล้วกรอกค่าเดียวกับไฟล์นี้
+services:
+  - type: web
+    name: engse203-final-1-t07           # ← เปลี่ยนเป็นชื่อ repo ทีม
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"
+      - key: JWT_SECRET                  # Render สุ่มให้ตอนสร้าง · ไม่อยู่ใน git
+        generateValue: true
+      # บัญชีเจ้าหน้าที่ production (ROLES.md ข้อ D3) — Render ถามค่าตอนสร้าง · ไม่เขียนลงไฟล์นี้
+      - key: STAFF_EMAIL
+        sync: false
+      - key: STAFF_PASSWORD
+        sync: false
+      # กลุ่ม 3 คน — Turso (ค่าจริงกรอกใน Dashboard ของ Render · ไม่เขียนลงไฟล์นี้)
+      # - key: TURSO_DATABASE_URL
+      #   sync: false
+      # - key: TURSO_AUTH_TOKEN
+      #   sync: false

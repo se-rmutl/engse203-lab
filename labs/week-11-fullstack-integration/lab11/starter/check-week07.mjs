@@ -153,7 +153,7 @@ async function run() {
   const errH = strip(await read('api/src/middleware/errorHandler.js'));
   rec('CHAL', 'challenge', '⭐ มี AppError สำหรับกำหนด status เอง', has(errH, 'class AppError'));
   rec('CHAL', 'challenge', '⭐ มี asyncHandler ห่อ handler ที่เป็น async', has(errH, 'asyncHandler'));
-  rec('CHAL', 'challenge', '⭐ ไม่ส่ง stack trace ตอน production', has(errH, 'isProduction') || has(errH, 'NODE_ENV'));
+  rec('CHAL', 'challenge', '⭐ ไม่ส่ง stack trace ตอน production', has(errH, 'isProd') || has(errH, 'NODE_ENV'));
 }
 
 await run();

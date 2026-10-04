@@ -1,0 +1,1635 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0D1233">
+<title>ENGSE203 ปิดภาค — สรุปการเรียน งานที่ต้องส่ง และสอบปลายภาค</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --font-scale:1;
+  --deep-950:#140C04; --deep-900:#221708; --deep-850:#2E1F0C; --deep-800:#3D2A12;
+  --ink:#EAF6EF; --muted:#A9C7B8; --dim:#6E8F7C;
+  --green:#FBBF24; --green-2:#22C55E; --cyan:#38D7ED; --amber:#FBBF24;
+  --red:#FB7185; --blue:#7AA5FF; --violet:#C084FC; --pink:#F472B6;
+  --panel:rgba(15,42,30,.74); --line:rgba(169,199,184,.24);
+  --shadow:0 24px 70px rgba(0,0,0,.44); --radius:20px;
+  font-size:calc(16px * var(--font-scale));
+}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0}
+body{overflow:hidden;color:var(--ink);
+  background:radial-gradient(circle at 14% 14%,rgba(251,191,36,.15),transparent 32%),
+  radial-gradient(circle at 84% 80%,rgba(192,132,252,.12),transparent 34%),#120A04;
+  font-family:'IBM Plex Sans Thai','Noto Sans Thai',Tahoma,sans-serif;}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+.app{min-height:100%;display:grid;place-items:center;position:relative}
+.stage{position:relative;width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));
+  aspect-ratio:16/9;overflow:hidden;background:var(--deep-900);box-shadow:var(--shadow);isolation:isolate;}
+.stage::before{content:"";position:absolute;inset:0;z-index:-2;
+  background:linear-gradient(135deg,rgba(255,255,255,.03),transparent 42%),
+  radial-gradient(circle at 80% 8%,rgba(74,222,128,.16),transparent 26%),
+  linear-gradient(160deg,var(--deep-900),#081b12 64%,#123024)}
+.stage::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.16;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 88%)}
+
+.slide{position:absolute;inset:0;display:none;padding:3.8% 5% 5.6%;overflow:hidden;flex-direction:column}
+.slide.active{display:flex;animation:enter .26s ease-out}
+@keyframes enter{from{opacity:.25;transform:translateX(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.active{animation:none}}
+
+.slide-id{position:absolute;top:2.8%;right:5%;font-family:'IBM Plex Mono',monospace;
+  font-size:.74rem;letter-spacing:.14em;color:var(--muted);opacity:.65}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;width:fit-content;color:var(--green);
+  font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.88rem;margin-bottom:.5rem}
+.eyebrow.amber{color:var(--amber)} .eyebrow.cyan{color:var(--cyan)}
+.eyebrow.red{color:var(--red)} .eyebrow.violet{color:var(--violet)}
+
+h1{font-size:3.3rem;line-height:1.1;margin:0 0 .7rem;font-weight:700;letter-spacing:-.015em}
+h2{font-size:2.35rem;line-height:1.16;margin:0 0 .7rem;font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.4rem;margin:0 0 .35rem;font-weight:600}
+p{margin:0 0 .6rem;line-height:1.5;font-size:1.3rem}
+.lead{font-size:1.6rem;color:var(--muted);font-weight:300;line-height:1.45}
+.muted{color:var(--muted)}
+small{font-size:1rem;color:var(--muted)}
+strong{font-weight:600}
+code{font-family:'IBM Plex Mono',monospace;font-size:.9em;background:rgba(74,222,128,.15);
+  padding:.08em .38em;border-radius:5px;color:#bff5d0}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.15rem 1.35rem}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:.75rem}
+.center{justify-content:center}
+
+/* SVG figure */
+.fig{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.fig svg{width:100%;height:100%;max-height:100%;display:block}
+.figcap{font-size:1.05rem;color:var(--muted);text-align:center;margin-top:.3rem}
+svg text{font-family:'IBM Plex Sans Thai',sans-serif}
+.svg-t{font-size:15px;font-weight:600;fill:#EAF6EF}
+.svg-s{font-size:12.5px;font-weight:300;fill:#A9C7B8}
+.svg-m{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500}
+.svg-lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em}
+.svg-big{font-size:19px;font-weight:700;fill:#EAF6EF}
+
+table{width:100%;border-collapse:collapse;font-size:1.22rem}
+th{text-align:left;padding:.6rem .75rem;color:var(--green);font-weight:600;
+  border-bottom:2px solid var(--line);font-size:1.08rem}
+td{padding:.6rem .75rem;border-bottom:1px solid rgba(169,199,184,.14);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+
+.chip{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .78rem;border-radius:999px;
+  font-size:1.02rem;font-weight:600;border:1px solid var(--line);background:rgba(74,222,128,.1);color:var(--green)}
+.chip.a{color:var(--amber);background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.32)}
+.chip.c{color:var(--cyan);background:rgba(56,215,237,.1);border-color:rgba(56,215,237,.32)}
+.chip.v{color:var(--violet);background:rgba(192,132,252,.1);border-color:rgba(192,132,252,.32)}
+.chip.r{color:var(--red);background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.32)}
+
+.where{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.98rem;font-weight:600;
+  padding:.24rem .72rem;border-radius:8px}
+.where.room{background:rgba(74,222,128,.16);color:#bff5d0;border:1px solid rgba(74,222,128,.4)}
+.where.home{background:rgba(251,191,36,.14);color:#ffe1a8;border:1px solid rgba(251,191,36,.4)}
+
+.title-slide{justify-content:center}
+.brandline{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.2rem}
+
+pre{background:rgba(4,16,11,.9);border:1px solid var(--line);border-radius:14px;
+  padding:.95rem 1.15rem;overflow:auto;font-size:1.08rem;line-height:1.55;margin:.35rem 0}
+pre code{background:none;padding:0;color:#d6efe0;font-size:1.08rem}
+.k{color:#8FE3A8}.s{color:#E9C88A}.c{color:#7EA592;font-style:italic}.f{color:#8FD0EC}
+.n{color:#D9A0E8}.hl{color:#FFE08A;font-weight:600}.bad{color:#FB7185}
+
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.g21{display:grid;grid-template-columns:1.4fr 1fr;gap:.9rem}
+.card{border:1px solid var(--line);border-radius:16px;padding:1rem 1.15rem;background:rgba(4,16,11,.5)}
+.card .ic{font-size:1.8rem;margin-bottom:.3rem}
+.card h3{font-size:1.25rem;margin-bottom:.25rem}
+.card p{font-size:1.06rem;margin:0;color:var(--muted)}
+.card.room{border-color:rgba(74,222,128,.4)}
+.card.home{border-color:rgba(251,191,36,.4)}
+.card.ch{border-color:rgba(192,132,252,.4)}
+
+.flow{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:.3rem 0}
+.flow .step{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35);
+  border-radius:12px;padding:.55rem .95rem;font-weight:600;font-size:1.1rem}
+.flow .arr{color:var(--muted);font-size:1.25rem}
+
+.analogy{background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.34);border-radius:var(--radius);padding:1rem 1.25rem}
+.note{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.34);border-radius:var(--radius);padding:1rem 1.25rem}
+.win{background:rgba(74,222,128,.09);border:1px solid rgba(74,222,128,.36);border-radius:var(--radius);padding:1rem 1.25rem}
+.wrong{background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.36);border-radius:var(--radius);padding:1rem 1.25rem}
+.term{background:rgba(56,215,237,.08);border-left:4px solid var(--cyan);border-radius:0 14px 14px 0;padding:.9rem 1.2rem}
+.term .w{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--cyan);font-size:1.2rem;margin-bottom:.2rem}
+.term p{margin:0;font-size:1.15rem}
+
+.iact{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.3);border-radius:var(--radius);padding:1rem 1.25rem}
+.opts{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.45rem}
+.opt{background:rgba(15,42,30,.92);border:1px solid var(--line);border-radius:12px;
+  padding:.55rem 1rem;font-size:1.15rem;transition:all .15s}
+.opt:hover{border-color:var(--green);background:rgba(74,222,128,.14)}
+.opt.ok{border-color:var(--green);background:rgba(74,222,128,.2);color:#c9f7d8}
+.opt.no{border-color:var(--red);background:rgba(251,113,133,.2);color:#ffd4da}
+.fb{margin-top:.5rem;font-size:1.1rem;min-height:1.4rem;color:var(--muted)}
+.fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+
+.reveal{border:1px dashed var(--line);border-radius:14px;padding:.7rem 1rem;background:rgba(4,16,11,.5)}
+.reveal button{background:none;border:none;color:var(--green);font-weight:600;font-size:1.15rem;padding:0}
+.reveal .ans{display:none;margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--line);font-size:1.15rem}
+.reveal.open .ans{display:block}
+
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.pgbox{border:1px solid var(--line);border-radius:14px;background:rgba(4,16,11,.8);overflow:hidden}
+.pghead{background:rgba(169,199,184,.09);padding:.42rem .8rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.95rem;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--line)}
+.pgbody{padding:.8rem;font-family:'IBM Plex Mono',monospace;font-size:1rem;line-height:1.5;
+  min-height:130px;word-break:break-all;color:#d6efe0;white-space:pre-wrap}
+.reqbtns{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem}
+.reqbtns button{background:rgba(15,42,30,.92);border:1px solid var(--line);border-radius:9px;
+  padding:.38rem .75rem;font-family:'IBM Plex Mono',monospace;font-size:.98rem;color:var(--muted)}
+.reqbtns button:hover{border-color:var(--green);color:var(--green)}
+.reqbtns button.m-get{color:#8FE3A8;border-color:rgba(74,222,128,.4)}
+.reqbtns button.m-post{color:#E9C88A;border-color:rgba(251,191,36,.4)}
+.reqbtns button.m-del{color:#FB7185;border-color:rgba(251,113,133,.4)}
+.stcode{font-family:'IBM Plex Mono',monospace;font-weight:600}
+.stcode.ok{color:var(--green)} .stcode.warn{color:var(--amber)} .stcode.err{color:var(--red)}
+
+.bigtime{font-family:'IBM Plex Mono',monospace;font-size:2.8rem;font-weight:600;line-height:1;color:var(--amber)}
+.timerbtns{display:flex;gap:.45rem;margin-top:.5rem}
+.timerbtns button{background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.4);
+  color:var(--amber);border-radius:10px;padding:.38rem .85rem;font-size:1rem;font-weight:600}
+.labstop{background:linear-gradient(150deg,rgba(251,191,36,.13),rgba(15,42,30,.82));border:1px solid rgba(251,191,36,.4)}
+
+ul{margin:.15rem 0 .4rem 1.25rem;padding:0}
+li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
+
+.bar{position:fixed;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.08);z-index:40}
+.bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));width:0;transition:width .25s}
+.hud{position:fixed;bottom:16px;right:18px;display:flex;gap:.42rem;align-items:center;z-index:41}
+.hud button{background:rgba(15,42,30,.94);border:1px solid var(--line);border-radius:10px;
+  padding:.3rem .62rem;font-size:.88rem;color:var(--muted)}
+.hud button:hover{color:var(--green);border-color:var(--green)}
+.counter{font-family:'IBM Plex Mono',monospace;font-size:.86rem;color:var(--muted);padding:0 .32rem}
+.toc{position:fixed;inset:0;background:rgba(4,12,8,.97);z-index:50;display:none;padding:3.5vh 5vw;overflow:auto}
+.toc.open{display:block}
+.toc h3{color:var(--green);margin-bottom:.9rem;font-size:1.25rem;letter-spacing:.08em;text-transform:uppercase}
+.toc ol{columns:3;column-gap:2.2rem;margin:0;padding-left:1.3rem;font-size:1.05rem}
+.toc li{margin-bottom:.42rem;break-inside:avoid}
+.toc a{color:var(--ink);text-decoration:none;opacity:.85}
+.toc a:hover{color:var(--green);opacity:1}
+.toc .tag{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--dim);margin-left:.35rem}
+@media (max-width:900px){.toc ol{columns:2}}
+
+/* ── โครงบท ── */
+.chapbadge{position:absolute;top:2.8%;left:5%;display:flex;align-items:center;gap:.5rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.76rem;font-weight:600;letter-spacing:.08em;
+  color:var(--green);background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);
+  padding:.22rem .7rem;border-radius:999px}
+.chapbadge .of{color:var(--muted);font-weight:400}
+.chapbadge.home{color:var(--amber);background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.32)}
+.divider{justify-content:center;align-items:flex-start}
+.divider .grp{font-family:'IBM Plex Mono',monospace;font-size:.95rem;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem}
+.divider .bignum{font-family:'IBM Plex Mono',monospace;font-size:6rem;font-weight:700;
+  line-height:1;color:var(--green);margin-bottom:.4rem;letter-spacing:-.04em}
+.divider .bignum.home{color:var(--amber)}
+.divider h2{font-size:3rem;margin-bottom:.6rem}
+.divider .whatfor{font-size:1.4rem;color:var(--muted);font-weight:300;max-width:46ch;line-height:1.5}
+.divider .mins{margin-top:1.6rem;display:flex;gap:.6rem;flex-wrap:wrap}
+.recap{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.35);
+  border-radius:var(--radius);padding:1.2rem 1.5rem}
+.recap h3{color:var(--green);font-size:1.3rem;margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.6rem}
+.recap ul{margin:0 0 0 1.3rem}
+.recap li{font-size:1.24rem;margin-bottom:.45rem}
+.nextup{background:rgba(56,215,237,.08);border:1px solid rgba(56,215,237,.35);
+  border-radius:var(--radius);padding:.9rem 1.3rem;font-size:1.2rem}
+.nextup b{color:var(--cyan)}
+.whybox{background:rgba(192,132,252,.1);border:1px solid rgba(192,132,252,.4);
+  border-radius:var(--radius);padding:1.2rem 1.5rem}
+.whybox .q{font-size:1.5rem;font-weight:600;color:var(--violet);margin-bottom:.5rem}
+.whybox p{font-size:1.28rem;margin:0}
+.track{display:flex;gap:.3rem;flex-wrap:wrap;justify-content:center;margin-top:.5rem}
+.track span{width:26px;height:6px;border-radius:3px;background:rgba(169,199,184,.2)}
+.track span.done{background:var(--green)}
+.track span.now{background:var(--cyan);box-shadow:0 0 8px rgba(56,215,237,.5)}
+.track span.home{background:rgba(251,191,36,.4)}
+
+/* ── Week 13 · ให้ font-size ที่ตั้งบน pre มีผลกับโค้ดข้างใน ── */
+pre code{font-size:inherit}
+.body pre,.body table,.body .g2,.body .g21{flex-shrink:0}
+.iact[data-quiz]{padding:.65rem 1.15rem}
+.slide > .chapbadge + h2{margin-top:1.3rem}
+.iact[data-quiz] .fb{margin-top:.25rem;min-height:1.3rem}
+.iact[data-quiz] .opt{padding:.45rem .95rem}
+table.tight td{padding:.42rem .7rem}
+/* ── Week 13 · ตารางเวลา ── */
+.tl{font-size:1.08rem}
+.tl td,.tl th{padding:.38rem .7rem}
+.tl tr.brk td{color:var(--muted);font-style:italic}
+.tl td:first-child{font-family:'IBM Plex Mono',monospace;font-size:.98rem;color:var(--cyan);white-space:nowrap}
+.tl td:last-child{text-align:center;font-family:'IBM Plex Mono',monospace;color:var(--muted)}
+.crit{margin:0;padding-left:1.2rem}
+.crit li{font-size:1.08rem;margin-bottom:.25rem;list-style:none;position:relative}
+.crit li::before{content:"✓";position:absolute;left:-1.15rem;color:var(--green-2);font-weight:700}
+.reqbtns button.on{border-color:var(--cyan);color:var(--cyan);background:rgba(56,215,237,.14)}
+
+
+
+/* ══ ENGSE203 Course Wrap-up · ธีมปิดภาค (น้ำเงินเข้ม + ทอง) ══ */
+:root{
+  --deep-950:#070A1C; --deep-900:#0D1233; --deep-850:#141A44; --deep-800:#1D2558;
+  --ink:#EEF1FF; --muted:#AEB7DA; --dim:#7680A8;
+  --green:#FBBF24; --gold:#FBBF24; --mint:#4ADE80;
+  --u1:#7AA5FF; --u2:#38D7ED; --u3:#4ADE80; --u4:#FBBF24; --u5:#C084FC; --u6:#F472B6; --ex:#FB7185;
+  --panel:rgba(20,26,68,.78); --line:rgba(174,183,218,.24);
+}
+body{background:radial-gradient(circle at 12% 12%,rgba(251,191,36,.14),transparent 32%),
+  radial-gradient(circle at 86% 82%,rgba(122,165,255,.14),transparent 34%),#05071A}
+.stage{background:var(--deep-900)}
+.stage::before{background:linear-gradient(135deg,rgba(255,255,255,.035),transparent 42%),
+  radial-gradient(circle at 82% 6%,rgba(251,191,36,.15),transparent 28%),
+  radial-gradient(circle at 6% 96%,rgba(192,132,252,.12),transparent 30%),
+  linear-gradient(160deg,#0D1233,#090D27 64%,#131A47)}
+code{background:rgba(251,191,36,.14);color:#FFE6A8}
+pre{background:rgba(5,8,26,.9)}
+pre code{color:#E3E7FF}
+th{color:var(--gold)}
+.card{background:rgba(7,10,28,.55)}
+.chip{background:rgba(251,191,36,.1);color:var(--gold);border-color:rgba(251,191,36,.32)}
+.chip.g{color:var(--mint);background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.32)}
+.chip.p{color:var(--u6);background:rgba(244,114,182,.1);border-color:rgba(244,114,182,.32)}
+.chip.b{color:var(--u1);background:rgba(122,165,255,.1);border-color:rgba(122,165,255,.32)}
+.recap{background:rgba(251,191,36,.07);border-color:rgba(251,191,36,.35)}
+.recap h3{color:var(--gold)}
+.win{background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.35)}
+.opt{background:rgba(20,26,68,.92)}
+.opt:hover{border-color:var(--gold);background:rgba(251,191,36,.12)}
+.hud button{background:rgba(20,26,68,.94)}
+.hud button:hover{color:var(--gold);border-color:var(--gold)}
+.bar > i{background:linear-gradient(90deg,var(--u1),var(--u2),var(--u3),var(--u4),var(--u5),var(--u6))}
+.toc{background:rgba(5,7,26,.97)}
+.toc h3,.toc a:hover{color:var(--gold)}
+.slide > .chapbadge + h2{margin-top:1.3rem}
+.body pre,.body table,.body .g2,.body .g21,.body .three,.body .four{flex-shrink:0}
+.iact[data-quiz]{padding:.7rem 1.15rem;background:rgba(251,191,36,.05);border-color:rgba(251,191,36,.3)}
+.iact[data-quiz] .fb{margin-top:.25rem;min-height:1.3rem}
+.fb.ok{color:var(--mint)}
+
+/* หัวหน่วย */
+.chapbadge{color:var(--gold);background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3)}
+.chapbadge.u1{color:var(--u1);background:rgba(122,165,255,.1);border-color:rgba(122,165,255,.35)}
+.chapbadge.u2{color:var(--u2);background:rgba(56,215,237,.1);border-color:rgba(56,215,237,.35)}
+.chapbadge.u3{color:var(--u3);background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.35)}
+.chapbadge.u4{color:var(--u4);background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.35)}
+.chapbadge.u5{color:var(--u5);background:rgba(192,132,252,.1);border-color:rgba(192,132,252,.35)}
+.chapbadge.u6{color:var(--u6);background:rgba(244,114,182,.1);border-color:rgba(244,114,182,.35)}
+.chapbadge.ex{color:var(--ex);background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.35)}
+.divider .bignum{color:var(--gold)}
+.divider .bignum.ex{color:var(--ex)}
+
+/* การ์ดสัปดาห์ */
+.wk{border:1px solid var(--line);border-radius:16px;padding:.85rem 1rem;background:rgba(7,10,28,.55);
+  display:flex;flex-direction:column;gap:.35rem;min-width:0;border-top:4px solid var(--c,var(--gold))}
+.wk .wn{font-family:'IBM Plex Mono',monospace;font-size:.85rem;font-weight:600;letter-spacing:.08em;color:var(--c,var(--gold))}
+.wk h3{font-size:1.22rem;margin:0;line-height:1.3}
+.wk .row{font-size:1rem;line-height:1.42;color:var(--muted);margin:0}
+.wk .row b{color:var(--ink);font-weight:600}
+.wk .tagline{margin-top:auto;font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--c,var(--gold));
+  background:rgba(255,255,255,.04);border:1px dashed var(--line);border-radius:8px;padding:.25rem .5rem;word-break:break-all}
+.u1c{--c:var(--u1)} .u2c{--c:var(--u2)} .u3c{--c:var(--u3)} .u4c{--c:var(--u4)} .u5c{--c:var(--u5)} .u6c{--c:var(--u6)} .exc{--c:var(--ex)}
+
+/* ตัวเลขใหญ่ */
+.stat{border:1px solid var(--line);border-radius:18px;padding:1.1rem 1.2rem;background:rgba(7,10,28,.55);text-align:left}
+.stat .num{font-family:'IBM Plex Mono',monospace;font-size:3.3rem;font-weight:700;line-height:1;color:var(--c,var(--gold))}
+.stat .lbl{font-size:1.15rem;font-weight:600;margin-top:.45rem}
+.stat .sub{font-size:1rem;color:var(--muted);margin-top:.2rem;line-height:1.4}
+
+/* ขั้นตอนแนวนอน */
+.steps{display:grid;grid-template-columns:repeat(var(--n,5),1fr);gap:.55rem;counter-reset:st}
+.steps .st{position:relative;border:1px solid var(--line);border-radius:14px;padding:.75rem .8rem .7rem;background:rgba(7,10,28,.55);min-width:0}
+.steps .st::before{counter-increment:st;content:counter(st);display:inline-grid;place-items:center;width:1.7rem;height:1.7rem;border-radius:50%;
+  background:var(--gold);color:#0D1233;font-weight:700;font-family:'IBM Plex Mono',monospace;font-size:.9rem;margin-bottom:.35rem}
+.steps .st b{display:block;font-size:1.08rem;margin-bottom:.2rem}
+.steps .st span{font-size:.95rem;color:var(--muted);line-height:1.4;display:block}
+.steps .st code{font-size:.8rem;word-break:break-all}
+
+/* ตารางส่งงาน */
+table.due td:first-child{font-family:'IBM Plex Mono',monospace;color:var(--gold);white-space:nowrap;font-size:1.02rem}
+table.due{font-size:1.1rem}
+table.due td,table.due th{padding:.42rem .7rem}
+.s1{color:var(--gold)} .s2{color:var(--u2)}
+
+/* ตัวหาวันส่ง */
+.secbtns{display:flex;gap:.5rem;margin-bottom:.55rem}
+.secbtns button{background:rgba(20,26,68,.92);border:1px solid var(--line);border-radius:12px;padding:.45rem 1.1rem;font-size:1.1rem;font-weight:600;color:var(--muted)}
+.secbtns button.on{color:#0D1233;background:var(--gold);border-color:var(--gold)}
+.secbtns button.on.s2b{background:var(--u2);border-color:var(--u2)}
+.dl{display:grid;grid-template-columns:9.6rem 1fr 7.6rem;gap:.3rem .8rem;align-items:center;font-size:1.06rem}
+.dl .d{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:.95rem}
+.dl .t{line-height:1.35}
+.dl .st{font-family:'IBM Plex Mono',monospace;font-size:.85rem;text-align:center;border-radius:999px;padding:.15rem .5rem;border:1px solid var(--line)}
+.dl .st.past{color:var(--dim)} .dl .st.soon{color:#0D1233;background:var(--gold);border-color:var(--gold);font-weight:600}
+.dl .st.today{color:#0D1233;background:var(--ex);border-color:var(--ex);font-weight:700}
+.dl .st.later{color:var(--u2);border-color:rgba(56,215,237,.4)}
+.dl .key .t{font-weight:600;color:var(--ink)}
+.dl > div{padding:.18rem 0;border-bottom:1px solid rgba(174,183,218,.1)}
+.countbox{border:1px solid rgba(251,191,36,.4);border-radius:18px;padding:.9rem 1.1rem;background:rgba(251,191,36,.07);text-align:center}
+.countbox .big{font-family:'IBM Plex Mono',monospace;font-size:3.6rem;font-weight:700;color:var(--gold);line-height:1}
+.countbox .lbl{font-size:1.05rem;color:var(--muted);margin-top:.35rem}
+
+.quote{font-size:2rem;line-height:1.45;font-weight:300;max-width:34ch}
+.quote b{color:var(--gold);font-weight:600}
+.reveal button{color:var(--gold)}
+.reveal{padding:.6rem .95rem}
+.reveal .ans{font-size:1.06rem}
+.mini li{font-size:1.06rem;margin-bottom:.22rem}
+.sv-gold{fill:#FBBF24} .sv-cyan{fill:#38D7ED}
+
+/* ขยายตัวอักษรให้อ่านง่ายบนโปรเจกเตอร์ */
+.wk{padding:1.05rem 1.15rem;gap:.45rem}
+.wk .wn{font-size:.92rem}
+.wk h3{font-size:1.4rem}
+.wk .row{font-size:1.13rem}
+.wk .tagline{font-size:.9rem}
+.card{padding:1.1rem 1.25rem}
+.card h3{font-size:1.32rem}
+.card p{font-size:1.13rem;line-height:1.5}
+.mini li{font-size:1.13rem;margin-bottom:.28rem}
+.steps .st{padding:.9rem .95rem .85rem}
+.steps .st b{font-size:1.18rem}
+.steps .st span{font-size:1.05rem}
+table.tight td{font-size:1.16rem;padding:.48rem .75rem}
+table.tight th{font-size:1.06rem}
+.stat .sub{font-size:1.08rem}
+.crit li{font-size:1.13rem;margin-bottom:.32rem}
+.nextup{font-size:1.18rem}
+.iact[data-quiz] .opt{font-size:1.15rem}
+/* ขนาดตัวอักษรตามขนาดเวที — จอใหญ่ขึ้น ตัวอักษรใหญ่ตาม (สัดส่วนเท่าเดิมทุกจอ) */
+:root{font-size:calc(min(1vw, 1.7778vh) * 1.06 * var(--font-scale))}
+
+.dl{grid-template-columns:auto 1fr 6.6rem;gap:.15rem .9rem;font-size:1.02rem}
+.dl .d{white-space:nowrap;font-size:.9rem}
+.dl > div{padding:.12rem 0}
+
+</style>
+</head>
+<body>
+<div class="app"><div class="stage" id="stage">
+
+<section class="slide title-slide active" data-title="ปิดภาค ENGSE203">
+  <div class="g21" style="align-items:center;gap:2rem">
+    <div>
+      <span class="eyebrow">ENGSE203 · การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์ · ภาค 1/2569</span>
+      <h1>จาก <code style="font-size:.85em">hello.js</code><br>สู่ระบบที่ <span style="color:var(--gold)">deploy ได้จริง</span></h1>
+      <p class="lead">สรุปเส้นทางทั้งภาค · งานที่ต้องส่ง · Final Term Project · สอบปลายภาค</p>
+      <div class="brandline">
+        <span class="chip b">6 หน่วยเรียน</span><span class="chip c">13 LAB</span><span class="chip g">1 ระบบที่โตขึ้นทุกสัปดาห์</span><span class="chip p">ปิดด้วยโปรเจกต์จริง</span>
+      </div>
+      <p style="margin-top:1.1rem"><small>คาบสุดท้าย · Sec 1 จันทร์ 5 ต.ค. · Sec 2 พฤหัส 8 ต.ค. · มทร.ล้านนา</small></p>
+      <p style="margin-top:.3rem"><small>→ / Space ไปต่อ · T สารบัญ · F เต็มจอ · A+ A− ปรับขนาด</small></p>
+    </div>
+    <div class="fig" style="max-height:62vh">
+      <svg viewBox="0 0 420 380" role="img" aria-label="ชั้นของระบบที่สร้างทั้งภาค">
+        <defs>
+          <linearGradient id="tgl" x1="0" x2="1"><stop offset="0" stop-color="#FBBF24" stop-opacity=".9"/><stop offset="1" stop-color="#F472B6" stop-opacity=".9"/></linearGradient>
+        </defs>
+        <g>
+          <rect x="60" y="300" width="300" height="52" rx="14" fill="rgba(122,165,255,.18)" stroke="#7AA5FF" stroke-width="2"/>
+          <text x="210" y="332" text-anchor="middle" class="svg-t">JavaScript · Git · GitHub</text>
+          <rect x="70" y="240" width="280" height="52" rx="14" fill="rgba(56,215,237,.18)" stroke="#38D7ED" stroke-width="2"/>
+          <text x="210" y="272" text-anchor="middle" class="svg-t">React · หน้าเว็บ</text>
+          <rect x="80" y="180" width="260" height="52" rx="14" fill="rgba(74,222,128,.18)" stroke="#4ADE80" stroke-width="2"/>
+          <text x="210" y="212" text-anchor="middle" class="svg-t">Express · REST API</text>
+          <rect x="90" y="120" width="240" height="52" rx="14" fill="rgba(251,191,36,.18)" stroke="#FBBF24" stroke-width="2"/>
+          <text x="210" y="152" text-anchor="middle" class="svg-t">SQLite · deploy</text>
+          <rect x="100" y="60" width="220" height="52" rx="14" fill="rgba(192,132,252,.2)" stroke="#C084FC" stroke-width="2"/>
+          <text x="210" y="92" text-anchor="middle" class="svg-t">Test · Security</text>
+          <rect x="120" y="8" width="180" height="44" rx="14" fill="url(#tgl)"/>
+          <text x="210" y="36" text-anchor="middle" style="font-size:15px;font-weight:700;fill:#0D1233">Final Project</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="🗺️ วันนี้คุยอะไร">
+  <span class="slide-id">WRAP · AGENDA</span>
+  <span class="eyebrow">คาบปิดภาค</span>
+  <h2>วันนี้คุยอะไรบ้าง</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="card"><div class="ic">🧭</div><h3>① ย้อนดูเส้นทาง</h3><p>13 สัปดาห์ที่ผ่านมา เราเรียนอะไร ทำ LAB อะไร และส่งอะไรไปแล้ว</p></div>
+      <div class="card"><div class="ic">🧩</div><h3>② ภาพรวมระบบ</h3><p>ทุกสัปดาห์ต่อเติมระบบเดียวกัน — ตอนนี้มันหน้าตาเป็นอย่างไร และคุณทำอะไรได้แล้ว</p></div>
+      <div class="card"><div class="ic">📊</div><h3>③ คะแนนทั้งวิชา</h3><p>A1–A7 มาจากไหน · อะไรเก็บไปแล้ว · อะไรยังเหลือ</p></div>
+      <div class="card"><div class="ic">🚀</div><h3>④ Final Term Project</h3><p>แทนสัปดาห์ 14–16 · ทำเป็นคู่ · บทบาท · ข้อกำหนด · กำหนดส่ง</p></div>
+      <div class="card"><div class="ic">📝</div><h3>⑤ สอบปลายภาค</h3><p>take-home · ทำในห้อง · สัมภาษณ์เป็นทีม — ไม่มีข้อเขียนทฤษฎี</p></div>
+      <div class="card"><div class="ic">📅</div><h3>⑥ ปฏิทินถึงวันสอบ</h3><p>ทุกวันส่งของ Sec 1 และ Sec 2 · ตัวนับถอยหลังของ Section คุณ</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="🔢 ภาคนี้ในตัวเลข">
+  <span class="slide-id">WRAP · NUMBERS</span>
+  <span class="eyebrow">ภาคนี้ในตัวเลข</span>
+  <h2>สิ่งที่เราผ่านมาด้วยกัน</h2>
+  <div class="body center">
+    <div class="four">
+      <div class="stat u1c"><div class="num">6</div><div class="lbl">หน่วยเรียน</div><div class="sub">พื้นฐาน → React → API → ฐานข้อมูล → คุณภาพ → โปรเจกต์</div></div>
+      <div class="stat u2c"><div class="num">13</div><div class="lbl">LAB รายบุคคล</div><div class="sub">ทุก LAB ส่งผ่าน GitHub: branch · PR · tag</div></div>
+      <div class="stat u3c"><div class="num">1</div><div class="lbl">ระบบเดียวทั้งภาค</div><div class="sub">Campus Service Request โตขึ้นทุกสัปดาห์</div></div>
+      <div class="stat u5c"><div class="num">CP52</div><div class="lbl">checkpoint ล่าสุด</div><div class="sub">ทุก checkpoint มี checker ตรวจได้เอง</div></div>
+    </div>
+    <div class="win" style="margin-top:.4rem"><p style="margin:0;font-size:1.25rem">ระบบที่คุณมีตอนนี้: <strong>หน้าเว็บ React</strong> + <strong>REST API</strong> + <strong>ฐานข้อมูล SQL</strong> + <strong>test อัตโนมัติ</strong> + <strong>login และสิทธิ์</strong> + <strong>deploy ขึ้น cloud</strong> — ครบทุกชั้นที่บริษัทซอฟต์แวร์ใช้จริง</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🛣️ เส้นทาง 17 สัปดาห์">
+  <span class="slide-id">WRAP · JOURNEY</span>
+  <span class="eyebrow">ภาพรวมทั้งภาค</span>
+  <h2>เส้นทาง 17 สัปดาห์</h2>
+  <div class="fig">
+    <svg viewBox="0 0 1200 300" role="img" aria-label="เส้นทางการเรียนสัปดาห์ที่ 1 ถึง 17">
+      <defs>
+        <marker id="jy-end" viewBox="0 0 8 8" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#AEB7DA" stroke-width="1.5"/></marker>
+      </defs>
+      <!-- แถบหน่วย -->
+      <rect x="30" y="56" width="127" height="64" rx="12" fill="rgba(122,165,255,.14)" stroke="#7AA5FF"/>
+      <text x="93" y="80" text-anchor="middle" class="svg-lbl" fill="#7AA5FF">หน่วย 1</text>
+      <text x="93" y="104" text-anchor="middle" class="svg-t">พื้นฐาน · Git</text>
+      <rect x="164" y="56" width="194" height="64" rx="12" fill="rgba(56,215,237,.14)" stroke="#38D7ED"/>
+      <text x="261" y="80" text-anchor="middle" class="svg-lbl" fill="#38D7ED">หน่วย 2</text>
+      <text x="261" y="104" text-anchor="middle" class="svg-t">หน้าเว็บ · React</text>
+      <rect x="365" y="56" width="127" height="64" rx="12" fill="rgba(74,222,128,.14)" stroke="#4ADE80"/>
+      <text x="428" y="80" text-anchor="middle" class="svg-lbl" fill="#4ADE80">หน่วย 3</text>
+      <text x="428" y="104" text-anchor="middle" class="svg-t">Express API</text>
+      <rect x="566" y="56" width="194" height="64" rx="12" fill="rgba(251,191,36,.14)" stroke="#FBBF24"/>
+      <text x="663" y="80" text-anchor="middle" class="svg-lbl" fill="#FBBF24">หน่วย 4</text>
+      <text x="663" y="104" text-anchor="middle" class="svg-t">ฐานข้อมูล · Deploy</text>
+      <rect x="767" y="56" width="127" height="64" rx="12" fill="rgba(192,132,252,.16)" stroke="#C084FC"/>
+      <text x="830" y="80" text-anchor="middle" class="svg-lbl" fill="#C084FC">หน่วย 5</text>
+      <text x="830" y="104" text-anchor="middle" style="font-size:13.5px;font-weight:600;fill:#EEF1FF">Test · Security</text>
+      <rect x="901" y="56" width="194" height="64" rx="12" fill="rgba(244,114,182,.14)" stroke="#F472B6"/>
+      <text x="998" y="80" text-anchor="middle" class="svg-lbl" fill="#F472B6">หน่วย 6</text>
+      <text x="998" y="104" text-anchor="middle" class="svg-t">Final Term Project</text>
+      <!-- ถนน -->
+      <line x1="34" y1="165" x2="1184" y2="165" stroke="rgba(174,183,218,.35)" stroke-width="6" stroke-linecap="round" marker-end="url(#jy-end)"/>
+      <g class="svg-m" font-size="12" text-anchor="middle" fill="#EEF1FF">
+        <circle cx="60" cy="165" r="9" fill="#7AA5FF"/><circle cx="127" cy="165" r="9" fill="#7AA5FF"/>
+        <circle cx="194" cy="165" r="9" fill="#38D7ED"/><circle cx="261" cy="165" r="9" fill="#38D7ED"/><circle cx="328" cy="165" r="9" fill="#38D7ED"/>
+        <circle cx="395" cy="165" r="9" fill="#4ADE80"/><circle cx="462" cy="165" r="9" fill="#4ADE80"/>
+        <circle cx="529" cy="165" r="11" fill="#0D1233" stroke="#FB7185" stroke-width="3"/>
+        <circle cx="596" cy="165" r="9" fill="#FBBF24"/><circle cx="663" cy="165" r="9" fill="#FBBF24"/><circle cx="730" cy="165" r="9" fill="#FBBF24"/>
+        <circle cx="797" cy="165" r="9" fill="#C084FC"/><circle cx="864" cy="165" r="12" fill="#C084FC" stroke="#FFFFFF" stroke-width="3"/>
+        <circle cx="931" cy="165" r="9" fill="#F472B6" opacity=".55"/><circle cx="998" cy="165" r="9" fill="#F472B6" opacity=".55"/><circle cx="1065" cy="165" r="9" fill="#F472B6" opacity=".55"/>
+        <circle cx="1132" cy="165" r="11" fill="#0D1233" stroke="#FB7185" stroke-width="3"/>
+        <text x="60" y="196">W1</text><text x="127" y="196">W2</text><text x="194" y="196">W3</text><text x="261" y="196">W4</text><text x="328" y="196">W5</text>
+        <text x="395" y="196">W6</text><text x="462" y="196">W7</text><text x="529" y="196">W8</text><text x="596" y="196">W9</text><text x="663" y="196">W10</text>
+        <text x="730" y="196">W11</text><text x="797" y="196">W12</text><text x="864" y="196">W13</text><text x="931" y="196">W14</text><text x="998" y="196">W15</text>
+        <text x="1065" y="196">W16</text><text x="1132" y="196">W17</text>
+      </g>
+      <g class="svg-m" font-size="10.5" text-anchor="middle" fill="#AEB7DA">
+        <text x="60" y="216">LAB01</text><text x="127" y="216">LAB02</text><text x="194" y="216">LAB03</text><text x="261" y="216">LAB04</text><text x="328" y="216">LAB05</text>
+        <text x="395" y="216">LAB06</text><text x="462" y="216">LAB07</text><text x="596" y="216">LAB09</text><text x="663" y="216">LAB10</text>
+        <text x="730" y="216">LAB11</text><text x="797" y="216">LAB12</text><text x="864" y="216">LAB13</text><text x="998" y="216">Project</text>
+      </g>
+      <!-- ธงสอบ + ตำแหน่งปัจจุบัน -->
+      <path d="M529 232 L529 262 M529 232 L548 239 L529 246" fill="none" stroke="#FB7185" stroke-width="2"/>
+      <text x="529" y="284" text-anchor="middle" style="font-size:13px;font-weight:600;fill:#FB7185">กลางภาค</text>
+      <path d="M1132 232 L1132 262 M1132 232 L1151 239 L1132 246" fill="none" stroke="#FB7185" stroke-width="2"/>
+      <text x="1132" y="284" text-anchor="middle" style="font-size:13px;font-weight:600;fill:#FB7185">ปลายภาค</text>
+      <path d="M864 236 L856 250 L872 250 Z" fill="#FFFFFF"/>
+      <text x="864" y="276" text-anchor="middle" style="font-size:13px;font-weight:700;fill:#FFFFFF">เราอยู่ตรงนี้</text>
+    </svg>
+  </div>
+  <p class="figcap">สัปดาห์ 14–16 ไม่มีคาบเรียน → ใช้ทำ Final Term Project · สอบปลายภาคสัปดาห์ 17</p>
+</section>
+
+<section class="slide" data-title="📈 ระบบเดียวที่โตขึ้นทุกสัปดาห์">
+  <span class="slide-id">WRAP · ONE SYSTEM</span>
+  <span class="eyebrow">Campus Service Request</span>
+  <h2>ระบบเดียว โตขึ้นทุกสัปดาห์</h2>
+  <div class="fig">
+    <svg viewBox="0 0 1200 360" role="img" aria-label="ขั้นบันไดการพัฒนาระบบ Campus Service">
+      <defs>
+        <marker id="ev-end" viewBox="0 0 8 8" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#FBBF24" stroke-width="1.5"/></marker>
+      </defs>
+      <line x1="98" y1="248" x2="1102" y2="40" stroke="#FBBF24" stroke-width="2" stroke-dasharray="6 6" marker-end="url(#ev-end)" opacity=".8"/>
+      <g>
+        <rect x="40"  y="300" width="116" height="40"  rx="8" fill="rgba(56,215,237,.22)" stroke="#38D7ED"/>
+        <rect x="166" y="274" width="116" height="66"  rx="8" fill="rgba(56,215,237,.22)" stroke="#38D7ED"/>
+        <rect x="292" y="248" width="116" height="92"  rx="8" fill="rgba(56,215,237,.22)" stroke="#38D7ED"/>
+        <rect x="418" y="222" width="116" height="118" rx="8" fill="rgba(74,222,128,.2)" stroke="#4ADE80"/>
+        <rect x="544" y="196" width="116" height="144" rx="8" fill="rgba(74,222,128,.2)" stroke="#4ADE80"/>
+        <rect x="670" y="170" width="116" height="170" rx="8" fill="rgba(251,191,36,.2)" stroke="#FBBF24"/>
+        <rect x="796" y="144" width="116" height="196" rx="8" fill="rgba(251,191,36,.2)" stroke="#FBBF24"/>
+        <rect x="922" y="118" width="116" height="222" rx="8" fill="rgba(192,132,252,.22)" stroke="#C084FC"/>
+        <rect x="1048" y="92" width="116" height="248" rx="8" fill="rgba(192,132,252,.22)" stroke="#C084FC"/>
+      </g>
+      <g class="svg-m" font-size="12" text-anchor="middle">
+        <text x="98"  y="270" fill="#38D7ED">W3</text><text x="224" y="244" fill="#38D7ED">W4</text><text x="350" y="218" fill="#38D7ED">W5</text>
+        <text x="476" y="192" fill="#4ADE80">W6</text><text x="602" y="166" fill="#4ADE80">W7</text><text x="728" y="140" fill="#FBBF24">W9–10</text>
+        <text x="854" y="114" fill="#FBBF24">W11</text><text x="980" y="88" fill="#C084FC">W12</text><text x="1106" y="62" fill="#C084FC">W13</text>
+      </g>
+      <g text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:#EEF1FF">
+        <text x="98" y="288">ฟอร์ม HTML</text><text x="224" y="262">React component</text><text x="350" y="236">Router · Storage</text>
+        <text x="476" y="210">Express API</text><text x="602" y="184">Validation · CORS</text><text x="728" y="158">SQLite + JOIN</text>
+        <text x="854" y="132">Deploy ขึ้น cloud</text><text x="980" y="106">Test + Debug</text><text x="1106" y="80">JWT · 401/403</text>
+      </g>
+      <g text-anchor="middle" class="svg-s" font-size="11.5">
+        <text x="98" y="326">responsive</text><text x="224" y="326">props · state</text><text x="350" y="326">fetch · mock</text>
+        <text x="476" y="326">CRUD · service</text><text x="602" y="326">API contract</text><text x="728" y="326">parameterized</text>
+        <text x="854" y="326">health · build</text><text x="980" y="326">Vitest · 4 bug</text><text x="1106" y="326">scrypt · secret</text>
+      </g>
+    </svg>
+  </div>
+  <p class="figcap">ไม่มีสัปดาห์ไหนเริ่มจากศูนย์ — ทุกสัปดาห์ต่อยอดจากงานของสัปดาห์ก่อน (สัปดาห์ 8 = สอบกลางภาค)</p>
+</section>
+
+<section class="slide divider" data-title="— ภาค 1 · ย้อนดูเส้นทาง">
+  <div class="grp">ภาค 1</div>
+  <div class="bignum">W1 → W13</div>
+  <h2>ย้อนดูเส้นทาง</h2>
+  <p class="whatfor">แต่ละสัปดาห์เรียนอะไร · LAB ไหน · ส่งอะไร — ใช้ทบทวนก่อนสอบ และใช้เป็นแผนที่ตอนทำโปรเจกต์</p>
+  <div class="mins"><span class="chip b">หน่วย 1–2</span><span class="chip g">หน่วย 3</span><span class="chip">หน่วย 4</span><span class="chip v">หน่วย 5</span></div>
+</section>
+
+<section class="slide" data-title="หน่วย 1 · พื้นฐานและ Git">
+  <span class="chapbadge u1">หน่วยที่ 1 <span class="of">· สัปดาห์ 1–2</span></span>
+  <h2>พื้นฐานการพัฒนาโปรแกรมสมัยใหม่และการทำงานร่วมกัน</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="wk u1c"><div class="wn">WEEK 1 · LAB 01</div><h3>Developer Environment &amp; GitHub</h3>
+        <p class="row"><b>เรียน</b> บทบาทของ Front-end · Back-end · API · Database · ติดตั้ง Node.js · npm · VS Code · Git</p>
+        <p class="row"><b>ทำ</b> Student Repository <code>engse203-student-labs-&lt;รหัส&gt;</code> · <code>hello.js</code> · README</p>
+        <div class="tagline">branch lab/week-01 · tag lab-01-submission-v1</div></div>
+      <div class="wk u1c"><div class="wn">WEEK 2 · LAB 02</div><h3>JavaScript สมัยใหม่</h3>
+        <p class="row"><b>เรียน</b> ES6+ · module · async/await · error handling · commit · branch · merge · Pull Request</p>
+        <p class="row"><b>ทำ</b> Vanilla JS + Vite · Pages Hub · หน้า LAB02 Result</p>
+        <div class="tagline">merged PR lab/week-02 · tag</div></div>
+    </div>
+    <div class="nextup"><b>ติดตัวมาจนวันนี้:</b> ทุกงานหลังจากนี้ส่งผ่าน <strong>branch → PR → tag</strong> ใน GitHub — ทักษะที่ใช้ทุกวันในการทำงานจริง</div>
+  </div>
+</section>
+
+<section class="slide" data-title="หน่วย 2 · React">
+  <span class="chapbadge u2">หน่วยที่ 2 <span class="of">· สัปดาห์ 3–5</span></span>
+  <h2>การพัฒนาส่วนติดต่อผู้ใช้ด้วย React.js</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="wk u2c"><div class="wn">WEEK 3 · LAB 03</div><h3>Responsive UI &amp; Form</h3>
+        <p class="row"><b>เรียน</b> Semantic HTML · CSS responsive · DOM event · ตรวจฟอร์ม</p>
+        <p class="row"><b>ทำ</b> Campus Service Request รุ่นแรก (HTML/CSS/JS)</p>
+        <div class="tagline">lab/week-03 · lab-03-submission-v1</div></div>
+      <div class="wk u2c"><div class="wn">WEEK 4 · LAB 04</div><h3>React Components &amp; State</h3>
+        <p class="row"><b>เรียน</b> JSX · component · props · state · event · hooks</p>
+        <p class="row"><b>ทำ</b> Pre-LAB Study Task Board (CP00–CP07) → LAB 4 ย้าย Campus Service เป็น React</p>
+        <div class="tagline">lab/week-04 · PR · Pages</div></div>
+      <div class="wk u2c"><div class="wn">WEEK 5A · 5B · LAB 05</div><h3>Router · Fetch · Storage</h3>
+        <p class="row"><b>เรียน</b> 5A อ่านข้อมูล (routing + fetch) · 5B เขียนข้อมูล (storage + กู้คืน)</p>
+        <p class="row"><b>ทำ</b> Front-end Mini App ส่งชิ้นเดียวหลัง 5B</p>
+        <div class="tagline">lab/week-05 · lab-05-submission-v1</div></div>
+    </div>
+    <div class="nextup"><b>ใช้ต่อใน Term Project:</b> คน Front-end ใช้ component · router · service layer จากหน่วยนี้โดยตรง</div>
+  </div>
+</section>
+
+<section class="slide" data-title="หน่วย 3 · Express API + กลางภาค">
+  <span class="chapbadge u3">หน่วยที่ 3 <span class="of">· สัปดาห์ 6–7 · สอบกลางภาคสัปดาห์ 8</span></span>
+  <h2>การพัฒนาส่วนหลังและ RESTful API ด้วย Node.js</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="wk u3c"><div class="wn">WEEK 6 · LAB 06</div><h3>Express API Foundation</h3>
+        <p class="row"><b>เรียน</b> route · middleware · controller / service · HTTP method · status code</p>
+        <p class="row"><b>ทำ</b> CRUD API · งาน 3 ระดับ 🏫 ในห้อง · 🏠 ที่บ้าน · ⭐ Challenge</p>
+        <div class="tagline">unit3/week-06 · lab-06-submission-v1</div></div>
+      <div class="wk u3c"><div class="wn">WEEK 7 · LAB 07</div><h3>Validation · Error · CORS</h3>
+        <p class="row"><b>เรียน</b> validation middleware · error handler · CORS · config · API contract</p>
+        <p class="row"><b>ทำ</b> เชื่อม React (W05) เข้ากับ API (W06) ให้ทำงานจริง · supertest</p>
+        <div class="tagline">unit3/week-07 · lab-07-submission-v1</div></div>
+      <div class="wk exc"><div class="wn">WEEK 8 · A3 15%</div><h3>สอบกลางภาค</h3>
+        <p class="row"><b>รูปแบบ</b> ทฤษฎี · ปฏิบัติ · สัมภาษณ์ (oral defense)</p>
+        <p class="row"><b>เนื้อหา</b> JavaScript · React · REST API</p>
+        <div class="tagline">ประกาศคะแนนแล้ว</div></div>
+    </div>
+    <div class="nextup"><b>ใช้ต่อใน Term Project:</b> คน Back-end ใช้โครง route → controller → service · validation · error handler จากหน่วยนี้ทั้งหมด</div>
+  </div>
+</section>
+
+<section class="slide" data-title="หน่วย 4 · ฐานข้อมูลและ deploy">
+  <span class="chapbadge u4">หน่วยที่ 4 <span class="of">· สัปดาห์ 9–11</span></span>
+  <h2>ฐานข้อมูลและการบูรณาการระบบ Full-Stack</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="wk u4c"><div class="wn">WEEK 9 · LAB 09</div><h3>SQL พื้นฐาน</h3>
+        <p class="row"><b>เรียน</b> ออกแบบ 2 ตาราง · Primary / Foreign Key · constraint · SELECT · WHERE · JOIN</p>
+        <p class="row"><b>ทำ</b> SQL ล้วน — ไม่แตะโค้ด Node เลย</p>
+        <div class="tagline">unit4/week-09 · lab-09-submission-v1</div></div>
+      <div class="wk u4c"><div class="wn">WEEK 10 · LAB 10</div><h3>เชื่อม Node เข้ากับ SQLite</h3>
+        <p class="row"><b>เรียน</b> <code>node:sqlite</code> · JOIN ในชั้น service · parameterized query กัน SQL injection</p>
+        <p class="row"><b>ทำ</b> เปลี่ยนแหล่งข้อมูล แก้ไฟล์เดียว</p>
+        <div class="tagline">unit4/week-10 · lab-10-submission-v1</div></div>
+      <div class="wk u4c"><div class="wn">WEEK 11 · LAB 11 · A4 15%</div><h3>ระบบจริงที่ deploy ได้</h3>
+        <p class="row"><b>เรียน</b> env config · health check · logging · production build พอร์ตเดียว · Render · ⭐⭐ Turso</p>
+        <p class="row"><b>ทำ</b> งานบูรณาการ Full-Stack รายบุคคล</p>
+        <div class="tagline">unit4/week-11 · lab-11-submission-v1</div></div>
+    </div>
+    <div class="nextup"><b>ใช้ต่อใน Term Project:</b> ตาราง 2 ตาราง + JOIN (R1) · health check · deploy ขึ้น Render (R7) — คน DevOps เริ่มจากคู่มือ Deploy ของสัปดาห์ 11</div>
+  </div>
+</section>
+
+<section class="slide" data-title="🧱 แก้ชั้นเดียวทุกครั้ง">
+  <span class="slide-id">WRAP · LAYERS</span>
+  <span class="eyebrow">บทเรียนสำคัญที่สุดของหน่วย 3–4</span>
+  <h2>เปลี่ยนแหล่งข้อมูลหลายครั้ง — แก้ชั้นเดียวทุกครั้ง</h2>
+  <div class="body center">
+    <table class="tight">
+      <tr><th>สัปดาห์</th><th>ข้อมูลมาจากไหน</th><th>ชั้นที่แก้</th><th>ชั้นที่ไม่ต้องแตะ</th></tr>
+      <tr><td><span class="chip c">W05</span></td><td>ไฟล์ mock + browser storage</td><td><code>services/</code> ของ React</td><td>component · หน้า</td></tr>
+      <tr><td><span class="chip g">W06</span></td><td>array ในหน่วยความจำของ API</td><td>service ของ API</td><td>route · controller</td></tr>
+      <tr><td><span class="chip g">W07</span></td><td>React เรียก Express จริง</td><td><code>apiClient</code> ที่เดียว</td><td>component ทุกหน้า</td></tr>
+      <tr><td><span class="chip">W10</span></td><td>SQLite ด้วย <code>node:sqlite</code></td><td>service ของ API</td><td>controller · React</td></tr>
+      <tr><td><span class="chip">W11 ⭐⭐</span></td><td>Turso (SQLite บนอินเทอร์เน็ต)</td><td>เปิดฐานข้อมูลใน service</td><td>ทุกชั้นที่เหลือ</td></tr>
+    </table>
+    <div class="iact" data-quiz>
+      <p style="margin:0;font-size:1.22rem"><strong>ทายก่อน:</strong> W13 เพิ่ม JWT ให้ React — ต้องแก้ทุกหน้าที่เรียก API หรือไม่</p>
+      <div class="opts"><button class="opt">แก้ทุกหน้า</button><button class="opt" data-a="1">แก้ apiClient ที่เดียว</button><button class="opt">แก้ทุก component ที่มีปุ่ม</button></div>
+      <div class="fb"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="หน่วย 5 · คุณภาพและความปลอดภัย">
+  <span class="chapbadge u5">หน่วยที่ 5 <span class="of">· สัปดาห์ 12–13 (วันเดียว)</span></span>
+  <h2>คุณภาพซอฟต์แวร์ การทดสอบ และความพร้อมก่อนใช้งาน</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="wk u5c"><div class="wn">WEEK 12 · LAB 12 · เช้า</div><h3>ทดสอบและแก้ไขข้อผิดพลาด</h3>
+        <p class="row"><b>เรียน</b> ออกแบบ test case (ค่าขอบ) · Vitest unit · supertest integration · coverage · debug 6 ขั้น</p>
+        <p class="row"><b>ทำ</b> หา bug 4 ตัวด้วย stack trace · breakpoint · DevTools · เขียน regression test · <code>DEBUG_LOG.md</code></p>
+        <div class="tagline">unit5/week-12 · lab-12-submission-v1 · check-week12 20/20</div></div>
+      <div class="wk u5c"><div class="wn">WEEK 13 · LAB 13 · บ่าย · A5</div><h3>พัฒนาอย่างปลอดภัยและพร้อมส่งมอบ</h3>
+        <p class="row"><b>เรียน</b> validation · scrypt · JWT · 401 vs 403 · secret · fail fast · Release Checklist</p>
+        <p class="row"><b>ทำ</b> GET/POST เปิดให้ทุกคน · PUT/DELETE เฉพาะเจ้าหน้าที่</p>
+        <div class="tagline">unit5/week-13 · lab-13-submission-v1 · check-week13 23/23</div></div>
+    </div>
+    <div class="nextup"><b>สองประโยคที่ต้องจำ:</b> <em>"test ผ่าน ≠ ไม่มี bug"</em> · <em>"ทุกอย่างที่มาจากนอกระบบ คือข้อมูลที่ยังไม่ได้ตรวจ"</em></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏗️ ระบบของคุณตอนนี้">
+  <span class="slide-id">WRAP · ARCHITECTURE</span>
+  <span class="eyebrow">ภาพรวมระบบ ณ สัปดาห์ 13</span>
+  <h2>ระบบของคุณตอนนี้ — ครบทุกชั้น</h2>
+  <div class="fig">
+    <svg viewBox="0 0 1200 420" role="img" aria-label="สถาปัตยกรรมระบบเต็ม">
+      <defs>
+        <marker id="ar-a" viewBox="0 0 8 8" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#AEB7DA" stroke-width="1.5"/></marker>
+      </defs>
+      <!-- เบราว์เซอร์ -->
+      <rect x="20" y="60" width="220" height="210" rx="16" fill="rgba(56,215,237,.08)" stroke="#38D7ED" stroke-width="2"/>
+      <text x="130" y="88" text-anchor="middle" class="svg-t" fill="#38D7ED">เบราว์เซอร์ · React</text>
+      <rect x="35" y="104" width="190" height="44" rx="10" fill="rgba(7,10,28,.7)" stroke="rgba(174,183,218,.35)"/>
+      <text x="130" y="131" text-anchor="middle" style="font-size:13px;fill:#EEF1FF">หน้า · component</text>
+      <rect x="35" y="156" width="190" height="44" rx="10" fill="rgba(7,10,28,.7)" stroke="rgba(174,183,218,.35)"/>
+      <text x="130" y="183" text-anchor="middle" style="font-size:13px;fill:#EEF1FF">authStore · token</text>
+      <rect x="35" y="208" width="190" height="44" rx="10" fill="rgba(7,10,28,.7)" stroke="rgba(174,183,218,.35)"/>
+      <text x="130" y="235" text-anchor="middle" style="font-size:13px;fill:#EEF1FF">apiClient · Bearer</text>
+      <line x1="242" y1="160" x2="286" y2="160" stroke="#AEB7DA" stroke-width="2" marker-end="url(#ar-a)"/>
+      <text x="264" y="150" text-anchor="middle" class="svg-m" fill="#AEB7DA" font-size="11">HTTP</text>
+      <!-- Express -->
+      <rect x="290" y="50" width="700" height="250" rx="16" fill="rgba(74,222,128,.06)" stroke="#4ADE80" stroke-width="2"/>
+      <text x="640" y="80" text-anchor="middle" class="svg-t" fill="#4ADE80">Express API · Node.js</text>
+      <g text-anchor="middle">
+        <rect x="303" y="106" width="104" height="72" rx="10" fill="rgba(7,10,28,.75)" stroke="#AEB7DA"/>
+        <text x="355" y="136" style="font-size:12.5px;font-weight:600;fill:#EEF1FF">express.json</text><text x="355" y="160" class="svg-m" fill="#FBBF24">413</text>
+        <rect x="417" y="106" width="104" height="72" rx="10" fill="rgba(7,10,28,.75)" stroke="#C084FC"/>
+        <text x="469" y="136" style="font-size:12.5px;font-weight:600;fill:#EEF1FF">authenticate</text><text x="469" y="160" class="svg-m" fill="#FB7185">401</text>
+        <rect x="531" y="106" width="104" height="72" rx="10" fill="rgba(7,10,28,.75)" stroke="#C084FC"/>
+        <text x="583" y="136" style="font-size:12.5px;font-weight:600;fill:#EEF1FF">requireRole</text><text x="583" y="160" class="svg-m" fill="#FB7185">403</text>
+        <rect x="645" y="106" width="104" height="72" rx="10" fill="rgba(7,10,28,.75)" stroke="#AEB7DA"/>
+        <text x="697" y="136" style="font-size:12.5px;font-weight:600;fill:#EEF1FF">validate</text><text x="697" y="160" class="svg-m" fill="#FBBF24">400</text>
+        <rect x="759" y="106" width="104" height="72" rx="10" fill="rgba(7,10,28,.75)" stroke="#4ADE80"/>
+        <text x="811" y="136" style="font-size:12.5px;font-weight:600;fill:#EEF1FF">controller</text><text x="811" y="160" class="svg-m" fill="#4ADE80">200 · 201</text>
+        <rect x="873" y="106" width="104" height="72" rx="10" fill="rgba(7,10,28,.75)" stroke="#4ADE80"/>
+        <text x="925" y="136" style="font-size:12.5px;font-weight:600;fill:#EEF1FF">service</text><text x="925" y="160" class="svg-m" fill="#4ADE80">SQL · ?</text>
+      </g>
+      <g stroke="#AEB7DA" stroke-width="1.6">
+        <line x1="407" y1="142" x2="415" y2="142" marker-end="url(#ar-a)"/><line x1="521" y1="142" x2="529" y2="142" marker-end="url(#ar-a)"/>
+        <line x1="635" y1="142" x2="643" y2="142" marker-end="url(#ar-a)"/><line x1="749" y1="142" x2="757" y2="142" marker-end="url(#ar-a)"/>
+        <line x1="863" y1="142" x2="871" y2="142" marker-end="url(#ar-a)"/>
+      </g>
+      <text x="640" y="222" text-anchor="middle" style="font-size:14px;fill:#EEF1FF">ด่านไหนไม่ผ่าน → ตอบทันที ไม่ถึง controller</text>
+      <text x="640" y="252" text-anchor="middle" class="svg-s">/api/health · errorHandler (production ไม่ส่ง stack) · security headers</text>
+      <text x="640" y="278" text-anchor="middle" class="svg-s">GET · POST เปิดให้ทุกคน — PUT · DELETE ต้องเป็นเจ้าหน้าที่</text>
+      <!-- ฐานข้อมูล -->
+      <line x1="992" y1="160" x2="1026" y2="160" stroke="#AEB7DA" stroke-width="2" marker-end="url(#ar-a)"/>
+      <rect x="1030" y="80" width="150" height="160" rx="16" fill="rgba(251,191,36,.1)" stroke="#FBBF24" stroke-width="2"/>
+      <text x="1105" y="130" text-anchor="middle" class="svg-big">SQLite</text>
+      <text x="1105" y="156" text-anchor="middle" class="svg-m" fill="#AEB7DA">node:sqlite</text>
+      <text x="1105" y="186" text-anchor="middle" class="svg-s">หรือ Turso</text>
+      <text x="1105" y="208" text-anchor="middle" class="svg-m" fill="#AEB7DA">(libsql)</text>
+      <!-- แถวล่าง -->
+      <g stroke="rgba(174,183,218,.5)" stroke-dasharray="5 5" stroke-width="1.5">
+        <line x1="400" y1="300" x2="400" y2="330"/><line x1="640" y1="300" x2="640" y2="330"/><line x1="880" y1="300" x2="880" y2="330"/>
+      </g>
+      <rect x="290" y="330" width="220" height="70" rx="12" fill="rgba(192,132,252,.12)" stroke="#C084FC"/>
+      <text x="400" y="358" text-anchor="middle" class="svg-t">Vitest + supertest</text>
+      <text x="400" y="382" text-anchor="middle" class="svg-s">unit · integration · regression</text>
+      <rect x="530" y="330" width="220" height="70" rx="12" fill="rgba(122,165,255,.12)" stroke="#7AA5FF"/>
+      <text x="640" y="358" text-anchor="middle" class="svg-t">GitHub Actions</text>
+      <text x="640" y="382" text-anchor="middle" class="svg-s">CI รัน npm test ทุก PR</text>
+      <rect x="770" y="330" width="220" height="70" rx="12" fill="rgba(244,114,182,.12)" stroke="#F472B6"/>
+      <text x="880" y="358" text-anchor="middle" class="svg-t">Render</text>
+      <text x="880" y="382" text-anchor="middle" class="svg-s">NODE_ENV · JWT_SECRET · health</text>
+    </svg>
+  </div>
+</section>
+
+<section class="slide" data-title="🌿 วิธีส่งงานที่ใช้ทั้งภาค">
+  <span class="slide-id">WRAP · GIT FLOW</span>
+  <span class="eyebrow">สิ่งที่ทำทุกสัปดาห์</span>
+  <h2>branch → commit → PR → merge → tag</h2>
+  <div class="fig" style="flex:0 0 auto;height:34%">
+    <svg viewBox="0 0 1100 250" role="img" aria-label="ขั้นตอนการส่งงานด้วย git">
+      <defs>
+        <marker id="gf-a" viewBox="0 0 8 8" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#AEB7DA" stroke-width="1.5"/></marker>
+      </defs>
+      <line x1="40" y1="180" x2="932" y2="180" stroke="rgba(174,183,218,.55)" stroke-width="4" marker-end="url(#gf-a)"/>
+      <text x="44" y="210" class="svg-m" fill="#AEB7DA">main</text>
+      <path d="M160 180 C200 180 200 90 240 90 L600 90 C640 90 640 180 680 180" fill="none" stroke="#38D7ED" stroke-width="4"/>
+      <circle cx="80" cy="180" r="8" fill="#AEB7DA"/><circle cx="160" cy="180" r="8" fill="#AEB7DA"/>
+      <circle cx="280" cy="90" r="8" fill="#38D7ED"/><circle cx="380" cy="90" r="8" fill="#38D7ED"/><circle cx="480" cy="90" r="8" fill="#38D7ED"/>
+      <circle cx="680" cy="180" r="11" fill="#FBBF24"/>
+      <text x="120" y="140" text-anchor="middle" class="svg-m" fill="#38D7ED">switch -c</text>
+      <text x="420" y="62" text-anchor="middle" class="svg-m" fill="#38D7ED">unit5/week-13</text>
+      <g text-anchor="middle" class="svg-s"><text x="280" y="122">commit</text><text x="380" y="122">commit</text><text x="480" y="122">commit</text></g>
+      <text x="560" y="122" text-anchor="middle" class="svg-m" fill="#AEB7DA">push</text>
+      <text x="600" y="40" text-anchor="middle" style="font-size:13.5px;font-weight:600;fill:#EEF1FF">Pull Request · review</text>
+      <text x="680" y="212" text-anchor="middle" class="svg-m" fill="#FBBF24">merge</text>
+      <path d="M790 180 L790 120 L870 132 L790 144" fill="rgba(251,191,36,.25)" stroke="#FBBF24" stroke-width="2"/>
+      <text x="800" y="108" class="svg-m" fill="#FBBF24">lab-13-submission-v1</text>
+      <rect x="950" y="156" width="130" height="48" rx="10" fill="rgba(244,114,182,.15)" stroke="#F472B6"/>
+      <text x="1015" y="186" text-anchor="middle" style="font-size:13.5px;font-weight:600;fill:#EEF1FF">ส่งลิงก์ LMS</text>
+    </svg>
+  </div>
+  <div class="body">
+    <table class="tight">
+      <tr><th>สัปดาห์</th><th>branch</th><th>tag ที่ส่ง</th></tr>
+      <tr><td>1–5</td><td><code>lab/week-0X</code></td><td><code>lab-0X-submission-v1</code> + PR + Pages</td></tr>
+      <tr><td>6–7 · 9–11</td><td><code>unit3/week-0X</code> · <code>unit4/week-XX</code></td><td><code>lab-XX-submission-v1</code></td></tr>
+      <tr><td>12–13</td><td><code>unit5/week-12</code> · <code>unit5/week-13</code></td><td><code>lab-12-submission-v1</code> · <code>lab-13-submission-v1</code></td></tr>
+      <tr><td>Project · Final</td><td><code>feature/&lt;บทบาท&gt;-&lt;เรื่อง&gt;</code> · <code>part2</code></td><td><code>v1.0.0</code> · <code>takehome-A/B-v1</code> · <code>part2-A/B</code></td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="slide" data-title="🎯 ตอนนี้คุณทำอะไรได้แล้ว">
+  <span class="slide-id">WRAP · SKILLS</span>
+  <span class="eyebrow">ทักษะที่ได้ — จัดตามบทบาทใน Term Project</span>
+  <h2>ตอนนี้คุณทำอะไรได้แล้ว</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="wk u2c"><div class="wn">🎨 FRONT-END</div><h3>สร้างหน้าเว็บที่ใช้งานจริง</h3>
+        <ul class="mini"><li>component · props · state · router</li><li>เรียก API ผ่าน service layer</li><li>ตรวจฟอร์ม · loading · error state</li><li>เก็บ token · แนบ header · ซ่อนปุ่มตามสิทธิ์</li></ul></div>
+      <div class="wk u3c"><div class="wn">⚙️ BACK-END</div><h3>สร้าง API ที่ปลอดภัย</h3>
+        <ul class="mini"><li>route → controller → service</li><li>SQL · JOIN · parameterized query</li><li>validation · error handling · 400/404</li><li>scrypt · JWT · 401/403</li></ul></div>
+      <div class="wk u6c"><div class="wn">🚀 DEVOPS</div><h3>ส่งมอบให้คนอื่นใช้ได้</h3>
+        <ul class="mini"><li>env config · secret · fail fast</li><li>health check · production build</li><li>deploy ขึ้น Render · ⭐⭐ Turso</li><li>CI · Release Checklist · tag</li></ul></div>
+    </div>
+    <div class="win"><p style="margin:0;font-size:1.2rem">ทุกคนมีทักษะ<strong>ทั้งสามฝั่ง</strong>แล้ว — ใน Term Project แต่ละคนรับผิดชอบหลักหนึ่งฝั่ง แต่ต้องอธิบายฝั่งของเพื่อนได้ในการสัมภาษณ์</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="❓ ทบทวน 3 ข้อ">
+  <span class="slide-id">WRAP · QUIZ</span>
+  <span class="eyebrow cyan">ทบทวนก่อนไปต่อ</span>
+  <h2>ทบทวน 3 ข้อ — ตอบในใจก่อนกด</h2>
+  <div class="body center">
+    <div class="iact" data-quiz>
+      <p style="margin:0;font-size:1.18rem"><strong>1.</strong> กฎ "รายละเอียดอย่างน้อย 10 ตัวอักษร" ควรทดสอบค่าใดบ้าง</p>
+      <div class="opts"><button class="opt">5 กับ 50</button><button class="opt" data-a="1">9 · 10 · 11</button><button class="opt">10 อย่างเดียว</button></div>
+      <div class="fb"></div>
+    </div>
+    <div class="iact" data-quiz>
+      <p style="margin:0;font-size:1.18rem"><strong>2.</strong> ส่ง token ที่ถูกต้องของ<strong>ผู้แจ้งทั่วไป</strong>มาลบคำร้อง ได้ status อะไร</p>
+      <div class="opts"><button class="opt">401</button><button class="opt" data-a="1">403</button><button class="opt">404</button><button class="opt">500</button></div>
+      <div class="fb"></div>
+    </div>
+    <div class="iact" data-quiz>
+      <p style="margin:0;font-size:1.18rem"><strong>3.</strong> query ใดปลอดภัยจาก SQL injection</p>
+      <div class="opts"><button class="opt">`... WHERE id = '${id}'`</button><button class="opt" data-a="1">prepare('... WHERE id = ?').get(id)</button><button class="opt">'... WHERE id = ' + id</button></div>
+      <div class="fb"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="📊 คะแนนทั้งวิชา">
+  <span class="slide-id">WRAP · ASSESSMENT</span>
+  <span class="eyebrow">คะแนน 100% มาจากไหน</span>
+  <h2>คะแนนทั้งวิชา — เก็บไปแล้ว และที่ยังเหลือ</h2>
+  <div class="fig">
+    <svg viewBox="0 0 1000 380" role="img" aria-label="สัดส่วนคะแนน A1 ถึง A7">
+      <g transform="rotate(-90 180 190)" fill="none" stroke-width="50">
+        <circle cx="180" cy="190" r="130" stroke="#7680A8" stroke-dasharray="40.8 816.8" stroke-dashoffset="0"/>
+        <circle cx="180" cy="190" r="130" stroke="#7AA5FF" stroke-dasharray="204.2 816.8" stroke-dashoffset="-40.8"/>
+        <circle cx="180" cy="190" r="130" stroke="#38D7ED" stroke-dasharray="122.5 816.8" stroke-dashoffset="-245"/>
+        <circle cx="180" cy="190" r="130" stroke="#4ADE80" stroke-dasharray="122.5 816.8" stroke-dashoffset="-367.5"/>
+        <circle cx="180" cy="190" r="130" stroke="#C084FC" stroke-dasharray="81.7 816.8" stroke-dashoffset="-490"/>
+        <circle cx="180" cy="190" r="130" stroke="#F472B6" stroke-dasharray="122.5 816.8" stroke-dashoffset="-571.7"/>
+        <circle cx="180" cy="190" r="130" stroke="#FB7185" stroke-dasharray="122.5 816.8" stroke-dashoffset="-694.2"/>
+      </g>
+      <text x="180" y="186" text-anchor="middle" style="font-size:40px;font-weight:700;fill:#EEF1FF">100%</text>
+      <text x="180" y="214" text-anchor="middle" class="svg-s">7 รายการ</text>
+      <g>
+        <rect x="380" y="34" width="16" height="16" rx="4" fill="#7680A8"/><text x="406" y="48" class="svg-t">A1 ความรับผิดชอบ · AI disclosure</text><text x="406" y="66" class="svg-s">ทุกงาน · Git history · อ้างอิง</text><text x="985" y="48" text-anchor="end" class="svg-m" fill="#EEF1FF">5%</text>
+        <rect x="380" y="82" width="16" height="16" rx="4" fill="#7AA5FF"/><text x="406" y="96" class="svg-t">A2 Weekly LAB รายบุคคล</text><text x="406" y="114" class="svg-s">LAB 01–07 · 09–10 · 12 — ส่งครบแล้วเกือบทั้งหมด</text><text x="985" y="96" text-anchor="end" class="svg-m" fill="#EEF1FF">25%</text>
+        <rect x="380" y="130" width="16" height="16" rx="4" fill="#38D7ED"/><text x="406" y="144" class="svg-t">A3 สอบกลางภาค</text><text x="406" y="162" class="svg-s">สัปดาห์ 8 · ประกาศแล้ว</text><text x="985" y="144" text-anchor="end" class="svg-m" fill="#EEF1FF">15%</text>
+        <rect x="380" y="178" width="16" height="16" rx="4" fill="#4ADE80"/><text x="406" y="192" class="svg-t">A4 Full-Stack รายบุคคล</text><text x="406" y="210" class="svg-s">LAB 11 · ระบบที่ deploy ได้</text><text x="985" y="192" text-anchor="end" class="svg-m" fill="#EEF1FF">15%</text>
+        <rect x="380" y="226" width="16" height="16" rx="4" fill="#C084FC"/><text x="406" y="240" class="svg-t">A5 คุณภาพและความปลอดภัย</text><text x="406" y="258" class="svg-s">LAB 13 ในห้อง 4 + คุณภาพใน Term Project 6</text><text x="985" y="240" text-anchor="end" class="svg-m" fill="#EEF1FF">10%</text>
+        <rect x="380" y="274" width="16" height="16" rx="4" fill="#F472B6"/><text x="406" y="288" class="svg-t">A6 Final Term Project</text><text x="406" y="306" class="svg-s">ผลงานทีม 10 + รายบุคคลตามบทบาท 5</text><text x="985" y="288" text-anchor="end" class="svg-m" fill="#EEF1FF">15%</text>
+        <rect x="380" y="322" width="16" height="16" rx="4" fill="#FB7185"/><text x="406" y="336" class="svg-t">A7 สอบปลายภาค</text><text x="406" y="354" class="svg-s">take-home 5 + ทำในห้อง 5 + สัมภาษณ์ 5</text><text x="985" y="336" text-anchor="end" class="svg-m" fill="#EEF1FF">15%</text>
+      </g>
+    </svg>
+  </div>
+  <p class="figcap">ยังเหลือเก็บ <strong style="color:var(--gold)">ราว 40%</strong> — A5 · A6 · A7 รวมกันทั้งหมดเกิดขึ้นระหว่างวันนี้ถึงวันสอบ</p>
+</section>
+
+<section class="slide divider" data-title="— ภาค 2 · งานที่ต้องส่ง">
+  <div class="grp">ภาค 2</div>
+  <div class="bignum">5 → 22 ต.ค.</div>
+  <h2>สิ่งที่ต้องส่ง ตั้งแต่วันนี้ถึงวันสอบ</h2>
+  <p class="whatfor">มี 3 เส้นทางที่วิ่งไปพร้อมกัน แล้วมาบรรจบกันในวันสอบปลายภาค</p>
+  <div class="mins"><span class="chip v">LAB 12–13</span><span class="chip p">Final Term Project</span><span class="chip r">สอบปลายภาค</span></div>
+</section>
+
+<section class="slide" data-title="🧵 3 เส้นทางที่ต้องเดินพร้อมกัน">
+  <span class="slide-id">WRAP · 3 TRACKS</span>
+  <span class="eyebrow">ภาพรวมงานที่เหลือ</span>
+  <h2>3 เส้นทาง — บรรจบกันวันสอบ</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="wk u5c"><div class="wn">① LAB 12 · LAB 13</div><h3>ปิดงานในห้องให้ครบ</h3>
+        <p class="row">tag <code>lab-12-submission-v1</code> · <code>lab-13-submission-v1</code></p>
+        <p class="row"><b>ทำไมด่วน</b> LAB 13 ที่ผ่าน 23/23 คือจุดเริ่มของ Term Project</p>
+        <div class="tagline">ให้ครบก่อน M1 · A2 + A5 (4)</div></div>
+      <div class="wk u6c"><div class="wn">② FINAL TERM PROJECT</div><h3>สร้างระบบใหม่เป็นคู่</h3>
+        <p class="row">เลือกหัวข้อ · ต่อยอด LAB 13 · login + สิทธิ์ · test · CI · deploy</p>
+        <p class="row"><b>ส่ง</b> tag <code>v1.0.0</code> + URL ที่ deploy</p>
+        <div class="tagline">M0 → M1 → M2 → M3 · A6 15 + A5 6</div></div>
+      <div class="wk exc"><div class="wn">③ สอบปลายภาค</div><h3>take-home + ในห้อง + สัมภาษณ์</h3>
+        <p class="row">Part 1 ทำที่บ้าน · Part 2 ทำในห้อง 90 นาที · สัมภาษณ์เป็นทีม</p>
+        <p class="row"><b>ส่ง</b> tag <code>takehome-A/B-v1</code> · <code>part2-A/B</code></p>
+        <div class="tagline">A7 15 · ไม่มีข้อเขียนทฤษฎี</div></div>
+    </div>
+    <div class="note"><p style="margin:0;font-size:1.18rem">⏱️ <strong>วางแผนเวลา:</strong> take-home ใช้ราว 4–6 ชั่วโมง · โปรเจกต์ใช้เกือบ 2 สัปดาห์ — อย่าเก็บทั้งสองอย่างไว้ทำคืนก่อนสอบ</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="① ปิด LAB 12–13">
+  <span class="chapbadge u5">เส้นทาง ① <span class="of">· LAB 12–13</span></span>
+  <h2>ปิด LAB 12–13 ให้ครบ</h2>
+  <div class="body center">
+    <table class="tight">
+      <tr><th>LAB</th><th>ตรวจด้วย</th><th>ต้องได้</th><th>ส่ง</th><th>คะแนน</th></tr>
+      <tr><td><strong>LAB 12</strong> · ทดสอบ + debug</td><td><code>check-week12.mjs --inclass</code></td><td>20/20</td><td><code>lab-12-submission-v1</code></td><td>A2</td></tr>
+      <tr><td><strong>LAB 13</strong> · ปลอดภัย + ส่งมอบ</td><td><code>check-week13.mjs --inclass</code></td><td>23/23</td><td><code>lab-13-submission-v1</code></td><td>A5 · 4</td></tr>
+    </table>
+    <pre><code><span class="c"># ตรวจก่อน push tag — รันจาก labs/week-13/source</span>
+node --disable-warning=ExperimentalWarning check-week13.mjs --inclass   <span class="c"># 23/23</span>
+git push -u origin unit5/week-13
+git tag lab-13-submission-v1 &amp;&amp; git push origin lab-13-submission-v1</code></pre>
+    <div class="g2">
+      <div class="win"><p style="margin:0;font-size:1.12rem">✅ <strong>ครบในห้องแล้ว</strong> → push tag ก่อนกลับ แล้วไปเริ่ม Term Project ได้เลย</p></div>
+      <div class="note"><p style="margin:0;font-size:1.12rem">⚠ <strong>ยังไม่ครบ</strong> → ทำต่อให้ผ่าน<strong>ก่อน M1</strong> (Sec 1: 8 ต.ค. · Sec 2: 11 ต.ค.) เพราะโปรเจกต์เริ่มจาก LAB 13 ของคน Back-end</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="— Final Term Project">
+  <div class="grp">เส้นทาง ②</div>
+  <div class="bignum" style="color:var(--u6)">v1.0.0</div>
+  <h2>Final Term Project</h2>
+  <p class="whatfor">สัปดาห์ 14–16 ไม่มีคาบเรียน — ใช้เวลานั้นสร้างระบบ Full-Stack ของจริงเป็นคู่ จากหัวข้อในมหาวิทยาลัย แล้วเอามาสาธิตวันสอบ</p>
+  <div class="mins"><span class="chip p">A6 15%</span><span class="chip v">+ A5 6%</span><span class="chip">ส่งวันสอบ</span></div>
+</section>
+
+<section class="slide" data-title="👥 ทีมและบทบาท">
+  <span class="chapbadge u6">Final Term Project <span class="of">· ทีม</span></span>
+  <h2>ทำเป็นคู่ — แต่ละคนมีบทบาทชัด</h2>
+  <div class="fig">
+    <svg viewBox="0 0 1100 330" role="img" aria-label="บทบาทในทีมแบบคู่และแบบสามคน">
+      <rect x="20" y="16" width="500" height="296" rx="18" fill="rgba(244,114,182,.06)" stroke="rgba(244,114,182,.45)"/>
+      <rect x="560" y="16" width="520" height="296" rx="18" fill="rgba(251,191,36,.05)" stroke="rgba(251,191,36,.45)"/>
+      <text x="270" y="50" text-anchor="middle" style="font-size:17px;font-weight:700;fill:#F472B6">แบบคู่ (ส่วนใหญ่)</text>
+      <text x="820" y="50" text-anchor="middle" style="font-size:17px;font-weight:700;fill:#FBBF24">กลุ่ม 3 คน (1 กลุ่ม / Section)</text>
+      <!-- คู่ -->
+      <g>
+        <circle cx="150" cy="104" r="26" fill="rgba(56,215,237,.3)" stroke="#38D7ED" stroke-width="2"/>
+        <path d="M110 186 Q110 140 150 140 Q190 140 190 186 Z" fill="rgba(56,215,237,.3)" stroke="#38D7ED" stroke-width="2"/>
+        <text x="150" y="222" text-anchor="middle" class="svg-t">Front-end</text>
+        <text x="150" y="246" text-anchor="middle" class="svg-s">React · login · token</text>
+        <text x="150" y="266" text-anchor="middle" class="svg-s">test frontend</text>
+        <circle cx="390" cy="104" r="26" fill="rgba(74,222,128,.3)" stroke="#4ADE80" stroke-width="2"/>
+        <path d="M350 186 Q350 140 390 140 Q430 140 430 186 Z" fill="rgba(74,222,128,.3)" stroke="#4ADE80" stroke-width="2"/>
+        <text x="390" y="222" text-anchor="middle" class="svg-t">Back-end + DevOps</text>
+        <text x="390" y="246" text-anchor="middle" class="svg-s">API · auth · test API</text>
+        <text x="390" y="266" text-anchor="middle" class="svg-s">CI · deploy · Release</text>
+        <text x="270" y="298" text-anchor="middle" class="svg-m" fill="#AEB7DA">Sec 1: 12 คู่ · Sec 2: 11 คู่</text>
+      </g>
+      <!-- สามคน -->
+      <g>
+        <circle cx="660" cy="104" r="26" fill="rgba(56,215,237,.3)" stroke="#38D7ED" stroke-width="2"/>
+        <path d="M620 186 Q620 140 660 140 Q700 140 700 186 Z" fill="rgba(56,215,237,.3)" stroke="#38D7ED" stroke-width="2"/>
+        <text x="660" y="222" text-anchor="middle" class="svg-t">Front-end</text>
+        <text x="660" y="246" text-anchor="middle" class="svg-s">React · login</text>
+        <text x="660" y="266" text-anchor="middle" class="svg-s">test frontend</text>
+        <circle cx="820" cy="104" r="26" fill="rgba(74,222,128,.3)" stroke="#4ADE80" stroke-width="2"/>
+        <path d="M780 186 Q780 140 820 140 Q860 140 860 186 Z" fill="rgba(74,222,128,.3)" stroke="#4ADE80" stroke-width="2"/>
+        <text x="820" y="222" text-anchor="middle" class="svg-t">Back-end</text>
+        <text x="820" y="246" text-anchor="middle" class="svg-s">API · auth</text>
+        <text x="820" y="266" text-anchor="middle" class="svg-s">test · DEBUG_LOG</text>
+        <circle cx="980" cy="104" r="26" fill="rgba(251,191,36,.3)" stroke="#FBBF24" stroke-width="2"/>
+        <path d="M940 186 Q940 140 980 140 Q1020 140 1020 186 Z" fill="rgba(251,191,36,.3)" stroke="#FBBF24" stroke-width="2"/>
+        <text x="980" y="222" text-anchor="middle" class="svg-t">DevOps</text>
+        <text x="980" y="246" text-anchor="middle" class="svg-s">Render + Turso</text>
+        <text x="980" y="266" text-anchor="middle" class="svg-s">CI · rollback</text>
+        <text x="820" y="298" text-anchor="middle" class="svg-m" fill="#AEB7DA">27 คน = 12 คู่ + 1 · 25 คน = 11 คู่ + 1</text>
+      </g>
+    </svg>
+  </div>
+  <p class="figcap">ทุกคนต้องอธิบายส่วนของเพื่อนได้ระดับภาพรวม — การสัมภาษณ์ถามข้ามบทบาท</p>
+</section>
+
+<section class="slide" data-title="🏫 18 หัวข้อให้เลือก">
+  <span class="chapbadge u6">Final Term Project <span class="of">· หัวข้อ</span></span>
+  <h2>18 หัวข้อ — ระบบของหน่วยงานจริงในมหาวิทยาลัย</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="card"><h3 style="color:var(--u2)">📚 บริการการเรียน</h3><ul class="mini"><li>T01 จองห้องประชุม / ห้องติว</li><li>T02 ขอเอกสารการศึกษา</li><li>T03 คิวพบอาจารย์ที่ปรึกษา</li><li>T04 ลงทะเบียนอบรม / กิจกรรม</li><li>T05 เสนอหัวข้อโครงงาน</li><li>T06 หาติวเตอร์รุ่นพี่</li></ul></div>
+      <div class="card"><h3 style="color:var(--u3)">🏠 นักศึกษาและหอพัก</h3><ul class="mini"><li>T07 ยืม-คืนอุปกรณ์ชมรม</li><li>T08 สมัครเข้าชมรม</li><li>T09 ของหาย-ได้คืน</li><li>T10 จองตู้ล็อกเกอร์</li><li>T11 ขอสติกเกอร์จอดรถ</li><li>T12 อาสาสมัครกิจกรรม</li></ul></div>
+      <div class="card"><h3 style="color:var(--u4)">🚐 บริการในวิทยาเขต</h3><ul class="mini"><li>T13 ขอใช้รถตู้มหาวิทยาลัย</li><li>T14 จองสนามกีฬา</li><li>T15 สั่งพิมพ์งาน</li><li>T16 สั่งอาหารล่วงหน้า</li><li>T17 จองที่นั่งรถรับส่ง</li><li>T18 ยืมห้องแล็บคอมพิวเตอร์</li></ul></div>
+    </div>
+    <table class="tight">
+      <tr><th>ทุกหัวข้อมีเหมือนกัน</th><th>แต่ละหัวข้อต่างกันที่</th></tr>
+      <tr><td>คนทั่วไปส่งคำขอ · เจ้าหน้าที่ดูแลสถานะ</td><td>ตาราง · ฟิลด์ · สถานะ</td></tr>
+      <tr><td>ตาราง ≥ 2 เชื่อมด้วย FOREIGN KEY</td><td><strong>กฎเฉพาะ</strong> เช่น "คืนไม่เกิน 14 วัน" · "ไม่เกินความจุห้อง"</td></tr>
+    </table>
+    <p style="margin:0"><small>ภายใน Section เดียวกันห้ามซ้ำ — <strong>เลือกก่อนได้ก่อน</strong>ผ่านฟอร์ม M0 · เสนอหัวข้อเองได้ (ผู้สอนอนุมัติ)</small></p>
+  </div>
+</section>
+
+<section class="slide" data-title="🧰 เริ่มต้นโปรเจกต์">
+  <span class="chapbadge u6">Final Term Project <span class="of">· จุดเริ่มต้น</span></span>
+  <h2>ไม่เริ่มจากศูนย์ — เริ่มจาก LAB 13</h2>
+  <div class="body center">
+    <div class="steps" style="--n:5">
+      <div class="st"><b>ตรวจ LAB 13</b><span>คน Back-end รัน <code>check-week13 --inclass</code> ต้องได้ 23/23</span></div>
+      <div class="st"><b>สร้าง repo ทีม</b><span><code>engse203-final-1-T07</code> · เพิ่มเพื่อน + ผู้สอนเป็น collaborator</span></div>
+      <div class="st"><b>คัดลอกโค้ด + kit</b><span>LAB 13 (ไม่เอา node_modules · .db · .env) + <code>kit/</code></span></div>
+      <div class="st"><b>tag v0.0.0</b><span>จุดเริ่มต้น — ใช้เทียบว่าทีมเปลี่ยนอะไรไปบ้าง</span></div>
+      <div class="st"><b>เปลี่ยนเป็นหัวข้อของทีม</b><span>ตารางใหม่ · API ใหม่ · หน้าใหม่ · ลบตาราง requests เดิม</span></div>
+    </div>
+    <div class="g2">
+      <div class="card"><h3>🧰 ใน <code>kit/</code> มีอะไร</h3><p><code>check-project.mjs</code> · <code>project.config.example.json</code> · แม่แบบ README · TEAM_CONTRACT · RELEASE_CHECKLIST · DEBUG_LOG · DEPLOY · CI · <code>render.yaml</code></p></div>
+      <div class="card"><h3>✅ สิ่งที่ไม่ต้องเขียนใหม่</h3><p>โครง route → controller → service · <code>config.js</code> · auth · health check · build/deploy — นี่คือประโยชน์ของการแยกชั้น</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="📋 ข้อกำหนด R1–R8">
+  <span class="chapbadge u6">Final Term Project <span class="of">· ข้อกำหนดขั้นต่ำ (MVP)</span></span>
+  <h2>ข้อกำหนด 8 ข้อ</h2>
+  <div class="body center">
+    <div class="four">
+      <div class="wk u4c"><div class="wn">R1 · BACK-END</div><h3>ข้อมูลของหัวข้อ</h3><p class="row">ตารางหลัก ≥ 6 ฟิลด์ + ตารางที่เกี่ยวข้อง ≥ 1 · seed ≥ 5 · JOIN</p></div>
+      <div class="wk u3c"><div class="wn">R2 · BACK-END</div><h3>API ครบ</h3><p class="row">GET · POST เปิด · PUT · DELETE เจ้าหน้าที่ · login · health</p></div>
+      <div class="wk u3c"><div class="wn">R3 · BACK-END</div><h3>Validation</h3><p class="row">บังคับ · enum · min/max · 413 · <strong>กฎเฉพาะของหัวข้อ</strong></p></div>
+      <div class="wk u5c"><div class="wn">R4 · BACK-END</div><h3>ความปลอดภัย</h3><p class="row">scrypt · JWT · 401/403 · fail fast · รหัส production ไม่ใช่รหัสใน seed</p></div>
+      <div class="wk u2c"><div class="wn">R5 · FRONT-END</div><h3>หน้าเว็บ</h3><p class="row">รายการ + กรอง · รายละเอียด · ฟอร์ม · dashboard · <strong>login</strong> · ปุ่มตามสิทธิ์ · มือถือ</p></div>
+      <div class="wk u5c"><div class="wn">R6 · ทุกคน</div><h3>การทดสอบ</h3><p class="row">unit ≥ 10 · integration ≥ 12 · frontend ≥ 3 · DEBUG_LOG ≥ 2 bug จริง</p></div>
+      <div class="wk u6c"><div class="wn">R7 · DEVOPS</div><h3>ส่งมอบ</h3><p class="row">CI · Render · <code>.env.example</code> · README · Release Checklist · <code>v1.0.0</code></p></div>
+      <div class="wk u1c"><div class="wn">R8 · ทุกคน</div><h3>ทำงานเป็นทีม</h3><p class="row">Issues · PR ≥ 2 ต่อคน · review ≥ 1 · commit ≥ 10 กระจายหลายวัน</p></div>
+    </div>
+    <p style="margin:0"><small>⭐ คะแนนเพิ่มสูงสุด 2 ข้อ: ค้นหา · ประวัติสถานะ · จำกัดการเดารหัสผ่าน · coverage ≥ 85% · แบ่งหน้า · PWA / Electron</small></p>
+  </div>
+</section>
+
+<section class="slide" data-title="🤖 ตรวจเองด้วย check-project">
+  <span class="chapbadge u6">Final Term Project <span class="of">· ตรวจงานด้วยตัวเอง</span></span>
+  <h2>ตรวจเองได้ทุกเมื่อ ด้วย <code>check-project.mjs</code></h2>
+  <div class="body center">
+    <div class="g21">
+      <pre><code><span class="c"># ครั้งแรก: กรอกข้อมูลทีม</span>
+cp project.config.example.json project.config.json
+
+<span class="c"># ตรวจทั้งหมด</span>
+node --disable-warning=ExperimentalWarning check-project.mjs
+
+<span class="c"># ตรวจเฉพาะส่วนของตัวเอง</span>
+node … check-project.mjs --role fe
+node … check-project.mjs --role be+devops
+
+<span class="c"># หลัง deploy — ตรวจ URL จริงด้วย</span>
+node … check-project.mjs --online</code></pre>
+      <div class="card"><h3>checker ทำอะไรบ้าง</h3>
+        <ul class="mini">
+          <li>เปิด API ของทีม<strong>จริง</strong>ด้วยฐานข้อมูลชั่วคราว แล้วยิงทุก endpoint</li>
+          <li>ลอง token ปลอม · token ผู้ใช้ทั่วไป · token เจ้าหน้าที่</li>
+          <li>รัน test ของทีม · build frontend</li>
+          <li>ตรวจ secret · production · เอกสาร · git · tag</li>
+        </ul></div>
+    </div>
+    <div class="note"><p style="margin:0;font-size:1.15rem">ผ่าน checker ครบ ≠ คะแนนเต็ม — checker ตรวจว่า<strong>มีและทำงาน</strong> · การออกแบบและความเข้าใจตรวจจาก rubric และ<strong>การสัมภาษณ์</strong></p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🗓️ milestone ของโปรเจกต์">
+  <span class="chapbadge u6">Final Term Project <span class="of">· กำหนดการ</span></span>
+  <h2>milestone — Sec 1 และ Sec 2</h2>
+  <div class="fig">
+    <svg viewBox="0 0 1200 380" role="img" aria-label="กำหนดการโปรเจกต์และ take-home">
+      <!-- วันหยุด -->
+      <rect x="443" y="66" width="108" height="300" fill="rgba(174,183,218,.07)"/>
+      <rect x="821" y="66" width="108" height="300" fill="rgba(174,183,218,.07)"/>
+      <g class="svg-m" font-size="12" text-anchor="middle" fill="#EEF1FF">
+        <text x="200" y="36">5</text><text x="254" y="36">6</text><text x="308" y="36">7</text><text x="362" y="36">8</text><text x="416" y="36">9</text><text x="470" y="36">10</text>
+        <text x="524" y="36">11</text><text x="578" y="36">12</text><text x="632" y="36">13</text><text x="686" y="36">14</text><text x="740" y="36">15</text><text x="794" y="36">16</text>
+        <text x="848" y="36">17</text><text x="902" y="36">18</text><text x="956" y="36">19</text><text x="1010" y="36">20</text><text x="1064" y="36">21</text><text x="1118" y="36">22</text>
+      </g>
+      <g font-size="11" text-anchor="middle" fill="#7680A8">
+        <text x="200" y="54">จ</text><text x="254" y="54">อ</text><text x="308" y="54">พ</text><text x="362" y="54">พฤ</text><text x="416" y="54">ศ</text><text x="470" y="54">ส</text>
+        <text x="524" y="54">อา</text><text x="578" y="54">จ</text><text x="632" y="54">อ</text><text x="686" y="54">พ</text><text x="740" y="54">พฤ</text><text x="794" y="54">ศ</text>
+        <text x="848" y="54">ส</text><text x="902" y="54">อา</text><text x="956" y="54">จ</text><text x="1010" y="54">อ</text><text x="1064" y="54">พ</text><text x="1118" y="54">พฤ</text>
+      </g>
+      <text x="20" y="36" class="svg-m" fill="#AEB7DA">ต.ค. 2569</text>
+      <!-- Sec 1 -->
+      <text x="20" y="92" style="font-size:15px;font-weight:700;fill:#FBBF24">Section 1</text>
+      <text x="20" y="128" class="svg-s">โปรเจกต์</text>
+      <rect x="200" y="114" width="756" height="18" rx="9" fill="rgba(251,191,36,.25)"/>
+      <g fill="#FBBF24"><path d="M200 114 L209 123 L200 132 L191 123 Z"/><path d="M362 114 L371 123 L362 132 L353 123 Z"/><path d="M632 114 L641 123 L632 132 L623 123 Z"/></g>
+      <circle cx="686" cy="123" r="6" fill="#EEF1FF"/><circle cx="848" cy="123" r="6" fill="none" stroke="#EEF1FF" stroke-width="2"/>
+      <circle cx="956" cy="123" r="11" fill="#FB7185"/>
+      <g font-size="11.5" text-anchor="middle" fill="#EEF1FF" font-weight="600">
+        <text x="200" y="106">M0</text><text x="362" y="106">M1</text><text x="632" y="106">M2</text><text x="686" y="106">peer #1</text><text x="848" y="106">หยุดฟีเจอร์</text><text x="956" y="104">v1.0.0</text>
+      </g>
+      <text x="20" y="166" class="svg-s">take-home A</text>
+      <rect x="254" y="152" width="702" height="18" rx="9" fill="rgba(251,113,133,.22)"/>
+      <circle cx="254" cy="161" r="6" fill="#FB7185"/>
+      <text x="262" y="186" class="svg-s">ปล่อยโจทย์ 6 ต.ค.</text>
+      <text x="940" y="186" text-anchor="end" class="svg-s">ส่ง tag ก่อนเวลาสอบ</text>
+      <text x="975" y="166" style="font-size:13px;font-weight:700;fill:#FB7185">สอบ 19 ต.ค.</text>
+      <line x1="20" y1="214" x2="1180" y2="214" stroke="rgba(174,183,218,.2)"/>
+      <!-- Sec 2 -->
+      <text x="20" y="250" style="font-size:15px;font-weight:700;fill:#38D7ED">Section 2</text>
+      <text x="20" y="286" class="svg-s">โปรเจกต์</text>
+      <rect x="362" y="272" width="756" height="18" rx="9" fill="rgba(56,215,237,.25)"/>
+      <g fill="#38D7ED"><path d="M362 272 L371 281 L362 290 L353 281 Z"/><path d="M524 272 L533 281 L524 290 L515 281 Z"/><path d="M794 272 L803 281 L794 290 L785 281 Z"/></g>
+      <circle cx="848" cy="281" r="6" fill="#EEF1FF"/><circle cx="1010" cy="281" r="6" fill="none" stroke="#EEF1FF" stroke-width="2"/>
+      <circle cx="1118" cy="281" r="11" fill="#FB7185"/>
+      <g font-size="11.5" text-anchor="middle" fill="#EEF1FF" font-weight="600">
+        <text x="362" y="264">M0</text><text x="524" y="264">M1</text><text x="794" y="264">M2</text><text x="848" y="264">peer #1</text><text x="1010" y="264">หยุดฟีเจอร์</text><text x="1118" y="262">v1.0.0</text>
+      </g>
+      <text x="20" y="324" class="svg-s">take-home B</text>
+      <rect x="362" y="310" width="756" height="18" rx="9" fill="rgba(251,113,133,.22)"/>
+      <circle cx="362" cy="319" r="6" fill="#FB7185"/>
+      <text x="370" y="344" class="svg-s">ปล่อยโจทย์ 8 ต.ค. (หลังคาบ)</text>
+      <text x="1100" y="344" text-anchor="end" style="font-size:13px;font-weight:700;fill:#FB7185">สอบ 22 ต.ค.</text>
+    </svg>
+  </div>
+  <p class="figcap">M0 จับคู่ + หัวข้อ · M1 repo ทีม + <code>v0.1.0</code> · M2 API + login ใช้ได้ + deploy ครั้งแรก + <code>v0.5.0</code> · M3 <code>v1.0.0</code> · แถบเทา = เสาร์-อาทิตย์</p>
+</section>
+
+<section class="slide" data-title="🧮 คะแนนโปรเจกต์">
+  <span class="chapbadge u6">Final Term Project <span class="of">· คะแนน</span></span>
+  <h2>คะแนนโปรเจกต์ — ทีม + รายบุคคล</h2>
+  <div class="body center">
+    <div class="g2">
+      <table class="tight">
+        <tr><th colspan="2">A6 · 15 คะแนน</th></tr>
+        <tr><td>P1 ระบบทำงานครบ</td><td>4</td></tr>
+        <tr><td>P2 deploy ใช้ได้จริง · demo</td><td>2</td></tr>
+        <tr><td>P3 ออกแบบข้อมูลและ API</td><td>2</td></tr>
+        <tr><td>P4 เอกสาร · กระบวนการทีม</td><td>2</td></tr>
+        <tr><td><strong>I1</strong> งานตามบทบาท (รายคน)</td><td>2</td></tr>
+        <tr><td><strong>I2</strong> หลักฐาน git (รายคน)</td><td>1.5</td></tr>
+        <tr><td><strong>I3</strong> ประเมินจากเพื่อน (รายคน)</td><td>1.5</td></tr>
+      </table>
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <table class="tight">
+          <tr><th colspan="2">A5 ส่วนคุณภาพ · 6 คะแนน</th></tr>
+          <tr><td>Q1 การทดสอบ</td><td>2</td></tr>
+          <tr><td>Q2 ความปลอดภัย</td><td>2</td></tr>
+          <tr><td>Q3 DEBUG_LOG</td><td>1</td></tr>
+          <tr><td>Q4 Release · <code>v1.0.0</code></td><td>1</td></tr>
+        </table>
+        <div class="wrong"><p style="margin:0;font-size:1.08rem">🚫 <strong>ไม่มี commit ของตัวเองเลย</strong> → A6 รายบุคคล = 0 · อธิบายงานตัวเองไม่ได้ในการสัมภาษณ์ → I1 = 0</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="— สอบปลายภาค">
+  <div class="grp">เส้นทาง ③</div>
+  <div class="bignum ex">A7 · 15%</div>
+  <h2>สอบปลายภาค</h2>
+  <p class="whatfor">ไม่มีข้อเขียนทฤษฎี — วัดจากงานที่ทำได้จริง และการอธิบายงานของตัวเอง</p>
+  <div class="mins"><span class="chip r">Sec 1 · จันทร์ 19 ต.ค.</span><span class="chip c">Sec 2 · พฤหัส 22 ต.ค.</span></div>
+</section>
+
+<section class="slide" data-title="🧱 3 ส่วนของปลายภาค">
+  <span class="chapbadge ex">สอบปลายภาค <span class="of">· โครงสร้าง</span></span>
+  <h2>3 ส่วน · ส่วนละ 5 คะแนน</h2>
+  <div class="fig">
+    <svg viewBox="0 0 1100 320" role="img" aria-label="โครงสร้างข้อสอบปลายภาค 3 ส่วน">
+      <rect x="30" y="20" width="320" height="214" rx="18" fill="rgba(251,191,36,.08)" stroke="#FBBF24" stroke-width="2"/>
+      <rect x="390" y="20" width="320" height="214" rx="18" fill="rgba(56,215,237,.08)" stroke="#38D7ED" stroke-width="2"/>
+      <rect x="750" y="20" width="320" height="214" rx="18" fill="rgba(244,114,182,.08)" stroke="#F472B6" stroke-width="2"/>
+      <g style="font-size:44px;font-weight:700" text-anchor="end"><text x="330" y="70" fill="#FBBF24">5</text><text x="690" y="70" fill="#38D7ED">5</text><text x="1050" y="70" fill="#F472B6">5</text></g>
+      <g class="svg-lbl" fill="#AEB7DA"><text x="52" y="52">PART 1</text><text x="412" y="52">PART 2</text><text x="772" y="52">INTERVIEW</text></g>
+      <g style="font-size:20px;font-weight:700;fill:#EEF1FF"><text x="52" y="86">Take-home</text><text x="412" y="86">ทำในห้อง</text><text x="772" y="86">สัมภาษณ์เป็นทีม</text></g>
+      <g class="svg-s" font-size="13"><text x="52" y="112">ทำที่บ้าน · รายบุคคล · 4–6 ชม.</text><text x="412" y="112">วันสอบ · 90 นาที · ห้ามใช้ AI</text><text x="772" y="112">ทีมละ 15 นาที · ให้คะแนนรายคน</text></g>
+      <g style="font-size:14px;fill:#EEF1FF">
+        <text x="52" y="148">• แก้ bug 3 ตัว + ปัญหา secret</text><text x="52" y="174">• เพิ่มฟีเจอร์ 1 อย่าง + test</text><text x="52" y="200">• ส่ง tag takehome-A/B-v1</text>
+        <text x="412" y="148">• review PR จากเพื่อนร่วมทีม</text><text x="412" y="174">• แก้ปัญหา + change request</text><text x="412" y="200">• ส่ง tag part2-A/B</text>
+        <text x="772" y="148">• demo โปรเจกต์ 3 นาที</text><text x="772" y="174">• ถามทั้งโปรเจกต์และ take-home</text><text x="772" y="200">• แทนข้อสอบทฤษฎี</text>
+      </g>
+      <rect x="30" y="256" width="1040" height="46" rx="14" fill="rgba(251,113,133,.14)" stroke="#FB7185"/>
+      <text x="550" y="286" text-anchor="middle" style="font-size:17px;font-weight:700;fill:#EEF1FF">A7 สอบปลายภาค = 15 คะแนน · ชุด A = Section 1 · ชุด B = Section 2 (คนละระบบ คนละ bug)</text>
+    </svg>
+  </div>
+</section>
+
+<section class="slide" data-title="🏠 Part 1 · take-home">
+  <span class="chapbadge ex">Part 1 <span class="of">· take-home · รายบุคคล</span></span>
+  <h2>Take-home — ดูแลระบบต่อจากรุ่นพี่</h2>
+  <div class="body center">
+    <div class="g21">
+      <table class="tight">
+        <tr><th>งาน</th><th>ทำอะไร</th><th>คะแนน</th></tr>
+        <tr><td><strong>BUG-1</strong></td><td>bug ฝั่ง API ที่ผู้ใช้แจ้งมา</td><td>15</td></tr>
+        <tr><td><strong>BUG-2</strong></td><td>ช่องโหว่ความปลอดภัย (ทำซ้ำได้ด้วย curl)</td><td>15</td></tr>
+        <tr><td><strong>BUG-3</strong></td><td>bug ฝั่งหน้าเว็บ (หาเจอด้วย DevTools)</td><td>15</td></tr>
+        <tr><td><strong>SEC</strong></td><td>ปัญหาเรื่อง secret ที่ทีมตรวจความปลอดภัยพบ</td><td>15</td></tr>
+        <tr><td><strong>FEAT</strong></td><td>ฟีเจอร์ใหม่ 1 อย่าง · มี test สเปกให้ (test-first)</td><td>20</td></tr>
+        <tr><td><strong>TEST</strong></td><td>regression test ที่เขียนเอง</td><td>10</td></tr>
+        <tr><td><strong>LOG</strong></td><td><code>DEBUG_LOG.md</code> 3 bug × 6 ช่อง + SEC</td><td>10</td></tr>
+      </table>
+      <div style="display:flex;flex-direction:column;gap:.65rem">
+        <div class="card"><h3>📦 ได้อะไร</h3><p>repo template ที่มีระบบใหม่ (ไม่ใช่ Campus Service) · <code>TAKEHOME_A.md</code> / <code>TAKEHOME_B.md</code> · <code>BUG_REPORTS.md</code></p></div>
+        <div class="card"><h3>🔍 ตรวจอย่างไร</h3><p>hidden test ที่ผู้สอนเก็บไว้ · test ของคุณต้อง <strong>fail บนโค้ดเดิม</strong> และผ่านหลังแก้</p></div>
+        <div class="note"><p style="margin:0;font-size:1.05rem">ใช้ AI ได้ — แต่ต้องเปิดเผยใน README และ<strong>อธิบายได้ทุกบรรทัด</strong></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="📤 วิธีส่ง take-home">
+  <span class="chapbadge ex">Part 1 <span class="of">· วิธีส่ง</span></span>
+  <h2>ส่ง take-home ใน 5 ขั้น</h2>
+  <div class="body center">
+    <div class="steps" style="--n:5">
+      <div class="st"><b>Use this template</b><span>สร้าง repo ของตัวเองจาก template ที่ประกาศ · ตั้งเป็น <strong>Private</strong></span></div>
+      <div class="st"><b>เพิ่มผู้สอน</b><span>Settings → Collaborators → เพิ่มบัญชีผู้สอน</span></div>
+      <div class="st"><b>ทำงาน + commit</b><span>commit เป็นระยะ ข้อความบอกว่าทำอะไร เช่น <code>fix(BUG-2): …</code></span></div>
+      <div class="st"><b>ติด tag</b><span><code>git tag takehome-A-v1</code><br><code>git push origin takehome-A-v1</code></span></div>
+      <div class="st"><b>ส่งลิงก์ LMS</b><span>ลิงก์ repo · tag ต้องอยู่บน GitHub ก่อนเวลาสอบ</span></div>
+    </div>
+    <table class="due">
+      <tr><th>ชุด</th><th>ปล่อยโจทย์</th><th>tag</th><th>ส่งภายใน</th></tr>
+      <tr><td class="s1">ชุด A · Sec 1</td><td>อังคาร 6 ต.ค.</td><td><code>takehome-A-v1</code></td><td><strong>จันทร์ 19 ต.ค. ก่อน 09:00</strong></td></tr>
+      <tr><td class="s2">ชุด B · Sec 2</td><td>พฤหัส 8 ต.ค. (หลังคาบ)</td><td><code>takehome-B-v1</code></td><td><strong>พฤหัส 22 ต.ค. ก่อน 09:00</strong></td></tr>
+    </table>
+    <p style="margin:0"><small>ผู้สอนตรวจเฉพาะ commit ที่ tag ชี้ · แก้หลังติด tag ได้จนถึงกำหนด (<code>git tag -f</code> แล้ว <code>git push -f origin &lt;tag&gt;</code>)</small></p>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 Part 2 · ทำในห้อง">
+  <span class="chapbadge ex">Part 2 <span class="of">· วันสอบ · 90 นาที · รายบุคคล</span></span>
+  <h2>Part 2 — review PR ของเพื่อน แล้วรับ change request</h2>
+  <div class="body center">
+    <div class="g21">
+      <table class="tight">
+        <tr><th>งาน</th><th>ทำอะไร</th><th>คะแนน</th></tr>
+        <tr><td><strong>REVIEW</strong></td><td><code>REVIEW.md</code> — ปัญหาใน patch ≥ 2 ข้อ: ไฟล์:บรรทัด · ทำไม · แก้อย่างไร</td><td>20</td></tr>
+        <tr><td><strong>FIX-SEC</strong></td><td>แก้ปัญหาความปลอดภัยใน patch</td><td>25</td></tr>
+        <tr><td><strong>FIX-LOGIC</strong></td><td>แก้ปัญหาข้อมูล / ตรรกะใน patch</td><td>15</td></tr>
+        <tr><td><strong>CR</strong></td><td>ทำ change request ตามใบงาน</td><td>25</td></tr>
+        <tr><td><strong>TEST</strong></td><td>test ใหม่ ≥ 3 ข้อ (ต้องมีค่าขอบ)</td><td>15</td></tr>
+      </table>
+      <div style="display:flex;flex-direction:column;gap:.6rem">
+        <div class="card"><h3>🧩 ทำบน repo take-home ของตัวเอง</h3><p><code>git switch -c part2 takehome-A-v1</code> · <code>git apply</code> patch ที่แจกตอน 09:00 · ส่ง tag <code>part2-A</code> / <code>part2-B</code> ภายใน 11:30</p></div>
+        <div class="wrong"><p style="margin:0;font-size:1.05rem">🚫 <strong>ห้ามใช้ AI ทุกชนิด</strong> (ปิด Copilot / AI ใน IDE) · เปิดเอกสารวิชา · MDN · Express · Vitest docs ได้</p></div>
+        <div class="win"><p style="margin:0;font-size:1.05rem">take-home ยังพังอยู่? ขอ starter จากผู้สอนแล้วทำ Part 2 ได้ — ไม่เสียคะแนน Part 2</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="🎤 การสัมภาษณ์">
+  <span class="chapbadge ex">สัมภาษณ์ <span class="of">· เป็นทีม · ให้คะแนนรายคน</span></span>
+  <h2>15 นาทีต่อทีม — demo แล้วถามทีละคน</h2>
+  <div class="fig" style="flex:0 0 auto;height:30%">
+    <svg viewBox="0 0 1100 170" role="img" aria-label="ลำดับเวลาการสัมภาษณ์ 15 นาที">
+      <text x="80" y="26" class="svg-s">ก่อนถึงคิว 2–3 นาที: เปิด URL ที่ deploy ทิ้งไว้ (Render free tier ตื่นช้า 30–60 วินาที)</text>
+      <rect x="80" y="44" width="188" height="60" rx="12" fill="rgba(251,191,36,.3)" stroke="#FBBF24"/>
+      <rect x="268" y="44" width="564" height="60" rx="12" fill="rgba(56,215,237,.22)" stroke="#38D7ED"/>
+      <rect x="832" y="44" width="188" height="60" rx="12" fill="rgba(174,183,218,.15)" stroke="#AEB7DA"/>
+      <text x="174" y="80" text-anchor="middle" style="font-size:15px;font-weight:700;fill:#EEF1FF">Demo 3 นาที</text>
+      <text x="550" y="80" text-anchor="middle" style="font-size:15px;font-weight:700;fill:#EEF1FF">ถามทีละคน คนละ 4 ข้อ · คนที่ถูกถามตอบเอง</text>
+      <text x="926" y="80" text-anchor="middle" style="font-size:15px;font-weight:700;fill:#EEF1FF">บันทึกคะแนน</text>
+      <g class="svg-m" font-size="12" fill="#AEB7DA" text-anchor="middle"><text x="80" y="128">0</text><text x="268" y="128">3</text><text x="832" y="128">12</text><text x="1020" y="128">15 นาที</text></g>
+      <text x="80" y="158" class="svg-s">demo: ส่งคำขอแบบคนทั่วไป → login เจ้าหน้าที่ → เปลี่ยนสถานะ → คนทั่วไปทำไม่ได้ (401/403) → CI ที่ผ่าน</text>
+    </svg>
+  </div>
+  <div class="body">
+    <div class="four">
+      <div class="stat u4c"><div class="num" style="font-size:2.4rem">2</div><div class="lbl">I-OWN</div><div class="sub">เปิดไฟล์ชี้โค้ดส่วนของตัวเองในโปรเจกต์ได้ · อธิบายเหตุผล</div></div>
+      <div class="stat u2c"><div class="num" style="font-size:2.4rem">1</div><div class="lbl">I-CROSS</div><div class="sub">เข้าใจส่วนของเพื่อน · เล่าการไหลของระบบข้ามชั้นได้</div></div>
+      <div class="stat exc"><div class="num" style="font-size:2.4rem">1.5</div><div class="lbl">I-TH</div><div class="sub">take-home ของตัวเอง: ทำซ้ำอาการ · ชี้สาเหตุ · ชี้ test</div></div>
+      <div class="stat u5c"><div class="num" style="font-size:2.4rem">0.5</div><div class="lbl">I-CONCEPT</div><div class="sub">แนวคิดทั้งวิชา 1 ข้อแบบสุ่ม (แทนข้อเขียน)</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="⏰ ตารางวันสอบ">
+  <span class="chapbadge ex">วันสอบ <span class="of">· Sec 1 จ. 19 ต.ค. · Sec 2 พฤ. 22 ต.ค.</span></span>
+  <h2>วันสอบ 08:30 – 12:30</h2>
+  <div class="fig">
+    <svg viewBox="0 0 1200 300" role="img" aria-label="ตารางเวลาวันสอบ">
+      <g class="svg-m" font-size="12" fill="#AEB7DA" text-anchor="middle">
+        <text x="120" y="40">08:30</text><text x="246" y="40">09:00</text><text x="372" y="40">09:30</text><text x="498" y="40">10:00</text><text x="624" y="40">10:30</text>
+        <text x="750" y="40">11:00</text><text x="876" y="40">11:30</text><text x="1002" y="40">12:00</text><text x="1128" y="40">12:30</text>
+      </g>
+      <g stroke="rgba(174,183,218,.18)"><line x1="120" y1="50" x2="120" y2="220"/><line x1="246" y1="50" x2="246" y2="220"/><line x1="372" y1="50" x2="372" y2="220"/><line x1="498" y1="50" x2="498" y2="220"/><line x1="624" y1="50" x2="624" y2="220"/><line x1="750" y1="50" x2="750" y2="220"/><line x1="876" y1="50" x2="876" y2="220"/><line x1="1002" y1="50" x2="1002" y2="220"/><line x1="1128" y1="50" x2="1128" y2="220"/></g>
+      <text x="20" y="96" style="font-size:14px;font-weight:600;fill:#EEF1FF">Part 2</text>
+      <rect x="246" y="74" width="630" height="38" rx="10" fill="rgba(251,191,36,.28)" stroke="#FBBF24"/>
+      <text x="561" y="99" text-anchor="middle" style="font-size:14px;font-weight:600;fill:#EEF1FF">ทำในห้อง 90 นาที (ห้องเปิด 09:00–11:30) · ส่ง tag part2 ภายใน 11:30</text>
+      <text x="20" y="160" style="font-size:14px;font-weight:600;fill:#EEF1FF">สัมภาษณ์</text>
+      <rect x="309" y="138" width="819" height="38" rx="10" fill="rgba(244,114,182,.22)" stroke="#F472B6"/>
+      <g stroke="rgba(244,114,182,.7)"><line x1="372" y1="138" x2="372" y2="176"/><line x1="435" y1="138" x2="435" y2="176"/><line x1="498" y1="138" x2="498" y2="176"/><line x1="561" y1="138" x2="561" y2="176"/><line x1="624" y1="138" x2="624" y2="176"/><line x1="687" y1="138" x2="687" y2="176"/><line x1="750" y1="138" x2="750" y2="176"/><line x1="813" y1="138" x2="813" y2="176"/><line x1="876" y1="138" x2="876" y2="176"/><line x1="939" y1="138" x2="939" y2="176"/><line x1="1002" y1="138" x2="1002" y2="176"/><line x1="1065" y1="138" x2="1065" y2="176"/></g>
+      <text x="718" y="200" text-anchor="middle" class="svg-s">ทีมละ 15 นาที ตามคิวที่สุ่มตอน 09:00 · ถูกเรียกเมื่อไรก็พัก Part 2 ไปสัมภาษณ์แล้วกลับมาทำต่อ</text>
+      <g fill="#FB7185"><path d="M120 222 L128 230 L120 238 L112 230 Z"/><path d="M246 222 L254 230 L246 238 L238 230 Z"/><path d="M876 222 L884 230 L876 238 L868 230 Z"/><path d="M1128 222 L1136 230 L1128 238 L1120 230 Z"/></g>
+      <text x="120" y="262" text-anchor="middle" style="font-size:13px;font-weight:600;fill:#EEF1FF">ตั้งเครื่อง</text>
+      <text x="246" y="286" text-anchor="middle" style="font-size:13px;font-weight:600;fill:#FB7185">ปิดรับ take-home · v1.0.0</text>
+      <text x="876" y="262" text-anchor="middle" style="font-size:13px;font-weight:600;fill:#FBBF24">ส่ง Part 2</text>
+      <text x="1120" y="286" text-anchor="middle" style="font-size:13px;font-weight:600;fill:#EEF1FF">จบ (Sec 2 ราว 12:15)</text>
+    </svg>
+  </div>
+  <p class="figcap">Sec 1 มี 13 ทีม (สัมภาษณ์ 09:15–12:30) · Sec 2 มี 12 ทีม (09:15–12:15)</p>
+</section>
+
+<section class="slide" data-title="🔔 กำหนดส่งของฉัน">
+  <span class="slide-id">WRAP · MY DEADLINES</span>
+  <span class="eyebrow">เลือก Section ของคุณ</span>
+  <h2>กำหนดส่งทั้งหมดของ Section คุณ</h2>
+  <div class="body">
+    <div class="g21" style="align-items:start">
+      <div>
+        <div class="secbtns"><button id="dlS1" class="on">Section 1 · วันจันทร์</button><button id="dlS2" class="s2b">Section 2 · วันพฤหัส</button></div>
+        <div class="dl" id="dlList"></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <div class="countbox"><div class="big" id="dlCount">—</div><div class="lbl" id="dlCountLbl">วันจนถึงวันสอบ</div></div>
+        <div class="card"><h3>สถานะ</h3><p><span class="chip">ใกล้ถึง ≤ 3 วัน</span> <span class="chip c">ยังมีเวลา</span> <span class="chip r">วันนี้</span> <span class="chip" style="color:var(--dim);background:none">ผ่านไปแล้ว</span></p></div>
+        <p style="margin:0"><small>นับจากวันที่ในเครื่องที่เปิดสไลด์นี้</small></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="📅 ปฏิทินตุลาคม">
+  <span class="slide-id">WRAP · CALENDAR</span>
+  <span class="eyebrow">ปฏิทินรวมทั้งสอง Section</span>
+  <h2>ตุลาคม 2569 — ทุกวันที่ต้องจำ</h2>
+  <div class="fig">
+    <svg viewBox="0 0 1000 560" role="img" aria-label="ปฏิทินเดือนตุลาคม">
+      <g style="font-size:13px;font-weight:600" text-anchor="middle" fill="#AEB7DA">
+        <text x="97" y="30">จันทร์</text><text x="231" y="30">อังคาร</text><text x="365" y="30">พุธ</text><text x="499" y="30">พฤหัส</text><text x="633" y="30">ศุกร์</text><text x="767" y="30">เสาร์</text><text x="901" y="30">อาทิตย์</text>
+      </g>
+      <g>
+      <rect x="435" y="47" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="446" y="70" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">1</text>
+      <rect x="569" y="47" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="580" y="70" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">2</text>
+      <rect x="703" y="47" width="128" height="90" rx="10" fill="rgba(174,183,218,.05)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="714" y="70" class="svg-m" font-size="15" font-weight="600" fill="#7680A8">3</text>
+      <rect x="837" y="47" width="128" height="90" rx="10" fill="rgba(174,183,218,.05)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="848" y="70" class="svg-m" font-size="15" font-weight="600" fill="#7680A8">4</text>
+      <rect x="33" y="143" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="44" y="166" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">5</text>
+      <circle cx="47" cy="182" r="4" fill="#FBBF24"/>
+      <text x="57" y="186" style="font-size:11.5px;font-weight:500" fill="#FBBF24">เรียนหน่วย 5</text>
+      <circle cx="47" cy="200" r="4" fill="#FBBF24"/>
+      <text x="57" y="204" style="font-size:11.5px;font-weight:500" fill="#FBBF24">M0 จับคู่</text>
+      <rect x="167" y="143" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="178" y="166" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">6</text>
+      <circle cx="181" cy="182" r="4" fill="#FBBF24"/>
+      <text x="191" y="186" style="font-size:11.5px;font-weight:500" fill="#FBBF24">ปล่อยโจทย์ชุด A</text>
+      <rect x="301" y="143" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="312" y="166" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">7</text>
+      <rect x="435" y="143" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="446" y="166" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">8</text>
+      <circle cx="449" cy="182" r="4" fill="#38D7ED"/>
+      <text x="459" y="186" style="font-size:11.5px;font-weight:500" fill="#38D7ED">เรียนหน่วย 5 · M0</text>
+      <circle cx="449" cy="200" r="4" fill="#38D7ED"/>
+      <text x="459" y="204" style="font-size:11.5px;font-weight:500" fill="#38D7ED">ปล่อยโจทย์ชุด B</text>
+      <circle cx="449" cy="218" r="4" fill="#FBBF24"/>
+      <text x="459" y="222" style="font-size:11.5px;font-weight:500" fill="#FBBF24">M1 ตั้งต้น</text>
+      <rect x="569" y="143" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="580" y="166" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">9</text>
+      <rect x="703" y="143" width="128" height="90" rx="10" fill="rgba(174,183,218,.05)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="714" y="166" class="svg-m" font-size="15" font-weight="600" fill="#7680A8">10</text>
+      <rect x="837" y="143" width="128" height="90" rx="10" fill="rgba(174,183,218,.05)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="848" y="166" class="svg-m" font-size="15" font-weight="600" fill="#7680A8">11</text>
+      <circle cx="851" cy="182" r="4" fill="#38D7ED"/>
+      <text x="861" y="186" style="font-size:11.5px;font-weight:500" fill="#38D7ED">M1 ตั้งต้น</text>
+      <rect x="33" y="239" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="44" y="262" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">12</text>
+      <rect x="167" y="239" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="178" y="262" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">13</text>
+      <circle cx="181" cy="278" r="4" fill="#FBBF24"/>
+      <text x="191" y="282" style="font-size:11.5px;font-weight:500" fill="#FBBF24">M2 กลางทาง</text>
+      <rect x="301" y="239" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="312" y="262" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">14</text>
+      <circle cx="315" cy="278" r="4" fill="#FBBF24"/>
+      <text x="325" y="282" style="font-size:11.5px;font-weight:500" fill="#FBBF24">peer review #1</text>
+      <rect x="435" y="239" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="446" y="262" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">15</text>
+      <rect x="569" y="239" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="580" y="262" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">16</text>
+      <circle cx="583" cy="278" r="4" fill="#38D7ED"/>
+      <text x="593" y="282" style="font-size:11.5px;font-weight:500" fill="#38D7ED">M2 กลางทาง</text>
+      <rect x="703" y="239" width="128" height="90" rx="10" fill="rgba(174,183,218,.05)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="714" y="262" class="svg-m" font-size="15" font-weight="600" fill="#7680A8">17</text>
+      <circle cx="717" cy="278" r="4" fill="#FBBF24"/>
+      <text x="727" y="282" style="font-size:11.5px;font-weight:500" fill="#FBBF24">หยุดเพิ่มฟีเจอร์</text>
+      <circle cx="717" cy="296" r="4" fill="#38D7ED"/>
+      <text x="727" y="300" style="font-size:11.5px;font-weight:500" fill="#38D7ED">peer review #1</text>
+      <rect x="837" y="239" width="128" height="90" rx="10" fill="rgba(174,183,218,.05)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="848" y="262" class="svg-m" font-size="15" font-weight="600" fill="#7680A8">18</text>
+      <rect x="33" y="335" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="#FB7185" stroke-width="2.5"/>
+      <text x="44" y="358" class="svg-m" font-size="15" font-weight="600" fill="#FB7185">19</text>
+      <circle cx="47" cy="374" r="4" fill="#FBBF24"/>
+      <text x="57" y="378" style="font-size:11.5px;font-weight:700" fill="#FBBF24">สอบปลายภาค</text>
+      <rect x="167" y="335" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="178" y="358" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">20</text>
+      <circle cx="181" cy="374" r="4" fill="#38D7ED"/>
+      <text x="191" y="378" style="font-size:11.5px;font-weight:500" fill="#38D7ED">หยุดเพิ่มฟีเจอร์</text>
+      <rect x="301" y="335" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="312" y="358" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">21</text>
+      <rect x="435" y="335" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="#FB7185" stroke-width="2.5"/>
+      <text x="446" y="358" class="svg-m" font-size="15" font-weight="600" fill="#FB7185">22</text>
+      <circle cx="449" cy="374" r="4" fill="#38D7ED"/>
+      <text x="459" y="378" style="font-size:11.5px;font-weight:700" fill="#38D7ED">สอบปลายภาค</text>
+      <rect x="569" y="335" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="580" y="358" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">23</text>
+      <rect x="703" y="335" width="128" height="90" rx="10" fill="rgba(174,183,218,.05)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="714" y="358" class="svg-m" font-size="15" font-weight="600" fill="#7680A8">24</text>
+      <rect x="837" y="335" width="128" height="90" rx="10" fill="rgba(174,183,218,.05)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="848" y="358" class="svg-m" font-size="15" font-weight="600" fill="#7680A8">25</text>
+      <rect x="33" y="431" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="44" y="454" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">26</text>
+      <rect x="167" y="431" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="178" y="454" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">27</text>
+      <rect x="301" y="431" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="312" y="454" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">28</text>
+      <rect x="435" y="431" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="446" y="454" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">29</text>
+      <rect x="569" y="431" width="128" height="90" rx="10" fill="rgba(7,10,28,.55)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="580" y="454" class="svg-m" font-size="15" font-weight="600" fill="#EEF1FF">30</text>
+      <rect x="703" y="431" width="128" height="90" rx="10" fill="rgba(174,183,218,.05)" stroke="rgba(174,183,218,.22)" stroke-width="1"/>
+      <text x="714" y="454" class="svg-m" font-size="15" font-weight="600" fill="#7680A8">31</text>
+    </g>
+    </svg>
+  </div>
+  <p class="figcap"><span style="color:var(--gold)">●</span> Section 1 &nbsp;·&nbsp; <span style="color:var(--u2)">●</span> Section 2 &nbsp;·&nbsp; กรอบแดง = วันสอบปลายภาค</p>
+</section>
+
+<section class="slide" data-title="🎒 เช็กลิสต์ก่อนวันสอบ">
+  <span class="slide-id">WRAP · CHECKLIST</span>
+  <span class="eyebrow">ก่อนวันสอบ 1 วัน</span>
+  <h2>เช็กลิสต์ก่อนวันสอบ</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="card"><h3>💻 เครื่อง</h3><ul class="crit">
+        <li>โน้ตบุ๊ก + สายชาร์จ</li><li>repo take-home <code>npm install</code> แล้ว · <code>npm test</code> รันได้</li><li>ปิด AI ใน IDE สำหรับ Part 2</li><li>login GitHub ในเครื่องได้ (push ได้)</li></ul></div>
+      <div class="card"><h3>🏷️ tag ที่ต้องอยู่บน GitHub</h3><ul class="crit">
+        <li><code>takehome-A-v1</code> / <code>takehome-B-v1</code></li><li><code>v1.0.0</code> ของ repo ทีม</li><li>ผู้สอนเป็น collaborator ทั้งสอง repo</li><li>ส่งลิงก์ใน LMS ครบ</li></ul></div>
+      <div class="card"><h3>🎤 เตรียมสัมภาษณ์</h3><ul class="crit">
+        <li>URL ที่ deploy เปิดได้ · ซ้อม demo 3 นาที</li><li>อ่านโค้ดของตัวเองให้เข้าใจทุกบรรทัด</li><li>อ่าน DEBUG_LOG ของ take-home อีกรอบ</li><li>รู้ว่าเพื่อนทำส่วนไหน ทำงานอย่างไร</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="⚖️ กติกาที่ต้องรู้">
+  <span class="slide-id">WRAP · RULES</span>
+  <span class="eyebrow">กติกา</span>
+  <h2>กติกาที่ต้องรู้</h2>
+  <div class="body center">
+    <table class="tight">
+      <tr><th>เรื่อง</th><th>กติกา</th></tr>
+      <tr><td>🤖 AI</td><td>take-home และโปรเจกต์ <strong>ใช้ได้ แต่ต้องเปิดเผย</strong>ใน README · Part 2 <strong>ห้ามใช้</strong> · ทุกที่: อธิบายไม่ได้ = ไม่ได้คะแนนส่วนนั้น</td></tr>
+      <tr><td>🏷️ เวลาส่ง</td><td>ตรวจที่ commit ที่ tag ชี้ · commit หลัง tag <code>v1.0.0</code> หรือหลังเวลาส่ง<strong>ไม่นับ</strong></td></tr>
+      <tr><td>🔑 secret</td><td>ห้าม commit <code>.env</code> · token · รหัสผ่านจริง · เผลอ commit → เปลี่ยน secret ทันทีแล้วบันทึกใน DEBUG_LOG</td></tr>
+      <tr><td>👥 ทีม</td><td>มีปัญหาในทีม (เพื่อนหาย · ไม่ทำงาน) แจ้งผู้สอน<strong>ก่อน M2</strong> — แจ้งวันสอบช่วยไม่ได้</td></tr>
+      <tr><td>🧑‍💻 งานรายบุคคล</td><td>take-home และ Part 2 ห้ามแชร์โค้ด · ผู้สอนตรวจความคล้ายของงาน และถามเจาะในการสัมภาษณ์</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="slide" data-title="💬 คำถามที่เจอบ่อย">
+  <span class="slide-id">WRAP · FAQ</span>
+  <span class="eyebrow cyan">คำถามที่เจอบ่อย</span>
+  <h2>คำถามที่เจอบ่อย — กดดูคำตอบ</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="reveal" data-reveal><button>LAB 13 ของคน Back-end ยังไม่ครบ เริ่มโปรเจกต์ได้ไหม ▸</button><div class="ans">ทำให้ครบก่อน (เป็นคะแนน A5 อยู่แล้ว) · หรือใช้ LAB 13 ของเพื่อนในทีมที่ครบแทน แล้วเขียนไว้ใน <code>TEAM_CONTRACT.md</code></div></div>
+      <div class="reveal" data-reveal><button>ทำเว็บ deploy แล้วข้อมูลหายตอน restart ▸</button><div class="ans">ปกติของ Render free tier (ไฟล์ SQLite กลับเป็นค่าใน git) — ทีมคู่ยอมรับได้ เขียนไว้ใน README · กลุ่ม 3 คนต้องใช้ Turso</div></div>
+      <div class="reveal" data-reveal><button>Render หลับตอนถึงคิวสัมภาษณ์ ▸</button><div class="ans">ไม่หักคะแนน — แต่ให้เปิด URL ทิ้งไว้ก่อนถึงคิว 2–3 นาที · ถ้าล่มจริงให้ demo บนเครื่องก่อน</div></div>
+      <div class="reveal" data-reveal><button>take-home ทำไม่เสร็จ แล้ว Part 2 ล่ะ ▸</button><div class="ans">Part 2 ทำได้แม้ take-home ยังมี bug — hidden test ของ Part 2 ไม่ขึ้นกับ take-home · ถ้า repo พังทั้งหมด ขอ starter จากผู้สอน</div></div>
+      <div class="reveal" data-reveal><button>ทำงานแทนเพื่อนได้ไหม ▸</button><div class="ans">ช่วยกันได้ แต่ <strong>I1</strong> ให้คะแนนจากงานในบทบาทตัวเอง และการสัมภาษณ์จะถามงานที่คุณ commit เอง</div></div>
+      <div class="reveal" data-reveal><button>แก้ take-home หลังติด tag ได้ไหม ▸</button><div class="ans">ได้จนถึงกำหนดส่ง — ย้าย tag ด้วย <code>git tag -f takehome-A-v1</code> แล้ว <code>git push -f origin takehome-A-v1</code></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="🧭 หลังจาก ENGSE203">
+  <span class="slide-id">WRAP · WHAT'S NEXT</span>
+  <span class="eyebrow">เรียนต่อจากตรงนี้</span>
+  <h2>หลังจากวิชานี้ — ไปต่อได้อีกไกล</h2>
+  <div class="body center">
+    <div class="four">
+      <div class="wk u1c"><div class="wn">ภาษา</div><h3>TypeScript</h3><p class="row">ใส่ type ให้ JavaScript ที่เขียนมาทั้งภาค · จับ bug ก่อนรัน</p></div>
+      <div class="wk u3c"><div class="wn">ทดสอบ</div><h3>E2E Testing</h3><p class="row">Playwright ทดสอบผ่านเบราว์เซอร์จริง — ต่อยอดจาก unit + integration</p></div>
+      <div class="wk u4c"><div class="wn">ส่งมอบ</div><h3>Docker · Cloud</h3><p class="row">ห่อระบบเป็น container · deploy ที่ไหนก็ได้ · ฐานข้อมูลจริงอย่าง PostgreSQL</p></div>
+      <div class="wk u6c"><div class="wn">แพลตฟอร์ม</div><h3>Mobile · Desktop</h3><p class="row">React Native · Electron · PWA — ใช้ความรู้ React เดิม</p></div>
+    </div>
+    <div class="analogy"><p style="margin:0;font-size:1.22rem">💼 portfolio ที่ดีที่สุดของคุณตอนนี้ = <strong>repo ทีมที่มี README ดี · test ผ่าน · CI เขียว · URL ที่เปิดได้จริง</strong> — ใช้แนบตอนสมัครฝึกงานได้ทันที</p></div>
+  </div>
+</section>
+
+<section class="slide title-slide" data-title="🎓 ขอบคุณ">
+  <div class="g21" style="align-items:center;gap:2rem">
+    <div>
+      <span class="eyebrow">ENGSE203 · ปิดภาค 1/2569</span>
+      <p class="quote">ระบบที่ดีไม่ใช่แค่ระบบที่ <b>"ทำงานได้"</b><br>แต่เป็นระบบที่ <b>ทดสอบได้ · ปลอดภัย · ส่งมอบได้</b><br>และคนเขียน<b>อธิบายมันได้</b></p>
+      <div class="brandline" style="margin-top:1.4rem">
+        <span class="chip">เว็บวิชา · se-rmutl.github.io/engse203</span>
+        <span class="chip c">github.com/se-rmutl/engse203-lab</span>
+      </div>
+      <p style="margin-top:1.1rem;font-size:1.45rem">ขอบคุณที่เดินทางมาด้วยกันทั้งภาค — <strong style="color:var(--gold)">เจอกันวันสอบ แล้วโชว์ระบบของคุณให้ดู</strong> 🚀</p>
+    </div>
+    <div class="fig" style="max-height:60vh">
+      <svg viewBox="0 0 360 360" role="img" aria-label="ตราปิดภาค">
+        <g transform="rotate(-90 180 180)" fill="none" stroke-width="22" stroke-linecap="butt">
+          <circle cx="180" cy="180" r="150" stroke="#7AA5FF" stroke-dasharray="152 942.5" stroke-dashoffset="0"/>
+          <circle cx="180" cy="180" r="150" stroke="#38D7ED" stroke-dasharray="152 942.5" stroke-dashoffset="-157"/>
+          <circle cx="180" cy="180" r="150" stroke="#4ADE80" stroke-dasharray="152 942.5" stroke-dashoffset="-314"/>
+          <circle cx="180" cy="180" r="150" stroke="#FBBF24" stroke-dasharray="152 942.5" stroke-dashoffset="-471"/>
+          <circle cx="180" cy="180" r="150" stroke="#C084FC" stroke-dasharray="152 942.5" stroke-dashoffset="-628"/>
+          <circle cx="180" cy="180" r="150" stroke="#F472B6" stroke-dasharray="152 942.5" stroke-dashoffset="-785"/>
+        </g>
+        <circle cx="180" cy="180" r="118" fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.45)" stroke-width="2"/>
+        <text x="180" y="150" text-anchor="middle" class="svg-lbl" fill="#AEB7DA">ENGSE203 · 1/2569</text>
+        <text x="180" y="200" text-anchor="middle" style="font-family:'IBM Plex Mono',monospace;font-size:44px;font-weight:700;fill:#FBBF24">v1.0.0</text>
+        <text x="180" y="236" text-anchor="middle" style="font-size:16px;font-weight:600;fill:#EEF1FF">ready to ship</text>
+        <text x="180" y="262" text-anchor="middle" class="svg-s">6 หน่วย · 13 LAB · 1 ระบบ</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+</div></div>
+<div class="bar"><i id="progress"></i></div>
+<div class="hud">
+  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 42</span><button id="btnNext">→</button>
+  <button id="btnToc">สารบัญ</button><button id="btnMinus">A−</button><button id="btnPlus">A+</button><button id="btnFull">เต็มจอ</button>
+</div>
+<div class="toc" id="toc" role="dialog"><h3>สารบัญ — กด T หรือ Esc ปิด</h3><ol id="tocList"></ol></div>
+<script>
+(function(){
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const slides=Array.from(document.querySelectorAll('.slide'));let cur=0;
+  function show(i){cur=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach((s,n)=>s.classList.toggle('active',n===cur));
+    const c=$('counter'); if(c) c.textContent=(cur+1)+' / '+slides.length;
+    const p=$('progress'); if(p) p.style.width=((cur+1)/slides.length*100)+'%';
+    try{history.replaceState(null,'','#s'+(cur+1));}catch(e){}}
+  const next=()=>show(cur+1),prev=()=>show(cur-1);
+  if($('btnNext')) $('btnNext').onclick=next;
+  if($('btnPrev')) $('btnPrev').onclick=prev;
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT')return;
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next();}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev();}
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+    else if(e.key.toLowerCase()==='t')toggleToc();else if(e.key==='Escape')setToc(false);
+    else if(e.key.toLowerCase()==='f')toggleFull();
+    else if(e.key==='+'||e.key==='=')setScale(scale+.06);else if(e.key==='-')setScale(scale-.06);});
+  const tocEl=$('toc'),list=$('tocList');
+  if(list){slides.forEach((s,i)=>{const li=document.createElement('li'),a=document.createElement('a');
+    a.href='#s'+(i+1);a.textContent=s.dataset.title||('สไลด์ '+(i+1));
+    a.onclick=e=>{e.preventDefault();show(i);setToc(false);};li.appendChild(a);list.appendChild(li);});}
+  function setToc(o){if(tocEl)tocEl.classList.toggle('open',o);}
+  function toggleToc(){if(tocEl)setToc(!tocEl.classList.contains('open'));}
+  if($('btnToc')) $('btnToc').onclick=toggleToc;
+  let scale=1;
+  function setScale(v){scale=Math.max(.8,Math.min(1.4,v));document.documentElement.style.setProperty('--font-scale',scale);}
+  if($('btnPlus')) $('btnPlus').onclick=()=>setScale(scale+.06);
+  if($('btnMinus')) $('btnMinus').onclick=()=>setScale(scale-.06);
+  function toggleFull(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}
+  if($('btnFull')) $('btnFull').onclick=toggleFull;
+
+  // ══ quiz · reveal ══
+  document.querySelectorAll('[data-quiz]').forEach(q=>{const fb=q.querySelector('.fb');
+    q.querySelectorAll('.opt').forEach(b=>{b.onclick=()=>{const ok=b.dataset.a==='1';
+      b.classList.add(ok?'ok':'no');
+      if(!fb)return;
+      if(ok){fb.textContent='✓ ถูกต้อง';fb.className='fb ok';q.querySelectorAll('.opt').forEach(x=>x.disabled=true);}
+      else{fb.textContent='✕ ยังไม่ใช่ ลองใหม่';fb.className='fb no';}};});});
+  document.querySelectorAll('[data-reveal]').forEach(b=>{const btn=b.querySelector('button');if(btn)btn.onclick=()=>b.classList.toggle('open');});
+
+  // ══ กำหนดส่งของฉัน — เวลาไทย (UTC+7) ══
+  (function(){
+    const listEl=$('dlList'), cnt=$('dlCount'), cntLbl=$('dlCountLbl'), b1=$('dlS1'), b2=$('dlS2');
+    if(!listEl||!cnt||!b1||!b2) return;
+    const D={
+      1:[
+        ['2026-10-05T16:00','เรียนหน่วยที่ 5 · ประกาศ Term Project'],
+        ['2026-10-05T23:59','M0 ส่งฟอร์มจับคู่ + บทบาท + หัวข้อ',1],
+        ['2026-10-06T12:00','ปล่อยโจทย์ take-home ชุด A'],
+        ['2026-10-08T23:59','M1 repo ทีม · TEAM_CONTRACT · schema · v0.1.0 · LAB 13 ครบ',1],
+        ['2026-10-13T23:59','M2 API + test ผ่าน · login ได้ · deploy ครั้งแรก · v0.5.0',1],
+        ['2026-10-14T23:59','peer review ครั้งที่ 1 (ไม่คิดคะแนน)'],
+        ['2026-10-17T23:59','แนะนำ: หยุดเพิ่มฟีเจอร์ · เก็บ bug · เอกสาร'],
+        ['2026-10-19T09:00','ส่ง tag takehome-A-v1 และ v1.0.0 + URL ผ่าน LMS',1],
+        ['2026-10-19T11:30','ส่ง tag part2-A (ทำในห้อง)',1],
+        ['2026-10-19T12:30','สัมภาษณ์ทีมเสร็จ · ส่ง peer review ครั้งที่ 2']
+      ],
+      2:[
+        ['2026-10-08T16:00','เรียนหน่วยที่ 5 · ประกาศ Term Project'],
+        ['2026-10-08T17:00','ปล่อยโจทย์ take-home ชุด B'],
+        ['2026-10-08T23:59','M0 ส่งฟอร์มจับคู่ + บทบาท + หัวข้อ',1],
+        ['2026-10-11T23:59','M1 repo ทีม · TEAM_CONTRACT · schema · v0.1.0 · LAB 13 ครบ',1],
+        ['2026-10-16T23:59','M2 API + test ผ่าน · login ได้ · deploy ครั้งแรก · v0.5.0',1],
+        ['2026-10-17T23:59','peer review ครั้งที่ 1 (ไม่คิดคะแนน)'],
+        ['2026-10-20T23:59','แนะนำ: หยุดเพิ่มฟีเจอร์ · เก็บ bug · เอกสาร'],
+        ['2026-10-22T09:00','ส่ง tag takehome-B-v1 และ v1.0.0 + URL ผ่าน LMS',1],
+        ['2026-10-22T11:30','ส่ง tag part2-B (ทำในห้อง)',1],
+        ['2026-10-22T12:15','สัมภาษณ์ทีมเสร็จ · ส่ง peer review ครั้งที่ 2']
+      ]
+    };
+    const EXAM={1:'2026-10-19T09:00',2:'2026-10-22T09:00'};
+    const DAYS=['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
+    const at=s=>new Date(s+':00+07:00');
+    const dayStart=d=>{const t=new Date(d.getTime()+7*3600e3);return Date.UTC(t.getUTCFullYear(),t.getUTCMonth(),t.getUTCDate());};
+    const dayDiff=(a,b)=>Math.round((dayStart(a)-dayStart(b))/864e5);
+    const dayKey=d=>{const t=new Date(d.getTime()+7*3600e3);return t.getUTCFullYear()*1e4+(t.getUTCMonth()+1)*100+t.getUTCDate();};
+    const fmt=s=>{const d=at(s),t=new Date(d.getTime()+7*3600e3);
+      return DAYS[t.getUTCDay()]+' '+t.getUTCDate()+' ต.ค. '+String(t.getUTCHours()).padStart(2,'0')+':'+String(t.getUTCMinutes()).padStart(2,'0');};
+    function render(sec){
+      const now=new Date();
+      listEl.innerHTML='';
+      D[sec].forEach(([s,txt,key])=>{
+        const d=at(s); let cls,lab;
+        const left=dayDiff(d,now);
+        if(d<now){cls='past';lab='ผ่านแล้ว';}
+        else if(left===0){cls='today';lab='วันนี้';}
+        else if(left===1){cls='soon';lab='พรุ่งนี้';}
+        else if(left<=3){cls='soon';lab='อีก '+left+' วัน';}
+        else{cls='later';lab='อีก '+left+' วัน';}
+        const row=[['d',fmt(s)],['t',txt],['st '+cls,lab]];
+        row.forEach(([c,v],i)=>{const el=document.createElement('div');
+          el.className=(i===2?'':'')+(key?'key ':'');
+          const span=document.createElement('span');span.className=c;span.textContent=v;
+          if(i===2){span.style.display='block';}
+          el.appendChild(span);listEl.appendChild(el);});
+      });
+      const ex=at(EXAM[sec]); const dd=dayDiff(ex,now);
+      if(dayKey(ex)===dayKey(now)){cnt.textContent='วันนี้';cntLbl.textContent='วันสอบ Section '+sec+' — โชคดี!';}
+      else if(ex<now){cnt.textContent='✓';cntLbl.textContent='สอบ Section '+sec+' ผ่านไปแล้ว';}
+      else{cnt.textContent=dd;cntLbl.textContent='วันจนถึงวันสอบ Section '+sec+' ('+fmt(EXAM[sec]).replace(' 09:00','')+')';}
+      b1.classList.toggle('on',sec===1); b2.classList.toggle('on',sec===2);
+    }
+    b1.addEventListener('click',()=>render(1)); b2.addEventListener('click',()=>render(2));
+    const k=dayKey(new Date()); render(k>=20261008 && k<=20261022 && k!==20261019 && k!==20261013 ? 2 : 1);
+  })();
+
+  const mh=location.hash.match(/^#s(\d+)$/);show(mh?+mh[1]-1:0);
+})();
+
+</script>
+</body>
+</html>

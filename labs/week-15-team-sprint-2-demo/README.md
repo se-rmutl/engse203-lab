@@ -1,33 +1,9 @@
-# LAB 15 — Team Full-Stack Sprint 2 & Demo
+# สัปดาห์ที่ 15 — ไม่มีคาบเรียน (ยกเลิก)
 
-**สัปดาห์ที่ 15** · หน่วยที่ 6 การพัฒนาแบบข้ามแพลตฟอร์มและโครงงานบูรณาการ  
-**รูปแบบงาน:** กลุ่ม  
-**CLO ที่เกี่ยวข้อง:** CLO3–CLO7  
-**การประเมิน:** A6 Team Mini Project & Demo (15 คะแนน)  
-**สถานะ:** เผยแพร่รายละเอียดขั้นตอนในสัปดาห์ที่ 15
+**สัปดาห์ที่ 14–16 ยกเลิกคาบเรียน** · Sprint 2 และการสาธิตย้ายไปอยู่ใน **[Final Term Project](../final-term-project/)**
 
-## ภาพรวม
-
-ทดสอบ แก้ไข ทบทวนโค้ด ปรับ README และสาธิต Team Full-Stack Project พร้อม evidence การมีส่วนร่วมของสมาชิกทุกคน.
-
-## สิ่งที่คาดว่าจะได้เรียนรู้
-
-- เชื่อมโยงเนื้อหาสัปดาห์นี้กับผลลัพธ์การเรียนรู้ของรายวิชา
-- สร้างหลักฐานการปฏิบัติจริงใน GitHub repository ของตนเองหรือของกลุ่ม
-- อธิบายการตัดสินใจด้านการออกแบบ/พัฒนาใน README ได้
-
-## สิ่งที่ต้องส่ง (โครงร่าง)
-
-- Source code ที่รันได้ตาม README
-- README พร้อมวิธีติดตั้ง วิธีรัน และหลักฐานผลลัพธ์
-- Git history ที่แสดงการทำงานอย่างต่อเนื่อง
-- เอกสาร/หลักฐานเฉพาะงานตามที่ผู้สอนประกาศ เช่น API contract, test evidence, issue, pull request หรือ demo
-
-## การเตรียมตัวล่วงหน้า
-
-- ทบทวนเนื้อหาสัปดาห์ก่อนหน้า
-- ตรวจว่า Node.js, npm, Git และ VS Code พร้อมใช้งาน
-- อ่าน [คู่มือการส่งงาน](../../docs/submission-guide.md)
-- เตรียมใช้ [README template](../../templates/student-lab-readme-template.md) และ template อื่นตามชนิดงาน
-
-> รายละเอียดขั้นตอน, starter files, rubric และกำหนดส่งฉบับสมบูรณ์ จะเผยแพร่ใน README นี้ก่อนถึงสัปดาห์เรียนหรือในชั้นเรียนตามประกาศของผู้สอน
+| เดิม (สัปดาห์ 15) | ตอนนี้อยู่ที่ |
+|---|---|
+| Code review · test · README | Final Term Project ข้อ R6 · R7 · R8 |
+| Demo + peer evaluation | สาธิต 3 นาทีในการสัมภาษณ์วันสอบปลายภาค · [PEER_REVIEW.md](../final-term-project/PEER_REVIEW.md) |
+| Demo checklist | [`kit/RELEASE_CHECKLIST.md`](../final-term-project/kit/RELEASE_CHECKLIST.md) |

@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ENGSE203 Week 12 — CP47 debug 3 bug จากผู้ใช้</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fs:1;
+  --ink:#EAF6EF; --muted:#A9C7B8; --line:rgba(169,199,184,.22);
+  --green:#4ADE80; --cyan:#38D7ED; --amber:#FBBF24; --red:#FB7185; --violet:#C084FC;
+  --panel:rgba(15,42,30,.74); --code:#04120C;
+  font-size:calc(16px * var(--fs));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 12% 10%,rgba(74,222,128,.14),transparent 32%),
+             radial-gradient(circle at 88% 84%,rgba(56,215,237,.11),transparent 34%),#04100B;
+  color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;line-height:1.65;
+  padding:0 20px 90px;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{padding:38px 0 22px;border-bottom:2px solid var(--line);margin-bottom:22px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  letter-spacing:.18em;color:var(--green);text-transform:uppercase}
+h1{font-size:2.3rem;font-weight:700;line-height:1.15;margin:.4rem 0 .3rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-weight:300;font-size:1.05rem}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.pill{font-size:.76rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;
+  border:1px solid var(--line);background:rgba(74,222,128,.09);color:var(--green)}
+.pill.a{color:var(--amber);background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3)}
+.pill.c{color:var(--cyan);background:rgba(56,215,237,.09);border-color:rgba(56,215,237,.3)}
+.pill.r{color:var(--red);background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.3)}
+.pill.v{color:var(--violet);background:rgba(192,132,252,.09);border-color:rgba(192,132,252,.3)}
+.where{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.76rem;font-weight:600;
+  padding:.22rem .6rem;border-radius:7px;background:rgba(74,222,128,.16);color:#bff5d0;
+  border:1px solid rgba(74,222,128,.4)}
+.where.home{background:rgba(251,191,36,.14);color:#ffe1a8;border-color:rgba(251,191,36,.4)}
+
+.jump{position:sticky;top:0;z-index:15;display:flex;gap:.4rem;flex-wrap:wrap;
+  padding:.7rem 0;margin-bottom:8px;background:rgba(4,16,11,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.jump a{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.76rem;
+  padding:.32rem .7rem;border-radius:8px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(15,42,30,.85)}
+.jump a:hover{color:var(--green);border-color:var(--green)}
+.jump a.now{color:#04120C;background:var(--green);border-color:var(--green);font-weight:600}
+
+.step{margin:30px 0;border:1px solid var(--line);border-radius:16px;background:var(--panel);
+  overflow:hidden;scroll-margin-top:70px}
+.step-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;
+  background:rgba(74,222,128,.08);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.num{min-width:38px;height:38px;padding:0 .7rem;flex:0 0 auto;border-radius:19px;
+  display:grid;place-items:center;background:var(--green);color:#04120C;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.92rem}
+.step-head h2{font-size:1.2rem;font-weight:700;line-height:1.3}
+.step-head .file{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted);margin-left:auto}
+.step-body{padding:1.15rem 1.3rem}
+p{margin-bottom:.7rem;font-size:1rem}
+
+.say,.warn,.ok,.vio,.home{padding:.75rem 1rem;border-radius:0 10px 10px 0;margin:.8rem 0;font-size:.97rem}
+.say{border-left:3px solid var(--amber);background:rgba(251,191,36,.08)}
+.warn{border-left:3px solid var(--red);background:rgba(251,113,133,.08)}
+.ok{border-left:3px solid var(--green);background:rgba(74,222,128,.08)}
+.vio{border-left:3px solid var(--cyan);background:rgba(56,215,237,.09)}
+.home{border-left:3px solid var(--violet);background:rgba(192,132,252,.08)}
+.say b,.warn b,.ok b,.vio b,.home b{font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.14em;display:block;margin-bottom:.3rem;text-transform:uppercase}
+.say b{color:var(--amber)} .warn b{color:var(--red)} .ok b{color:var(--green)}
+.vio b{color:var(--cyan)} .home b{color:var(--violet)}
+
+.codewrap{position:relative;margin:.7rem 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;
+  padding:1rem 1.15rem;overflow-x:auto;font-size:.9rem;line-height:1.72}
+code{font-family:'IBM Plex Mono',monospace}
+pre code{color:#d6efe0}
+.k{color:#8FE3A8}.s{color:#E9C88A}.c{color:#7EA592;font-style:italic}
+.f{color:#8FD0EC}.t{color:#68d8d2}.d{color:#FB7185}.hl{color:#FFE08A;font-weight:600}
+.n{color:#D9A0E8}
+.copy{position:absolute;top:.55rem;right:.6rem;background:rgba(15,42,30,.95);
+  border:1px solid var(--line);color:var(--muted);border-radius:8px;
+  padding:.25rem .65rem;font-size:.74rem;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--green);border-color:var(--green)}
+
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:.7rem 0}
+th{text-align:left;padding:.6rem .7rem;color:var(--green);font-size:.8rem;
+  font-weight:600;border-bottom:1px solid var(--line);letter-spacing:.04em}
+td{padding:.6rem .7rem;border-bottom:1px solid rgba(169,199,184,.1);vertical-align:top}
+tr:last-child td{border-bottom:none}
+ul{margin:.3rem 0 .6rem 1.2rem}li{margin-bottom:.35rem}
+
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem 0;
+  border-bottom:1px solid rgba(169,199,184,.1)}
+.check:last-child{border-bottom:none}
+.box{width:22px;height:22px;flex:0 0 22px;border:2px solid var(--muted);border-radius:5px;
+  cursor:pointer;display:grid;place-items:center;font-size:.85rem;color:transparent;
+  transition:all .15s;margin-top:.15rem}
+.box.on{background:var(--green);border-color:var(--green);color:#04120C}
+
+.trap{border:1px solid rgba(251,113,133,.4);border-radius:14px;
+  background:rgba(251,113,133,.07);padding:1rem 1.15rem;margin:.8rem 0}
+.trap h3{color:var(--red);font-size:1.03rem;margin-bottom:.4rem;display:flex;gap:.5rem;
+  align-items:center;flex-wrap:wrap}
+.trap h3 span{font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  background:rgba(251,113,133,.2);padding:.15rem .5rem;border-radius:5px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.35rem;display:block}
+.tag.b{color:var(--red)} .tag.a{color:var(--green)}
+
+.hud{position:fixed;bottom:14px;right:16px;display:flex;gap:.4rem;z-index:20}
+.hud button{background:rgba(15,42,30,.94);border:1px solid var(--line);border-radius:9px;
+  padding:.3rem .65rem;font-size:.78rem;color:var(--muted);cursor:pointer;font-family:inherit}
+.hud button:hover{color:var(--green);border-color:var(--green)}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.84rem;color:var(--muted);font-weight:300;display:flex;
+  justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.nav{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
+.nav a{text-decoration:none;font-size:.84rem;padding:.45rem .9rem;border-radius:10px;
+  border:1px solid var(--line);color:var(--muted);background:rgba(15,42,30,.7)}
+.nav a:hover{color:var(--green);border-color:var(--green)}
+
+@media (max-width:820px){.split{grid-template-columns:1fr}}
+@media print{body{background:#fff;color:#111}.hud,.jump{display:none}
+  pre{background:#f4f6f9;border-color:#ccc}pre code{color:#111}.step{break-inside:avoid}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">ENGSE203 · Week 12 · Checkpoint 47</p>
+  <h1>debug 3 bug จากผู้ใช้ <span class="where">🏫 ทำในห้อง</span></h1>
+  <p class="sub">11:05–11:55 · 50 นาที · I do BUG #3 → We do BUG #1 → You do BUG #2</p>
+  <div class="pills"><span class="pill a">TODO W12-DEBUG</span><span class="pill a">TODO W12-LOG</span><span class="pill r">🐞 BUG #1–#3</span><span class="pill c">stack trace · breakpoint · DevTools</span><span class="pill v">regression test</span></div>
+</header>
+
+<nav class="jump"><a href="#s1">① 6 ขั้น</a><a href="#s2">② I do · BUG #3</a><a href="#s3">③ We do · BUG #1</a><a href="#s4">④ You do · BUG #2</a><a href="#s5">⑤ ปิดงานเช้า</a><a href="#done">ผ่าน CP</a></nav>
+
+<div class="step" id="s1">
+  <div class="step-head"><span class="num">①</span><h2>กระบวนการ debug 6 ขั้น — และเปิดระบบให้พร้อม</h2></div>
+  <div class="step-body">
+  <table>
+    <tr><th>ขั้น</th><th>ทำอะไร</th><th>ลงใน DEBUG_LOG.md</th></tr>
+    <tr><td>① อาการ</td><td>อ่านสิ่งที่ผู้ใช้แจ้ง — ยังไม่เดาสาเหตุ</td><td><strong>อาการ</strong></td></tr>
+    <tr><td>② ทำซ้ำ</td><td>ทำให้เกิดได้ทุกครั้งด้วยขั้นตอนสั้นที่สุด</td><td><strong>วิธีทำซ้ำ</strong></td></tr>
+    <tr><td>③ แยกชั้น</td><td>frontend / API / DB — ชั้นไหนผิด</td><td><strong>เครื่องมือ</strong></td></tr>
+    <tr><td>④ สมมติฐาน + หลักฐาน</td><td>stack trace · breakpoint · DevTools</td><td><strong>สาเหตุ (ไฟล์:บรรทัด)</strong></td></tr>
+    <tr><td>⑤ แก้</td><td>แก้ที่ต้นเหตุ จุดเดียว</td><td><strong>วิธีแก้</strong></td></tr>
+    <tr><td>⑥ regression test</td><td>test ที่ fail ก่อนแก้ ผ่านหลังแก้</td><td><strong>test ที่กัน</strong></td></tr>
+  </table>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>npm run dev --prefix api         <span class="c"># terminal 1 — API :3001</span></code></pre></div>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>npm run dev --prefix frontend    <span class="c"># terminal 2 — frontend :5173</span></code></pre></div>
+  <p class="say">รูปแบบวันนี้: <strong>I do BUG #3</strong> (ดูครูทำ) → <strong>We do BUG #1</strong> (ทำด้วยกัน) → <strong>You do BUG #2</strong> (ทำเอง)</p>
+  </div>
+</div>
+<div class="step" id="s2">
+  <div class="step-head"><span class="num">②</span><h2>I do · BUG #3 — อ่าน stack trace</h2><span class="file">api/src/controllers/requestController.js</span></div>
+  <div class="step-body">
+  <p class="say">ผู้แจ้ง: เจ้าหน้าที่ IT — "เปลี่ยนสถานะคำร้องที่เพิ่งถูกลบ ได้ error 500 · น่าจะต้องบอกว่าไม่พบคำร้อง"</p>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>curl -i -X PUT localhost:3001/api/requests/REQ-999 \
+  -H <span class="s">"Content-Type: application/json"</span> -d <span class="s">'{"status":"completed"}'</span>     <span class="c"># ได้ 500</span></code></pre></div>
+  <span class="tag a">terminal ของ API</span><pre><code><span class="d">เกิดข้อผิดพลาดภายใน: TypeError: Cannot read properties of null (reading 'id')</span>
+    at updateRequestStatus (file:///…/api/src/controllers/requestController.js:30:35)
+    at Layer.handleRequest (…/node_modules/router/lib/layer.js:152:17)</code></pre>
+  <table>
+    <tr><th>อ่าน stack trace</th><th>ได้อะไร</th></tr>
+    <tr><td>บรรทัดแรก</td><td><strong>เกิดอะไร</strong> — อ่านค่า <code>.id</code> จากสิ่งที่เป็น <code>null</code></td></tr>
+    <tr><td>บรรทัด <code>at</code> แรกที่เป็น<strong>ไฟล์ของเรา</strong></td><td><strong>เกิดที่ไหน</strong> — <code>requestController.js:30:35</code> (ข้ามบรรทัด <code>node_modules</code>)</td></tr>
+  </table>
+  <span class="tag b">ก่อน — log อยู่ก่อนตรวจ null</span>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">const</span> updated = service.<span class="f">updateStatus</span>(req.params.id, status);
+<span class="d">console.log(`[status] ${updated.id} → ${updated.status}`);</span>
+<span class="k">if</span> (!updated) {
+  <span class="k">return</span> res.<span class="f">status</span>(<span class="n">404</span>).<span class="f">json</span>({ error: <span class="s">`ไม่พบคำร้องรหัส ${req.params.id}`</span> });
+}
+res.<span class="f">status</span>(<span class="n">200</span>).<span class="f">json</span>(updated);</code></pre></div>
+  <span class="tag a">หลัง — ย้าย log ไปหลังตรวจ null</span>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">const</span> updated = service.<span class="f">updateStatus</span>(req.params.id, status);
+<span class="k">if</span> (!updated) {
+  <span class="k">return</span> res.<span class="f">status</span>(<span class="n">404</span>).<span class="f">json</span>({ error: <span class="s">`ไม่พบคำร้องรหัส ${req.params.id}`</span> });
+}
+<span class="hl">console.log(`[status] ${updated.id} → ${updated.status}`);</span>
+res.<span class="f">status</span>(<span class="n">200</span>).<span class="f">json</span>(updated);</code></pre></div>
+  <p class="say">regression test — <strong>เขียนก่อนแก้</strong> ต้องเห็นมัน fail (500) → แก้ → ผ่าน (404) · ใส่ใน describe PUT</p>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="c">// 🐞 regression test — BUG #3: เปลี่ยนสถานะคำร้องที่ไม่มีอยู่ ได้ 500</span>
+<span class="f">test</span>(<span class="s">'คำร้องที่ไม่มีอยู่ → 404 (ไม่ใช่ 500)'</span>, <span class="k">async</span> () =&gt; {
+  <span class="k">const</span> r = <span class="k">await</span> <span class="f">request</span>(app).<span class="hl">put('/api/requests/REQ-999')</span>.<span class="f">send</span>({ status: <span class="s">'completed'</span> });
+  <span class="f">expect</span>(r.status).<span class="f">toBe</span>(<span class="n">404</span>);
+});</code></pre></div>
+  </div>
+</div>
+<div class="step" id="s3">
+  <div class="step-head"><span class="num">③</span><h2>We do · BUG #1 — log + breakpoint ใน nextId()</h2><span class="file">api/src/services/requestService.js</span></div>
+  <div class="step-body">
+  <p class="say">ผู้แจ้ง: เจ้าหน้าที่ฝ่ายอาคาร — "ลบคำร้องที่ซ้ำไป 1 รายการ แล้วนักศึกษาส่งคำร้องใหม่ไม่ได้ · เมื่อวานยังส่งได้" → เกิด<strong>หลังลบ</strong></p>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>curl -X DELETE localhost:3001/api/requests/REQ-002          <span class="c"># 204</span>
+curl -i -X POST localhost:3001/api/requests -H <span class="s">"Content-Type: application/json"</span> \
+  -d <span class="s">'{"requesterName":"ทดสอบ","requestType":"แจ้งซ่อม","location":"C3-401","details":"รายละเอียดยาวพอสมควรจริง","priority":"normal"}'</span>
+<span class="c"># ได้ 500 "เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์"</span></code></pre></div>
+  <span class="tag a">terminal ของ API</span><pre><code><span class="d">เกิดข้อผิดพลาดภายใน: Error: UNIQUE constraint failed: requests.id</span>
+    at Module.create (file:///…/api/src/services/requestService.js:127:7)</code></pre>
+  <p class="say">log บอกว่า<strong>รหัสซ้ำ</strong> แต่ไม่บอกว่าทำไม → ต้องดูค่าตอนรันจริง · VS Code: <code>Ctrl+Shift+P</code> → <strong>JavaScript Debug Terminal</strong> (ไม่ต้องตั้ง launch.json)</p>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="c"># ใน JavaScript Debug Terminal (ปิด npm run dev ตัวเดิมก่อน)</span>
+npm run dev --prefix api
+<span class="c"># คลิกซ้ายของเลขบรรทัด 102 (return ใน nextId) → จุดแดง → ยิง POST อีกครั้ง → โปรแกรมหยุด</span></code></pre></div>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">function</span> <span class="f">nextId</span>() {
+  <span class="c">// รหัสถัดไป = จำนวนคำร้องที่มีอยู่ + 1  (ปรับให้เรียบง่ายขึ้นในรุ่นนี้)</span>
+  <span class="k">const</span> { total } = db.<span class="f">prepare</span>(<span class="s">'SELECT COUNT(*) AS total FROM requests'</span>).<span class="f">get</span>();
+  <span class="hl">return `REQ-${String(total + 1).padStart(3, '0')}`;</span>   <span class="c">← แผง Variables: total = 4 → REQ-005 ซึ่งมีอยู่แล้ว!</span>
+}</code></pre></div>
+  <span class="tag b">ก่อน — นับจำนวน</span>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="d">const { total } = db.prepare('SELECT COUNT(*) AS total FROM requests').get();</span>
+<span class="d">return `REQ-${String(total + 1).padStart(3, '0')}`;</span></code></pre></div>
+  <span class="tag a">หลัง — หารหัสล่าสุดแล้ว +1</span>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">const</span> row = db.<span class="f">prepare</span>(
+  "SELECT id FROM requests WHERE id LIKE <span class="s">'REQ-%'</span> <span class="hl">ORDER BY id DESC LIMIT 1</span>"
+).<span class="f">get</span>();
+<span class="k">const</span> n = row ? <span class="f">Number</span>(<span class="f">String</span>(row.id).<span class="f">replace</span>(<span class="s">'REQ-'</span>, <span class="s">''</span>)) + <span class="n">1</span> : <span class="n">1</span>;
+<span class="k">return</span> <span class="s">`REQ-${String(n).padStart(3, '0')}`</span>;</code></pre></div>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="c">// 🐞 regression test — BUG #1: ลบแล้วเพิ่มใหม่ ได้ 500 (รหัสซ้ำ) · ใส่ใน describe POST</span>
+<span class="f">test</span>(<span class="s">'ลบรายการกลาง แล้วเพิ่มใหม่ → 201 และรหัสไม่ซ้ำของเดิม'</span>, <span class="k">async</span> () =&gt; {
+  <span class="k">await</span> <span class="f">request</span>(app).<span class="f">delete</span>(<span class="s">'/api/requests/REQ-002'</span>).<span class="f">expect</span>(<span class="n">204</span>);
+  <span class="k">const</span> r = <span class="k">await</span> <span class="f">request</span>(app).<span class="f">post</span>(<span class="s">'/api/requests'</span>).<span class="f">send</span>(valid);
+  <span class="f">expect</span>(r.status).<span class="f">toBe</span>(<span class="n">201</span>);
+  <span class="k">const</span> ids = (<span class="k">await</span> <span class="f">request</span>(app).<span class="f">get</span>(<span class="s">'/api/requests'</span>)).body.<span class="f">map</span>((x) =&gt; x.id);
+  <span class="f">expect</span>(<span class="k">new</span> <span class="f">Set</span>(ids).size).<span class="f">toBe</span>(ids.length);
+});</code></pre></div>
+  <div class="warn"><b>⚠ กับดัก</b>curl ตอน <code>npm run dev</code> ยิงใส่ <strong>campus.db จริง</strong> — ลบแล้วหายจริง · debug เสร็จให้คืนข้อมูลตั้งต้นด้วย <code>npm run db:reset --prefix api</code> (test ไม่ได้รับผลเพราะใช้ <code>:memory:</code>)</div>
+  </div>
+</div>
+<div class="step" id="s4">
+  <div class="step-head"><span class="num">④</span><h2>You do · BUG #2 — DevTools Network แยกชั้น</h2><span class="file">frontend/src/utils/requestSummary.js</span></div>
+  <div class="step-body">
+  <p class="say">ผู้แจ้ง: หัวหน้าฝ่ายบริการ — "การ์ด กำลังดำเนินการ บอก 0 แต่ในรายการเห็นคำร้อง in-progress อยู่ · ตัวเลขอื่นดูถูก" · เปิด <code>http://localhost:5173</code> ดูเอง</p>
+  <div class="warn"><b>⚠ กับดัก</b><strong>ถ้าลบ REQ-002 ไปตอน BUG #1</strong> — นั่นคือคำร้อง in-progress ตัวเดียว การ์ดจะเป็น 0 "ถูกต้อง" ทั้งที่ bug ยังอยู่ · ปิด API (<code>Ctrl+C</code>) → <code>npm run db:reset --prefix api</code> → <code>npm run dev --prefix api</code> ใหม่ก่อนเริ่ม</div>
+  <table>
+    <tr><th>DevTools → Network → <code>requests</code> → Response</th><th>แปลว่า</th></tr>
+    <tr><td>API ส่ง <code>"status": "in-progress"</code> ถูก</td><td>API/DB ไม่ผิด → <strong>ปัญหาอยู่ frontend</strong> ✓</td></tr>
+    <tr><td>API ส่งค่าผิดหรือไม่ส่ง</td><td>ไล่ต่อที่ API/service/DB</td></tr>
+  </table>
+  <p class="say"><strong>Sources</strong> → <code>Ctrl+P</code> → <code>requestSummary.js</code> → วาง breakpoint บรรทัด 12 → Reload → เทียบค่าที่นับกับค่าที่ API ส่งมาทีละตัวอักษร</p>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">export</span> <span class="k">function</span> <span class="f">summarizeRequests</span>(requests) {
+  <span class="k">const</span> count = (status) =&gt; requests.<span class="f">filter</span>((request) =&gt; request.status === status).length;
+  <span class="k">return</span> {
+    total: requests.length,
+    pending: <span class="f">count</span>(<span class="s">'pending'</span>),
+    inProgress: <span class="f">count</span>(<span class="d">'in progress'</span>),      <span class="c">← API ส่ง 'in-progress' (ขีด) → แก้ให้ตรง</span>
+    completed: <span class="f">count</span>(<span class="s">'completed'</span>),
+  };
+}</code></pre></div>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="c">// frontend/src/utils/requestSummary.test.js</span>
+<span class="c">// 🐞 regression test — BUG #2 · ข้อมูลรูปแบบเดียวกับที่ GET /api/requests ส่งมา</span>
+<span class="k">const</span> sample = [
+  { id: <span class="s">'REQ-001'</span>, status: <span class="s">'pending'</span> },
+  { id: <span class="s">'REQ-002'</span>, status: <span class="hl">'in-progress'</span> },
+  { id: <span class="s">'REQ-003'</span>, status: <span class="s">'completed'</span> },
+  { id: <span class="s">'REQ-004'</span>, status: <span class="s">'pending'</span> },
+];
+<span class="f">test</span>(<span class="s">'นับครบทุกสถานะ'</span>, () =&gt; {
+  <span class="f">expect</span>(<span class="f">summarizeRequests</span>(sample)).<span class="f">toEqual</span>({ total: <span class="n">4</span>, pending: <span class="n">2</span>, inProgress: <span class="n">1</span>, completed: <span class="n">1</span> });
+});</code></pre></div>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>npm test --prefix frontend        <span class="c"># ต้องมี ≥ 2 ข้อ และผ่านทั้งหมด</span></code></pre></div>
+  <div class="say"><b>💬 คำถาม</b>ถ้าไม่เปิด Network ก่อน แต่เดาว่า "API นับผิด" แล้วไปไล่ใน <code>requestService.js</code> จะเสียเวลาเท่าไร · ขั้น "แยกชั้น" ช่วยอย่างไร?</div>
+  </div>
+</div>
+<div class="step" id="s5">
+  <div class="step-head"><span class="num">⑤</span><h2>DEBUG_LOG.md ครบ 4 bug · checker 20/20</h2><span class="file">DEBUG_LOG.md</span></div>
+  <div class="step-body">
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">## BUG #3 · เปลี่ยนสถานะคำร้องที่ไม่มีอยู่ ได้ 500</span>
+
+- <span class="f">**อาการ:**</span> <span class="s">`PUT /api/requests/REQ-999`</span> ได้ 500 แทน 404
+- <span class="f">**วิธีทำซ้ำ:**</span> <span class="s">`curl -X PUT localhost:3001/api/requests/REQ-999 -H "Content-Type: application/json" -d '{"status":"completed"}'`</span>
+- <span class="f">**เครื่องมือ:**</span> อ่าน stack trace ใน terminal — <span class="s">`TypeError: Cannot read properties of null (reading 'id')`</span>
+- <span class="f">**สาเหตุ (ไฟล์:บรรทัด):**</span> <span class="s">`api/src/controllers/requestController.js:30`</span> log <span class="s">`updated.id`</span> อยู่ก่อน <span class="s">`if (!updated)`</span>
+- <span class="f">**วิธีแก้:**</span> ย้าย log ไปไว้หลังการตรวจ null
+- <span class="f">**test ที่กัน:**</span> <span class="s">`tests/integration/requests.api.test.js`</span> → "คำร้องที่ไม่มีอยู่ → 404 (ไม่ใช่ 500)"</code></pre></div>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>npm test
+node --disable-warning=ExperimentalWarning check-week12.mjs --inclass</code></pre></div>
+  <span class="tag a">ผลที่ควรเห็น</span><pre><code><span class="k">✅ CP47 BUG #1 · ลบรายการกลางแล้วเพิ่มใหม่ → 201</span>
+<span class="d">✅ CP47 BUG #3 · เปลี่ยนสถานะคำร้องที่ไม่มี → 404 (ไม่ใช่ 500)</span>
+<span class="k">✅ CP47 BUG #2 · Dashboard นับ "กำลังดำเนินการ" ถูก</span>
+<span class="k">✅ CP47 DEBUG_LOG.md ระบุสาเหตุครบ 4 bug</span>
+<span class="k">🏫 ในห้อง (CP44–CP47)   ผ่าน 20/20 รายการ</span></code></pre>
+  <div class="warn"><b>⚠ กับดัก</b>checker ตรวจว่า<strong>ช่องสาเหตุ</strong>ของทุก bug มีข้อความจริง — เขียนแค่ "แก้แล้ว" หรือเว้นว่างไว้ไม่นับ · และผู้สอนจะถามให้เล่าว่า<strong>ใช้เครื่องมือไหนหาเจอ</strong></div>
+  </div>
+</div>
+<div class="step" id="done">
+  <div class="step-head"><span class="num">✓</span><h2>ผ่าน CP47 เมื่อ</h2></div>
+  <div class="step-body">
+  <p class="say">ตรวจ 5 ข้อ · ปิดช่วงเช้า (Challenge: coverage ≥ 85% · CI รัน npm test — รวม 22)</p>
+  <div class="check"><span class="box" data-check>✓</span><div>BUG #1 · ลบ REQ-002 แล้ว POST → <strong>201</strong> และรหัสไม่ซ้ำ</div></div>
+  <div class="check"><span class="box" data-check>✓</span><div>BUG #2 · Dashboard การ์ด "กำลังดำเนินการ" แสดง <strong>1</strong></div></div>
+  <div class="check"><span class="box" data-check>✓</span><div>BUG #3 · <code>PUT /api/requests/REQ-999</code> → <strong>404</strong></div></div>
+  <div class="check"><span class="box" data-check>✓</span><div>regression test ครบ 3 ตัว + <code>DEBUG_LOG.md</code> ครบ <strong>4 bug × 6 ข้อ</strong></div></div>
+  <div class="check"><span class="box" data-check>✓</span><div><code>check-week12.mjs --inclass</code> ผ่าน <strong>20/20</strong></div></div>
+  <div class="say"><b>💬 คำถาม</b>BUG ทั้ง 4 ตัวถูกจับได้ด้วยเครื่องมือคนละแบบ (test ค่าขอบ · log + breakpoint · DevTools Network · stack trace) — ถ้าเจอ bug ใหม่พรุ่งนี้ คุณจะเริ่มจากเครื่องมือไหน และทำไม?</div>
+  </div>
+</div>
+
+
+<footer><span>ENGSE203 · Week 12 · CP47 debug 3 bug จากผู้ใช้ · เอกสารสำหรับฉายบนจอ</span>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน Week 12 บทที่ 7–9</span></footer>
+<div class="nav">
+  <a href="ENGSE203_Week12_CP44_LiveCoding.html">CP44</a>
+  <a href="ENGSE203_Week12_CP45_LiveCoding.html">CP45</a>
+  <a href="ENGSE203_Week12_CP46_LiveCoding.html">CP46</a>
+  <a href="#" style="color:var(--green);border-color:var(--green);background:rgba(74,222,128,.14);font-weight:600">CP47 ← อยู่ที่นี่</a>
+</div>
+</div>
+<div class="hud">
+  <button id="minus">A−</button><button id="plus">A+</button><button id="full">เต็มจอ</button>
+</div>
+<script>
+(function(){
+  var fs=1;
+  function setFs(v){fs=Math.max(.75,Math.min(1.6,v));
+    document.documentElement.style.setProperty('--fs',fs);}
+  var p=document.getElementById('plus'),m=document.getElementById('minus'),f=document.getElementById('full');
+  if(p)p.onclick=function(){setFs(fs+.08);};
+  if(m)m.onclick=function(){setFs(fs-.08);};
+  if(f)f.onclick=function(){
+    if(!document.fullscreenElement)document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();
+    else document.exitFullscreen&&document.exitFullscreen();};
+  document.addEventListener('keydown',function(e){
+    if(e.target.tagName==='INPUT')return;
+    if(e.key==='+'||e.key==='=')setFs(fs+.08);
+    if(e.key==='-')setFs(fs-.08);});
+  document.querySelectorAll('[data-check]').forEach(function(b){
+    b.onclick=function(){b.classList.toggle('on');};});
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.onclick=function(){
+      var pre=btn.parentElement.querySelector('pre');
+      var text=pre.innerText.replace(/\s*←[^\n]*/g,'');
+      navigator.clipboard.writeText(text).then(function(){
+        var old=btn.textContent;btn.textContent='คัดลอกแล้ว';
+        setTimeout(function(){btn.textContent=old;},1400);});};});
+  var links=Array.prototype.slice.call(document.querySelectorAll('.jump a[href^="#"]'));
+  if(links.length){
+    var targets=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+    function onScroll(){var best=0;
+      targets.forEach(function(el,i){if(el&&el.getBoundingClientRect().top<=120)best=i;});
+      links.forEach(function(a,i){a.classList.toggle('now',i===best);});}
+    document.addEventListener('scroll',onScroll,{passive:true});onScroll();}
+})();
+
+</script>
+</body>
+</html>

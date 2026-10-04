@@ -1,5 +1,132 @@
 # Changelog
 
+## v7.11.0 — หน่วยที่ 5 (สัปดาห์ 12–13 สอนวันเดียว) · Final Term Project · ปรับผังปลายภาค
+
+**สอนวันเดียว** — เช้า W12 (09:00–12:00) · บ่าย W13 (13:00–16:00) · Sec 1 วันที่ 5 ต.ค. · Sec 2 วันที่ 8 ต.ค. · สัปดาห์ 14–16 ยกเลิกคาบเรียน → Final Term Project · สอบปลายภาค Sec 1 วันที่ 19 · Sec 2 วันที่ 22 ต.ค.
+
+### สัปดาห์ 12 — การทดสอบและการแก้ไขข้อผิดพลาด (`week-12-testing-debugging`)
+
+- starter: ระบบที่มี bug 4 ตัว (แต่ละตัวต้องใช้เครื่องมือต่างกัน: unit test ค่าขอบ · breakpoint · DevTools Network · stack trace) · `npm test` ผ่าน 11/11 ทั้งที่มี bug · `check-week12` 6/20
+- Vitest 5 ทั้ง api และ frontend (Vitest รุ่นเก่าตัด `node:` ออกจาก `node:sqlite`) · `DB_FILE=':memory:'` + `beforeEach(loadSeed)` · coverage
+- reference: validator เป็น pure function · regression test ครบ 4 bug · coverage 87% · CI · `check-week12` 22/22 · W07 36/36 · W10 31/31
+- คู่มือในห้อง CP44–CP47 · เอกสาร 9 บท 12 ภาพ · สไลด์ 42 หน้า (Boundary tester · แยกชั้นหา bug) · live-coding 4 หน้า
+
+### สัปดาห์ 13 — พัฒนาอย่างปลอดภัยและพร้อมส่งมอบ (`week-13-quality-security`)
+
+- กติกาสิทธิ์: GET/POST ทุกคน · PUT/DELETE เฉพาะเจ้าหน้าที่ (JWT)
+- starter = เฉลย W12 + TODO 5 จุด (W13-VALID · HASH · LOGIN · AUTH · SECRET) · test-first `password.test.js` · `check-week13` 5/23
+- reference: max length + 413 · scrypt + `timingSafeEqual` · JWT 2 ชม. · `authenticate` 401 / `requireRole` 403 · fail fast เมื่อไม่มี `JWT_SECRET` · security headers · จำกัดการเดารหัสผ่าน (429) · `create-staff` · React: หน้า login · `authStore` · `useAuth` · `check-week13` 27/27 · api 77 test · frontend 8 test
+- คู่มือในห้อง CP48–CP52 · เอกสาร 9 บท 10 ภาพ · สไลด์ 42 หน้า (JWT decoder · ด่านตรวจ 401/403) · live-coding 5 หน้า
+
+### แก้จากสัปดาห์ 11
+
+- `errorHandler` ใช้ `config.isProduction` (ไม่มีอยู่จริง) → production ส่ง stack trace ออกไป · แก้เป็น `config.isProd` ทั้งใน W11 reference และทุกสัปดาห์ถัดไป · checker W07 ปรับตาม
+
+### Final Term Project (`labs/final-term-project` · ใหม่)
+
+- คู่ (Front-end / Back-end + DevOps) · กลุ่ม 3 คน 1 กลุ่มต่อ Section (Front-end / Back-end / DevOps ขึ้น cloud + Turso)
+- 18 หัวข้อ · ข้อกำหนด R1–R8 · `ROLES.md` · `RUBRIC.md` (A6 15 + A5 6) · `PEER_REVIEW.md` · กำหนดการ M0–M3
+- `kit/`: `check-project.mjs` (เปิด API ของทีมจริงด้วยฐานข้อมูลชั่วคราว · ยิงทุก endpoint · รัน test · ตรวจเอกสาร/git/secret/production · `--online` · `--role`) · แม่แบบ README · TEAM_CONTRACT · RELEASE_CHECKLIST · DEBUG_LOG · DEPLOY · CI · `render.yaml` (`STAFF_EMAIL`/`STAFF_PASSWORD` ตั้งรหัสเจ้าหน้าที่ production)
+- สัปดาห์ 14–16 README เปลี่ยนเป็นประกาศยกเลิก + ชี้ไปโปรเจกต์ · สัปดาห์ 17 อธิบายรูปแบบสอบใหม่
+
+### สไลด์ปิดภาค (ใหม่)
+
+- `week-13-quality-security/guides/ENGSE203_Course_Wrapup_Slides.html` · เว็บ `wrapup/` — 42 หน้า: เส้นทาง 17 สัปดาห์ · ระบบที่โตทุกสัปดาห์ · สรุปทีละหน่วย · สถาปัตยกรรมเต็ม · วิธีส่งงาน · คะแนน A1–A7 · Final Term Project (บทบาท · หัวข้อ · R1–R8 · checker · milestone · คะแนน) · สอบปลายภาค (3 ส่วน · take-home · Part 2 · สัมภาษณ์ · ตารางวันสอบ) · กำหนดส่งของฉัน (เลือก Section + นับถอยหลัง) · ปฏิทินตุลาคม · เช็กลิสต์ · กติกา · FAQ · 12 ภาพ SVG · quiz 4 ข้อ
+
+### เอกสารรายวิชา
+
+- `README.md` (ตาราง LAB · สื่อออนไลน์ W12–13 · แผนผังหน่วยตาม มคอ. v2 · การประเมิน) · `docs/course-assessment.md` ตามผังใหม่
+
+## v7.10.1 — ข้อควรระวัง Challenge Turso จาก feedback ผู้ช่วยสอน
+
+ผู้ช่วยสอนทดลองทำ Week 11 แล้วเสนอ 4 ข้อ — ตรวจแล้วถูกต้องทุกข้อ (ข้อ ② ยืนยันด้วยการลบ libsql ออก: checker และ `npm test` ยังผ่าน · error เฉพาะตอนตั้งค่า Turso)
+
+1. script `build` ต้องมี `npm install --prefix api` · `libsql` ต้องอยู่ใน dependencies
+2. dynamic import `await import('libsql')` — เครื่องที่ไม่มี libsql ยังใช้ node:sqlite ได้
+3. **`libsql` (sync) ไม่ใช่ `@libsql/client` (async)** — เดิมยังไม่มีในเอกสาร · ตัวหลังทำให้กระทบ controller ทั้งชุด
+4. URL/token ห้ามอยู่ใน `.env.example` หรือ git
+
+### ปรับ
+
+- Take-Home: กล่อง "ข้อควรระวัง 4 ข้อ" ก่อนขั้นที่ 1 · เตือน libsql ≠ @libsql/client ในขั้นที่ 2 · คอมเมนต์เหตุผล dynamic import · คำสั่งตรวจ token ก่อน push · ตารางแก้ปัญหา +2 แถว
+- คู่มือ Deploy: 11.2 ข้อควรระวัง + ภาพที่ 7 (libsql กับ @libsql/client) · ตารางแก้ปัญหา · ตารางความปลอดภัย
+- เอกสาร 7.3 กล่องข้อควรระวัง · บท 8 เพิ่มแถว "Turso ผ่าน @libsql/client → 2 ชั้น"
+- สไลด์ Turso: กล่องเตือน libsql ≠ @libsql/client
+- โค้ดเฉลย: คอมเมนต์ข้อควรระวังใน service · Step Script 13.2
+
+## v7.10.0 — Challenge ⭐⭐ ข้อมูลถาวรด้วย Turso (Week 11)
+
+**เหตุผล** — Render free tier ใช้ ephemeral filesystem · `campus.db` กลับเป็นเวอร์ชันใน git ทุก restart · Turso เป็น SQLite บนอินเทอร์เน็ต free tier ไม่ต้องใช้บัตร
+
+### โค้ด (reference)
+
+- service เพิ่ม `openDatabase()` — เลือกฐานข้อมูลจาก env: ไม่มี `TURSO_DATABASE_URL` → `node:sqlite` ไฟล์เดิม · มี → `libsql` (โหลดแบบ dynamic เฉพาะตอนใช้)
+- health check บอก `driver: sqlite | turso`
+- `api/package.json` เพิ่ม `libsql` · `.env.example` (starter + reference) เพิ่ม `TURSO_DATABASE_URL` / `TURSO_AUTH_TOKEN` ค่าว่าง · `render.yaml` มีตัวอย่าง `sync: false`
+
+### checker (W11 · starter + reference)
+
+- ลบตัวแปร Turso ก่อนรัน — ใช้ฐานข้อมูลชั่วคราวในเครื่องเสมอ ไม่เขียนข้อมูลทดสอบขึ้น Turso
+- CP26 รับ `libsql` / `new Database` ได้ด้วย · ตัวเลขเดิม (41 ข้อ · Challenge ⭐⭐ ตรวจจาก health + หลักฐาน Manual Deploy)
+
+### ทดสอบ (ด้วย sqld — server open source ตัวเดียวกับที่ Turso ใช้)
+
+- ต่อผ่าน HTTP: สร้างตารางจาก schema.sql อัตโนมัติ · check-week07 36/36 · check-week10 31/31 · check-week11 41/41 บนฐานข้อมูลระยะไกล
+- auth token แบบ JWT (EdDSA): token ถูก → ใช้งานได้ · ผิด/ไม่ใส่ → 401 พร้อมข้อความใน log
+- จำลอง Render (clone สะอาด · build แบบ production) → เพิ่มข้อมูล → redeploy บนเครื่องใหม่ → **ข้อมูลยังอยู่**
+- checker ที่รันขณะตั้งค่า Turso ไว้ ไม่สร้างตารางใดใน server
+- ยังไม่ได้ทดสอบกับบริการ Turso จริงบนอินเทอร์เน็ต — แนะนำผู้สอนลองกับบัญชีจริงก่อนประกาศ
+
+### เอกสาร
+
+- Take-Home: Challenge ⭐⭐ 6 ขั้น · ความปลอดภัยของ token · ตารางแก้ปัญหา · เกณฑ์คะแนนโบนัส
+- คู่มือ Deploy: ส่วนที่ 11 (ภาพสถาปัตยกรรม Render + Turso · ขั้นตอน · ผู้สอน · ขอบเขตการทดสอบ) · 6 ภาพ
+- เอกสารประกอบการสอน: 7.3 (ภาพ + ทายก่อนอ่าน "แก้กี่ชั้น") · บท 8 ตาราง "sync/async ไม่ใช่ SQL/NoSQL" · บท 9 แถว Week 11 ⭐⭐ · 10 ภาพ
+- สไลด์ 41 หน้า: สไลด์ Turso (ภาพ + quiz) · ตารางสรุปหน่วย · recap บท 7
+- Step Script 13.2 · README W11
+
+## v7.9.0 — ทบทวน Week 11 ทั้งหมด · แก้บั๊ก deploy จริง 3 จุด · คู่มือ Deploy มีภาพประกอบ
+
+**วิธีตรวจ** — จำลองสิ่งที่ Render ทำครบทุกขั้นบนสำเนาสะอาด (clone ใหม่ · `NODE_ENV=production` ตั้งแต่ build · `PORT=10000`) และอ้างอิงสเปก Render ปัจจุบัน
+
+### บั๊กที่ทำให้ deploy ไม่ได้จริง (แก้แล้ว)
+
+1. **bundle ฝัง `localhost:3001`** — `apiClient` ใช้ค่าเริ่มต้น localhost · ทดสอบในเครื่องดูเหมือนผ่านเพราะบังเอิญเป็น server ตัวเดียวกัน แต่บน cloud เบราว์เซอร์ผู้ใช้ยิงไปหาเครื่องตัวเอง → เพิ่ม `frontend/.env.production` (`VITE_API_BASE_URL=` ว่าง)
+2. **หน้าแรก `/` ตอบ JSON** — route ต้อนรับจาก Week 06 อยู่ก่อน static · ผู้ใช้เปิด URL เห็น JSON → ย้ายไป `/api` · `/` ตอบ JSON เฉพาะ dev
+3. **`vite: not found` ตอน build บน cloud** — Render ตั้ง `NODE_ENV=production` ตั้งแต่ build ทำให้ข้าม devDependencies → root `package.json` script `build` ใช้ `--include=dev`
+
+### ไฟล์ deploy ให้ตรงสเปกปัจจุบัน
+
+- `render.yaml`: `runtime: node` (แทน `env:` เดิม) · `plan: free` · `region: singapore` · `rootDir` · `healthCheckPath: /api/health` · `NODE_VERSION=22` · ตัด `PORT` ที่ hardcode ออก
+- เพิ่ม root `package.json` (build/start/check) · `.node-version` · `.gitignore` ระดับโปรเจกต์
+- ลบ import ซ้ำ (`express0`) ใน app.js
+- CI workflow build แบบเดียวกับ cloud
+
+### checker Week 11 (36 → 41 ข้อ)
+
+- แก้ตัวหารไม่คงที่ (เปิด API ไม่ได้แล้วเหลือ 34) — บันทึกครบทุกข้อทั้งสองกรณี
+- เพิ่ม: production `/` ได้หน้าเว็บ · bundle ไม่มี localhost · มี `.env.production` · root build/start + `--include=dev` · render.yaml ตามสเปก
+- ทดสอบว่าจับบั๊กทั้ง 3 ได้จริง · reference 41/41 · starter 18/41 · W10 31/31 · W07 36/36
+
+### เอกสาร · สไลด์ · คู่มือ
+
+- **ใหม่: คู่มือ Deploy ขึ้น Render** (`week11/deploy-guide.html`) — 10 ส่วน · 5 ภาพ · มีส่วนสำหรับผู้สอน (deploy เดโม · ก่อนเข้าคาบ · ตรวจงาน)
+- เอกสารบท 6 เพิ่ม 6.3 กับดัก production (SVG + ทายก่อนอ่าน) · บท 7 เขียนใหม่ (SVG ขั้นตอน Render · render.yaml ถูกสเปก) · 9 ภาพ
+- สไลด์ 40 หน้า: เพิ่มสไลด์กับดัก 2 ข้อ (SVG + quiz) · แก้ CP39/เตรียม deploy/จำลอง production/A4
+- Take-Home เขียนใหม่ทั้งไฟล์ · In-Class CP39 เขียนใหม่ · Live-coding CP39 ใหม่ · Step Script เพิ่มช่วงสาธิตกับดัก
+
+### checker ทุกสัปดาห์ที่ใช้ supertest (W07 · W10 · W11)
+
+- **หา supertest จาก `api/` ได้** — เดิม `import('supertest')` หาได้เฉพาะ node_modules ระดับบนสุด แต่คู่มือให้ติดตั้งใน `api/` · เครื่องนักศึกษาจึงขึ้น "เปิด API ไม่ได้" ทั้งที่งานถูก · ทดสอบแล้วว่าผ่านเมื่อมีแค่ `api/node_modules`
+- **ไม่เขียนข้อมูลทดสอบลง `campus.db` ตัวจริง** (W10 · W11) — ใช้ฐานข้อมูลชั่วคราวใน tmp แล้วลบทิ้ง · เดิมทุกครั้งที่รัน checker มีรายการทดสอบค้างใน campus.db ที่นักศึกษาต้อง commit และไปโชว์บนเว็บที่ deploy
+- สร้าง `campus.db` ของเฉลย W10 · W11 ใหม่จาก schema (5 คำร้อง · 4 ผู้ใช้ — เดิม W11 มีข้อมูลทดสอบค้าง)
+
+### ความสอดคล้องทั้งหน่วย (W09–W11 ตามมาตรฐาน W07)
+
+- เพิ่ม "โครงสร้างที่ต้องมีใน Student Repository" `labs/week-NN/source/` + `evidence/` + `AI_USAGE.md` ในทั้ง 3 สัปดาห์
+- W10 รับของจาก W09 ด้วย path จริง (`labs/week-09/source/schema.sql`) · W11 ตั้งต้นจาก `labs/week-10/source`
+- Root Directory บน Render = `labs/week-11/source`
+
 ## v7.8.0 — ตรวจ Week 11 ครั้งสุดท้าย · แก้จุดที่ตกหล่น
 
 **จากการตรวจครบก่อนปิด Week 11 พบและแก้**
@@ -135,6 +262,7 @@
 ### ② จัดไฟล์ starter Week 10 ให้ตรงเรื่องราว "รับของจากสัปดาห์ที่ 9"
 
 - **ย้าย schema.sql ออกจาก starter** — นักศึกษาต้องเอามาจากงาน W09 ของตัวเอง (starter เดิมแจกให้เลย ขัดกับบทเรียน)
+- ย้ายไป `_instructor-private/backup/` พร้อม campus.db สำรอง + README อธิบายว่าแจกเมื่อไร (เฉพาะคนที่จำเป็น)
 - เพิ่มขั้น ⓪ "รับของจากสัปดาห์ที่ 9" ใน LAB10 In-Class Guide
 - `npm run db:setup` แจ้ง error ชัดเมื่อไม่มี schema ("ขอไฟล์สำรองจากผู้สอน")
 
@@ -231,6 +359,7 @@
 
 - **เขียน README ใหม่ทั้งไฟล์** — เดิมยังเป็นโครงเก่าเรื่อง MongoDB จึงไม่มีลิงก์ไปหา LAB Guide ที่มีอยู่แล้ว
 - **เพิ่ม Live-Coding 5 ไฟล์** — CP26 เปิด DB · CP27 กับดัก path · CP28 JOIN · CP29 แปลงชื่อเป็น id · CP30 CRUD + พิสูจน์ว่าไม่พัง
+- เพิ่ม `_instructor-private/README.md` พร้อมรายการไฟล์สำรองที่ต้องเตรียม
 - อัปเดตตารางสื่อและชื่อ LAB ใน README หลัก
 
 ## v6.7.0 — เพิ่มภาพประกอบ Week 09 และสคริปต์สร้างฐานข้อมูล Week 10

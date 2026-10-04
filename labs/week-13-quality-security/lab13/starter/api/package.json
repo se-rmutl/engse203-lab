@@ -1,0 +1,32 @@
+{
+  "name": "engse203-campus-api",
+  "version": "3.2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "node --disable-warning=ExperimentalWarning --watch --env-file=.env src/server.js",
+    "start": "node --disable-warning=ExperimentalWarning src/server.js",
+    "check": "node scripts/check-project.mjs",
+    "test": "vitest run",
+    "db:setup": "node --disable-warning=ExperimentalWarning scripts/setup-db.mjs",
+    "db:reset": "node --disable-warning=ExperimentalWarning scripts/setup-db.mjs --force",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
+    "create-staff": "node --disable-warning=ExperimentalWarning scripts/create-staff.mjs"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "libsql": "^0.5.29",
+    "morgan": "^1.12.1"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^5.0.3",
+    "supertest": "^7.2.2",
+    "vitest": "^5.0.3"
+  }
+}

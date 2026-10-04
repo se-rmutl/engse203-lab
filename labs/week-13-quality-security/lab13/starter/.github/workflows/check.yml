@@ -1,0 +1,15 @@
+# CI — รัน test ทุกครั้งที่ push (Week 12)
+# ถ้าโปรเจกต์อยู่ใน labs/week-12/source ของ Student Repository ให้เพิ่ม
+#   defaults: { run: { working-directory: labs/week-12/source } }
+name: Week 12 Tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --prefix api && npm install --prefix frontend
+      - run: npm test

@@ -1,0 +1,1470 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A1F16">
+<title>ENGSE203 Week 13 — Interactive Slides (โครงบท)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --font-scale:1;
+  --deep-950:#140C04; --deep-900:#221708; --deep-850:#2E1F0C; --deep-800:#3D2A12;
+  --ink:#EAF6EF; --muted:#A9C7B8; --dim:#6E8F7C;
+  --green:#FBBF24; --green-2:#22C55E; --cyan:#38D7ED; --amber:#FBBF24;
+  --red:#FB7185; --blue:#7AA5FF; --violet:#C084FC; --pink:#F472B6;
+  --panel:rgba(15,42,30,.74); --line:rgba(169,199,184,.24);
+  --shadow:0 24px 70px rgba(0,0,0,.44); --radius:20px;
+  font-size:calc(16px * var(--font-scale));
+}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0}
+body{overflow:hidden;color:var(--ink);
+  background:radial-gradient(circle at 14% 14%,rgba(251,191,36,.15),transparent 32%),
+  radial-gradient(circle at 84% 80%,rgba(192,132,252,.12),transparent 34%),#120A04;
+  font-family:'IBM Plex Sans Thai','Noto Sans Thai',Tahoma,sans-serif;}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+.app{min-height:100%;display:grid;place-items:center;position:relative}
+.stage{position:relative;width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));
+  aspect-ratio:16/9;overflow:hidden;background:var(--deep-900);box-shadow:var(--shadow);isolation:isolate;}
+.stage::before{content:"";position:absolute;inset:0;z-index:-2;
+  background:linear-gradient(135deg,rgba(255,255,255,.03),transparent 42%),
+  radial-gradient(circle at 80% 8%,rgba(74,222,128,.16),transparent 26%),
+  linear-gradient(160deg,var(--deep-900),#081b12 64%,#123024)}
+.stage::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.16;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 88%)}
+
+.slide{position:absolute;inset:0;display:none;padding:3.8% 5% 5.6%;overflow:hidden;flex-direction:column}
+.slide.active{display:flex;animation:enter .26s ease-out}
+@keyframes enter{from{opacity:.25;transform:translateX(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.active{animation:none}}
+
+.slide-id{position:absolute;top:2.8%;right:5%;font-family:'IBM Plex Mono',monospace;
+  font-size:.74rem;letter-spacing:.14em;color:var(--muted);opacity:.65}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;width:fit-content;color:var(--green);
+  font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.88rem;margin-bottom:.5rem}
+.eyebrow.amber{color:var(--amber)} .eyebrow.cyan{color:var(--cyan)}
+.eyebrow.red{color:var(--red)} .eyebrow.violet{color:var(--violet)}
+
+h1{font-size:3.3rem;line-height:1.1;margin:0 0 .7rem;font-weight:700;letter-spacing:-.015em}
+h2{font-size:2.35rem;line-height:1.16;margin:0 0 .7rem;font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.4rem;margin:0 0 .35rem;font-weight:600}
+p{margin:0 0 .6rem;line-height:1.5;font-size:1.3rem}
+.lead{font-size:1.6rem;color:var(--muted);font-weight:300;line-height:1.45}
+.muted{color:var(--muted)}
+small{font-size:1rem;color:var(--muted)}
+strong{font-weight:600}
+code{font-family:'IBM Plex Mono',monospace;font-size:.9em;background:rgba(74,222,128,.15);
+  padding:.08em .38em;border-radius:5px;color:#bff5d0}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.15rem 1.35rem}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:.75rem}
+.center{justify-content:center}
+
+/* SVG figure */
+.fig{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.fig svg{width:100%;height:100%;max-height:100%;display:block}
+.figcap{font-size:1.05rem;color:var(--muted);text-align:center;margin-top:.3rem}
+svg text{font-family:'IBM Plex Sans Thai',sans-serif}
+.svg-t{font-size:15px;font-weight:600;fill:#EAF6EF}
+.svg-s{font-size:12.5px;font-weight:300;fill:#A9C7B8}
+.svg-m{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500}
+.svg-lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em}
+.svg-big{font-size:19px;font-weight:700;fill:#EAF6EF}
+
+table{width:100%;border-collapse:collapse;font-size:1.22rem}
+th{text-align:left;padding:.6rem .75rem;color:var(--green);font-weight:600;
+  border-bottom:2px solid var(--line);font-size:1.08rem}
+td{padding:.6rem .75rem;border-bottom:1px solid rgba(169,199,184,.14);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+
+.chip{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .78rem;border-radius:999px;
+  font-size:1.02rem;font-weight:600;border:1px solid var(--line);background:rgba(74,222,128,.1);color:var(--green)}
+.chip.a{color:var(--amber);background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.32)}
+.chip.c{color:var(--cyan);background:rgba(56,215,237,.1);border-color:rgba(56,215,237,.32)}
+.chip.v{color:var(--violet);background:rgba(192,132,252,.1);border-color:rgba(192,132,252,.32)}
+.chip.r{color:var(--red);background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.32)}
+
+.where{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.98rem;font-weight:600;
+  padding:.24rem .72rem;border-radius:8px}
+.where.room{background:rgba(74,222,128,.16);color:#bff5d0;border:1px solid rgba(74,222,128,.4)}
+.where.home{background:rgba(251,191,36,.14);color:#ffe1a8;border:1px solid rgba(251,191,36,.4)}
+
+.title-slide{justify-content:center}
+.brandline{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.2rem}
+
+pre{background:rgba(4,16,11,.9);border:1px solid var(--line);border-radius:14px;
+  padding:.95rem 1.15rem;overflow:auto;font-size:1.08rem;line-height:1.55;margin:.35rem 0}
+pre code{background:none;padding:0;color:#d6efe0;font-size:1.08rem}
+.k{color:#8FE3A8}.s{color:#E9C88A}.c{color:#7EA592;font-style:italic}.f{color:#8FD0EC}
+.n{color:#D9A0E8}.hl{color:#FFE08A;font-weight:600}.bad{color:#FB7185}
+
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.g21{display:grid;grid-template-columns:1.4fr 1fr;gap:.9rem}
+.card{border:1px solid var(--line);border-radius:16px;padding:1rem 1.15rem;background:rgba(4,16,11,.5)}
+.card .ic{font-size:1.8rem;margin-bottom:.3rem}
+.card h3{font-size:1.25rem;margin-bottom:.25rem}
+.card p{font-size:1.06rem;margin:0;color:var(--muted)}
+.card.room{border-color:rgba(74,222,128,.4)}
+.card.home{border-color:rgba(251,191,36,.4)}
+.card.ch{border-color:rgba(192,132,252,.4)}
+
+.flow{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:.3rem 0}
+.flow .step{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35);
+  border-radius:12px;padding:.55rem .95rem;font-weight:600;font-size:1.1rem}
+.flow .arr{color:var(--muted);font-size:1.25rem}
+
+.analogy{background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.34);border-radius:var(--radius);padding:1rem 1.25rem}
+.note{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.34);border-radius:var(--radius);padding:1rem 1.25rem}
+.win{background:rgba(74,222,128,.09);border:1px solid rgba(74,222,128,.36);border-radius:var(--radius);padding:1rem 1.25rem}
+.wrong{background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.36);border-radius:var(--radius);padding:1rem 1.25rem}
+.term{background:rgba(56,215,237,.08);border-left:4px solid var(--cyan);border-radius:0 14px 14px 0;padding:.9rem 1.2rem}
+.term .w{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--cyan);font-size:1.2rem;margin-bottom:.2rem}
+.term p{margin:0;font-size:1.15rem}
+
+.iact{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.3);border-radius:var(--radius);padding:1rem 1.25rem}
+.opts{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.45rem}
+.opt{background:rgba(15,42,30,.92);border:1px solid var(--line);border-radius:12px;
+  padding:.55rem 1rem;font-size:1.15rem;transition:all .15s}
+.opt:hover{border-color:var(--green);background:rgba(74,222,128,.14)}
+.opt.ok{border-color:var(--green);background:rgba(74,222,128,.2);color:#c9f7d8}
+.opt.no{border-color:var(--red);background:rgba(251,113,133,.2);color:#ffd4da}
+.fb{margin-top:.5rem;font-size:1.1rem;min-height:1.4rem;color:var(--muted)}
+.fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+
+.reveal{border:1px dashed var(--line);border-radius:14px;padding:.7rem 1rem;background:rgba(4,16,11,.5)}
+.reveal button{background:none;border:none;color:var(--green);font-weight:600;font-size:1.15rem;padding:0}
+.reveal .ans{display:none;margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--line);font-size:1.15rem}
+.reveal.open .ans{display:block}
+
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.pgbox{border:1px solid var(--line);border-radius:14px;background:rgba(4,16,11,.8);overflow:hidden}
+.pghead{background:rgba(169,199,184,.09);padding:.42rem .8rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.95rem;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--line)}
+.pgbody{padding:.8rem;font-family:'IBM Plex Mono',monospace;font-size:1rem;line-height:1.5;
+  min-height:130px;word-break:break-all;color:#d6efe0;white-space:pre-wrap}
+.reqbtns{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem}
+.reqbtns button{background:rgba(15,42,30,.92);border:1px solid var(--line);border-radius:9px;
+  padding:.38rem .75rem;font-family:'IBM Plex Mono',monospace;font-size:.98rem;color:var(--muted)}
+.reqbtns button:hover{border-color:var(--green);color:var(--green)}
+.reqbtns button.m-get{color:#8FE3A8;border-color:rgba(74,222,128,.4)}
+.reqbtns button.m-post{color:#E9C88A;border-color:rgba(251,191,36,.4)}
+.reqbtns button.m-del{color:#FB7185;border-color:rgba(251,113,133,.4)}
+.stcode{font-family:'IBM Plex Mono',monospace;font-weight:600}
+.stcode.ok{color:var(--green)} .stcode.warn{color:var(--amber)} .stcode.err{color:var(--red)}
+
+.bigtime{font-family:'IBM Plex Mono',monospace;font-size:2.8rem;font-weight:600;line-height:1;color:var(--amber)}
+.timerbtns{display:flex;gap:.45rem;margin-top:.5rem}
+.timerbtns button{background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.4);
+  color:var(--amber);border-radius:10px;padding:.38rem .85rem;font-size:1rem;font-weight:600}
+.labstop{background:linear-gradient(150deg,rgba(251,191,36,.13),rgba(15,42,30,.82));border:1px solid rgba(251,191,36,.4)}
+
+ul{margin:.15rem 0 .4rem 1.25rem;padding:0}
+li{margin-bottom:.35rem;font-size:1.2rem;line-height:1.45}
+
+.bar{position:fixed;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.08);z-index:40}
+.bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));width:0;transition:width .25s}
+.hud{position:fixed;bottom:16px;right:18px;display:flex;gap:.42rem;align-items:center;z-index:41}
+.hud button{background:rgba(15,42,30,.94);border:1px solid var(--line);border-radius:10px;
+  padding:.3rem .62rem;font-size:.88rem;color:var(--muted)}
+.hud button:hover{color:var(--green);border-color:var(--green)}
+.counter{font-family:'IBM Plex Mono',monospace;font-size:.86rem;color:var(--muted);padding:0 .32rem}
+.toc{position:fixed;inset:0;background:rgba(4,12,8,.97);z-index:50;display:none;padding:3.5vh 5vw;overflow:auto}
+.toc.open{display:block}
+.toc h3{color:var(--green);margin-bottom:.9rem;font-size:1.25rem;letter-spacing:.08em;text-transform:uppercase}
+.toc ol{columns:3;column-gap:2.2rem;margin:0;padding-left:1.3rem;font-size:1.05rem}
+.toc li{margin-bottom:.42rem;break-inside:avoid}
+.toc a{color:var(--ink);text-decoration:none;opacity:.85}
+.toc a:hover{color:var(--green);opacity:1}
+.toc .tag{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--dim);margin-left:.35rem}
+@media (max-width:900px){.toc ol{columns:2}}
+
+/* ── โครงบท ── */
+.chapbadge{position:absolute;top:2.8%;left:5%;display:flex;align-items:center;gap:.5rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.76rem;font-weight:600;letter-spacing:.08em;
+  color:var(--green);background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);
+  padding:.22rem .7rem;border-radius:999px}
+.chapbadge .of{color:var(--muted);font-weight:400}
+.chapbadge.home{color:var(--amber);background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.32)}
+.divider{justify-content:center;align-items:flex-start}
+.divider .grp{font-family:'IBM Plex Mono',monospace;font-size:.95rem;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem}
+.divider .bignum{font-family:'IBM Plex Mono',monospace;font-size:6rem;font-weight:700;
+  line-height:1;color:var(--green);margin-bottom:.4rem;letter-spacing:-.04em}
+.divider .bignum.home{color:var(--amber)}
+.divider h2{font-size:3rem;margin-bottom:.6rem}
+.divider .whatfor{font-size:1.4rem;color:var(--muted);font-weight:300;max-width:46ch;line-height:1.5}
+.divider .mins{margin-top:1.6rem;display:flex;gap:.6rem;flex-wrap:wrap}
+.recap{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.35);
+  border-radius:var(--radius);padding:1.2rem 1.5rem}
+.recap h3{color:var(--green);font-size:1.3rem;margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.6rem}
+.recap ul{margin:0 0 0 1.3rem}
+.recap li{font-size:1.24rem;margin-bottom:.45rem}
+.nextup{background:rgba(56,215,237,.08);border:1px solid rgba(56,215,237,.35);
+  border-radius:var(--radius);padding:.9rem 1.3rem;font-size:1.2rem}
+.nextup b{color:var(--cyan)}
+.whybox{background:rgba(192,132,252,.1);border:1px solid rgba(192,132,252,.4);
+  border-radius:var(--radius);padding:1.2rem 1.5rem}
+.whybox .q{font-size:1.5rem;font-weight:600;color:var(--violet);margin-bottom:.5rem}
+.whybox p{font-size:1.28rem;margin:0}
+.track{display:flex;gap:.3rem;flex-wrap:wrap;justify-content:center;margin-top:.5rem}
+.track span{width:26px;height:6px;border-radius:3px;background:rgba(169,199,184,.2)}
+.track span.done{background:var(--green)}
+.track span.now{background:var(--cyan);box-shadow:0 0 8px rgba(56,215,237,.5)}
+.track span.home{background:rgba(251,191,36,.4)}
+
+/* ── Week 13 · ให้ font-size ที่ตั้งบน pre มีผลกับโค้ดข้างใน ── */
+pre code{font-size:inherit}
+.body pre,.body table,.body .g2,.body .g21{flex-shrink:0}
+.iact[data-quiz]{padding:.65rem 1.15rem}
+.slide > .chapbadge + h2{margin-top:1.3rem}
+.iact[data-quiz] .fb{margin-top:.25rem;min-height:1.3rem}
+.iact[data-quiz] .opt{padding:.45rem .95rem}
+table.tight td{padding:.42rem .7rem}
+/* ── Week 13 · ตารางเวลา ── */
+.tl{font-size:1.08rem}
+.tl td,.tl th{padding:.38rem .7rem}
+.tl tr.brk td{color:var(--muted);font-style:italic}
+.tl td:first-child{font-family:'IBM Plex Mono',monospace;font-size:.98rem;color:var(--cyan);white-space:nowrap}
+.tl td:last-child{text-align:center;font-family:'IBM Plex Mono',monospace;color:var(--muted)}
+.crit{margin:0;padding-left:1.2rem}
+.crit li{font-size:1.08rem;margin-bottom:.25rem;list-style:none;position:relative}
+.crit li::before{content:"✓";position:absolute;left:-1.15rem;color:var(--green-2);font-weight:700}
+.reqbtns button.on{border-color:var(--cyan);color:var(--cyan);background:rgba(56,215,237,.14)}
+
+/* ── Interactive: JWT decoder ── */
+.jw-token{font-family:'IBM Plex Mono',monospace;font-size:.84rem;line-height:1.5;word-break:break-all;
+  background:rgba(4,16,11,.85);border:1px solid var(--line);border-radius:12px;padding:.55rem .8rem;margin-bottom:.55rem}
+.jw-h{color:#FB7185}.jw-p{color:#C084FC}.jw-s{color:#38D7ED}.jw-dot{color:var(--ink);font-weight:700}
+.jw-p.edited{background:rgba(251,191,36,.18);color:#FFE08A;border-radius:4px}
+.jw-s.bad{color:#FB7185;text-decoration:line-through}
+.jw-grid{display:grid;grid-template-columns:1fr 1.45fr 1.25fr;gap:.6rem}
+.jw-col{border:1px solid var(--line);border-radius:12px;padding:.5rem .75rem;background:rgba(4,16,11,.6);min-width:0}
+.jw-col.h{border-color:rgba(251,113,133,.45)}.jw-col.p{border-color:rgba(192,132,252,.45)}.jw-col.s{border-color:rgba(56,215,237,.45)}
+.jw-col h4{margin:0 0 .3rem;font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.08em;font-weight:600}
+.jw-col.h h4{color:#FB7185}.jw-col.p h4{color:#C084FC}.jw-col.s h4{color:#38D7ED}
+.jw-json{font-family:'IBM Plex Mono',monospace;font-size:.84rem;white-space:pre-wrap;word-break:break-all;line-height:1.45;color:#d6efe0}
+.jw-json .cm{color:#7EA592;font-style:italic}
+.jw-json .hl{color:#FFE08A;font-weight:600}
+.jw-json .ok{color:#4ADE80}.jw-json .no{color:#FB7185}
+.jw-verdict{margin-top:.55rem;padding:.5rem .85rem;border-radius:10px;font-size:1.04rem;line-height:1.45;min-height:3.1rem}
+.jw-verdict.ok{background:rgba(34,197,94,.12);border-left:4px solid var(--green-2)}
+.jw-verdict.warn{background:rgba(251,191,36,.12);border-left:4px solid var(--amber)}
+.jw-verdict.no{background:rgba(251,113,133,.13);border-left:4px solid var(--red)}
+
+/* ── Interactive: ด่านตรวจ 401/403 ── */
+.gk-row{align-items:center;margin-bottom:.4rem}
+.gk-row .lbl{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--muted);min-width:4.6rem;letter-spacing:.06em}
+.gk-flow{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:.45rem 0}
+.gk-node{flex:1;padding:.55rem .5rem;text-align:center;border-right:1px solid rgba(169,199,184,.2);transition:all .25s;min-width:0}
+.gk-node:last-child{border-right:none}
+.gk-node .nm{display:block;font-weight:600;font-size:.98rem}
+.gk-node .ds{display:block;font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--muted);margin-top:.15rem;word-break:break-word}
+.gk-node.pass{background:rgba(34,197,94,.13)}
+.gk-node.pass .nm::after{content:" ✓";color:#4ADE80}
+.gk-node.stop{background:rgba(251,113,133,.2);box-shadow:inset 0 0 0 2px rgba(251,113,133,.65)}
+.gk-node.stop .nm::after{content:" ✕";color:#FB7185}
+.gk-node.skip,.gk-node.wait{opacity:.32}
+.gk-out{display:grid;grid-template-columns:7.2rem 1fr;gap:.9rem;align-items:center;background:rgba(4,16,11,.78);
+  border-radius:12px;padding:.55rem .9rem;border-left:4px solid var(--cyan)}
+.gk-code{font-family:'IBM Plex Mono',monospace;font-size:2.3rem;font-weight:700;line-height:1;text-align:center}
+.gk-code small{display:block;font-size:.72rem;color:var(--muted);font-weight:500;margin-top:.2rem}
+.gk-code.ok{color:#4ADE80}.gk-code.no{color:#FB7185}.gk-code.warn{color:var(--amber)}
+.gk-body{font-family:'IBM Plex Mono',monospace;font-size:.86rem;white-space:pre-wrap;line-height:1.45;color:#d6efe0;word-break:break-word}
+.gk-why{font-size:1.05rem;margin-top:.45rem;padding:.45rem .8rem;border-radius:10px;background:rgba(56,215,237,.08);min-height:2.4rem}
+</style>
+</head>
+<body>
+<div class="app"><div class="stage" id="stage">
+
+<section class="slide title-slide active" data-title="เปิดบทเรียน">
+  <span class="eyebrow">หน่วยที่ 5 · สัปดาห์ที่ 13 · ช่วงบ่าย</span>
+  <h1>พัฒนาอย่างปลอดภัย<br>และพร้อมส่งมอบ</h1>
+  <p class="lead">"ทำงานได้" ยังไม่พอ — ระบบต้อง<strong>ไม่ยอม</strong>ให้คนที่ไม่มีสิทธิ์ทำในสิ่งที่ไม่ควรทำ</p>
+  <div class="brandline">
+    <span class="chip">validation เข้มขึ้น</span><span class="chip c">password hashing</span>
+    <span class="chip v">JWT · 401 / 403</span><span class="chip a">secrets &amp; release</span>
+  </div>
+  <p style="margin-top:1.1rem"><small>Campus Service Request · ต่อจากช่วงเช้า (สัปดาห์ 12) · Sec 1 สอน 5 ต.ค. · Sec 2 สอน 8 ต.ค.</small></p>
+  <p style="margin-top:.4rem"><small>→ / Space ไปต่อ · T สารบัญ · F เต็มจอ · A+ A− ปรับขนาด</small></p>
+</section>
+
+<section class="slide" data-title="🗓️ ตารางช่วงบ่าย">
+  <span class="slide-id">W13 · TIMELINE</span>
+  <span class="eyebrow cyan">13:00–16:00 · 5 checkpoint ในห้อง</span>
+  <h2>ช่วงบ่ายวันนี้ — CP48 ถึง CP52</h2>
+  <div class="body center">
+    <table class="tl">
+      <tr><th>เวลา</th><th>เนื้อหา</th><th>บท</th><th>CP</th></tr>
+      <tr><td>13:00–13:10</td><td>ทำไมต้องปลอดภัย · คัดลอก starter W13</td><td>1</td><td>—</td></tr>
+      <tr><td>13:10–13:35</td><td>validation เข้มขึ้น + จำกัดขนาด body</td><td>2</td><td><strong style="color:var(--amber)">CP48</strong></td></tr>
+      <tr><td>13:35–14:10</td><td>ตัวตน vs สิทธิ์ · password hashing ด้วย scrypt</td><td>3–4</td><td><strong style="color:var(--amber)">CP49</strong></td></tr>
+      <tr class="brk"><td>14:10–14:20</td><td>พัก</td><td></td><td></td></tr>
+      <tr><td>14:20–14:55</td><td><code>POST /api/auth/login</code> ออก JWT</td><td>5</td><td><strong style="color:var(--amber)">CP50</strong></td></tr>
+      <tr><td>14:55–15:30</td><td>authenticate + requireRole · 401 vs 403 · แก้ test เดิมที่พัง</td><td>6</td><td><strong style="color:var(--amber)">CP51</strong></td></tr>
+      <tr><td>15:30–15:50</td><td>secrets + fail-fast + production ไม่ส่ง stack</td><td>7</td><td><strong style="color:var(--amber)">CP52</strong></td></tr>
+      <tr><td>15:50–16:00</td><td>check-week13 --inclass · Release Checklist · ประกาศ Term Project</td><td>8–9</td><td>—</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 เริ่มบ่าย: คัดลอก starter">
+  <span class="slide-id">W13 · START</span>
+  <span class="eyebrow amber">13:00 · ทำก่อนเริ่มบทที่ 1</span>
+  <h2>เริ่มบ่าย: คัดลอก lab13/starter เป็น labs/week-13/source</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:.98rem"><code><span class="c"># ที่ root ของ Student Repository</span>
+cp -r &lt;Course Repository&gt;/labs/week-13-quality-security/lab13/starter labs/week-13/source
+cd labs/week-13/source
+npm install --prefix api &amp;&amp; npm install --prefix frontend   <span class="c"># มี jsonwebtoken ^9 เพิ่ม</span>
+cp api/.env.example api/.env
+npm run db:reset --prefix api         <span class="c"># สร้าง campus.db ใหม่ — users มี role + password_hash</span>
+node --disable-warning=ExperimentalWarning check-week13.mjs --inclass   <span class="c"># starter = 5/23</span></code></pre>
+    <div class="g2">
+      <div class="note"><p style="margin:0;font-size:1.12rem"><strong>starter = เฉลย W12 + โครงงาน W13</strong><br>ค้นหา TODO: <code>W13-VALID</code> <code>W13-HASH</code> <code>W13-LOGIN</code> <code>W13-AUTH</code> <code>W13-SECRET</code></p></div>
+      <div class="wrong"><p style="margin:0;font-size:1.12rem"><strong>ผ่าน 5/23 ตั้งแต่ยังไม่แก้</strong> — บางข้อผ่านเพราะ<strong>ยังไม่ได้ล็อกอะไรเลย</strong> เช่น PUT/DELETE ได้ 200 — ตอนนี้<strong>ใครก็ลบคำร้องได้</strong></p></div>
+    </div>
+    <div class="win"><p style="margin:0;font-size:1.12rem">🔑 บัญชีเจ้าหน้าที่ — <code>staff@rmutl.ac.th</code> / <code>staff1234</code> <strong>(dev only)</strong> อยู่ใน schema.sql เป็น hash · <code>npm test</code> ตอนนี้ยังแดงบางข้อ = ปกติ เพราะ <strong>test มาก่อนโค้ด</strong></p></div>
+  </div>
+</section>
+
+<!-- ═════════ บทที่ 1 ═════════ -->
+<section class="slide divider" data-title="บทที่ 1 · เส้นแบ่งความเชื่อใจ">
+  <span class="grp">กลุ่ม 1 · ด่านแรกของข้อมูล</span>
+  <p class="bignum">01</p>
+  <h2>เส้นแบ่งความเชื่อใจ</h2>
+  <p class="whatfor">ข้อมูลที่ข้ามจากฝั่งผู้ใช้มาถึง server — เชื่อได้แค่ไหน และต้องตรวจที่ใคร</p>
+  <div class="mins"><span class="chip">🏫 เรียนในห้อง</span><span class="chip c">≈ 5 นาที</span></div>
+  <div class="track"><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+</section>
+
+<section class="slide" data-title="frontend ตรวจ ≠ ปลอดภัย">
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 9</span> · trust boundary</span>
+  <span class="eyebrow red">ทำไมต้องปลอดภัย</span>
+  <h2>frontend ตรวจ = UX · server ตรวจ = ความปลอดภัย</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="เส้นแบ่งความเชื่อใจ">
+      <defs><marker id="w13tb" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#FBBF24" stroke-width="1.5"/></marker></defs>
+      <rect x="20" y="14" width="330" height="196" rx="14" fill="rgba(251,113,133,.06)" stroke="#FB7185" stroke-width="1.6" stroke-dasharray="6 5"/>
+      <text x="185" y="42" text-anchor="middle" class="svg-t">ฝั่งผู้ใช้ · เราควบคุมไม่ได้</text>
+      <rect x="45" y="58" width="280" height="40" rx="9" fill="rgba(56,215,237,.12)" stroke="#38D7ED" stroke-width="1.4"/>
+      <text x="185" y="83" text-anchor="middle" class="svg-s" style="fill:#EAF6EF">หน้าเว็บ React · ตรวจฟอร์มแล้ว</text>
+      <rect x="45" y="108" width="280" height="40" rx="9" fill="rgba(169,199,184,.1)" stroke="#8FA69A" stroke-width="1.4"/>
+      <text x="185" y="133" text-anchor="middle" class="svg-s" style="fill:#EAF6EF">curl / Postman · ข้าม React ได้</text>
+      <rect x="45" y="158" width="280" height="40" rx="9" fill="rgba(251,113,133,.12)" stroke="#FB7185" stroke-width="1.4"/>
+      <text x="185" y="183" text-anchor="middle" class="svg-s" style="fill:#EAF6EF">สคริปต์ที่แต่ง request เอง</text>
+      <path d="M440 8 L440 214" stroke="#FBBF24" stroke-width="2" stroke-dasharray="7 6"/>
+      <path d="M327 78 L524 78" stroke="#FBBF24" stroke-width="2" marker-end="url(#w13tb)"/>
+      <path d="M327 128 L524 128" stroke="#FBBF24" stroke-width="2" marker-end="url(#w13tb)"/>
+      <path d="M327 178 L524 178" stroke="#FBBF24" stroke-width="2" marker-end="url(#w13tb)"/>
+      <rect x="530" y="14" width="350" height="196" rx="14" fill="rgba(34,197,94,.08)" stroke="#4ADE80" stroke-width="1.8"/>
+      <text x="705" y="42" text-anchor="middle" class="svg-t">Express API · ด่านที่เราคุม</text>
+      <text x="556" y="76" class="svg-m" fill="#38D7ED">① express.json — limit 10kb</text>
+      <text x="556" y="108" class="svg-m" fill="#38D7ED">② validateRequest — ชนิด + ความยาว</text>
+      <text x="556" y="140" class="svg-m" fill="#FBBF24">③ authenticate → requireRole</text>
+      <text x="556" y="172" class="svg-m" fill="#4ADE80">④ controller → service → SQLite</text>
+      <text x="185" y="236" text-anchor="middle" class="svg-s">ตรวจที่นี่ = UX ช่วยกรอกให้ถูก</text>
+      <text x="440" y="236" text-anchor="middle" class="svg-m" fill="#FBBF24">trust boundary</text>
+      <text x="705" y="236" text-anchor="middle" class="svg-s">ตรวจที่นี่ = ความปลอดภัยจริง</text>
+    </svg>
+  </div>
+  <div class="iact" data-quiz="q1">
+    <p style="margin:0 0 .3rem"><strong>ฟอร์ม React ตรวจครบแล้ว — มีคนใช้ curl ส่ง <code>{"details": 123}</code> ตรงไปที่ API จะเกิดอะไร</strong></p>
+    <div class="opts">
+      <button class="opt" data-a="0">ไม่เกิดอะไร เพราะฟอร์มตรวจไว้แล้ว</button>
+      <button class="opt" data-a="1">ข้อมูลถึง API ได้เลย — server ต้องตรวจเองทุกครั้ง</button>
+      <button class="opt" data-a="0">เบราว์เซอร์บล็อกให้อัตโนมัติ</button>
+    </div>
+    <p class="fb"></p>
+  </div>
+</section>
+
+<section class="slide" data-title="✓ สรุปบทที่ 1">
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 9</span> · trust boundary</span>
+  <h2>จบบทที่ 1 — เส้นแบ่งความเชื่อใจ</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul>
+      <li>ตรวจที่ frontend = <strong>UX</strong> (ตอบเร็ว ช่วยกรอกให้ถูก) — <strong>ไม่ใช่</strong>ความปลอดภัย</li>
+      <li>ทุกอย่างที่มาจากฝั่งผู้ใช้<strong>ปลอมได้</strong> — body · header · token</li>
+      <li>ด่านจริงอยู่ที่ server เรียงชั้น: ขนาด body → validation → ตัวตน → สิทธิ์</li>
+      <li>starter ตอนนี้ยังไม่มีด่านตัวตน/สิทธิ์ — ใครก็เปลี่ยนสถานะและลบได้</li>
+    </ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 2 — ทำ validation ฝั่ง server ให้เข้มขึ้น (CP48)</div>
+    <div class="track"><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+  </div>
+</section>
+
+<!-- ═════════ บทที่ 2 ═════════ -->
+<section class="slide divider" data-title="บทที่ 2 · Validation เข้มขึ้น">
+  <span class="grp">กลุ่ม 1 · ด่านแรกของข้อมูล</span>
+  <p class="bignum">02</p>
+  <h2>Validation เข้มขึ้น + จำกัดขนาด body</h2>
+  <p class="whatfor">validator จากสัปดาห์ 6–7 ตรวจแค่ "มีไหม ยาวพอไหม" — วันนี้เพิ่ม "ชนิดถูกไหม ยาวเกินไหม ก้อนใหญ่เกินไหม"</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง · CP48</span><span class="chip c">≈ 25 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+</section>
+
+<section class="slide" data-title="ชนิด · ค่าสูงสุด · 413">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 9</span> · validation</span>
+  <span class="eyebrow">W13-VALID · validators/requestValidator.js · app.js</span>
+  <h2>ชนิดต้องเป็นข้อความ · มีค่าสูงสุด · ก้อนใหญ่ได้ 413</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:.86rem"><code><span class="k">export const</span> MAX_NAME = <span class="n">100</span>;  <span class="k">export const</span> MAX_LOCATION = <span class="n">100</span>;  <span class="k">export const</span> MAX_DETAILS = <span class="n">1000</span>;
+<span class="k">function</span> <span class="f">checkText</span>(value, label, { min = <span class="n">1</span>, max }) {          <span class="c">// แนวทางในเฉลย</span>
+  <span class="k">if</span> (<span class="k">typeof</span> value !== <span class="s">'string'</span>) <span class="k">return</span> <span class="s">`${label}ต้องเป็นข้อความ`</span>;  <span class="c">// ① ชนิดก่อน</span>
+  <span class="k">const</span> length = value.<span class="f">trim</span>().length;
+  <span class="k">if</span> (length &lt; min) <span class="k">return</span> <span class="s">`${label}ต้องมีอย่างน้อย ${min} ตัวอักษร`</span>;
+  <span class="k">if</span> (length &gt; max) <span class="k">return</span> <span class="s">`${label}ต้องไม่เกิน ${max} ตัวอักษร`</span>;  <span class="c">// ② ค่าสูงสุด</span>
+  <span class="k">return null</span>;
+}
+<span class="c">// app.js — ③ ด่านแรกสุด: ทั้งก้อนเกิน 10kb → 413 "ข้อมูลที่ส่งมามีขนาดใหญ่เกินกำหนด"</span>
+app.<span class="f">use</span>(express.<span class="f">json</span>({ limit: <span class="s">'10kb'</span> }));</code></pre>
+    <div class="g2">
+      <div class="note"><p style="margin:0;font-size:1.05rem"><strong>ทำไมตรวจชนิดก่อน</strong> — starter แปลง <code>123</code> เป็น <code>''</code> แล้วตอบ "ต้องมีอย่างน้อย 2 ตัวอักษร" = <strong>บอกสาเหตุผิด</strong></p></div>
+      <div class="wrong"><p style="margin:0;font-size:1.05rem"><strong>validation ≠ sanitize</strong> — ตรวจแล้ว<strong>ปฏิเสธ</strong> · React escape ตอนแสดงให้แล้ว · <strong>อย่าใช้ <code>dangerouslySetInnerHTML</code></strong></p></div>
+    </div>
+    <div class="iact" data-quiz="q2">
+      <p style="margin:0 0 .3rem"><strong>ส่ง <code>{ details: 'x'.repeat(20000) }</code> (ราว 20kb) ไปที่ <code>POST /api/requests</code> — ได้ status อะไร</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">400 — รายละเอียดยาวเกิน 1000</button>
+        <button class="opt" data-a="1">413 — ถูกตัดที่ express.json ยังไม่ถึง validator</button>
+        <button class="opt" data-a="0">500 — server รับไม่ไหว</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 CP48 validation + 413">
+  <span class="chapbadge">🏫 ลงมือทำ · CP48</span>
+  <span class="eyebrow amber">13:10–13:35 · TODO W13-VALID</span>
+  <h2>🏫 ลงมือ CP48 · validation เข้มขึ้น + จำกัดขนาด body</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:.95rem"><code><span class="c"># ① validators/requestValidator.js — ชนิด string + MAX_NAME 100 · MAX_LOCATION 100 · MAX_DETAILS 1000</span>
+<span class="c"># ② app.js — express.json({ limit: '10kb' })</span>
+<span class="c"># ③ tests/unit/requestValidator.test.js — เพิ่ม test ค่าขอบ 100/101 · 1000/1001 · ชนิดไม่ใช่ string</span>
+npm test --prefix api
+
+<span class="c"># ④ ลองยิงจริง — body ราว 20kb (เปิด npm run dev --prefix api ไว้อีก terminal)</span>
+node -e "fetch('http://localhost:3001/api/requests', { method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ details: 'x'.repeat(20000) }) }).then(r =&gt; console.log(r.status))"
+<span class="c">#   → 413</span></code></pre>
+    <div class="win"><p style="margin:0 0 .35rem;font-size:1.12rem"><strong>✓ ผ่านเมื่อ (checker CP48 · 4 ข้อ)</strong></p>
+      <ul class="crit">
+        <li>ชื่อผู้แจ้ง 100 ตัวผ่าน · 101 ตัวถูกปฏิเสธ</li>
+        <li>รายละเอียด 1000 ตัวผ่าน · 1001 ตัวถูกปฏิเสธ</li>
+        <li>สถานที่ยาวเกิน 100 ตัวถูกปฏิเสธ</li>
+        <li>body ใหญ่เกิน 10kb → 413 เป็น JSON "ข้อมูลที่ส่งมามีขนาดใหญ่เกินกำหนด"</li>
+      </ul></div>
+  </div>
+</section>
+
+<section class="slide" data-title="✓ สรุปบทที่ 2">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 9</span> · validation</span>
+  <h2>จบบทที่ 2 — Validation เข้มขึ้น</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul>
+      <li>ตรวจ<strong>ชนิด</strong>ก่อน — ไม่ใช่ string บอก "...ต้องเป็นข้อความ"</li>
+      <li>ทุกช่องมี<strong>ค่าสูงสุด</strong> — ชื่อ 100 · สถานที่ 100 · รายละเอียด 1000</li>
+      <li><code>express.json({ limit: '10kb' })</code> → <strong>413</strong> ก่อนถึง validator</li>
+      <li>validation ≠ sanitize · React escape ให้แล้ว — อย่าใช้ <code>dangerouslySetInnerHTML</code></li>
+      <li>test ค่าขอบ 100/101 · 1000/1001 — ต่อยอดวิธีคิดจาก CP44–CP45 ช่วงเช้า</li>
+    </ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 3 — ก่อนล็อก PUT/DELETE ต้องแยกให้ออก: "คุณคือใคร" กับ "ทำได้ไหม"</div>
+    <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+  </div>
+</section>
+
+<!-- ═════════ บทที่ 3 ═════════ -->
+<section class="slide divider" data-title="บทที่ 3 · ตัวตน vs สิทธิ์">
+  <span class="grp">กลุ่ม 1 · ด่านแรกของข้อมูล</span>
+  <p class="bignum">03</p>
+  <h2>Authentication vs Authorization</h2>
+  <p class="whatfor">สองคำถามที่ต่างกัน ได้ status code ต่างกัน — 401 กับ 403</p>
+  <div class="mins"><span class="chip">🏫 เรียนในห้อง</span><span class="chip c">≈ 5 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+</section>
+
+<section class="slide" data-title="401 vs 403 + นโยบายสิทธิ์">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 9</span> · authN vs authZ</span>
+  <span class="eyebrow violet">สองคำถาม สองด่าน</span>
+  <h2>"คุณคือใคร" → 401 · "ทำสิ่งนี้ได้ไหม" → 403</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="panel" style="border-color:rgba(251,113,133,.45)">
+        <h3 style="color:var(--red)">Authentication · คุณคือใคร</h3>
+        <p style="margin:0;font-size:1.1rem">ไม่มี token · token ปลอม · หมดอายุ → <strong>401 Unauthorized</strong><br><small>แปลจริง ๆ ว่า "ยังไม่รู้ว่าคุณเป็นใคร" — เข้าสู่ระบบใหม่แล้วแก้ได้</small></p>
+      </div>
+      <div class="panel" style="border-color:rgba(251,191,36,.45)">
+        <h3 style="color:var(--amber)">Authorization · ทำได้ไหม</h3>
+        <p style="margin:0;font-size:1.1rem">รู้ว่าเป็นใคร แต่ role ไม่ใช่ staff → <strong>403 Forbidden</strong><br><small>เข้าสู่ระบบกี่รอบก็ไม่ช่วย — ต้องมีสิทธิ์</small></p>
+      </div>
+    </div>
+    <div class="flow" style="justify-content:center">
+      <span class="step">GET ✓ ทุกคน</span><span class="step">POST ✓ ทุกคน (ใครก็ส่งคำร้องได้)</span>
+      <span class="step" style="background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.45)">PUT 🔒 เจ้าหน้าที่</span>
+      <span class="step" style="background:rgba(251,113,133,.12);border-color:rgba(251,113,133,.45)">DELETE 🔒 เจ้าหน้าที่</span>
+    </div>
+    <div class="analogy"><p style="margin:0;font-size:1.12rem"><strong>เหมือนยามหน้าอาคาร</strong> — ไม่มีบัตร/บัตรปลอม = <strong>401</strong> ไม่รู้ว่าเป็นใคร · มีบัตรนักศึกษาจริงแต่จะเข้าห้องควบคุมไฟ = <strong>403</strong></p></div>
+    <div class="iact" data-quiz="q3">
+      <p style="margin:0 0 .3rem"><strong>ผู้แจ้งทั่วไปมี token ถูกต้อง (<code>role: 'requester'</code>) แล้วกดลบคำร้อง — API ควรตอบอะไร</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">401 — ต้องเข้าสู่ระบบก่อน</button>
+        <button class="opt" data-a="1">403 — รู้ว่าเป็นใคร แต่ไม่มีสิทธิ์ลบ</button>
+        <button class="opt" data-a="0">404 — ไม่พบคำร้อง</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="✓ สรุปบทที่ 3">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 9</span> · authN vs authZ</span>
+  <h2>จบบทที่ 3 — ตัวตน vs สิทธิ์</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul>
+      <li><strong>Authentication</strong> = คุณคือใคร · ไม่รู้ (ไม่มี/ปลอม/หมดอายุ) → <strong>401</strong></li>
+      <li><strong>Authorization</strong> = ทำสิ่งนี้ได้ไหม · รู้ว่าใครแต่ไม่มีสิทธิ์ → <strong>403</strong></li>
+      <li>นโยบาย: GET และ POST เปิดให้ทุกคน · PUT และ DELETE เฉพาะเจ้าหน้าที่</li>
+      <li>ต้องรู้ "ใคร" ก่อนถึงจะตัดสิน "ได้ไหม" — ลำดับด่านสำคัญ</li>
+    </ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 4 — จะรู้ว่า "ใคร" ต้องตรวจรหัสผ่าน · แล้วเก็บรหัสผ่านอย่างไรให้ปลอดภัย</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+  </div>
+</section>
+
+<!-- ═════════ บทที่ 4 ═════════ -->
+<section class="slide divider" data-title="บทที่ 4 · Password Hashing">
+  <span class="grp">กลุ่ม 2 · ตัวตนและสิทธิ์</span>
+  <p class="bignum">04</p>
+  <h2>Password Hashing ด้วย scrypt</h2>
+  <p class="whatfor">ฐานข้อมูลหลุดเมื่อไร รหัสผ่านต้องไม่หลุดตาม — และเขียนให้ test ที่ให้มาผ่าน (test-first)</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง · CP49</span><span class="chip c">≈ 30 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+</section>
+
+<section class="slide" data-title="salt → hash ไม่ซ้ำ">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 9</span> · hashing</span>
+  <span class="eyebrow cyan">เห็นภาพ</span>
+  <h2>รหัสผ่านเดียวกัน แต่ hash ไม่เหมือนกัน</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="salt ทำให้ hash ต่างกัน">
+      <defs>
+        <marker id="w13sg" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#4ADE80" stroke-width="1.5"/></marker>
+        <marker id="w13sr" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#FB7185" stroke-width="1.5"/></marker>
+      </defs>
+      <text x="90" y="24" text-anchor="middle" class="svg-s">รหัสผ่าน</text>
+      <text x="290" y="24" text-anchor="middle" class="svg-s">salt สุ่ม 16 ไบต์</text>
+      <text x="500" y="24" text-anchor="middle" class="svg-s">ช้าโดยตั้งใจ</text>
+      <text x="745" y="24" text-anchor="middle" class="svg-s">hash 64 ไบต์</text>
+      <rect x="20" y="36" width="140" height="44" rx="9" fill="rgba(169,199,184,.1)" stroke="#8FA69A" stroke-width="1.4"/>
+      <text x="90" y="63" text-anchor="middle" class="svg-m" fill="#EAF6EF">staff1234</text>
+      <text x="175" y="65" text-anchor="middle" class="svg-big">+</text>
+      <rect x="190" y="36" width="200" height="44" rx="9" fill="rgba(56,215,237,.12)" stroke="#38D7ED" stroke-width="1.4"/>
+      <text x="290" y="63" text-anchor="middle" class="svg-m" fill="#38D7ED">5e1f0c3a…3e5f7a9c</text>
+      <rect x="430" y="36" width="140" height="44" rx="9" fill="rgba(34,197,94,.12)" stroke="#4ADE80" stroke-width="1.4"/>
+      <text x="500" y="63" text-anchor="middle" class="svg-t">scrypt</text>
+      <rect x="610" y="36" width="270" height="44" rx="9" fill="rgba(34,197,94,.14)" stroke="#4ADE80" stroke-width="1.4"/>
+      <text x="745" y="63" text-anchor="middle" class="svg-m" fill="#4ADE80">2f81bcd58254b4…a36771bc38</text>
+      <path d="M392 58 L426 58" stroke="#4ADE80" stroke-width="2" marker-end="url(#w13sg)"/>
+      <path d="M572 58 L606 58" stroke="#4ADE80" stroke-width="2" marker-end="url(#w13sg)"/>
+      <rect x="20" y="96" width="140" height="44" rx="9" fill="rgba(169,199,184,.1)" stroke="#8FA69A" stroke-width="1.4"/>
+      <text x="90" y="123" text-anchor="middle" class="svg-m" fill="#EAF6EF">staff1234</text>
+      <text x="175" y="125" text-anchor="middle" class="svg-big">+</text>
+      <rect x="190" y="96" width="200" height="44" rx="9" fill="rgba(56,215,237,.12)" stroke="#38D7ED" stroke-width="1.4"/>
+      <text x="290" y="123" text-anchor="middle" class="svg-m" fill="#38D7ED">9a4c71d2…a6b39f58</text>
+      <rect x="430" y="96" width="140" height="44" rx="9" fill="rgba(34,197,94,.12)" stroke="#4ADE80" stroke-width="1.4"/>
+      <text x="500" y="123" text-anchor="middle" class="svg-t">scrypt</text>
+      <rect x="610" y="96" width="270" height="44" rx="9" fill="rgba(34,197,94,.14)" stroke="#4ADE80" stroke-width="1.4"/>
+      <text x="745" y="123" text-anchor="middle" class="svg-m" fill="#4ADE80">aa60f4f180d368…a5665b7b59</text>
+      <path d="M392 118 L426 118" stroke="#4ADE80" stroke-width="2" marker-end="url(#w13sg)"/>
+      <path d="M572 118 L606 118" stroke="#4ADE80" stroke-width="2" marker-end="url(#w13sg)"/>
+      <path d="M20 158 L880 158" stroke="rgba(169,199,184,.35)" stroke-width="1" stroke-dasharray="5 5"/>
+      <rect x="20" y="172" width="140" height="44" rx="9" fill="rgba(169,199,184,.1)" stroke="#8FA69A" stroke-width="1.4"/>
+      <text x="90" y="199" text-anchor="middle" class="svg-m" fill="#EAF6EF">staff1234</text>
+      <rect x="190" y="172" width="380" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#FB7185" stroke-width="1.4"/>
+      <text x="380" y="199" text-anchor="middle" class="svg-s" style="fill:#EAF6EF">sha256 — ไม่มี salt · เร็วมาก</text>
+      <rect x="610" y="172" width="270" height="44" rx="9" fill="rgba(251,113,133,.12)" stroke="#FB7185" stroke-width="1.4"/>
+      <text x="745" y="199" text-anchor="middle" class="svg-m" fill="#FB7185">02defbfb8190f9…35ca334b7</text>
+      <path d="M162 194 L186 194" stroke="#FB7185" stroke-width="2" marker-end="url(#w13sr)"/>
+      <path d="M572 194 L606 194" stroke="#FB7185" stroke-width="2" marker-end="url(#w13sr)"/>
+      <text x="450" y="241" text-anchor="middle" class="svg-s">salt ต่างกัน → hash ต่างกันเสมอ · sha256 ได้ค่าเดิมทุกครั้ง → เทียบกับตารางที่คำนวณไว้แล้วก็เดาออก</text>
+    </svg>
+  </div>
+  <div class="four">
+    <div class="card" style="border-color:rgba(251,113,133,.45)"><h3>❌ เก็บตรง ๆ</h3><p>DB หลุด = รหัสทุกคนหลุดทันที (คนใช้รหัสซ้ำหลายเว็บ)</p></div>
+    <div class="card" style="border-color:rgba(251,113,133,.45)"><h3>❌ sha256</h3><p>เร็วเกิน — เดาได้หลายล้านครั้งต่อวินาที</p></div>
+    <div class="card" style="border-color:rgba(251,191,36,.45)"><h3>⚠ bcrypt</h3><p>ดี แต่เป็น native module ต้อง compile — มักพังบน Windows</p></div>
+    <div class="card room"><h3>✅ scrypt + salt</h3><p>ช้าโดยตั้งใจ · มากับ Node (<code>node:crypto</code>) ไม่ต้องติดตั้ง</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="hashPassword · verifyPassword">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 9</span> · hashing</span>
+  <span class="eyebrow">W13-HASH · utils/password.js</span>
+  <h2>เก็บเป็น <code>scrypt$salt$hash</code> · เทียบด้วย timingSafeEqual</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:.95rem"><code><span class="k">import</span> { randomBytes, scryptSync, timingSafeEqual } <span class="k">from</span> <span class="s">'node:crypto'</span>;
+<span class="k">export function</span> <span class="f">hashPassword</span>(plain) {
+  <span class="k">const</span> salt = <span class="f">randomBytes</span>(<span class="n">16</span>).<span class="f">toString</span>(<span class="s">'hex'</span>);                 <span class="c">// 32 ตัวอักษร</span>
+  <span class="k">const</span> hash = <span class="f">scryptSync</span>(plain, salt, <span class="n">64</span>).<span class="f">toString</span>(<span class="s">'hex'</span>);       <span class="c">// 128 ตัวอักษร</span>
+  <span class="k">return</span> <span class="s">`scrypt$${salt}$${hash}`</span>;
+}
+<span class="k">export function</span> <span class="f">verifyPassword</span>(plain, stored) {
+  <span class="k">const</span> [scheme, salt, hashHex] = <span class="f">String</span>(stored ?? <span class="s">''</span>).<span class="f">split</span>(<span class="s">'$'</span>);
+  <span class="k">if</span> (scheme !== <span class="s">'scrypt'</span> || !salt || !hashHex) <span class="k">return false</span>;      <span class="c">// ผิดรูปแบบ → false ไม่โยน error</span>
+  <span class="k">const</span> expected = Buffer.<span class="f">from</span>(hashHex, <span class="s">'hex'</span>);
+  <span class="k">const</span> actual = <span class="f">scryptSync</span>(<span class="f">String</span>(plain), salt, expected.length);  <span class="c">// salt เดิม → hash ใหม่</span>
+  <span class="k">return</span> actual.length === expected.length &amp;&amp; <span class="hl">timingSafeEqual</span>(actual, expected);
+}</code></pre>
+    <div class="g2">
+      <div class="term"><div class="w">timingSafeEqual</div><p>เทียบครบทุกไบต์ ใช้เวลาเท่ากันเสมอ · <code>===</code> หยุดทันทีที่เจอตัวแรกที่ต่าง → วัดเวลาตอบแล้ว<strong>เดาทีละไบต์ได้</strong></p></div>
+      <div class="note"><p style="margin:0;font-size:1.08rem"><strong>salt ไม่ใช่ความลับ</strong> — เก็บคู่กับ hash ได้ เพราะหน้าที่ของมันคือทำให้ hash ไม่ซ้ำกัน · ⚠ รูปแบบต้องตรงเป๊ะ ไม่งั้น hash ของ <code>staff1234</code> ใน schema.sql จะตรวจไม่ผ่าน</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 CP49 password hashing">
+  <span class="chapbadge">🏫 ลงมือทำ · CP49</span>
+  <span class="eyebrow amber">13:35–14:10 · TODO W13-HASH · test-first</span>
+  <h2>🏫 ลงมือ CP49 · ทำให้ password.test.js ที่ให้มาผ่าน</h2>
+  <div class="body center">
+    <div class="g21">
+      <pre style="margin:0;font-size:.95rem"><code><span class="c"># ① รันก่อนเขียน — ต้องเห็นแดง (นี่คือ test-first)</span>
+npx vitest run tests/unit/password.test.js   <span class="c"># ใน api/</span>
+<span class="c">#   ✕ Error: TODO W13-HASH: ยังไม่ได้เขียน ...</span>
+
+<span class="c"># ② เขียน hashPassword + verifyPassword</span>
+<span class="c"># ③ รันซ้ำจนเขียวทุกข้อ</span>
+npm run test:watch --prefix api
+
+<span class="c"># ④ ไม่ต้องแก้ test — test คือ "สเปก" ที่ให้มา</span></code></pre>
+      <div class="panel" style="padding:.8rem 1rem">
+        <h3 style="font-size:1.1rem;color:var(--cyan)">test ที่ให้มา บอกสเปกอะไร</h3>
+        <ul style="margin-left:1.1rem">
+          <li style="font-size:1rem">รูปแบบ <code>scrypt$[32 hex]$[128 hex]</code></li>
+          <li style="font-size:1rem">hash 2 ครั้งได้ไม่เหมือนกัน (salt สุ่ม)</li>
+          <li style="font-size:1rem">ไม่มีรหัสผ่านจริงปนใน hash</li>
+          <li style="font-size:1rem">ถูก → true · ผิด → false</li>
+          <li style="font-size:1rem">ตรวจ hash ใน schema.sql ได้</li>
+          <li style="font-size:1rem"><code>undefined</code> <code>''</code> <code>'md5$abc$def'</code> → false</li>
+        </ul>
+      </div>
+    </div>
+    <div class="win"><p style="margin:0 0 .35rem;font-size:1.12rem"><strong>✓ ผ่านเมื่อ (checker CP49 · 5 ข้อ)</strong></p>
+      <ul class="crit">
+        <li>hashPassword คืนรูปแบบ scrypt$salt$hash · รหัสผ่านเดียวกันได้ hash ต่างกัน และไม่มีรหัสผ่านจริงปน</li>
+        <li>verifyPassword: ถูก → true · ผิด → false · ตรวจ hash บัญชีเจ้าหน้าที่ใน schema.sql ได้</li>
+        <li>ตาราง users มีคอลัมน์ role และ password_hash (ได้หลัง <code>npm run db:reset --prefix api</code>)</li>
+      </ul></div>
+  </div>
+</section>
+
+<section class="slide" data-title="✓ สรุปบทที่ 4">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 9</span> · hashing</span>
+  <h2>จบบทที่ 4 — Password Hashing</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul>
+      <li>ห้ามเก็บรหัสผ่านตรง ๆ · sha256 เร็วเกินไป · bcrypt พังบน Windows → <strong>scrypt + salt</strong></li>
+      <li>เก็บ <code>scrypt$&lt;salt 16 ไบต์ hex&gt;$&lt;hash 64 ไบต์ hex&gt;</code> · salt ไม่ลับ</li>
+      <li>ตรวจ = hash ใหม่ด้วย salt เดิม แล้วเทียบด้วย <code>timingSafeEqual</code> (ไม่ใช่ <code>===</code>)</li>
+      <li>hash ผิดรูปแบบ → <code>false</code> ไม่โยน error</li>
+      <li><strong>test-first</strong> — test มาก่อน แดงก่อน แล้วเขียนโค้ดให้เขียว</li>
+    </ul></div>
+    <div class="nextup"><b>ต่อไป →</b> พัก 10 นาที แล้วบทที่ 5 — ตรวจรหัสผ่านผ่านแล้ว ออก "บัตร" ให้ผู้ใช้ (JWT)</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+  </div>
+</section>
+
+<!-- ═════════ บทที่ 5 ═════════ -->
+<section class="slide divider" data-title="บทที่ 5 · JWT และการเข้าสู่ระบบ">
+  <span class="grp">กลุ่ม 2 · ตัวตนและสิทธิ์</span>
+  <p class="bignum">05</p>
+  <h2>JWT และการเข้าสู่ระบบ</h2>
+  <p class="whatfor">ตรวจรหัสผ่านครั้งเดียว แล้วออก token ที่ server ตรวจได้ทุกคำขอโดยไม่ต้องจำ session</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง · CP50</span><span class="chip c">≈ 35 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+</section>
+
+<section class="slide" data-title="ลำดับการเข้าสู่ระบบ">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 9</span> · JWT</span>
+  <span class="eyebrow cyan">เห็นภาพ</span>
+  <h2>login ครั้งเดียว · แนบ token ทุกคำขอหลังจากนั้น</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ลำดับการเข้าสู่ระบบด้วย JWT">
+      <defs>
+        <marker id="w13lq" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#FBBF24" stroke-width="1.5"/></marker>
+        <marker id="w13lr" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#4ADE80" stroke-width="1.5"/></marker>
+      </defs>
+      <rect x="40" y="10" width="200" height="38" rx="9" fill="rgba(56,215,237,.14)" stroke="#38D7ED" stroke-width="1.5"/>
+      <text x="140" y="34" text-anchor="middle" class="svg-t">เบราว์เซอร์ / React</text>
+      <rect x="350" y="10" width="200" height="38" rx="9" fill="rgba(251,191,36,.14)" stroke="#FBBF24" stroke-width="1.5"/>
+      <text x="450" y="34" text-anchor="middle" class="svg-t">Express API</text>
+      <rect x="660" y="10" width="200" height="38" rx="9" fill="rgba(34,197,94,.14)" stroke="#4ADE80" stroke-width="1.5"/>
+      <text x="760" y="34" text-anchor="middle" class="svg-t">SQLite · users</text>
+      <path d="M140 50 L140 270" stroke="rgba(169,199,184,.35)" stroke-width="1.2" stroke-dasharray="4 5"/>
+      <path d="M450 50 L450 270" stroke="rgba(169,199,184,.35)" stroke-width="1.2" stroke-dasharray="4 5"/>
+      <path d="M760 50 L760 270" stroke="rgba(169,199,184,.35)" stroke-width="1.2" stroke-dasharray="4 5"/>
+      <path d="M144 80 L444 80" stroke="#FBBF24" stroke-width="2" marker-end="url(#w13lq)"/>
+      <text x="294" y="71" text-anchor="middle" class="svg-m" fill="#FBBF24">① POST /api/auth/login</text>
+      <text x="294" y="96" text-anchor="middle" class="svg-s">{ email, password }</text>
+      <path d="M454 110 L754 110" stroke="#FBBF24" stroke-width="2" marker-end="url(#w13lq)"/>
+      <text x="604" y="101" text-anchor="middle" class="svg-m" fill="#FBBF24">② findUserByEmail</text>
+      <path d="M756 140 L456 140" stroke="#4ADE80" stroke-width="2" marker-end="url(#w13lr)"/>
+      <text x="606" y="131" text-anchor="middle" class="svg-m" fill="#4ADE80">role · password_hash</text>
+      <rect x="462" y="150" width="190" height="30" rx="7" fill="rgba(251,191,36,.1)" stroke="#FBBF24" stroke-width="1.2"/>
+      <text x="557" y="170" text-anchor="middle" class="svg-s" style="fill:#EAF6EF">③ verifyPassword → jwt.sign</text>
+      <path d="M446 200 L146 200" stroke="#4ADE80" stroke-width="2" marker-end="url(#w13lr)"/>
+      <text x="296" y="191" text-anchor="middle" class="svg-m" fill="#4ADE80">④ 200 { token, user }</text>
+      <path d="M144 248 L444 248" stroke="#FBBF24" stroke-width="2" marker-end="url(#w13lq)"/>
+      <text x="294" y="239" text-anchor="middle" class="svg-m" fill="#FBBF24">⑤ PUT /api/requests/REQ-001</text>
+      <text x="294" y="264" text-anchor="middle" class="svg-m" fill="#C084FC">Authorization: Bearer eyJ…</text>
+      <text x="450" y="292" text-anchor="middle" class="svg-s">⑥ API ตรวจด้วย jwt.verify + secret — ไม่ต้องถามฐานข้อมูลว่า login อยู่ไหม (stateless)</text>
+    </svg>
+  </div>
+  <div class="note"><p style="margin:0;font-size:1.1rem"><strong>ผิด → 401 ข้อความเดียวกันเสมอ</strong> "อีเมลหรือรหัสผ่านไม่ถูกต้อง" · ถ้าบอกว่า "ไม่พบอีเมลนี้" คนนอกจะไล่ลองอีเมลจนรู้ว่า<strong>ใครมีบัญชีบ้าง</strong> · ผู้แจ้งทั่วไป (ไม่มีรหัสผ่าน) ก็ได้ 401</p></div>
+</section>
+
+<section class="slide" data-title="🎮 JWT decoder">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 9</span> · JWT</span>
+  <span class="eyebrow amber">ลองเล่น — แกะ token แล้วลองปลอม role</span>
+  <h2>header.payload.signature — อ่านได้ทุกคน แต่แก้ไม่ได้</h2>
+  <div class="body">
+    <div class="iact" style="padding:.75rem 1rem">
+      <div class="reqbtns" style="margin-bottom:.45rem">
+        <button id="jwReq" class="m-get">🎫 token ของ requester</button>
+        <button id="jwStaff">🎫 token ของ staff (login จริง)</button>
+        <button id="jwEdit" class="m-del">✏️ แก้ role เป็น staff</button>
+        <button id="jwResign" class="m-post">🔑 เดา secret แล้วเซ็นใหม่</button>
+      </div>
+      <div class="jw-token" id="jwToken"></div>
+      <div class="jw-grid">
+        <div class="jw-col h"><h4>HEADER</h4><div class="jw-json" id="jwHeader"></div></div>
+        <div class="jw-col p"><h4>PAYLOAD · base64url</h4><div class="jw-json" id="jwPayload"></div></div>
+        <div class="jw-col s"><h4>SIGNATURE · HMAC-SHA256</h4><div class="jw-json" id="jwSig"></div></div>
+      </div>
+      <div class="jw-verdict" id="jwVerdict"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="login() ใน authService">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 9</span> · JWT</span>
+  <span class="eyebrow">W13-LOGIN · services/authService.js · app.js</span>
+  <h2>login(email, password) → { token, user } หรือ null</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:.9rem"><code><span class="k">export function</span> <span class="f">login</span>(email, password) {
+  <span class="k">const</span> user = <span class="f">findUserByEmail</span>(email);
+  <span class="k">if</span> (!user || user.role !== <span class="s">'staff'</span> || !<span class="f">verifyPassword</span>(password, user.passwordHash)) {
+    <span class="k">return null</span>;                                   <span class="c">// ไม่มีอีเมล กับ รหัสผิด → ผลเดียวกัน</span>
+  }
+  <span class="k">const</span> payload = { sub: <span class="f">String</span>(user.id), name: user.name, role: user.role };  <span class="c">// ห้ามใส่รหัสผ่าน/hash</span>
+  <span class="k">const</span> token = jwt.<span class="f">sign</span>(payload, config.jwtSecret, { expiresIn: config.jwtExpiresIn });  <span class="c">// '2h'</span>
+  <span class="k">return</span> { token, user: { id: user.id, name: user.name, role: user.role } };
+}
+<span class="k">export function</span> <span class="f">verifyToken</span>(token) { <span class="k">return</span> jwt.<span class="f">verify</span>(token, config.jwtSecret); }  <span class="c">// ปลอม/หมดอายุ → throw</span>
+
+<span class="c">// app.js — route POST /login ให้มาแล้วใน routes/authRoutes.js · แค่ผูก</span>
+app.<span class="f">use</span>(<span class="s">'/api/auth'</span>, authRoutes);</code></pre>
+    <div class="iact" data-quiz="q4">
+      <p style="margin:0 0 .3rem"><strong>payload ของ JWT ควรใส่อะไร</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">email + password_hash</button>
+        <button class="opt" data-a="1">sub · name · role — เฉพาะที่ไม่ลับ (ใครก็ decode ได้)</button>
+        <button class="opt" data-a="0">อะไรก็ได้ — JWT เข้ารหัสแล้ว</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 CP50 login ออก JWT">
+  <span class="chapbadge">🏫 ลงมือทำ · CP50</span>
+  <span class="eyebrow amber">14:20–14:55 · TODO W13-LOGIN</span>
+  <h2>🏫 ลงมือ CP50 · POST /api/auth/login ออก JWT</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:.92rem"><code><span class="c"># ① authService.js — login() + verifyToken()   ② app.js — app.use('/api/auth', authRoutes)</span>
+<span class="c"># ③ ลองจริง (npm run dev --prefix api)</span>
+curl -s -X POST localhost:3001/api/auth/login -H "Content-Type: application/json" \
+     -d '{"email":"staff@rmutl.ac.th","password":"staff1234"}'
+<span class="c">#   → {"token":"eyJhbGciOiJIUzI1NiIs...","user":{"id":5,"name":"เจ้าหน้าที่ฝ่ายบริการ","role":"staff"}}</span>
+<span class="c"># ④ tests/integration/auth.api.test.js — เพิ่ม test: อีเมลที่ไม่มี ได้ error เดียวกับรหัสผิด</span></code></pre>
+    <div class="win"><p style="margin:0 0 .35rem;font-size:1.12rem"><strong>✓ ผ่านเมื่อ (checker CP50 · 4 ข้อ)</strong></p>
+      <ul class="crit">
+        <li><code>POST /api/auth/login</code> ถูกต้อง → 200 พร้อม token (3 ส่วน)</li>
+        <li>payload ของ token มี <code>role=staff</code> และ <code>exp</code> · ไม่มีรหัสผ่าน</li>
+        <li>รหัสผ่านผิด กับ อีเมลที่ไม่มี → 401 ข้อความเดียวกัน</li>
+        <li>ผู้แจ้งทั่วไป (ไม่มีรหัสผ่าน) เข้าสู่ระบบไม่ได้</li>
+      </ul></div>
+    <div class="note"><p style="margin:0;font-size:1.05rem">🔑 <code>staff@rmutl.ac.th</code> / <code>staff1234</code> = <strong>บัญชี dev only</strong> · production ต้องสร้างใหม่ด้วย <code>npm run create-staff --prefix api -- &lt;อีเมล&gt; &lt;รหัสผ่าน&gt; [ชื่อ]</code></p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="✓ สรุปบทที่ 5">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 9</span> · JWT</span>
+  <h2>จบบทที่ 5 — JWT</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul>
+      <li>JWT = <code>header.payload.signature</code> · signature คำนวณจาก header + payload + <strong>secret</strong></li>
+      <li>payload เป็นแค่ base64url — <strong>อ่านได้ทุกคน</strong> ห้ามใส่รหัสผ่าน</li>
+      <li>แก้ payload แล้ว signature ไม่ตรง → <code>jwt.verify</code> ไม่ผ่าน → 401</li>
+      <li><strong>stateless</strong> — server ไม่ต้องจำ session · หมดอายุเองด้วย <code>exp</code> (<code>expiresIn: '2h'</code>)</li>
+      <li>ไม่มีอีเมล กับ รหัสผิด → 401 "อีเมลหรือรหัสผ่านไม่ถูกต้อง" เหมือนกัน</li>
+    </ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 6 — มี token แล้ว ตั้งด่านตรวจหน้า PUT/DELETE</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+  </div>
+</section>
+
+<!-- ═════════ บทที่ 6 ═════════ -->
+<section class="slide divider" data-title="บทที่ 6 · Middleware ป้องกัน route">
+  <span class="grp">กลุ่ม 2 · ตัวตนและสิทธิ์</span>
+  <p class="bignum">06</p>
+  <h2>authenticate + requireRole</h2>
+  <p class="whatfor">สอง middleware ต่อกันหน้า PUT/DELETE — และเมื่อ requirement เปลี่ยน test เดิมก็ต้องเปลี่ยนตาม</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง · CP51</span><span class="chip c">≈ 35 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span></div>
+</section>
+
+<section class="slide" data-title="ลำดับ middleware + ทางออก 401/403">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 9</span> · middleware</span>
+  <span class="eyebrow cyan">เห็นภาพ</span>
+  <h2>คำขอต้องผ่านทีละด่าน — ตกด่านไหนก็จบที่นั่น</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="middleware chain พร้อมทางออก 401 และ 403">
+      <defs>
+        <marker id="w13mg" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#4ADE80" stroke-width="1.5"/></marker>
+        <marker id="w13mr" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#FB7185" stroke-width="1.5"/></marker>
+        <marker id="w13ma" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#FBBF24" stroke-width="1.5"/></marker>
+      </defs>
+      <rect x="15" y="50" width="140" height="64" rx="10" fill="rgba(169,199,184,.1)" stroke="#8FA69A" stroke-width="1.5"/>
+      <text x="85" y="78" text-anchor="middle" class="svg-t">PUT /:id</text>
+      <text x="85" y="99" text-anchor="middle" class="svg-m" fill="#A9C7B8">Bearer …</text>
+      <rect x="195" y="50" width="190" height="64" rx="10" fill="rgba(251,113,133,.1)" stroke="#FB7185" stroke-width="1.8"/>
+      <text x="290" y="78" text-anchor="middle" class="svg-t">authenticate</text>
+      <text x="290" y="99" text-anchor="middle" class="svg-s">คุณคือใคร</text>
+      <rect x="425" y="50" width="200" height="64" rx="10" fill="rgba(251,191,36,.12)" stroke="#FBBF24" stroke-width="1.8"/>
+      <text x="525" y="78" text-anchor="middle" class="svg-t">requireRole('staff')</text>
+      <text x="525" y="99" text-anchor="middle" class="svg-s">ทำได้ไหม</text>
+      <rect x="665" y="50" width="220" height="64" rx="10" fill="rgba(34,197,94,.14)" stroke="#4ADE80" stroke-width="1.8"/>
+      <text x="775" y="78" text-anchor="middle" class="svg-t">controller</text>
+      <text x="775" y="99" text-anchor="middle" class="svg-m" fill="#4ADE80">updateRequestStatus</text>
+      <path d="M157 82 L191 82" stroke="#4ADE80" stroke-width="2" marker-end="url(#w13mg)"/>
+      <path d="M387 82 L421 82" stroke="#4ADE80" stroke-width="2" marker-end="url(#w13mg)"/>
+      <text x="404" y="40" text-anchor="middle" class="svg-m" fill="#4ADE80">req.user</text>
+      <path d="M627 82 L661 82" stroke="#4ADE80" stroke-width="2" marker-end="url(#w13mg)"/>
+      <text x="644" y="40" text-anchor="middle" class="svg-m" fill="#4ADE80">next()</text>
+      <path d="M290 116 L290 154" stroke="#FB7185" stroke-width="2" marker-end="url(#w13mr)"/>
+      <rect x="196" y="158" width="190" height="66" rx="10" fill="rgba(251,113,133,.16)" stroke="#FB7185" stroke-width="1.5"/>
+      <text x="291" y="182" text-anchor="middle" class="svg-big" style="fill:#FB7185">401</text>
+      <text x="291" y="203" text-anchor="middle" class="svg-s">ไม่มี · ปลอม · หมดอายุ</text>
+      <text x="291" y="218" text-anchor="middle" class="svg-m" fill="#A9C7B8">+ WWW-Authenticate</text>
+      <path d="M525 116 L525 154" stroke="#FBBF24" stroke-width="2" marker-end="url(#w13ma)"/>
+      <rect x="430" y="158" width="190" height="66" rx="10" fill="rgba(251,191,36,.14)" stroke="#FBBF24" stroke-width="1.5"/>
+      <text x="525" y="182" text-anchor="middle" class="svg-big" style="fill:#FBBF24">403</text>
+      <text x="525" y="203" text-anchor="middle" class="svg-s">role ไม่ใช่ staff</text>
+      <text x="525" y="218" text-anchor="middle" class="svg-m" fill="#A9C7B8">ไม่มีสิทธิ์ทำรายการนี้</text>
+      <rect x="665" y="158" width="220" height="66" rx="10" fill="rgba(34,197,94,.1)" stroke="#4ADE80" stroke-width="1.2"/>
+      <text x="775" y="182" text-anchor="middle" class="svg-big" style="fill:#4ADE80">200 / 204</text>
+      <text x="775" y="205" text-anchor="middle" class="svg-s">หรือ 400 / 404 ตามเดิม</text>
+      <text x="450" y="245" text-anchor="middle" class="svg-s">ด่านหลังไม่เคยเห็นคำขอที่ตกด่านหน้า — requireRole จึงเชื่อ req.user ได้</text>
+    </svg>
+  </div>
+  <pre style="margin:0;font-size:.98rem"><code>router.<span class="f">put</span>(<span class="s">'/:id'</span>,    <span class="hl">authenticate</span>, <span class="hl">requireRole</span>(<span class="s">'staff'</span>), controller.updateRequestStatus);
+router.<span class="f">delete</span>(<span class="s">'/:id'</span>, <span class="hl">authenticate</span>, <span class="hl">requireRole</span>(<span class="s">'staff'</span>), controller.deleteRequest);</code></pre>
+</section>
+
+<section class="slide" data-title="🎮 ด่านตรวจ 401/403">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 9</span> · middleware</span>
+  <span class="eyebrow amber">ลองเล่น — เลือก token × method แล้วดูว่าตกด่านไหน</span>
+  <h2>ด่านตรวจ 401 / 403</h2>
+  <div class="body">
+    <div class="iact" style="padding:.75rem 1rem">
+      <div class="reqbtns gk-row" id="gkTokens">
+        <span class="lbl">TOKEN</span>
+        <button data-gk-tok="none">ไม่มี token</button>
+        <button data-gk-tok="forged">token ปลอม</button>
+        <button data-gk-tok="expired">หมดอายุ</button>
+        <button data-gk-tok="requester">requester</button>
+        <button data-gk-tok="staff">staff</button>
+      </div>
+      <div class="reqbtns gk-row" id="gkMethods">
+        <span class="lbl">METHOD</span>
+        <button data-gk-m="GET" class="m-get">GET</button>
+        <button data-gk-m="POST" class="m-post">POST</button>
+        <button data-gk-m="PUT">PUT</button>
+        <button data-gk-m="DELETE" class="m-del">DELETE</button>
+      </div>
+      <div class="gk-flow" id="gkFlow"></div>
+      <div class="gk-out"><div class="gk-code" id="gkCode">—</div><div class="gk-body" id="gkBody"></div></div>
+      <div class="gk-why" id="gkWhy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="authenticate · requireRole">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 9</span> · middleware</span>
+  <span class="eyebrow">W13-AUTH · middleware/auth.js</span>
+  <h2>สอง middleware · สองคำถาม · สอง status</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:.88rem"><code><span class="k">export function</span> <span class="f">authenticate</span>(req, res, next) {
+  <span class="k">const</span> [scheme, token] = (req.<span class="f">get</span>(<span class="s">'Authorization'</span>) ?? <span class="s">''</span>).<span class="f">split</span>(<span class="s">' '</span>);
+  <span class="k">if</span> (scheme !== <span class="s">'Bearer'</span> || !token) {
+    res.<span class="f">set</span>(<span class="s">'WWW-Authenticate'</span>, <span class="s">'Bearer'</span>);
+    <span class="k">return</span> res.<span class="f">status</span>(<span class="n">401</span>).<span class="f">json</span>({ error: <span class="s">'ต้องเข้าสู่ระบบก่อน'</span> });
+  }
+  <span class="k">try</span> { req.user = <span class="f">verifyToken</span>(token); <span class="f">next</span>(); }          <span class="c">// แนบผู้ใช้ไว้ให้ด่านถัดไป</span>
+  <span class="k">catch</span> { res.<span class="f">set</span>(<span class="s">'WWW-Authenticate'</span>, <span class="s">'Bearer error="invalid_token"'</span>);
+          <span class="k">return</span> res.<span class="f">status</span>(<span class="n">401</span>).<span class="f">json</span>({ error: <span class="s">'token ไม่ถูกต้องหรือหมดอายุ กรุณาเข้าสู่ระบบใหม่'</span> }); }
+}
+<span class="k">export function</span> <span class="f">requireRole</span>(role) {                               <span class="c">// คืน middleware — ตั้งค่าได้</span>
+  <span class="k">return</span> (req, res, next) =&gt; req.user?.role !== role
+    ? res.<span class="f">status</span>(<span class="n">403</span>).<span class="f">json</span>({ error: <span class="s">'ไม่มีสิทธิ์ทำรายการนี้'</span> }) : <span class="f">next</span>();
+}</code></pre>
+    <div class="iact" data-quiz="q5">
+      <p style="margin:0 0 .3rem"><strong>ถ้าสลับลำดับเป็น <code>requireRole('staff'), authenticate</code> จะเกิดอะไร</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">เหมือนเดิม ลำดับไม่สำคัญ</button>
+        <button class="opt" data-a="1">ทุกคนได้ 403 — requireRole ทำงานก่อน req.user ยังไม่มี</button>
+        <button class="opt" data-a="0">ทุกคนผ่านหมด</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="test เดิมพัง → แก้ให้ login ก่อน">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 9</span> · middleware</span>
+  <span class="eyebrow red">หลังผูก authenticate — npm test แดง 6 ข้อ</span>
+  <h2>requirement เปลี่ยน → test ต้องเปลี่ยนตาม</h2>
+  <div class="body center">
+    <div class="g2">
+      <pre style="margin:0;font-size:.8rem"><code><span class="bad">FAIL</span> PUT /api/requests/:id &gt; เปลี่ยนสถานะ → 200
+  AssertionError: expected <span class="bad">401</span> to be 200
+<span class="bad">FAIL</span> PUT /api/requests/:id &gt; สถานะนอกรายการ → 400
+  AssertionError: expected <span class="bad">401</span> to be 400
+<span class="bad">FAIL</span> DELETE /api/requests/:id &gt; ลบแล้ว GET ซ้ำ → 404
+  Error: expected 204 "No Content", got <span class="bad">401</span>
+<span class="c">  … รวม 6 ข้อใน requests.api.test.js</span></code></pre>
+      <pre style="margin:0;font-size:.8rem"><code><span class="k">import</span> { loginAsStaff } <span class="k">from</span> <span class="s">'../helpers/auth.js'</span>;
+<span class="k">let</span> auth;
+<span class="f">beforeEach</span>(<span class="k">async</span> () =&gt; {
+  <span class="k">await</span> <span class="f">loadSeed</span>();
+  auth = { Authorization:
+    <span class="s">`Bearer ${</span><span class="k">await</span> <span class="f">loginAsStaff</span>(app)<span class="s">}`</span> };
+});
+request(app).<span class="f">put</span>(<span class="s">'/api/requests/REQ-001'</span>)
+  .<span class="f">set</span>(auth).<span class="f">send</span>({ status: <span class="s">'completed'</span> });</code></pre>
+    </div>
+    <table class="tight" style="font-size:1rem">
+      <tr><th>helper (ให้มาแล้วใน tests/helpers/auth.js)</th><th>ใช้ทดสอบ</th></tr>
+      <tr><td><code>loginAsStaff(app)</code> — login จริงผ่าน API คืน token</td><td>PUT 200 · DELETE 204 · 400/404 เดิมยังทำงาน</td></tr>
+      <tr><td><code>tokenFor('requester')</code></td><td><strong>403</strong> — token จริงแต่ไม่ใช่เจ้าหน้าที่</td></tr>
+      <tr><td><code>tokenFor('staff', 'not-the-real-secret')</code></td><td><strong>401</strong> — เซ็นด้วย secret อื่น = ปลอม</td></tr>
+    </table>
+    <div class="wrong"><p style="margin:0;font-size:1.06rem"><strong>อย่าแก้ test ให้ผ่านโดยถอด authenticate ออก</strong> — test พังเพราะ<strong>สเปกเปลี่ยน</strong> (PUT/DELETE ต้องเข้าสู่ระบบ) · เหตุผลเดียวกับที่ checker สัปดาห์ 7/10 ใช้ไม่ได้แล้ว — เป็นเรื่องปกติ</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 CP51 ป้องกัน PUT/DELETE">
+  <span class="chapbadge">🏫 ลงมือทำ · CP51</span>
+  <span class="eyebrow amber">14:55–15:30 · TODO W13-AUTH</span>
+  <h2>🏫 ลงมือ CP51 · authenticate + requireRole + แก้ test</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:.92rem"><code><span class="c"># ① middleware/auth.js — authenticate (401 + WWW-Authenticate) · requireRole (403)</span>
+<span class="c"># ② routes/requestRoutes.js — ผูกหน้า PUT/DELETE   ③ npm test --prefix api → แดง 6 ข้อ (ตั้งใจ)</span>
+<span class="c"># ④ แก้ test ด้วย loginAsStaff · เพิ่ม 403 (tokenFor('requester')) · token ปลอม · staff 200+204</span>
+curl -s -X POST localhost:3001/api/auth/login -H "Content-Type: application/json" \
+  -d '{"email":"staff@rmutl.ac.th","password":"staff1234"}'          <span class="c"># คัดลอก token</span>
+curl -i -X PUT localhost:3001/api/requests/REQ-001 \
+  -H "Content-Type: application/json" -d '{"status":"completed"}'    <span class="c"># → 401</span>
+curl -i -X PUT localhost:3001/api/requests/REQ-001 -H "Authorization: Bearer &lt;token&gt;" \
+  -H "Content-Type: application/json" -d '{"status":"completed"}'    <span class="c"># → 200</span></code></pre>
+    <div class="win"><p style="margin:0 0 .35rem;font-size:1.1rem"><strong>✓ ผ่านเมื่อ (checker CP51 · 6 ข้อ)</strong></p>
+      <ul class="crit">
+        <li>PUT ไม่มี token → 401 · PUT ด้วย token ปลอม (secret อื่น) → 401 · token ที่ไม่ใช่เจ้าหน้าที่ → 403</li>
+        <li>เจ้าหน้าที่: PUT → 200 และ DELETE → 204 · GET และ POST ยังไม่ต้องเข้าสู่ระบบ</li>
+        <li>ไม่ถอยหลัง — BUG #1 ของสัปดาห์ 12 ยังแก้อยู่ (ลบแล้วเพิ่มใหม่ → 201)</li>
+      </ul></div>
+  </div>
+</section>
+
+<section class="slide" data-title="✓ สรุปบทที่ 6">
+  <span class="chapbadge">บทที่ 6 <span class="of">/ 9</span> · middleware</span>
+  <h2>จบบทที่ 6 — authenticate + requireRole</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul>
+      <li><code>authenticate</code> อ่าน <code>Authorization: Bearer &lt;token&gt;</code> → ไม่มี/ปลอม/หมดอายุ = <strong>401</strong> + WWW-Authenticate</li>
+      <li><code>requireRole('staff')</code> → role ไม่ตรง = <strong>403</strong> · ต้องอยู่<strong>หลัง</strong> authenticate</li>
+      <li>ผูกเฉพาะ PUT และ DELETE — GET และ POST ยังเปิดตามนโยบาย</li>
+      <li>test เดิมพัง 401 = requirement เปลี่ยน → แก้ test ด้วย <code>loginAsStaff</code> / <code>tokenFor</code></li>
+    </ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 7 — ทั้งหมดนี้พังทันทีถ้า secret ที่ใช้เซ็น token รั่ว</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span></div>
+  </div>
+</section>
+
+<!-- ═════════ บทที่ 7 ═════════ -->
+<section class="slide divider" data-title="บทที่ 7 · Secrets และ production">
+  <span class="grp">กลุ่ม 3 · พร้อมส่งมอบ</span>
+  <p class="bignum">07</p>
+  <h2>Secrets และ production</h2>
+  <p class="whatfor">ใครรู้ JWT_SECRET ก็ปลอม token ของเจ้าหน้าที่ได้ — secret ต้องอยู่นอก git และ production ต้องไม่ยอม start ถ้าไม่มี</p>
+  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง · CP52</span><span class="chip c">≈ 20 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span></div>
+</section>
+
+<section class="slide" data-title="secret อยู่ที่ไหน + fail fast">
+  <span class="chapbadge">บทที่ 7 <span class="of">/ 9</span> · secrets</span>
+  <span class="eyebrow red">W13-SECRET · config.js · .env.example</span>
+  <h2>secret อยู่ใน env เท่านั้น — production ไม่มีก็ไม่ start</h2>
+  <div class="fig">
+    <svg viewBox="0 0 900 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="secret อยู่ที่ไหน">
+      <defs><marker id="w13se" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#C084FC" stroke-width="1.5"/></marker></defs>
+      <rect x="15" y="12" width="270" height="150" rx="12" fill="rgba(34,197,94,.08)" stroke="#4ADE80" stroke-width="1.5"/>
+      <text x="150" y="38" text-anchor="middle" class="svg-t">GitHub · ทุกคนเห็น</text>
+      <text x="35" y="68" class="svg-m" fill="#4ADE80">✓ .env.example</text>
+      <text x="55" y="88" class="svg-m" fill="#A9C7B8">JWT_SECRET=  (ค่าว่าง)</text>
+      <text x="35" y="116" class="svg-m" fill="#4ADE80">✓ .gitignore มี .env</text>
+      <text x="35" y="144" class="svg-m" fill="#FB7185">✕ ค่าจริงของ secret</text>
+      <rect x="315" y="12" width="270" height="150" rx="12" fill="rgba(56,215,237,.08)" stroke="#38D7ED" stroke-width="1.5"/>
+      <text x="450" y="38" text-anchor="middle" class="svg-t">เครื่องเรา · dev</text>
+      <text x="335" y="68" class="svg-m" fill="#38D7ED">api/.env (ไม่ commit)</text>
+      <text x="335" y="96" class="svg-s">ว่างได้ → ใช้ค่าสำหรับพัฒนา</text>
+      <text x="335" y="122" class="svg-m" fill="#A9C7B8">'dev-only-secret-do-not-</text>
+      <text x="335" y="140" class="svg-m" fill="#A9C7B8">use-in-production'</text>
+      <rect x="615" y="12" width="270" height="150" rx="12" fill="rgba(192,132,252,.1)" stroke="#C084FC" stroke-width="1.8"/>
+      <text x="750" y="38" text-anchor="middle" class="svg-t">Render · production</text>
+      <text x="635" y="68" class="svg-m" fill="#C084FC">Environment Variables</text>
+      <text x="635" y="96" class="svg-m" fill="#A9C7B8">JWT_SECRET</text>
+      <text x="635" y="114" class="svg-m" fill="#A9C7B8">  generateValue: true</text>
+      <text x="635" y="142" class="svg-s">Render สุ่มให้ · ไม่อยู่ใน git</text>
+      <path d="M450 164 L450 182 L512 182" stroke="#C084FC" stroke-width="1.8" fill="none" marker-end="url(#w13se)"/>
+      <path d="M750 164 L750 182 L668 182" stroke="#C084FC" stroke-width="1.8" fill="none" marker-end="url(#w13se)"/>
+      <rect x="518" y="170" width="144" height="26" rx="7" fill="rgba(251,191,36,.14)" stroke="#FBBF24" stroke-width="1.3"/>
+      <text x="590" y="188" text-anchor="middle" class="svg-m" fill="#FBBF24">process.env</text>
+      <text x="300" y="188" text-anchor="middle" class="svg-s">config.js อ่านค่าที่เดียว → jwt.sign / jwt.verify</text>
+    </svg>
+  </div>
+  <div class="g2">
+    <pre style="margin:0;font-size:.84rem"><code><span class="k">function</span> <span class="f">readJwtSecret</span>() {
+  <span class="k">const</span> secret = process.env.JWT_SECRET;
+  <span class="k">if</span> (secret) <span class="k">return</span> secret;
+  <span class="k">if</span> (process.env.NODE_ENV === <span class="s">'production'</span>) {
+    <span class="k">throw new</span> <span class="f">Error</span>(<span class="s">'ต้องตั้งค่า JWT_SECRET ก่อนรันแบบ production ...'</span>);
+  }                                     <span class="c">// ↑ fail fast</span>
+  <span class="k">return</span> <span class="s">'dev-only-secret-do-not-use-in-production'</span>;
+}</code></pre>
+    <div class="body" style="gap:.5rem">
+      <div class="wrong"><p style="margin:0;font-size:1.02rem"><strong>ทำไม fail fast</strong> — เปิดระบบด้วย secret ที่อยู่ใน GitHub = ใครก็เซ็น <code>role: 'staff'</code> เองได้ · <strong>ล่มตอน start ดีกว่าเปิดแบบไม่ปลอดภัย</strong></p></div>
+      <div class="note"><p style="margin:0;font-size:1.02rem"><strong>production ไม่ส่ง stack</strong> ให้ผู้ใช้ (errorHandler เช็ค <code>config.isProd</code>) · ก่อน push ตรวจ <code>git diff --cached</code> ทุกครั้ง</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 CP52 secrets + fail fast">
+  <span class="chapbadge">🏫 ลงมือทำ · CP52</span>
+  <span class="eyebrow amber">15:30–15:50 · TODO W13-SECRET</span>
+  <h2>🏫 ลงมือ CP52 · secrets + fail-fast + production ไม่ส่ง stack</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:.92rem"><code><span class="c"># ① config.js — readJwtSecret(): production ไม่มี JWT_SECRET → throw · dev ใช้ค่าสำหรับพัฒนา</span>
+<span class="c"># ② api/.env.example — เพิ่มบรรทัด  JWT_SECRET=  (ค่าว่าง · ห้ามใส่ค่าจริง)</span>
+<span class="c"># ③ ลองว่า fail fast จริง (ใน api/)</span>
+NODE_ENV=production npm start                <span class="c"># → Error: ต้องตั้งค่า JWT_SECRET ...</span>
+<span class="c"># ④ สร้างค่าสุ่มไว้ใช้จริง — ใส่ใน .env หรือ Render เท่านั้น</span>
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+<span class="c"># ⑤ ก่อน push — ดูทุกบรรทัดที่กำลังจะขึ้น GitHub</span>
+git add . &amp;&amp; git diff --cached               <span class="c"># ต้องไม่เห็น .env หรือค่า secret จริง</span></code></pre>
+    <div class="win"><p style="margin:0 0 .35rem;font-size:1.1rem"><strong>✓ ผ่านเมื่อ (checker CP52 · 4 ข้อ)</strong></p>
+      <ul class="crit">
+        <li>production ไม่ตั้ง JWT_SECRET → ระบบไม่ยอม start</li>
+        <li>production: error ไม่ส่ง stack trace ให้ผู้ใช้</li>
+        <li><code>.env.example</code> มี <code>JWT_SECRET</code> ค่าว่าง และ .gitignore ไม่รวม .env</li>
+        <li><code>npm test</code> ใน api ผ่านทุกข้อ และมี test ของ 401 กับ 403</li>
+      </ul></div>
+  </div>
+</section>
+
+<section class="slide" data-title="✓ สรุปบทที่ 7">
+  <span class="chapbadge">บทที่ 7 <span class="of">/ 9</span> · secrets</span>
+  <h2>จบบทที่ 7 — Secrets และ production</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul>
+      <li>secret อ่านจาก <code>process.env</code> ที่ <code>config.js</code> ที่เดียว · ค่าจริงอยู่ใน .env หรือ Render ไม่ใช่ git</li>
+      <li><strong>fail fast</strong> — production ไม่มี JWT_SECRET → throw ตอน start</li>
+      <li><code>.env.example</code> บอกชื่อตัวแปร (ค่าว่าง) · Render ใช้ <code>generateValue: true</code></li>
+      <li>production ไม่ส่ง stack ให้ผู้ใช้ · ตรวจ <code>git diff --cached</code> ก่อน push</li>
+      <li>secret เคยหลุดขึ้น GitHub แล้ว → ลบไฟล์ไม่พอ ต้อง<strong>เปลี่ยน secret ใหม่</strong> (อยู่ในประวัติ git)</li>
+    </ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 8 — ฝั่ง React จะเก็บ token และแนบไปกับคำขออย่างไร</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span></div>
+  </div>
+</section>
+
+<!-- ═════════ บทที่ 8 ═════════ -->
+<section class="slide divider" data-title="บทที่ 8 · React กับ token">
+  <span class="grp">กลุ่ม 3 · พร้อมส่งมอบ</span>
+  <p class="bignum">08</p>
+  <h2>ฝั่ง React เก็บ token และแนบ header</h2>
+  <p class="whatfor">ตัวอย่างอยู่ในเฉลย — นักศึกษาทำจริงใน Final Term Project</p>
+  <div class="mins"><span class="chip v">📖 ตัวอย่างอ้างอิง → Term Project</span><span class="chip c">≈ 5 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span></div>
+</section>
+
+<section class="slide" data-title="authStore + apiClient">
+  <span class="chapbadge">บทที่ 8 <span class="of">/ 9</span> · React + token</span>
+  <span class="eyebrow violet">reference example · ทำใน Term Project</span>
+  <h2>แนบ <code>Authorization: Bearer</code> ที่เดียว — ทุกหน้าไม่ต้องรู้</h2>
+  <div class="body center">
+    <div class="g2">
+      <pre style="margin:0;font-size:.86rem"><code><span class="c">// services/apiClient.js — ที่เดียวที่เรียก fetch()</span>
+<span class="k">const</span> token = <span class="f">getToken</span>();      <span class="c">// จาก authStore</span>
+<span class="k">const</span> headers = {
+  <span class="s">'Content-Type'</span>: <span class="s">'application/json'</span>,
+  ...(token ? { Authorization: <span class="s">`Bearer ${token}`</span> } : {}),
+  ...options.headers,
+};
+<span class="c">// …</span>
+<span class="k">if</span> (response.status === <span class="n">401</span> &amp;&amp; token) <span class="f">clearToken</span>();
+<span class="c">// token หมดอายุ → ล้าง → หน้าจอกลับเป็นยังไม่ login</span></code></pre>
+      <table style="font-size:.98rem">
+        <tr><th>เก็บ token ที่</th><th>ข้อดี / ข้อเสีย</th></tr>
+        <tr><td>ตัวแปรใน memory</td><td>ปลอดภัยสุด · refresh แล้วหลุด</td></tr>
+        <tr><td><strong>localStorage</strong> ← วิชานี้</td><td>อยู่รอด refresh · สคริปต์ XSS อ่านได้</td></tr>
+        <tr><td>httpOnly cookie</td><td>JS อ่านไม่ได้ · เกินขอบเขตวิชา</td></tr>
+      </table>
+    </div>
+    <div class="flow" style="justify-content:center">
+      <span class="step">pages/LoginPage.jsx · /login</span><span class="arr">→</span>
+      <span class="step">services/authStore.js</span><span class="arr">→</span>
+      <span class="step">services/apiClient.js</span><span class="arr">→</span>
+      <span class="step">hooks/useAuth.js → isStaff</span>
+    </div>
+    <div class="iact" data-quiz="q6">
+      <p style="margin:0 0 .3rem"><strong>React ซ่อนปุ่มลบเมื่อ <code>isStaff</code> เป็น false และ <code>utils/token.js</code> decode payload ได้ — พอไหม</strong></p>
+      <div class="opts">
+        <button class="opt" data-a="0">พอ — ผู้ใช้ไม่เห็นปุ่มก็ลบไม่ได้</button>
+        <button class="opt" data-a="1">ไม่พอ — ซ่อนปุ่ม = UX · การตรวจจริงอยู่ที่ API (authenticate) เสมอ</button>
+      </div>
+      <p class="fb"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="✓ สรุปบทที่ 8">
+  <span class="chapbadge">บทที่ 8 <span class="of">/ 9</span> · React + token</span>
+  <h2>จบบทที่ 8 — React กับ token</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul>
+      <li><code>authStore.js</code> เก็บ token ใน localStorage — รู้ข้อแลกเปลี่ยนกับ memory และ httpOnly cookie</li>
+      <li><code>apiClient.js</code> แนบ Bearer <strong>ที่เดียว</strong> — "แก้ชั้นเดียว" อีกครั้ง เหมือนตอนเปลี่ยนแหล่งข้อมูล</li>
+      <li>ได้ 401 → ล้าง token · ปุ่มลบ/เปลี่ยนสถานะแสดงเฉพาะเจ้าหน้าที่</li>
+      <li><code>utils/token.js</code> แค่<strong>อ่าน</strong>เพื่อแสดงผล — <strong>ตรวจจริงที่ API เสมอ</strong> (ย้อนกลับไปบทที่ 1)</li>
+      <li>หน้า login ฝั่ง React = <strong>ข้อกำหนดของ Final Term Project</strong></li>
+    </ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บทที่ 9 — ตรวจงานวันนี้ · Release Checklist · ประกาศ Term Project และสอบปลายภาค</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span></div>
+  </div>
+</section>
+
+<!-- ═════════ บทที่ 9 ═════════ -->
+<section class="slide divider" data-title="บทที่ 9 · พร้อมส่งมอบ + ปิดหน่วย 5">
+  <span class="grp">กลุ่ม 3 · พร้อมส่งมอบ</span>
+  <p class="bignum">09</p>
+  <h2>พร้อมส่งมอบ · ปิดหน่วยที่ 5</h2>
+  <p class="whatfor">ตรวจงานวันนี้ด้วย checker แล้วมองไปข้างหน้า — Release Checklist, Final Term Project และสอบปลายภาค</p>
+  <div class="mins"><span class="chip">🏫 15:50–16:00</span><span class="chip c">≈ 10 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span></div>
+</section>
+
+<section class="slide" data-title="✅ checker + Release Checklist">
+  <span class="chapbadge">บทที่ 9 <span class="of">/ 9</span> · ส่งมอบ</span>
+  <span class="eyebrow amber">15:50 · ตรวจก่อนกลับ</span>
+  <h2>check-week13 แล้วรู้จัก Release Checklist</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="body" style="gap:.6rem">
+        <pre style="margin:0;font-size:.9rem"><code><span class="c"># ที่ labs/week-13/source</span>
+node --disable-warning=ExperimentalWarning \
+  check-week13.mjs --inclass</code></pre>
+        <table style="font-size:1rem">
+          <tr><th>รายการ</th><th>จำนวน</th></tr>
+          <tr><td>ในห้อง (CP48 ×4 · CP49 ×5 · CP50 ×4 · CP51 ×6 · CP52 ×4)</td><td><strong>23</strong></td></tr>
+          <tr><td>⭐ Challenge (security header · 429 · frontend แนบ Authorization · render.yaml generateValue)</td><td><strong>4</strong></td></tr>
+          <tr><td>รวม</td><td><strong>27</strong></td></tr>
+          <tr><td>starter ก่อนแก้</td><td>5/23</td></tr>
+        </table>
+        <div class="note"><p style="margin:0;font-size:.98rem">โฟลเดอร์ W13 มี <code>check-week12</code> (ขอ token เองแล้ว) ด้วย · checker สัปดาห์ 7/10 ใช้ไม่ได้แล้ว = ปกติ</p></div>
+      </div>
+      <div class="panel" style="border-color:rgba(192,132,252,.45);padding:.9rem 1.1rem">
+        <h3 style="color:var(--violet);font-size:1.15rem">📋 Release Checklist — ทำจริงใน Term Project</h3>
+        <ul class="crit" style="margin-left:1.2rem">
+          <li>test ผ่านทั้งหมด (<code>npm test</code>)</li>
+          <li>build ได้ (<code>npm run build</code>)</li>
+          <li>ไม่มี secret ใน git</li>
+          <li><code>.env.example</code> ครบทุกตัวแปร</li>
+          <li>README มีวิธีรัน / วิธี deploy</li>
+          <li>health check ผ่านบน URL จริง</li>
+          <li><code>npm audit</code></li>
+          <li>tag เวอร์ชัน <code>v1.0.0</code></li>
+        </ul>
+        <p style="margin:.4rem 0 0;font-size:1rem;color:var(--muted)">checker บอกว่า<strong>ทำงานถูก</strong> · checklist บอกว่า<strong>พร้อมส่งมอบ</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="📣 Final Term Project + สอบปลายภาค">
+  <span class="chapbadge">บทที่ 9 <span class="of">/ 9</span> · ส่งมอบ</span>
+  <span class="eyebrow violet">ประกาศ · ไม่มีงาน Take-Home แยกของสัปดาห์นี้</span>
+  <h2>งานต่อจากคาบ = ข้อกำหนดของ Final Term Project</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="card ch"><div class="ic">🧩</div><h3>สิ่งที่ต้องมีเพิ่ม</h3><p>หน้า login ฝั่ง React · test เพิ่ม · <code>RELEASE_CHECKLIST</code> · deploy</p></div>
+      <div class="card room"><div class="ic">👥</div><h3>ทำเป็นคู่</h3><p><strong>Front-end</strong> / <strong>Back-end + DevOps</strong></p></div>
+      <div class="card home"><div class="ic">👥+1</div><h3>เศษเป็นสามคน</h3><p><strong>Front-end</strong> / <strong>Back-end</strong> / <strong>DevOps</strong> (ขึ้น cloud)</p></div>
+    </div>
+    <div class="panel" style="border-color:rgba(251,191,36,.45)">
+      <h3 style="color:var(--amber)">📝 สอบปลายภาค · 3 ส่วน</h3>
+      <div class="three" style="margin-top:.4rem">
+        <div><p style="margin:0;font-size:1.1rem"><strong>① take-home</strong><br><small>ข้อสอบชุด A/B</small></p></div>
+        <div><p style="margin:0;font-size:1.1rem"><strong>② ทำในห้อง</strong><br><small>ลงมือกับระบบจริง</small></p></div>
+        <div><p style="margin:0;font-size:1.1rem"><strong>③ สัมภาษณ์เป็นกลุ่ม</strong><br><small>อธิบายเหตุผลของโค้ดตัวเอง</small></p></div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="win"><p style="margin:0;font-size:1.2rem"><strong>Sec 1</strong> — สอบวันที่ <strong>19 ต.ค.</strong></p></div>
+      <div class="win"><p style="margin:0;font-size:1.2rem"><strong>Sec 2</strong> — สอบวันที่ <strong>22 ต.ค.</strong></p></div>
+    </div>
+    <p style="text-align:center;margin:0"><small>เตรียมตอบให้ได้: 401 ต่างจาก 403 อย่างไร · ทำไมต้อง hash รหัสผ่าน · ทำไม test เดิมต้องเปลี่ยน</small></p>
+  </div>
+</section>
+
+<section class="slide" data-title="✓ สรุปบทที่ 9 + หน่วยที่ 5">
+  <span class="chapbadge">บทที่ 9 <span class="of">/ 9</span> · ส่งมอบ</span>
+  <h2>จบบทที่ 9 — ปิดหน่วยที่ 5</h2>
+  <div class="fig" style="flex:0 0 auto;height:150px">
+    <svg viewBox="0 0 900 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="เส้นทางหน่วยที่ 5">
+      <defs><marker id="w13end" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#C084FC" stroke-width="1.5"/></marker></defs>
+      <rect x="20" y="20" width="190" height="80" rx="10" fill="rgba(56,215,237,.12)" stroke="#38D7ED" stroke-width="1.5"/>
+      <text x="115" y="50" text-anchor="middle" class="svg-t">เช้า · สัปดาห์ 12</text>
+      <text x="115" y="74" text-anchor="middle" class="svg-s">ทดสอบ + debug</text>
+      <rect x="250" y="20" width="190" height="80" rx="10" fill="rgba(34,197,94,.14)" stroke="#4ADE80" stroke-width="2"/>
+      <text x="345" y="50" text-anchor="middle" class="svg-t">บ่าย · สัปดาห์ 13</text>
+      <text x="345" y="74" text-anchor="middle" class="svg-s">ปลอดภัย + พร้อมส่งมอบ</text>
+      <rect x="480" y="20" width="190" height="80" rx="10" fill="rgba(192,132,252,.14)" stroke="#C084FC" stroke-width="1.5"/>
+      <text x="575" y="50" text-anchor="middle" class="svg-t">Final Term Project</text>
+      <text x="575" y="74" text-anchor="middle" class="svg-s">login React · deploy</text>
+      <rect x="710" y="20" width="170" height="80" rx="10" fill="rgba(251,191,36,.12)" stroke="#FBBF24" stroke-width="1.5"/>
+      <text x="795" y="50" text-anchor="middle" class="svg-t">สอบปลายภาค</text>
+      <text x="795" y="74" text-anchor="middle" class="svg-s">19 / 22 ต.ค.</text>
+      <path d="M212 60 L246 60" stroke="#C084FC" stroke-width="2" marker-end="url(#w13end)"/>
+      <path d="M442 60 L476 60" stroke="#C084FC" stroke-width="2" marker-end="url(#w13end)"/>
+      <path d="M672 60 L706 60" stroke="#C084FC" stroke-width="2" marker-end="url(#w13end)"/>
+      <text x="450" y="122" text-anchor="middle" class="svg-s">หน่วยที่ 5 · คุณภาพซอฟต์แวร์ การทดสอบ และความพร้อมก่อนใช้งาน · CLO6</text>
+    </svg>
+  </div>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากทั้งบ่าย</h3><ul>
+      <li>server คือด่านจริง — validation ชนิด + ความยาว · 413 · ไม่เชื่อ frontend</li>
+      <li>รหัสผ่าน: scrypt + salt + timingSafeEqual · token: JWT ที่ server เซ็นและตรวจด้วย secret</li>
+      <li><strong>401 = ไม่รู้ว่าใคร · 403 = รู้แต่ไม่มีสิทธิ์</strong> · GET/POST เปิด · PUT/DELETE เฉพาะเจ้าหน้าที่</li>
+      <li>requirement เปลี่ยน → test เปลี่ยนตาม · secret อยู่นอก git · production fail fast และไม่ส่ง stack</li>
+    </ul></div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span></div>
+  </div>
+</section>
+</div></div>
+<div class="bar"><i id="progress"></i></div>
+<div class="hud">
+  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 42</span><button id="btnNext">→</button>
+  <button id="btnToc">สารบัญ</button><button id="btnMinus">A−</button><button id="btnPlus">A+</button><button id="btnFull">เต็มจอ</button>
+</div>
+<div class="toc" id="toc" role="dialog"><h3>สารบัญ — กด T หรือ Esc ปิด</h3><ol id="tocList"></ol></div>
+
+<script>
+(function(){
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const slides=Array.from(document.querySelectorAll('.slide'));let cur=0;
+  function show(i){cur=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach((s,n)=>s.classList.toggle('active',n===cur));
+    const c=$('counter'); if(c) c.textContent=(cur+1)+' / '+slides.length;
+    const p=$('progress'); if(p) p.style.width=((cur+1)/slides.length*100)+'%';
+    try{history.replaceState(null,'','#s'+(cur+1));}catch(e){}}
+  const next=()=>show(cur+1),prev=()=>show(cur-1);
+  if($('btnNext')) $('btnNext').onclick=next;
+  if($('btnPrev')) $('btnPrev').onclick=prev;
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT')return;
+    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
+    else if(e.key==='ArrowLeft'){e.preventDefault();prev();}
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+    else if(e.key.toLowerCase()==='t')toggleToc();else if(e.key==='Escape')setToc(false);
+    else if(e.key.toLowerCase()==='f')toggleFull();
+    else if(e.key==='+'||e.key==='=')setScale(scale+.06);else if(e.key==='-')setScale(scale-.06);});
+  const tocEl=$('toc'),list=$('tocList');
+  if(list){slides.forEach((s,i)=>{const li=document.createElement('li'),a=document.createElement('a');
+    a.href='#s'+(i+1);a.textContent=s.dataset.title||('สไลด์ '+(i+1));
+    a.onclick=e=>{e.preventDefault();show(i);setToc(false);};li.appendChild(a);
+    const id=s.querySelector('.slide-id');
+    if(id){const t=document.createElement('span');t.className='tag';t.textContent=id.textContent;li.appendChild(t);}
+    list.appendChild(li);});}
+  function setToc(o){if(tocEl)tocEl.classList.toggle('open',o);}
+  function toggleToc(){if(tocEl)setToc(!tocEl.classList.contains('open'));}
+  if($('btnToc')) $('btnToc').onclick=toggleToc;
+  let scale=1;
+  function setScale(v){scale=Math.max(.8,Math.min(1.4,v));document.documentElement.style.setProperty('--font-scale',scale);}
+  if($('btnPlus')) $('btnPlus').onclick=()=>setScale(scale+.06);
+  if($('btnMinus')) $('btnMinus').onclick=()=>setScale(scale-.06);
+  function toggleFull(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}
+  if($('btnFull')) $('btnFull').onclick=toggleFull;
+
+  // ══ quiz (data-quiz) · reveal ══
+  document.querySelectorAll('[data-quiz]').forEach(q=>{const fb=q.querySelector('.fb');
+    q.querySelectorAll('.opt').forEach(b=>{b.onclick=()=>{const ok=b.dataset.a==='1';
+      b.classList.add(ok?'ok':'no');
+      if(!fb)return;
+      if(ok){fb.textContent='✓ ถูกต้อง';fb.className='fb ok';q.querySelectorAll('.opt').forEach(x=>x.disabled=true);}
+      else{fb.textContent='✕ ยังไม่ใช่ ลองใหม่';fb.className='fb no';}};});});
+  document.querySelectorAll('[data-reveal]').forEach(b=>{const btn=b.querySelector('button');if(btn)btn.onclick=()=>b.classList.toggle('open');});
+
+  // ══ JWT decoder — ค่าจริงที่คำนวณด้วย HMAC-SHA256 ไว้ล่วงหน้า (ในหน้านี้ไม่ได้ทำ crypto จริง) ══
+  (function(){
+    const elToken=$('jwToken'), elH=$('jwHeader'), elP=$('jwPayload'), elS=$('jwSig'), elV=$('jwVerdict');
+    if(!elToken||!elH||!elP||!elS||!elV) return;
+    const H='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+    const P={
+      requester:{enc:'eyJzdWIiOiIxIiwibmFtZSI6IuC4l-C4lOC4quC4reC4miIsInJvbGUiOiJyZXF1ZXN0ZXIiLCJpYXQiOjE3OTExODU0MDAsImV4cCI6MTc5MTE4NTcwMH0',
+        obj:{sub:'1',name:'ทดสอบ',role:'requester',iat:1791185400,exp:1791185700}},
+      staff:{enc:'eyJzdWIiOiI1IiwibmFtZSI6IuC5gOC4iOC5ieC4suC4q-C4meC5ieC4suC4l-C4teC5iOC4neC5iOC4suC4ouC4muC4o-C4tOC4geC4suC4oyIsInJvbGUiOiJzdGFmZiIsImlhdCI6MTc5MTE4NTQwMCwiZXhwIjoxNzkxMTkyNjAwfQ',
+        obj:{sub:'5',name:'เจ้าหน้าที่ฝ่ายบริการ',role:'staff',iat:1791185400,exp:1791192600}},
+      forged:{enc:'eyJzdWIiOiIxIiwibmFtZSI6IuC4l-C4lOC4quC4reC4miIsInJvbGUiOiJzdGFmZiIsImlhdCI6MTc5MTE4NTQwMCwiZXhwIjoxNzkxMTg1NzAwfQ',
+        obj:{sub:'1',name:'ทดสอบ',role:'staff',iat:1791185400,exp:1791185700}}
+    };
+    const SIG={
+      requester:'tDs12lVvpE6ZvpI4iQ5zichFUNuk7LY5BtWmxQyiQ7w',     // HMAC(H.requester, secret ของ server)
+      staff:'9WW5IXAGw9zicyvyw7MfGjutaSSLDOrOXvEUVD3CT0o',         // HMAC(H.staff, secret ของ server)
+      forgedReal:'Y-C5UC1Gwb3CjlLEhMg-0seL3W1k3NoQkIEmpnagMOQ',    // HMAC(H.forged, secret ของ server) — ผู้ปลอมไม่รู้ค่านี้
+      forgedGuess:'8JTtCZIvdp1cwMrQKYA5HtSSmo-jn_H_3VKYGIRT9UE'    // HMAC(H.forged, 'admin1234') — เดา secret ผิด
+    };
+    const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+    const thTime=t=>{const d=new Date((t+7*3600)*1000);return String(d.getUTCHours()).padStart(2,'0')+':'+String(d.getUTCMinutes()).padStart(2,'0')+' น.';};
+    function payloadHtml(o,editedRole){
+      return '{\n'+
+        '  "sub": "'+esc(o.sub)+'",\n'+
+        '  "name": "'+esc(o.name)+'",\n'+
+        '  "role": '+(editedRole?'<span class="hl">"'+esc(o.role)+'"</span>  <span class="cm">← แก้เอง</span>':'"'+esc(o.role)+'"')+',\n'+
+        '  "iat": '+o.iat+',  <span class="cm">// '+thTime(o.iat)+'</span>\n'+
+        '  "exp": '+o.exp+'   <span class="cm">// '+thTime(o.exp)+'</span>\n}';
+    }
+    const states={
+      requester:{p:'requester',sig:SIG.requester,edited:false,expect:SIG.requester,
+        verdict:['ok','<strong>✓ signature ตรง</strong> — server คำนวณ HMAC(header.payload, secret) ได้ค่าเดียวกัน → verify ผ่าน · แต่ role = requester → <strong>PUT/DELETE ได้ 403</strong>']},
+      staff:{p:'staff',sig:SIG.staff,edited:false,expect:SIG.staff,
+        verdict:['ok','<strong>✓ token จาก login จริง</strong> — server เซ็นเองด้วย secret · verify ผ่าน · role = staff → <strong>PUT 200 · DELETE 204</strong> · หมดอายุใน 2 ชั่วโมง (exp)']},
+      edited:{p:'forged',sig:SIG.requester,edited:true,expect:SIG.forgedReal,
+        verdict:['no','<strong>✕ signature ไม่ตรง → 401</strong> — แก้ payload ได้ (มันแค่ base64url) แต่ signature เดิมคำนวณจาก payload เก่า · <code>jwt.verify</code> โยน "invalid signature" → authenticate ตอบ <strong>401</strong>']},
+      resign:{p:'forged',sig:SIG.forgedGuess,edited:true,expect:SIG.forgedReal,
+        verdict:['warn','<strong>✕ ยังไม่ตรง → 401</strong> — ผู้ปลอมเดา secret เป็น <code>admin1234</code> แล้วเซ็นใหม่ ได้ signature คนละค่ากับที่ server คำนวณ · <strong>⚠ แต่ถ้า production ใช้ secret ที่อยู่ใน GitHub ผู้ปลอมเซ็นได้ตรงทันที</strong> → บทที่ 7']}
+    };
+    let curKey='requester';
+    function render(key){
+      const st=states[key]; if(!st) return; curKey=key;
+      const p=P[st.p], match=st.sig===st.expect;
+      elToken.innerHTML='<span class="jw-h">'+H+'</span><span class="jw-dot">.</span>'+
+        '<span class="jw-p'+(st.edited?' edited':'')+'">'+p.enc+'</span><span class="jw-dot">.</span>'+
+        '<span class="jw-s'+(match?'':' bad')+'">'+st.sig+'</span>';
+      elH.innerHTML='{\n  "alg": "HS256",\n  "typ": "JWT"\n}\n<span class="cm">// อ่านได้ทุกคน</span>';
+      elP.innerHTML=payloadHtml(p.obj,st.edited);
+      elS.innerHTML='<span class="cm">ใน token:</span>\n'+st.sig.slice(0,22)+'…\n'+
+        '<span class="cm">server คำนวณได้:</span>\n'+st.expect.slice(0,22)+'…\n'+
+        (match?'<span class="ok">✓ ตรงกัน</span>':'<span class="no">✕ ไม่ตรง</span>');
+      elV.className='jw-verdict '+st.verdict[0]; elV.innerHTML=st.verdict[1];
+      [['jwReq','requester'],['jwStaff','staff'],['jwEdit','edited'],['jwResign','resign']].forEach(([id,k])=>{const b=$(id);if(b)b.classList.toggle('on',k===key);});
+    }
+    const bind=(id,key)=>{const b=$(id);if(b)b.addEventListener('click',()=>render(key));};
+    bind('jwReq','requester'); bind('jwStaff','staff');
+    const bEdit=$('jwEdit'); if(bEdit) bEdit.addEventListener('click',()=>render('edited'));
+    bind('jwResign','resign');
+    render('requester');
+  })();
+
+  // ══ ด่านตรวจ 401/403 — จำลองตาม middleware/auth.js และ routes/requestRoutes.js ของเฉลย ══
+  (function(){
+    const flow=$('gkFlow'), code=$('gkCode'), body=$('gkBody'), why=$('gkWhy');
+    if(!flow||!code||!body||!why) return;
+    const TOK={none:'ไม่มี header',forged:'Bearer eyJ… (secret อื่น)',expired:'Bearer eyJ… (exp ผ่านแล้ว)',requester:'Bearer eyJ… role=requester',staff:'Bearer eyJ… role=staff'};
+    let tok='none', m='PUT';
+    function node(nm,ds,cls){return '<div class="gk-node '+cls+'"><span class="nm">'+nm+'</span><span class="ds">'+ds+'</span></div>';}
+    function render(){
+      const guarded=(m==='PUT'||m==='DELETE');
+      const path=m==='GET'||m==='POST'?'/api/requests':'/api/requests/REQ-001';
+      let a='skip',r='skip',c='wait',st,cls,res,w;
+      if(!guarded){
+        c='pass'; st=m==='GET'?200:201; cls='ok';
+        res=m==='GET'?'[ { "id": "REQ-001", ... }, ... ]   // 5 รายการ':'{ "id": "REQ-006", "status": "pending", ... }';
+        w='<strong>'+m+' ไม่ได้ผูก authenticate</strong> — เปิดให้ทุกคนตามนโยบาย'+(tok==='none'?'':' · token ที่แนบมาถูกเมิน (แม้จะปลอมก็ไม่มีใครตรวจ)')+(m==='POST'?' · ยังผ่าน validateRequest ตามปกติ':'');
+      } else if(tok==='none'){
+        a='stop'; st=401; cls='no';
+        res='WWW-Authenticate: Bearer\n{ "error": "ต้องเข้าสู่ระบบก่อน" }';
+        w='<strong>authenticate</strong> ไม่เจอ <code>Authorization: Bearer</code> → ไม่รู้ว่าเป็นใคร → <strong>401</strong> · requireRole และ controller ไม่เคยเห็นคำขอนี้';
+      } else if(tok==='forged'||tok==='expired'){
+        a='stop'; st=401; cls='no';
+        res='WWW-Authenticate: Bearer error="invalid_token"\n{ "error": "token ไม่ถูกต้องหรือหมดอายุ กรุณาเข้าสู่ระบบใหม่" }';
+        w=tok==='forged'?'<code>jwt.verify</code> โยน <strong>invalid signature</strong> — เซ็นด้วย secret อื่น → <strong>401</strong>':'<code>jwt.verify</code> โยน <strong>jwt expired</strong> — เลย exp แล้ว → <strong>401</strong> (login ใหม่ก็แก้ได้)';
+      } else if(tok==='requester'){
+        a='pass'; r='stop'; st=403; cls='warn';
+        res='{ "error": "ไม่มีสิทธิ์ทำรายการนี้" }';
+        w='token จริง → <code>req.user.role = "requester"</code> · <strong>requireRole("staff")</strong> ไม่ตรง → <strong>403</strong> · login ใหม่ก็ไม่ช่วย ต้องมีสิทธิ์';
+      } else {
+        a='pass'; r='pass'; c='pass'; st=m==='PUT'?200:204; cls='ok';
+        res=m==='PUT'?'{ "id": "REQ-001", "status": "completed", ... }':'(204 No Content — ไม่มี body)';
+        w='ผ่านทั้งสองด่าน → controller ทำงาน · '+(m==='PUT'?'<strong>200</strong> (สถานะผิดยังได้ 400 · ไม่มีรหัสได้ 404 ตามเดิม)':'<strong>204</strong> (ไม่มีรหัสได้ 404 ตามเดิม)');
+      }
+      flow.innerHTML=node(m+' '+path.replace('/api/requests','…'),TOK[tok],'pass')+
+        node('authenticate',guarded?'คุณคือใคร':'ไม่ได้ผูก',a)+
+        node("requireRole('staff')",guarded?'ทำได้ไหม':'ไม่ได้ผูก',r)+
+        node('controller',m==='GET'?'listRequests':m==='POST'?'createRequest':m==='PUT'?'updateRequestStatus':'deleteRequest',c);
+      code.className='gk-code '+cls; code.innerHTML=st+'<small>'+(st===401?'Unauthorized':st===403?'Forbidden':st===204?'No Content':st===201?'Created':'OK')+'</small>';
+      body.textContent=res; why.innerHTML=w;
+      document.querySelectorAll('[data-gk-tok]').forEach(b=>b.classList.toggle('on',b.dataset.gkTok===tok));
+      document.querySelectorAll('[data-gk-m]').forEach(b=>b.classList.toggle('on',b.dataset.gkM===m));
+    }
+    document.querySelectorAll('[data-gk-tok]').forEach(b=>b.addEventListener('click',()=>{tok=b.dataset.gkTok;render();}));
+    document.querySelectorAll('[data-gk-m]').forEach(b=>b.addEventListener('click',()=>{m=b.dataset.gkM;render();}));
+    render();
+  })();
+
+  // ══ timer (generic จากต้นแบบ — ใช้เมื่อมีปุ่ม data-timer) ══
+  const timers={};
+  function fmt(s){const mm=Math.floor(Math.abs(s)/60),x=Math.abs(s)%60;
+    return(s<0?'-':'')+String(mm).padStart(2,'0')+':'+String(x).padStart(2,'0');}
+  if(document.querySelector('[data-timer]')){
+    setInterval(()=>{Object.keys(timers).forEach(id=>{const t=timers[id];if(!t||!t.running)return;
+      t.left--;const el=$(id);if(!el)return;el.textContent=fmt(t.left);
+      el.style.color=t.left<=0?'var(--red)':'var(--amber)';});},1000);
+    document.querySelectorAll('[data-timer]').forEach(b=>{b.onclick=()=>{
+      const id=b.dataset.timer,act=b.dataset.act,el=$(id);if(!el)return;
+      if(!timers[id])timers[id]={left:(+b.dataset.min||30)*60,running:false};
+      const t=timers[id];
+      if(act==='start')t.running=true;else if(act==='pause')t.running=false;
+      else if(act==='reset'){t.running=false;t.left=(+b.dataset.min||30)*60;el.textContent=fmt(t.left);el.style.color='var(--amber)';}};});
+  }
+  const mh=location.hash.match(/^#s(\d+)$/);show(mh?+mh[1]-1:0);
+})();
+</script>
+</body>
+</html>

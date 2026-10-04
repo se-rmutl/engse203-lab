@@ -140,3 +140,12 @@ week-11-fullstack-integration/
 > **MongoDB เป็นภาคผนวก** — สัปดาห์นี้เน้น integration + production-ready ด้วย SQLite (จากสัปดาห์ 10) · MongoDB/async อยู่ในบท 8 "อ่านเพิ่มเติม" เพื่อให้รู้จักทางเลือก ไม่ต้องลงมือเขียน
 
 ---
+
+## สำหรับผู้สอน
+
+| ไฟล์ | ใช้ทำอะไร |
+|---|---|
+| [Step Script](_instructor-private/ENGSE203_Week11_Instructor_Step_Script_TH.md) | สคริปต์ 300 นาที |
+| `_instructor-private/reference-solution/` | เฉลย (checker 41/41) |
+
+⚠ **`_instructor-private/` ห้ามเผยแพร่ให้นักศึกษา**

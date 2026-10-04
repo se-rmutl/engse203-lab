@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENGSE203 Week 12 — เอกสารประกอบการสอน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1F6F3; --card:#FFFFFF; --ink:#14251E; --ink-soft:#54685E;
+  --track:#BFD2C8; --a:#A8620E; --a-tint:#FBF0E2; --b:#186B8C; --b-tint:#DDEEF5;
+  --loading:#B5771A; --success:#1E7A54; --error:#B23A2E; --rule:#DBE7E0;
+  --code-bg:#1E1408; --vio:#6B3B96; --vio-tint:#F1EAF8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  line-height:1.78;padding:0 20px 80px;-webkit-font-smoothing:antialiased;}
+.doc{max-width:860px;margin:0 auto}
+
+.cover{padding:64px 0 40px;border-bottom:3px solid var(--a)}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.2em;color:var(--a);text-transform:uppercase}
+.cover h1{font-size:clamp(30px,5vw,46px);font-weight:700;line-height:1.15;
+  letter-spacing:-.02em;margin:14px 0 8px}
+.cover .subtitle{font-size:19px;color:var(--ink-soft);font-weight:300;margin-bottom:28px}
+.meta{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px}
+.meta th{text-align:left;font-weight:600;padding:7px 14px 7px 0;width:190px;
+  vertical-align:top;color:var(--ink-soft);font-size:13px}
+.meta td{padding:7px 0;border-bottom:1px solid var(--rule)}
+.meta tr:first-child td,.meta tr:first-child th{border-top:1px solid var(--rule)}
+.meta a{color:var(--b)}
+
+.bigidea{background:var(--ink);color:#fff;padding:24px 26px;border-radius:4px;margin-top:8px}
+.bigidea .lab{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;
+  opacity:.65;text-transform:uppercase;margin-bottom:8px}
+.bigidea p{font-size:17px;line-height:1.6}
+.bigidea code{font-family:'IBM Plex Mono',monospace;font-size:15px;color:#F0B872;
+  background:rgba(255,255,255,.14);padding:1px 7px;border-radius:3px}
+
+.howto{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:26px;margin:36px 0}
+.howto h2{font-size:19px;margin-bottom:14px}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;font-size:14px;margin-top:14px}
+.legend .k{font-weight:600;white-space:nowrap}
+.newbie{background:var(--a-tint);border-left:3px solid var(--a);padding:16px 20px;
+  border-radius:0 6px 6px 0;margin-top:18px;font-size:14.5px}
+.wheretag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:middle}
+.wheretag.home{background:#FDF2E6;color:#8A5A0E;border:1px solid #E8C99A}
+.wheretag.room{background:#E4F1EA;color:#14503A;border:1px solid #A8D4BE}
+
+.ch{margin-top:60px;padding-top:8px}
+.ch-num{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:.16em;color:var(--a);text-transform:uppercase;
+  display:flex;align-items:center;gap:12px}
+.ch-num::after{content:"";flex:1;height:1px;background:var(--rule)}
+.ch h2{font-size:28px;font-weight:700;line-height:1.25;margin:12px 0 6px;letter-spacing:-.01em}
+.ch .readtime{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  color:var(--track);letter-spacing:.06em;margin-bottom:22px}
+.ch h3{font-size:19px;font-weight:600;margin:32px 0 10px}
+p{margin-bottom:14px}
+ul,ol{margin:0 0 16px 22px}
+li{margin-bottom:7px}
+strong{font-weight:600}
+em{font-style:normal;background:linear-gradient(transparent 62%,var(--a-tint) 62%)}
+
+code{font-family:'IBM Plex Mono',monospace;font-size:.88em;
+  background:#F5EADA;padding:2px 6px;border-radius:3px;color:#7A4708}
+pre{background:var(--code-bg);color:#E4EFE9;border-radius:4px;
+  padding:20px 22px;overflow-x:auto;margin:16px 0;font-size:13.5px;line-height:1.7}
+pre code{background:none;padding:0;color:inherit;font-size:13.5px}
+.c-key{color:#F0B872}.c-str{color:#E9C08A}.c-com{color:#6E8A7E;font-style:italic}
+.c-fn{color:#8FD0EC}.c-bad{color:#F0968C}.c-hl{color:#FFE08A;font-weight:600}
+.c-num{color:#D9A0E8}
+
+.term{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--b);
+  border-radius:0 6px 6px 0;padding:16px 20px;margin:18px 0}
+.term .w{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--b);
+  font-size:15px;margin-bottom:4px}
+.term p{margin:0;font-size:14.5px}
+
+table.d{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0}
+table.d th{text-align:left;background:#F5EADA;padding:10px 12px;
+  font-weight:600;font-size:13px;border-bottom:2px solid var(--track)}
+table.d td{padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.d tr:hover td{background:#FAFCFB}
+
+figure{margin:30px 0;background:var(--card);border:1px solid var(--rule);
+  border-radius:4px;padding:24px 22px 16px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:13px;color:var(--ink-soft);margin-top:16px;padding-top:12px;border-top:1px solid var(--rule)}
+figcaption b{font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  letter-spacing:.1em;color:var(--a);display:block;margin-bottom:4px;text-transform:uppercase}
+
+.box{border-radius:4px;padding:20px 22px;margin:22px 0;font-size:14.5px}
+.box .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px;display:block}
+.box p:last-child{margin-bottom:0}
+.predict{background:var(--a-tint);border-left:3px solid var(--a)}
+.predict .h{color:var(--a)}
+.pitfall{background:#FBEBE8;border-left:3px solid var(--error)}
+.pitfall .h{color:var(--error)}
+.note{background:#FDF4E3;border-left:3px solid var(--loading)}
+.note .h{color:var(--loading)}
+.next{background:var(--b-tint);border-left:3px solid var(--b)}
+.next .h{color:var(--b)}
+.analogy{background:var(--vio-tint);border-left:3px solid var(--vio)}
+.analogy .h{color:var(--vio)}
+.inclass{background:#E4F1EA;border-left:3px solid var(--a)}
+.inclass .h{color:var(--a)}
+.takehome{background:#FDF2E6;border-left:3px solid var(--loading)}
+.takehome .h{color:var(--loading)}
+.challenge{background:var(--vio-tint);border-left:3px solid var(--vio)}
+.challenge .h{color:var(--vio)}
+
+details{background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  padding:14px 18px;margin:14px 0;font-size:14.5px}
+details summary{cursor:pointer;font-weight:600;font-size:14.5px;list-style:none;
+  display:flex;align-items:center;gap:9px}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸";color:var(--a);font-size:13px;transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+details .ans{margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-weight:300}
+details .ans p:last-child{margin-bottom:0}
+
+.recap{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--ink);
+  border-radius:4px;padding:22px;margin:30px 0 0}
+.recap .h{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px;display:block}
+.recap ul{margin-bottom:0;margin-left:20px}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--rule);
+  font-size:12.5px;color:var(--ink-soft);font-weight:300;display:flex;
+  justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer .m{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.05em}
+
+.toc{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:24px 26px;margin:28px 0}
+.toc h2{font-size:17px;margin-bottom:8px}
+.toc .toc-note{font-size:13px;color:var(--ink-soft);margin-bottom:16px;font-weight:300}
+.toc ol{margin:0 0 0 20px;font-size:14.5px}
+.toc li{margin-bottom:6px}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+.toc a:hover{border-bottom-color:var(--a);color:var(--a)}
+.toc .t{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--track);margin-left:6px}
+.toc .grp{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--a);margin:14px 0 6px}
+
+@media print{
+  body{background:#fff;padding:0}
+  figure,.box,.recap,details,table.d,.term{break-inside:avoid}
+  .ch{break-before:page}
+  details{border:none}details summary::before{content:""}
+  details .ans{display:block}
+}
+@media (max-width:640px){
+  .meta th{width:auto;display:block;padding-bottom:0}
+  .meta td{display:block;padding-top:2px}
+  .cover{padding:36px 0 28px}
+  .legend{grid-template-columns:1fr}
+  table.d{font-size:13px}
+  table.d th,table.d td{padding:8px 6px}
+  table.d code,.meta code,.box code,details code{overflow-wrap:anywhere;word-break:break-word}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+
+<!-- ════════ COVER ════════ -->
+<header class="cover">
+  <p class="eyebrow">ENGSE203 · หน่วยที่ 5 · Week 12 · ช่วงเช้า</p>
+  <h1>การทดสอบและ<br>การแก้ไขข้อผิดพลาด</h1>
+  <p class="subtitle">Testing &amp; Debugging · หน่วยที่ 5 · CLO6 · CP44–CP47 · ช่วงเช้าของวันสอนหน่วย 5 (บ่ายต่อด้วย Week 13)</p>
+
+  <table class="meta">
+    <tr><th>รายวิชา</th><td>ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์</td></tr>
+    <tr><th>ต่อจาก</th><td>Week 11 — บูรณาการเป็นระบบจริงที่ deploy ได้</td></tr>
+    <tr><th>หน่วยที่</th><td>5 · คุณภาพซอฟต์แวร์ การทดสอบ และความพร้อมก่อนใช้งาน — สอนวันเดียว: ช่วงเช้า = Week 12 · ช่วงบ่าย = Week 13</td></tr>
+    <tr><th>วันสอน</th><td>Sec 1 · 5 ต.ค. · Sec 2 · 8 ต.ค. · ช่วงเช้า 09:00–12:00</td></tr>
+    <tr><th>Checkpoints</th><td>CP44 · CP45 · CP46 · CP47 — 🏫 ทำในห้องทั้งหมด</td></tr>
+    <tr><th>เครื่องมือ</th><td>Vitest 5 · supertest · @vitest/coverage-v8 · VS Code JavaScript Debug Terminal · Chrome DevTools</td></tr>
+    <tr><th>ประเมินผล</th><td>CLO6 · checker ในห้อง 20 ข้อ · งานต่อยอดรวมเป็นข้อกำหนดของ Final Term Project</td></tr>
+    <tr><th>สื่อประกอบ</th><td><a href="https://se-rmutl.github.io/engse203/week12/">สไลด์สัปดาห์ 12</a> · <a href="https://se-rmutl.github.io/engse203/week12/guides/ENGSE203_Week12_CP44_LiveCoding.html">live-coding CP44–CP47</a></td></tr>
+  </table>
+
+  <div class="bigidea">
+    <span class="lab">แนวคิดแกนกลางของคาบนี้</span>
+    <p><strong>test ผ่านทั้งหมด ไม่ได้แปลว่าไม่มี bug — แปลว่ายังไม่มี test สำหรับกรณีนั้น</strong><br>
+    <code>ออกแบบกรณีทดสอบ → เขียน test → หาสาเหตุด้วยเครื่องมือ → กันไม่ให้กลับมา</code></p>
+  </div>
+</header>
+
+<!-- ════════ HOW TO READ ════════ -->
+<section class="howto">
+  <h2>วิธีอ่านเอกสารนี้</h2>
+  <p>ระบบ Campus Service Request ที่เรา deploy ได้ใน Week 11 ถูกเปิดให้ทดลองใช้แล้ว — และ<strong>ผู้ใช้แจ้งปัญหาเข้ามา 3 เรื่อง</strong> · เช้านี้เราจะเปลี่ยนจาก "เขียนให้รันได้" เป็น "พิสูจน์ได้ว่าทำงานถูก และหาสาเหตุได้อย่างมีหลักฐานเมื่อมันไม่ถูก"</p>
+
+  <div class="newbie">
+    <strong>ตั้งต้น</strong> — คัดลอก starter ของสัปดาห์ 12 (<code>labs/week-12-testing-debugging/lab12/starter</code> ใน Course Repository) ไปไว้ที่ <code>labs/week-12/source/</code> ของ Student Repository แล้วรัน <code>npm install --prefix api &amp;&amp; npm install --prefix frontend</code> · Vitest และ supertest อยู่ใน devDependencies แล้ว ไม่ต้องติดตั้งอะไรเพิ่ม
+    <br><br>
+    <strong>ของที่เคยทำแล้ว</strong> — middleware <code>validateRequest</code> (W06–07) · supertest + node:test 8 test (W07 CP16 · W10 CP33) · <code>config.js</code> (W07, W11) · health check + morgan (W11) · เช้านี้<strong>ต่อยอด</strong>จากของเหล่านี้ ไม่ได้เริ่มใหม่
+    <br><br>
+    <strong>ไม่มีงาน Take-Home แยก</strong> — งานที่ต่อจากคาบรวมเป็นข้อกำหนดของ Final Term Project (บทที่ 9)
+  </div>
+
+  <h2 style="margin-top:26px">รูปแบบการเรียน</h2>
+  <table class="d">
+    <tr><th>ระดับ</th><th>ทำที่ไหน</th><th>คืออะไร</th></tr>
+    <tr><td><span class="wheretag room">🏫 ในห้อง</span></td><td>ช่วงเช้า ให้เสร็จ</td><td>CP44–CP47 · test case → unit test → integration test + coverage → debug 3 bug จากผู้ใช้</td></tr>
+    <tr><td>⭐ Challenge</td><td>ไม่บังคับ</td><td>coverage ของ api ≥ 85% · CI รัน <code>npm test</code> ทุกครั้งที่ push</td></tr>
+    <tr><td>🎓 Term Project</td><td>ต่อจากคาบ</td><td>test สำหรับฟีเจอร์ของกลุ่ม — เป็นข้อกำหนดของโปรเจกต์ ไม่ใช่การบ้านแยก</td></tr>
+  </table>
+
+  <h2 style="margin-top:26px">ตารางช่วงเช้า</h2>
+  <table class="d">
+    <tr><th style="width:110px">เวลา</th><th style="width:70px">CP</th><th>ทำอะไร</th><th style="width:70px">อ่านบท</th></tr>
+    <tr><td>09:00–09:15</td><td>—</td><td>เปิดคาบ · อ่าน <code>BUG_REPORTS.md</code></td><td>1</td></tr>
+    <tr><td>09:15–09:40</td><td><strong>CP44</strong></td><td>ออกแบบ test case (equivalence + boundary) → <code>TEST_CASES.md</code></td><td>2, 3</td></tr>
+    <tr><td>09:40–10:20</td><td><strong>CP45</strong></td><td>unit test pure function ด้วย Vitest → เจอ BUG #0</td><td>4</td></tr>
+    <tr><td>10:20–10:30</td><td>—</td><td>พัก</td><td></td></tr>
+    <tr><td>10:30–11:05</td><td><strong>CP46</strong></td><td>integration test (supertest + <code>:memory:</code>) + coverage</td><td>5, 6</td></tr>
+    <tr><td>11:05–11:55</td><td><strong>CP47</strong></td><td>debug 3 bug จากผู้ใช้ + regression test + <code>DEBUG_LOG.md</code></td><td>7, 8, 9</td></tr>
+    <tr><td>11:55–12:00</td><td>—</td><td><code>check-week12 --inclass</code> · สรุปช่วงเช้า</td><td>9</td></tr>
+  </table>
+
+  <div class="legend">
+    <span class="k">🟩 ทายก่อนอ่านต่อ</span><span>หยุดคิดก่อน อย่าเพิ่งดูคำตอบ</span>
+    <span class="k">🟦 ศัพท์ที่ต้องรู้</span><span>คำใหม่พร้อมคำอธิบาย</span>
+    <span class="k">🟪 เทียบกับของที่คุ้น</span><span>อุปมากับสิ่งที่เจอจริง</span>
+    <span class="k">🟥 กับดักที่พบบ่อย</span><span>ความผิดพลาดที่เจอจริง</span>
+    <span class="k">🟨 หมายเหตุ</span><span>เกร็ดและเหตุผลเบื้องหลัง</span>
+    <span class="k">▸ เฉลย/ดูเพิ่ม</span><span>กดเพื่อเปิด</span>
+  </div>
+</section>
+
+<!-- ════════ TOC ════════ -->
+<nav class="toc">
+  <h2>สารบัญ</h2>
+  <p class="toc-note">9 บท · อ่านบท 1–3 ก่อนเข้าคาบ ที่เหลืออ่านตอนลงมือทำ · ทุกบทเป็น 🏫 ในห้อง</p>
+
+  <p class="grp">กลุ่ม 1 · ทำไมต้องทดสอบ</p>
+  <ol>
+    <li><a href="#c1">คุณภาพซอฟต์แวร์ และ "test ผ่าน ≠ ไม่มี bug"</a><span class="t">9 นาที</span></li>
+    <li><a href="#c2">ออกแบบ test case ก่อนเขียนโค้ด (CP44)</a><span class="t">12 นาที</span></li>
+    <li><a href="#c3">ระดับของ test — unit · integration · e2e</a><span class="t">8 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 2 · ลงมือทดสอบ</p>
+  <ol start="4">
+    <li><a href="#c4">Unit test ด้วย Vitest (CP45)</a><span class="t">14 นาที</span></li>
+    <li><a href="#c5">Integration test ด้วย supertest (CP46)</a><span class="t">12 นาที</span></li>
+    <li><a href="#c6">Coverage — test วิ่งผ่านโค้ดตรงไหนบ้าง (CP46)</a><span class="t">9 นาที</span></li>
+  </ol>
+
+  <p class="grp">กลุ่ม 3 · Debug อย่างเป็นขั้นตอน</p>
+  <ol start="7">
+    <li><a href="#c7">กระบวนการ debug 6 ขั้น</a><span class="t">10 นาที</span></li>
+    <li><a href="#c8">เครื่องมือ debug — stack trace · breakpoint · DevTools (CP47)</a><span class="t">15 นาที</span></li>
+    <li><a href="#c9">Regression test, DEBUG_LOG และสรุป</a><span class="t">10 นาที</span></li>
+  </ol>
+</nav>
+
+<!-- ════════ CH 1 ════════ -->
+<section class="ch" id="c1">
+  <p class="ch-num">บทที่ 1 · กลุ่มที่ 1 <span class="wheretag room">🏫 09:00 เปิดคาบ</span></p>
+  <h2>คุณภาพซอฟต์แวร์ และ "test ผ่าน ≠ ไม่มี bug"</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <p>เปิดไฟล์ <code>BUG_REPORTS.md</code> ใน starter — ระบบเปิดให้ทดลองใช้แล้ว ผู้ใช้แจ้งปัญหาเข้ามา 3 เรื่อง <strong>มีแต่อาการ ยังไม่มีใครรู้สาเหตุ</strong></p>
+
+  <table class="d">
+    <tr><th style="width:70px">BUG</th><th style="width:150px">ผู้แจ้ง</th><th>สิ่งที่ผู้ใช้เล่า</th></tr>
+    <tr><td><strong>#1</strong></td><td>เจ้าหน้าที่ฝ่ายอาคาร</td><td>"วันนี้ลบคำร้องที่ซ้ำไป 1 รายการ แล้วพอนักศึกษาส่งคำร้องใหม่ ระบบขึ้นว่า 'เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์' — เมื่อวานยังส่งได้ปกติ"</td></tr>
+    <tr><td><strong>#2</strong></td><td>หัวหน้าฝ่ายบริการ</td><td>"การ์ดสรุปด้านบนบอกว่ากำลังดำเนินการ 0 รายการ แต่ในรายการด้านล่างเห็นคำร้องสถานะ in-progress อยู่ — ตัวเลขอื่นดูถูกต้อง"</td></tr>
+    <tr><td><strong>#3</strong></td><td>เจ้าหน้าที่ฝ่าย IT</td><td>"เพื่อนร่วมงานลบคำร้องไปแล้ว แต่หน้าจอของผมยังค้างอยู่ พอผมกดเปลี่ยนสถานะ ได้ error 500 — น่าจะต้องบอกว่า 'ไม่พบคำร้อง' มากกว่า"</td></tr>
+  </table>
+
+  <p>ก่อนไล่ bug ลองทำสิ่งที่วิศวกรทุกคนทำเป็นอย่างแรก — <strong>รัน test ที่มีอยู่</strong></p>
+
+<pre><code><span class="c-key">npm</span> install --prefix api &amp;&amp; <span class="c-key">npm</span> install --prefix frontend
+<span class="c-key">npm</span> test
+<span class="c-com"># api       →  Test Files  2 passed (2)   Tests  11 passed (11)</span>
+<span class="c-com"># frontend  →  Test Files  1 passed (1)   Tests   1 passed (1)</span></code></pre>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">test ของ api ผ่านครบ <strong>11/11</strong> และ frontend ผ่าน 1/1 — <strong>แปลว่าระบบไม่มี bug ใช่ไหม</strong> · แล้ว 3 เรื่องที่ผู้ใช้แจ้งมาล่ะ</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ไม่ใช่</strong> — starter มี bug ฝังอยู่ <strong>4 ตัว</strong> (3 ตัวที่ผู้ใช้แจ้ง + อีก 1 ตัวที่ยังไม่มีใครเจอ เรียกว่า BUG #0) แต่ test ทั้ง 11 ข้อ<strong>ไม่มีข้อไหนลองกรณีเหล่านั้นเลย</strong></p>
+      <ul style="margin:8px 0 0 20px">
+        <li>ไม่มี test ที่ <em>ลบรายการกลางแล้วเพิ่มใหม่</em> (BUG #1)</li>
+        <li>test ฝั่ง frontend มีข้อเดียว คือ "รายการว่าง" — ไม่เคยนับข้อมูลหน้าตาเดียวกับที่ API ส่ง (BUG #2)</li>
+        <li>ไม่มี test <code>PUT</code> กับรหัสที่ไม่มีอยู่ (BUG #3)</li>
+        <li>ไม่มี test รายละเอียดยาว <em>10 ตัวอักษรพอดี</em> (BUG #0)</li>
+      </ul>
+      <p style="margin:8px 0 0"><strong>test ผ่านไม่ได้แปลว่าไม่มี bug — แปลว่ายังไม่มี test สำหรับกรณีนั้น</strong></p>
+    </div>
+  </details>
+
+  <figure>
+    <svg viewBox="0 0 760 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="test ส่องได้เฉพาะกรณีที่เขียนไว้ bug ทั้งสี่อยู่นอกวง">
+      <style>
+        .f1t{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .f1s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .f1m{font:500 9.5px 'IBM Plex Mono',monospace}
+        .f1b{font:600 9.5px 'IBM Plex Sans Thai',sans-serif;fill:#8F2B21}
+      </style>
+      <rect x="20" y="20" width="720" height="210" rx="12" fill="#EEF2F0" stroke="#BFD2C8"/>
+      <text x="40" y="44" class="f1t" fill="#54685E">พฤติกรรมทั้งหมดของระบบ — ทุกกรณีที่ผู้ใช้ทำได้</text>
+      <rect x="560" y="30" width="165" height="24" rx="12" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="642" y="46" text-anchor="middle" class="f1m" fill="#14503A">✓ npm test · 11 passed</text>
+
+      <ellipse cx="165" cy="118" rx="125" ry="52" fill="#FFF8E6" stroke="#E8C99A" stroke-width="1.5"/>
+      <text x="165" y="106" text-anchor="middle" class="f1t">unit · 3 ข้อ</text>
+      <text x="165" y="124" text-anchor="middle" class="f1s">ข้อมูลถูกทุกช่อง · รายละเอียด 9 ตัว</text>
+      <text x="165" y="140" text-anchor="middle" class="f1m" fill="#A8620E">isValidStatus('pending')</text>
+
+      <ellipse cx="430" cy="118" rx="130" ry="52" fill="#FFF8E6" stroke="#E8C99A" stroke-width="1.5"/>
+      <text x="430" y="106" text-anchor="middle" class="f1t">integration · 8 ข้อ</text>
+      <text x="430" y="124" text-anchor="middle" class="f1s">GET ทั้งหมด · กรองสถานะ · ค้นด้วย id</text>
+      <text x="430" y="140" text-anchor="middle" class="f1s">POST ถูก → 201 · ไม่ครบ → 400</text>
+
+      <ellipse cx="650" cy="118" rx="80" ry="44" fill="#FFF8E6" stroke="#E8C99A" stroke-width="1.5"/>
+      <text x="650" y="114" text-anchor="middle" class="f1t">frontend · 1 ข้อ</text>
+      <text x="650" y="132" text-anchor="middle" class="f1s">รายการว่าง → 0</text>
+
+      <rect x="35" y="186" width="155" height="26" rx="13" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="112" y="203" text-anchor="middle" class="f1b">BUG #0 · 10 ตัวพอดี</text>
+      <rect x="215" y="186" width="155" height="26" rx="13" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="292" y="203" text-anchor="middle" class="f1b">BUG #1 · ลบแล้วเพิ่มใหม่</text>
+      <rect x="395" y="186" width="155" height="26" rx="13" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="472" y="203" text-anchor="middle" class="f1b">BUG #3 · PUT รหัสที่ไม่มี</text>
+      <rect x="575" y="186" width="155" height="26" rx="13" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="652" y="203" text-anchor="middle" class="f1b">BUG #2 · นับ in-progress</text>
+
+      <text x="380" y="256" text-anchor="middle" class="f1s">วงสีเหลือง = กรณีที่มี test ส่องอยู่ · ป้ายแดง = bug ทั้ง 4 ตัว ซึ่งอยู่นอกวงทั้งหมด</text>
+      <text x="380" y="277" text-anchor="middle" class="f1t">test ผ่านทุกข้อ = "ในวง" ถูกต้อง — ไม่ได้บอกอะไรเลยเกี่ยวกับ "นอกวง"</text>
+    </svg>
+    <figcaption><b>ภาพที่ 1</b>test 11 ข้อของ starter ส่องเฉพาะกรณีที่เขียนไว้ — bug ทั้ง 4 ตัวอยู่ในส่วนที่ไม่มี test ส่องถึง</figcaption>
+  </figure>
+
+  <h3>1.1 คุณภาพซอฟต์แวร์ — ถูกต้องในทุกกรณีที่ผู้ใช้จะเจอ</h3>
+
+  <p>ตอน dev เรามักลองแค่ "กรณีปกติ" — กรอกข้อมูลครบ กดส่ง ข้อมูลขึ้น ก็ถือว่าเสร็จ · แต่ผู้ใช้จริงทำสิ่งที่เราไม่ได้ลอง: ลบรายการกลาง เปิดหน้าจอค้างไว้แล้วกดทีหลัง พิมพ์ข้อความยาวพอดีขอบ · <strong>คุณภาพ</strong>จึงหมายถึงระบบทำงานถูกตามที่ตกลงไว้ <strong>ในทุกกรณีที่ผู้ใช้จะเจอ</strong> ไม่ใช่แค่กรณีที่เราลองตอนเขียน</p>
+
+  <div class="term">
+    <div class="w">Bug · อาการ (symptom) · สาเหตุ (root cause)</div>
+    <p><strong>bug</strong> = พฤติกรรมของโปรแกรมที่ต่างจากที่ควรเป็น · <strong>อาการ</strong>คือสิ่งที่ผู้ใช้เห็น (ได้ 500, ตัวเลขเป็น 0) · <strong>สาเหตุ</strong>คือบรรทัดโค้ดที่ทำให้เกิด — ผู้ใช้บอกได้แค่อาการ งานของเราคือหาสาเหตุ</p>
+  </div>
+
+  <h3>1.2 test ทำอะไรได้ และทำอะไรไม่ได้</h3>
+
+  <table class="d">
+    <tr><th>test ทำได้</th><th>test ทำไม่ได้</th></tr>
+    <tr><td>ยืนยันว่ากรณีที่<strong>เขียนไว้</strong>ยังทำงานถูก</td><td>พิสูจน์ว่า "ไม่มี bug เลย"</td></tr>
+    <tr><td>บอกทันทีเมื่อแก้โค้ดแล้วของเดิมพัง (regression)</td><td>เจอกรณีที่ไม่มีใครคิดจะเขียน</td></tr>
+    <tr><td>รันซ้ำได้เร็ว — ทั้งชุดไม่ถึง 2 วินาที</td><td>แทนการคิดออกแบบกรณีทดสอบ</td></tr>
+  </table>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับไฟฉายในห้องมืด</span>
+    <p style="margin:0">test แต่ละข้อคือ<strong>ไฟฉายหนึ่งดวง</strong>ที่ส่องไปยังกรณีหนึ่ง · ทุกดวงสว่าง (ผ่าน) ไม่ได้แปลว่าห้องสะอาด — แปลว่าจุดที่ส่องสะอาด<br>
+    งานของเช้านี้คือ<strong>คิดก่อนว่าควรส่องตรงไหน</strong> (CP44) แล้วค่อยเพิ่มไฟฉาย (CP45–CP46) และเมื่อเจอของสกปรก ให้ติดไฟฉายค้างไว้ตรงนั้นตลอดไป (CP47)</p>
+  </div>
+
+  <h3>1.3 เช้านี้เราจะทำอะไร</h3>
+
+  <table class="d">
+    <tr><th style="width:70px">CP</th><th>ทำอะไร</th><th>ผลที่ได้</th></tr>
+    <tr><td><strong>CP44</strong></td><td>ออกแบบกรณีทดสอบก่อนเขียนโค้ด</td><td>รู้ว่าควรส่องตรงไหน → <code>TEST_CASES.md</code></td></tr>
+    <tr><td><strong>CP45</strong></td><td>unit test ด้วย Vitest</td><td>เจอ BUG #0 เอง — ไม่ต้องรอผู้ใช้แจ้ง</td></tr>
+    <tr><td><strong>CP46</strong></td><td>integration test + coverage</td><td>เห็นว่าโค้ดส่วนไหนยัง "มืด"</td></tr>
+    <tr><td><strong>CP47</strong></td><td>debug 3 bug จากผู้ใช้</td><td>แก้ด้วยหลักฐาน + test กันไม่ให้กลับมา</td></tr>
+  </table>
+
+  <div class="box note">
+    <span class="h">🟨 bug ทั้ง 4 ตัวถูกฝังไว้โดยตั้งใจ</span>
+    <p style="margin:0">และเป็นแบบที่เจอบ่อยในงานจริงทุกตัว — ขอบ <code>&lt;</code> กับ <code>&lt;=</code> · คำนวณรหัสจากจำนวนแถว · ค่าที่สะกดไม่ตรงกันระหว่างชั้น · ใช้ค่าก่อนตรวจว่าเป็น <code>null</code> · เรียนจาก bug ปลอมวันนี้ จะจำได้เมื่อเจอ bug จริงใน Term Project</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 1</span>
+    <ul>
+      <li>ผู้ใช้แจ้งได้แค่<strong>อาการ</strong> — หน้าที่เราคือหา<strong>สาเหตุ</strong></li>
+      <li>starter <code>npm test</code> ผ่าน 11/11 ทั้งที่มี bug 4 ตัว</li>
+      <li><strong>test ผ่าน ≠ ไม่มี bug</strong> — แปลว่ายังไม่มี test สำหรับกรณีนั้น</li>
+      <li>คุณภาพ = ถูกต้องในทุกกรณีที่ผู้ใช้จะเจอ ไม่ใช่แค่กรณีที่เราลอง</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 2 ════════ -->
+<section class="ch" id="c2">
+  <p class="ch-num">บทที่ 2 · กลุ่มที่ 1 <span class="wheretag room">🏫 CP44 · 09:15</span></p>
+  <h2>ออกแบบ test case ก่อนเขียนโค้ด</h2>
+  <p class="readtime">เวลาอ่าน ≈ 12 นาที</p>
+
+  <div class="term">
+    <div class="w">Test case</div>
+    <p>ข้อมูลเข้า 1 ชุด + <strong>ผลที่คาดหวัง</strong> ที่เขียนไว้<strong>ก่อน</strong>รัน · ถ้าไม่เขียนผลที่คาดหวังไว้ก่อน เราจะเผลอยอมรับสิ่งที่โปรแกรมทำออกมา — รวมทั้ง bug ด้วย</p>
+  </div>
+
+  <p>ทำไมต้องออกแบบก่อนเขียนโค้ด test — ถ้าเปิดโค้ดดูก่อนแล้วค่อยคิด test เรามักจะ "ลอก" พฤติกรรมของโค้ดมาเป็นผลที่คาดหวัง · ผลที่คาดหวังต้องมาจาก<strong>สเปก</strong> (สิ่งที่ระบบสัญญากับผู้ใช้) ไม่ใช่จากสิ่งที่โค้ดทำอยู่</p>
+
+  <h3>2.1 กฎที่เราจะทดสอบ</h3>
+
+  <p>กฎตรวจข้อมูลคำร้องอยู่ใน <code>api/src/validators/requestValidator.js</code> (starter แยกออกมาจาก middleware ให้แล้ว — บทที่ 4 จะเล่าว่าทำไม)</p>
+
+<pre><code><span class="c-com">// api/src/validators/requestValidator.js (ตัดมาบางส่วน)</span>
+<span class="c-key">export const</span> REQUEST_TYPES = [<span class="c-str">'แจ้งซ่อม'</span>, <span class="c-str">'บริการบัญชีผู้ใช้'</span>, <span class="c-str">'ขอใช้อุปกรณ์'</span>, <span class="c-str">'อื่น ๆ'</span>];
+<span class="c-key">export const</span> PRIORITIES = [<span class="c-str">'normal'</span>, <span class="c-str">'urgent'</span>];
+<span class="c-key">export const</span> MIN_NAME = <span class="c-num">2</span>;
+<span class="c-key">export const</span> MIN_DETAILS = <span class="c-num">10</span>;
+
+<span class="c-key">function</span> <span class="c-fn">readText</span>(value) {
+  <span class="c-key">return typeof</span> value === <span class="c-str">'string'</span> ? value.<span class="c-fn">trim</span>() : <span class="c-str">''</span>;   <span class="c-com">// ตัดช่องว่างหัวท้ายก่อนนับ</span>
+}</code></pre>
+
+  <table class="d">
+    <tr><th>ช่อง</th><th>กฎ</th><th>ข้อความ error เมื่อผิด</th></tr>
+    <tr><td>ชื่อผู้แจ้ง</td><td>อย่างน้อย 2 ตัวอักษร (หลังตัดช่องว่าง)</td><td>ชื่อผู้แจ้งต้องมีอย่างน้อย 2 ตัวอักษร</td></tr>
+    <tr><td>ประเภท</td><td>ต้องอยู่ในรายการ 4 ค่า</td><td>ประเภทคำร้องไม่ถูกต้อง</td></tr>
+    <tr><td>สถานที่</td><td>ต้องไม่ว่าง</td><td>กรุณาระบุสถานที่</td></tr>
+    <tr><td>รายละเอียด</td><td>อย่างน้อย 10 ตัวอักษร (หลังตัดช่องว่าง)</td><td>รายละเอียดต้องมีอย่างน้อย 10 ตัวอักษร</td></tr>
+    <tr><td>ความเร่งด่วน</td><td><code>normal</code> หรือ <code>urgent</code></td><td>ความเร่งด่วนต้องเป็น normal หรือ urgent</td></tr>
+  </table>
+
+  <p>สังเกตว่าข้อความ error คือ<strong>สเปกที่ผู้ใช้เห็น</strong> — "อย่างน้อย 10 ตัวอักษร" คือสัญญาว่า 10 ตัวต้องผ่าน</p>
+
+  <h3>2.2 Equivalence partitioning — แบ่งค่าเป็นกลุ่ม</h3>
+
+  <div class="term">
+    <div class="w">Equivalence partitioning</div>
+    <p>แบ่งค่าที่เป็นไปได้ทั้งหมดของแต่ละช่องเป็น<strong>กลุ่มที่ระบบควรทำเหมือนกัน</strong> แล้วเลือก<strong>ตัวแทน 1 ค่าต่อกลุ่ม</strong> · ไม่ต้องทดสอบทุกค่า (ซึ่งเป็นไปไม่ได้) แต่ต้องครบทุกกลุ่ม</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 372" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="แบ่งค่าของแต่ละช่องเป็นกลุ่ม ผ่าน และ error">
+      <style>
+        .f2t{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .f2s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .f2m{font:500 9.5px 'IBM Plex Mono',monospace;fill:#54685E}
+      </style>
+      <text x="20" y="22" class="f2s">ช่อง (กฎ)</text>
+      <text x="180" y="22" class="f2s">กลุ่มของค่า — เลือกตัวแทน 1 ค่าต่อกลุ่ม</text>
+      <rect x="590" y="12" width="12" height="12" rx="2" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="608" y="22" class="f2s">ผ่าน</text>
+      <rect x="660" y="12" width="12" height="12" rx="2" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="678" y="22" class="f2s">error</text>
+
+      <text x="20" y="58" class="f2t">ชื่อผู้แจ้ง</text>
+      <text x="20" y="74" class="f2s">≥ 2 ตัวอักษร</text>
+      <rect x="180" y="38" width="220" height="46" rx="6" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="290" y="57" text-anchor="middle" class="f2t">0–1 ตัวอักษร</text>
+      <text x="290" y="74" text-anchor="middle" class="f2m">'ก'</text>
+      <rect x="404" y="38" width="336" height="46" rx="6" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="572" y="57" text-anchor="middle" class="f2t">2 ตัวขึ้นไป</text>
+      <text x="572" y="74" text-anchor="middle" class="f2m">'กข' · 'สมชาย ใจดี'</text>
+
+      <text x="20" y="120" class="f2t">ประเภทคำร้อง</text>
+      <text x="20" y="136" class="f2s">อยู่ในรายการ 4 ค่า</text>
+      <rect x="180" y="100" width="320" height="46" rx="6" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="340" y="119" text-anchor="middle" class="f2t">อยู่ในรายการ</text>
+      <text x="340" y="136" text-anchor="middle" class="f2m">'แจ้งซ่อม'</text>
+      <rect x="504" y="100" width="236" height="46" rx="6" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="622" y="119" text-anchor="middle" class="f2t">นอกรายการ</text>
+      <text x="622" y="136" text-anchor="middle" class="f2m">'แจ้งเหตุ'</text>
+
+      <text x="20" y="182" class="f2t">รายละเอียด</text>
+      <text x="20" y="198" class="f2s">≥ 10 ตัว หลังตัดช่องว่าง</text>
+      <rect x="180" y="162" width="160" height="46" rx="6" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="260" y="181" text-anchor="middle" class="f2t">ว่าง / ช่องว่างล้วน</text>
+      <text x="260" y="198" text-anchor="middle" class="f2m">'          '</text>
+      <rect x="344" y="162" width="176" height="46" rx="6" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="432" y="181" text-anchor="middle" class="f2t">1–9 ตัวอักษร</text>
+      <text x="432" y="198" text-anchor="middle" class="f2m">'123456789'</text>
+      <rect x="524" y="162" width="216" height="46" rx="6" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="632" y="181" text-anchor="middle" class="f2t">10 ตัวขึ้นไป</text>
+      <text x="632" y="198" text-anchor="middle" class="f2m">'1234567890'</text>
+
+      <text x="20" y="244" class="f2t">ความเร่งด่วน</text>
+      <text x="20" y="260" class="f2s">normal · urgent</text>
+      <rect x="180" y="224" width="280" height="46" rx="6" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="320" y="243" text-anchor="middle" class="f2t">normal · urgent</text>
+      <text x="320" y="260" text-anchor="middle" class="f2m">test.each 2 ค่า</text>
+      <rect x="464" y="224" width="276" height="46" rx="6" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="602" y="243" text-anchor="middle" class="f2t">ค่าอื่น</text>
+      <text x="602" y="260" text-anchor="middle" class="f2m">'high'</text>
+
+      <text x="20" y="306" class="f2t">input ทั้งก้อน</text>
+      <text x="20" y="322" class="f2s">ต้องเป็น object</text>
+      <rect x="180" y="286" width="220" height="46" rx="6" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="290" y="305" text-anchor="middle" class="f2t">object</text>
+      <text x="290" y="322" text-anchor="middle" class="f2m">{ ...valid }</text>
+      <rect x="404" y="286" width="336" height="46" rx="6" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="572" y="305" text-anchor="middle" class="f2t">null · array · ตัวเลข · ข้อความ</text>
+      <text x="572" y="322" text-anchor="middle" class="f2m">null · [] · 42 · 'text'</text>
+
+      <text x="380" y="358" text-anchor="middle" class="f2s">ค่าในกลุ่มเดียวกัน ระบบควรทำเหมือนกัน → ตัวแทน 1 ค่าพอ · รอยต่อระหว่างกลุ่มคือจุดที่ต้องทดสอบละเอียด (ภาพที่ 3)</text>
+    </svg>
+    <figcaption><b>ภาพที่ 2</b>Equivalence partitioning — แบ่งค่าของแต่ละช่องเป็นกลุ่ม "ผ่าน" (เขียว) กับ "error" (แดง) แล้วเลือกตัวแทนกลุ่มละ 1 ค่า</figcaption>
+  </figure>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">กฎ "รายละเอียดอย่างน้อย 10 ตัวอักษร" — ถ้าเลือกทดสอบความยาวได้แค่ <strong>3 ค่า</strong> จะเลือกความยาวเท่าไร · 3 · 50 · 100 ดีไหม</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>เลือก <strong>9 · 10 · 11</strong> — ค่าที่อยู่รอบ "รอยต่อ" ระหว่างกลุ่ม error กับกลุ่มผ่าน</p>
+      <p style="margin:0">3 · 50 · 100 อยู่ไกลจากขอบ ต่อให้โค้ดเขียนขอบผิดไป 1 (เช่น <code>&lt;=</code> แทน <code>&lt;</code>) ทั้ง 3 ค่าก็ยังให้ผลถูก · <strong>bug ชอบซ่อนตรงขอบ</strong> เพราะโปรแกรมเมอร์ต้องตัดสินใจตรงนั้นว่าจะใช้ <code>&lt;</code> หรือ <code>&lt;=</code></p>
+    </div>
+  </details>
+
+  <h3>2.3 Boundary value — ทดสอบที่ขอบเสมอ</h3>
+
+  <div class="term">
+    <div class="w">Boundary value analysis</div>
+    <p>ถ้ากฎคือ "อย่างน้อย N" ให้ทดสอบ <strong>N−1 · N · N+1</strong> เสมอ · รายละเอียด: 9 · 10 · 11 · ชื่อ: 1 · 2 (· 3)</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 224" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="เส้นจำนวนความยาวรายละเอียด สเปกเทียบโค้ด starter ต่างกันที่ 10">
+      <style>
+        .f3t{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .f3s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .f3m{font:500 9.5px 'IBM Plex Mono',monospace;fill:#54685E}
+        .f3b{font:600 11px 'IBM Plex Sans Thai',sans-serif;fill:#8F2B21}
+      </style>
+      <text x="20" y="26" class="f3t">สเปก — "อย่างน้อย 10 ตัวอักษร" (ต่ำกว่า 10 → error)</text>
+      <circle cx="586" cy="22" r="6" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.5"/>
+      <text x="598" y="26" class="f3s">error</text>
+      <circle cx="656" cy="22" r="6" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5"/>
+      <text x="668" y="26" class="f3s">ผ่าน</text>
+
+      <line x1="60" y1="52" x2="650" y2="52" stroke="#BFD2C8" stroke-width="2"/>
+      <g stroke-width="1.5">
+        <circle cx="70" cy="52" r="7" fill="#FBEBE8" stroke="#B23A2E"/><circle cx="108" cy="52" r="7" fill="#FBEBE8" stroke="#B23A2E"/>
+        <circle cx="146" cy="52" r="7" fill="#FBEBE8" stroke="#B23A2E"/><circle cx="184" cy="52" r="7" fill="#FBEBE8" stroke="#B23A2E"/>
+        <circle cx="222" cy="52" r="7" fill="#FBEBE8" stroke="#B23A2E"/><circle cx="260" cy="52" r="7" fill="#FBEBE8" stroke="#B23A2E"/>
+        <circle cx="298" cy="52" r="7" fill="#FBEBE8" stroke="#B23A2E"/><circle cx="336" cy="52" r="7" fill="#FBEBE8" stroke="#B23A2E"/>
+        <circle cx="374" cy="52" r="7" fill="#FBEBE8" stroke="#B23A2E"/><circle cx="412" cy="52" r="7" fill="#FBEBE8" stroke="#B23A2E"/>
+        <circle cx="450" cy="52" r="7" fill="#DFF0E7" stroke="#1E7A54"/><circle cx="488" cy="52" r="7" fill="#DFF0E7" stroke="#1E7A54"/>
+        <circle cx="526" cy="52" r="7" fill="#DFF0E7" stroke="#1E7A54"/><circle cx="564" cy="52" r="7" fill="#DFF0E7" stroke="#1E7A54"/>
+        <circle cx="602" cy="52" r="7" fill="#DFF0E7" stroke="#1E7A54"/><circle cx="640" cy="52" r="7" fill="#DFF0E7" stroke="#1E7A54"/>
+      </g>
+
+      <text x="20" y="96" class="f3t">โค้ด starter — <tspan class="f3m" fill="#A8620E">if (length &lt;= MIN_DETAILS)</tspan> → error</text>
+      <line x1="60" y1="122" x2="650" y2="122" stroke="#BFD2C8" stroke-width="2"/>
+      <g stroke-width="1.5">
+        <circle cx="70" cy="122" r="7" fill="#FBEBE8" stroke="#B23A2E"/><circle cx="108" cy="122" r="7" fill="#FBEBE8" stroke="#B23A2E"/>
+        <circle cx="146" cy="122" r="7" fill="#FBEBE8" stroke="#B23A2E"/><circle cx="184" cy="122" r="7" fill="#FBEBE8" stroke="#B23A2E"/>
+        <circle cx="222" cy="122" r="7" fill="#FBEBE8" stroke="#B23A2E"/><circle cx="260" cy="122" r="7" fill="#FBEBE8" stroke="#B23A2E"/>
+        <circle cx="298" cy="122" r="7" fill="#FBEBE8" stroke="#B23A2E"/><circle cx="336" cy="122" r="7" fill="#FBEBE8" stroke="#B23A2E"/>
+        <circle cx="374" cy="122" r="7" fill="#FBEBE8" stroke="#B23A2E"/><circle cx="412" cy="122" r="7" fill="#FBEBE8" stroke="#B23A2E"/>
+        <circle cx="450" cy="122" r="7" fill="#FBEBE8" stroke="#B23A2E"/><circle cx="488" cy="122" r="7" fill="#DFF0E7" stroke="#1E7A54"/>
+        <circle cx="526" cy="122" r="7" fill="#DFF0E7" stroke="#1E7A54"/><circle cx="564" cy="122" r="7" fill="#DFF0E7" stroke="#1E7A54"/>
+        <circle cx="602" cy="122" r="7" fill="#DFF0E7" stroke="#1E7A54"/><circle cx="640" cy="122" r="7" fill="#DFF0E7" stroke="#1E7A54"/>
+      </g>
+
+      <rect x="432" y="38" width="36" height="98" rx="6" fill="none" stroke="#B23A2E" stroke-width="1.6" stroke-dasharray="4 3"/>
+      <text x="478" y="92" class="f3b">ต่างกันตรงนี้ = BUG #0</text>
+
+      <g class="f3m" text-anchor="middle">
+        <text x="70" y="152">0</text><text x="108" y="152">1</text><text x="146" y="152">2</text><text x="184" y="152">3</text>
+        <text x="222" y="152">4</text><text x="260" y="152">5</text><text x="298" y="152">6</text><text x="336" y="152">7</text>
+        <text x="374" y="152">8</text><text x="412" y="152">9</text><text x="450" y="152">10</text><text x="488" y="152">11</text>
+        <text x="526" y="152">12</text><text x="564" y="152">13</text><text x="602" y="152">14</text><text x="640" y="152">15</text>
+      </g>
+      <text x="676" y="152" class="f3s">ตัวอักษร</text>
+
+      <rect x="395" y="164" width="34" height="18" rx="9" fill="#FBF0E2" stroke="#A8620E"/>
+      <text x="412" y="177" text-anchor="middle" class="f3m" fill="#A8620E">N−1</text>
+      <rect x="433" y="164" width="34" height="18" rx="9" fill="#FBF0E2" stroke="#A8620E"/>
+      <text x="450" y="177" text-anchor="middle" class="f3m" fill="#A8620E">N</text>
+      <rect x="471" y="164" width="34" height="18" rx="9" fill="#FBF0E2" stroke="#A8620E"/>
+      <text x="488" y="177" text-anchor="middle" class="f3m" fill="#A8620E">N+1</text>
+
+      <text x="380" y="210" text-anchor="middle" class="f3s">ทดสอบ 9 · 10 · 11 รอบขอบ — ค่า 10 คือค่าเดียวที่แยก &lt; ออกจาก &lt;= ได้</text>
+    </svg>
+    <figcaption><b>ภาพที่ 3</b>Boundary value — สเปก (บน) กับโค้ด starter (ล่าง) ให้ผลต่างกันแค่ค่าเดียวคือ 10 · test ที่ไม่ลองค่า 10 จะไม่มีวันเห็น bug นี้</figcaption>
+  </figure>
+
+  <h3>2.4 เขียนลง <code>TEST_CASES.md</code></h3>
+
+  <p>หลักสำคัญ — เริ่มจาก<strong>ข้อมูลที่ถูกต้องทุกช่อง</strong> (ชื่อ <code>สมชาย ใจดี</code> · ประเภท <code>แจ้งซ่อม</code> · สถานที่ <code>ห้อง 301</code> · รายละเอียด <code>แอร์ไม่เย็นตั้งแต่เช้า</code> · <code>normal</code>) แล้วแต่ละข้อ<strong>เปลี่ยนทีละช่อง</strong> · ถ้า test พัง จะรู้ทันทีว่าพังเพราะช่องไหน</p>
+
+  <table class="d">
+    <tr><th>รหัส</th><th>กลุ่ม</th><th>ข้อมูลที่เปลี่ยน</th><th>ผลที่คาดหวัง</th><th>ระดับ test</th></tr>
+    <tr><td>TC-01</td><td>ถูกต้อง</td><td>— (ถูกทุกช่อง)</td><td>ไม่มี error · API ตอบ 201</td><td>unit + integration</td></tr>
+    <tr><td>TC-02</td><td>ค่าขอบ รายละเอียด</td><td>9 ตัวอักษร</td><td>error 1 ข้อ</td><td>unit</td></tr>
+    <tr><td>TC-03</td><td>ค่าขอบ รายละเอียด</td><td>10 ตัวอักษรพอดี</td><td><strong>ผ่าน</strong></td><td>unit</td></tr>
+    <tr><td>TC-04</td><td>ค่าขอบ รายละเอียด</td><td>11 ตัวอักษร</td><td>ผ่าน</td><td>unit</td></tr>
+    <tr><td>TC-05</td><td>ไม่ถูกต้อง</td><td>รายละเอียดเป็นช่องว่างล้วน</td><td>error (ตัดช่องว่างก่อนนับ)</td><td>unit</td></tr>
+    <tr><td>TC-06</td><td>ค่าขอบ ชื่อ</td><td>1 ตัวอักษร</td><td>error</td><td>unit</td></tr>
+    <tr><td colspan="5" style="color:var(--ink-soft)">… ต่อด้วยกลุ่ม <strong>นอกรายการ</strong> (ประเภท · ความเร่งด่วน) · <strong>ผิดรูปแบบ</strong> (null · array) · <strong>ผิดหลายช่อง</strong> (<code>{}</code>) · <strong>ลำดับการทำงาน</strong> (ลบแล้วเพิ่มใหม่)</td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 อย่าใส่ "?" หรือดูผลจากโปรแกรม</span>
+    <p style="margin:0">starter ทิ้ง TC-03 ไว้เป็น <code>?</code> โดยตั้งใจ · ห้ามเติมโดย "ลองรันดูว่าได้อะไร" — โปรแกรมตอบว่า error ซึ่ง<strong>ผิด</strong> · ผลที่คาดหวังต้องมาจากสเปก: ข้อความบอก "อย่างน้อย 10" → <strong>10 ต้องผ่าน</strong></p>
+  </div>
+
+  <div class="box inclass">
+    <span class="h">🏫 CP44 · checker ตรวจ 4 ข้อ</span>
+    <p style="margin:0">api ใช้ Vitest (script <code>test</code> = <code>vitest</code>) · test ใช้ฐานข้อมูลแยก (<code>DB_FILE</code> <code>:memory:</code>) · <code>TEST_CASES.md</code> มีอย่างน้อย <strong>8 ข้อ</strong> · มีกรณี<strong>ค่าขอบ</strong> · สองข้อแรก starter เตรียมไว้ให้แล้ว (บทที่ 5 อธิบาย)</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 2</span>
+    <ul>
+      <li>ผลที่คาดหวังมาจาก<strong>สเปก</strong> ไม่ใช่จากสิ่งที่โค้ดทำ — จึงต้องออกแบบก่อนเขียน</li>
+      <li>Equivalence partitioning — แบ่งค่าเป็นกลุ่ม เลือกตัวแทนกลุ่มละ 1 ค่า</li>
+      <li>Boundary value — กฎ "อย่างน้อย N" ทดสอบ <strong>N−1 · N · N+1</strong></li>
+      <li>เริ่มจากข้อมูลถูกทุกช่อง แล้วเปลี่ยน<strong>ทีละช่อง</strong></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 3 ════════ -->
+<section class="ch" id="c3">
+  <p class="ch-num">บทที่ 3 · กลุ่มที่ 1 <span class="wheretag room">🏫 CP44</span></p>
+  <h2>ระดับของ test — unit · integration · e2e</h2>
+  <p class="readtime">เวลาอ่าน ≈ 8 นาที</p>
+
+  <div class="term">
+    <div class="w">Test pyramid</div>
+    <p>หลักการจัดสัดส่วน test — <strong>ระดับล่าง (unit) มีมากที่สุด</strong> เพราะเร็วและถูก · ระดับบนมีน้อยลงเพราะช้าและแพงขึ้น · วาดเป็นพีระมิดจึงเห็นสัดส่วนได้ทันที</p>
+  </div>
+
+  <p>ตาราง <code>TEST_CASES.md</code> มีคอลัมน์ "ระดับ test" — เพราะ test แต่ละระดับ<strong>มองเห็นคนละส่วนของระบบ</strong> และจับ bug ได้คนละแบบ</p>
+
+  <figure>
+    <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="พีระมิดการทดสอบ unit integration e2e">
+      <style>
+        .f4t{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .f4s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .f4m{font:500 9.5px 'IBM Plex Mono',monospace}
+      </style>
+      <defs><marker id="f4a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#6B3B96" stroke-width="1.5"/></marker></defs>
+
+      <polygon points="220,30 266.6,97 173.4,97" fill="#F1EAF8" stroke="#6B3B96" stroke-width="1.5"/>
+      <text x="220" y="84" text-anchor="middle" class="f4t">e2e</text>
+      <polygon points="169.9,102 270.1,102 322.3,177 117.7,177" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.5"/>
+      <text x="220" y="136" text-anchor="middle" class="f4t">integration</text>
+      <text x="220" y="154" text-anchor="middle" class="f4s">≥ 12 ข้อ</text>
+      <polygon points="114.3,182 325.7,182 380,260 60,260" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.5"/>
+      <text x="220" y="214" text-anchor="middle" class="f4t">unit</text>
+      <text x="220" y="234" text-anchor="middle" class="f4s">≥ 10 ข้อ (api) · ≥ 2 ข้อ (frontend)</text>
+
+      <path d="M412 255 L412 44" stroke="#6B3B96" stroke-width="1.6" marker-end="url(#f4a)"/>
+      <text x="397" y="150" text-anchor="middle" class="f4s" transform="rotate(-90 397 150)">ยิ่งสูง ยิ่งช้าและแพง</text>
+
+      <text x="440" y="52" class="f4t">e2e (end-to-end) — ไม่ทำในวิชานี้</text>
+      <text x="440" y="70" class="f4s">เปิดเบราว์เซอร์จริง คลิกเหมือนผู้ใช้</text>
+      <text x="440" y="86" class="f4s">ช้าที่สุด · พังง่ายเมื่อหน้าจอเปลี่ยน</text>
+
+      <text x="440" y="126" class="f4t">integration</text>
+      <text x="440" y="144" class="f4m" fill="#186B8C">api/tests/integration/ · supertest</text>
+      <text x="440" y="160" class="f4s">ยิง HTTP ผ่าน route → controller → service → DB</text>
+
+      <text x="440" y="204" class="f4t">unit</text>
+      <text x="440" y="222" class="f4m" fill="#1E7A54">api/tests/unit/ · frontend/src/utils/</text>
+      <text x="440" y="238" class="f4s">เรียก pure function ตรง ๆ ไม่ต้องเปิด server</text>
+
+      <text x="380" y="288" text-anchor="middle" class="f4s">ฐานกว้างที่สุด = unit มากที่สุด — เร็วจนรันได้ทุกครั้งที่บันทึกไฟล์ (npm run test:watch)</text>
+    </svg>
+    <figcaption><b>ภาพที่ 4</b>Test pyramid — unit เป็นฐาน (เร็ว ถูก จำนวนมาก) · integration ตรงกลาง · e2e ยอดบน (ช้า แพง ใกล้ผู้ใช้ที่สุด)</figcaption>
+  </figure>
+
+  <table class="d">
+    <tr><th>ระดับ</th><th>ทดสอบอะไร</th><th>ไฟล์ในโปรเจกต์</th><th>จับ bug แบบไหน</th></tr>
+    <tr><td><strong>unit</strong></td><td>ฟังก์ชันเดียว ไม่แตะ server / DB</td><td><code>api/tests/unit/requestValidator.test.js</code><br><code>frontend/src/utils/requestSummary.test.js</code></td><td>กฎคำนวณผิด · ขอบผิด (BUG #0 · BUG #2)</td></tr>
+    <tr><td><strong>integration</strong></td><td>หลายชั้นทำงานร่วมกันผ่าน HTTP</td><td><code>api/tests/integration/requests.api.test.js</code></td><td>status code ผิด · ลำดับการทำงาน · ชั้นต่อกันผิด (BUG #1 · BUG #3)</td></tr>
+    <tr><td><strong>e2e</strong></td><td>ทั้งระบบผ่านเบราว์เซอร์จริง</td><td>— (ไม่ทำในวิชานี้)</td><td>หน้าจอกับ API ทำงานร่วมกันไม่ได้</td></tr>
+  </table>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">BUG #1 (ลบแล้วเพิ่มใหม่ได้ 500) — <strong>unit test ของ <code>validateRequestInput</code> จะจับได้ไหม</strong> · ถ้าไม่ได้ ต้องใช้ test ระดับไหน</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>จับไม่ได้</strong> — validator ไม่รู้จักฐานข้อมูลเลย ข้อมูลที่ส่งมาถูกต้องทุกช่อง validator จึงตอบ <code>[]</code> ตามปกติ</p>
+      <p style="margin:0">BUG #1 เกิดจาก<strong>ลำดับของ 2 request</strong> (DELETE แล้ว POST) บน<strong>ข้อมูลในฐานข้อมูล</strong> → ต้องใช้ <strong>integration test</strong> ที่ยิง 2 request ต่อกัน · นี่คือเหตุผลที่ตาราง test case มีกลุ่ม "ลำดับการทำงาน" และระบุระดับเป็น integration</p>
+    </div>
+  </details>
+
+  <div class="box note">
+    <span class="h">🟨 ไม่มีระดับไหนดีที่สุด — ต้องผสม</span>
+    <p style="margin:0">unit เร็วและชี้จุดพังได้แม่น แต่ไม่เห็นว่าชั้นต่อกันถูกไหม · integration เห็นภาพกว้างกว่า แต่พังแล้วต้องไล่ต่อว่าชั้นไหน · เช้านี้เราใช้ทั้งสองระดับ — <strong>unit สำหรับกฎ · integration สำหรับพฤติกรรมของ API</strong></p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 3</span>
+    <ul>
+      <li>unit = ฟังก์ชันเดียว · integration = หลายชั้นผ่าน HTTP · e2e = ทั้งระบบผ่านเบราว์เซอร์</li>
+      <li>ยิ่งขึ้นยอดพีระมิด ยิ่งช้าและแพง — จึงมี unit มากที่สุด</li>
+      <li>bug ที่เกิดจาก<strong>ลำดับการทำงานบนข้อมูล</strong> ต้องใช้ integration test</li>
+      <li>ระบุระดับ test ไว้ใน <code>TEST_CASES.md</code> ตั้งแต่ตอนออกแบบ</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 4 ════════ -->
+<section class="ch" id="c4">
+  <p class="ch-num">บทที่ 4 · กลุ่มที่ 2 <span class="wheretag room">🏫 CP45 · 09:40</span></p>
+  <h2>Unit test ด้วย Vitest</h2>
+  <p class="readtime">เวลาอ่าน ≈ 14 นาที</p>
+
+  <div class="term">
+    <div class="w">Unit test · Pure function</div>
+    <p><strong>unit test</strong> = test ที่เรียกฟังก์ชันเดียวโดยตรง แล้วตรวจผลที่คืนมา · ทำได้ง่ายที่สุดกับ <strong>pure function</strong> — ฟังก์ชันที่รับข้อมูลเข้า คืนผลลัพธ์ ไม่แตะอะไรภายนอก (ไม่มี req/res ไม่มีฐานข้อมูล ไม่มีเครือข่าย) · ใส่ค่าเดิมได้ผลเดิมทุกครั้ง</p>
+  </div>
+
+  <h3>4.1 ทำไมต้องแยก <code>validateRequestInput</code> ออกจาก middleware</h3>
+
+  <p>ใน W06–07 กฎตรวจข้อมูลอยู่ใน middleware <code>validateRequest(req, res, next)</code> · starter สัปดาห์นี้<strong>แยกกฎออกมาเป็น pure function</strong> ไว้ที่ <code>validators/requestValidator.js</code> แล้ว middleware เหลือแค่เรียกใช้</p>
+
+  <figure>
+    <svg viewBox="0 0 760 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="middleware ผูกกับ req res next เทียบกับ pure function">
+      <style>
+        .f5t{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .f5s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .f5m{font:500 9.5px 'IBM Plex Mono',monospace}
+      </style>
+      <defs>
+        <marker id="f5r" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#B23A2E" stroke-width="1.5"/></marker>
+        <marker id="f5g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#1E7A54" stroke-width="1.5"/></marker>
+      </defs>
+
+      <text x="20" y="22" class="f5m" fill="#B23A2E" style="letter-spacing:.06em">ก่อน — กฎอยู่ใน middleware</text>
+      <rect x="20" y="32" width="160" height="96" rx="9" fill="#F5F7F6" stroke="#8A9691"/>
+      <text x="100" y="56" text-anchor="middle" class="f5t">ต้องเตรียม</text>
+      <text x="100" y="76" text-anchor="middle" class="f5m" fill="#54685E">req จำลอง</text>
+      <text x="100" y="92" text-anchor="middle" class="f5m" fill="#54685E">res จำลอง</text>
+      <text x="100" y="108" text-anchor="middle" class="f5m" fill="#54685E">next จำลอง</text>
+      <path d="M182 80 L236 80" stroke="#B23A2E" stroke-width="1.6" marker-end="url(#f5r)"/>
+      <rect x="240" y="40" width="250" height="80" rx="9" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.6"/>
+      <text x="365" y="64" text-anchor="middle" class="f5m" fill="#8F2B21">validateRequest(req, res, next)</text>
+      <text x="365" y="86" text-anchor="middle" class="f5s">กฎ + ตัดสินใจตอบ 400 ปนกัน</text>
+      <text x="365" y="104" text-anchor="middle" class="f5s">ผูกกับ Express</text>
+      <path d="M492 80 L546 80" stroke="#B23A2E" stroke-width="1.6" marker-end="url(#f5r)"/>
+      <rect x="550" y="40" width="190" height="80" rx="9" fill="#F5F7F6" stroke="#8A9691"/>
+      <text x="645" y="64" text-anchor="middle" class="f5t">ตรวจผลทางอ้อม</text>
+      <text x="645" y="84" text-anchor="middle" class="f5s">res.status ถูกเรียกด้วย 400?</text>
+      <text x="645" y="100" text-anchor="middle" class="f5s">next ถูกเรียกไหม?</text>
+
+      <text x="20" y="166" class="f5m" fill="#1E7A54" style="letter-spacing:.06em">หลัง — กฎแยกเป็น pure function</text>
+      <rect x="20" y="176" width="160" height="80" rx="9" fill="#F5F7F6" stroke="#8A9691"/>
+      <text x="100" y="204" text-anchor="middle" class="f5t">ข้อมูลธรรมดา</text>
+      <text x="100" y="224" text-anchor="middle" class="f5m" fill="#54685E">{ ...valid,</text>
+      <text x="100" y="240" text-anchor="middle" class="f5m" fill="#54685E">details: '…' }</text>
+      <path d="M182 216 L236 216" stroke="#1E7A54" stroke-width="1.6" marker-end="url(#f5g)"/>
+      <rect x="240" y="176" width="250" height="80" rx="9" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.8"/>
+      <text x="365" y="200" text-anchor="middle" class="f5m" fill="#14503A">validateRequestInput(input)</text>
+      <text x="365" y="222" text-anchor="middle" class="f5s">มีแต่กฎ — ไม่รู้จัก Express</text>
+      <text x="365" y="240" text-anchor="middle" class="f5s">ใส่ค่าเดิม ได้ผลเดิมทุกครั้ง</text>
+      <path d="M492 216 L546 216" stroke="#1E7A54" stroke-width="1.6" marker-end="url(#f5g)"/>
+      <rect x="550" y="176" width="190" height="80" rx="9" fill="#F5F7F6" stroke="#8A9691"/>
+      <text x="645" y="204" text-anchor="middle" class="f5t">ตรวจผลตรง ๆ</text>
+      <text x="645" y="224" text-anchor="middle" class="f5m" fill="#14503A">[]  หรือ</text>
+      <text x="645" y="240" text-anchor="middle" class="f5m" fill="#14503A">['ข้อความ error', …]</text>
+
+      <text x="380" y="282" text-anchor="middle" class="f5s">middleware ยังอยู่ — แต่เหลือแค่: เรียก pure function → มี error ตอบ 400 · ไม่มีก็ next()</text>
+    </svg>
+    <figcaption><b>ภาพที่ 5</b>แยกกฎออกเป็น pure function — test ไม่ต้องจำลอง req/res/next อีกต่อไป ส่งข้อมูลธรรมดาเข้าไปแล้วตรวจ array ที่คืนมา</figcaption>
+  </figure>
+
+<pre><code><span class="c-com">// api/src/middleware/validateRequest.js — middleware บาง ๆ</span>
+<span class="c-key">import</span> { validateRequestInput } <span class="c-key">from</span> <span class="c-str">'../validators/requestValidator.js'</span>;
+
+<span class="c-key">export function</span> <span class="c-fn">validateRequest</span>(req, res, next) {
+  <span class="c-key">const</span> errors = <span class="c-fn">validateRequestInput</span>(req.body);
+  <span class="c-key">if</span> (errors.length &gt; <span class="c-num">0</span>) {
+    <span class="c-key">return</span> res.<span class="c-fn">status</span>(<span class="c-num">400</span>).<span class="c-fn">json</span>({ error: <span class="c-str">'ข้อมูลคำร้องไม่ถูกต้อง'</span>, details: errors });
+  }
+  <span class="c-fn">next</span>();
+}</code></pre>
+
+  <p>หลักเดียวกับที่ใช้มาตลอดวิชา — <strong>แยกหน้าที่ให้ชัด แล้วแต่ละส่วนจะเปลี่ยนหรือทดสอบได้โดยไม่กระทบส่วนอื่น</strong> · ฝั่ง frontend ก็ทำแบบเดียวกัน: <code>utils/requestSummary.js</code> แยกการนับออกจาก component <code>SummaryPanel</code></p>
+
+  <h3>4.2 โครงของ test ใน Vitest</h3>
+
+<pre><code><span class="c-com">// api/tests/unit/requestValidator.test.js</span>
+<span class="c-key">import</span> { describe, test, expect } <span class="c-key">from</span> <span class="c-str">'vitest'</span>;
+<span class="c-key">import</span> { validateRequestInput, isValidStatus } <span class="c-key">from</span> <span class="c-str">'../../src/validators/requestValidator.js'</span>;
+
+<span class="c-com">// ข้อมูลที่ถูกต้องทุกช่อง — แต่ละ test เปลี่ยนทีละช่องเพื่อให้รู้ว่าพังเพราะอะไร</span>
+<span class="c-key">const</span> valid = {
+  requesterName: <span class="c-str">'สมชาย ใจดี'</span>, requestType: <span class="c-str">'แจ้งซ่อม'</span>,
+  location: <span class="c-str">'ห้อง 301'</span>, details: <span class="c-str">'แอร์ไม่เย็นตั้งแต่เช้า'</span>, priority: <span class="c-str">'normal'</span>,
+};
+<span class="c-key">const</span> <span class="c-fn">withField</span> = (patch) =&gt; ({ ...valid, ...patch });
+
+<span class="c-fn">describe</span>(<span class="c-str">'validateRequestInput — รายละเอียด (ค่าขอบ 10 ตัวอักษร)'</span>, () =&gt; {   <span class="c-com">// จัดกลุ่ม</span>
+  <span class="c-fn">test</span>(<span class="c-str">'9 ตัวอักษร → error (ต่ำกว่าขอบ 1)'</span>, () =&gt; {                    <span class="c-com">// 1 กรณี = 1 test</span>
+    <span class="c-fn">expect</span>(<span class="c-fn">validateRequestInput</span>(<span class="c-fn">withField</span>({ details: <span class="c-str">'123456789'</span> }))).<span class="c-fn">toHaveLength</span>(<span class="c-num">1</span>);
+  });
+});</code></pre>
+
+  <table class="d">
+    <tr><th style="width:270px">ส่วน</th><th>หน้าที่</th></tr>
+    <tr><td><code>describe(ชื่อ, fn)</code></td><td>จัดกลุ่ม test ที่เกี่ยวกัน — ตรงกับ "กลุ่ม" ในตาราง <code>TEST_CASES.md</code></td></tr>
+    <tr><td><code>test(ชื่อ, fn)</code></td><td>กรณีทดสอบ 1 ข้อ · <strong>ตั้งชื่อเป็นประโยคที่บอกข้อมูลเข้าและผลที่คาด</strong> — ตอน fail จะอ่านรู้เรื่องทันที</td></tr>
+    <tr><td><code>expect(ค่าจริง).matcher(ค่าที่คาด)</code></td><td>ตรวจผล · ถ้าไม่ตรง test fail และบอกว่าต่างกันอย่างไร</td></tr>
+  </table>
+
+  <h3>4.3 Arrange · Act · Assert</h3>
+
+  <p>test ที่อ่านง่ายมี 3 จังหวะเสมอ — ลองเขียนกรณีค่าขอบ TC-03 แบบแยกจังหวะให้เห็นชัด</p>
+
+<pre><code><span class="c-fn">test</span>(<span class="c-str">'10 ตัวอักษร → ผ่าน (ตรงขอบพอดี)'</span>, () =&gt; {
+  <span class="c-com">// Arrange — เตรียมข้อมูล: ถูกทุกช่อง ยกเว้นรายละเอียดยาว 10 ตัวพอดี</span>
+  <span class="c-key">const</span> input = <span class="c-fn">withField</span>({ details: <span class="c-str">'1234567890'</span> });
+  <span class="c-com">// Act — เรียกสิ่งที่ทดสอบ 1 ครั้ง</span>
+  <span class="c-key">const</span> errors = <span class="c-fn">validateRequestInput</span>(input);
+  <span class="c-com">// Assert — ตรวจผลกับสิ่งที่สเปกบอก ("อย่างน้อย 10" → 10 ต้องผ่าน)</span>
+  <span class="c-fn">expect</span>(errors).<span class="c-fn">toEqual</span>([]);
+});</code></pre>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ข้อความ error ของ starter บอกว่า "รายละเอียดต้องมีอย่างน้อย 10 ตัวอักษร" — <strong>ถ้าส่ง <code>'1234567890'</code> (10 ตัวพอดี) test ข้างบนจะผ่านไหม</strong> · ลองเดาก่อนรัน <code>npm test</code></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ไม่ผ่าน</strong> — นี่คือ <strong>BUG #0</strong> ที่ไม่มีผู้ใช้คนไหนแจ้ง เราเจอเองเพราะเขียน test ค่าขอบ · Vitest ตอบแบบนี้</p>
+<pre style="margin:10px 0"><code><span class="c-bad">FAIL</span>  tests/unit/requestValidator.test.js &gt; … &gt; 10 ตัวอักษร → ผ่าน (ตรงขอบพอดี)
+AssertionError: expected [ Array(1) ] to deeply equal []
+
+<span class="c-com">- Expected</span>
+<span class="c-com">+ Received</span>
+
+- []
++ [
++   <span class="c-str">"รายละเอียดต้องมีอย่างน้อย 10 ตัวอักษร"</span>,
++ ]</code></pre>
+      <p style="margin:0">อ่านผล: คาดว่าได้ <code>[]</code> (ไม่มี error) แต่ได้ error 1 ข้อ · ข้อความของระบบเอง<strong>ขัดกับพฤติกรรมของระบบ</strong> → bug อยู่ในโค้ด ไม่ใช่ใน test</p>
+    </div>
+  </details>
+
+<pre><code><span class="c-com">// api/src/validators/requestValidator.js บรรทัด 37</span>
+<span class="c-bad">if (readText(input.details).length &lt;= MIN_DETAILS) {</span>   <span class="c-com">// ✕ starter — 10 ตัวถูกนับว่าไม่ผ่าน</span>
+<span class="c-key">if</span> (<span class="c-fn">readText</span>(input.details).length <span class="c-hl">&lt;</span> MIN_DETAILS) {    <span class="c-com">// ✓ ต่ำกว่า 10 เท่านั้นที่ error</span></code></pre>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 bug ตัวแรกของวัน — test เจอก่อนผู้ใช้</span>
+    <p style="margin:0">BUG #0 เป็นตัวเดียวที่<strong>ไม่มีผู้ใช้คนไหนแจ้ง</strong> · เราเจอเพราะออกแบบค่าขอบไว้ตั้งแต่ CP44 แล้วเขียนเป็น test ใน CP45 · ถ้าไม่มี test ข้อนี้ วันหนึ่งนักศึกษาที่พิมพ์รายละเอียด 10 ตัวพอดีจะส่งคำร้องไม่ได้ และกลายเป็น bug report ใบที่ 4</p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 test fail — อย่าเพิ่งแก้ test และอย่าแก้เกิน</span>
+    <p style="margin:0">① test fail แล้วรีบเปลี่ยน <code>toEqual([])</code> เป็น <code>toHaveLength(1)</code> ให้ผ่าน = <strong>ลบหลักฐานของ bug ทิ้ง</strong> · ย้อนไปดูสเปกก่อนเสมอ<br>
+    ② แก้ด้วยการเปลี่ยน <code>MIN_DETAILS</code> เป็น 9 ก็ทำให้ 10 ตัวผ่านได้ — แต่ 9 ตัวก็จะผ่านด้วย · checker มีข้อ "รายละเอียด 9 ตัวอักษร → ยังถูกปฏิเสธ (ไม่แก้เกิน)" ไว้จับกรณีนี้ · นี่คือเหตุผลที่ต้องทดสอบ<strong>ทั้ง N−1 และ N</strong></p>
+  </div>
+
+  <h3>4.4 matcher ที่ใช้บ่อย — <code>toBe</code> · <code>toEqual</code> · <code>toHaveLength</code></h3>
+
+  <table class="d">
+    <tr><th style="width:150px">matcher</th><th>ตรวจอะไร</th><th>ใช้กับ</th></tr>
+    <tr><td><code>toBe(x)</code></td><td>เป็น<strong>ค่าเดียวกัน</strong> (ตัวเลข ข้อความ true/false) หรือ<strong>ตัวเดียวกัน</strong>ในหน่วยความจำ</td><td><code>expect(r.status).toBe(201)</code> · <code>isValidStatus('pending')</code></td></tr>
+    <tr><td><code>toEqual(x)</code></td><td><strong>หน้าตาเหมือนกัน</strong> ไล่เทียบทุกช่องข้างใน</td><td>array/object เช่น <code>toEqual([])</code> · <code>toEqual({ total: 0, … })</code></td></tr>
+    <tr><td><code>toHaveLength(n)</code></td><td>มีสมาชิก <code>n</code> ตัว — ไม่สนเนื้อหา</td><td>"error 1 ข้อ" โดยไม่ผูกกับข้อความ</td></tr>
+    <tr><td><code>toContain(x)</code></td><td>มี <code>x</code> อยู่ใน array</td><td><code>toContain('ประเภทคำร้องไม่ถูกต้อง')</code></td></tr>
+  </table>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0"><code>expect(validateRequestInput(valid)).toBe([])</code> — ฟังก์ชันคืน <code>[]</code> จริง ๆ · <strong>test นี้ผ่านไหม</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ไม่ผ่าน</strong> — <code>[]</code> ที่ฟังก์ชันคืน กับ <code>[]</code> ที่เราพิมพ์ใน test เป็น <strong>array คนละตัว</strong>ในหน่วยความจำ · <code>toBe</code> ถามว่า "ตัวเดียวกันไหม" จึงได้คำตอบว่าไม่</p>
+      <p style="margin:0">กฎจำง่าย: <strong>ค่าพื้นฐาน (ตัวเลข ข้อความ boolean) ใช้ <code>toBe</code> · array/object ใช้ <code>toEqual</code></strong></p>
+    </div>
+  </details>
+
+  <h3>4.5 <code>test.each</code> — หลายกรณี โค้ดเดียว</h3>
+
+  <p>กลุ่ม "ผิดรูปแบบ" ใน TEST_CASES มีหลายค่าที่ควรได้ผลเหมือนกัน · แทนที่จะคัดลอก test 5 ครั้ง ใช้ <code>test.each</code></p>
+
+<pre><code><span class="c-fn">describe</span>(<span class="c-str">'validateRequestInput — ข้อมูลผิดรูปแบบ'</span>, () =&gt; {
+  test.<span class="c-fn">each</span>([<span class="c-key">null</span>, <span class="c-key">undefined</span>, <span class="c-str">'text'</span>, <span class="c-num">42</span>, []])(<span class="c-str">'input = %j → error เดียว'</span>, (input) =&gt; {
+    <span class="c-fn">expect</span>(<span class="c-fn">validateRequestInput</span>(input)).<span class="c-fn">toEqual</span>([<span class="c-str">'ต้องส่งข้อมูลคำร้องมาด้วย'</span>]);
+  });
+});
+<span class="c-com">// %j แทนค่าในชื่อ test → เห็น 5 บรรทัด: input = null → …, input = 42 → …</span></code></pre>
+
+  <h3>4.6 จาก node:test (W07/W10) มาเป็น Vitest</h3>
+
+  <p>integration test 8 ข้อที่เขียนใน W07 (CP16) และ W10 (CP33) ใช้ <code>node:test</code> + <code>assert</code> · starter <strong>แปลงมาเป็น Vitest ให้แล้ว</strong> — เทียบกันได้ทีละบรรทัด</p>
+
+  <table class="d">
+    <tr><th>node:test (W07 · W10)</th><th>Vitest (W12)</th></tr>
+    <tr><td><code>assert.equal(a, b)</code></td><td><code>expect(a).toBe(b)</code></td></tr>
+    <tr><td><code>assert.ok(x)</code></td><td><code>expect(x).toBe(true)</code></td></tr>
+    <tr><td><code>before(...)</code> — ครั้งเดียวก่อนทุกข้อ</td><td><code>beforeEach(...)</code> — ก่อน<strong>ทุกข้อ</strong> (บทที่ 5)</td></tr>
+    <tr><td><code>node --test</code></td><td><code>vitest run</code> · <code>vitest</code> (watch)</td></tr>
+  </table>
+
+<pre><code><span class="c-key">npm</span> test                          <span class="c-com"># root — api + frontend ครั้งเดียว</span>
+<span class="c-key">npm</span> run test:watch --prefix api   <span class="c-com"># รันใหม่ทุกครั้งที่บันทึกไฟล์ — เปิดค้างไว้ตอนทำ CP45</span></code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไม Vitest 5 ไม่ใช่รุ่นที่เก่ากว่า</span>
+    <p style="margin:0">Vitest รุ่นเก่า (ที่ใช้ Vite 5) ตัดคำนำหน้า <code>node:</code> ออกจาก <code>node:sqlite</code> ตอนโหลดโมดูล → ได้ error <code>Failed to load url sqlite</code> ทั้งที่โค้ดไม่ผิด · Vitest 5 แก้แล้ว · เป็นตัวอย่างว่า<strong>เวอร์ชันของเครื่องมือก็เป็นสาเหตุของ bug ได้</strong> — อ่าน error ให้ละเอียดก่อนสงสัยโค้ดตัวเอง</p>
+  </div>
+
+  <div class="box inclass">
+    <span class="h">🏫 CP45 · checker ตรวจ 3 ข้อ</span>
+    <p style="margin:0">unit test ใน <code>tests/unit</code> อย่างน้อย <strong>10 ข้อ</strong> · BUG #0: รายละเอียด 10 ตัวอักษรพอดี → ผ่าน · รายละเอียด 9 ตัวอักษร → ยังถูกปฏิเสธ (ไม่แก้เกิน) · บันทึก BUG #0 ลง <code>DEBUG_LOG.md</code> ด้วย (บทที่ 9)</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 4</span>
+    <ul>
+      <li>แยกกฎออกเป็น <strong>pure function</strong> → unit test ส่งข้อมูลธรรมดาเข้าไปได้เลย ไม่ต้องจำลอง req/res</li>
+      <li><code>describe</code> จัดกลุ่ม · <code>test</code> 1 กรณี · <code>expect</code> ตรวจผล · เขียนแบบ Arrange–Act–Assert</li>
+      <li>ค่าพื้นฐานใช้ <code>toBe</code> · array/object ใช้ <code>toEqual</code> · นับจำนวนใช้ <code>toHaveLength</code> · หลายค่าใช้ <code>test.each</code></li>
+      <li>test ค่าขอบ 10 ตัวเผย <strong>BUG #0</strong> (<code>&lt;=</code> → <code>&lt;</code>) — test fail ให้สงสัยโค้ดก่อน อย่ารีบแก้ test</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 5 ════════ -->
+<section class="ch" id="c5">
+  <p class="ch-num">บทที่ 5 · กลุ่มที่ 2 <span class="wheretag room">🏫 CP46 · 10:30</span></p>
+  <h2>Integration test ด้วย supertest</h2>
+  <p class="readtime">เวลาอ่าน ≈ 12 นาที</p>
+
+  <div class="term">
+    <div class="w">supertest</div>
+    <p>ไลบรารีที่<strong>ยิง HTTP request เข้า Express app โดยตรง</strong> โดยไม่ต้อง <code>listen</code> พอร์ตจริง · request วิ่งผ่านทุกชั้น route → middleware → controller → service → SQLite เหมือนผู้ใช้จริงเรียก</p>
+  </div>
+
+  <h3>5.1 รูปแบบการเรียก</h3>
+
+<pre><code><span class="c-key">import</span> request <span class="c-key">from</span> <span class="c-str">'supertest'</span>;
+<span class="c-key">import</span> { createApp } <span class="c-key">from</span> <span class="c-str">'../../src/app.js'</span>;     <span class="c-com">// สร้าง app โดยไม่เปิดพอร์ต (server.js เป็นคนเปิด)</span>
+<span class="c-key">const</span> app = <span class="c-fn">createApp</span>();
+
+<span class="c-key">const</span> r = <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">get</span>(<span class="c-str">'/api/requests/REQ-001'</span>);
+<span class="c-fn">expect</span>(r.status).<span class="c-fn">toBe</span>(<span class="c-num">200</span>);
+<span class="c-fn">expect</span>(r.body.id).<span class="c-fn">toBe</span>(<span class="c-str">'REQ-001'</span>);
+
+<span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">post</span>(<span class="c-str">'/api/requests'</span>).<span class="c-fn">send</span>(valid);                  <span class="c-com">// body เป็น JSON ให้อัตโนมัติ</span>
+<span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">put</span>(<span class="c-str">'/api/requests/REQ-001'</span>).<span class="c-fn">send</span>({ status: <span class="c-str">'completed'</span> });
+<span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">delete</span>(<span class="c-str">'/api/requests/REQ-003'</span>).<span class="c-fn">expect</span>(<span class="c-num">204</span>);   <span class="c-com">// .expect(n) = ตรวจ status สั้น ๆ</span></code></pre>
+
+  <p>starter มี integration test 8 ข้อ (GET · POST) · CP46 ให้เพิ่ม <strong>PUT และ DELETE</strong> ตาม TODO ในไฟล์</p>
+
+<pre><code><span class="c-fn">describe</span>(<span class="c-str">'PUT /api/requests/:id'</span>, () =&gt; {
+  <span class="c-fn">test</span>(<span class="c-str">'เปลี่ยนสถานะ → 200 และค่าใหม่ถูกบันทึก'</span>, <span class="c-key">async</span> () =&gt; {
+    <span class="c-key">const</span> r = <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">put</span>(<span class="c-str">'/api/requests/REQ-001'</span>).<span class="c-fn">send</span>({ status: <span class="c-str">'completed'</span> });
+    <span class="c-fn">expect</span>(r.status).<span class="c-fn">toBe</span>(<span class="c-num">200</span>);
+    <span class="c-fn">expect</span>(r.body.status).<span class="c-fn">toBe</span>(<span class="c-str">'completed'</span>);
+  });
+  <span class="c-fn">test</span>(<span class="c-str">'สถานะนอกรายการ → 400'</span>, <span class="c-key">async</span> () =&gt; {
+    <span class="c-key">const</span> r = <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">put</span>(<span class="c-str">'/api/requests/REQ-001'</span>).<span class="c-fn">send</span>({ status: <span class="c-str">'done'</span> });
+    <span class="c-fn">expect</span>(r.status).<span class="c-fn">toBe</span>(<span class="c-num">400</span>);
+  });
+});
+
+<span class="c-fn">describe</span>(<span class="c-str">'DELETE /api/requests/:id'</span>, () =&gt; {
+  <span class="c-fn">test</span>(<span class="c-str">'ลบแล้ว GET ซ้ำ → 404'</span>, <span class="c-key">async</span> () =&gt; {
+    <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">delete</span>(<span class="c-str">'/api/requests/REQ-003'</span>).<span class="c-fn">expect</span>(<span class="c-num">204</span>);
+    <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">get</span>(<span class="c-str">'/api/requests/REQ-003'</span>).<span class="c-fn">expect</span>(<span class="c-num">404</span>);
+  });
+});</code></pre>
+
+  <h3>5.2 Isolation — ทุก test เริ่มจากฐานข้อมูลชุดใหม่</h3>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">test ข้อหนึ่ง <strong>ลบ REQ-003</strong> ทิ้ง · test อีกข้อตรวจว่า <code>GET /api/requests</code> ได้ <strong>5 รายการ</strong> · ถ้าทุก test ใช้ฐานข้อมูลก้อนเดียวกันตลอด (เตรียมครั้งเดียวด้วย <code>before</code> แบบ W10) — <strong>จะเกิดอะไรขึ้น</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>ผลขึ้นกับว่า<strong>ข้อไหนรันก่อน</strong> — ถ้าข้อ "ลบ" รันก่อน ข้อ "ได้ 5 รายการ" จะเห็นแค่ 4 แล้ว fail ทั้งที่โค้ดไม่ผิด · สลับลำดับก็ผ่าน · test แบบนี้เรียกว่า <strong>flaky</strong> (ผลไม่แน่นอน) ซึ่งแย่กว่าไม่มี test เพราะทำให้คนเลิกเชื่อผลการทดสอบ</p>
+      <p style="margin:0">ทางแก้: <code>beforeEach</code> สร้างฐานข้อมูลใหม่ก่อน<strong>ทุกข้อ</strong> — แต่ละ test เป็นอิสระต่อกัน (isolation)</p>
+    </div>
+  </details>
+
+<pre><code><span class="c-com">// api/vitest.config.js</span>
+<span class="c-key">export default</span> <span class="c-fn">defineConfig</span>({
+  test: {
+    environment: <span class="c-str">'node'</span>,
+    include: [<span class="c-str">'tests/**/*.test.js'</span>],
+    env: {
+      DB_FILE: <span class="c-str">':memory:'</span>,   <span class="c-com">// ฐานข้อมูลในหน่วยความจำ — ไม่แตะ campus.db</span>
+      NODE_ENV: <span class="c-str">'test'</span>,     <span class="c-com">// app.js ปิด morgan ตอน test → ผลอ่านง่าย</span>
+    },
+  },
+});
+
+<span class="c-com">// api/tests/integration/requests.api.test.js</span>
+<span class="c-fn">beforeEach</span>(<span class="c-key">async</span> () =&gt; { <span class="c-key">await</span> <span class="c-fn">loadSeed</span>(); });   <span class="c-com">// ก่อนทุกข้อ: เปิด :memory: ใหม่ → สร้างตารางจาก schema.sql → 5 รายการ</span></code></pre>
+
+  <figure>
+    <svg viewBox="0 0 760 316" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="beforeEach loadSeed ทำให้แต่ละ test ได้ฐานข้อมูลใหม่">
+      <style>
+        .f6t{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .f6s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .f6m{font:500 9.5px 'IBM Plex Mono',monospace}
+      </style>
+      <defs><marker id="f6a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#186B8C" stroke-width="1.5"/></marker></defs>
+
+      <text x="20" y="22" class="f6m" fill="#186B8C" style="letter-spacing:.06em">beforeEach(loadSeed) — ทุก test ได้ฐานข้อมูลในหน่วยความจำชุดใหม่</text>
+
+      <rect x="20" y="36" width="150" height="58" rx="8" fill="#DDEEF5" stroke="#186B8C"/>
+      <text x="95" y="60" text-anchor="middle" class="f6m" fill="#186B8C">loadSeed()</text>
+      <text x="95" y="80" text-anchor="middle" class="f6s">:memory: ใหม่ · 5 รายการ</text>
+      <path d="M172 65 L208 65" stroke="#186B8C" stroke-width="1.6" marker-end="url(#f6a)"/>
+      <rect x="212" y="36" width="300" height="58" rx="8" fill="#fff" stroke="#BFD2C8"/>
+      <text x="228" y="60" class="f6t">test A · ลบแล้ว GET ซ้ำ → 404</text>
+      <text x="228" y="80" class="f6m" fill="#54685E">DELETE REQ-003 → เหลือ 4 รายการ</text>
+      <rect x="540" y="44" width="200" height="42" rx="21" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="640" y="70" text-anchor="middle" class="f6t" fill="#14503A">✓ ผ่าน · ทิ้ง DB นี้ไป</text>
+
+      <rect x="20" y="108" width="150" height="58" rx="8" fill="#DDEEF5" stroke="#186B8C"/>
+      <text x="95" y="132" text-anchor="middle" class="f6m" fill="#186B8C">loadSeed()</text>
+      <text x="95" y="152" text-anchor="middle" class="f6s">:memory: ใหม่ · 5 รายการ</text>
+      <path d="M172 137 L208 137" stroke="#186B8C" stroke-width="1.6" marker-end="url(#f6a)"/>
+      <rect x="212" y="108" width="300" height="58" rx="8" fill="#fff" stroke="#BFD2C8"/>
+      <text x="228" y="132" class="f6t">test B · คืน array 5 รายการ</text>
+      <text x="228" y="152" class="f6m" fill="#54685E">GET /api/requests → 5 รายการ</text>
+      <rect x="540" y="116" width="200" height="42" rx="21" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="640" y="142" text-anchor="middle" class="f6t" fill="#14503A">✓ ผ่าน · ไม่สนว่า A ลบอะไร</text>
+
+      <rect x="20" y="180" width="150" height="58" rx="8" fill="#DDEEF5" stroke="#186B8C"/>
+      <text x="95" y="204" text-anchor="middle" class="f6m" fill="#186B8C">loadSeed()</text>
+      <text x="95" y="224" text-anchor="middle" class="f6s">:memory: ใหม่ · 5 รายการ</text>
+      <path d="M172 209 L208 209" stroke="#186B8C" stroke-width="1.6" marker-end="url(#f6a)"/>
+      <rect x="212" y="180" width="300" height="58" rx="8" fill="#fff" stroke="#BFD2C8"/>
+      <text x="228" y="204" class="f6t">test C · ข้อมูลถูกต้อง → 201</text>
+      <text x="228" y="224" class="f6m" fill="#54685E">POST → ได้ REQ-006 เสมอ</text>
+      <rect x="540" y="188" width="200" height="42" rx="21" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="640" y="214" text-anchor="middle" class="f6t" fill="#14503A">✓ ผ่าน · ลำดับไหนก็ได้</text>
+
+      <rect x="20" y="256" width="720" height="48" rx="8" fill="#FAFCFB" stroke="#DBE7E0"/>
+      <text x="380" y="276" text-anchor="middle" class="f6t">api/data/campus.db ไม่ถูกแตะเลย</text>
+      <text x="380" y="294" text-anchor="middle" class="f6s">ข้อมูลที่ใช้ตอน dev ปลอดภัย · CI บน GitHub ที่ไม่มีไฟล์ campus.db ก็รันได้ · ทุกเครื่องได้ผลเหมือนกัน</text>
+    </svg>
+    <figcaption><b>ภาพที่ 6</b>Isolation — <code>beforeEach(loadSeed)</code> สร้างฐานข้อมูล <code>:memory:</code> ใหม่ก่อนทุก test · test ไม่ขึ้นต่อกัน และไม่แตะ campus.db</figcaption>
+  </figure>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับห้องแล็บเคมี</span>
+    <p style="margin:0">ทุกการทดลองเริ่มจาก<strong>อุปกรณ์ที่ล้างสะอาดและสารตั้งต้นชุดใหม่</strong> — ถ้าใช้บีกเกอร์ที่ยังมีสารจากการทดลองก่อนค้างอยู่ ผลที่ได้จะเชื่อไม่ได้ · <code>beforeEach(loadSeed)</code> คือการล้างบีกเกอร์ก่อนทุก test</p>
+  </div>
+
+  <h3>5.3 ทำไม test ห้ามแตะ <code>campus.db</code></h3>
+
+  <table class="d">
+    <tr><th>ถ้า test ใช้ campus.db ตัวจริง</th><th>ผลที่ตามมา</th></tr>
+    <tr><td>test ลบ/เพิ่มข้อมูลจริง</td><td>ข้อมูลที่ใช้ตอน dev เปลี่ยนไปทุกครั้งที่รัน test</td></tr>
+    <tr><td>ผลขึ้นกับข้อมูลที่อยู่ในไฟล์ตอนนั้น</td><td>ผ่านเครื่องหนึ่ง พังอีกเครื่อง — "เครื่องผมผ่านนะ"</td></tr>
+    <tr><td>CI ไม่มีไฟล์ campus.db</td><td>รันบน GitHub Actions ไม่ได้ (Challenge ⭐)</td></tr>
+  </table>
+
+  <h3>5.4 ทำไม <code>userRoutes</code> ต้องเรียกผ่าน service</h3>
+
+<pre><code><span class="c-com">// api/src/routes/userRoutes.js</span>
+<span class="c-com">// ใช้ฐานข้อมูลผ่าน service เหมือน route อื่น — ไม่เปิด connection เอง</span>
+<span class="c-com">// (เดิมเปิด DatabaseSync ตรงนี้ ทำให้ test ที่ใช้ฐานข้อมูลในหน่วยความจำไม่เห็นข้อมูลชุดเดียวกัน)</span>
+router.<span class="c-fn">get</span>(<span class="c-str">'/'</span>, (req, res) =&gt; {
+  res.<span class="c-fn">json</span>(service.<span class="c-fn">listUsers</span>());
+});</code></pre>
+
+  <p><code>:memory:</code> มีข้อควรรู้ — <strong>เปิด connection ใหม่ 1 ครั้ง = ได้ฐานข้อมูลใหม่ 1 ก้อน</strong> · ถ้า route ใดเปิด <code>DatabaseSync</code> ของตัวเอง มันจะเห็นฐานข้อมูลคนละก้อนกับที่ <code>loadSeed()</code> เตรียมไว้ · starter จึงปรับ <code>userRoutes</code> ให้เรียกผ่าน service ซึ่งถือ connection เดียวของทั้งระบบ — <strong>หลัก "แยกชั้น" ที่ใช้มาตลอดวิชา ช่วยให้ทดสอบได้ด้วย</strong></p>
+
+  <div class="box note">
+    <span class="h">🟨 ทำไม starter มี test POST อยู่แล้ว แต่ไม่เจอ BUG #1</span>
+    <p style="margin:0">test "ข้อมูลถูกต้อง → 201 · ได้รหัสถัดไป" POST บนฐานข้อมูลใหม่ 5 รายการ จึงได้ <code>REQ-006</code> ถูกต้องเสมอ · BUG #1 เกิดเมื่อ<strong>ลบก่อนแล้วค่อยเพิ่ม</strong> — ลำดับการทำงานที่ยังไม่มี test ไหนลอง (บทที่ 8)</p>
+  </div>
+
+  <div class="box inclass">
+    <span class="h">🏫 CP46 · checker ตรวจ 4 ข้อ</span>
+    <p style="margin:0">integration test ใน <code>tests/integration</code> อย่างน้อย <strong>12 ข้อ</strong> · ครอบคลุม <code>.put(</code> และ <code>.delete(</code> · ตั้งค่า coverage แล้ว (script <code>coverage</code> + <code>@vitest/coverage-v8</code>) · <code>npm test</code> ใน api ผ่านทุกข้อ และรวมอย่างน้อย <strong>22 ข้อ</strong></p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 5</span>
+    <ul>
+      <li>supertest ยิง HTTP เข้า <code>createApp()</code> ตรง ๆ — วิ่งผ่านทุกชั้นโดยไม่ต้องเปิดพอร์ต</li>
+      <li><code>DB_FILE=':memory:'</code> + <code>beforeEach(loadSeed)</code> = ทุก test เริ่มจาก 5 รายการเดิม (isolation)</li>
+      <li>test ห้ามแตะ campus.db — ข้อมูล dev ปลอดภัย และรันได้ทุกเครื่องรวมทั้ง CI</li>
+      <li>ทุก route ต้องใช้ฐานข้อมูลผ่าน service — connection เดียว ข้อมูลชุดเดียว</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 6 ════════ -->
+<section class="ch" id="c6">
+  <p class="ch-num">บทที่ 6 · กลุ่มที่ 2 <span class="wheretag room">🏫 CP46</span></p>
+  <h2>Coverage — test วิ่งผ่านโค้ดตรงไหนบ้าง</h2>
+  <p class="readtime">เวลาอ่าน ≈ 9 นาที</p>
+
+  <div class="term">
+    <div class="w">Code coverage</div>
+    <p>สัดส่วนของโค้ดที่<strong>ถูกรันอย่างน้อย 1 ครั้ง</strong>ระหว่างที่ test ทำงาน · บอกว่าส่วนไหน "ยังไม่มีไฟฉายส่อง" — ไม่ได้บอกว่าส่วนที่ส่องแล้วถูกต้อง</p>
+  </div>
+
+<pre><code><span class="c-key">npm</span> run coverage      <span class="c-com"># = vitest run --coverage ใน api/ → ตารางใน terminal + api/coverage/index.html</span>
+
+<span class="c-com">-------------------|---------|----------|---------|---------|-------------------</span>
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+<span class="c-com">-------------------|---------|----------|---------|---------|-------------------</span>
+All files          |   <span class="c-hl">60.13</span> |    50.58 |   42.85 |   62.23 |
+  errorHandler.js  |       <span class="c-bad">0</span> |        0 |       0 |       0 | 6-33
+  logger.js        |       <span class="c-bad">0</span> |      100 |       0 |       0 | 3-8
+  ...tValidator.js |   95.23 |    94.11 |     100 |   95.23 | 24
+<span class="c-com">  … (ตัดมาบางไฟล์ — ผลจริงของ starter)</span></code></pre>
+
+  <h3>6.1 อ่านตัวเลข 4 คอลัมน์</h3>
+
+  <table class="d">
+    <tr><th style="width:120px">คอลัมน์</th><th>นับอะไร</th><th>ตัวอย่างที่ทำให้ไม่เต็ม</th></tr>
+    <tr><td><strong>Statements</strong></td><td>คำสั่งแต่ละคำสั่ง</td><td>คำสั่งในฟังก์ชันที่ไม่มีใครเรียก</td></tr>
+    <tr><td><strong>Branches</strong></td><td>ทุก "ทางแยก" ของ <code>if</code> · <code>? :</code> · <code>??</code> — ต้องไปครบทั้งสองทาง</td><td>มี test แค่กรณีผ่าน ไม่เคยเข้า <code>if</code> ที่ตอบ error</td></tr>
+    <tr><td><strong>Functions</strong></td><td>ฟังก์ชันที่ถูกเรียกอย่างน้อยครั้งเดียว</td><td>middleware ที่ไม่ได้ผูกกับ app</td></tr>
+    <tr><td><strong>Lines</strong></td><td>บรรทัดที่ถูกรัน</td><td>ใกล้เคียง Statements</td></tr>
+  </table>
+
+  <p>คอลัมน์ขวาสุด <strong>Uncovered Line #s</strong> สำคัญที่สุด — บอกเลขบรรทัดที่ยังมืด · เช่น <code>requestValidator.js</code> บรรทัด 24 คือ <code>return ['ต้องส่งข้อมูลคำร้องมาด้วย']</code> = กลุ่ม "ผิดรูปแบบ" ที่ยังไม่มี test (กลับไปเพิ่มตาม TC-10)</p>
+
+  <figure>
+    <svg viewBox="0 0 760 408" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="statement coverage ต่อไฟล์ starter เทียบเฉลย">
+      <style>
+        .f7t{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .f7s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .f7m{font:500 9.5px 'IBM Plex Mono',monospace;fill:#14251E}
+        .f7v{font:500 9px 'IBM Plex Mono',monospace;fill:#54685E}
+      </style>
+      <rect x="400" y="12" width="12" height="10" rx="2" fill="#A8620E"/>
+      <text x="418" y="21" class="f7s">starter (≈ 60% ทั้งโปรเจกต์)</text>
+      <rect x="586" y="12" width="12" height="10" rx="2" fill="#1170A8"/>
+      <text x="604" y="21" class="f7s">เฉลย (≈ 87% ทั้งโปรเจกต์)</text>
+
+      <g stroke="#E3ECE7" stroke-width="1">
+        <line x1="190" y1="34" x2="190" y2="340"/><line x1="320" y1="34" x2="320" y2="340"/>
+        <line x1="450" y1="34" x2="450" y2="340"/><line x1="580" y1="34" x2="580" y2="340"/>
+        <line x1="710" y1="34" x2="710" y2="340"/>
+      </g>
+      <line x1="190" y1="34" x2="190" y2="340" stroke="#BFD2C8" stroke-width="1"/>
+      <g class="f7v" text-anchor="middle">
+        <text x="190" y="356">0%</text><text x="320" y="356">25%</text><text x="450" y="356">50%</text>
+        <text x="580" y="356">75%</text><text x="710" y="356">100%</text>
+      </g>
+      <line x1="632" y1="30" x2="632" y2="340" stroke="#6B3B96" stroke-width="1.2" stroke-dasharray="4 3"/>
+      <text x="638" y="42" class="f7s" fill="#6B3B96">Challenge 85%</text>
+
+      <text x="180" y="51" text-anchor="end" class="f7m">requestController.js</text>
+      <rect x="190" y="40" width="208" height="12" rx="2" fill="#A8620E"/><text x="404" y="50" class="f7v">40</text>
+      <rect x="190" y="54" width="520" height="12" rx="2" fill="#1170A8"/><text x="716" y="64" class="f7v">100</text>
+
+      <text x="180" y="88" text-anchor="end" class="f7m">requestService.js</text>
+      <rect x="190" y="77" width="306" height="12" rx="2" fill="#A8620E"/><text x="502" y="87" class="f7v">59</text>
+      <rect x="190" y="91" width="440" height="12" rx="2" fill="#1170A8"/><text x="638" y="101" class="f7v">85</text>
+
+      <text x="180" y="125" text-anchor="end" class="f7m">errorHandler.js</text>
+      <rect x="190" y="114" width="2" height="12" fill="#A8620E"/><text x="198" y="124" class="f7v">0</text>
+      <rect x="190" y="128" width="231" height="12" rx="2" fill="#1170A8"/><text x="427" y="138" class="f7v">44</text>
+
+      <text x="180" y="162" text-anchor="end" class="f7m">logger.js</text>
+      <rect x="190" y="151" width="2" height="12" fill="#A8620E"/><text x="198" y="161" class="f7v">0 · dead code</text>
+      <text x="198" y="176" class="f7s" fill="#6B3B96">เฉลยลบไฟล์นี้ทิ้ง (morgan ทำแทนแล้ว)</text>
+
+      <text x="180" y="199" text-anchor="end" class="f7m">healthRoutes.js</text>
+      <rect x="190" y="188" width="208" height="12" rx="2" fill="#A8620E"/><text x="404" y="198" class="f7v">40</text>
+      <rect x="190" y="202" width="520" height="12" rx="2" fill="#1170A8"/><text x="716" y="212" class="f7v">100</text>
+
+      <text x="180" y="236" text-anchor="end" class="f7m">userRoutes.js</text>
+      <rect x="190" y="225" width="312" height="12" rx="2" fill="#A8620E"/><text x="508" y="235" class="f7v">60</text>
+      <rect x="190" y="239" width="520" height="12" rx="2" fill="#1170A8"/><text x="716" y="249" class="f7v">100</text>
+
+      <text x="180" y="273" text-anchor="end" class="f7m">app.js</text>
+      <rect x="190" y="262" width="356" height="12" rx="2" fill="#A8620E"/><text x="552" y="272" class="f7v">68</text>
+      <rect x="190" y="276" width="356" height="12" rx="2" fill="#1170A8"/><text x="552" y="286" class="f7v">68</text>
+
+      <text x="180" y="310" text-anchor="end" class="f7m">requestValidator.js</text>
+      <rect x="190" y="299" width="495" height="12" rx="2" fill="#A8620E"/><text x="690" y="309" class="f7v">95</text>
+      <rect x="190" y="313" width="520" height="12" rx="2" fill="#1170A8"/><text x="716" y="323" class="f7v">100</text>
+
+      <text x="450" y="378" text-anchor="middle" class="f7s">% Statements ต่อไฟล์ จากการรัน npm run coverage จริง (ปัดเป็นจำนวนเต็ม) · ไฟล์ที่ 100% ทั้งคู่ไม่แสดง</text>
+      <text x="450" y="396" text-anchor="middle" class="f7s">app.js ที่เหลือ 32% คือโค้ดเสิร์ฟหน้าเว็บตอน production ซึ่ง test (NODE_ENV=test) ไม่ได้วิ่งผ่าน</text>
+    </svg>
+    <figcaption><b>ภาพที่ 7</b>Statement coverage ต่อไฟล์ — starter (ส้ม) เทียบเฉลย (น้ำเงิน) · ไฟล์ที่ 0% คือที่ที่ test ไม่เคยเดินผ่าน</figcaption>
+  </figure>
+
+  <h3>6.2 coverage บอกอะไรเรา — 2 ไฟล์ที่ 0%</h3>
+
+  <table class="d">
+    <tr><th>ไฟล์</th><th>ทำไม 0%</th><th>ทำอย่างไร</th></tr>
+    <tr><td><code>middleware/logger.js</code></td><td>ไม่มีใคร <code>import</code> เลย — W11 เปลี่ยนไปใช้ <code>morgan</code> แล้ว แต่ลืมลบไฟล์เดิม</td><td><strong>dead code</strong> → ลบทิ้ง (ไม่ใช่เขียน test ให้)</td></tr>
+    <tr><td><code>middleware/errorHandler.js</code></td><td>test ทุกข้อของ starter ได้คำตอบจาก controller หรือ <code>validateRequest</code> — ไม่มีข้อไหนหลุดไปถึง <code>notFound</code>/<code>errorHandler</code></td><td>เพิ่ม test ที่วิ่งไปถึงจริง (ด้านล่าง)</td></tr>
+  </table>
+
+<pre><code><span class="c-fn">describe</span>(<span class="c-str">'เส้นทางที่ไม่มีอยู่'</span>, () =&gt; {
+  <span class="c-fn">test</span>(<span class="c-str">'GET /api/nope → 404 เป็น JSON'</span>, <span class="c-key">async</span> () =&gt; {              <span class="c-com">// วิ่งเข้า notFound</span>
+    <span class="c-key">const</span> r = <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">get</span>(<span class="c-str">'/api/nope'</span>);
+    <span class="c-fn">expect</span>(r.status).<span class="c-fn">toBe</span>(<span class="c-num">404</span>);
+    <span class="c-fn">expect</span>(r.body.error).<span class="c-fn">toMatch</span>(<span class="c-str">/ไม่พบเส้นทาง/</span>);
+  });
+});
+<span class="c-fn">test</span>(<span class="c-str">'ส่ง JSON ที่เสีย → 400 เป็น JSON ไม่ใช่ 500'</span>, <span class="c-key">async</span> () =&gt; {       <span class="c-com">// express.json() โยน error → errorHandler</span>
+  <span class="c-key">const</span> r = <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">post</span>(<span class="c-str">'/api/requests'</span>)
+    .<span class="c-fn">set</span>(<span class="c-str">'Content-Type'</span>, <span class="c-str">'application/json'</span>).<span class="c-fn">send</span>(<span class="c-str">'{"requesterName": '</span>);
+  <span class="c-fn">expect</span>(r.status).<span class="c-fn">toBe</span>(<span class="c-num">400</span>);
+  <span class="c-fn">expect</span>(r.body).<span class="c-fn">toHaveProperty</span>(<span class="c-str">'error'</span>);
+});</code></pre>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0"><code>requestValidator.js</code> ของ starter ได้ coverage 95% · บรรทัด <code>if (… .length &lt;= MIN_DETAILS)</code> ถูกรันแล้ว<strong>ทั้งสองทาง</strong> (test 9 ตัวเข้า <code>if</code> · test ข้อมูลถูกต้องไม่เข้า) — <strong>แปลว่าบรรทัดนั้นถูกต้องใช่ไหม</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ไม่ใช่</strong> — บรรทัดนั้นคือ BUG #0 เต็ม ๆ · coverage นับแค่ว่า "บรรทัดถูกรัน" ไม่ได้ตรวจว่า "ผลถูกตามสเปก"</p>
+      <p style="margin:0">ทั้ง 9 ตัว และ 22 ตัว (<code>แอร์ไม่เย็นตั้งแต่เช้า</code> ของข้อมูลถูกต้อง) อยู่ไกลจากขอบพอที่ <code>&lt;</code> กับ <code>&lt;=</code> ให้ผลเหมือนกัน · ต้องมี test ที่ส่ง <strong>10 ตัวพอดี</strong> ซึ่งมาจากการออกแบบ (บทที่ 2) ไม่ใช่จาก coverage</p>
+    </div>
+  </details>
+
+  <div class="box pitfall">
+    <span class="h">🟥 coverage 100% ก็ยังมี bug ได้</span>
+    <p style="margin:0">coverage เป็น<strong>เครื่องมือหาจุดมืด</strong> ไม่ใช่คะแนนความถูกต้อง · ไล่ตัวเลขให้ถึง 100% ด้วย test ที่ไม่มี <code>expect</code> ที่มีความหมาย = ได้ตัวเลขสวยแต่ไม่ได้อะไร<br>
+    ใช้ตามลำดับนี้: <strong>ออกแบบ test case จากสเปกก่อน → ดู coverage เพื่อหาส่วนที่ลืม → ตัดสินใจว่าจะเพิ่ม test หรือลบ dead code</strong> · Challenge ⭐ ของสัปดาห์นี้ตั้งไว้ที่ ≥ 85% (statements) — ไม่ใช่ 100%</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 6</span>
+    <ul>
+      <li><code>npm run coverage</code> → ตารางใน terminal + <code>api/coverage/index.html</code></li>
+      <li>Statements · Branches · Functions · Lines — และดู <strong>Uncovered Line #s</strong> เพื่อหาจุดมืด</li>
+      <li>starter ≈ 60% → เฉลย ≈ 87% · <code>logger.js</code> 0% = dead code (ลบ) · <code>errorHandler.js</code> 0% → เพิ่ม test <code>/api/nope</code> และ JSON เสีย</li>
+      <li><strong>coverage สูงไม่ได้แปลว่าไม่มี bug</strong> — บรรทัด BUG #0 ถูกรันครบทั้งสองทาง</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 7 ════════ -->
+<section class="ch" id="c7">
+  <p class="ch-num">บทที่ 7 · กลุ่มที่ 3 <span class="wheretag room">🏫 CP47 · 11:05</span></p>
+  <h2>กระบวนการ debug 6 ขั้น</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <p>กลับมาที่ <code>BUG_REPORTS.md</code> — ผู้ใช้ 3 คนแจ้งอาการมา · ความผิดพลาดที่พบบ่อยที่สุดคือ<strong>เปิดโค้ดแล้วเดาแก้ไปเรื่อย ๆ</strong> จนอาการหาย (หรือย้ายไปที่อื่น) · วิศวกรใช้กระบวนการที่ทำซ้ำได้ และทิ้ง<strong>หลักฐาน</strong>ไว้ทุกขั้น</p>
+
+  <div class="term">
+    <div class="w">Debugging</div>
+    <p>กระบวนการหา<strong>สาเหตุ</strong>ของ bug จาก<strong>อาการ</strong> แล้วแก้ที่สาเหตุ · ไม่ใช่ "ลองเปลี่ยนโค้ดจนมันหาย" แต่คือ "ตั้งสมมติฐาน แล้วพิสูจน์ด้วยหลักฐาน" เหมือนการทดลองทางวิทยาศาสตร์</p>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="วงจร debug 6 ขั้น">
+      <style>
+        .f8t{font:600 12px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .f8s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .f8m{font:500 9.5px 'IBM Plex Mono',monospace}
+        .f8n{font:600 10px 'IBM Plex Mono',monospace}
+      </style>
+      <defs>
+        <marker id="f8a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#A8620E" stroke-width="1.5"/></marker>
+        <marker id="f8b" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#6B3B96" stroke-width="1.5"/></marker>
+      </defs>
+
+      <rect x="30" y="30" width="200" height="76" rx="9" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="46" y="52" class="f8n" fill="#B23A2E">1</text>
+      <text x="62" y="52" class="f8t">อาการ</text>
+      <text x="46" y="72" class="f8s">ผู้ใช้เห็นอะไร ที่หน้าจอไหน</text>
+      <text x="46" y="90" class="f8m" fill="#8F2B21">BUG_REPORTS.md</text>
+
+      <rect x="280" y="30" width="200" height="76" rx="9" fill="#FBF0E2" stroke="#A8620E"/>
+      <text x="296" y="52" class="f8n" fill="#A8620E">2</text>
+      <text x="312" y="52" class="f8t">ทำซ้ำ</text>
+      <text x="296" y="72" class="f8s">ทำให้เกิดอีกครั้งได้ทุกครั้ง</text>
+      <text x="296" y="90" class="f8m" fill="#A8620E">curl · test ที่ fail</text>
+
+      <rect x="530" y="30" width="200" height="76" rx="9" fill="#DDEEF5" stroke="#186B8C"/>
+      <text x="546" y="52" class="f8n" fill="#186B8C">3</text>
+      <text x="562" y="52" class="f8t">แยกชั้น</text>
+      <text x="546" y="72" class="f8s">frontend · API · DB ชั้นไหน</text>
+      <text x="546" y="90" class="f8m" fill="#186B8C">DevTools Network</text>
+
+      <rect x="530" y="194" width="200" height="76" rx="9" fill="#F1EAF8" stroke="#6B3B96"/>
+      <text x="546" y="216" class="f8n" fill="#6B3B96">4</text>
+      <text x="562" y="216" class="f8t">สมมติฐาน + หลักฐาน</text>
+      <text x="546" y="236" class="f8s">เดาสาเหตุ แล้วพิสูจน์ให้เห็น</text>
+      <text x="546" y="254" class="f8m" fill="#6B3B96">stack trace · breakpoint</text>
+
+      <rect x="280" y="194" width="200" height="76" rx="9" fill="#FFF8E6" stroke="#B5771A"/>
+      <text x="296" y="216" class="f8n" fill="#B5771A">5</text>
+      <text x="312" y="216" class="f8t">แก้</text>
+      <text x="296" y="236" class="f8s">แก้ที่สาเหตุ ไม่ใช่ที่อาการ</text>
+      <text x="296" y="254" class="f8m" fill="#8A5A0E">เปลี่ยนให้น้อยที่สุด</text>
+
+      <rect x="30" y="194" width="200" height="76" rx="9" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="46" y="216" class="f8n" fill="#1E7A54">6</text>
+      <text x="62" y="216" class="f8t">regression test</text>
+      <text x="46" y="236" class="f8s">fail ก่อนแก้ · ผ่านหลังแก้</text>
+      <text x="46" y="254" class="f8m" fill="#14503A">DEBUG_LOG.md</text>
+
+      <path d="M232 68 L276 68" stroke="#A8620E" stroke-width="1.6" marker-end="url(#f8a)"/>
+      <path d="M482 68 L526 68" stroke="#A8620E" stroke-width="1.6" marker-end="url(#f8a)"/>
+      <path d="M560 108 L560 190" stroke="#A8620E" stroke-width="1.6" marker-end="url(#f8a)"/>
+      <path d="M528 232 L484 232" stroke="#A8620E" stroke-width="1.6" marker-end="url(#f8a)"/>
+      <path d="M278 232 L234 232" stroke="#A8620E" stroke-width="1.6" marker-end="url(#f8a)"/>
+      <path d="M130 192 L130 110" stroke="#1E7A54" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#f8a)"/>
+      <text x="140" y="155" class="f8s" fill="#14503A">bug ตัวถัดไป</text>
+
+      <path d="M705 192 L705 110" stroke="#6B3B96" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#f8b)"/>
+      <text x="574" y="146" class="f8s" fill="#6B3B96">หลักฐานไม่ตรง?</text>
+      <text x="574" y="162" class="f8s" fill="#6B3B96">ย้อนไปแยกชั้นใหม่</text>
+
+      <text x="380" y="146" text-anchor="middle" class="f8t">ทุก bug เดินครบ 6 ขั้น</text>
+      <text x="380" y="164" text-anchor="middle" class="f8s">แต่ละขั้นทิ้งหลักฐานไว้ใน DEBUG_LOG.md</text>
+      <text x="380" y="292" text-anchor="middle" class="f8s">ขั้น 2 กับ 6 คือสิ่งเดียวกัน — test ที่ทำซ้ำอาการได้ จะกลายเป็น regression test หลังแก้</text>
+    </svg>
+    <figcaption><b>ภาพที่ 8</b>กระบวนการ debug 6 ขั้น — อาการ → ทำซ้ำ → แยกชั้น → สมมติฐาน+หลักฐาน → แก้ → regression test · ถ้าหลักฐานไม่ตรงกับสมมติฐาน ให้ย้อนกลับไปแยกชั้นใหม่</figcaption>
+  </figure>
+
+  <h3>7.1 ขั้น 1–2 · อาการ และทำซ้ำ</h3>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">BUG #1 — ผู้ใช้บอกว่า "<em>เมื่อวานยังส่งได้ วันนี้ส่งไม่ได้</em>" และ "<em>วันนี้ลบคำร้องที่ซ้ำไป 1 รายการ</em>" · <strong>ก่อนเปิดโค้ด ควรทำอะไรเป็นอย่างแรก</strong> และประโยคไหนของผู้ใช้เป็นเบาะแสสำคัญ</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ทำให้เกิดซ้ำก่อน</strong> — ถ้ายังทำซ้ำไม่ได้ เราจะไม่มีทางรู้ว่าแก้แล้วหายจริงหรือแค่บังเอิญ</p>
+      <p style="margin:0">เบาะแสคือ "<strong>ลบไป 1 รายการ</strong>" — เมื่อวานไม่มีใครลบ วันนี้มีการลบ · สิ่งที่เปลี่ยนระหว่าง "ใช้ได้" กับ "ใช้ไม่ได้" มักชี้ไปที่สาเหตุ · ลองทำซ้ำ: <code>DELETE /api/requests/REQ-002</code> แล้ว <code>POST /api/requests</code> → ได้ 500 ทุกครั้ง ✓ ทำซ้ำได้แล้ว</p>
+    </div>
+  </details>
+
+  <p>"ทำซ้ำได้" ที่ดีที่สุดคือ<strong>เขียนเป็น test</strong> — รันซ้ำกี่ครั้งก็ได้ผลเดิม ไม่ต้องคลิกหน้าเว็บใหม่ทุกครั้ง · BUG #3 ผู้แจ้งให้วิธีทำซ้ำมาแล้ว: <code>PUT /api/requests/REQ-999</code> พร้อม <code>{ "status": "completed" }</code></p>
+
+  <h3>7.2 ขั้น 3 · แยกชั้น — ปัญหาอยู่ชั้นไหน</h3>
+
+  <p>ระบบเรามี 3 ชั้น (W11) · อาการทุกอย่างผู้ใช้เห็นที่หน้าจอ แต่สาเหตุอาจอยู่ชั้นไหนก็ได้ · ก่อนอ่านโค้ดสักบรรทัด ให้<strong>ตัดครึ่งปัญหา</strong>ด้วยคำถามเดียว: <em>API ส่งข้อมูลถูกไหม</em></p>
+
+  <figure>
+    <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ผังตัดสินใจแยกชั้นด้วย DevTools Network">
+      <style>
+        .f9t{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .f9s{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .f9m{font:500 9.5px 'IBM Plex Mono',monospace}
+        .f9l{font:600 10.5px 'IBM Plex Sans Thai',sans-serif}
+      </style>
+      <defs>
+        <marker id="f9a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#54685E" stroke-width="1.5"/></marker>
+        <marker id="f9g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#186B8C" stroke-width="1.5"/></marker>
+        <marker id="f9r" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#A8620E" stroke-width="1.5"/></marker>
+      </defs>
+
+      <rect x="20" y="122" width="160" height="70" rx="9" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="100" y="148" text-anchor="middle" class="f9t">อาการบนหน้าจอ</text>
+      <text x="100" y="168" text-anchor="middle" class="f9s">ตัวเลขผิด · error 500</text>
+      <text x="100" y="182" text-anchor="middle" class="f9s">ข้อมูลไม่ขึ้น</text>
+
+      <path d="M182 157 L214 157" stroke="#54685E" stroke-width="1.6" marker-end="url(#f9a)"/>
+      <rect x="218" y="122" width="172" height="70" rx="9" fill="#FFFFFF" stroke="#8A9691"/>
+      <text x="304" y="146" text-anchor="middle" class="f9t">เปิด DevTools (F12)</text>
+      <text x="304" y="164" text-anchor="middle" class="f9m" fill="#186B8C">Network → Fetch/XHR</text>
+      <text x="304" y="182" text-anchor="middle" class="f9s">ดู response ของ request นั้น</text>
+
+      <path d="M392 157 L418 157" stroke="#54685E" stroke-width="1.6" marker-end="url(#f9a)"/>
+      <polygon points="422,157 497,105 572,157 497,209" fill="#F5F7F6" stroke="#54685E" stroke-width="1.5"/>
+      <text x="497" y="151" text-anchor="middle" class="f9m" fill="#14251E">response</text>
+      <text x="497" y="169" text-anchor="middle" class="f9t">ถูกต้องไหม?</text>
+
+      <path d="M497 105 L497 62 L586 62" fill="none" stroke="#186B8C" stroke-width="1.6" marker-end="url(#f9g)"/>
+      <text x="507" y="84" class="f9l" fill="#186B8C">ถูก</text>
+      <path d="M497 209 L497 250 L586 250" fill="none" stroke="#A8620E" stroke-width="1.6" marker-end="url(#f9r)"/>
+      <text x="507" y="234" class="f9l" fill="#A8620E">ผิด / 500</text>
+
+      <rect x="590" y="14" width="150" height="98" rx="9" fill="#DDEEF5" stroke="#186B8C" stroke-width="1.6"/>
+      <text x="665" y="38" text-anchor="middle" class="f9t">bug อยู่ frontend</text>
+      <text x="665" y="56" text-anchor="middle" class="f9s">คำนวณ / แสดงผลผิด</text>
+      <text x="665" y="74" text-anchor="middle" class="f9m" fill="#186B8C">Sources · breakpoint</text>
+      <text x="665" y="90" text-anchor="middle" class="f9m" fill="#186B8C">unit test ฝั่ง React</text>
+      <text x="665" y="105" text-anchor="middle" class="f9s">เช่น BUG #2</text>
+
+      <rect x="590" y="202" width="150" height="98" rx="9" fill="#FBF0E2" stroke="#A8620E" stroke-width="1.6"/>
+      <text x="665" y="226" text-anchor="middle" class="f9t">bug อยู่ API / DB</text>
+      <text x="665" y="244" text-anchor="middle" class="f9s">ดู log ใน terminal</text>
+      <text x="665" y="262" text-anchor="middle" class="f9m" fill="#A8620E">stack trace</text>
+      <text x="665" y="278" text-anchor="middle" class="f9m" fill="#A8620E">VS Code breakpoint</text>
+      <text x="665" y="293" text-anchor="middle" class="f9s">เช่น BUG #1 · #3</text>
+
+      <text x="20" y="250" class="f9s">ข้อมูลที่ API ส่งจริง คือ "เส้นแบ่ง"</text>
+      <text x="20" y="266" class="f9s">ระหว่างชั้น frontend กับชั้น API</text>
+      <text x="20" y="282" class="f9s">ดูครั้งเดียว ตัดที่ต้องสงสัยออกครึ่งหนึ่ง</text>
+    </svg>
+    <figcaption><b>ภาพที่ 9</b>แยกชั้นด้วยคำถามเดียว — เปิด DevTools → Network ดู response จริง · ถูก → bug อยู่ frontend · ผิดหรือ 500 → bug อยู่ API/DB</figcaption>
+  </figure>
+
+  <table class="d">
+    <tr><th>BUG</th><th>ดู Network แล้วเห็น</th><th>สรุปว่าอยู่ชั้น</th></tr>
+    <tr><td>#1 ลบแล้วเพิ่มใหม่</td><td><code>POST /api/requests</code> → <strong>500</strong></td><td>API/DB → ไปดู terminal</td></tr>
+    <tr><td>#2 การ์ด = 0</td><td><code>GET /api/requests</code> → 200 · มี <code>"status": "in-progress"</code> ถูกต้อง</td><td><strong>frontend</strong></td></tr>
+    <tr><td>#3 PUT คำร้องที่ถูกลบ</td><td><code>PUT /api/requests/REQ-999</code> → <strong>500</strong></td><td>API → ไปดู terminal</td></tr>
+  </table>
+
+  <h3>7.3 ขั้น 4–6 · สมมติฐาน หลักฐาน แก้ และกันไม่ให้กลับมา</h3>
+
+  <table class="d">
+    <tr><th style="width:150px">ขั้น</th><th>ทำอะไร</th><th>ตัวอย่าง BUG #1</th></tr>
+    <tr><td>4 สมมติฐาน+หลักฐาน</td><td>เขียนสิ่งที่เชื่อว่าเป็นสาเหตุ แล้วหา<strong>ค่าจริง</strong>มายืนยัน</td><td>"รหัสใหม่ซ้ำของเดิม" → breakpoint ใน <code>nextId()</code> เห็นค่า <code>REQ-005</code></td></tr>
+    <tr><td>5 แก้</td><td>แก้ที่สาเหตุ เปลี่ยนให้น้อยที่สุด</td><td>หารหัสล่าสุดแทนการนับจำนวนแถว</td></tr>
+    <tr><td>6 regression test</td><td>test จากขั้น 2 ต้องผ่าน และอยู่ในโปรเจกต์ตลอดไป</td><td>"ลบรายการกลาง แล้วเพิ่มใหม่ → 201 และรหัสไม่ซ้ำของเดิม"</td></tr>
+  </table>
+
+  <div class="box analogy">
+    <span class="h">🟪 เทียบกับหมอตรวจคนไข้</span>
+    <p style="margin:0">คนไข้บอก<strong>อาการ</strong> ("ปวดหัวตั้งแต่เมื่อวาน") · หมอ<strong>ซักประวัติ</strong>ว่าอะไรเปลี่ยน · <strong>ตรวจ</strong>เพื่อตัดสาเหตุที่ไม่ใช่ · ตั้งสมมติฐานแล้วส่ง<strong>ตรวจเลือด</strong>ยืนยัน · รักษาที่ต้นเหตุ ไม่ใช่ให้ยาแก้ปวดอย่างเดียว · แล้ว<strong>นัดติดตามผล</strong><br>
+    ยาแก้ปวด = <code>try/catch</code> ครอบแล้วตอบ 200 ให้ error เงียบไป — อาการหาย แต่โรคยังอยู่</p>
+  </div>
+
+  <div class="box pitfall">
+    <span class="h">🟥 แก้ที่อาการ ไม่ใช่ที่สาเหตุ</span>
+    <p style="margin:0">BUG #1 "แก้" ได้ด้วยการจับ error UNIQUE แล้วลอง <code>+2</code>, <code>+3</code> ไปเรื่อย ๆ · BUG #2 "แก้" ได้ด้วยการเปลี่ยน API ให้ส่ง <code>'in progress'</code> แทน — ทั้งคู่ทำให้อาการหาย แต่<strong>สาเหตุยังอยู่</strong> และ BUG #2 แบบนั้นจะไปพังตัวกรองสถานะกับ schema ที่ใช้ <code>'in-progress'</code> อยู่ · ถามตัวเองทุกครั้ง: <em>ถ้าแก้ตรงนี้ ส่วนอื่นที่พึ่งพาค่าเดิมจะพังไหม</em></p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 7</span>
+    <ul>
+      <li>debug 6 ขั้น: <strong>อาการ → ทำซ้ำ → แยกชั้น → สมมติฐาน+หลักฐาน → แก้ → regression test</strong></li>
+      <li>ทำซ้ำให้ได้ก่อนเสมอ — ดีที่สุดคือเขียนเป็น test ที่ fail</li>
+      <li>แยกชั้นด้วย DevTools Network: response ถูก → frontend · ผิด/500 → API/DB</li>
+      <li>แก้ที่สาเหตุ ไม่ใช่ซ่อนอาการ — แล้วเก็บ test ไว้กันไม่ให้กลับมา</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 8 ════════ -->
+<section class="ch" id="c8">
+  <p class="ch-num">บทที่ 8 · กลุ่มที่ 3 <span class="wheretag room">🏫 CP47</span></p>
+  <h2>เครื่องมือ debug — stack trace · breakpoint · DevTools</h2>
+  <p class="readtime">เวลาอ่าน ≈ 15 นาที</p>
+
+  <p>ขั้น "สมมติฐาน + หลักฐาน" ต้องใช้เครื่องมือ · bug 3 ตัวจากผู้ใช้ถูกเลือกมาให้แต่ละตัว<strong>เหมาะกับเครื่องมือคนละแบบ</strong></p>
+
+  <table class="d">
+    <tr><th style="width:70px">BUG</th><th>เครื่องมือหลัก</th><th>ตอบคำถาม</th></tr>
+    <tr><td><strong>#3</strong></td><td>อ่าน stack trace ใน terminal</td><td>พังที่ไฟล์ไหน บรรทัดไหน เพราะอะไร</td></tr>
+    <tr><td><strong>#1</strong></td><td>log ใน terminal → breakpoint ใน VS Code</td><td>ตอนนั้นตัวแปรมีค่าอะไร</td></tr>
+    <tr><td><strong>#2</strong></td><td>DevTools Network → Sources</td><td>ข้อมูลจริงที่เบราว์เซอร์ได้รับหน้าตาเป็นอย่างไร</td></tr>
+  </table>
+
+  <h3>8.1 BUG #3 · อ่าน stack trace</h3>
+
+  <div class="term">
+    <div class="w">Stack trace</div>
+    <p>รายการ "ใครเรียกใคร" ณ วินาทีที่เกิด error · บรรทัดแรกบอก<strong>เกิดอะไร</strong> · บรรทัดถัดไปไล่จาก<strong>จุดที่พัง</strong>ย้อนขึ้นไปหาผู้เรียก · รูปแบบ <code>ไฟล์:บรรทัด:คอลัมน์</code></p>
+  </div>
+
+  <p>ทำซ้ำ BUG #3 ด้วย <code>curl</code> (หรือรัน regression test) แล้วดู terminal ที่รัน <code>npm run dev</code> — <code>errorHandler</code> พิมพ์ stack เต็มเพราะเป็น dev mode</p>
+
+<pre><code><span class="c-key">curl</span> -X PUT localhost:3001/api/requests/REQ-999 \
+  -H <span class="c-str">"Content-Type: application/json"</span> -d <span class="c-str">'{"status":"completed"}'</span></code></pre>
+
+  <figure>
+    <svg viewBox="0 0 760 262" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="stack trace จริงของ BUG 3 พร้อมคำอธิบาย">
+      <style>
+        .fat{font:600 11px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .fas{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .fam{font:500 9.5px 'IBM Plex Mono',monospace}
+        .fan{font:600 10px 'IBM Plex Mono',monospace;fill:#FFFFFF}
+      </style>
+      <rect x="20" y="14" width="540" height="200" rx="8" fill="#1E1408"/>
+      <text x="34" y="38" class="fam" fill="#F0968C">เกิดข้อผิดพลาดภายใน: TypeError: Cannot read properties of null (reading 'id')</text>
+      <rect x="28" y="50" width="526" height="20" rx="3" fill="#3A2A12"/>
+      <text x="34" y="64" class="fam" fill="#FFE08A">    at updateRequestStatus (file:///…/api/src/controllers/requestController.js:30:35)</text>
+      <text x="34" y="88" class="fam" fill="#6E8A7E">    at Layer.handleRequest (…/api/node_modules/router/lib/layer.js:152:17)</text>
+      <text x="34" y="106" class="fam" fill="#6E8A7E">    at next (…/api/node_modules/router/lib/route.js:157:13)</text>
+      <text x="34" y="124" class="fam" fill="#6E8A7E">    at Route.dispatch (…/api/node_modules/router/lib/route.js:117:3)</text>
+      <text x="34" y="142" class="fam" fill="#6E8A7E">    at handle (…/api/node_modules/router/index.js:435:11)</text>
+      <text x="34" y="160" class="fam" fill="#6E8A7E">    … อีก 5 บรรทัด ใน node_modules/router</text>
+      <text x="34" y="186" class="fam" fill="#E4EFE9">PUT /api/requests/REQ-999 <tspan fill="#F0968C">500</tspan> 12.812 ms - 487</text>
+
+      <circle cx="580" cy="34" r="9" fill="#B23A2E"/><text x="580" y="38" text-anchor="middle" class="fan">1</text>
+      <text x="596" y="31" class="fat">เกิดอะไร</text>
+      <text x="596" y="46" class="fas">เอา .id จากค่า null</text>
+
+      <circle cx="580" cy="72" r="9" fill="#A8620E"/><text x="580" y="76" text-anchor="middle" class="fan">2</text>
+      <text x="596" y="69" class="fat">โค้ดของเราบรรทัดแรก</text>
+      <text x="596" y="84" class="fas">บรรทัด 30 · คอลัมน์ 35</text>
+
+      <circle cx="580" cy="124" r="9" fill="#8A9691"/><text x="580" y="128" text-anchor="middle" class="fan">3</text>
+      <text x="596" y="121" class="fat">node_modules</text>
+      <text x="596" y="136" class="fas">ข้างใน Express — ข้ามได้</text>
+
+      <circle cx="580" cy="182" r="9" fill="#186B8C"/><text x="580" y="186" text-anchor="middle" class="fan">4</text>
+      <text x="596" y="179" class="fat">log ของ morgan</text>
+      <text x="596" y="194" class="fas">คำขอไหน ได้ status อะไร</text>
+
+      <text x="20" y="238" class="fas">ผลจริงจาก terminal ของ starter (ย่อ path ด้วย …) · ตัวที่ต้องอ่านคือบรรทัด 1 กับ 2 — อีก 9 บรรทัด at เป็นเส้นทางภายใน Express</text>
+      <text x="20" y="254" class="fas">response ใน dev mode ก็มี stack 3 บรรทัดแรกแนบมาด้วย (production ไม่ส่ง — ดู errorHandler.js)</text>
+    </svg>
+    <figcaption><b>ภาพที่ 10</b>stack trace จริงของ BUG #3 — อ่านบรรทัดแรก (เกิดอะไร) กับบรรทัดแรกที่เป็นโค้ดของเรา (เกิดที่ไหน) · บรรทัดใน node_modules ข้ามได้</figcaption>
+  </figure>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">stack trace บอก <code>requestController.js:30:35</code> และ "reading 'id'" ของ <code>null</code> · ลองเปิดบรรทัด 30 ด้านล่าง — <strong>ตัวแปรไหนเป็น null และทำไมโค้ดถึงเอา <code>.id</code> ของมันก่อนจะตรวจ</strong></p>
+  </div>
+
+<pre><code><span class="c-com">// api/src/controllers/requestController.js (starter)</span>
+<span class="c-num">29</span>    <span class="c-key">const</span> updated = service.<span class="c-fn">updateStatus</span>(req.params.id, status);   <span class="c-com">// ไม่พบ → คืน null</span>
+<span class="c-num">30</span>    console.<span class="c-fn">log</span>(<span class="c-str">`[status] ${updated<span class="c-hl">.id</span>} → ${updated.status}`</span>);   <span class="c-com">// คอลัมน์ 35 = .id</span>
+<span class="c-num">31</span>    <span class="c-key">if</span> (!updated) {
+<span class="c-num">32</span>      <span class="c-key">return</span> res.<span class="c-fn">status</span>(<span class="c-num">404</span>).<span class="c-fn">json</span>({ error: <span class="c-str">`ไม่พบคำร้องรหัส ${req.params.id}`</span> });
+<span class="c-num">33</span>    }</code></pre>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><code>updated</code> เป็น <code>null</code> เพราะ <code>service.updateStatus</code> คืน <code>null</code> เมื่อไม่พบรหัส (ออกแบบไว้ถูกแล้ว) · controller ก็มี <code>if (!updated)</code> ตอบ 404 ไว้แล้ว — <strong>แต่บรรทัด log ถูกวางไว้ก่อนการตรวจ</strong> จึงพังก่อนจะถึง 404</p>
+      <p style="margin:0">แก้: <strong>ย้ายบรรทัด log ไปไว้หลัง <code>if (!updated) { … }</code></strong> · ไม่ต้องเพิ่ม <code>?.</code> หรือ <code>try/catch</code> — ลำดับต่างหากที่ผิด · บทเรียน: บรรทัด log ก็เป็นโค้ดที่พังได้ เหมือนบรรทัดอื่น</p>
+    </div>
+  </details>
+
+  <h3>8.2 BUG #1 · log → breakpoint ใน VS Code</h3>
+
+  <p>ทำซ้ำ BUG #1 ใน dev (ลบ REQ-002 บน Dashboard แล้วสร้างคำร้องใหม่) — terminal บอกว่า</p>
+
+<pre><code><span class="c-bad">เกิดข้อผิดพลาดภายใน: Error: UNIQUE constraint failed: requests.id</span>
+    at Module.create (file:///…/api/src/services/requestService.js:<span class="c-hl">127:7</span>)
+    at createRequest (file:///…/api/src/controllers/requestController.js:20:27)
+    at Layer.handleRequest (…/api/node_modules/router/lib/layer.js:152:17)
+    …</code></pre>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">stack trace ชี้ไปที่ <code>requestService.js:127</code> ซึ่งเป็นคำสั่ง <code>INSERT</code> · <strong>bug อยู่ที่บรรทัด 127 ใช่ไหม</strong> · และ "UNIQUE constraint failed: requests.id" บอกอะไรเรา</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>ไม่ใช่</strong> — บรรทัด 127 แค่<strong>ส่งรหัสที่ได้รับมา</strong>ให้ SQLite · SQLite ปฏิเสธเพราะ <code>id</code> เป็น PRIMARY KEY และ<strong>รหัสนั้นมีอยู่แล้ว</strong> · stack trace บอก<em>ที่ที่พัง</em> ไม่ใช่<em>ที่ที่ผิด</em></p>
+      <p style="margin:0">รหัสถูกคำนวณก่อนหน้านั้นใน <code>nextId()</code> (บรรทัด 118 <code>const id = nextId();</code>) · สมมติฐาน: "<code>nextId()</code> คืนรหัสที่ซ้ำ" → ต้องการหลักฐาน = <strong>ค่าจริงที่ <code>nextId()</code> คืน</strong> → ใช้ breakpoint</p>
+    </div>
+  </details>
+
+  <div class="term">
+    <div class="w">Breakpoint · JavaScript Debug Terminal</div>
+    <p><strong>breakpoint</strong> = จุดที่สั่งให้โปรแกรม<strong>หยุดชั่วคราว</strong> เพื่อดูค่าตัวแปรทุกตัว ณ ตอนนั้น โดยไม่ต้องแทรก <code>console.log</code> · <strong>JavaScript Debug Terminal</strong> ของ VS Code คือ terminal ที่ต่อ debugger ให้ทุกคำสั่ง <code>node</code>/<code>npm</code> ที่รันในนั้นอัตโนมัติ — ไม่ต้องตั้ง <code>launch.json</code></p>
+  </div>
+
+  <ol>
+    <li>VS Code → แท็บ Terminal → ลูกศรข้างปุ่ม <strong>+</strong> → เลือก <strong>JavaScript Debug Terminal</strong></li>
+    <li>ในเทอร์มินัลนั้น: <code>cd api</code> แล้ว <code>npm run dev</code> (ปิด API ตัวเดิมก่อน พอร์ตจะได้ไม่ชน)</li>
+    <li>เปิด <code>api/src/services/requestService.js</code> → <strong>คลิกซ้ายของเลขบรรทัด 102</strong> (<code>return `REQ-…`</code>) → มีจุดแดง</li>
+    <li>ทำซ้ำอาการบนหน้าเว็บ (ลบ REQ-002 → สร้างคำร้องใหม่) → VS Code หยุดที่บรรทัด 102</li>
+    <li>ดูแผง <strong>VARIABLES</strong> หรือเอาเมาส์ชี้ตัวแปร — <code>total</code> = <strong>4</strong> · ผลที่จะคืนคือ <code>'REQ-005'</code></li>
+    <li>กด Continue (F5) ให้ทำงานต่อ · เสร็จแล้วคืนข้อมูล dev ด้วย <code>npm run db:reset</code> (ยังอยู่ใน <code>api/</code>)</li>
+  </ol>
+
+<pre><code><span class="c-com">// api/src/services/requestService.js — starter</span>
+<span class="c-num">99</span>  <span class="c-key">function</span> <span class="c-fn">nextId</span>() {
+<span class="c-num">100</span>   <span class="c-com">// รหัสถัดไป = จำนวนคำร้องที่มีอยู่ + 1  (ปรับให้เรียบง่ายขึ้นในรุ่นนี้)</span>
+<span class="c-num">101</span>   <span class="c-key">const</span> { total } = db.<span class="c-fn">prepare</span>(<span class="c-str">'SELECT COUNT(*) AS total FROM requests'</span>).<span class="c-fn">get</span>();
+<span class="c-num">102</span>   <span class="c-key">return</span> <span class="c-str">`REQ-${String(<span class="c-hl">total + 1</span>).padStart(3, '0')}`</span>;   <span class="c-com">// ● breakpoint · total = 4</span>
+<span class="c-num">103</span> }</code></pre>
+
+  <figure>
+    <svg viewBox="0 0 760 316" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="รหัสคำร้องก่อนและหลังลบ COUNT บวกหนึ่งชนกับ REQ-005">
+      <style>
+        .fbt{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .fbs{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .fbm{font:500 10px 'IBM Plex Mono',monospace;fill:#14251E}
+        .fbk{font:500 9.5px 'IBM Plex Mono',monospace}
+      </style>
+      <text x="20" y="24" class="fbt">① ข้อมูลตั้งต้น — 5 รายการ</text>
+      <rect x="20" y="34" width="78" height="34" rx="6" fill="#F5F7F6" stroke="#8A9691"/><text x="59" y="55" text-anchor="middle" class="fbm">REQ-001</text>
+      <rect x="104" y="34" width="78" height="34" rx="6" fill="#F5F7F6" stroke="#8A9691"/><text x="143" y="55" text-anchor="middle" class="fbm">REQ-002</text>
+      <rect x="188" y="34" width="78" height="34" rx="6" fill="#F5F7F6" stroke="#8A9691"/><text x="227" y="55" text-anchor="middle" class="fbm">REQ-003</text>
+      <rect x="272" y="34" width="78" height="34" rx="6" fill="#F5F7F6" stroke="#8A9691"/><text x="311" y="55" text-anchor="middle" class="fbm">REQ-004</text>
+      <rect x="356" y="34" width="78" height="34" rx="6" fill="#F5F7F6" stroke="#8A9691"/><text x="395" y="55" text-anchor="middle" class="fbm">REQ-005</text>
+      <rect x="460" y="30" width="280" height="42" rx="8" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="474" y="48" class="fbk" fill="#14503A">COUNT(*) = 5 → 5 + 1 → REQ-006</text>
+      <text x="474" y="64" class="fbs" fill="#14503A">✓ ไม่ซ้ำ — test ของ starter ผ่านเพราะกรณีนี้</text>
+
+      <text x="20" y="122" class="fbt">② หลัง DELETE REQ-002 — เหลือ 4 รายการ (starter)</text>
+      <rect x="20" y="132" width="78" height="34" rx="6" fill="#F5F7F6" stroke="#8A9691"/><text x="59" y="153" text-anchor="middle" class="fbm">REQ-001</text>
+      <rect x="104" y="132" width="78" height="34" rx="6" fill="#FFFFFF" stroke="#B8C4BD" stroke-dasharray="4 3"/><text x="143" y="153" text-anchor="middle" class="fbm" fill="#B8C4BD">ลบแล้ว</text>
+      <rect x="188" y="132" width="78" height="34" rx="6" fill="#F5F7F6" stroke="#8A9691"/><text x="227" y="153" text-anchor="middle" class="fbm">REQ-003</text>
+      <rect x="272" y="132" width="78" height="34" rx="6" fill="#F5F7F6" stroke="#8A9691"/><text x="311" y="153" text-anchor="middle" class="fbm">REQ-004</text>
+      <rect x="356" y="132" width="78" height="34" rx="6" fill="#FBEBE8" stroke="#B23A2E" stroke-width="2"/><text x="395" y="153" text-anchor="middle" class="fbm" fill="#8F2B21">REQ-005</text>
+      <rect x="460" y="122" width="280" height="56" rx="8" fill="#FBEBE8" stroke="#B23A2E"/>
+      <text x="474" y="140" class="fbk" fill="#8F2B21">COUNT(*) = 4 → 4 + 1 → REQ-005</text>
+      <text x="474" y="156" class="fbs" fill="#8F2B21">✕ ชนกับ REQ-005 ที่ยังอยู่</text>
+      <text x="474" y="171" class="fbk" fill="#8F2B21">UNIQUE constraint failed → 500</text>
+
+      <text x="20" y="226" class="fbt">③ แก้แล้ว — หารหัสล่าสุด แล้ว +1 (เฉลย)</text>
+      <rect x="20" y="236" width="78" height="34" rx="6" fill="#F5F7F6" stroke="#8A9691"/><text x="59" y="257" text-anchor="middle" class="fbm">REQ-001</text>
+      <rect x="104" y="236" width="78" height="34" rx="6" fill="#FFFFFF" stroke="#B8C4BD" stroke-dasharray="4 3"/><text x="143" y="257" text-anchor="middle" class="fbm" fill="#B8C4BD">ลบแล้ว</text>
+      <rect x="188" y="236" width="78" height="34" rx="6" fill="#F5F7F6" stroke="#8A9691"/><text x="227" y="257" text-anchor="middle" class="fbm">REQ-003</text>
+      <rect x="272" y="236" width="78" height="34" rx="6" fill="#F5F7F6" stroke="#8A9691"/><text x="311" y="257" text-anchor="middle" class="fbm">REQ-004</text>
+      <rect x="356" y="236" width="78" height="34" rx="6" fill="#DFF0E7" stroke="#1E7A54" stroke-width="2"/><text x="395" y="257" text-anchor="middle" class="fbm" fill="#14503A">REQ-005</text>
+      <rect x="460" y="226" width="280" height="56" rx="8" fill="#DFF0E7" stroke="#1E7A54"/>
+      <text x="474" y="244" class="fbk" fill="#14503A">ORDER BY id DESC LIMIT 1 → REQ-005</text>
+      <text x="474" y="260" class="fbk" fill="#14503A">5 + 1 → REQ-006</text>
+      <text x="474" y="275" class="fbs" fill="#14503A">✓ ไม่ซ้ำ ไม่ว่าจะลบรายการไหน</text>
+
+      <text x="20" y="306" class="fbs">"จำนวนแถว" กับ "รหัสล่าสุด" เท่ากันก็ต่อเมื่อไม่เคยลบ — นี่คือเหตุผลที่ "เมื่อวานยังส่งได้"</text>
+    </svg>
+    <figcaption><b>ภาพที่ 11</b>BUG #1 — <code>COUNT(*) + 1</code> ใช้ได้เฉพาะเมื่อไม่เคยลบ · ลบ REQ-002 แล้วนับได้ 4 จึงได้ REQ-005 ซึ่งยังมีอยู่ · แก้ด้วยการหารหัสล่าสุดแล้วบวก 1</figcaption>
+  </figure>
+
+<pre><code><span class="c-com">// api/src/services/requestService.js — หลังแก้</span>
+<span class="c-key">function</span> <span class="c-fn">nextId</span>() {
+  <span class="c-key">const</span> row = db.<span class="c-fn">prepare</span>(
+    <span class="c-str">"SELECT id FROM requests WHERE id LIKE 'REQ-%' ORDER BY id DESC LIMIT 1"</span>
+  ).<span class="c-fn">get</span>();
+  <span class="c-key">const</span> n = row ? <span class="c-fn">Number</span>(<span class="c-fn">String</span>(row.id).<span class="c-fn">replace</span>(<span class="c-str">'REQ-'</span>, <span class="c-str">''</span>)) + <span class="c-num">1</span> : <span class="c-num">1</span>;
+  <span class="c-key">return</span> <span class="c-str">`REQ-${String(n).padStart(3, '0')}`</span>;
+}</code></pre>
+
+  <div class="box win" style="background:var(--a-tint);border-left:3px solid var(--a)">
+    <span class="h" style="color:var(--a)">🟩 หลักฐานยืนยันสมมติฐานแล้ว</span>
+    <p style="margin:0">สมมติฐาน "<code>nextId()</code> คืนรหัสซ้ำ" → breakpoint แสดง <code>total = 4</code> → คืน <code>'REQ-005'</code> ซึ่งยังมีอยู่ในตาราง · ตอนนี้เรา<strong>รู้</strong> ไม่ใช่<strong>เดา</strong> — จึงแก้ได้ตรงจุดและเขียนลง DEBUG_LOG ได้ว่าเห็นอะไรจากเครื่องมือไหน</p>
+  </div>
+
+  <div class="box note">
+    <span class="h">🟨 breakpoint ดีกว่า console.log อย่างไร</span>
+    <p style="margin:0"><code>console.log</code> ต้องเดาล่วงหน้าว่าจะพิมพ์ตัวแปรไหน ผิดก็ต้องแก้แล้วรันใหม่ และมักลืมลบ (BUG #3 ก็เกิดจากบรรทัด log) · breakpoint หยุดแล้ว<strong>เห็นทุกตัวแปรพร้อมกัน</strong> ดูผู้เรียก (CALL STACK) ได้ และ<strong>ไม่ต้องแก้โค้ดเลย</strong> · เปิด <code>npm run test:watch</code> ใน JavaScript Debug Terminal ก็หยุดที่ breakpoint ตอนรัน test ได้เหมือนกัน</p>
+  </div>
+
+  <h3>8.3 BUG #2 · DevTools Network และ Sources</h3>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">การ์ด "กำลังดำเนินการ" เป็น 0 แต่รายการด้านล่างมีคำร้อง in-progress · คนหนึ่งบอกว่า "SQL นับผิดแน่ ๆ ไปแก้ service" · <strong>จะพิสูจน์อย่างไรภายใน 30 วินาที ว่า bug อยู่ API หรือ frontend</strong></p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p>เปิด DevTools → <strong>Network</strong> → กรอง Fetch/XHR → รีเฟรช Dashboard → คลิก <code>requests</code> → แท็บ <strong>Response</strong> · จะเห็นข้อมูลจริงที่ API ส่งมา:</p>
+<pre style="margin:10px 0"><code>{ <span class="c-str">"id"</span>: <span class="c-str">"REQ-002"</span>, …, <span class="c-str">"status"</span>: <span class="c-str">"in-progress"</span> }   <span class="c-com">// ✓ API ส่งถูก — มีขีด</span></code></pre>
+      <p style="margin:0">API ส่งถูก → <strong>bug อยู่ frontend</strong> · ไม่ต้องเปิดไฟล์ฝั่ง API เลยสักไฟล์ (ภาพที่ 9) · และสังเกตว่าการ์ดสรุปไม่ได้มาจาก SQL — frontend นับเองจาก array ที่ได้รับ</p>
+    </div>
+  </details>
+
+  <p>ต่อด้วย <strong>Sources</strong> (ยังอยู่ใน DevTools) → กด Ctrl+P พิมพ์ <code>requestSummary</code> → เปิด <code>src/utils/requestSummary.js</code> (Vite ส่งไฟล์ต้นฉบับมาให้ debug ได้ตรง ๆ) → คลิกเลขบรรทัด 12 → รีเฟรช → หยุดแล้วเอาเมาส์ชี้ <code>requests</code> ใน Scope</p>
+
+<pre><code><span class="c-com">// frontend/src/utils/requestSummary.js — starter</span>
+<span class="c-key">export function</span> <span class="c-fn">summarizeRequests</span>(requests) {
+  <span class="c-key">const</span> <span class="c-fn">count</span> = (status) =&gt; requests.<span class="c-fn">filter</span>((request) =&gt; request.status === status).length;
+  <span class="c-key">return</span> {
+    total: requests.length,
+    pending: <span class="c-fn">count</span>(<span class="c-str">'pending'</span>),
+    inProgress: <span class="c-fn">count</span>(<span class="c-bad">'in progress'</span>),   <span class="c-com">// ✕ ช่องว่าง — API ส่ง 'in-progress' (ขีด)</span>
+    completed: <span class="c-fn">count</span>(<span class="c-str">'completed'</span>),
+  };
+}</code></pre>
+
+  <p>แก้เป็น <code>count('in-progress')</code> ให้ตรงกับ API · ค่าสถานะต้องตรงกันทุกตัวอักษรในทุกชั้น — schema.sql (<code>CHECK (status IN ('pending','in-progress','completed'))</code>) · validator (<code>STATUSES</code>) · frontend</p>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ทำไม test ของ starter ไม่เจอ BUG #2</span>
+    <p style="margin:0">test เดียวที่มีคือ "รายการว่าง → ทุกค่าเป็น 0" — <strong>ข้อมูลว่างให้ 0 ทั้งโค้ดถูกและโค้ดผิด</strong> · test ที่ดีต้องใช้<strong>ข้อมูลหน้าตาเดียวกับที่ระบบจริงส่ง</strong> — คัดลอกค่า status จาก Network มาใช้ ไม่ใช่พิมพ์เองจากความจำ (ซึ่งก็คือวิธีที่ bug นี้เกิดขึ้น)</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 8</span>
+    <ul>
+      <li><strong>stack trace</strong> — อ่านบรรทัดแรก (เกิดอะไร) + บรรทัดแรกที่เป็นโค้ดเรา (ไฟล์:บรรทัด:คอลัมน์) · ข้าม node_modules</li>
+      <li>ที่ที่พัง ≠ ที่ที่ผิด — BUG #1 พังตอน INSERT แต่ผิดที่ <code>nextId()</code></li>
+      <li><strong>breakpoint</strong> ใน JavaScript Debug Terminal — หยุดดูค่าจริงโดยไม่ต้องแก้โค้ด · <code>total = 4</code> → <code>REQ-005</code></li>
+      <li><strong>DevTools Network</strong> ตัดสินว่า bug อยู่ชั้นไหน · <strong>Sources</strong> วาง breakpoint ฝั่ง React</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════ CH 9 ════════ -->
+<section class="ch" id="c9">
+  <p class="ch-num">บทที่ 9 · กลุ่มที่ 3 <span class="wheretag room">🏫 CP47 · ปิดช่วงเช้า</span></p>
+  <h2>Regression test, DEBUG_LOG และสรุป</h2>
+  <p class="readtime">เวลาอ่าน ≈ 10 นาที</p>
+
+  <div class="term">
+    <div class="w">Regression test</div>
+    <p>test ที่เขียนขึ้นจาก bug ที่เคยเกิด เพื่อ<strong>กันไม่ให้ bug เดิมกลับมา</strong> (regression = ถอยหลัง) · วันหนึ่งมีคนแก้ <code>nextId()</code> กลับเป็นแบบเดิมโดยไม่รู้ประวัติ — test ข้อนี้จะ fail ทันที</p>
+  </div>
+
+  <h3>9.1 เขียน test ที่ fail ก่อน แล้วค่อยแก้</h3>
+
+  <div class="box predict">
+    <span class="h">🟩 ทายก่อนอ่านต่อ</span>
+    <p style="margin:0">ถ้าแก้ bug เสร็จก่อน แล้วค่อยเขียน regression test — test ผ่านทันที · <strong>รู้ได้อย่างไรว่า test ข้อนี้จับ bug ได้จริง</strong> ไม่ใช่ test ที่ผ่านเสมอไม่ว่าโค้ดจะเป็นอย่างไร</p>
+  </div>
+
+  <details>
+    <summary>เฉลย</summary>
+    <div class="ans">
+      <p><strong>รู้ไม่ได้</strong> — test ที่ไม่เคย fail อาจตรวจผิดจุด (เช่นลืม <code>await</code>, ใช้รหัสที่ไม่ทำให้เกิด bug, หรือไม่มี <code>expect</code> เลย) · มันจะผ่านทั้งก่อนและหลังแก้ ซึ่งไม่ได้กันอะไร</p>
+      <p style="margin:0">ลำดับที่ถูก: <strong>เขียน test ที่ทำซ้ำอาการ → รันบนโค้ดที่มี bug → ต้องเห็นแดง → แก้ → เห็นเขียว</strong> · การเห็นแดงก่อนคือหลักฐานว่า test ตรวจถูกจุด</p>
+    </div>
+  </details>
+
+  <figure>
+    <svg viewBox="0 0 760 214" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ลำดับเขียน regression test แดงก่อนแล้วเขียว">
+      <style>
+        .fct{font:600 11.5px 'IBM Plex Sans Thai',sans-serif;fill:#14251E}
+        .fcs{font:300 10px 'IBM Plex Sans Thai',sans-serif;fill:#54685E}
+        .fcm{font:500 9.5px 'IBM Plex Mono',monospace}
+        .fcn{font:600 10px 'IBM Plex Mono',monospace}
+      </style>
+      <defs><marker id="fca" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#54685E" stroke-width="1.5"/></marker></defs>
+
+      <rect x="20" y="30" width="126" height="98" rx="9" fill="#FFFFFF" stroke="#8A9691"/>
+      <text x="34" y="52" class="fcn" fill="#54685E">1</text>
+      <text x="34" y="72" class="fct">เขียน test</text>
+      <text x="34" y="90" class="fcs">ทำซ้ำอาการ</text>
+      <text x="34" y="106" class="fcs">จาก BUG_REPORTS</text>
+
+      <rect x="170" y="30" width="126" height="98" rx="9" fill="#FBEBE8" stroke="#B23A2E" stroke-width="1.6"/>
+      <text x="184" y="52" class="fcn" fill="#B23A2E">2</text>
+      <text x="184" y="72" class="fct" fill="#8F2B21">รัน → FAIL</text>
+      <text x="184" y="90" class="fcm" fill="#8F2B21">expected 500</text>
+      <text x="184" y="106" class="fcm" fill="#8F2B21">to be 201</text>
+
+      <rect x="320" y="30" width="126" height="98" rx="9" fill="#FFF8E6" stroke="#B5771A"/>
+      <text x="334" y="52" class="fcn" fill="#B5771A">3</text>
+      <text x="334" y="72" class="fct">แก้โค้ด</text>
+      <text x="334" y="90" class="fcs">ที่สาเหตุ</text>
+      <text x="334" y="106" class="fcm" fill="#8A5A0E">nextId()</text>
+
+      <rect x="470" y="30" width="126" height="98" rx="9" fill="#DFF0E7" stroke="#1E7A54" stroke-width="1.6"/>
+      <text x="484" y="52" class="fcn" fill="#1E7A54">4</text>
+      <text x="484" y="72" class="fct" fill="#14503A">รัน → PASS</text>
+      <text x="484" y="90" class="fcs">ทั้งข้อใหม่</text>
+      <text x="484" y="106" class="fcs">และข้อเดิมทุกข้อ</text>
+
+      <rect x="620" y="30" width="120" height="98" rx="9" fill="#DDEEF5" stroke="#186B8C"/>
+      <text x="634" y="52" class="fcn" fill="#186B8C">5</text>
+      <text x="634" y="72" class="fct">อยู่ถาวร</text>
+      <text x="634" y="90" class="fcs">รันทุกครั้งที่</text>
+      <text x="634" y="106" class="fcs">npm test / push</text>
+
+      <path d="M148 79 L166 79" stroke="#54685E" stroke-width="1.6" marker-end="url(#fca)"/>
+      <path d="M298 79 L316 79" stroke="#54685E" stroke-width="1.6" marker-end="url(#fca)"/>
+      <path d="M448 79 L466 79" stroke="#54685E" stroke-width="1.6" marker-end="url(#fca)"/>
+      <path d="M598 79 L616 79" stroke="#54685E" stroke-width="1.6" marker-end="url(#fca)"/>
+
+      <rect x="20" y="148" width="720" height="50" rx="8" fill="#FAFCFB" stroke="#DBE7E0"/>
+      <text x="380" y="169" text-anchor="middle" class="fct">ขั้น 2 คือหลักฐานว่า test ตรวจถูกจุด — ข้ามไม่ได้</text>
+      <text x="380" y="187" text-anchor="middle" class="fcs">ถ้ารันแล้วผ่านตั้งแต่ขั้น 2 แปลว่า test ยังไม่ได้ทำซ้ำอาการ ให้กลับไปแก้ test ก่อน</text>
+    </svg>
+    <figcaption><b>ภาพที่ 12</b>ลำดับของ regression test — เขียน test → เห็น FAIL บนโค้ดที่มี bug → แก้ → เห็น PASS → test อยู่ในโปรเจกต์ตลอดไป</figcaption>
+  </figure>
+
+  <p>regression test ของทั้ง 4 bug (จากเฉลย) — สังเกตว่าทุกข้อคือ "วิธีทำซ้ำ" ที่เขียนเป็นโค้ด</p>
+
+<pre><code><span class="c-com">// 🐞 BUG #0 — tests/unit/requestValidator.test.js</span>
+<span class="c-fn">test</span>(<span class="c-str">'10 ตัวอักษร → ผ่าน (ตรงขอบพอดี)'</span>, () =&gt; {
+  <span class="c-fn">expect</span>(<span class="c-fn">validateRequestInput</span>(<span class="c-fn">withField</span>({ details: <span class="c-str">'1234567890'</span> }))).<span class="c-fn">toEqual</span>([]);
+});
+
+<span class="c-com">// 🐞 BUG #1 — tests/integration/requests.api.test.js</span>
+<span class="c-fn">test</span>(<span class="c-str">'ลบรายการกลาง แล้วเพิ่มใหม่ → 201 และรหัสไม่ซ้ำของเดิม'</span>, <span class="c-key">async</span> () =&gt; {
+  <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">delete</span>(<span class="c-str">'/api/requests/REQ-002'</span>).<span class="c-fn">expect</span>(<span class="c-num">204</span>);
+  <span class="c-key">const</span> r = <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">post</span>(<span class="c-str">'/api/requests'</span>).<span class="c-fn">send</span>(valid);
+  <span class="c-fn">expect</span>(r.status).<span class="c-fn">toBe</span>(<span class="c-num">201</span>);
+  <span class="c-key">const</span> ids = (<span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">get</span>(<span class="c-str">'/api/requests'</span>)).body.<span class="c-fn">map</span>((x) =&gt; x.id);
+  <span class="c-fn">expect</span>(<span class="c-key">new</span> <span class="c-fn">Set</span>(ids).size).<span class="c-fn">toBe</span>(ids.length);           <span class="c-com">// ไม่มีรหัสซ้ำ</span>
+});
+
+<span class="c-com">// 🐞 BUG #3 — tests/integration/requests.api.test.js</span>
+<span class="c-fn">test</span>(<span class="c-str">'คำร้องที่ไม่มีอยู่ → 404 (ไม่ใช่ 500)'</span>, <span class="c-key">async</span> () =&gt; {
+  <span class="c-key">const</span> r = <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">put</span>(<span class="c-str">'/api/requests/REQ-999'</span>).<span class="c-fn">send</span>({ status: <span class="c-str">'completed'</span> });
+  <span class="c-fn">expect</span>(r.status).<span class="c-fn">toBe</span>(<span class="c-num">404</span>);
+});
+
+<span class="c-com">// 🐞 BUG #2 — frontend/src/utils/requestSummary.test.js (ข้อมูลหน้าตาเดียวกับ Network)</span>
+<span class="c-key">const</span> sample = [
+  { id: <span class="c-str">'REQ-001'</span>, status: <span class="c-str">'pending'</span> },   { id: <span class="c-str">'REQ-002'</span>, status: <span class="c-str">'in-progress'</span> },
+  { id: <span class="c-str">'REQ-003'</span>, status: <span class="c-str">'completed'</span> }, { id: <span class="c-str">'REQ-004'</span>, status: <span class="c-str">'pending'</span> },
+];
+<span class="c-fn">test</span>(<span class="c-str">'นับครบทุกสถานะ'</span>, () =&gt; {
+  <span class="c-fn">expect</span>(<span class="c-fn">summarizeRequests</span>(sample)).<span class="c-fn">toEqual</span>({ total: <span class="c-num">4</span>, pending: <span class="c-num">2</span>, inProgress: <span class="c-num">1</span>, completed: <span class="c-num">1</span> });
+});</code></pre>
+
+  <p>ผลเมื่อรันบน starter (ก่อนแก้) — แดงทั้งหมดตามที่ควร</p>
+
+<pre><code><span class="c-bad">×</span> ลบรายการกลาง แล้วเพิ่มใหม่ → 201 และรหัสไม่ซ้ำของเดิม   <span class="c-com">AssertionError: expected 500 to be 201</span>
+<span class="c-bad">×</span> คำร้องที่ไม่มีอยู่ → 404 (ไม่ใช่ 500)                    <span class="c-com">AssertionError: expected 500 to be 404</span>
+<span class="c-bad">×</span> นับครบทุกสถานะ                                          <span class="c-com">-   "inProgress": 1,   +   "inProgress": 0,</span></code></pre>
+
+  <h3>9.2 <code>DEBUG_LOG.md</code> — 6 ข้อต่อ bug</h3>
+
+  <p>checker ตรวจได้ว่า bug หายและมี test กัน <strong>แต่ตรวจไม่ได้ว่าเข้าใจสาเหตุ</strong> · <code>DEBUG_LOG.md</code> คือหลักฐานการคิด และผู้สอนจะถามให้เล่าจากบันทึกนี้</p>
+
+  <table class="d">
+    <tr><th style="width:170px">หัวข้อ</th><th>ตอบคำถาม</th><th style="width:90px">ขั้นที่</th></tr>
+    <tr><td><strong>อาการ</strong></td><td>ผู้ใช้เห็นอะไร</td><td>1</td></tr>
+    <tr><td><strong>วิธีทำซ้ำ</strong></td><td>ทำอย่างไรให้เกิดอีกครั้ง (คำสั่ง / test)</td><td>2</td></tr>
+    <tr><td><strong>เครื่องมือ</strong></td><td>ใช้อะไรหาเจอ และเห็นอะไร</td><td>3–4</td></tr>
+    <tr><td><strong>สาเหตุ (ไฟล์:บรรทัด)</strong></td><td>ผิดที่ไหน ทำไม</td><td>4</td></tr>
+    <tr><td><strong>วิธีแก้</strong></td><td>เปลี่ยนอะไร</td><td>5</td></tr>
+    <tr><td><strong>test ที่กัน</strong></td><td>ไฟล์ + ชื่อ test</td><td>6</td></tr>
+  </table>
+
+  <p>ตัวอย่างที่เขียนครบ (BUG #3)</p>
+
+<pre><code><span class="c-key">## BUG #3 · เปลี่ยนสถานะคำร้องที่ไม่มีอยู่ ได้ 500</span>
+
+- <span class="c-hl">**อาการ:**</span> `PUT /api/requests/REQ-999` ได้ 500 แทน 404
+- <span class="c-hl">**วิธีทำซ้ำ:**</span> `curl -X PUT localhost:3001/api/requests/REQ-999 -H "Content-Type: application/json" -d '{"status":"completed"}'`
+- <span class="c-hl">**เครื่องมือ:**</span> อ่าน stack trace ใน terminal — บรรทัดแรกบอก `TypeError: Cannot read properties of null (reading 'id')`
+  บรรทัดถัดไปบอกไฟล์และบรรทัดใน controller
+- <span class="c-hl">**สาเหตุ (ไฟล์:บรรทัด):**</span> `api/src/controllers/requestController.js` ใน `updateRequestStatus` มีบรรทัด log `updated.id`
+  อยู่**ก่อน**การตรวจ `if (!updated)` — เมื่อไม่พบคำร้อง `updated` เป็น null จึงพัง
+- <span class="c-hl">**วิธีแก้:**</span> ย้าย log ไปไว้หลังการตรวจ null
+- <span class="c-hl">**test ที่กัน:**</span> `tests/integration/requests.api.test.js` → "คำร้องที่ไม่มีอยู่ → 404 (ไม่ใช่ 500)"</code></pre>
+
+  <div class="box pitfall">
+    <span class="h">🟥 "สาเหตุ" ไม่ใช่การเล่าอาการซ้ำ</span>
+    <p style="margin:0">✕ "สาเหตุ: เปลี่ยนสถานะแล้วได้ 500" — นี่คืออาการ<br>
+    ✓ "สาเหตุ: <code>requestController.js</code> บรรทัด log ใช้ <code>updated.id</code> ก่อนตรวจ null" — ระบุไฟล์ ระบุจุด และบอก<strong>ทำไม</strong> · checker นับว่าบันทึกครบเมื่อทุก bug มีหัวข้อ "สาเหตุ" ที่เขียนจริง</p>
+  </div>
+
+  <h3>9.3 ตรวจงานด้วย checker</h3>
+
+<pre><code><span class="c-key">npm</span> install --prefix api &amp;&amp; <span class="c-key">npm</span> install --prefix frontend          <span class="c-com"># checker เรียก Vitest ของโปรเจกต์</span>
+<span class="c-key">node</span> --disable-warning=ExperimentalWarning check-week12.mjs --inclass   <span class="c-com"># เฉพาะในห้อง 20 ข้อ</span>
+<span class="c-key">node</span> --disable-warning=ExperimentalWarning check-week12.mjs             <span class="c-com"># รวม Challenge = 22 ข้อ</span></code></pre>
+
+  <table class="d">
+    <tr><th>หมวด</th><th style="width:80px">จำนวน</th><th>ตรวจอะไร</th></tr>
+    <tr><td><strong>CP44</strong></td><td>4</td><td>Vitest · DB <code>:memory:</code> · TEST_CASES ≥ 8 ข้อ · มีค่าขอบ</td></tr>
+    <tr><td><strong>CP45</strong></td><td>3</td><td>unit test ≥ 10 · BUG #0 (10 ตัวผ่าน) · 9 ตัวยังถูกปฏิเสธ</td></tr>
+    <tr><td><strong>CP46</strong></td><td>4</td><td>integration ≥ 12 · มี PUT/DELETE · ตั้งค่า coverage · api test ผ่านหมดและรวม ≥ 22</td></tr>
+    <tr><td><strong>CP47</strong></td><td>9</td><td>BUG #1 · BUG #3 · health ไม่ถอยหลัง · BUG #2 · frontend test ≥ 2 ผ่าน · regression test 3 ข้อ · DEBUG_LOG ครบ 4 bug</td></tr>
+    <tr style="background:#F8F4FB"><td>⭐ Challenge</td><td>2</td><td>coverage ของ api ≥ 85% (statements) · CI รัน <code>npm test</code> ทุกครั้งที่ push</td></tr>
+    <tr><td colspan="3"><strong>ในห้อง 20 ข้อ · รวม 22 ข้อ</strong> · starter ได้ 6/20 · เฉลยได้ 20/20 และ 22/22</td></tr>
+  </table>
+
+<pre><code><span class="c-com"># .github/workflows/check.yml — Challenge ⭐ CI (เฉลย)</span>
+<span class="c-key">name:</span> Week 12 Tests
+<span class="c-key">on:</span> [push, pull_request]
+<span class="c-key">jobs:</span>
+  <span class="c-key">test:</span>
+    <span class="c-key">runs-on:</span> ubuntu-latest
+    <span class="c-key">steps:</span>
+      - <span class="c-key">uses:</span> actions/checkout@v4
+      - <span class="c-key">uses:</span> actions/setup-node@v4
+        <span class="c-key">with:</span>
+          <span class="c-key">node-version:</span> <span class="c-str">'22'</span>
+      - <span class="c-key">run:</span> npm install --prefix api &amp;&amp; npm install --prefix frontend
+      - <span class="c-key">run:</span> npm test
+<span class="c-com"># โปรเจกต์อยู่ใน labs/week-12/source → เพิ่ม defaults: { run: { working-directory: labs/week-12/source } }</span></code></pre>
+
+  <div class="box note">
+    <span class="h">🟨 CI รันได้เพราะบทที่ 5</span>
+    <p style="margin:0">เครื่อง GitHub ไม่มีไฟล์ <code>campus.db</code> · test ยังผ่านเพราะ <code>vitest.config.js</code> ตั้ง <code>DB_FILE=':memory:'</code> และ <code>loadSeed()</code> สร้างตารางจาก <code>schema.sql</code> เอง — isolation ทำให้ test รันได้ทุกที่</p>
+  </div>
+
+  <h3>9.4 Checkpoint ทั้งหมดของช่วงเช้า</h3>
+
+  <table class="d">
+    <tr><th style="width:80px">CP</th><th>ทำอะไร</th><th style="width:70px">อ่านบท</th><th style="width:56px">ที่ไหน</th></tr>
+    <tr><td><strong>CP44</strong></td><td>ออกแบบ test case (equivalence + boundary) → <code>TEST_CASES.md</code></td><td>1, 2, 3</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP45</strong></td><td>unit test pure function ด้วย Vitest → เจอและแก้ BUG #0</td><td>4</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP46</strong></td><td>integration test (supertest + <code>:memory:</code>) + coverage</td><td>5, 6</td><td><span class="wheretag room">🏫</span></td></tr>
+    <tr><td><strong>CP47</strong></td><td>debug 3 bug จากผู้ใช้ + regression test + <code>DEBUG_LOG.md</code></td><td>7, 8, 9</td><td><span class="wheretag room">🏫</span></td></tr>
+  </table>
+
+  <div class="box inclass">
+    <span class="h">🏫 ทำในห้อง · CP44–CP47 · ไฟล์ที่ต้องมี</span>
+    <p style="margin:0"><code>TEST_CASES.md</code> ≥ 8 ข้อ มีค่าขอบ · unit test ≥ 10 · integration test ≥ 12 รวม PUT/DELETE · api test รวม ≥ 22 ผ่านหมด · frontend test ≥ 2 · <code>DEBUG_LOG.md</code> ครบ 4 bug · จบคาบรัน <code>check-week12 --inclass</code> ให้ได้ 20/20</p>
+  </div>
+
+  <h3>9.5 ต่อเข้า Final Term Project</h3>
+
+  <p><strong>สัปดาห์นี้ไม่มีงาน Take-Home แยก</strong> — สิ่งที่ฝึกเช้านี้กลายเป็น<strong>ข้อกำหนดของ Final Term Project</strong>: โปรเจกต์ต้องมี test เพิ่มสำหรับฟีเจอร์ของกลุ่ม และ <code>npm test</code> ต้องผ่านทั้งหมด — ซึ่งเป็นข้อแรกของ Release Checklist ที่จะแนะนำท้ายช่วงบ่าย · ใช้หลักเดียวกับเช้านี้: unit test สำหรับกฎและการคำนวณ · integration test สำหรับ endpoint</p>
+
+  <table class="d">
+    <tr><th>รูปแบบทีม</th><th>บทบาท</th><th>ตัวอย่างการแบ่งงาน test (แนวทาง)</th></tr>
+    <tr><td>คู่ (2 คน)</td><td>Front-end · Back-end+DevOps</td><td>Front-end: unit test ของ utils ฝั่ง React · Back-end: unit + integration test ของ API และ CI</td></tr>
+    <tr><td>เศษ (3 คน)</td><td>Front-end · Back-end · DevOps (ขึ้น cloud)</td><td>แบ่งเหมือนข้างบน · DevOps ดูแล CI และ deploy</td></tr>
+  </table>
+
+  <p>งานที่ต่อจากคาบทั้งวัน (หน้า login ฝั่ง React · test เพิ่ม · RELEASE_CHECKLIST · deploy) รวมอยู่ในข้อกำหนดของโปรเจกต์ · ปลายภาค (Sec 1 วันที่ 19 · Sec 2 วันที่ 22) มีข้อสอบ take-home ชุด A/B + ทำในห้อง + สัมภาษณ์เป็นกลุ่ม — คำถามสัมภาษณ์แบบ "ใช้เครื่องมือไหนหาเจอ และทำไมแก้ตรงนั้น" ตอบได้ถ้าเคยเขียน DEBUG_LOG จริง</p>
+
+  <h3>9.6 สรุปช่วงเช้า</h3>
+
+  <table class="d">
+    <tr><th>ก่อนเช้านี้</th><th>หลังเช้านี้</th></tr>
+    <tr><td>test ผ่าน = เสร็จ</td><td>test ผ่าน = กรณีที่เขียนไว้ถูก · ยังต้องคิดว่าขาดกรณีไหน</td></tr>
+    <tr><td>ลองค่าปกติไม่กี่ค่า</td><td>แบ่งกลุ่ม + ค่าขอบ N−1 · N · N+1 ก่อนเขียนโค้ด</td></tr>
+    <tr><td>test ด้วยการคลิกหน้าเว็บ</td><td>unit (Vitest) + integration (supertest + <code>:memory:</code>) รันได้ใน 2 วินาที</td></tr>
+    <tr><td>ไม่รู้ว่า test ครอบคลุมแค่ไหน</td><td>coverage ชี้จุดมืด — แต่ไม่ใช่คะแนนความถูกต้อง</td></tr>
+    <tr><td>เดาแก้จนอาการหาย</td><td>debug 6 ขั้น · stack trace · breakpoint · DevTools · หลักฐานใน DEBUG_LOG</td></tr>
+    <tr><td>bug แก้แล้วอาจกลับมา</td><td>regression test ที่เห็นแดงก่อนเขียว — อยู่ในโปรเจกต์ตลอดไป</td></tr>
+  </table>
+
+  <div class="box next">
+    <span class="h">🟦 ช่วงบ่าย — Week 13 พัฒนาอย่างปลอดภัยและพร้อมส่งมอบ</span>
+    <p style="margin:0">คัดลอก <code>lab13/starter</code> เป็น <code>labs/week-13/source</code> — starter บ่าย<strong>คือเฉลยของเช้านี้</strong> + โครงงาน W13 · CP48–CP52: validation เข้มขึ้น · password hashing · login ด้วย JWT · สิทธิ์ 401/403 · secrets<br>
+    บ่ายนี้จะเจอบทเรียนต่อจากเช้า: เมื่อ PUT/DELETE ต้องเข้าสู่ระบบ <strong>test เดิมจะพัง 401</strong> — requirement เปลี่ยน test ต้องเปลี่ยนตาม · และ CP49 ได้ test มาก่อนโค้ด (test-first) แบบเดียวกับ regression test ในบทนี้</p>
+  </div>
+
+  <div class="recap">
+    <span class="h">สรุปบทที่ 9</span>
+    <ul>
+      <li>regression test = วิธีทำซ้ำที่เขียนเป็นโค้ด · ต้องเห็น <strong>FAIL ก่อน</strong> แล้วค่อยแก้จน PASS</li>
+      <li><code>DEBUG_LOG.md</code> 6 ข้อ: อาการ · วิธีทำซ้ำ · เครื่องมือ · สาเหตุ (ไฟล์:บรรทัด) · วิธีแก้ · test ที่กัน</li>
+      <li>checker ในห้อง <strong>20 ข้อ</strong> (CP44 ×4 · CP45 ×3 · CP46 ×4 · CP47 ×9) · รวม Challenge <strong>22 ข้อ</strong> · starter 6/20</li>
+      <li>test เป็นข้อกำหนดของ Final Term Project — ไม่มีงาน Take-Home แยก</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <span>ENGSE203 · หน่วยที่ 5 · คุณภาพซอฟต์แวร์ การทดสอบ และความพร้อมก่อนใช้งาน</span>
+  <span class="m">Week 12 · CLO6 · CP44–CP47 · เอกสารประกอบการสอน · ช่วงเช้า</span>
+</footer>
+
+</div>
+</body>
+</html>

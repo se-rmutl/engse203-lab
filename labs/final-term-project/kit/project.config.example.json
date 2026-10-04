@@ -1,0 +1,27 @@
+{
+  "team": "ชื่อทีม",
+  "section": 1,
+  "topic": "T07",
+  "members": [
+    { "name": "ชื่อ นามสกุล", "studentId": "6xxxxxxxxxx-x", "github": "github-username", "role": "fe" },
+    { "name": "ชื่อ นามสกุล", "studentId": "6xxxxxxxxxx-x", "github": "github-username", "role": "be+devops" }
+  ],
+  "api": {
+    "resource": "/api/loans",
+    "existingId": "LN-001",
+    "validSample": {
+      "borrowerName": "ทดสอบ ระบบ",
+      "equipmentId": 1,
+      "quantity": 1,
+      "borrowDate": "2026-12-01",
+      "returnDate": "2026-12-05",
+      "purpose": "ใช้ซ้อมดนตรีของชมรม"
+    },
+    "invalidSample": {},
+    "statusField": "status",
+    "statusFilter": "requested",
+    "statusUpdate": { "status": "borrowed" }
+  },
+  "devStaff": { "email": "staff@rmutl.ac.th", "password": "staff1234" },
+  "deployUrl": "https://engse203-final-1-t07.onrender.com"
+}
