@@ -120,7 +120,6 @@ week-12-testing-debugging/
 │   ├── LAB12_INCLASS_GUIDE_TH.md
 │   └── starter/          (มี bug 4 ตัว · test 11 ข้อผ่านหมด · check-week12.mjs)
 ├── guides/               (เอกสาร · สไลด์ · live-coding CP44–47 · blueprint หน่วยที่ 5)
-└── _instructor-private/  ⚠ สำหรับผู้สอน
 ```
 
 ---
@@ -131,11 +130,3 @@ week-12-testing-debugging/
 - **Final Term Project** — unit + integration + frontend test และ `DEBUG_LOG.md` เป็นข้อกำหนดของโปรเจกต์
 
 ---
-
-## สำหรับผู้สอน
-
-| ไฟล์ | ใช้ทำอะไร |
-|---|---|
-| [Step Script ทั้งวัน](_instructor-private/ENGSE203_Unit5_Instructor_Step_Script_TH.md) | สคริปต์เช้า + บ่าย (W12 + W13) |
-| [Blueprint หน่วยที่ 5](guides/ENGSE203_Unit5_Week12_Week13_Blueprint_TH.md) | เหตุผลการออกแบบ · CP · checker |
-| `_instructor-private/reference-solution/` | เฉลย (check-week12 22/22 · coverage 87%) |

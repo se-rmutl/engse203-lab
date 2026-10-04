@@ -149,7 +149,6 @@ week-13-quality-security/
 │   ├── LAB13_INCLASS_GUIDE_TH.md
 │   └── starter/          (= เฉลย W12 + TODO W13-VALID · HASH · LOGIN · AUTH · SECRET)
 ├── guides/               (เอกสาร · สไลด์ · live-coding CP48–52)
-└── _instructor-private/  ⚠ สำหรับผู้สอน
 ```
 
 > checker สัปดาห์ 7 และ 10 ไม่อยู่ในโฟลเดอร์นี้แล้ว — requirement เปลี่ยน (PUT/DELETE ต้องเข้าสู่ระบบ) checker เก่าจึงใช้ไม่ได้ เหมือน test เก่าที่ต้องแก้ตาม
@@ -167,11 +166,3 @@ week-13-quality-security/
 | DevOps | `.env.example` · secret บน cloud · CI · `RELEASE_CHECKLIST.md` · tag `v1.0.0` · deploy |
 
 ---
-
-## สำหรับผู้สอน
-
-| ไฟล์ | ใช้ทำอะไร |
-|---|---|
-| [Step Script ทั้งวัน](../week-12-testing-debugging/_instructor-private/ENGSE203_Unit5_Instructor_Step_Script_TH.md) | ช่วงบ่ายอยู่ข้อ 10–16 |
-| [Blueprint หน่วยที่ 5](../week-12-testing-debugging/guides/ENGSE203_Unit5_Week12_Week13_Blueprint_TH.md) | เหตุผลการออกแบบ · CP · checker |
-| `_instructor-private/reference-solution/` | เฉลย api + React (หน้า login · `authStore` · `useAuth`) · check-week13 27/27 |
