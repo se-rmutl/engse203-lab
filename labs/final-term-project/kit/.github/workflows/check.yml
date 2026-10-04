@@ -1,5 +1,5 @@
 # CI — รัน test ทุกครั้งที่ push และเปิด Pull Request (Final Term Project)
-# กลุ่ม 3 คน: เปิดบรรทัด "npm run build" ด้านล่างด้วย (ข้อ D8)
+# กลุ่ม 3 คน: ลบ # หน้าบรรทัด "npm run build" ด้านล่าง (ROLES.md ข้อ D8 · checker ข้อ X1 — บรรทัดที่ยังเป็นคอมเมนต์ไม่นับ)
 name: CI
 on:
   push:

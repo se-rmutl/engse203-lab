@@ -239,7 +239,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
   <div class="step-head"><span class="num">④</span><h2>test 10 ตัวอักษร FAIL → อ่าน validator → แก้ &lt;= เป็น &lt;</h2><span class="file">api/src/validators/requestValidator.js</span></div>
   <div class="step-body">
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>npm test --prefix api -- tests/unit       <span class="c"># รันเฉพาะ unit test</span></code></pre></div>
-  <span class="tag a">ผลจริงจาก starter</span><pre><code><span class="d">❯ tests/unit/requestValidator.test.js (24 tests | 1 failed)</span>
+  <span class="tag a">ผลจริงจาก starter · โค้ดบนจอ 20 ข้อ + You do 4 ข้อ</span><pre><code><span class="d">❯ tests/unit/requestValidator.test.js (24 tests | 1 failed)</span>
 <span class="d">   × 10 ตัวอักษร → ผ่าน (ตรงขอบพอดี)</span>
 <span class="d">AssertionError: expected [ Array(1) ] to deeply equal []</span>
 - []
@@ -256,7 +256,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">if</span> (<span class="f">readText</span>(input.details).length <span class="hl">&lt;</span> MIN_DETAILS) {
   errors.<span class="f">push</span>(<span class="s">`รายละเอียดต้องมีอย่างน้อย ${MIN_DETAILS} ตัวอักษร`</span>);
 }</code></pre></div>
-  <div class="ok"><b>✓ ต้องเห็น</b>รันใหม่ → <code>Tests  24 passed (24)</code> · และ test <strong>9 ตัวอักษร</strong> ยังต้อง error อยู่ (checker ตรวจว่าไม่ "แก้เกิน")</div>
+  <div class="ok"><b>✓ ต้องเห็น</b>รันใหม่ → <code>Tests  24 passed (24)</code> (ถ้ายังไม่ได้ทำ You do จะเห็น 20) · และ test <strong>9 ตัวอักษร</strong> ยังต้อง error อยู่ (checker ตรวจว่าไม่ "แก้เกิน")</div>
   <div class="say"><b>💬 คำถาม</b>test เดิมของ starter ใช้รายละเอียด "แอร์ไม่เย็นตั้งแต่เช้า" ซึ่งยาวเกินขอบไปไกล — ทำไม test แบบนั้นไม่มีวันเจอ bug ตัวนี้?</div>
   </div>
 </div>
@@ -290,7 +290,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
 
 
 <footer><span>ENGSE203 · Week 12 · CP45 unit test + BUG #0 · เอกสารสำหรับฉายบนจอ</span>
-<span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน Week 12 บทที่ 3–4</span></footer>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem">อ่านเพิ่ม: เอกสารประกอบการสอน Week 12 บทที่ 4</span></footer>
 <div class="nav">
   <a href="ENGSE203_Week12_CP44_LiveCoding.html">CP44</a>
   <a href="#" style="color:var(--green);border-color:var(--green);background:rgba(74,222,128,.14);font-weight:600">CP45 ← อยู่ที่นี่</a>

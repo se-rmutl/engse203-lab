@@ -8,6 +8,7 @@ node_modules/
 
 # build output — สร้างใหม่ได้ทุกครั้ง
 frontend/dist/
+coverage/
 
 # ฐานข้อมูลทดสอบ (campus.db ต้อง commit ตามคู่มือ)
 api/data/test.db

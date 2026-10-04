@@ -148,7 +148,7 @@ deploy ได้                     test case · test · debug         validati
 | A2 Weekly LAB | (ส่วนหนึ่งของ 25%) | LAB 12 · tag `lab-12-submission-v1` |
 | A5 คุณภาพและความปลอดภัย | 10% | LAB 13 ในห้อง (4) + ส่วนคุณภาพใน Final Term Project (6) |
 
-ทักษะทั้งหน่วยถูกถามซ้ำใน**การสัมภาษณ์เป็นทีม**วันสอบปลายภาค (เช่น "BUG #1 หาเจอด้วยเครื่องมืออะไร" · "401 ต่างจาก 403 อย่างไร")
+ทักษะทั้งหน่วยถูกถามซ้ำใน**การสัมภาษณ์วันสอบปลายภาค** (สอบเป็นทีมเดียวกับโปรเจกต์ · ถามรายคนตามบทบาท) (เช่น "BUG #1 หาเจอด้วยเครื่องมืออะไร" · "401 ต่างจาก 403 อย่างไร")
 
 ---
 
@@ -161,4 +161,4 @@ deploy ได้                     test case · test · debug         validati
 | เอกสารประกอบการสอน | `guides/ENGSE203_Week12_Teaching_Document_TH.html` (9 บท · 12 ภาพ) · `…Week13…` (9 บท · 10 ภาพ) |
 | สไลด์ | `guides/ENGSE203_Week12_Slides.html` (42) · `…Week13_Slides.html` (42) |
 | live-coding | `guides/ENGSE203_Week12_CP44–47_LiveCoding.html` · `…Week13_CP48–52…` |
-| สำหรับผู้สอน | `week-12-testing-debugging/_instructor-private/ENGSE203_Unit5_Instructor_Step_Script_TH.md` · reference-solution ทั้งสองสัปดาห์ |
+| สำหรับผู้สอน | `resources/week-12-testing-debugging/ENGSE203_Unit5_Instructor_Step_Script_TH.md` · `resources/week-1{2,3}-…/reference-solution/` (อยู่ใน `.gitignore` — ไม่ขึ้น GitHub) |

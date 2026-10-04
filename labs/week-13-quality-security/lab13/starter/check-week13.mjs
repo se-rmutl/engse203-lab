@@ -190,7 +190,7 @@ rec('CP52', 'inclass', 'production: error ไม่ส่ง stack trace ให�
 
 const envEx = await read('api/.env.example');
 const gi = (await read('.gitignore')) + '\n' + (await read('api/.gitignore'));
-rec('CP52', 'inclass', '.env.example มี JWT_SECRET ค่าว่าง และ .gitignore ไม่รวม .env',
+rec('CP52', 'inclass', '.env.example มี JWT_SECRET ค่าว่าง และ .gitignore มี .env (ไม่ commit ค่าลับ)',
   /^JWT_SECRET=\s*$/m.test(envEx) && /^\.env\s*$/m.test(gi));
 
 // ทดสอบของโปรเจกต์ผ่านทั้งหมด และมี test เรื่องสิทธิ์

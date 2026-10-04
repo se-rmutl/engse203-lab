@@ -75,10 +75,12 @@
 
 ```bash
 # รันที่ root ของ Student Repository
+mkdir -p labs/week-12
 cp -r ../engse203-lab/labs/week-12-testing-debugging/lab12/starter labs/week-12/source
 cd labs/week-12/source
 npm install --prefix api
 npm install --prefix frontend
+cp api/.env.example api/.env   # npm run dev --prefix api ต้องใช้ (CP47)
 npm run db:setup --prefix api
 npm test --prefix api          # ผ่านทั้งหมด — ทั้งที่มี bug!
 ```
@@ -119,7 +121,7 @@ week-12-testing-debugging/
 ├── lab12/
 │   ├── LAB12_INCLASS_GUIDE_TH.md
 │   └── starter/          (มี bug 4 ตัว · test 11 ข้อผ่านหมด · check-week12.mjs)
-├── guides/               (เอกสาร · สไลด์ · live-coding CP44–47 · blueprint หน่วยที่ 5)
+└── guides/               (เอกสาร · สไลด์ · live-coding CP44–47 · blueprint หน่วยที่ 5)
 ```
 
 ---
@@ -128,5 +130,3 @@ week-12-testing-debugging/
 
 - **ช่วงบ่าย** — [LAB 13](../week-13-quality-security/) เริ่มจาก starter ใหม่ที่แก้ bug ทั้งหมดแล้ว (ใครทำเช้าไม่เสร็จก็เริ่มบ่ายได้)
 - **Final Term Project** — unit + integration + frontend test และ `DEBUG_LOG.md` เป็นข้อกำหนดของโปรเจกต์
-
----

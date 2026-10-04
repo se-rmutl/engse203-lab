@@ -10,7 +10,7 @@
 | A4 | งานบูรณาการ Full-Stack รายบุคคล | 11 | 15 | LAB 11 |
 | A5 | งานคุณภาพและความปลอดภัย | 13 + โปรเจกต์ | 10 | LAB 13 ในห้อง 4 + ส่วนคุณภาพของ Final Term Project 6 |
 | A6 | Final Term Project (คู่ / กลุ่ม 3 คน) | 14–17 | 15 | ผลงานทีม 10 + รายบุคคลตามบทบาท 5 |
-| A7 | สอบปลายภาค | 17 | 15 | take-home 5 + ทำในห้อง 5 + สัมภาษณ์ 5 |
+| A7 | สอบปลายภาค (ทีมเดียวกับ Term Project · คะแนนรายบุคคล) | 17 | 15 | take-home 5 + ทำในห้อง 5 + สัมภาษณ์ 5 · แต่ละส่วน = 0.6 × งานของตัวเอง + 0.4 × ผลรวมทีม |
 |  | **รวม** |  | **100** | |
 
 - Final Term Project — [labs/final-term-project](../labs/final-term-project/) · เกณฑ์ [RUBRIC.md](../labs/final-term-project/RUBRIC.md)

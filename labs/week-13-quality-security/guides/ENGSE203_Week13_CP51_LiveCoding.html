@@ -239,7 +239,7 @@ curl -i -X PUT localhost:3001/api/requests/REQ-001 -H <span class="s">"Authoriza
 <div class="step" id="s5">
   <div class="step-head"><span class="num">⑤</span><h2>You do · เพิ่ม test 401 และ 403</h2><span class="file">api/tests/integration/auth.api.test.js</span></div>
   <div class="step-body">
-  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="f">describe</span>(<span class="s">'สิทธิ์ของ PUT / DELETE'</span>, () =&gt; {
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="f">describe</span>(<span class="s">'สิทธิ์ของ PUT / DELETE'</span>, () =&gt; {   <span class="c">// มีอยู่แล้วใน starter — เติมต่อจาก test 'ไม่มี token → 401' ตรง TODO W13-AUTH</span>
   <span class="k">const</span> put = () =&gt; <span class="f">request</span>(app).<span class="f">put</span>(<span class="s">'/api/requests/REQ-001'</span>).<span class="f">send</span>({ status: <span class="s">'completed'</span> });
 
   <span class="f">test</span>(<span class="s">'token ที่เซ็นด้วย secret อื่น (ปลอม) → 401'</span>, <span class="k">async</span> () =&gt; {

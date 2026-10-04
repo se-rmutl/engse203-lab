@@ -163,7 +163,7 @@ rec('CP47', 'inclass', 'frontend มี test และผ่านทุกข�
 
 // regression test — กันไม่ให้ bug กลับมา (ตรวจว่ามี test ที่ยิงกรณีนั้นจริง)
 const feSrc = strip(readDir('frontend/src'));
-rec('CP47', 'inclass', 'regression test BUG #1 (ลบแล้วเพิ่มใหม่)', /\.delete\([\s\S]{0,600}?\.post\(/.test(integSrc));
+rec('CP47', 'inclass', 'regression test BUG #1 (ลบแล้วเพิ่มใหม่)', /\.delete\((?:(?!\b(?:test|it|describe)\s*[.(])[\s\S]){0,600}?\.post\(/.test(integSrc));
 rec('CP47', 'inclass', 'regression test BUG #2 (นับ in-progress)', has(feSrc, 'in-progress', 'inProgress'));
 rec('CP47', 'inclass', 'regression test BUG #3 (PUT คำร้องที่ไม่มี → 404)',
   /\.put\(\s*['"`]\/api\/requests\/(REQ-9\d\d|\$\{)/.test(integSrc) && has(integSrc, '404'));
@@ -182,8 +182,10 @@ if (apiRun.ok) {
   try { pct = JSON.parse(readFileSync(path.join(covDir, 'coverage-summary.json'), 'utf8')).total.statements.pct; } catch {}
 }
 rec('CHAL', 'challenge', '⭐ coverage ของ api ≥ 85% (statements)', pct !== null && pct >= 85, pct === null ? 'วัดไม่ได้' : `ได้ ${pct}%`);
-const ci = existsSync(path.join(ROOT, '.github/workflows'))
-  ? readdirSync(path.join(ROOT, '.github/workflows')).map((f) => readFileSync(path.join(ROOT, '.github/workflows', f), 'utf8')).join('\n') : '';
+// GitHub รัน workflow จาก .github/workflows ที่ root ของ repo เท่านั้น — ตรวจทั้ง root ของ Student Repository (3 ชั้นขึ้นไป) และในโฟลเดอร์นี้
+const ciDirs = [path.join(ROOT, '../../../.github/workflows'), path.join(ROOT, '.github/workflows')];
+const ci = ciDirs.filter((d) => existsSync(d))
+  .flatMap((d) => readdirSync(d).filter((f) => /\.ya?ml$/.test(f)).map((f) => readFileSync(path.join(d, f), 'utf8'))).join('\n');
 rec('CHAL', 'challenge', '⭐ CI รัน npm test ทุกครั้งที่ push', has(ci, 'npm test|npm run test|vitest'));
 
 // ── รายงาน ──

@@ -325,6 +325,7 @@ table.tight td{padding:.42rem .7rem}
   <h2>เริ่มบ่าย: คัดลอก lab13/starter เป็น labs/week-13/source</h2>
   <div class="body center">
     <pre style="margin:0;font-size:.98rem"><code><span class="c"># ที่ root ของ Student Repository</span>
+mkdir -p labs/week-13
 cp -r &lt;Course Repository&gt;/labs/week-13-quality-security/lab13/starter labs/week-13/source
 cd labs/week-13/source
 npm install --prefix api &amp;&amp; npm install --prefix frontend   <span class="c"># มี jsonwebtoken ^9 เพิ่ม</span>
@@ -424,7 +425,7 @@ node --disable-warning=ExperimentalWarning check-week13.mjs --inclass   <span cl
 <span class="k">function</span> <span class="f">checkText</span>(value, label, { min = <span class="n">1</span>, max }) {          <span class="c">// แนวทางในเฉลย</span>
   <span class="k">if</span> (<span class="k">typeof</span> value !== <span class="s">'string'</span>) <span class="k">return</span> <span class="s">`${label}ต้องเป็นข้อความ`</span>;  <span class="c">// ① ชนิดก่อน</span>
   <span class="k">const</span> length = value.<span class="f">trim</span>().length;
-  <span class="k">if</span> (length &lt; min) <span class="k">return</span> <span class="s">`${label}ต้องมีอย่างน้อย ${min} ตัวอักษร`</span>;
+  <span class="k">if</span> (length &lt; min) <span class="k">return</span> min &gt; <span class="n">1</span> ? <span class="s">`${label}ต้องมีอย่างน้อย ${min} ตัวอักษร`</span> : <span class="s">`กรุณาระบุ${label}`</span>;
   <span class="k">if</span> (length &gt; max) <span class="k">return</span> <span class="s">`${label}ต้องไม่เกิน ${max} ตัวอักษร`</span>;  <span class="c">// ② ค่าสูงสุด</span>
   <span class="k">return null</span>;
 }
@@ -667,7 +668,7 @@ npm run test:watch --prefix api
       <ul class="crit">
         <li>hashPassword คืนรูปแบบ scrypt$salt$hash · รหัสผ่านเดียวกันได้ hash ต่างกัน และไม่มีรหัสผ่านจริงปน</li>
         <li>verifyPassword: ถูก → true · ผิด → false · ตรวจ hash บัญชีเจ้าหน้าที่ใน schema.sql ได้</li>
-        <li>ตาราง users มีคอลัมน์ role และ password_hash (ได้หลัง <code>npm run db:reset --prefix api</code>)</li>
+        <li>ตาราง users มีคอลัมน์ role และ password_hash (มากับ starter แล้ว — checker อ่านจาก <code>schema.sql</code>)</li>
       </ul></div>
   </div>
 </section>
@@ -1091,7 +1092,7 @@ git add . &amp;&amp; git diff --cached               <span class="c"># ต้อ
       <ul class="crit">
         <li>production ไม่ตั้ง JWT_SECRET → ระบบไม่ยอม start</li>
         <li>production: error ไม่ส่ง stack trace ให้ผู้ใช้</li>
-        <li><code>.env.example</code> มี <code>JWT_SECRET</code> ค่าว่าง และ .gitignore ไม่รวม .env</li>
+        <li><code>.env.example</code> มี <code>JWT_SECRET</code> ค่าว่าง และ .gitignore มี .env (ไม่ commit ค่าลับ)</li>
         <li><code>npm test</code> ใน api ผ่านทุกข้อ และมี test ของ 401 กับ 403</li>
       </ul></div>
   </div>
@@ -1237,11 +1238,11 @@ node --disable-warning=ExperimentalWarning \
       <div class="card home"><div class="ic">👥+1</div><h3>เศษเป็นสามคน</h3><p><strong>Front-end</strong> / <strong>Back-end</strong> / <strong>DevOps</strong> (ขึ้น cloud)</p></div>
     </div>
     <div class="panel" style="border-color:rgba(251,191,36,.45)">
-      <h3 style="color:var(--amber)">📝 สอบปลายภาค · 3 ส่วน</h3>
+      <h3 style="color:var(--amber)">📝 สอบปลายภาค · 3 ส่วน · <span style="font-weight:500">สอบเป็นทีม (ทีมเดียวกับโปรเจกต์) · คะแนนรายคน</span></h3>
       <div class="three" style="margin-top:.4rem">
-        <div><p style="margin:0;font-size:1.1rem"><strong>① take-home</strong><br><small>ข้อสอบชุด A/B</small></p></div>
+        <div><p style="margin:0;font-size:1.1rem"><strong>① take-home</strong><br><small>ข้อสอบชุด A/B · ทุกงานมีเจ้าของตามบทบาท</small></p></div>
         <div><p style="margin:0;font-size:1.1rem"><strong>② ทำในห้อง</strong><br><small>ลงมือกับระบบจริง</small></p></div>
-        <div><p style="margin:0;font-size:1.1rem"><strong>③ สัมภาษณ์เป็นกลุ่ม</strong><br><small>อธิบายเหตุผลของโค้ดตัวเอง</small></p></div>
+        <div><p style="margin:0;font-size:1.1rem"><strong>③ สัมภาษณ์</strong><br><small>ถามรายคนตามบทบาท · อธิบายโค้ดตัวเอง</small></p></div>
       </div>
     </div>
     <div class="g2">

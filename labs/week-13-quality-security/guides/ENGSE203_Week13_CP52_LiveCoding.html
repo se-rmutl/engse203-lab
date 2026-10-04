@@ -136,7 +136,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
 <header class="top">
   <p class="eyebrow">ENGSE203 · Week 13 · Checkpoint 52</p>
   <h1>secrets + production <span class="where">🏫 ทำในห้อง</span></h1>
-  <p class="sub">15:30–15:50 · 20 นาที · I do → We do · fail fast · ไม่ส่ง stack</p>
+  <p class="sub">15:30–15:50 · 20 นาที · I do → You do · fail fast · ไม่ส่ง stack</p>
   <div class="pills"><span class="pill a">TODO W13-SECRET</span><span class="pill ">JWT_SECRET</span><span class="pill r">fail fast</span><span class="pill v">Release Checklist</span></div>
 </header>
 
@@ -146,7 +146,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
   <div class="step-head"><span class="num">①</span><h2>secret ที่อยู่ใน GitHub = ใครก็ปลอม token ได้</h2><span class="file">api/src/config.js</span></div>
   <div class="step-body">
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="c">// starter — ลืมตั้ง JWT_SECRET ตอน production ก็ยัง start ได้ ด้วยค่าที่ทุกคนเห็นใน GitHub</span>
-jwtSecret: process.env.JWT_SECRET <span class="d">?? 'dev-only-secret-do-not-use-in-production'</span>,</code></pre></div>
+jwtSecret: process.env.JWT_SECRET <span class="d">|| 'dev-only-secret-do-not-use-in-production'</span>,</code></pre></div>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="c"># ใครก็ทำได้ ถ้ารู้ secret — ไม่ต้องรู้รหัสผ่านเลย</span>
 cd api &amp;&amp; node -e <span class="s">"console.log(require('jsonwebtoken').sign({ sub: '1', role: 'staff' }, 'dev-only-secret-do-not-use-in-production'))"</span></code></pre></div>
   <div class="warn"><b>⚠ กับดัก</b>token ที่ได้ใช้ PUT/DELETE บนระบบจริงได้ทันที ถ้า production ใช้ค่า dev · <strong>ปัญหาไม่ใช่ว่า "ลืม" — แต่คือ "ลืมแล้วระบบไม่บอก"</strong></div>
@@ -186,6 +186,7 @@ cd api &amp;&amp; node -e <span class="s">"console.log(require('jsonwebtoken').s
     at readJwtSecret (file:///…/api/src/config.js:25:11)</code></pre>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>node -e <span class="s">"console.log(require('crypto').randomBytes(32).toString('hex'))"</span>    <span class="c"># สุ่ม 64 ตัวอักษร</span>
 
+<span class="c"># หยุด npm run dev ก่อน (Ctrl+C) — ใช้พอร์ต 3001 เหมือนกัน (ไม่หยุด = EADDRINUSE)</span>
 NODE_ENV=production JWT_SECRET=&lt;ค่าที่สุ่มได้&gt; npm start
 <span class="c"># อีก terminal — ส่ง JSON เสีย</span>
 curl -s -X POST localhost:3001/api/requests -H <span class="s">"Content-Type: application/json"</span> -d <span class="s">'{"broken": '</span></code></pre></div>
@@ -193,7 +194,7 @@ curl -s -X POST localhost:3001/api/requests -H <span class="s">"Content-Type: ap
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="d">{"error":"รูปแบบ JSON ไม่ถูกต้อง","stack":["SyntaxError: Unexpected end of JSON input", …]}</span></code></pre></div>
   <span class="tag a">production</span>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>{"error":"รูปแบบ JSON ไม่ถูกต้อง"}</code></pre></div>
-  <div class="vio"><b>💡 เกร็ด</b>production ไม่ส่ง <code>stack</code> เพราะ errorHandler ตรวจ <code>config.isProd</code> (bug เดิม <code>config.isProduction</code> แก้ตั้งแต่ Week 12 แล้ว) · stack เต็มยังอยู่ใน log ของ server · Windows PowerShell: <code>$env:NODE_ENV="production"; npm start</code></div>
+  <div class="vio"><b>💡 เกร็ด</b>production ไม่ส่ง <code>stack</code> เพราะ errorHandler ตรวจ <code>config.isProd</code> (bug เดิม <code>config.isProduction</code> แก้ตั้งแต่ Week 12 แล้ว) · stack เต็มยังอยู่ใน log ของ server · Windows PowerShell: <code>$env:NODE_ENV="production"; npm start</code> แล้ว <code>Remove-Item Env:NODE_ENV</code> เมื่อเสร็จ (ค้างไว้ <code>npm run dev</code> จะกลายเป็น production)</div>
   </div>
 </div>
 <div class="step" id="s4">
@@ -212,7 +213,7 @@ git diff --cached --name-only | grep -E <span class="s">"\.env$"</span>      <sp
 node --disable-warning=ExperimentalWarning check-week13.mjs --inclass</code></pre></div>
   <span class="tag a">ผลที่ควรเห็น</span><pre><code><span class="k">✅ CP52 production ไม่ตั้ง JWT_SECRET → ระบบไม่ยอม start</span>
 <span class="k">✅ CP52 production: error ไม่ส่ง stack trace ให้ผู้ใช้</span>
-<span class="k">✅ CP52 .env.example มี JWT_SECRET ค่าว่าง และ .gitignore ไม่รวม .env</span>
+<span class="k">✅ CP52 .env.example มี JWT_SECRET ค่าว่าง และ .gitignore มี .env (ไม่ commit ค่าลับ)</span>
 <span class="k">✅ CP52 npm test ใน api ผ่านทุกข้อ และมี test ของ 401 กับ 403</span>
 <span class="k">🏫 ในห้อง (CP48–CP52)   ผ่าน 23/23 รายการ</span></code></pre>
   <div class="warn"><b>⚠ กับดัก</b><strong>secret ที่เคย push ขึ้น GitHub แล้ว ถือว่าหลุด</strong> — ลบ commit ทิ้งไม่พอ (มีใน history และอาจมีคน clone ไปแล้ว) · ต้องสุ่มค่าใหม่และเปลี่ยนที่ Render</div>

@@ -15,7 +15,7 @@
 | CP51 | `authenticate` + `requireRole` · 401 vs 403 | [เปิด](https://se-rmutl.github.io/engse203/week13/guides/ENGSE203_Week13_CP51_LiveCoding.html) |
 | CP52 | secret · fail fast · production ไม่ส่ง stack | [เปิด](https://se-rmutl.github.io/engse203/week13/guides/ENGSE203_Week13_CP52_LiveCoding.html) |
 
-สไลด์ · [เอกสารประกอบการสอน Week 13](https://se-rmutl.github.io/engse203/week13/week13-teaching-doc.html) (บทที่ 1 และ 3 อ่านระหว่างพักกลางวันได้)
+[สไลด์ Week 13](https://se-rmutl.github.io/engse203/week13) · [เอกสารประกอบการสอน Week 13](https://se-rmutl.github.io/engse203/week13/week13-teaching-doc.html) (บทที่ 1 และ 3 อ่านระหว่างพักกลางวันได้)
 
 ---
 
@@ -54,17 +54,19 @@ starter ของบ่ายนี้ = **เฉลยของเมื่อ�
 
 ```bash
 # รันที่ root ของ Student Repository
+mkdir -p labs/week-13                # ยังไม่มีโฟลเดอร์นี้ cp จะขึ้น "No such file or directory"
 cp -r ../engse203-lab/labs/week-13-quality-security/lab13/starter labs/week-13/source
 cd labs/week-13/source
 
 npm install --prefix api             # มี jsonwebtoken เพิ่มมาใน package.json แล้ว
 npm install --prefix frontend
+cp api/.env.example api/.env         # npm run dev อ่านไฟล์นี้ (--env-file) — ไม่มีจะขึ้น ".env: not found"
 npm run db:setup --prefix api        # ตาราง users มีคอลัมน์ role และ password_hash แล้ว
 ```
 
-> 🪟 **Windows (PowerShell)** — ใช้ `Copy-Item -Recurse ..\engse203-lab\labs\week-13-quality-security\lab13\starter labs\week-13\source`
+> 🪟 **Windows (PowerShell)** — ใช้ `mkdir -Force labs\week-13; Copy-Item -Recurse ..\engse203-lab\labs\week-13-quality-security\lab13\starter labs\week-13\source` และ `Copy-Item api\.env.example api\.env`
 
-> ⚠ ถ้าเคยมี `api/data/campus.db` เก่าในโฟลเดอร์นี้ (เช่นคัดลอกทับของ Week 12) ให้ใช้ `npm run db:reset --prefix api` แทน — ไม่งั้นจะเจอ `no such column: role`
+> ⚠ ถ้าเคยมี `api/data/campus.db` เก่าในโฟลเดอร์นี้ (เช่นคัดลอกทับของ Week 12) ให้ใช้ `npm run db:reset --prefix api` แทน — ไม่งั้นจะเจอ `no such column: role` (ถ้าเปิด `npm run dev` ค้างไว้ ให้หยุดก่อน แล้วค่อยเปิดใหม่หลัง reset)
 
 ### ลองรัน test ก่อนเริ่ม
 
@@ -118,7 +120,7 @@ labs/week-13/source/
 |---|---|
 | ชื่อยาว 100,000 ตัวอักษร | บันทึกลงฐานข้อมูล · หน้าเว็บพัง |
 | `"details": 12345678901` (ตัวเลข) | ได้ error ว่า "สั้นเกินไป" — ข้อความชวนงง |
-| body ขนาด 5 MB | server ต้องอ่านทั้งก้อนก่อนจะรู้ว่าผิด |
+| body ขนาด 90 KB | ผ่าน — ค่าเริ่มต้นของ `express.json()` รับได้ถึง 100kb · server ต้องอ่านทั้งก้อนก่อนจะรู้ว่าผิด |
 
 ## ② ปรับ `api/src/validators/requestValidator.js` (W13-VALID)
 
@@ -137,7 +139,18 @@ export const MAX_DETAILS = 1000;
 
 > 💡 กฎ 3 ช่องหน้าตาเหมือนกัน — เขียน helper ตัวเดียว (เช่น `checkText(value, label, { min, max })`) ดีกว่าเขียนซ้ำ 3 รอบ
 
-## ③ เพิ่ม unit test ค่าขอบของค่าสูงสุด
+## ③ จำกัดขนาด body ใน `api/src/app.js`
+
+```js
+app.use(express.json({ limit: '10kb' }));   // เกิน → 413
+```
+
+errorHandler แปลข้อความให้แล้ว: `ข้อมูลที่ส่งมามีขนาดใหญ่เกินกำหนด`
+
+> ⚠ **validation ≠ sanitize** — เราปฏิเสธข้อมูลที่ผิดกฎ ไม่ได้ "ล้าง" ข้อความ
+> ข้อความที่มี `<script>` ยังบันทึกได้ แต่ React **escape ให้อัตโนมัติ**ตอนแสดงผล → อย่าใช้ `dangerouslySetInnerHTML` กับข้อความจากผู้ใช้
+
+## ④ เพิ่ม unit test ค่าขอบของค่าสูงสุด
 
 ใช้เทคนิคเดียวกับเมื่อเช้า — **100 ผ่าน · 101 ไม่ผ่าน**
 
@@ -149,17 +162,6 @@ test('ชื่อ 101 ตัว → ไม่ผ่าน', () => {
   expect(validateRequestInput(withField({ requesterName: 'ก'.repeat(101) }))).toHaveLength(1);
 });
 ```
-
-## ④ จำกัดขนาด body ใน `api/src/app.js`
-
-```js
-app.use(express.json({ limit: '10kb' }));   // เกิน → 413
-```
-
-errorHandler แปลข้อความให้แล้ว: `ข้อมูลที่ส่งมามีขนาดใหญ่เกินกำหนด`
-
-> ⚠ **validation ≠ sanitize** — เราปฏิเสธข้อมูลที่ผิดกฎ ไม่ได้ "ล้าง" ข้อความ
-> ข้อความที่มี `<script>` ยังบันทึกได้ แต่ React **escape ให้อัตโนมัติ**ตอนแสดงผล → อย่าใช้ `dangerouslySetInnerHTML` กับข้อความจากผู้ใช้
 
 ### ✓ ผ่าน CP48 เมื่อ
 
@@ -243,7 +245,7 @@ eyJhbGciOiJIUzI1NiJ9 . eyJzdWIiOiI1Iiwicm9sZSI6InN0YWZmIn0 . k3S0yX...
 | payload | ข้อมูลผู้ใช้ — **แค่ base64url ไม่ได้เข้ารหัส** ใครก็ถอดอ่านได้ |
 | signature | คำนวณจาก header + payload + **secret** → แก้ payload แม้แต่ตัวเดียว signature ก็ไม่ตรง |
 
-> ลองวาง token ใน interactive "JWT decoder" ในสไลด์ — จะเห็นว่า payload อ่านได้ทันที **ห้ามใส่รหัสผ่านหรือข้อมูลลับใน payload**
+> ลองกดปุ่มใน interactive "JWT decoder" (สไลด์ 21) — จะเห็นว่า payload อ่านได้ทันที (token ของตัวเองถอดได้ด้วย `node -pe` ในหน้าจอ CP50 ข้อ ④) **ห้ามใส่รหัสผ่านหรือข้อมูลลับใน payload**
 
 ## ② เขียน `login()` ใน `api/src/services/authService.js` (W13-LOGIN)
 
@@ -334,7 +336,8 @@ router.delete('/:id', authenticate, requireRole('staff'), controller.deleteReque
 
 ```bash
 npm test --prefix api
-# test PUT/DELETE ใน requests.api.test.js ที่เขียนเมื่อเช้า → expected 200, received 401
+# test PUT/DELETE ใน requests.api.test.js ที่เขียนเมื่อเช้า พัง 6 ข้อ → AssertionError: expected 401 to be 200
+#   (ได้ 401 แต่ test คาดว่า 200 · ข้อที่ใช้ .expect(204) ขึ้น expected 204 "No Content", got 401 "Unauthorized")
 ```
 
 > นี่ไม่ใช่ bug — **requirement เปลี่ยน test ต้องเปลี่ยนตาม** · test ที่พังบอกเราว่ามีที่ไหนบ้างที่ได้รับผลกระทบ
@@ -475,7 +478,7 @@ git tag lab-13-submission-v1 && git push origin lab-13-submission-v1
 | ข้อ | ทำอะไร |
 |---|---|
 | security headers | ทุก response มี `X-Content-Type-Options: nosniff` · `X-Frame-Options: DENY` · `Referrer-Policy: no-referrer` |
-| จำกัดการเดารหัสผ่าน | login ผิด 5 ครั้งใน 15 นาที → **429** |
+| จำกัดการเดารหัสผ่าน | login ผิด 5 ครั้งใน 15 นาที → **429** · export `resetLoginLimiter()` จาก `routes/authRoutes.js` แล้วเรียกใน `beforeEach` ของ `auth.api.test.js` (checker ก็เรียกชื่อนี้) — ไม่งั้น test ข้ออื่นที่ login จะโดน 429 ไปด้วย |
 | frontend แนบ token | `frontend/src/services/apiClient.js` ส่ง `Authorization: Bearer …` |
 | Render สุ่ม secret | `render.yaml` มี `JWT_SECRET` แบบ `generateValue: true` |
 
@@ -487,9 +490,11 @@ git tag lab-13-submission-v1 && git push origin lab-13-submission-v1
 
 | อาการ | สาเหตุ / วิธีแก้ |
 |---|---|
-| `no such column: role` | `campus.db` เป็นของเก่า → `npm run db:reset --prefix api` |
+| `no such column: role` | `campus.db` เป็นของเก่า → หยุด `npm run dev` ก่อน แล้ว `npm run db:reset --prefix api` และเปิดใหม่ (reset ขณะ server เปิดอยู่ ไม่มีผล) |
 | `Cannot find package 'jsonwebtoken'` | ยังไม่ได้ `npm install --prefix api` หลังคัดลอก starter |
-| test "ตรวจ hash ใน schema.sql" ไม่ผ่าน แต่ข้ออื่นผ่าน | ตอน verify แปลง salt เป็น Buffer · หรือใช้ความยาว key ไม่ใช่ 64 |
+| `node: .env: not found` ตอน `npm run dev` | ยังไม่ได้ `cp api/.env.example api/.env` (ข้อ ⓪) |
+| `EADDRINUSE: address already in use` (พอร์ต 3001) | มี server เปิดค้างอยู่ — เช่น `npm run dev` ของ Week 12 เมื่อเช้า หรือของบ่ายนี้ตอนจะรันแบบ production → หยุดตัวเก่าก่อน (Ctrl+C) |
+| test "ตรวจ hash ใน schema.sql" ไม่ผ่าน แต่ข้ออื่นผ่าน | แปลง salt เป็น `Buffer.from(salt, 'hex')` ทั้งตอน hash และ verify → ใช้ข้อความ hex ตรง ๆ · (ถ้า "รหัสผ่านถูก → true" แดงด้วย = ตอน verify ใช้ salt หรือความยาว key ไม่ตรงกับตอน hash) |
 | login ถูกแต่ได้ 401 | `verifyPassword` คืน false · หรือ `findUserByEmail` ได้ user ที่ role ไม่ใช่ staff |
 | `secretOrPrivateKey must have a value` | `.env` มี `JWT_SECRET=` ค่าว่าง และ config ใช้ `??` (ค่าว่างผ่าน `??` ไปได้) → ตรวจด้วย `if (secret)` หรือ `\|\|` แทน |
 | ส่ง token แล้วยังได้ 401 | header ต้องเป็น `Authorization: Bearer <token>` (มีเว้นวรรค 1 ช่อง) · token หมดอายุ (2 ชั่วโมง) |
@@ -506,7 +511,7 @@ git tag lab-13-submission-v1 && git push origin lab-13-submission-v1
 
 - [ ] `npm test` ผ่านทั้งหมด (api + frontend)
 - [ ] `npm run build` ได้ไม่มี error
-- [ ] ไม่มี secret ใน git (`git ls-files | grep .env` เจอแค่ `.env.example`)
+- [ ] ไม่มี secret ใน git (`git ls-files | grep .env` เจอแค่ `.env.example` และ `frontend/.env.production` ที่ไม่มีค่าลับ — ไม่มี `api/.env`)
 - [ ] `.env.example` มีตัวแปรครบ ค่าว่าง
 - [ ] README บอกวิธีติดตั้ง · วิธีรัน · วิธี deploy · บัญชีทดสอบ
 - [ ] `/api/health` ผ่านบน URL จริง

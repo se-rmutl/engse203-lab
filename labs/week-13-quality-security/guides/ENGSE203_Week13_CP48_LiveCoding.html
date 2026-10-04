@@ -136,7 +136,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
 <header class="top">
   <p class="eyebrow">ENGSE203 · Week 13 · Checkpoint 48</p>
   <h1>validation เข้มขึ้น <span class="where">🏫 ทำในห้อง</span></h1>
-  <p class="sub">13:10–13:35 · 25 นาที · We do → You do · ชนิด · ความยาว · ขนาด body</p>
+  <p class="sub">13:10–13:35 · 25 นาที · We do · ชนิด · ความยาว · ขนาด body</p>
   <div class="pills"><span class="pill a">TODO W13-VALID</span><span class="pill ">MAX 100 / 100 / 1000</span><span class="pill r">413 · 10kb</span><span class="pill v">ค่าขอบ N / N+1</span></div>
 </header>
 
@@ -147,6 +147,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
   <div class="step-body">
   <p class="say">starter บ่ายนี้ = <strong>เฉลยของเช้า</strong> (bug หายหมด) + โครงงาน W13 ที่มี TODO · ไม่ต้องต่อจากงานเช้าของตัวเอง · test ของ api 56 ข้อ แดง 13 ข้อ = งานบ่ายนี้</p>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="c"># รันที่ root ของ Student Repository</span>
+mkdir -p labs/week-13
 cp -r ../engse203-lab/labs/week-13-quality-security/lab13/starter labs/week-13/source
 cd labs/week-13/source
 
@@ -205,7 +206,7 @@ cp api/.env.example api/.env
 <div class="step" id="s3">
   <div class="step-head"><span class="num">③</span><h2>express.json({ limit: '10kb' }) → 413</h2><span class="file">api/src/app.js</span></div>
   <div class="step-body">
-  <p class="say">validation ทำงาน<strong>หลัง</strong> Express อ่าน body เสร็จ · ถ้ามีคนส่ง 50 MB มา server ต้องอ่านทั้งก้อนก่อน → จำกัดตั้งแต่ประตู</p>
+  <p class="say">validation ทำงาน<strong>หลัง</strong> Express อ่าน body เสร็จ · ค่าเริ่มต้นของ <code>express.json()</code> รับ body ได้ถึง 100kb · ถ้ามีคนส่งมา 90 KB server ต้องอ่านทั้งก้อนก่อน → จำกัดตั้งแต่ประตูให้แคบลง</p>
   <span class="tag b">ก่อน</span>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>app.<span class="f">use</span>(express.<span class="f">json</span>());</code></pre></div>
   <span class="tag a">หลัง</span>

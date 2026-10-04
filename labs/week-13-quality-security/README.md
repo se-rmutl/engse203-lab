@@ -20,7 +20,7 @@
 | สื่อ | เปิด |
 |---|---|
 | สไลด์ Week 13 (42 หน้า · 9 บท · interactive JWT decoder และด่านตรวจ 401/403) | [เปิดสไลด์](https://se-rmutl.github.io/engse203/week13) |
-| **สไลด์ปิดภาค** — สรุปสัปดาห์ 1–17 · งานที่ต้องส่ง · Final Term Project · สอบปลายภาค · ปฏิทิน + ตัวนับถอยหลัง (42 หน้า) | [เปิดสไลด์ปิดภาค](https://se-rmutl.github.io/engse203/wrapup/) |
+| **สไลด์ปิดภาค** — สรุปสัปดาห์ 1–17 · งานที่ต้องส่ง · Final Term Project · สอบปลายภาค · ปฏิทิน + ตัวนับถอยหลัง (43 หน้า) | [เปิดสไลด์ปิดภาค](https://se-rmutl.github.io/engse203/wrapup/) |
 | เอกสารประกอบการสอน (9 บท · 10 ภาพ) | [เปิดเอกสาร](https://se-rmutl.github.io/engse203/week13/week13-teaching-doc.html) |
 
 ### หน้าจอ Live-Coding (ใช้ในคาบ)
@@ -82,10 +82,12 @@
 > starter ของบ่าย = **เฉลยของเมื่อเช้า** + โครงระบบเข้าสู่ระบบ — ไม่ต้องทำเช้าเสร็จก่อน
 
 ```bash
+mkdir -p labs/week-13
 cp -r ../engse203-lab/labs/week-13-quality-security/lab13/starter labs/week-13/source
 cd labs/week-13/source
 npm install --prefix api              # มี jsonwebtoken เพิ่ม
 npm install --prefix frontend
+cp api/.env.example api/.env          # npm run dev ต้องมีไฟล์นี้
 npm run db:setup --prefix api         # users มีคอลัมน์ role + password_hash
 npm test --prefix api                 # ผ่าน 43 · ไม่ผ่าน 13 ← เป้าหมายของบ่ายนี้
 ```
@@ -148,7 +150,7 @@ week-13-quality-security/
 ├── lab13/
 │   ├── LAB13_INCLASS_GUIDE_TH.md
 │   └── starter/          (= เฉลย W12 + TODO W13-VALID · HASH · LOGIN · AUTH · SECRET)
-├── guides/               (เอกสาร · สไลด์ · live-coding CP48–52)
+└── guides/               (เอกสาร · สไลด์ · live-coding CP48–52)
 ```
 
 > checker สัปดาห์ 7 และ 10 ไม่อยู่ในโฟลเดอร์นี้แล้ว — requirement เปลี่ยน (PUT/DELETE ต้องเข้าสู่ระบบ) checker เก่าจึงใช้ไม่ได้ เหมือน test เก่าที่ต้องแก้ตาม
@@ -164,5 +166,3 @@ week-13-quality-security/
 | Front-end | หน้า login · เก็บ token · `apiClient` แนบ `Authorization` · ซ่อนปุ่มที่ไม่มีสิทธิ์ · test ฝั่ง frontend |
 | Back-end | validation · auth 401/403 · unit + integration test · `DEBUG_LOG.md` |
 | DevOps | `.env.example` · secret บน cloud · CI · `RELEASE_CHECKLIST.md` · tag `v1.0.0` · deploy |
-
----

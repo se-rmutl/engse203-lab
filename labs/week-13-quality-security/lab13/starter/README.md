@@ -41,8 +41,8 @@ npm run dev           # React ที่ http://localhost:5173
 NODE_ENV=production npm install
 NODE_ENV=production npm run build
 
-# start — เสิร์ฟทั้งหน้าเว็บและ API จากพอร์ตเดียว
-NODE_ENV=production PORT=10000 npm start
+# start — เสิร์ฟทั้งหน้าเว็บและ API จากพอร์ตเดียว (สัปดาห์ 13: production ต้องตั้ง JWT_SECRET ไม่งั้นไม่ยอม start)
+NODE_ENV=production JWT_SECRET=<ค่าสุ่ม> PORT=10000 npm start
 # เปิด http://localhost:10000
 ```
 
@@ -73,6 +73,7 @@ curl http://localhost:3001/api/health
 | `PORT` | 3001 | พอร์ต API |
 | `CORS_ORIGIN` | http://localhost:5173 | ที่อยู่ frontend ที่อนุญาต |
 | `DB_FILE` | api/data/campus.db | ไฟล์ฐานข้อมูล |
+| `JWT_SECRET` | (dev: ค่าสำหรับพัฒนา) | secret สำหรับเซ็น JWT · production ไม่ตั้ง = ไม่ยอม start |
 
 ## API Endpoints
 

@@ -97,7 +97,7 @@ git push -u origin main
 | 12 | LAB 12 — การทดสอบและการแก้ไขข้อผิดพลาด (เช้า) | รายบุคคล | test case ค่าขอบ, Vitest unit + integration, coverage, debug 4 bug + regression test, `DEBUG_LOG.md` | [เปิด LAB 12](./labs/week-12-testing-debugging/) |
 | 13 | LAB 13 — พัฒนาอย่างปลอดภัยและพร้อมส่งมอบ (บ่าย · A5) | รายบุคคล | validation, scrypt, JWT login, 401/403, secret + fail fast, Release Checklist | [เปิด LAB 13](./labs/week-13-quality-security/) |
 | 14–16 | **Final Term Project** (ไม่มีคาบเรียน · A6) | คู่ / กลุ่ม 3 คน | ระบบใหม่จากหัวข้อ · auth · test · CI · deploy · `v1.0.0` · Issue/PR · peer review | [เปิด Final Term Project](./labs/final-term-project/) |
-| 17 | สอบปลายภาค (A7) · Sec 1 วันที่ 19 ต.ค. · Sec 2 วันที่ 22 ต.ค. | รายบุคคล + สัมภาษณ์เป็นทีม | take-home (ชุด A/B) · ทำในห้อง · สัมภาษณ์แทนข้อเขียน | [รายละเอียด](./labs/week-17-final/) |
+| 17 | สอบปลายภาค (A7) · Sec 1 วันที่ 19 ต.ค. · Sec 2 วันที่ 22 ต.ค. | ทีม (เดียวกับ Term Project) · คะแนนรายบุคคลตามบทบาท | take-home (ชุด A/B) · ทำในห้อง · สัมภาษณ์แทนข้อเขียน | [รายละเอียด](./labs/week-17-final/) |
 
 ### Week 04 สำหรับผู้เริ่ม React
 
@@ -169,7 +169,7 @@ Week 04 มีสองเส้นทางที่ไม่ควรสลั
 | A4 งานบูรณาการ Full-Stack รายบุคคล | 15% | LAB 11: React + API + Database |
 | A5 งานคุณภาพและความปลอดภัย | 10% | LAB 13 ในห้อง (4) + ส่วนคุณภาพของ Final Term Project (6) |
 | A6 Final Term Project | 15% | ผลงานทีม (10) + รายบุคคลตามบทบาท (5): issue, branch, PR, peer review, deploy, demo |
-| A7 สอบปลายภาค | 15% | take-home (5) + ทำในห้อง (5) + สัมภาษณ์เป็นทีม (5) · สัปดาห์ที่ 17 |
+| A7 สอบปลายภาค | 15% | take-home (5) + ทำในห้อง (5) + สัมภาษณ์ (5) · ทำเป็นทีมเดียวกับ Term Project · คะแนนรายบุคคลตามงานที่เป็นเจ้าของ · สัปดาห์ที่ 17 |
 | **รวม** | **100%** | |
 
 ## กติกาการส่งงานมาตรฐาน

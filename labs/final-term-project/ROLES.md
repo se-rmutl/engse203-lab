@@ -57,7 +57,7 @@ Front-end กับ Back-end ทำงานพร้อมกันได้เ
 | B2 | service ของหัวข้อ — SELECT แบบ JOIN · parameterized query ทุกคำสั่ง | `api/src/services/….js` |
 | B3 | route + controller ครบตาราง R2 ใน README · `?status=` | `api/src/routes/` · `controllers/` |
 | B4 | validator pure function — บังคับ · enum · min/max · **กฎเฉพาะของหัวข้อ** | `api/src/validators/….js` |
-| B5 | auth จาก LAB 13 ใช้กับ resource ใหม่ · บัญชีเจ้าหน้าที่ production สร้างด้วย `create-staff` | `middleware/auth.js` · `scripts/create-staff.mjs` |
+| B5 | auth จาก LAB 13 ใช้กับ resource ใหม่ · มี `upsertStaff` ให้ D3 เรียกตอน start (บัญชี production ตั้งจาก env ไม่ใช้ `create-staff` เพราะ Render free tier ไม่มี Shell) | `middleware/auth.js` · `services/…` |
 | B6 | unit test ≥ 10 · integration test ≥ 12 (รวม 401 · 403 · เจ้าหน้าที่) | `api/tests/` |
 | B7 | `DEBUG_LOG.md` ≥ 2 bug จริงที่เจอระหว่างทำ + regression test | `DEBUG_LOG.md` |
 | B8 | `API_CONTRACT.md` ตรงกับโค้ดจริง | `API_CONTRACT.md` |
@@ -96,7 +96,7 @@ Front-end กับ Back-end ทำงานพร้อมกันได้เ
 
 ```js
 // api/src/server.js — ต่อจาก await loadSeed();
-import { upsertStaff } from './services/requestService.js';   // ย้าย import ไปไว้บนสุดของไฟล์
+import { upsertStaff } from './services/requestService.js';   // ย้าย import ไปไว้บนสุดของไฟล์ · ถ้าแยก/เปลี่ยนชื่อ service แล้ว (เช่น userService.js) ให้ import จากไฟล์ที่มี upsertStaff
 import { hashPassword } from './utils/password.js';
 
 if (process.env.STAFF_EMAIL && process.env.STAFF_PASSWORD) {

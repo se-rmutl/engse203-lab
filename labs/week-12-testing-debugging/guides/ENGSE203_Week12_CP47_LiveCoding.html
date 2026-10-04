@@ -231,7 +231,7 @@ npm run dev --prefix api
   <span class="k">const</span> ids = (<span class="k">await</span> <span class="f">request</span>(app).<span class="f">get</span>(<span class="s">'/api/requests'</span>)).body.<span class="f">map</span>((x) =&gt; x.id);
   <span class="f">expect</span>(<span class="k">new</span> <span class="f">Set</span>(ids).size).<span class="f">toBe</span>(ids.length);
 });</code></pre></div>
-  <div class="warn"><b>⚠ กับดัก</b>curl ตอน <code>npm run dev</code> ยิงใส่ <strong>campus.db จริง</strong> — ลบแล้วหายจริง · debug เสร็จให้คืนข้อมูลตั้งต้นด้วย <code>npm run db:reset --prefix api</code> (test ไม่ได้รับผลเพราะใช้ <code>:memory:</code>)</div>
+  <div class="warn"><b>⚠ กับดัก</b>curl ตอน <code>npm run dev</code> ยิงใส่ <strong>campus.db จริง</strong> — ลบแล้วหายจริง · debug เสร็จให้ปิด API แล้วคืนข้อมูลตั้งต้นด้วย <code>npm run db:reset --prefix api</code> แล้วเปิดใหม่ (test ไม่ได้รับผลเพราะใช้ <code>:memory:</code>)</div>
   </div>
 </div>
 <div class="step" id="s4">

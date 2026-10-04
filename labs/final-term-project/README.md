@@ -67,6 +67,8 @@ cd engse203-final-1-T04
 rsync -a --exclude node_modules --exclude '*.db' --exclude .env <Student Repository>/labs/week-13/source/ ./
 cp -r ../engse203-lab/labs/final-term-project/kit/. ./         # check-project.mjs · แม่แบบเอกสาร · CI · render.yaml
 rm -f BUG_REPORTS.md DEMO.md DATABASE_CHOICES.md TEST_CASES.md check-week1*.mjs   # ไฟล์ของ LAB ที่ไม่ใช้แล้ว
+rm -rf api/scripts/check-project.mjs api/data/initialRequests.json frontend/public/data frontend/src/services/requestStorage.js   # ของ LAB 6–10 ที่ไม่มีใครเรียกแล้ว
+cp api/.env.example api/.env                                     # ไฟล์ค่าลับของเครื่องตัวเอง (ไม่ commit) — ไม่มีไฟล์นี้ npm run dev จะขึ้น ".env: not found"
 cp PROJECT_README_TEMPLATE.md README.md                          # แล้วค่อยกรอกทีหลัง
 # แก้ package.json (root) บรรทัด "check" เป็น  "node --disable-warning=ExperimentalWarning check-project.mjs"
 git add -A && git commit -m "start: LAB 13 ของ <ชื่อ> + project kit"
@@ -74,7 +76,9 @@ git push -u origin main
 git tag v0.0.0 && git push origin v0.0.0                         # จุดเริ่มต้น — ใช้เทียบว่าทีมเปลี่ยนอะไรไปบ้าง
 ```
 
-> 🪟 ไม่มี `rsync` — คัดลอกด้วย File Explorer แล้วลบ `node_modules/` · `api/data/*.db` · `api/.env` ออกก่อน `git add`
+> 🪟 ไม่มี `rsync` — ใช้ `cp -r <Student Repository>/labs/week-13/source/. ./ && rm -rf node_modules api/node_modules frontend/node_modules api/data/*.db api/.env` แทน หรือคัดลอกด้วย File Explorer แล้วลบสิ่งเหล่านั้นก่อน `git add`
+
+> 🗄 **ไม่ต้อง commit ไฟล์ `.db`** — API สร้างฐานข้อมูลจาก `schema.sql` เองเมื่อยังไม่มีตาราง (`loadSeed()` — อย่าลืมเปลี่ยนชื่อตารางที่ตรวจ ดู [TOPICS.md](TOPICS.md)) · ใส่ `api/data/*.db` ใน `.gitignore` · บน Render ข้อมูลจึงกลับเป็น seed ทุกครั้งที่ restart (ทีม 3 คนใช้ Turso)
 
 > ⚠ LAB 13 ของคน Back-end ยังไม่ครบ 23/23 → ทำให้ครบก่อน (เป็นคะแนน A5 อยู่แล้ว) · ถ้าใช้ของเพื่อนในทีมแทน ให้เขียนไว้ใน `TEAM_CONTRACT.md`
 
@@ -100,7 +104,7 @@ git tag v0.0.0 && git push origin v0.0.0                         # จุดเ�
 | GET | `/api/<resource>/:id` | ทุกคน | 200 · ไม่มี → 404 |
 | POST | `/api/<resource>` | ทุกคน | 201 · ข้อมูลผิด → 400 พร้อมรายการ error |
 | PUT | `/api/<resource>/:id` | **เจ้าหน้าที่** | 200 · ไม่มี token → 401 · ไม่ใช่เจ้าหน้าที่ → 403 |
-| DELETE | `/api/<resource>/:id` | **เจ้าหน้าที่** | 204 · ไม่มี token → 401 |
+| DELETE | `/api/<resource>/:id` | **เจ้าหน้าที่** | 204 · ไม่มี token → 401 · ไม่ใช่เจ้าหน้าที่ → 403 |
 | POST | `/api/auth/login` | ทุกคน | 200 + token · ผิด → 401 (ข้อความเดียวกันทั้งอีเมลผิดและรหัสผิด) |
 
 ### R3 · Validation (Back-end)
@@ -170,12 +174,24 @@ git tag v0.0.0 && git push origin v0.0.0                         # จุดเ�
 cp project.config.example.json project.config.json   # แล้วกรอกค่าของทีม
 npm install --prefix api && npm install --prefix frontend
 
-node --disable-warning=ExperimentalWarning check-project.mjs              # ตรวจทั้งหมด
-node --disable-warning=ExperimentalWarning check-project.mjs --role fe    # ตรวจเฉพาะส่วนของ Front-end
-node --disable-warning=ExperimentalWarning check-project.mjs --online     # ตรวจ URL ที่ deploy แล้วด้วย
+node --disable-warning=ExperimentalWarning check-project.mjs                   # ตรวจทั้งหมด
+node --disable-warning=ExperimentalWarning check-project.mjs --role fe         # ตรวจเฉพาะส่วนของ Front-end
+node --disable-warning=ExperimentalWarning check-project.mjs --role be+devops  # คน Back-end + DevOps ของทีมคู่ (กลุ่ม 3 คนใช้ --role be / --role devops)
+node --disable-warning=ExperimentalWarning check-project.mjs --skip-build      # ไม่ build frontend (เร็วขึ้น)
+node --disable-warning=ExperimentalWarning check-project.mjs --online          # ตรวจ URL ที่ deploy แล้วด้วย
 ```
 
-checker เปิด API ของทีมจริงด้วยฐานข้อมูลชั่วคราว แล้วยิงทุก endpoint ใน R2 · รัน test ของทีม · ตรวจเอกสาร · ตรวจ git
+checker เปิด API ของทีมจริงด้วยฐานข้อมูลชั่วคราว (`DB_FILE`) แล้วยิงทุก endpoint ใน R2 ตาม `project.config.json` · รัน test ของทีม · ลองเรียกชั้น service ของ frontend ว่าแนบ token จริง · ตรวจเอกสาร · ตรวจ git · ข้อที่ข้าม (`–` เช่น `--skip-build` หรือยังไม่ใช้ `--online`) ไม่นับในคะแนนรวมของ checker
+
+| ช่องใน `project.config.json` | ใช้ทำอะไร |
+|---|---|
+| `api.resource` · `api.existingId` | path ของ resource และรหัสของรายการหนึ่งใน seed (เช่น `/api/loans` · `LN-001`) |
+| `api.validSample` · `api.invalidSample` | body ที่ต้องได้ 201 และ 400 · วันที่เขียนแบบ `"{{today+7}}"` ได้ (checker แทนเป็นวันที่จริงตามเวลาไทย ข้อมูลตัวอย่างจึงไม่หมดอายุ) |
+| `api.ruleSamples` | (แนะนำ) body ที่ผิด**กฎเฉพาะของหัวข้อ** ทีละข้อ — ทุกข้อต้องได้ 400 |
+| `api.statusField` · `api.statusFilter` · `api.statusUpdate` | ชื่อฟิลด์สถานะ · สถานะที่ใช้ลองกรอง · body ของ PUT (ต้องเป็นการเปลี่ยนสถานะที่ระบบยอมให้จาก `existingId`) |
+| `api.idField` · `api.staffRole` | (ไม่บังคับ) ถ้าไม่ได้ใช้ `id` และ role `staff` ตามแบบ LAB 13 |
+
+> รหัสในผล checker (`T2` · `B1` · `F2` · `D8` · `X1` …) เป็นรหัส**ของ checker** ไม่ใช่เลขข้อใน [ROLES.md](ROLES.md) — ดูจากชื่อข้อที่พิมพ์ต่อท้าย เช่น checker `D8` = ROLES D3 (รหัสเจ้าหน้าที่ production)
 
 > ผ่าน checker ครบ ≠ ได้คะแนนเต็ม — checker ตรวจว่า "มีและทำงาน" แต่ไม่ได้ตรวจว่า "ออกแบบดีและอธิบายได้" ซึ่งดูจากการสัมภาษณ์และ rubric
 
@@ -200,9 +216,11 @@ checker เปิด API ของทีมจริงด้วยฐานข�
 
 | ส่วน | ทำอะไร | รูปแบบ |
 |---|---|---|
-| ข้อสอบ Part 1 | take-home (ประกาศแยก · ชุด A = Sec 1 · ชุด B = Sec 2) | รายบุคคล · ส่งวันสอบ |
-| ข้อสอบ Part 2 | ทำในห้อง — แก้ไขหรือเพิ่มความสามารถตามโจทย์ใหม่ | รายบุคคล |
-| **สัมภาษณ์** | ทีมละประมาณ 15 นาที · **demo โปรเจกต์ 3 นาที** แล้วถามทั้งโปรเจกต์และ take-home · แทนข้อสอบทฤษฎี | ถามเป็นทีม · ให้คะแนนรายบุคคล |
+| ข้อสอบ Part 1 | take-home (ประกาศแยก · ชุด A = Sec 1 · ชุด B = Sec 2) · ส่งวันสอบ | **ทีมเดียวกับโปรเจกต์นี้** · 1 repo/ทีม · ทุกงานมีเจ้าของตามบทบาท · คะแนนรายบุคคล |
+| ข้อสอบ Part 2 | ทำในห้อง 90 นาที — review + แก้ PR และทำ change request บน repo take-home ของทีม | ทีม · เจ้าของงานตามบทบาท · คะแนนรายบุคคล |
+| **สัมภาษณ์** | ทีมละประมาณ 15 นาที · **demo โปรเจกต์ 3 นาที** แล้วถามทั้งโปรเจกต์และงานข้อสอบที่แต่ละคนเป็นเจ้าของ · แทนข้อสอบทฤษฎี | ถามรายคนตามบทบาท · ให้คะแนนรายบุคคล |
+
+> สอบเป็นทีมเพื่อฝึก **pair programming** ต่อจากโปรเจกต์ — ใครเป็นเจ้าของงานไหนและวิธีคิดคะแนนรายบุคคลอยู่ใน [สัปดาห์ที่ 17](../week-17-final/)
 
 เตรียม demo: เปิด URL ที่ deploy → ส่งคำขอแบบคนทั่วไป → login เจ้าหน้าที่ → เปลี่ยนสถานะ → แสดงว่าคนทั่วไปทำไม่ได้ (401/403) → เปิด CI ที่ผ่าน
 
@@ -214,7 +232,7 @@ checker เปิด API ของทีมจริงด้วยฐานข�
 |---|---:|---|
 | **A6** Final Term Project | 15% | ผลงานทีม 10 + ผลงานรายบุคคลตามบทบาท 5 |
 | **A5** คุณภาพและความปลอดภัย | 6 จาก 10% | test · DEBUG_LOG · auth · secret · Release Checklist ในโปรเจกต์ (อีก 4 มาจาก LAB 13 ในห้อง) |
-| A7 สอบปลายภาค | 15% | take-home + ทำในห้อง + สัมภาษณ์ (ประกาศแยก) |
+| A7 สอบปลายภาค | 15% | take-home + ทำในห้อง + สัมภาษณ์ · **ทีมเดียวกับโปรเจกต์นี้** · คะแนนรายบุคคล (ดู [สัปดาห์ที่ 17](../week-17-final/)) |
 
 เกณฑ์ละเอียด → [RUBRIC.md](RUBRIC.md)
 

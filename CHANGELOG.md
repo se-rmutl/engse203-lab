@@ -1,5 +1,50 @@
 # Changelog
 
+## v7.12.0 — ตรวจหน่วยที่ 5 ซ้ำทั้งเส้นทาง · ย้ายของผู้สอนไป `resources/` · ทดสอบ checker โปรเจกต์กับหัวข้อ T07 · สอบปลายภาคเป็นทีม
+
+### ของผู้สอนย้ายไป `resources/` (อยู่ใน `.gitignore` — ไม่ขึ้น GitHub)
+
+- `labs/<สัปดาห์>/_instructor-private/` ทุกสัปดาห์ (06 · 07 · 09 · 10 · 11 · 12 · 13 · final-term-project) → `resources/<สัปดาห์>/` · README ของแต่ละสัปดาห์ไม่มีส่วน "สำหรับผู้สอน" แล้ว · ดัชนีและคำสั่งตรวจก่อนสอนอยู่ที่ `resources/README.md`
+- path ใน Step Script · คู่มือ Deploy W11 · Blueprint หน่วยที่ 5 · คู่มือผู้สอน Term Project ปรับตาม
+- `.gitignore` (root) เพิ่ม `!.env.production` — เดิม `.env.*` ตัด `frontend/.env.production` ของ starter W12/W13 ทิ้ง ทำให้ `npm run build` ฝัง `localhost:3001` (ไฟล์นี้ไม่มีค่าลับ)
+
+### สัปดาห์ 12 (เดินตามคู่มือแบบนักศึกษาทุกคำสั่ง · ผลทุกจุดตรงกับที่คู่มือบอก)
+
+- คู่มือ · README · CP44: เพิ่ม `mkdir -p labs/week-12` ก่อน `cp` (template สร้างถึง week-04 เท่านั้น) และ `cp api/.env.example api/.env` (ไม่มี = `npm run dev` ขึ้น `.env: not found`)
+- BUG #1 · BUG #2: หยุด `npm run dev` เดิมก่อน (พอร์ตชน · `db:reset` ขณะ server เปิดไม่มีผล) · เมนู JavaScript Debug Terminal ที่ถูกต้อง · `before` → `beforeAll`
+- CP45/CP46: ระบุจำนวน test ตามโค้ดบนจอ (20 ข้อ + You do 4) · Step Script ซ้อมด้วย `grep` แทน `tail -3`
+- checker: "regression test BUG #1" ไม่ผ่านก่อนเวลาอีก (regex ข้ามไปจับ test ถัดไป) · CI นับ workflow ที่ root ของ Student Repository ด้วย · `.gitignore` มี `coverage/` · `server.js` throw เมื่อพอร์ตชน (Express 5) · engines `>=22.13.0` · `render.yaml` rootDir เป็นสัปดาห์ของตัวเอง
+
+### สัปดาห์ 13
+
+- คู่มือ · README · CP48 · สไลด์ 3: `mkdir -p labs/week-13` · `cp api/.env.example api/.env`
+- แก้ข้อความที่ไม่ตรงโค้ด: starter ใช้ `||` (ไม่ใช่ `??`) · body เกิน 100kb ถูกปฏิเสธอยู่แล้ว · สไลด์ 21 มีแต่ปุ่มตัวอย่าง (decode token ของตัวเองด้วย `node -pe`) · ข้อความ error ของ Vitest · สาเหตุของ "ตรวจ hash ใน schema.sql ไม่ผ่านข้อเดียว"
+- Challenge 429: ต้อง export `resetLoginLimiter()` และเรียกใน `beforeEach` (ไม่เช่นนั้น 23/23 ตกเป็น 22/23)
+- Step Script: เดโม `DELETE REQ-001` ตอน 13:00 แล้วต้อง `db:reset` (หยุด server ก่อน) · CP52 หยุด dev server ก่อนรัน production · ลิงก์สไลด์ quiz
+- `server.js` throw เมื่อพอร์ตชน · README ของ starter/reference มี `JWT_SECRET` ในคำสั่ง production · ชื่อข้อ checker ".gitignore มี .env"
+
+### Final Term Project
+
+- `check-project.mjs` ทดสอบกับโปรเจกต์ตัวอย่างหัวข้อ T07 (ยืม-คืนอุปกรณ์) ทั้งทีมคู่และทีม 3 คน + กรณีบกพร่อง 18 แบบ: เดิม T07 ที่ถูกต้องได้ 31/35 → 34/34 · Campus Service ผลเหมือนเดิมทุกข้อ
+  - แก้ false fail: `render.yaml` ของ kit เอง · ข้อความแม่แบบใน TEAM_CONTRACT · `nextId` ใน DEBUG_LOG
+  - แก้ false pass: DELETE ไม่มี auth / ไม่มี `requireRole` · frontend สร้าง header แต่ไม่ส่ง · คำสั่งในคอมเมนต์ของ CI · แม่แบบที่ยังไม่กรอก · `test.todo` · PUT ที่ตอบ 200 แต่ไม่บันทึก
+  - ใช้ `DB_FILE` ชั่วคราวเสมอ (ถ้า API ไม่สนใจ `DB_FILE` จะแจ้งแทนการเขียนทับฐานข้อมูลจริง) · config รองรับ `{{today+N}}` · `ruleSamples` · `idField` · `staffRole`
+- TOPICS: ตาราง "จุดที่ผูกกับชื่อ `requests`" (`loadSeed()` · `nextId()` · `setup-db.mjs` · `campus.db`) และตัวอย่างการตีความกฎ T07
+- README ข้อ 3: ลบไฟล์ของ LAB ที่ไม่ใช้ · `cp api/.env.example api/.env` · ไม่ต้อง commit `.db` · ทางเลือกเมื่อไม่มี `rsync` · ข้อ 5: รหัสของ checker ≠ เลขข้อใน ROLES
+- ROLES B5 ไม่ขัดกับ D3 อีก (บัญชี production ตั้งจาก env)
+
+### สอบปลายภาคเป็นทีม (ทีมเดียวกับ Final Term Project)
+
+- take-home (Part 1) และทำในห้อง (Part 2) ทำเป็นทีม · 1 repo ต่อทีม · pair programming ได้ แต่**ทุกงานมีเจ้าของตามบทบาท** — Front-end: bug ฝั่งหน้าเว็บ · ฟีเจอร์ส่วนหน้าเว็บ · code review (Part 2) · test ใต้ `frontend/` · Back-end (+DevOps ในทีมคู่): bug ฝั่ง API · ฟีเจอร์ส่วน API · ปัญหาตรรกะ · test ใต้ `api/` · DevOps (ทีม 3 คน): secret · ปัญหาความปลอดภัยใน PR · CI + วิธีรัน production
+- คะแนนรายบุคคลแต่ละ Part = 100 × (0.6 × งานของตัวเอง + 0.4 × ผลรวมทีม) × 0.05 · สัมภาษณ์ถามรายคนตามบทบาท · เจ้าของอธิบายงานไม่ได้ = งานนั้นของคนนั้นเหลือครึ่ง
+- หลักฐาน: `team.json` · commit โดยเจ้าของ + `Co-authored-by:` · "ผู้รับผิดชอบ" ใน `DEBUG_LOG.md` · "ผู้เขียน" ใน `REVIEW.md`
+- เอกสารที่ปรับ: สัปดาห์ 17 (ตารางเจ้าของงาน + สูตร) · Final Term Project ข้อ 7–8 · README หลัก · `docs/course-assessment.md` · สไลด์ปิดภาค (เพิ่มหน้า "สอบเป็นทีม · ใครทำอะไร" → 43 หน้า · ตาราง Part 1/2 มีคอลัมน์เจ้าของ) · สไลด์ W13 หน้า 41 · เอกสาร W13 ข้อ 9.4
+- ชุดข้อสอบ grader และคู่มือผู้สอนอยู่ใน `resources/final-exam/` (ไม่ขึ้น GitHub)
+
+### คู่มือ Deploy (W11) — ส่วนที่ 12 ใหม่
+
+- `JWT_SECRET` (`generateValue` หรือสุ่มเอง) · `STAFF_EMAIL` / `STAFF_PASSWORD` (`sync: false` + upsert ตอน start) · ตรวจหลัง deploy ว่ารหัส seed ใช้ไม่ได้ · ตารางแก้ปัญหา
+
 ## v7.11.0 — หน่วยที่ 5 (สัปดาห์ 12–13 สอนวันเดียว) · Final Term Project · ปรับผังปลายภาค
 
 **สอนวันเดียว** — เช้า W12 (09:00–12:00) · บ่าย W13 (13:00–16:00) · Sec 1 วันที่ 5 ต.ค. · Sec 2 วันที่ 8 ต.ค. · สัปดาห์ 14–16 ยกเลิกคาบเรียน → Final Term Project · สอบปลายภาค Sec 1 วันที่ 19 · Sec 2 วันที่ 22 ต.ค.

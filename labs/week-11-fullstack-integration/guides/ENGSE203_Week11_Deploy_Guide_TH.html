@@ -208,6 +208,7 @@ footer .m{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:
     <tr><td>Health Check Path</td><td><code>/api/health</code></td></tr>
     <tr><td>Region · Instance</td><td>Singapore · Free</td></tr>
     <tr><td>⭐⭐ ข้อมูลถาวร (ไม่บังคับ)</td><td>เพิ่ม <code>TURSO_DATABASE_URL</code> · <code>TURSO_AUTH_TOKEN</code> — ดูส่วนที่ 11</td></tr>
+    <tr><td>หลัง LAB 13 · Term Project</td><td>เพิ่ม <code>JWT_SECRET</code> (สุ่ม) · <code>STAFF_EMAIL</code> · <code>STAFF_PASSWORD</code> — ดูส่วนที่ 12</td></tr>
   </table>
 </section>
 
@@ -226,6 +227,7 @@ footer .m{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:
     <li><a href="#s9">ข้อจำกัดของ free tier ที่ต้องรู้</a></li>
     <li><a href="#s10">สำหรับผู้สอน — เตรียมเดโมและตรวจงาน</a></li>
     <li><a href="#s11">Challenge ⭐⭐ — ข้อมูลถาวรด้วย Turso</a></li>
+    <li><a href="#s12">ค่าลับบน Render — JWT_SECRET และบัญชีเจ้าหน้าที่ (หลัง LAB 13)</a></li>
   </ol>
 </nav>
 
@@ -745,7 +747,7 @@ git push -u origin unit4/week-11</code></pre>
   <h3>10.1 deploy reference solution เป็นเดโมประจำวิชา</h3>
   <p>แนะนำให้ deploy ไว้ 1 ตัวก่อนเปิดภาคเรียน — ใช้ฉายในคาบและเป็นตัวเทียบเวลานักศึกษาติดปัญหา</p>
 <pre><code><span class="c-com"># ① คัดลอก reference ออกมาเป็น repo ใหม่ (โปรเจกต์อยู่ที่ root → Root Directory เว้นว่าง)</span>
-cp -r labs/week-11-fullstack-integration/_instructor-private/reference-solution ~/campus-demo
+cp -r resources/week-11-fullstack-integration/reference-solution ~/campus-demo   <span class="c-com"># resources/ อยู่ใน .gitignore — มีเฉพาะในเครื่องผู้สอน</span>
 <span class="c-key">cd</span> ~/campus-demo
 rm -rf node_modules api/node_modules frontend/node_modules frontend/dist
 
@@ -762,7 +764,7 @@ git push -u origin main</code></pre>
 
   <div class="box pitfall">
     <span class="h">🟥 อย่า deploy จาก Course Repository โดยตรง</span>
-    <p style="margin:0">reference อยู่ใน <code>_instructor-private/</code> · ถ้าเชื่อม Render กับ Course Repository ต้องให้สิทธิ์อ่านทั้ง repo · แยกเป็น repo เดโมปลอดภัยกว่า</p>
+    <p style="margin:0">reference อยู่ใน <code>resources/</code> ซึ่งไม่ขึ้น GitHub (อยู่ใน <code>.gitignore</code>) · Course Repository จึงไม่มีเฉลยให้ deploy · แยกเป็น repo เดโม (private ได้) ปลอดภัยกว่า</p>
   </div>
 
   <h3>10.2 ก่อนเข้าคาบ</h3>
@@ -946,6 +948,66 @@ git push -u origin main</code></pre>
     <span class="h">🟨 ขอบเขตการตรวจสอบของส่วนนี้</span>
     <p style="margin:0">ทดสอบกับ <strong>sqld</strong> (server แบบ open source ตัวเดียวกับที่ Turso ใช้) ผ่าน HTTP พร้อม auth token แบบ JWT: checker ทั้ง 3 ตัวผ่านครบบนฐานข้อมูลระยะไกล · จำลอง Render (build แบบ production) แล้ว redeploy บนเครื่องใหม่ ข้อมูลยังอยู่ · token ผิดหรือไม่ใส่ได้ 401 ตามตาราง 11.4<br>
     สิ่งที่<strong>ยังไม่ได้ทดสอบ</strong>คือบริการ Turso จริงบนอินเทอร์เน็ต (URL แบบ <code>libsql://</code>) และหน้าเว็บ Dashboard — <strong>แนะนำให้ผู้สอนลองกับบัญชีจริงหนึ่งครั้งก่อนประกาศ Challenge นี้</strong></p>
+  </div>
+</section>
+
+<!-- ════════ S12 ════════ -->
+<section class="ch" id="s12">
+  <p class="ch-num">ส่วนที่ 12 · หลัง LAB 13 และ Final Term Project</p>
+  <h2>ค่าลับบน Render — <code>JWT_SECRET</code> และบัญชีเจ้าหน้าที่</h2>
+
+  <p>หลัง LAB 13 ระบบมีการเข้าสู่ระบบ · <code>config.js</code> <strong>ไม่ยอม start</strong> ถ้า production ไม่มี <code>JWT_SECRET</code> (CP52) · และบัญชี <code>staff@rmutl.ac.th</code> / <code>staff1234</code> ใน seed ใช้ได้เฉพาะในเครื่อง — บน URL จริงต้องเปลี่ยนรหัส แต่ Render free tier <strong>ไม่มี Shell</strong> ให้รัน <code>create-staff</code> และไฟล์ SQLite กลับเป็นค่าเริ่มต้นทุก restart จึงต้องตั้งรหัสจาก env ตอน start ทุกครั้ง</p>
+
+  <h3>12.1 ตัวแปรที่ต้องเพิ่ม (ต่อจากขั้นที่ 4)</h3>
+  <table class="d">
+    <tr><th>Key</th><th>Value</th><th>ใครตั้ง · ทำไม</th></tr>
+    <tr><td><code>JWT_SECRET</code></td><td>สุ่มยาว ≥ 32 ไบต์</td><td>Blueprint (<code>render.yaml</code>) ใช้ <code>generateValue: true</code> ให้ Render สุ่มเอง · สร้าง Web Service เองให้สุ่มด้วยคำสั่งด้านล่าง · ไม่มี = ไม่ start (log: <code>ต้องตั้งค่า JWT_SECRET</code>)</td></tr>
+    <tr><td><code>STAFF_EMAIL</code></td><td>อีเมลเดียวกับบัญชีเจ้าหน้าที่ใน seed</td><td><code>sync: false</code> — Render ถามค่าตอนสร้าง Blueprint · ไม่เขียนลงไฟล์</td></tr>
+    <tr><td><code>STAFF_PASSWORD</code></td><td>รหัสใหม่ ≥ 12 ตัว</td><td><code>sync: false</code> · <code>server.js</code> hash แล้วเขียนทับรหัสใน seed ทุกครั้งที่ start → <code>staff1234</code> ใช้ไม่ได้บน production</td></tr>
+  </table>
+
+<pre><code><span class="c-com"># สุ่ม JWT_SECRET (กรณีกรอกเองใน Environment ของ Render)</span>
+node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"</code></pre>
+
+<pre><code><span class="c-com"># render.yaml — ส่วน envVars (มีให้แล้วใน kit ของ Final Term Project)</span>
+      - key: JWT_SECRET
+        generateValue: true          <span class="c-com"># Render สุ่มให้ · ไม่อยู่ใน git</span>
+      - key: STAFF_EMAIL
+        sync: false                  <span class="c-com"># Render ถามค่าตอนสร้าง</span>
+      - key: STAFF_PASSWORD
+        sync: false</code></pre>
+
+  <h3>12.2 โค้ดตั้งรหัสเจ้าหน้าที่ตอน start</h3>
+<pre><code><span class="c-com">// api/src/server.js — ต่อจาก await loadSeed(); (import ไว้บนสุดของไฟล์)</span>
+import { upsertStaff } from './services/requestService.js';   <span class="c-com">// ไฟล์ที่มี upsertStaff ของทีม</span>
+import { hashPassword } from './utils/password.js';
+
+if (process.env.STAFF_EMAIL &amp;&amp; process.env.STAFF_PASSWORD) {
+  upsertStaff({ email: process.env.STAFF_EMAIL, name: 'เจ้าหน้าที่', passwordHash: hashPassword(process.env.STAFF_PASSWORD) });
+}</code></pre>
+  <p>รายละเอียดอยู่ใน <a href="https://github.com/se-rmutl/engse203-lab/blob/main/labs/final-term-project/ROLES.md">ROLES.md ข้อ D3</a> ของ Final Term Project</p>
+
+  <h3>12.3 ตรวจหลัง deploy</h3>
+<pre><code>URL=https://&lt;ชื่อ service&gt;.onrender.com
+curl -s $URL/api/health                                             <span class="c-com"># "status":"ok"</span>
+curl -s -o /dev/null -w "%{http_code}\n" -X POST $URL/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"staff@rmutl.ac.th","password":"staff1234"}'          <span class="c-com"># ต้องได้ 401 — รหัสใน seed ใช้ไม่ได้แล้ว</span>
+curl -s -o /dev/null -w "%{http_code}\n" -X DELETE $URL/api/requests/REQ-001   <span class="c-com"># 401 — ไม่มี token</span></code></pre>
+  <p>แล้ว login ด้วย <code>STAFF_PASSWORD</code> จากหน้าเว็บ ต้องเห็นปุ่มของเจ้าหน้าที่</p>
+
+  <h3>12.4 ตารางแก้ปัญหา</h3>
+  <table class="d">
+    <tr><th>อาการ</th><th>สาเหตุ</th><th>แก้</th></tr>
+    <tr><td>deploy ล้ม · log มี <code>ต้องตั้งค่า JWT_SECRET</code></td><td>ไม่มีตัวแปร หรือค่าว่าง (CP52 fail fast ทำงานถูกแล้ว)</td><td>เพิ่ม <code>JWT_SECRET</code> ใน Environment → Manual Deploy</td></tr>
+    <tr><td>login ด้วย <code>staff1234</code> บน URL จริงยังได้</td><td>ไม่ได้ตั้ง <code>STAFF_EMAIL</code>/<code>STAFF_PASSWORD</code> · หรืออีเมลไม่ตรงกับใน seed · หรือยังไม่ได้ใส่โค้ด 12.2</td><td>ตั้งให้ครบ 2 ตัว อีเมลตรงกับ seed → Manual Deploy</td></tr>
+    <tr><td>หลังเปลี่ยน <code>JWT_SECRET</code> ทุกคนถูกเด้งออก</td><td>token เดิมลงนามด้วย secret เก่า → 401</td><td>ปกติ — login ใหม่</td></tr>
+    <tr><td>หน้าเว็บ login ได้ แต่กดเปลี่ยนสถานะได้ 401</td><td>frontend ไม่แนบ <code>Authorization: Bearer</code></td><td>แก้ <code>apiClient.js</code> (งานคน Front-end)</td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 ห้ามเขียนค่าจริงลงไฟล์</span>
+    <p style="margin:0">ทั้ง <code>JWT_SECRET</code> และ <code>STAFF_PASSWORD</code> ห้ามอยู่ใน <code>render.yaml</code> · <code>.env.example</code> · README · แชทกลุ่ม · ถ้าเผลอ commit ให้เปลี่ยนค่าใน Render ทันทีแล้วบันทึกใน <code>DEBUG_LOG.md</code> — การลบไฟล์ใน commit ถัดไปไม่ทำให้ค่าหายจากประวัติ git</p>
   </div>
 </section>
 

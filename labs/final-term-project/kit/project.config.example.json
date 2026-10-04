@@ -13,11 +13,16 @@
       "borrowerName": "ทดสอบ ระบบ",
       "equipmentId": 1,
       "quantity": 1,
-      "borrowDate": "2026-12-01",
-      "returnDate": "2026-12-05",
+      "borrowDate": "{{today+7}}",
+      "returnDate": "{{today+10}}",
       "purpose": "ใช้ซ้อมดนตรีของชมรม"
     },
     "invalidSample": {},
+    "ruleSamples": [
+      { "rule": "วันคืนต้องหลังวันยืม", "body": { "borrowerName": "ทดสอบ ระบบ", "equipmentId": 1, "quantity": 1, "borrowDate": "{{today+7}}", "returnDate": "{{today+6}}", "purpose": "ใช้ซ้อมดนตรีของชมรม" } },
+      { "rule": "ยืมเกิน 14 วัน", "body": { "borrowerName": "ทดสอบ ระบบ", "equipmentId": 1, "quantity": 1, "borrowDate": "{{today+7}}", "returnDate": "{{today+22}}", "purpose": "ใช้ซ้อมดนตรีของชมรม" } },
+      { "rule": "จำนวนเกินที่มี", "body": { "borrowerName": "ทดสอบ ระบบ", "equipmentId": 1, "quantity": 99, "borrowDate": "{{today+7}}", "returnDate": "{{today+10}}", "purpose": "ใช้ซ้อมดนตรีของชมรม" } }
+    ],
     "statusField": "status",
     "statusFilter": "requested",
     "statusUpdate": { "status": "borrowed" }

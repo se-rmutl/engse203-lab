@@ -7,7 +7,7 @@ services:
     runtime: node
     plan: free
     region: singapore
-    rootDir: labs/week-11/source          # โฟลเดอร์โปรเจกต์ใน Student Repository
+    rootDir: labs/week-13/source          # โฟลเดอร์โปรเจกต์ใน Student Repository
     buildCommand: npm install && npm run build
     startCommand: npm start
     healthCheckPath: /api/health          # Render รอให้ตอบ 2xx ก่อนเปิดให้ใช้งาน

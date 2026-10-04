@@ -382,6 +382,10 @@ table.tight th{font-size:1.06rem}
 .dl .d{white-space:nowrap;font-size:.9rem}
 .dl > div{padding:.12rem 0}
 
+/* ตารางเจ้าของงาน (สอบเป็นทีม) */
+.own td:first-child,.own td:last-child{white-space:nowrap}
+.own td:last-child .chip{margin:.08rem 0}
+
 </style>
 </head>
 <body>
@@ -433,7 +437,7 @@ table.tight th{font-size:1.06rem}
       <div class="card"><div class="ic">🧩</div><h3>② ภาพรวมระบบ</h3><p>ทุกสัปดาห์ต่อเติมระบบเดียวกัน — ตอนนี้มันหน้าตาเป็นอย่างไร และคุณทำอะไรได้แล้ว</p></div>
       <div class="card"><div class="ic">📊</div><h3>③ คะแนนทั้งวิชา</h3><p>A1–A7 มาจากไหน · อะไรเก็บไปแล้ว · อะไรยังเหลือ</p></div>
       <div class="card"><div class="ic">🚀</div><h3>④ Final Term Project</h3><p>แทนสัปดาห์ 14–16 · ทำเป็นคู่ · บทบาท · ข้อกำหนด · กำหนดส่ง</p></div>
-      <div class="card"><div class="ic">📝</div><h3>⑤ สอบปลายภาค</h3><p>take-home · ทำในห้อง · สัมภาษณ์เป็นทีม — ไม่มีข้อเขียนทฤษฎี</p></div>
+      <div class="card"><div class="ic">📝</div><h3>⑤ สอบปลายภาค</h3><p>take-home · ทำในห้อง · สัมภาษณ์ — <strong>สอบเป็นทีม</strong> (ทีมเดียวกับโปรเจกต์) คะแนนรายคน · ไม่มีข้อเขียนทฤษฎี</p></div>
       <div class="card"><div class="ic">📅</div><h3>⑥ ปฏิทินถึงวันสอบ</h3><p>ทุกวันส่งของ Sec 1 และ Sec 2 · ตัวนับถอยหลังของ Section คุณ</p></div>
     </div>
   </div>
@@ -888,7 +892,7 @@ table.tight th{font-size:1.06rem}
         <p class="row"><b>ส่ง</b> tag <code>v1.0.0</code> + URL ที่ deploy</p>
         <div class="tagline">M0 → M1 → M2 → M3 · A6 15 + A5 6</div></div>
       <div class="wk exc"><div class="wn">③ สอบปลายภาค</div><h3>take-home + ในห้อง + สัมภาษณ์</h3>
-        <p class="row">Part 1 ทำที่บ้าน · Part 2 ทำในห้อง 90 นาที · สัมภาษณ์เป็นทีม</p>
+        <p class="row"><b>เป็นทีม</b> (ทีมเดียวกับโปรเจกต์) · Part 1 ทำที่บ้าน · Part 2 ในห้อง 90 นาที · สัมภาษณ์รายคนตามบทบาท</p>
         <p class="row"><b>ส่ง</b> tag <code>takehome-A/B-v1</code> · <code>part2-A/B</code></p>
         <div class="tagline">A7 15 · ไม่มีข้อเขียนทฤษฎี</div></div>
     </div>
@@ -1157,38 +1161,60 @@ node … check-project.mjs --online</code></pre>
       <rect x="750" y="20" width="320" height="214" rx="18" fill="rgba(244,114,182,.08)" stroke="#F472B6" stroke-width="2"/>
       <g style="font-size:44px;font-weight:700" text-anchor="end"><text x="330" y="70" fill="#FBBF24">5</text><text x="690" y="70" fill="#38D7ED">5</text><text x="1050" y="70" fill="#F472B6">5</text></g>
       <g class="svg-lbl" fill="#AEB7DA"><text x="52" y="52">PART 1</text><text x="412" y="52">PART 2</text><text x="772" y="52">INTERVIEW</text></g>
-      <g style="font-size:20px;font-weight:700;fill:#EEF1FF"><text x="52" y="86">Take-home</text><text x="412" y="86">ทำในห้อง</text><text x="772" y="86">สัมภาษณ์เป็นทีม</text></g>
-      <g class="svg-s" font-size="13"><text x="52" y="112">ทำที่บ้าน · รายบุคคล · 4–6 ชม.</text><text x="412" y="112">วันสอบ · 90 นาที · ห้ามใช้ AI</text><text x="772" y="112">ทีมละ 15 นาที · ให้คะแนนรายคน</text></g>
+      <g style="font-size:20px;font-weight:700;fill:#EEF1FF"><text x="52" y="86">Take-home</text><text x="412" y="86">ทำในห้อง</text><text x="772" y="86">สัมภาษณ์</text></g>
+      <g class="svg-s" font-size="13"><text x="52" y="112">ทำที่บ้าน · ทีม · 4–6 ชม.</text><text x="412" y="112">วันสอบ · ทีม · 90 นาที · ห้ามใช้ AI</text><text x="772" y="112">ทีมละ 15 นาที · ถามรายคนตามบทบาท</text></g>
       <g style="font-size:14px;fill:#EEF1FF">
         <text x="52" y="148">• แก้ bug 3 ตัว + ปัญหา secret</text><text x="52" y="174">• เพิ่มฟีเจอร์ 1 อย่าง + test</text><text x="52" y="200">• ส่ง tag takehome-A/B-v1</text>
         <text x="412" y="148">• review PR จากเพื่อนร่วมทีม</text><text x="412" y="174">• แก้ปัญหา + change request</text><text x="412" y="200">• ส่ง tag part2-A/B</text>
-        <text x="772" y="148">• demo โปรเจกต์ 3 นาที</text><text x="772" y="174">• ถามทั้งโปรเจกต์และ take-home</text><text x="772" y="200">• แทนข้อสอบทฤษฎี</text>
+        <text x="772" y="148">• demo โปรเจกต์ 3 นาที</text><text x="772" y="174">• ถามโปรเจกต์ + งานข้อสอบของตัวเอง</text><text x="772" y="200">• แทนข้อสอบทฤษฎี</text>
       </g>
       <rect x="30" y="256" width="1040" height="46" rx="14" fill="rgba(251,113,133,.14)" stroke="#FB7185"/>
-      <text x="550" y="286" text-anchor="middle" style="font-size:17px;font-weight:700;fill:#EEF1FF">A7 สอบปลายภาค = 15 คะแนน · ชุด A = Section 1 · ชุด B = Section 2 (คนละระบบ คนละ bug)</text>
+      <text x="550" y="286" text-anchor="middle" style="font-size:17px;font-weight:700;fill:#EEF1FF">สอบเป็นทีม (ทีมเดียวกับโปรเจกต์) · คะแนนรายคน · ชุด A = Section 1 · ชุด B = Section 2</text>
     </svg>
   </div>
 </section>
 
 <section class="slide" data-title="🏠 Part 1 · take-home">
-  <span class="chapbadge ex">Part 1 <span class="of">· take-home · รายบุคคล</span></span>
-  <h2>Take-home — ดูแลระบบต่อจากรุ่นพี่</h2>
+  <span class="chapbadge ex">Part 1 <span class="of">· take-home · ทีม</span></span>
+  <h2>Take-home — ทีมดูแลระบบต่อจากรุ่นพี่</h2>
+  <div class="body center">
+    <div class="g21">
+      <table class="tight own">
+        <tr><th>งาน</th><th>ทำอะไร</th><th>คะแนน</th><th>เจ้าของ</th></tr>
+        <tr><td><strong>BUG-1</strong></td><td>bug ฝั่ง API ที่ผู้ใช้แจ้งมา</td><td>15</td><td><span class="chip b">BE</span></td></tr>
+        <tr><td><strong>BUG-2</strong></td><td>ช่องโหว่ความปลอดภัย (ทำซ้ำได้ด้วย curl)</td><td>15</td><td><span class="chip b">BE</span></td></tr>
+        <tr><td><strong>BUG-3</strong></td><td>bug ฝั่งหน้าเว็บ (หาเจอด้วย DevTools)</td><td>15</td><td><span class="chip p">FE</span></td></tr>
+        <tr><td><strong>SEC</strong></td><td>ปัญหาเรื่อง secret ที่ทีมตรวจความปลอดภัยพบ</td><td>15</td><td><span class="chip b">BE</span> <span class="chip g">Ops</span></td></tr>
+        <tr><td><strong>FEAT</strong></td><td>ฟีเจอร์ใหม่ 1 อย่าง · มี test สเปกให้ (test-first)</td><td>20</td><td><span class="chip b">API</span> <span class="chip p">หน้าเว็บ</span></td></tr>
+        <tr><td><strong>TEST</strong></td><td>regression test ที่เขียนเอง</td><td>10</td><td><span class="chip b">api/</span> <span class="chip p">frontend/</span></td></tr>
+        <tr><td><strong>LOG</strong></td><td><code>DEBUG_LOG.md</code> 3 bug × 6 ช่อง + SEC</td><td>10</td><td>เจ้าของ bug</td></tr>
+        <tr><td><strong>OPS</strong></td><td>ทีม 3 คน: CI + วิธีรัน production</td><td>+10</td><td><span class="chip g">Ops</span></td></tr>
+      </table>
+      <div style="display:flex;flex-direction:column;gap:.65rem">
+        <div class="card"><h3>📦 ได้อะไร</h3><p>repo template ที่มีระบบใหม่ (ไม่ใช่ Campus Service) · <code>TAKEHOME_A.md</code> / <code>TAKEHOME_B.md</code> · <code>BUG_REPORTS.md</code> · <code>team.json</code></p></div>
+        <p style="margin:0"><small><span class="chip p">FE</span> Front-end · <span class="chip b">BE</span> Back-end (ทีมคู่ = Back-end + DevOps) · <span class="chip g">Ops</span> DevOps ของทีม 3 คน</small></p>
+        <div class="card"><h3>🔍 ตรวจอย่างไร</h3><p>hidden test ที่ผู้สอนเก็บไว้ · test ของคุณต้อง <strong>fail บนโค้ดเดิม</strong> และผ่านหลังแก้</p></div>
+        <div class="note"><p style="margin:0;font-size:1.05rem">ใช้ AI ได้ — แต่ต้องเปิดเผยใน README และ<strong>อธิบายได้ทุกบรรทัด</strong></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="👥 สอบเป็นทีม · ใครทำอะไร">
+  <span class="chapbadge ex">สอบเป็นทีม <span class="of">· ทีมเดียวกับ Final Term Project · pair programming</span></span>
+  <h2>ช่วยกันได้ทุกงาน — แต่ทุกงานมีเจ้าของ 1 คน</h2>
   <div class="body center">
     <div class="g21">
       <table class="tight">
-        <tr><th>งาน</th><th>ทำอะไร</th><th>คะแนน</th></tr>
-        <tr><td><strong>BUG-1</strong></td><td>bug ฝั่ง API ที่ผู้ใช้แจ้งมา</td><td>15</td></tr>
-        <tr><td><strong>BUG-2</strong></td><td>ช่องโหว่ความปลอดภัย (ทำซ้ำได้ด้วย curl)</td><td>15</td></tr>
-        <tr><td><strong>BUG-3</strong></td><td>bug ฝั่งหน้าเว็บ (หาเจอด้วย DevTools)</td><td>15</td></tr>
-        <tr><td><strong>SEC</strong></td><td>ปัญหาเรื่อง secret ที่ทีมตรวจความปลอดภัยพบ</td><td>15</td></tr>
-        <tr><td><strong>FEAT</strong></td><td>ฟีเจอร์ใหม่ 1 อย่าง · มี test สเปกให้ (test-first)</td><td>20</td></tr>
-        <tr><td><strong>TEST</strong></td><td>regression test ที่เขียนเอง</td><td>10</td></tr>
-        <tr><td><strong>LOG</strong></td><td><code>DEBUG_LOG.md</code> 3 bug × 6 ช่อง + SEC</td><td>10</td></tr>
+        <tr><th>บทบาท</th><th>Part 1 · take-home</th><th>Part 2 · ในห้อง</th></tr>
+        <tr><td><span class="chip p">Front-end</span></td><td>BUG-3 · FEAT ส่วนหน้าเว็บ · test ใต้ <code>frontend/</code></td><td><strong>REVIEW.md</strong> · CR ส่วนหน้าเว็บ · test ใต้ <code>frontend/</code></td></tr>
+        <tr><td><span class="chip b">Back-end</span><br><small>ทีมคู่ = Back-end + DevOps</small></td><td>BUG-1 · BUG-2 · FEAT ส่วน API · test ใต้ <code>api/</code> · (ทีมคู่) SEC</td><td>FIX-LOGIC · CR ส่วน API · test ใต้ <code>api/</code> · (ทีมคู่) FIX-SEC</td></tr>
+        <tr><td><span class="chip g">DevOps</span><br><small>ทีม 3 คน</small></td><td>SEC · <strong>OPS</strong> CI + วิธีรัน production (+10)</td><td>FIX-SEC</td></tr>
       </table>
-      <div style="display:flex;flex-direction:column;gap:.65rem">
-        <div class="card"><h3>📦 ได้อะไร</h3><p>repo template ที่มีระบบใหม่ (ไม่ใช่ Campus Service) · <code>TAKEHOME_A.md</code> / <code>TAKEHOME_B.md</code> · <code>BUG_REPORTS.md</code></p></div>
-        <div class="card"><h3>🔍 ตรวจอย่างไร</h3><p>hidden test ที่ผู้สอนเก็บไว้ · test ของคุณต้อง <strong>fail บนโค้ดเดิม</strong> และผ่านหลังแก้</p></div>
-        <div class="note"><p style="margin:0;font-size:1.05rem">ใช้ AI ได้ — แต่ต้องเปิดเผยใน README และ<strong>อธิบายได้ทุกบรรทัด</strong></p></div>
+      <div style="display:flex;flex-direction:column;gap:.6rem">
+        <div class="recap"><h3>🧮 คะแนนของคุณ (แต่ละ Part)</h3><p style="margin:0;font-size:1.12rem">100 × (<strong>0.6</strong> × % งานของตัวเอง + <strong>0.4</strong> × % ของทั้งทีม)</p><p style="margin:.3rem 0 0;font-size:.98rem;color:var(--muted)">ช่วยเพื่อนให้ผ่าน = คะแนนคุณขึ้นด้วย · ส่วนใหญ่ยังมาจากงานของตัวเอง</p></div>
+        <div class="card"><h3>🧾 หลักฐานว่าใครทำ</h3><p><code>team.json</code> (commit แรก) · เจ้าของงานเป็นคน commit · navigator ใส่ <code>Co-authored-by:</code> · "ผู้รับผิดชอบ" ใน DEBUG_LOG · "ผู้เขียน" ใน REVIEW.md</p></div>
+        <div class="wrong"><p style="margin:0;font-size:1.05rem">🚫 เจ้าของงาน<strong>อธิบายงานของตัวเองไม่ได้</strong> → งานนั้นของคนนั้นเหลือครึ่ง (ไม่กระทบคะแนนส่วนตัวของเพื่อน)</p></div>
       </div>
     </div>
   </div>
@@ -1199,11 +1225,11 @@ node … check-project.mjs --online</code></pre>
   <h2>ส่ง take-home ใน 5 ขั้น</h2>
   <div class="body center">
     <div class="steps" style="--n:5">
-      <div class="st"><b>Use this template</b><span>สร้าง repo ของตัวเองจาก template ที่ประกาศ · ตั้งเป็น <strong>Private</strong></span></div>
-      <div class="st"><b>เพิ่มผู้สอน</b><span>Settings → Collaborators → เพิ่มบัญชีผู้สอน</span></div>
-      <div class="st"><b>ทำงาน + commit</b><span>commit เป็นระยะ ข้อความบอกว่าทำอะไร เช่น <code>fix(BUG-2): …</code></span></div>
+      <div class="st"><b>Use this template</b><span>คนหนึ่งในทีมสร้าง repo <strong>ของทีม</strong> จาก template ที่ประกาศ · ตั้งเป็น <strong>Private</strong></span></div>
+      <div class="st"><b>เพิ่มเพื่อน + ผู้สอน</b><span>Settings → Collaborators · แล้ว commit <code>team.json</code> เป็นอย่างแรก</span></div>
+      <div class="st"><b>ทำงาน + commit</b><span>เจ้าของงานเป็นคน commit เช่น <code>fix(BUG-2): …</code> · navigator ใส่ <code>Co-authored-by:</code></span></div>
       <div class="st"><b>ติด tag</b><span><code>git tag takehome-A-v1</code><br><code>git push origin takehome-A-v1</code></span></div>
-      <div class="st"><b>ส่งลิงก์ LMS</b><span>ลิงก์ repo · tag ต้องอยู่บน GitHub ก่อนเวลาสอบ</span></div>
+      <div class="st"><b>ส่งลิงก์ LMS</b><span>ทีมละ 1 ครั้ง · tag ต้องอยู่บน GitHub ก่อนเวลาสอบ</span></div>
     </div>
     <table class="due">
       <tr><th>ชุด</th><th>ปล่อยโจทย์</th><th>tag</th><th>ส่งภายใน</th></tr>
@@ -1215,20 +1241,20 @@ node … check-project.mjs --online</code></pre>
 </section>
 
 <section class="slide" data-title="🏫 Part 2 · ทำในห้อง">
-  <span class="chapbadge ex">Part 2 <span class="of">· วันสอบ · 90 นาที · รายบุคคล</span></span>
-  <h2>Part 2 — review PR ของเพื่อน แล้วรับ change request</h2>
+  <span class="chapbadge ex">Part 2 <span class="of">· วันสอบ · 90 นาที · ทีม</span></span>
+  <h2>Part 2 — ทีม review PR ของเพื่อน แล้วรับ change request</h2>
   <div class="body center">
     <div class="g21">
-      <table class="tight">
-        <tr><th>งาน</th><th>ทำอะไร</th><th>คะแนน</th></tr>
-        <tr><td><strong>REVIEW</strong></td><td><code>REVIEW.md</code> — ปัญหาใน patch ≥ 2 ข้อ: ไฟล์:บรรทัด · ทำไม · แก้อย่างไร</td><td>20</td></tr>
-        <tr><td><strong>FIX-SEC</strong></td><td>แก้ปัญหาความปลอดภัยใน patch</td><td>25</td></tr>
-        <tr><td><strong>FIX-LOGIC</strong></td><td>แก้ปัญหาข้อมูล / ตรรกะใน patch</td><td>15</td></tr>
-        <tr><td><strong>CR</strong></td><td>ทำ change request ตามใบงาน</td><td>25</td></tr>
-        <tr><td><strong>TEST</strong></td><td>test ใหม่ ≥ 3 ข้อ (ต้องมีค่าขอบ)</td><td>15</td></tr>
+      <table class="tight own">
+        <tr><th>งาน</th><th>ทำอะไร</th><th>คะแนน</th><th>เจ้าของ</th></tr>
+        <tr><td><strong>REVIEW</strong></td><td><code>REVIEW.md</code> — ปัญหาใน patch ≥ 2 ข้อ: ไฟล์:บรรทัด · ทำไม · แก้อย่างไร</td><td>20</td><td><span class="chip p">FE</span></td></tr>
+        <tr><td><strong>FIX-SEC</strong></td><td>แก้ปัญหาความปลอดภัยใน patch</td><td>25</td><td><span class="chip b">BE</span> <span class="chip g">Ops</span></td></tr>
+        <tr><td><strong>FIX-LOGIC</strong></td><td>แก้ปัญหาข้อมูล / ตรรกะใน patch</td><td>15</td><td><span class="chip b">BE</span></td></tr>
+        <tr><td><strong>CR</strong></td><td>ทำ change request ตามใบงาน</td><td>25</td><td><span class="chip b">API</span> <span class="chip p">หน้าเว็บ</span></td></tr>
+        <tr><td><strong>TEST</strong></td><td>test ใหม่ ≥ 3 ข้อ (ต้องมีค่าขอบ)</td><td>15</td><td><span class="chip b">api/</span> <span class="chip p">frontend/</span></td></tr>
       </table>
       <div style="display:flex;flex-direction:column;gap:.6rem">
-        <div class="card"><h3>🧩 ทำบน repo take-home ของตัวเอง</h3><p><code>git switch -c part2 takehome-A-v1</code> · <code>git apply</code> patch ที่แจกตอน 09:00 · ส่ง tag <code>part2-A</code> / <code>part2-B</code> ภายใน 11:30</p></div>
+        <div class="card"><h3>🧩 ทำบน repo take-home ของทีม</h3><p>คนหนึ่ง <code>git switch -c part2 takehome-A-v1</code> · <code>git apply</code> patch ที่แจกตอน 09:00 · push branch <code>part2</code> · ทุกคนทำงานของตัวเองใน branch เดียวกัน · ส่ง tag <code>part2-A</code> / <code>part2-B</code> ภายใน 11:30</p></div>
         <div class="wrong"><p style="margin:0;font-size:1.05rem">🚫 <strong>ห้ามใช้ AI ทุกชนิด</strong> (ปิด Copilot / AI ใน IDE) · เปิดเอกสารวิชา · MDN · Express · Vitest docs ได้</p></div>
         <div class="win"><p style="margin:0;font-size:1.05rem">take-home ยังพังอยู่? ขอ starter จากผู้สอนแล้วทำ Part 2 ได้ — ไม่เสียคะแนน Part 2</p></div>
       </div>
@@ -1237,7 +1263,7 @@ node … check-project.mjs --online</code></pre>
 </section>
 
 <section class="slide" data-title="🎤 การสัมภาษณ์">
-  <span class="chapbadge ex">สัมภาษณ์ <span class="of">· เป็นทีม · ให้คะแนนรายคน</span></span>
+  <span class="chapbadge ex">สัมภาษณ์ <span class="of">· เป็นทีม · ถามรายคนตามบทบาท</span></span>
   <h2>15 นาทีต่อทีม — demo แล้วถามทีละคน</h2>
   <div class="fig" style="flex:0 0 auto;height:30%">
     <svg viewBox="0 0 1100 170" role="img" aria-label="ลำดับเวลาการสัมภาษณ์ 15 นาที">
@@ -1246,7 +1272,7 @@ node … check-project.mjs --online</code></pre>
       <rect x="268" y="44" width="564" height="60" rx="12" fill="rgba(56,215,237,.22)" stroke="#38D7ED"/>
       <rect x="832" y="44" width="188" height="60" rx="12" fill="rgba(174,183,218,.15)" stroke="#AEB7DA"/>
       <text x="174" y="80" text-anchor="middle" style="font-size:15px;font-weight:700;fill:#EEF1FF">Demo 3 นาที</text>
-      <text x="550" y="80" text-anchor="middle" style="font-size:15px;font-weight:700;fill:#EEF1FF">ถามทีละคน คนละ 4 ข้อ · คนที่ถูกถามตอบเอง</text>
+      <text x="550" y="80" text-anchor="middle" style="font-size:15px;font-weight:700;fill:#EEF1FF">ถามทีละคน คนละ 4 ข้อ ตามบทบาท · คนที่ถูกถามตอบเอง</text>
       <text x="926" y="80" text-anchor="middle" style="font-size:15px;font-weight:700;fill:#EEF1FF">บันทึกคะแนน</text>
       <g class="svg-m" font-size="12" fill="#AEB7DA" text-anchor="middle"><text x="80" y="128">0</text><text x="268" y="128">3</text><text x="832" y="128">12</text><text x="1020" y="128">15 นาที</text></g>
       <text x="80" y="158" class="svg-s">demo: ส่งคำขอแบบคนทั่วไป → login เจ้าหน้าที่ → เปลี่ยนสถานะ → คนทั่วไปทำไม่ได้ (401/403) → CI ที่ผ่าน</text>
@@ -1255,8 +1281,8 @@ node … check-project.mjs --online</code></pre>
   <div class="body">
     <div class="four">
       <div class="stat u4c"><div class="num" style="font-size:2.4rem">2</div><div class="lbl">I-OWN</div><div class="sub">เปิดไฟล์ชี้โค้ดส่วนของตัวเองในโปรเจกต์ได้ · อธิบายเหตุผล</div></div>
-      <div class="stat u2c"><div class="num" style="font-size:2.4rem">1</div><div class="lbl">I-CROSS</div><div class="sub">เข้าใจส่วนของเพื่อน · เล่าการไหลของระบบข้ามชั้นได้</div></div>
-      <div class="stat exc"><div class="num" style="font-size:2.4rem">1.5</div><div class="lbl">I-TH</div><div class="sub">take-home ของตัวเอง: ทำซ้ำอาการ · ชี้สาเหตุ · ชี้ test</div></div>
+      <div class="stat u2c"><div class="num" style="font-size:2.4rem">1</div><div class="lbl">I-CROSS</div><div class="sub">เข้าใจส่วนของเพื่อน · งานที่ตัวเองเป็น navigator · การไหลของระบบ</div></div>
+      <div class="stat exc"><div class="num" style="font-size:2.4rem">1.5</div><div class="lbl">I-TH</div><div class="sub">งานข้อสอบที่ตัวเองเป็นเจ้าของ: ทำซ้ำอาการ · ชี้สาเหตุ · ชี้ test</div></div>
       <div class="stat u5c"><div class="num" style="font-size:2.4rem">0.5</div><div class="lbl">I-CONCEPT</div><div class="sub">แนวคิดทั้งวิชา 1 ข้อแบบสุ่ม (แทนข้อเขียน)</div></div>
     </div>
   </div>
@@ -1423,11 +1449,11 @@ node … check-project.mjs --online</code></pre>
   <div class="body center">
     <div class="three">
       <div class="card"><h3>💻 เครื่อง</h3><ul class="crit">
-        <li>โน้ตบุ๊ก + สายชาร์จ</li><li>repo take-home <code>npm install</code> แล้ว · <code>npm test</code> รันได้</li><li>ปิด AI ใน IDE สำหรับ Part 2</li><li>login GitHub ในเครื่องได้ (push ได้)</li></ul></div>
+        <li>โน้ตบุ๊ก + สายชาร์จ</li><li>repo take-home ของทีม clone + <code>npm install</code> แล้ว<strong>ทุกเครื่อง</strong> · <code>npm test</code> รันได้</li><li>ปิด AI ใน IDE สำหรับ Part 2</li><li>login GitHub ในเครื่องได้ (push ได้)</li></ul></div>
       <div class="card"><h3>🏷️ tag ที่ต้องอยู่บน GitHub</h3><ul class="crit">
         <li><code>takehome-A-v1</code> / <code>takehome-B-v1</code></li><li><code>v1.0.0</code> ของ repo ทีม</li><li>ผู้สอนเป็น collaborator ทั้งสอง repo</li><li>ส่งลิงก์ใน LMS ครบ</li></ul></div>
       <div class="card"><h3>🎤 เตรียมสัมภาษณ์</h3><ul class="crit">
-        <li>URL ที่ deploy เปิดได้ · ซ้อม demo 3 นาที</li><li>อ่านโค้ดของตัวเองให้เข้าใจทุกบรรทัด</li><li>อ่าน DEBUG_LOG ของ take-home อีกรอบ</li><li>รู้ว่าเพื่อนทำส่วนไหน ทำงานอย่างไร</li></ul></div>
+        <li>URL ที่ deploy เปิดได้ · ซ้อม demo 3 นาที</li><li>อ่านโค้ดงานที่ตัวเองเป็นเจ้าของให้เข้าใจทุกบรรทัด</li><li>อ่าน DEBUG_LOG หัวข้อของตัวเองอีกรอบ</li><li>รู้ว่าเพื่อนทำส่วนไหน ทำงานอย่างไร</li></ul></div>
     </div>
   </div>
 </section>
@@ -1443,7 +1469,7 @@ node … check-project.mjs --online</code></pre>
       <tr><td>🏷️ เวลาส่ง</td><td>ตรวจที่ commit ที่ tag ชี้ · commit หลัง tag <code>v1.0.0</code> หรือหลังเวลาส่ง<strong>ไม่นับ</strong></td></tr>
       <tr><td>🔑 secret</td><td>ห้าม commit <code>.env</code> · token · รหัสผ่านจริง · เผลอ commit → เปลี่ยน secret ทันทีแล้วบันทึกใน DEBUG_LOG</td></tr>
       <tr><td>👥 ทีม</td><td>มีปัญหาในทีม (เพื่อนหาย · ไม่ทำงาน) แจ้งผู้สอน<strong>ก่อน M2</strong> — แจ้งวันสอบช่วยไม่ได้</td></tr>
-      <tr><td>🧑‍💻 งานรายบุคคล</td><td>take-home และ Part 2 ห้ามแชร์โค้ด · ผู้สอนตรวจความคล้ายของงาน และถามเจาะในการสัมภาษณ์</td></tr>
+      <tr><td>🤝 สอบเป็นทีม</td><td>take-home และ Part 2 ทำในทีมของตัวเอง · <strong>ห้ามแชร์โค้ดข้ามทีม</strong> · ผู้สอนตรวจความคล้ายระหว่างทีม และดู git ว่าใครทำส่วนไหน · สลับเจ้าของงานไม่ได้</td></tr>
     </table>
   </div>
 </section>
@@ -1458,7 +1484,7 @@ node … check-project.mjs --online</code></pre>
       <div class="reveal" data-reveal><button>ทำเว็บ deploy แล้วข้อมูลหายตอน restart ▸</button><div class="ans">ปกติของ Render free tier (ไฟล์ SQLite กลับเป็นค่าใน git) — ทีมคู่ยอมรับได้ เขียนไว้ใน README · กลุ่ม 3 คนต้องใช้ Turso</div></div>
       <div class="reveal" data-reveal><button>Render หลับตอนถึงคิวสัมภาษณ์ ▸</button><div class="ans">ไม่หักคะแนน — แต่ให้เปิด URL ทิ้งไว้ก่อนถึงคิว 2–3 นาที · ถ้าล่มจริงให้ demo บนเครื่องก่อน</div></div>
       <div class="reveal" data-reveal><button>take-home ทำไม่เสร็จ แล้ว Part 2 ล่ะ ▸</button><div class="ans">Part 2 ทำได้แม้ take-home ยังมี bug — hidden test ของ Part 2 ไม่ขึ้นกับ take-home · ถ้า repo พังทั้งหมด ขอ starter จากผู้สอน</div></div>
-      <div class="reveal" data-reveal><button>ทำงานแทนเพื่อนได้ไหม ▸</button><div class="ans">ช่วยกันได้ แต่ <strong>I1</strong> ให้คะแนนจากงานในบทบาทตัวเอง และการสัมภาษณ์จะถามงานที่คุณ commit เอง</div></div>
+      <div class="reveal" data-reveal><button>ทำงานแทนเพื่อนได้ไหม ▸</button><div class="ans">ช่วยกันแบบ pair ได้ (เป็น navigator) · แต่งานยังเป็นของเจ้าของ — คะแนน own% ของเจ้าของ และการสัมภาษณ์จะถามงานที่เจ้าของ commit เอง · ทำแทนทั้งหมด = เจ้าของอธิบายไม่ได้ = เสียคะแนนงานนั้นครึ่ง</div></div>
       <div class="reveal" data-reveal><button>แก้ take-home หลังติด tag ได้ไหม ▸</button><div class="ans">ได้จนถึงกำหนดส่ง — ย้าย tag ด้วย <code>git tag -f takehome-A-v1</code> แล้ว <code>git push -f origin takehome-A-v1</code></div></div>
     </div>
   </div>
@@ -1513,7 +1539,7 @@ node … check-project.mjs --online</code></pre>
 </div></div>
 <div class="bar"><i id="progress"></i></div>
 <div class="hud">
-  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 42</span><button id="btnNext">→</button>
+  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 43</span><button id="btnNext">→</button>
   <button id="btnToc">สารบัญ</button><button id="btnMinus">A−</button><button id="btnPlus">A+</button><button id="btnFull">เต็มจอ</button>
 </div>
 <div class="toc" id="toc" role="dialog"><h3>สารบัญ — กด T หรือ Esc ปิด</h3><ol id="tocList"></ol></div>

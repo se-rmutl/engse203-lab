@@ -1370,11 +1370,11 @@ router.<span class="c-fn">delete</span>(<span class="c-str">'/:id'</span>, <span
   <h3>7.1 ปัญหาของ starter</h3>
 
 <pre><code><span class="c-com">// api/src/config.js (starter)</span>
-jwtSecret: process.env.JWT_SECRET ?? <span class="c-bad">'dev-only-secret-do-not-use-in-production'</span>,</code></pre>
+jwtSecret: process.env.JWT_SECRET || <span class="c-bad">'dev-only-secret-do-not-use-in-production'</span>,</code></pre>
 
   <div class="box predict">
     <span class="h">🟩 ทายก่อนอ่านต่อ</span>
-    <p style="margin:0">บรรทัดนี้ใช้ <code>??</code> ให้ค่า default เหมือน <code>PORT</code> ที่เราทำใน Week 11 · <strong>ถ้า deploy ขึ้น Render แล้วลืมตั้ง <code>JWT_SECRET</code> ระบบจะ start ได้ปกติ — แล้วอันตรายตรงไหน</strong></p>
+    <p style="margin:0">บรรทัดนี้ใช้ <code>||</code> ให้ค่า default แบบเดียวกับ <code>PORT</code> ที่เราทำใน Week 11 · <strong>ถ้า deploy ขึ้น Render แล้วลืมตั้ง <code>JWT_SECRET</code> ระบบจะ start ได้ปกติ — แล้วอันตรายตรงไหน</strong></p>
   </div>
 
   <details>
@@ -1851,9 +1851,9 @@ node --disable-warning=ExperimentalWarning check-week13.mjs             <span cl
 
   <table class="d">
     <tr><th>ปลายภาคมีอะไร</th><th>เตรียมจากหน่วยนี้อย่างไร</th></tr>
-    <tr><td>ข้อสอบ take-home ชุด A/B</td><td>อ่านโจทย์แล้วเขียน test ค่าขอบก่อน · ใช้ checker/test เป็นตัวยืนยัน</td></tr>
+    <tr><td>ข้อสอบ take-home ชุด A/B (ทำเป็นทีมเดียวกับโปรเจกต์ · ทุกงานมีเจ้าของตามบทบาท)</td><td>อ่านโจทย์แล้วเขียน test ค่าขอบก่อน · ใช้ checker/test เป็นตัวยืนยัน · pair programming แต่เจ้าของงานต้องเป็นคน commit และอธิบายได้</td></tr>
     <tr><td>ทำในห้อง</td><td>ฝึกอ่าน stack trace · แยกชั้นปัญหา · เขียน middleware และ validation ด้วยตัวเอง</td></tr>
-    <tr><td>สัมภาษณ์เป็นกลุ่ม</td><td>อธิบายให้ได้ด้วยคำของตัวเอง — 401 กับ 403 ต่างกันอย่างไร · ทำไมต้อง hash + salt · payload ของ JWT อ่านได้แต่แก้ไม่ได้เพราะอะไร · ทำไม production ไม่มี secret ต้องไม่ start</td></tr>
+    <tr><td>สัมภาษณ์ (เป็นทีม · ถามรายคนตามบทบาท)</td><td>อธิบายให้ได้ด้วยคำของตัวเอง — 401 กับ 403 ต่างกันอย่างไร · ทำไมต้อง hash + salt · payload ของ JWT อ่านได้แต่แก้ไม่ได้เพราะอะไร · ทำไม production ไม่มี secret ต้องไม่ start</td></tr>
     <tr><td>Final Term Project</td><td>หน้า login ฝั่ง React · test เพิ่ม · <code>RELEASE_CHECKLIST.md</code> · deploy ขึ้น cloud — ตามบทบาท Front-end / Back-end / DevOps</td></tr>
   </table>
 

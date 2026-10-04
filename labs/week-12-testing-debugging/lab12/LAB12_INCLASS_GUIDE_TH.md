@@ -14,7 +14,7 @@
 | CP46 | integration test + coverage | [เปิด](https://se-rmutl.github.io/engse203/week12/guides/ENGSE203_Week12_CP46_LiveCoding.html) |
 | CP47 | debug 3 bug จากผู้ใช้ + regression test | [เปิด](https://se-rmutl.github.io/engse203/week12/guides/ENGSE203_Week12_CP47_LiveCoding.html) |
 
-สไลด์ · [เอกสารประกอบการสอน Week 12](https://se-rmutl.github.io/engse203/week12/week12-teaching-doc.html) (อ่านบทที่ 1–3 ก่อนเข้าคาบ)
+[สไลด์](https://se-rmutl.github.io/engse203/week12) · [เอกสารประกอบการสอน Week 12](https://se-rmutl.github.io/engse203/week12/week12-teaching-doc.html) (อ่านบทที่ 1–3 ก่อนเข้าคาบ)
 
 ---
 
@@ -49,16 +49,18 @@ node --disable-warning=ExperimentalWarning check-week12.mjs --inclass    # 20/20
 
 ```bash
 # รันที่ root ของ Student Repository
-# (สมมติว่า clone Course Repository ไว้ข้าง ๆ ที่ ../engse203-lab — ถ้าไม่ได้ clone ให้ git pull หรือดาวน์โหลด zip จาก GitHub)
+# (สมมติว่า clone Course Repository ไว้ข้าง ๆ ที่ ../engse203-lab — ถ้าไม่เห็นโฟลเดอร์ week-12 ให้ git pull ใน Course Repository ก่อน · ถ้าไม่ได้ clone ให้ดาวน์โหลด zip จาก GitHub)
+mkdir -p labs/week-12                # ต้องมีโฟลเดอร์แม่ก่อน ไม่งั้น cp ขึ้น "No such file or directory"
 cp -r ../engse203-lab/labs/week-12-testing-debugging/lab12/starter labs/week-12/source
 cd labs/week-12/source
 
 npm install --prefix api
 npm install --prefix frontend
+cp api/.env.example api/.env         # npm run dev ต้องใช้ไฟล์นี้ (CP47) — ไม่มีจะขึ้น "node: .env: not found"
 npm run db:setup --prefix api        # สร้าง api/data/campus.db
 ```
 
-> 🪟 **Windows (PowerShell)** — ใช้ `Copy-Item -Recurse ..\engse203-lab\labs\week-12-testing-debugging\lab12\starter labs\week-12\source`
+> 🪟 **Windows (PowerShell)** — ใช้ `mkdir labs\week-12` แล้ว `Copy-Item -Recurse ..\engse203-lab\labs\week-12-testing-debugging\lab12\starter labs\week-12\source` · คัดลอก .env ด้วย `Copy-Item api\.env.example api\.env`
 
 ### โครงสร้างที่ต้องมีตอนจบ
 
@@ -234,7 +236,7 @@ npm run coverage
 
 ### 💬 คำถามที่ต้องตอบได้
 
-> ถ้าใช้ `before` (ครั้งเดียว) แทน `beforeEach` แล้ว test ข้อ "ลบ" รันก่อนข้อ "คืน 5 รายการ" จะเกิดอะไร
+> ถ้าใช้ `beforeAll` (ครั้งเดียว) แทน `beforeEach` แล้ว test ข้อ "ลบ" รันก่อนข้อ "คืน 5 รายการ" จะเกิดอะไร
 
 ---
 
@@ -270,8 +272,8 @@ terminal ของ API แสดง
 
 ## BUG #1 · ลบแล้วเพิ่มใหม่ ได้ 500 — 🔧 breakpoint
 
-1. VS Code → Terminal → **New JavaScript Debug Terminal** (ไม่ต้องตั้งค่าอะไรเพิ่ม)
-2. ในเทอร์มินัลนั้น `npm run dev --prefix api`
+1. VS Code → แผง Terminal → ลูกศรข้างปุ่ม **+** → **JavaScript Debug Terminal** (หรือ `Ctrl+Shift+P` → JavaScript Debug Terminal · ไม่ต้องตั้งค่าอะไรเพิ่ม)
+2. ปิด `npm run dev` ตัวเดิมจาก BUG #3 ก่อน (`Ctrl+C` — พอร์ต 3001 จะได้ไม่ชน) แล้วในเทอร์มินัลใหม่นั้น `npm run dev --prefix api`
 3. เปิด `api/src/services/requestService.js` → คลิกซ้ายของเลขบรรทัดใน `nextId()` (จุดแดง = breakpoint)
 4. ทำซ้ำอาการ: ลบ REQ-002 แล้วส่งคำร้องใหม่ — โปรแกรมหยุดที่ breakpoint
 5. ชี้เมาส์ดูค่าตัวแปร / แผง VARIABLES → รหัสที่คำนวณได้ซ้ำกับของเดิมหรือไม่
@@ -284,7 +286,7 @@ curl -X POST localhost:3001/api/requests -H "Content-Type: application/json" \
 
 ## BUG #2 · Dashboard "กำลังดำเนินการ 0" — 🔧 DevTools แยกชั้น
 
-> ⚠ ถ้าลบ REQ-002 ไปตอน BUG #1 ให้ `npm run db:reset --prefix api` ก่อน (REQ-002 คือคำร้องเดียวที่เป็น in-progress)
+> ⚠ ถ้าลบ REQ-002 ไปตอน BUG #1 ให้ปิด API (`Ctrl+C`) → `npm run db:reset --prefix api` → `npm run dev --prefix api` ใหม่ก่อน (REQ-002 คือคำร้องเดียวที่เป็น in-progress · reset ตอน API ยังเปิดอยู่ API จะยังเห็นข้อมูลเดิม)
 
 1. `npm run dev --prefix frontend` → เปิด Dashboard → การ์ด "กำลังดำเนินการ" แสดง 0
 2. F12 → **Network** → คลิก `requests` → แท็บ Response → เห็น `"status": "in-progress"` ไหม
@@ -330,6 +332,8 @@ node --disable-warning=ExperimentalWarning check-week12.mjs             # 22/22 
 
 > checker เรียก Vitest ของโปรเจกต์ — ต้อง `npm install` ทั้งใน `api/` และ `frontend/` ก่อน
 
+> `api/data/campus.db` ต้อง commit — ถ้าระหว่าง debug ไปเพิ่ม/ลบข้อมูลไว้ ให้หยุด `npm run dev` แล้ว `npm run db:reset --prefix api` ก่อน commit เพื่อให้ข้อมูลกลับเป็นค่าเริ่มต้น
+
 ```bash
 git switch -c unit5/week-12
 git add -A
@@ -343,7 +347,7 @@ git tag lab-12-submission-v1 && git push origin lab-12-submission-v1
 | ข้อ | ทำอะไร |
 |---|---|
 | coverage ≥ 85% | เพิ่ม test จนตัวเลข statements ของ api ถึง 85% (ดูจาก `npm run coverage`) |
-| CI | `.github/workflows/` ที่รัน `npm test` ทุกครั้งที่ push |
+| CI | `.github/workflows/check.yml` ที่ **root ของ Student Repository** (GitHub รัน workflow จากที่นี่เท่านั้น) รัน `npm test` ทุกครั้งที่ push · ใส่ `defaults: { run: { working-directory: labs/week-12/source } }` |
 
 ---
 
@@ -352,10 +356,12 @@ git tag lab-12-submission-v1 && git push origin lab-12-submission-v1
 | อาการ | สาเหตุ / วิธีแก้ |
 |---|---|
 | `vitest: not found` / checker บอก "ยังไม่ได้ npm install" | `npm install --prefix api` และ `--prefix frontend` |
+| checker พิมพ์ `POST /api/auth/login 404` · `PUT … 500` ก่อนรายการผล | เป็น log คำขอที่ checker ยิงเอง (login ไว้เผื่อสัปดาห์ 13) — ไม่ใช่ error · ดูผลที่บรรทัด ✅ / [TODO] |
+| `node: .env: not found` ตอน `npm run dev --prefix api` | ยังไม่ได้คัดลอก `.env` → `cp api/.env.example api/.env` (ข้อ ⓪) |
 | `Failed to load url sqlite` | Vitest รุ่นเก่า — ใช้รุ่นใน package.json ของ starter (Vitest 5) อย่าเปลี่ยนเวอร์ชัน |
-| test ผ่านบ้างไม่ผ่านบ้างตามลำดับ | ใช้ `before` แทน `beforeEach` — ต้องรีเซ็ตฐานข้อมูลทุก test |
-| breakpoint ไม่หยุด (จุดสีเทา) | ไม่ได้รันใน **JavaScript Debug Terminal** หรือ path ไฟล์ที่เปิดไม่ใช่ไฟล์ที่ server ใช้ |
-| Dashboard ไม่มีคำร้อง in-progress ให้ดู | ลบ REQ-002 ไปแล้ว → `npm run db:reset --prefix api` |
+| test ผ่านบ้างไม่ผ่านบ้างตามลำดับ | ใช้ `beforeAll` แทน `beforeEach` — ต้องรีเซ็ตฐานข้อมูลทุก test |
+| breakpoint ไม่หยุด (จุดสีเทา) | ไม่ได้รันใน **JavaScript Debug Terminal** · ยังมี `npm run dev` ตัวเดิมเปิดอยู่ (ตัวใหม่ขึ้น `Completed running` แล้วไม่ได้ฟังพอร์ต — curl ไปเข้าตัวเดิม) · หรือ path ไฟล์ที่เปิดไม่ใช่ไฟล์ที่ server ใช้ |
+| Dashboard ไม่มีคำร้อง in-progress ให้ดู | ลบ REQ-002 ไปแล้ว → ปิด API → `npm run db:reset --prefix api` → `npm run dev --prefix api` ใหม่ |
 | แก้ test ให้ผ่านแล้วแต่ bug ยังอยู่ | อย่าแก้ test ให้ตรงกับโค้ด — แก้โค้ดให้ตรงกับกฎ |
 
 ---
