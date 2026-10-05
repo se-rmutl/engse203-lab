@@ -11,9 +11,12 @@
 ใช้เฉลยทั้งชุดในคราวเดียว (จาก `labs/week-12/source/` ของ starter ที่ยังไม่แก้):
 
 ```bash
-git apply ~/engse203-lab/resources/week-12-testing-debugging/answer-key/lab12-inclass.patch
+cp -r ../week-12-testing-debugging/lab12/starter source
+cd source
+npm install --prefix api && npm install --prefix frontend
+patch -p1 < ../source-old/lab12-inclass.patch    # ต้องไม่มี "Reversed" และไม่มี "FAILED"
 cp api/.env.example api/.env && npm run db:reset --prefix api
-node --disable-warning=ExperimentalWarning check-week12.mjs --inclass     # 20/20
+node --disable-warning=ExperimentalWarning check-week12.mjs --inclass     # ต้องได้ 20/20
 ```
 
 > Challenge (coverage ≥ 85% · CI) ไม่อยู่ในเฉลยนี้ — ดู `../reference-solution/` (22/22)
