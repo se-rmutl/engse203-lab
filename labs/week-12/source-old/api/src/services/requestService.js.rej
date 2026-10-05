@@ -1,0 +1,14 @@
+@@ -98,8 +98,11 @@
+ /** สร้างรหัสคำร้องถัดไป เช่น REQ-006 */
+ function nextId() {
+   // รหัสถัดไป = จำนวนคำร้องที่มีอยู่ + 1  (ปรับให้เรียบง่ายขึ้นในรุ่นนี้)
+-  const { total } = db.prepare('SELECT COUNT(*) AS total FROM requests').get();
+-  return `REQ-${String(total + 1).padStart(3, '0')}`;
++  const row = db.prepare(
++    "SELECT id FROM requests WHERE id LIKE 'REQ-%' ORDER BY id DESC LIMIT 1"
++  ).get();
++  const n = row ? Number(String(row.id).replace('REQ-', '')) + 1 : 1;
++  return `REQ-${String(n).padStart(3, '0')}`;
+ }
+ 
+ /**
