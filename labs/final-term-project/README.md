@@ -51,28 +51,51 @@
 
 ## 3. จุดเริ่มต้น
 
-ทุกทีม**เริ่มจาก LAB 13 ที่ทำเสร็จแล้วของคน Back-end** (ไม่เริ่มจากศูนย์ และไม่ใช้ starter ใหม่)
+### M0 — สร้าง repo ทีม + `TEAM.md` (คืนวันเรียน)
+
+ไม่มีฟอร์มแยก — **ข้อมูลทีมอยู่ใน repo ทีมตั้งแต่วันแรก** ด้วยไฟล์ [`TEAM.md`](kit/TEAM.md): สมาชิก · บทบาท · อีเมลที่ใช้ commit · หัวข้อที่อยากได้ 3 อันดับ
+
+```bash
+# ① ตัวแทนทีม (คน Back-end) สร้าง repository ใหม่บน GitHub
+#    ชื่อ engse203-final-<sec>-<รหัสหัวข้ออันดับ 1> เช่น engse203-final-1-T04 · ติ๊ก "Add a README file"
+#    → Settings → Collaborators เพิ่มเพื่อนในทีมทุกคน + บัญชีผู้สอนตามที่ประกาศใน LMS
+
+# ② ตัวแทนทีมวางแม่แบบ TEAM.md แล้วกรอกส่วน "ทีม" · "หัวข้อ" · แถวของตัวเอง
+git clone git@github.com:<owner>/engse203-final-1-T04.git
+cd engse203-final-1-T04
+cp ../engse203-lab/labs/final-term-project/kit/TEAM.md .
+git add TEAM.md && git commit -m "M0: TEAM.md" && git push
+
+# ③ เพื่อนทุกคน clone จากเครื่องของตัวเอง → กรอกแถวของตัวเอง → commit + push เอง
+git config user.email                       # ต้องตรงกับอีเมลที่เขียนใน TEAM.md
+git pull && git add TEAM.md && git commit -m "M0: <ชื่อ> เข้าทีม" && git push
+
+# ④ ส่งลิงก์ repo ใน LMS — ทีมละ 1 ครั้ง · เวลาที่ส่งใช้จัดหัวข้อ (ส่งก่อนได้ก่อน)
+```
+
+> ผู้สอนประกาศหัวข้อที่แต่ละทีมได้ภายใน 09:00 วันถัดไป → กรอก "ผลการจัดหัวข้อ" ใน `TEAM.md` · ได้หัวข้ออื่นให้เปลี่ยนชื่อ repo ที่ Settings → General (ลิงก์เดิมยังใช้ได้)
+
+### M1 — ใส่โค้ดตั้งต้นจาก LAB 13
+
+ทุกทีม**เริ่มจาก LAB 13 ที่ทำเสร็จแล้วของคน Back-end** (ไม่เริ่มจากศูนย์ และไม่ใช้ starter ใหม่) — ใส่ลงใน repo ทีมเดิมจาก M0
 
 ```bash
 # ① คน Back-end ตรวจ LAB 13 ของตัวเองก่อน — ต้องผ่านครบ
 cd <Student Repository>/labs/week-13/source
 node --disable-warning=ExperimentalWarning check-week13.mjs --inclass     # 23/23
 
-# ② สร้าง repository ใหม่ของทีมบน GitHub (ชื่อ engse203-final-<sec>-<รหัสหัวข้อ> เช่น engse203-final-1-T04)
-#    → เพิ่มเพื่อนเป็น collaborator และเพิ่มบัญชีผู้สอนตามที่ประกาศ
-
-# ③ คัดลอกโค้ดเป็นจุดเริ่มต้น (ไม่คัดลอก node_modules · campus.db · .env)
-git clone git@github.com:<owner>/engse203-final-1-T04.git
-cd engse203-final-1-T04
+# ② คัดลอกโค้ดเข้า repo ทีม (ไม่คัดลอก node_modules · campus.db · .env)
+cd <โฟลเดอร์ repo ทีม> && git pull
 rsync -a --exclude node_modules --exclude '*.db' --exclude .env <Student Repository>/labs/week-13/source/ ./
-cp -r ../engse203-lab/labs/final-term-project/kit/. ./         # check-project.mjs · แม่แบบเอกสาร · CI · render.yaml
+cp -rn ../engse203-lab/labs/final-term-project/kit/. ./        # check-project.mjs · แม่แบบเอกสาร · CI · render.yaml (-n = ไม่ทับ TEAM.md ที่กรอกแล้ว)
 rm -f BUG_REPORTS.md DEMO.md DATABASE_CHOICES.md TEST_CASES.md check-week1*.mjs   # ไฟล์ของ LAB ที่ไม่ใช้แล้ว
 rm -rf api/scripts/check-project.mjs api/data/initialRequests.json frontend/public/data frontend/src/services/requestStorage.js   # ของ LAB 6–10 ที่ไม่มีใครเรียกแล้ว
 cp api/.env.example api/.env                                     # ไฟล์ค่าลับของเครื่องตัวเอง (ไม่ commit) — ไม่มีไฟล์นี้ npm run dev จะขึ้น ".env: not found"
-cp PROJECT_README_TEMPLATE.md README.md                          # แล้วค่อยกรอกทีหลัง
+cp PROJECT_README_TEMPLATE.md README.md                          # แทน README ที่ GitHub สร้างให้ แล้วค่อยกรอกทีหลัง
 # แก้ package.json (root) บรรทัด "check" เป็น  "node --disable-warning=ExperimentalWarning check-project.mjs"
+# project.config.json · TEAM_CONTRACT.md — คัดลอกชื่อ · GitHub · บทบาท จาก TEAM.md
 git add -A && git commit -m "start: LAB 13 ของ <ชื่อ> + project kit"
-git push -u origin main
+git push
 git tag v0.0.0 && git push origin v0.0.0                         # จุดเริ่มต้น — ใช้เทียบว่าทีมเปลี่ยนอะไรไปบ้าง
 ```
 
@@ -168,7 +191,7 @@ git tag v0.0.0 && git push origin v0.0.0                         # จุดเ�
 
 ## 5. ตรวจงานด้วยตัวเอง — `check-project.mjs`
 
-ไฟล์อยู่ใน `kit/` (คัดลอกไปไว้ที่ root ของ repo ทีมแล้วในขั้นตอนที่ 3) · ต้องกรอก `project.config.json` ก่อน
+ไฟล์อยู่ใน `kit/` (คัดลอกไปไว้ที่ root ของ repo ทีมแล้วตอน M1 ข้อ 3) · ต้องกรอก `project.config.json` ก่อน
 
 ```bash
 cp project.config.example.json project.config.json   # แล้วกรอกค่าของทีม
@@ -201,8 +224,8 @@ checker เปิด API ของทีมจริงด้วยฐานข�
 
 | ขั้น | ส่งอะไร | Section 1 | Section 2 |
 |---|---|---|---|
-| **M0** จับคู่ | ฟอร์ม: สมาชิก · บทบาท · หัวข้อ (เลือกก่อนได้ก่อน) | 5 ต.ค. 23:59 | 8 ต.ค. 23:59 |
-| **M1** ตั้งต้น | repo ทีม · `TEAM_CONTRACT.md` · `project.config.json` · ตาราง 2 ตารางใน `schema.sql` · Issues · tag `v0.1.0` | 8 ต.ค. 23:59 | 11 ต.ค. 23:59 |
+| **M0** จับคู่ | repo ทีม + [`TEAM.md`](kit/TEAM.md) (สมาชิก · บทบาท · อีเมลที่ใช้ commit · หัวข้อ 3 อันดับ) · **ทุกคน commit แถวของตัวเอง** · ส่งลิงก์ repo ใน LMS (ส่งก่อนได้หัวข้อก่อน) | 5 ต.ค. 23:59 | 8 ต.ค. 23:59 |
+| **M1** ตั้งต้น | โค้ดจาก LAB 13 + kit (`v0.0.0`) · `TEAM_CONTRACT.md` · `project.config.json` · ตาราง 2 ตารางใน `schema.sql` · Issues · tag `v0.1.0` | 8 ต.ค. 23:59 | 11 ต.ค. 23:59 |
 | **M2** กลางทาง | API ของหัวข้อทำงาน + test ผ่าน · หน้า login ใช้ได้ใน local · deploy ครั้งแรก · tag `v0.5.0` | 13 ต.ค. 23:59 | 16 ต.ค. 23:59 |
 | แนะนำ | **หยุดเพิ่มฟีเจอร์** — แก้ bug · เอกสาร · Release Checklist | 17 ต.ค. | 20 ต.ค. |
 | **M3** ส่ง | tag **`v1.0.0`** · URL ที่ deploy · ลิงก์ repo ผ่าน LMS | **19 ต.ค. ก่อนเวลาสอบ** | **22 ต.ค. ก่อนเวลาสอบ** |
@@ -256,4 +279,5 @@ checker เปิด API ของทีมจริงด้วยฐานข�
 | [ROLES.md](ROLES.md) | รายการงานของ Front-end · Back-end · DevOps |
 | [RUBRIC.md](RUBRIC.md) | เกณฑ์คะแนนทีมและรายบุคคล |
 | [PEER_REVIEW.md](PEER_REVIEW.md) | คำถามประเมินเพื่อนร่วมทีม (ส่งผ่านแบบฟอร์ม) |
+| [kit/TEAM.md](kit/TEAM.md) | **M0** — แม่แบบข้อมูลทีม: สมาชิก · บทบาท · หัวข้อ 3 อันดับ |
 | `kit/` | คัดลอกไปไว้ที่ root ของ repo ทีม — `check-project.mjs` · `project.config.example.json` · แม่แบบเอกสาร · CI |
