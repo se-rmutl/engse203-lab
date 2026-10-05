@@ -14,7 +14,7 @@
 cp -r ../week-12-testing-debugging/lab12/starter source
 cd source
 npm install --prefix api && npm install --prefix frontend
-patch -p1 < ../source-old/lab12-inclass.patch    # ต้องไม่มี "Reversed" และไม่มี "FAILED"
+patch -p1 < lab12-inclass.patch    # ต้องไม่มี "Reversed" และไม่มี "FAILED"
 cp api/.env.example api/.env && npm run db:reset --prefix api
 node --disable-warning=ExperimentalWarning check-week12.mjs --inclass     # ต้องได้ 20/20
 ```
