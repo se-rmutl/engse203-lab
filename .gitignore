@@ -10,6 +10,8 @@ coverage/
 .env
 .env.*
 !.env.example
+# frontend/.env.production ของ starter W12–W13 ไม่มีค่าลับ (VITE_API_BASE_URL ว่าง) — ต้องขึ้น GitHub
+!.env.production
 .vscode
 
 # Logs
