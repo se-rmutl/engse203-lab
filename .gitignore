@@ -33,3 +33,8 @@ Thumbs.db
 uploads/
 
 resources
+
+# workspace ทดสอบของผู้สอน/นักศึกษา (labs/week-12/source ฯลฯ) — ห้ามขึ้น Course Repository
+/labs/week-[0-9][0-9]/
+*.rej
+*.orig
