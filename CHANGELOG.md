@@ -1,5 +1,11 @@
 # Changelog
 
+## v7.13.0 — รวมชุดสำหรับปลายภาค · lockfile ข้ามระบบ · กันเฉลยหลุด
+
+- `labs/week-12-…/lab12/starter/api/package-lock.json` มี binding ของ rolldown ครบทุกระบบ — เดิมมีแค่ Linux ทำให้ `npm test` บน Mac/Windows ขึ้น "Cannot find native binding"
+- `.gitignore` กัน `labs/week-XX/` (workspace ทดสอบ) · `*.rej` · `*.orig` — ไม่ให้ workspace ที่มีเฉลยถูก commit ขึ้น Course Repository อีก
+- ฝั่งผู้สอน (`resources/` · ไม่ขึ้น GitHub): `RUNBOOK_FINAL_TH.md` ลำดับงาน Term Project + สอบปลายภาคทั้ง 2 Section ตามวันที่ · `tools/teams.sh` (clone · ผล M0 · ตรวจโปรเจกต์ · บันทึก tag) · เฉลย LAB 12/13 แบบ patch · lockfile ของ reference และ template ข้อสอบ
+
 ## v7.12.1 — M0 ใช้ `TEAM.md` ใน repo ทีมแทนฟอร์ม
 
 - `kit/TEAM.md` ใหม่ — ทีม · สมาชิก (ชื่อ · รหัส · GitHub · อีเมลที่ใช้ commit · บทบาท) · หัวข้อ 3 อันดับ · หัวข้อที่เสนอเอง · ผลการจัดหัวข้อ · **ทุกคน commit แถวของตัวเอง** (ตรวจสิทธิ์เข้า repo และอีเมล commit ไปในตัว)
