@@ -28,6 +28,21 @@
 
 > 📅 ภาพรวมทั้งหมด (กำหนดส่ง · ปฏิทิน · ตัวนับถอยหลังของแต่ละ Section) — [สไลด์ปิดภาค](https://se-rmutl.github.io/engse203/wrapup/)
 
+## เริ่มทำ take-home (ทีมละครั้ง — ภายใน 2 วันหลังได้โจทย์)
+
+ผู้สอนประกาศลิงก์ **template** ใน LMS — Section 1 ได้ชุด A (อ. 6 ต.ค. 12:00) · Section 2 ได้ชุด B (พฤ. 8 ต.ค. หลังเลิกคาบ)
+
+| ลำดับ | ใคร | ทำอะไร |
+|---:|---|---|
+| 1 | คนหนึ่งในทีม | template → **Use this template** → **Private** · ชื่อ `engse203-takehome-<section>-<รหัสหัวข้อ>` เช่น `engse203-takehome-1-T04` |
+| 2 | คนเดิม | **Settings → Collaborators** เพิ่มเพื่อนในทีมทุกคน + บัญชีผู้สอน (ชุดเดียวกับ repo Term Project) |
+| 3 | ทุกคน | รับคำเชิญ · clone · `npm install --prefix api && npm install --prefix frontend` |
+| 4 | คนหนึ่งในทีม | กรอก `team.json` โดย**คัดลอกจากตารางสมาชิกใน `TEAM.md`** (`github` · `email` · `role` ต้องตรงกัน) → commit **เป็นอย่างแรก** + push |
+| 5 | คนหนึ่งในทีม | ใน repo **Term Project** แก้ `TEAM.md` ตาราง "ทีม" บรรทัด `repo take-home` (เช่น `\| repo take-home \| https://github.com/… \|` · ไม่มีให้เพิ่มใต้บรรทัด `repo`) → commit + push — **ไม่ต้องส่งลิงก์ใน LMS** ผู้สอนดึงจากบรรทัดนี้ |
+| 6 | ทุกคน | ทำงานของตัวเองตามบทบาท (`TAKEHOME_A.md` / `TAKEHOME_B.md` ข้อ 3.1) · push tag `takehome-A-v1` / `takehome-B-v1` **ก่อน 09:00 วันสอบ** |
+
+> ผู้สอนตรวจ `team.json` กับ `TEAM.md` ให้หลังครบ 2 วัน และแจ้งทีมที่ไม่ตรง — คะแนนรายคนคิดจาก `team.json` จึงต้องถูกก่อนวันสอบ
+
 ## เตรียมตัว
 
 - ทำ LAB 12–13 ให้เข้าใจ — Part 1 และ Part 2 ใช้ทักษะเดียวกัน (test · debug · validation · auth · secret)

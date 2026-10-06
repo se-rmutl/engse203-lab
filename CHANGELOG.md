@@ -1,5 +1,10 @@
 # Changelog
 
+## v7.13.1 — take-home ใช้ทีมเดียวกับ Term Project ผ่าน `TEAM.md`
+
+- `labs/week-17-final/README.md` — ขั้นตอนเริ่ม take-home ทีมละครั้ง 6 ขั้น (Use this template · collaborator · `team.json` คัดลอกจาก `TEAM.md` · ใส่ลิงก์ take-home ใน `TEAM.md` แทนการส่งใน LMS · tag ก่อนวันสอบ)
+- `kit/TEAM.md` — บรรทัด `repo take-home` ในตาราง "ทีม" และข้อยืนยัน
+
 ## v7.13.0 — รวมชุดสำหรับปลายภาค · lockfile ข้ามระบบ · กันเฉลยหลุด
 
 - `labs/week-12-…/lab12/starter/api/package-lock.json` มี binding ของ rolldown ครบทุกระบบ — เดิมมีแค่ Linux ทำให้ `npm test` บน Mac/Windows ขึ้น "Cannot find native binding"
