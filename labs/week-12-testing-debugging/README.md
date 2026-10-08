@@ -19,7 +19,7 @@
 
 | สื่อ | เปิด |
 |---|---|
-| สไลด์ Week 12 (42 หน้า · 9 บท · interactive 2 ตัว) | [เปิดสไลด์](https://se-rmutl.github.io/engse203/week12) |
+| สไลด์ Week 12 (46 หน้า · 5 บท: ระดับของ test → Unit → Integration → UAT → Debug · interactive 2 ตัว) | [เปิดสไลด์](https://se-rmutl.github.io/engse203/week12) |
 | เอกสารประกอบการสอน (9 บท · 12 ภาพ) | [เปิดเอกสาร](https://se-rmutl.github.io/engse203/week12/week12-teaching-doc.html) |
 
 ### หน้าจอ Live-Coding (ใช้ในคาบ)

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0A1F16">
-<title>ENGSE203 Week 12 — Interactive Slides (ทดสอบและ debug)</title>
+<title>ENGSE203 Week 12 — Unit · Integration · UAT · Debug</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -308,10 +308,10 @@ pre .okc{color:#4ADE80;font-weight:600}
 <section class="slide title-slide active" data-title="เปิดบทเรียน">
   <span class="eyebrow">หน่วยที่ 5 · สัปดาห์ที่ 12 · ช่วงเช้า</span>
   <h1>การทดสอบและ<br>การแก้ไขข้อผิดพลาด</h1>
-  <p class="lead">test ผ่านหมดทุกข้อ — แต่ผู้ใช้ยังแจ้ง bug มา 3 เรื่อง · เกิดอะไรขึ้น</p>
+  <p class="lead">dev ทดสอบงานของตัวเองก่อนส่ง — ทีละระดับ จาก <strong>ฟังก์ชันเดียว</strong> → <strong>ทั้ง API</strong> → <strong>ผู้ใช้ยอมรับ</strong> แล้ว debug สิ่งที่ผู้ใช้เจอ</p>
   <div class="brandline">
-    <span class="chip">ออกแบบ test case</span><span class="chip c">Vitest · supertest</span>
-    <span class="chip v">coverage</span><span class="chip a">debug 6 ขั้น</span><span class="chip r">4 bug ที่ซ่อนอยู่</span>
+    <span class="chip">① ระดับของ test</span><span class="chip c">② Unit · Vitest</span>
+    <span class="chip v">③ Integration · supertest</span><span class="chip a">④ UAT</span><span class="chip r">⑤ Debug</span>
   </div>
   <p style="margin-top:1.1rem;font-size:1.15rem" class="muted">Campus Service Request · ต่อจาก Week 11 · CP44–CP47 · CLO6</p>
   <p style="margin-top:.6rem"><small>→ / Space ไปต่อ · T สารบัญ · F เต็มจอ · A+ A− ปรับขนาด</small></p>
@@ -319,145 +319,326 @@ pre .okc{color:#4ADE80;font-weight:600}
 
 <section class="slide" data-title="🗓️ ช่วงเช้าวันนี้">
   <span class="slide-id">W12 · TIMELINE</span>
-  <span class="eyebrow cyan">สอนวันเดียว · เช้า Week 12 · บ่าย Week 13</span>
-  <h2>ช่วงเช้า 09:00–12:00 · 4 checkpoint</h2>
+  <span class="eyebrow cyan">เรียนหลักการก่อน แล้วลงมือกับโปรเจกต์จริง · บ่ายต่อ Week 13</span>
+  <h2>ช่วงเช้า 09:00–12:00 · 5 บท · 4 checkpoint</h2>
   <div class="body center">
     <table style="font-size:1rem">
-      <tr><th>เวลา</th><th>CP</th><th>ทำอะไร</th><th>บท</th></tr>
-      <tr><td><code>09:00–09:15</code></td><td>—</td><td>เปิดคาบ · อ่าน <code>BUG_REPORTS.md</code></td><td>1</td></tr>
-      <tr><td><code>09:15–09:40</code></td><td><strong>CP44</strong></td><td>ออกแบบ test case (equivalence + boundary) → <code>TEST_CASES.md</code></td><td>2–3</td></tr>
-      <tr><td><code>09:40–10:20</code></td><td><strong>CP45</strong></td><td>unit test pure function ด้วย Vitest → เจอ BUG #0</td><td>4</td></tr>
-      <tr><td><code>10:20–10:30</code></td><td>☕</td><td class="muted">พัก</td><td></td></tr>
-      <tr><td><code>10:30–11:05</code></td><td><strong>CP46</strong></td><td>integration test (supertest + <code>:memory:</code>) + coverage</td><td>5–6</td></tr>
-      <tr><td><code>11:05–11:55</code></td><td><strong>CP47</strong></td><td>debug 3 bug จากผู้ใช้ + regression test + <code>DEBUG_LOG.md</code></td><td>7–9</td></tr>
-      <tr><td><code>11:55–12:00</code></td><td>—</td><td><code>check-week12 --inclass</code> · สรุปเช้า</td><td>9</td></tr>
+      <tr><th>เวลา</th><th>บท / CP</th><th>ทำอะไร</th></tr>
+      <tr><td><code>09:00–09:20</code></td><td>บท 1–2</td><td>ระดับของ test · หลักการ unit test · Vitest · เลือก test case</td></tr>
+      <tr><td><code>09:20–09:35</code></td><td><strong>CP44</strong></td><td>ออกแบบ test case → <code>TEST_CASES.md</code></td></tr>
+      <tr><td><code>09:35–10:10</code></td><td>บท 2 → <strong>CP45</strong></td><td>ใช้แบบเดียวกันกับ <code>requestValidator.js</code> · unit test ≥ 10 ข้อ</td></tr>
+      <tr><td><code>10:10–10:20</code></td><td>☕</td><td class="muted">พัก</td></tr>
+      <tr><td><code>10:20–11:00</code></td><td>บท 3 → <strong>CP46</strong></td><td>integration test ด้วย supertest · coverage</td></tr>
+      <tr><td><code>11:00–11:15</code></td><td>บท 4–5</td><td>UAT · ผู้ใช้แจ้ง 3 เรื่อง · กระบวนการ debug</td></tr>
+      <tr><td><code>11:15–11:55</code></td><td><strong>CP47</strong></td><td>debug 3 bug + regression test + <code>DEBUG_LOG.md</code></td></tr>
+      <tr><td><code>11:55–12:00</code></td><td>✅</td><td><code>check-week12 --inclass</code></td></tr>
     </table>
-    <div class="note"><p style="margin:0;font-size:1.08rem"><strong>ทุก CP เป็น 🏫 ทำในห้อง</strong> · ไม่มี Take-Home แยก — งานต่อยอดรวมใน <strong>Final Term Project</strong> · 13:00 ต่อ Week 13</p></div>
+    <div class="note"><p style="margin:0;font-size:1.08rem">แต่ละบท: <strong>หลักการ → เครื่องมือ → ตัวอย่างง่าย → ตัวอย่างเดียวกับในแลป → ลงมือ</strong></p></div>
   </div>
 </section>
 
-<section class="slide divider" data-title="บทที่ 1 · test ผ่าน ≠ ไม่มี bug">
-  <span class="grp">กลุ่ม 1 · ทำไมต้องทดสอบ</span>
+<section class="slide divider" data-title="บทที่ 1 · ระดับของการทดสอบ">
+  <span class="grp">ภาพรวม</span>
   <p class="bignum">01</p>
-  <h2>คุณภาพ &amp; "test ผ่าน ≠ ไม่มี bug"</h2>
-  <p class="whatfor">ระบบ deploy ได้แล้ว แต่ผู้ใช้เริ่มแจ้งปัญหา — test ที่มีอยู่บอกอะไรเราได้บ้าง</p>
-  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 9 นาที</span></div>
-  <div class="track"><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+  <h2>ระดับของการทดสอบ</h2>
+  <p class="whatfor">ก่อนเขียน test สักบรรทัด — รู้ก่อนว่ามีกี่ระดับ แต่ละระดับดูอะไร ใครทำ ใช้อะไร</p>
+  <div class="mins"><span class="chip">🏫 เรียนในห้อง</span><span class="chip c">≈ 10 นาที</span></div>
+  <div class="track"><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
 </section>
 
-<section class="slide" data-title="ผู้ใช้แจ้งมา 3 เรื่อง">
-  <span class="chapbadge">บทที่ 1 <span class="of">/ 9</span> · test ผ่าน ≠ ไม่มี bug</span>
-  <span class="eyebrow red">BUG_REPORTS.md · มีแต่อาการ ยังไม่มีใครรู้สาเหตุ</span>
-  <h2>ผู้ใช้แจ้งมา 3 เรื่อง</h2>
+<section class="slide" data-title="ทำไม dev ต้องทดสอบเอง">
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 5</span> · ระดับของการทดสอบ</span>
+  <span class="eyebrow ">ในโปรเจกต์ทั่วไป</span>
+  <h2>dev ทดสอบงานของตัวเองก่อนส่งต่อ</h2>
   <div class="body center">
     <div class="three">
-      <div class="card"><div class="ic">🏢</div><h3>#1 · เจ้าหน้าที่ฝ่ายอาคาร</h3><p>ลบคำร้องที่ซ้ำไป 1 รายการ พอนักศึกษาส่งคำร้องใหม่ ขึ้น "เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์" — เมื่อวานยังส่งได้</p></div>
-      <div class="card"><div class="ic">📊</div><h3>#2 · หัวหน้าฝ่ายบริการ</h3><p>การ์ด "กำลังดำเนินการ" บน Dashboard บอก 0 แต่ในรายการด้านล่างเห็นคำร้อง in-progress อยู่</p></div>
-      <div class="card"><div class="ic">🖥️</div><h3>#3 · เจ้าหน้าที่ IT</h3><p>เปลี่ยนสถานะคำร้องที่เพื่อนเพิ่งลบ ได้ error 500 — น่าจะบอกว่า "ไม่พบคำร้อง" มากกว่า</p></div>
+      <div class="card"><div class="ic">👩‍💻</div><h3>dev ทดสอบเอง</h3><p>ทุกฟังก์ชัน ทุก API ที่เขียน — <strong>test อัตโนมัติ</strong> รันซ้ำได้ทุกครั้งที่แก้โค้ด</p></div>
+      <div class="card"><div class="ic">🧪</div><h3>ทีม / QA</h3><p>ทดสอบทั้งระบบรวมกัน ตามเส้นทางที่ผู้ใช้ใช้งานจริง</p></div>
+      <div class="card"><div class="ic">🙋</div><h3>ผู้ใช้</h3><p>ลองใช้แล้ว<strong>ยอมรับ</strong>ว่าระบบตรงกับที่ต้องการ (UAT)</p></div>
     </div>
-    <pre style="margin:0;font-size:1.02rem"><code style="font-size:1.02rem">npm install --prefix api &amp;&amp; npm install --prefix frontend
-npm test
-<span class="c"># api       →  Tests  <span class="okc">11 passed (11)</span></span>
-<span class="c"># frontend  →  Tests  <span class="okc">1 passed (1)</span></span></code></pre>
-    <div class="whybox"><p class="q">test ผ่านหมด — แต่ผู้ใช้ยังเจอ bug ได้อย่างไร</p>
-    <p>เก็บคำถามนี้ไว้ · คำตอบคือหัวใจของเช้านี้</p></div>
+    <div class="g2">
+      <div class="term"><p class="w">เจอ bug ยิ่งช้า ยิ่งแพง</p><p>เจอตอนรัน test บนเครื่อง dev = แก้ไม่กี่นาที · เจอหลังผู้ใช้ใช้แล้ว = ข้อมูลเสีย ต้องไล่หาสาเหตุ เสียความเชื่อมั่น</p></div>
+      <div class="term"><p class="w">test อัตโนมัติ = ตาข่ายนิรภัย</p><p>แก้โค้ดตรงนี้ แล้วรู้ทันทีว่าที่อื่นพังไหม · ไม่ต้องกดทดสอบเองทุกหน้าทุกครั้ง</p></div>
+    </div>
   </div>
 </section>
 
-<section class="slide" data-title="test ส่องเฉพาะกรณีที่เขียนไว้">
-  <span class="chapbadge">บทที่ 1 <span class="of">/ 9</span> · test ผ่าน ≠ ไม่มี bug</span>
-  <span class="eyebrow cyan">เห็นภาพ</span>
-  <h2>test ส่องเฉพาะกรณีที่เขียนไว้</h2>
-  <div class="body">
-    <div class="fig"><svg viewBox="0 0 900 262" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="test ส่องเฉพาะกรณีที่เขียนไว้">
-      <rect x="20" y="16" width="860" height="212" rx="14" fill="rgba(169,199,184,.05)" stroke="#6E8F7C" stroke-width="1.4" stroke-dasharray="6 5"/>
-      <text x="40" y="42" class="svg-s">ทุกกรณีที่ผู้ใช้จะเจอ</text>
-      <text x="866" y="42" text-anchor="end" class="svg-s" style="fill:#FB7185">ส่วนที่ test ยังส่องไม่ถึง</text>
-      <rect x="40" y="56" width="390" height="158" rx="12" fill="rgba(74,222,128,.12)" stroke="#4ADE80" stroke-width="1.8"/>
-      <text x="235" y="84" text-anchor="middle" class="svg-t">✓ กรณีที่มี test ส่องถึง</text>
-      <text x="235" y="110" text-anchor="middle" class="svg-m" fill="#86EFAC">GET /api/requests → 5 รายการ</text>
-      <text x="235" y="130" text-anchor="middle" class="svg-m" fill="#86EFAC">POST ข้อมูลถูก → 201 · REQ-006</text>
-      <text x="235" y="150" text-anchor="middle" class="svg-m" fill="#86EFAC">details 9 ตัว → error</text>
-      <text x="235" y="170" text-anchor="middle" class="svg-m" fill="#86EFAC">summarizeRequests([]) → 0 ทุกค่า</text>
-      <text x="235" y="198" text-anchor="middle" class="svg-s">npm test → api 11/11 · frontend 1/1 ผ่านหมด</text>
-      <rect x="458" y="62" width="196" height="66" rx="10" fill="rgba(251,113,133,.12)" stroke="#FB7185" stroke-width="1.6"/>
-      <text x="556" y="88" text-anchor="middle" class="svg-t" style="fill:#FB7185">BUG #0</text>
-      <text x="556" y="112" text-anchor="middle" class="svg-s">10 ตัวพอดีถูกปฏิเสธ</text>
-      <rect x="670" y="62" width="196" height="66" rx="10" fill="rgba(251,113,133,.12)" stroke="#FB7185" stroke-width="1.6"/>
-      <text x="768" y="88" text-anchor="middle" class="svg-t" style="fill:#FB7185">BUG #1</text>
-      <text x="768" y="112" text-anchor="middle" class="svg-s">ลบแล้วเพิ่มใหม่ → 500</text>
-      <rect x="458" y="144" width="196" height="66" rx="10" fill="rgba(251,113,133,.12)" stroke="#FB7185" stroke-width="1.6"/>
-      <text x="556" y="170" text-anchor="middle" class="svg-t" style="fill:#FB7185">BUG #2</text>
-      <text x="556" y="194" text-anchor="middle" class="svg-s">การ์ด in-progress = 0</text>
-      <rect x="670" y="144" width="196" height="66" rx="10" fill="rgba(251,113,133,.12)" stroke="#FB7185" stroke-width="1.6"/>
-      <text x="768" y="170" text-anchor="middle" class="svg-t" style="fill:#FB7185">BUG #3</text>
-      <text x="768" y="194" text-anchor="middle" class="svg-s">PUT REQ-999 → 500</text>
-      <text x="450" y="252" text-anchor="middle" class="svg-s">bug ทั้ง 4 ตัวอยู่ในส่วนที่ยังไม่มี test ข้อไหนลองเลย</text>
+<section class="slide" data-title="4 ระดับของ test">
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 5</span> · ระดับของการทดสอบ</span>
+  <span class="eyebrow ">4 ระดับ · ดูคนละขอบเขต</span>
+  <h2>Unit · Integration · E2E · UAT</h2>
+  <div class="body center">
+    <table style="font-size:1.02rem">
+      <tr><th>ระดับ</th><th>ทดสอบอะไร</th><th>ใครทำ</th><th>เครื่องมือ (วิชานี้)</th><th>ความเร็ว · จำนวน</th></tr>
+      <tr><td><strong style="color:#4ADE80">Unit</strong></td><td>ฟังก์ชันเดียว แยกจากส่วนอื่น · ไม่เปิด server ไม่แตะ DB</td><td>dev</td><td><strong>Vitest</strong></td><td>เร็วมาก · มากที่สุด</td></tr>
+      <tr><td><strong style="color:#38D7ED">Integration</strong></td><td>หลายส่วนทำงานร่วมกัน · ยิง HTTP ผ่าน route → controller → service → DB</td><td>dev</td><td><strong>Vitest + supertest</strong></td><td>เร็ว · ปานกลาง</td></tr>
+      <tr><td><strong style="color:#C084FC">E2E</strong></td><td>ทั้งระบบผ่านเบราว์เซอร์จริง กดตามผู้ใช้</td><td>dev / QA</td><td class="muted">Playwright (ไม่ทำในคาบนี้)</td><td>ช้า · น้อย</td></tr>
+      <tr><td><strong style="color:#FBBF24">UAT</strong></td><td>ระบบ<strong>ตรงความต้องการ</strong>ของผู้ใช้ไหม</td><td><strong>ผู้ใช้จริง</strong></td><td>เกณฑ์ยอมรับ + checklist</td><td>ทำด้วยมือ · ก่อนส่งมอบ</td></tr>
+    </table>
+    <div class="note"><p style="margin:0;font-size:1.1rem">คาบนี้ dev ทำ <strong>Unit</strong> และ <strong>Integration</strong> · <strong>UAT</strong> คือมุมของผู้ใช้ — สิ่งที่ผู้ใช้แจ้งมา คือ UAT ที่ไม่ผ่าน</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="แต่ละระดับมองเห็นแค่ไหน">
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 5</span> · ระดับของการทดสอบ</span>
+  <span class="eyebrow ">เห็นภาพ</span>
+  <h2>แต่ละระดับครอบคลุมระบบแค่ไหน</h2>
+  <div class="body center">
+    <div class="fig"><svg viewBox="0 0 900 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ขอบเขตของ unit integration e2e และ uat บนระบบ">
+      <rect x="30" y="8" width="840" height="34" rx="9" fill="rgba(251,191,36,.12)" stroke="#FBBF24" stroke-width="1.5"/>
+      <text x="450" y="31" text-anchor="middle" class="svg-t" style="fill:#FBBF24">UAT · ผู้ใช้จริงลองใช้ตามสถานการณ์จริง — "ตรงกับที่ต้องการไหม"</text>
+      <rect x="30" y="62" width="150" height="58" rx="10" fill="rgba(192,132,252,.10)" stroke="#C084FC" stroke-width="1.5"/>
+      <text x="105" y="96" text-anchor="middle" class="svg-t">หน้าเว็บ React</text>
+      <rect x="210" y="62" width="150" height="58" rx="10" fill="rgba(56,215,237,.08)" stroke="#38D7ED" stroke-width="1.5"/>
+      <text x="285" y="96" text-anchor="middle" class="svg-t">route</text>
+      <rect x="390" y="62" width="150" height="58" rx="10" fill="rgba(56,215,237,.08)" stroke="#38D7ED" stroke-width="1.5"/>
+      <text x="465" y="96" text-anchor="middle" class="svg-t">controller</text>
+      <rect x="570" y="62" width="150" height="58" rx="10" fill="rgba(74,222,128,.16)" stroke="#4ADE80" stroke-width="2"/>
+      <text x="645" y="88" text-anchor="middle" class="svg-t">service</text>
+      <text x="645" y="108" text-anchor="middle" class="svg-s">validator</text>
+      <rect x="750" y="62" width="120" height="58" rx="10" fill="rgba(56,215,237,.08)" stroke="#38D7ED" stroke-width="1.5"/>
+      <text x="810" y="96" text-anchor="middle" class="svg-t">SQLite</text>
+      <g stroke="#A9C7B8" stroke-width="1.6"><path d="M181 91 L208 91"/><path d="M361 91 L388 91"/><path d="M541 91 L568 91"/><path d="M721 91 L748 91"/></g>
+      <path d="M572 140 L572 150 L718 150 L718 140" fill="none" stroke="#4ADE80" stroke-width="3"/>
+      <text x="645" y="172" text-anchor="middle" class="svg-t" style="fill:#4ADE80">Unit · ฟังก์ชันเดียว</text>
+      <path d="M212 188 L212 198 L868 198 L868 188" fill="none" stroke="#38D7ED" stroke-width="3"/>
+      <text x="540" y="220" text-anchor="middle" class="svg-t" style="fill:#38D7ED">Integration · ยิง HTTP ผ่านทุกชั้นของ API ถึงฐานข้อมูล</text>
+      <path d="M32 234 L32 244 L868 244 L868 234" fill="none" stroke="#C084FC" stroke-width="3"/>
+      <text x="450" y="265" text-anchor="middle" class="svg-t" style="fill:#C084FC">E2E · เปิดเบราว์เซอร์จริงตั้งแต่หน้าเว็บถึงฐานข้อมูล</text>
     </svg></div>
-    <div class="iact" data-quiz="q1">
-      <p style="margin:0 0 .3rem"><strong>api ผ่าน 11/11 · frontend ผ่าน 1/1 — แปลว่าอะไร</strong></p>
-      <div class="opts"><button class="opt" data-a="0">ระบบไม่มี bug แล้ว ส่งงานได้</button><button class="opt" data-a="1">ยังไม่มี test สำหรับกรณีที่ผู้ใช้เจอ</button><button class="opt" data-a="0">test พัง ต้องลบทิ้งแล้วเขียนใหม่</button></div>
+    <div class="iact" data-quiz="q-level">
+      <p style="margin:0 0 .3rem"><strong>"ส่ง details 10 ตัวอักษร ฟังก์ชันตรวจข้อมูลต้องไม่ error" — ทดสอบระดับไหนเหมาะที่สุด</strong></p>
+      <div class="opts"><button class="opt" data-a="1">Unit — เรียกฟังก์ชันตรวจข้อมูลตรง ๆ</button><button class="opt" data-a="0">E2E — เปิดเบราว์เซอร์กรอกฟอร์ม</button><button class="opt" data-a="0">UAT — ให้ผู้ใช้ลอง</button></div>
       <p class="fb"></p>
     </div>
-    <div class="win"><p style="margin:0;font-size:1.22rem"><strong>test ผ่านไม่ได้แปลว่าไม่มี bug — แปลว่ายังไม่มี test สำหรับกรณีนั้น</strong></p></div>
   </div>
 </section>
 
 <section class="slide" data-title="✓ สรุปบทที่ 1">
-  <span class="chapbadge">บทที่ 1 <span class="of">/ 9</span> · test ผ่าน ≠ ไม่มี bug</span>
-  <h2>จบบทที่ 1 — test ผ่าน ≠ ไม่มี bug</h2>
+  <span class="chapbadge">บทที่ 1 <span class="of">/ 5</span> · ระดับของการทดสอบ</span>
+  <h2>จบบทที่ 1 — ระดับของการทดสอบ</h2>
   <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>คุณภาพ = ถูกต้องใน<strong>ทุกกรณีที่ผู้ใช้จะเจอ</strong> ไม่ใช่แค่กรณีปกติตอน dev</li><li>starter: api 11/11 · frontend 1/1 ผ่านหมด แต่มี <strong>bug ฝังอยู่ 4 ตัว</strong> (แจ้งมา 3 + BUG #0 ที่ยังไม่มีใครเจอ)</li><li><strong>test ผ่าน ≠ ไม่มี bug</strong> — แปลว่ายังไม่มี test สำหรับกรณีนั้น</li><li>งานเช้านี้: เพิ่ม test ให้ส่องถึง → หา bug → แก้ → กันไม่ให้กลับมา</li></ul></div>
-    <div class="nextup"><b>ต่อไป →</b> บทที่ 2 — ออกแบบ test case ให้ส่องถึงจุดที่ bug ชอบซ่อน</div>
-    <div class="track"><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li><strong>Unit</strong> — ฟังก์ชันเดียว ไม่เปิด server ไม่แตะ DB · เร็ว · มากที่สุด · Vitest</li><li><strong>Integration</strong> — ยิง HTTP ผ่าน route → controller → service → DB · supertest</li><li><strong>E2E</strong> — ผ่านเบราว์เซอร์จริง · ช้า · น้อย (ไม่ทำในคาบนี้)</li><li><strong>UAT</strong> — ผู้ใช้จริงตรวจว่าตรงความต้องการ · ทำด้วยมือตามเกณฑ์ยอมรับ</li><li>dev ทำ Unit + Integration ให้ครบก่อนส่ง — จับ bug ได้ตั้งแต่บนเครื่องตัวเอง</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>บทที่ 2</strong> — เริ่มจากระดับที่เล็กที่สุด: Unit test</div>
+    <div class="track"><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
   </div>
 </section>
 
-<section class="slide divider" data-title="บทที่ 2 · ออกแบบ test case">
-  <span class="grp">กลุ่ม 1 · ทำไมต้องทดสอบ</span>
+<section class="slide divider" data-title="บทที่ 2 · Unit test · Vitest">
+  <span class="grp">ระดับที่ 1</span>
   <p class="bignum">02</p>
-  <h2>ออกแบบ test case</h2>
-  <p class="whatfor">คิดก่อนว่าจะทดสอบอะไร ก่อนเขียนโค้ด test สักบรรทัด — แบ่งกลุ่ม แล้วทดสอบตรงรอยต่อ</p>
-  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 12 นาที</span><span class="chip a">CP44</span></div>
-  <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+  <h2>Unit test ด้วย Vitest</h2>
+  <p class="whatfor">หลักการ → เครื่องมือ → ตัวอย่างง่าย → ตัวอย่างเดียวกับในแลป</p>
+  <div class="mins"><span class="chip">🏫 เรียนในห้อง</span><span class="chip c">≈ 25 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span></div>
 </section>
 
-<section class="slide" data-title="Equivalence + Boundary">
-  <span class="chapbadge">บทที่ 2 <span class="of">/ 9</span> · ออกแบบ test case</span>
-  <span class="eyebrow">2 เทคนิคที่ใช้คู่กัน</span>
-  <h2>แบ่งกลุ่ม แล้วทดสอบตรงรอยต่อ</h2>
-  <div class="body">
+<section class="slide" data-title="หลักการ unit test">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
+  <span class="eyebrow ">หลักการ</span>
+  <h2>unit test = เรียกฟังก์ชันเดียว แล้วเทียบผล</h2>
+  <div class="body center">
+    <div class="g21">
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <div class="term"><p class="w">ทดสอบได้ดีที่สุดกับ pure function</p><p>รับข้อมูลเข้า → คืนผลลัพธ์ · <strong>ไม่แตะอะไรภายนอก</strong> (req/res · DB · ไฟล์) → ใส่ค่าเดิมได้ผลเดิมทุกครั้ง</p></div>
+        <div class="term"><p class="w">AAA — โครงของ test ทุกข้อ</p><p><strong>Arrange</strong> เตรียมข้อมูล → <strong>Act</strong> เรียกฟังก์ชัน → <strong>Assert</strong> ตรวจผล</p></div>
+        <div class="term"><p class="w">1 test = 1 เรื่อง</p><p>ชื่อ test บอกกรณีและผลที่คาดหวัง เช่น <code>'79 คะแนน → B'</code> · test แต่ละข้อไม่พึ่งกัน</p></div>
+      </div>
+<pre style="margin:0;font-size:.95rem;"><code style="font-size:.95rem"><span class="c">// ตัวอย่างที่ใช้ทั้งบทนี้ — src/utils/grade.js</span>
+<span class="k">export</span> <span class="k">function</span> gradeOf(score) {
+  <span class="k">if</span> (<span class="k">typeof</span> score !== <span class="s">'number'</span> || score &lt; 0 || score &gt; 100) {
+    <span class="k">throw</span> <span class="k">new</span> Error(<span class="s">'คะแนนต้องอยู่ระหว่าง 0–100'</span>);
+  }
+  <span class="k">if</span> (score &gt;= 80) <span class="k">return</span> <span class="s">'A'</span>;
+  <span class="k">if</span> (score &gt;= 70) <span class="k">return</span> <span class="s">'B'</span>;
+  <span class="k">if</span> (score &gt;= 60) <span class="k">return</span> <span class="s">'C'</span>;
+  <span class="k">if</span> (score &gt;= 50) <span class="k">return</span> <span class="s">'D'</span>;
+  <span class="k">return</span> <span class="s">'F'</span>;
+}</code></pre>
+    </div>
+    <div class="note"><p style="margin:0;font-size:1.08rem">ถ้าโค้ดผูกกับ <code>req</code>/<code>res</code> หรือ DB จะ unit test ยาก → <strong>แยกกฎออกมาเป็น pure function</strong> แล้ว test ตัวนั้น</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Vitest คืออะไร">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
+  <span class="eyebrow ">เครื่องมือ</span>
+  <h2>Vitest — ตัวรัน test สำหรับ JavaScript</h2>
+  <div class="body center">
     <div class="g2">
-      <div class="term"><p class="w">Equivalence partitioning</p><p>แบ่งค่าที่เป็นไปได้เป็นกลุ่มที่ระบบควรทำแบบเดียวกัน · ทดสอบ<strong>ตัวแทนกลุ่มละ 1 ค่า</strong></p></div>
-      <div class="term"><p class="w">Boundary value</p><p>กฎ "อย่างน้อย N" → ทดสอบ <strong>N−1 · N · N+1</strong> เสมอ · bug ชอบซ่อนตรงขอบ</p></div>
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <div class="term"><p class="w">Vitest</p><p>หาไฟล์ <code>*.test.js</code> → รัน test ทุกข้อ → รายงานผ่าน/ไม่ผ่าน · ใช้ได้ทั้ง API (Node) และ React</p></div>
+<pre style="margin:0;font-size:.95rem;"><code style="font-size:.95rem">npm install -D vitest         <span class="c"> # ติดตั้งเป็น devDependency</span>
+
+<span class="c"># package.json</span>
+<span class="s">"scripts"</span>: {
+  <span class="s">"test"</span>: <span class="s">"vitest run"</span>,        <span class="c"> # รันครั้งเดียว</span>
+  <span class="s">"test:watch"</span>: <span class="s">"vitest"</span>       <span class="c"> # รันใหม่ทุกครั้งที่บันทึก</span>
+}</code></pre>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+<pre style="margin:0;font-size:.95rem;"><code style="font-size:.95rem">project/
+├── src/utils/grade.js
+└── tests/unit/grade.test.js   <span class="c"> # ชื่อไฟล์ลงท้าย .test.js</span></code></pre><pre style="margin:0;font-size:.95rem;"><code style="font-size:.95rem">$ npm test
+
+ ✓ tests/unit/grade.test.js (3 tests) 4ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)</code></pre>
+      </div>
     </div>
-    <div class="fig"><svg viewBox="0 0 900 236" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="แบ่งกลุ่มและค่าขอบของความยาวรายละเอียด">
-      <defs><marker id="bvAx" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#A9C7B8" stroke-width="1.5"/></marker></defs>
-      <rect x="56" y="24" width="499" height="40" rx="9" fill="rgba(251,113,133,.14)" stroke="#FB7185" stroke-width="1.5"/>
-      <text x="305" y="49" text-anchor="middle" class="svg-t" style="fill:#FDA4AF">กลุ่มไม่ผ่าน · 0–9 ตัว</text>
-      <rect x="555" y="24" width="300" height="40" rx="9" fill="rgba(74,222,128,.14)" stroke="#4ADE80" stroke-width="1.5"/>
-      <text x="705" y="49" text-anchor="middle" class="svg-t" style="fill:#86EFAC">กลุ่มผ่าน · 10 ตัวขึ้นไป</text>
-      <text x="230" y="102" text-anchor="middle" class="svg-s" style="fill:#FBBF24">ตัวแทนกลุ่ม</text>
-      <text x="780" y="102" text-anchor="middle" class="svg-s" style="fill:#FBBF24">ตัวแทนกลุ่ม</text>
-      <rect x="510" y="141" width="140" height="24" rx="8" fill="rgba(56,215,237,.12)" stroke="#38D7ED" stroke-width="1.5"/>
-      <text x="34" y="134" text-anchor="middle" class="svg-s">ความยาว</text>
-      <path d="M66 130 L874 130" stroke="#A9C7B8" stroke-width="1.6" marker-end="url(#bvAx)"/>
-      <line x1="80" y1="123" x2="80" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="80" y="158" text-anchor="middle" class="svg-m" fill="#EAF6EF" style="font-size:13px">0</text><line x1="130" y1="123" x2="130" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="130" y="158" text-anchor="middle" class="svg-m" fill="#EAF6EF" style="font-size:13px">1</text><line x1="180" y1="123" x2="180" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="180" y="158" text-anchor="middle" class="svg-m" fill="#EAF6EF" style="font-size:13px">2</text><line x1="230" y1="123" x2="230" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="230" y="158" text-anchor="middle" class="svg-m" fill="#EAF6EF" style="font-size:13px">3</text><line x1="280" y1="123" x2="280" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="280" y="158" text-anchor="middle" class="svg-m" fill="#EAF6EF" style="font-size:13px">4</text><line x1="330" y1="123" x2="330" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="330" y="158" text-anchor="middle" class="svg-m" fill="#EAF6EF" style="font-size:13px">5</text><line x1="380" y1="123" x2="380" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="380" y="158" text-anchor="middle" class="svg-m" fill="#EAF6EF" style="font-size:13px">6</text><line x1="430" y1="123" x2="430" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="430" y="158" text-anchor="middle" class="svg-m" fill="#EAF6EF" style="font-size:13px">7</text><line x1="480" y1="123" x2="480" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="480" y="158" text-anchor="middle" class="svg-m" fill="#EAF6EF" style="font-size:13px">8</text><line x1="530" y1="123" x2="530" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="530" y="158" text-anchor="middle" class="svg-m" fill="#38D7ED" style="font-size:13px;font-weight:700">9</text><line x1="580" y1="123" x2="580" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="580" y="158" text-anchor="middle" class="svg-m" fill="#38D7ED" style="font-size:13px;font-weight:700">10</text><line x1="630" y1="123" x2="630" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="630" y="158" text-anchor="middle" class="svg-m" fill="#38D7ED" style="font-size:13px;font-weight:700">11</text><line x1="680" y1="123" x2="680" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="680" y="158" text-anchor="middle" class="svg-m" fill="#EAF6EF" style="font-size:13px">12</text><line x1="730" y1="123" x2="730" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="730" y="158" text-anchor="middle" class="svg-m" fill="#EAF6EF" style="font-size:13px">13</text><line x1="780" y1="123" x2="780" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="780" y="158" text-anchor="middle" class="svg-m" fill="#EAF6EF" style="font-size:13px">14</text><line x1="830" y1="123" x2="830" y2="137" stroke="#A9C7B8" stroke-width="1.4"/><text x="830" y="158" text-anchor="middle" class="svg-m" fill="#EAF6EF" style="font-size:13px">15</text>
-      <circle cx="230" cy="130" r="7" fill="#FBBF24"/>
-      <circle cx="780" cy="130" r="7" fill="#FBBF24"/>
-      <text x="580" y="190" text-anchor="middle" class="svg-t" style="fill:#38D7ED">ค่าขอบ N−1 · N · N+1</text>
-      <text x="450" y="224" text-anchor="middle" class="svg-s">starter เขียน length &lt;= 10 → ช่อง 10 ตกไปอยู่กลุ่มไม่ผ่าน · ตัวแทน 3 กับ 14 มองไม่เห็นเลย</text>
+  </div>
+</section>
+
+<section class="slide" data-title="โครงของไฟล์ test">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
+  <span class="eyebrow ">describe · test · expect</span>
+  <h2>โครงของไฟล์ test — 3 คำสั่งหลัก</h2>
+  <div class="body center">
+    <div class="g21">
+<pre style="margin:0;font-size:.95rem;"><code style="font-size:.95rem"><span class="c">// tests/unit/grade.test.js</span>
+<span class="k">import</span> { describe, test, expect } <span class="k">from</span> <span class="s">'vitest'</span>;
+<span class="k">import</span> { gradeOf } <span class="k">from</span> <span class="s">'../../src/utils/grade.js'</span>;
+
+describe(<span class="s">'gradeOf'</span>, () =&gt; {          <span class="c">// กลุ่มของ test</span>
+  test(<span class="s">'85 คะแนน → A'</span>, () =&gt; {        <span class="c">// 1 กรณี</span>
+    <span class="c">// Arrange</span>
+    <span class="k">const</span> score = 85;
+    <span class="c">// Act</span>
+    <span class="k">const</span> result = gradeOf(score);
+    <span class="c">// Assert</span>
+    expect(result).toBe(<span class="s">'A'</span>);
+  });
+
+  test(<span class="s">'45 คะแนน → F'</span>, () =&gt; {
+    expect(gradeOf(45)).toBe(<span class="s">'F'</span>);   <span class="c">// สั้น ๆ ได้ถ้าอ่านง่าย</span>
+  });
+});</code></pre>
+      <div style="display:flex;flex-direction:column;gap:.6rem">
+        <div class="term"><p class="w"><code>describe(ชื่อ, fn)</code></p><p>จัดกลุ่ม test ของฟังก์ชันเดียวกัน · รายงานอ่านง่าย</p></div>
+        <div class="term"><p class="w"><code>test(ชื่อ, fn)</code></p><p>1 กรณี · ชื่อ = กรณี → ผลที่คาดหวัง · (<code>it</code> คือชื่อเดียวกัน)</p></div>
+        <div class="term"><p class="w"><code>expect(ค่าจริง).matcher(ค่าที่คาด)</code></p><p>ไม่ตรง → test fail พร้อมบอก Expected / Received</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="matcher ที่ใช้บ่อย">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
+  <span class="eyebrow ">expect(...).matcher()</span>
+  <h2>matcher ที่ใช้บ่อย — พอสำหรับแลปทั้งหมด</h2>
+  <div class="body center">
+    <table style="font-size:1rem">
+      <tr><th>matcher</th><th>ใช้ตรวจ</th><th>ตัวอย่าง</th></tr>
+      <tr><td><code>toBe(x)</code></td><td>ค่าเดี่ยวเท่ากันแบบ <code>===</code> (ตัวเลข · ข้อความ · true/false)</td><td><code>expect(gradeOf(80)).toBe('A')</code></td></tr>
+      <tr><td><code>toEqual(x)</code></td><td><strong>เนื้อหา</strong>ของ object / array เท่ากัน</td><td><code>expect(errors).toEqual([])</code></td></tr>
+      <tr><td><code>toHaveLength(n)</code></td><td>array / ข้อความมีกี่ตัว</td><td><code>expect(errors).toHaveLength(1)</code></td></tr>
+      <tr><td><code>toContain(x)</code></td><td>มีสมาชิกนี้อยู่ใน array / ข้อความ</td><td><code>expect(['A','B']).toContain('A')</code></td></tr>
+      <tr><td><code>toHaveProperty(k)</code></td><td>object มี key นี้</td><td><code>expect(body).toHaveProperty('id')</code></td></tr>
+      <tr><td><code>toThrow()</code></td><td>ฟังก์ชัน throw error · <strong>ต้องห่อด้วย <code>() =&gt;</code></strong></td><td><code>expect(() =&gt; gradeOf(120)).toThrow()</code></td></tr>
+      <tr><td><code>.not</code></td><td>กลับความหมาย</td><td><code>expect(body).not.toHaveProperty('password')</code></td></tr>
+    </table>
+    <div class="wrong"><p style="margin:0;font-size:1.06rem"><strong>พลาดบ่อย:</strong> <code>expect([]).toBe([])</code> → fail เพราะเป็นคนละ array — เทียบ object / array ใช้ <code>toEqual</code></p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="เลือก test case">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
+  <span class="eyebrow ">จะทดสอบค่าอะไรบ้าง</span>
+  <h2>แบ่งกลุ่ม แล้วทดสอบตรงรอยต่อ</h2>
+  <div class="body center">
+    <div class="g2">
+      <div class="term"><p class="w">Equivalence partitioning — แบ่งกลุ่ม</p><p>ค่าที่ระบบทำแบบเดียวกัน = กลุ่มเดียวกัน · ทดสอบ<strong>ตัวแทนกลุ่มละ 1 ค่า</strong></p></div>
+      <div class="term"><p class="w">Boundary value — ค่าขอบ</p><p>กฎ "ตั้งแต่ N" → ทดสอบ <strong>N−1 · N · N+1</strong> · bug ชอบซ่อนตรงขอบ (<code>&gt;=</code> กับ <code>&gt;</code>)</p></div>
+    </div>
+    <div class="fig"><svg viewBox="0 0 900 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="กลุ่มคะแนนและค่าขอบของเกรด">
+      <rect x="20" y="16" width="110" height="38" rx="8" fill="rgba(251,113,133,.14)" stroke="#FB7185"/><text x="75" y="40" text-anchor="middle" class="svg-s" style="fill:#FDA4AF">ผิด · &lt; 0</text>
+      <rect x="135" y="16" width="250" height="38" rx="8" fill="rgba(169,199,184,.10)" stroke="#A9C7B8"/><text x="260" y="40" text-anchor="middle" class="svg-s">F · 0–49</text>
+      <rect x="390" y="16" width="90" height="38" rx="8" fill="rgba(169,199,184,.10)" stroke="#A9C7B8"/><text x="435" y="40" text-anchor="middle" class="svg-s">D</text>
+      <rect x="485" y="16" width="90" height="38" rx="8" fill="rgba(169,199,184,.10)" stroke="#A9C7B8"/><text x="530" y="40" text-anchor="middle" class="svg-s">C</text>
+      <rect x="580" y="16" width="90" height="38" rx="8" fill="rgba(169,199,184,.10)" stroke="#A9C7B8"/><text x="625" y="40" text-anchor="middle" class="svg-s">B</text>
+      <rect x="675" y="16" width="110" height="38" rx="8" fill="rgba(74,222,128,.14)" stroke="#4ADE80"/><text x="730" y="40" text-anchor="middle" class="svg-s" style="fill:#86EFAC">A · 80–100</text>
+      <rect x="790" y="16" width="90" height="38" rx="8" fill="rgba(251,113,133,.14)" stroke="#FB7185"/><text x="835" y="40" text-anchor="middle" class="svg-s" style="fill:#FDA4AF">ผิด · &gt; 100</text>
+      <path d="M672 62 L672 120" stroke="#38D7ED" stroke-width="2" stroke-dasharray="5 4"/>
+      <text x="610" y="100" text-anchor="middle" class="svg-m" fill="#38D7ED" style="font-size:16px">79 → B</text>
+      <text x="672" y="140" text-anchor="middle" class="svg-m" fill="#38D7ED" style="font-size:16px">80 → A</text>
+      <text x="735" y="100" text-anchor="middle" class="svg-m" fill="#38D7ED" style="font-size:16px">81 → A</text>
+      <text x="260" y="88" text-anchor="middle" class="svg-s" style="fill:#FBBF24">ตัวแทนกลุ่ม เช่น 30</text>
+      <text x="835" y="88" text-anchor="middle" class="svg-s" style="fill:#FBBF24">101 · 'abc'</text>
     </svg></div>
-    <div class="iact" data-quiz="q2">
-      <p style="margin:0 0 .3rem"><strong>กฎ: รายละเอียดอย่างน้อย 10 ตัวอักษร — ชุดค่าไหนจับ bug ที่ขอบได้</strong></p>
-      <div class="opts"><button class="opt" data-a="0">3 · 14 (ตัวแทนกลุ่มละตัว)</button><button class="opt" data-a="1">9 · 10 · 11</button><button class="opt" data-a="0">0 · 100 (สุดขั้ว)</button></div>
-      <p class="fb"></p>
-    </div>
+<pre style="margin:0;font-size:.92rem;"><code style="font-size:.92rem">test.each([            <span class="c">// หลายค่า กฎเดียว — เขียนครั้งเดียว</span>
+  [79, <span class="s">'B'</span>], [80, <span class="s">'A'</span>], [81, <span class="s">'A'</span>],     <span class="c">// ค่าขอบ</span>
+  [30, <span class="s">'F'</span>],                           <span class="c">// ตัวแทนกลุ่ม</span>
+])(<span class="s">'%i คะแนน → %s'</span>, (score, grade) =&gt; {
+  expect(gradeOf(score)).toBe(grade);
+});</code></pre>
+  </div>
+</section>
+
+<section class="slide" data-title="จดเป็นตาราง test case ก่อนเขียนโค้ด">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
+  <span class="eyebrow ">ออกแบบก่อนเขียน</span>
+  <h2>จดเป็นตาราง test case ก่อนเขียนโค้ด test</h2>
+  <div class="body center">
+    <table style="font-size:1.02rem">
+      <tr><th>รหัส</th><th>กลุ่ม</th><th>ข้อมูลเข้า</th><th>ผลที่คาดหวัง</th><th>ระดับ test</th></tr>
+      <tr><td>TC-01</td><td>ค่าขอบ A</td><td><code>79</code></td><td><code>'B'</code></td><td>unit</td></tr>
+      <tr><td>TC-02</td><td>ค่าขอบ A</td><td><code>80</code></td><td><code>'A'</code></td><td>unit</td></tr>
+      <tr><td>TC-03</td><td>ค่าขอบ A</td><td><code>81</code></td><td><code>'A'</code></td><td>unit</td></tr>
+      <tr><td>TC-04</td><td>ตัวแทนกลุ่ม F</td><td><code>30</code></td><td><code>'F'</code></td><td>unit</td></tr>
+      <tr><td>TC-05</td><td>ข้อมูลผิด</td><td><code>101</code> · <code>'abc'</code></td><td>throw error</td><td>unit</td></tr>
+      <tr><td>TC-06</td><td>ผ่าน API</td><td><code>POST /api/grades {score:80}</code></td><td>201 · <code>grade: 'A'</code></td><td>integration (บทที่ 3)</td></tr>
+    </table>
+    <div class="win"><p style="margin:0;font-size:1.1rem">ตารางนี้ = แผนการทดสอบ · <strong>1 แถว → 1 test</strong> · เห็นช่องว่างก่อนเขียนโค้ด (ลืมค่าขอบไหม · ลืมข้อมูลผิดไหม)</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="🏫 ลงมือ CP44">
+  <span class="chapbadge">🏫 ลงมือทำ · CP44</span>
+  <span class="eyebrow amber">09:20–09:35 · ใช้ความรู้บทที่ 2 · ทำแบบเดียวกับตาราง gradeOf</span>
+  <h2>CP44 · ออกแบบ test case → TEST_CASES.md</h2>
+  <div class="body center">
+    <pre style="margin:0;font-size:.98rem"><code style="font-size:.98rem">npm install --prefix api &amp;&amp; npm install --prefix frontend
+npm test     <span class="c"># api 11/11 · frontend 1/1 ผ่านหมด (แต่มี 4 bug) · อ่านกฎใน requestValidator.js</span></code></pre>
+    <table style="font-size:.96rem">
+      <tr><th>รหัส</th><th>กลุ่ม</th><th>ข้อมูลที่เปลี่ยน</th><th>ผลที่คาดหวัง</th><th>ระดับ test</th></tr>
+      <tr><td>TC-01</td><td>ถูกต้อง</td><td>— (ถูกทุกช่อง)</td><td>ไม่มี error · API ตอบ 201</td><td>unit + integration</td></tr>
+      <tr><td>TC-02</td><td>ค่าขอบ รายละเอียด</td><td>9 ตัวอักษร</td><td>error 1 ข้อ</td><td>unit</td></tr>
+      <tr><td>TC-03</td><td>ค่าขอบ รายละเอียด</td><td>10 ตัวอักษรพอดี</td><td style="color:var(--amber)">? ← คิดเอง</td><td>unit</td></tr>
+      <tr><td>TC-04…</td><td colspan="4" class="muted">เติมเอง — ค่าขอบชื่อ · ค่านอกรายการ · input ผิดรูปแบบ · ลำดับ ลบ → เพิ่ม</td></tr>
+    </table>
+    <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — <code>TEST_CASES.md</code> มี<strong>อย่างน้อย 8 ข้อ</strong> · มีกรณี<strong>ค่าขอบ</strong> · ทุกข้อมีผลที่คาดหวังและระดับ test · checker ข้อ CP44 ครบ <strong>4/4</strong></p></div>
+    <div class="panel labstop tmrow"><span class="bigtime" id="t44">15:00</span>
+      <div class="timerbtns"><button data-timer="t44" data-act="start" data-min="15">▶ เริ่ม</button><button data-timer="t44" data-act="pause" data-min="15">⏸ พัก</button><button data-timer="t44" data-act="reset" data-min="15">↺</button></div>
+      <p>CP44 · 15 นาที</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="แบบเดียวกันในแลป">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
+  <span class="eyebrow ">จากตัวอย่าง → โปรเจกต์จริง</span>
+  <h2>ทำแบบเดียวกันกับ requestValidator.js</h2>
+  <div class="body center">
+    <table style="font-size:1rem">
+      <tr><th></th><th>ตัวอย่าง</th><th>แลป · Campus Service</th></tr>
+      <tr><td>pure function</td><td><code>gradeOf(score)</code></td><td><code>validateRequestInput(input)</code> · <code>isValidStatus(status)</code></td></tr>
+      <tr><td>ผลที่คืน</td><td><code>'A'</code> … <code>'F'</code> หรือ throw</td><td><code>[]</code> = ผ่าน · <code>['ข้อความ error', …]</code> = ไม่ผ่าน</td></tr>
+      <tr><td>ค่าขอบ</td><td>80 → ทดสอบ 79 · 80 · 81</td><td>details อย่างน้อย 10 → <strong>9 · 10 · 11</strong> · ชื่ออย่างน้อย 2 → 1 · 2</td></tr>
+      <tr><td>ไฟล์ test</td><td><code>tests/unit/grade.test.js</code></td><td><code>api/tests/unit/requestValidator.test.js</code></td></tr>
+    </table>
+<pre style="margin:0;font-size:.92rem;"><code style="font-size:.92rem"><span class="k">const</span> valid = { requesterName: <span class="s">'สมชาย ใจดี'</span>, requestType: <span class="s">'แจ้งซ่อม'</span>,
+  location: <span class="s">'ห้อง 301'</span>, details: <span class="s">'แอร์ไม่เย็นตั้งแต่เช้า'</span>, priority: <span class="s">'normal'</span> };
+<span class="k">const</span> withField = (patch) =&gt; ({ ...valid, ...patch });   <span class="c">// เปลี่ยนทีละช่อง</span>
+
+test(<span class="s">'details 9 ตัว → error 1 ข้อ'</span>, () =&gt; {
+  expect(validateRequestInput(withField({ details: <span class="s">'123456789'</span> }))).toHaveLength(1);
+});</code></pre>
+    <div class="note"><p style="margin:0;font-size:1.04rem"><code>valid</code> = ข้อมูลถูกทุกช่อง · แต่ละ test เปลี่ยน<strong>ทีละช่อง</strong> → test fail เมื่อไรรู้ทันทีว่าเพราะช่องไหน</p></div>
   </div>
 </section>
 
 <section class="slide" data-title="🎮 Boundary tester">
-  <span class="chapbadge">บทที่ 2 <span class="of">/ 9</span> · ออกแบบ test case</span>
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
   <span class="eyebrow amber">ลองเล่น — เลื่อนความยาว แล้วสลับโค้ด</span>
   <h2>ค่าขอบจับ <code>&lt;=</code> ได้ · ตัวแทนกลุ่มจับไม่ได้</h2>
   <div class="body">
@@ -478,128 +659,8 @@ npm test
   </div>
 </section>
 
-<section class="slide" data-title="✓ สรุปบทที่ 2">
-  <span class="chapbadge">บทที่ 2 <span class="of">/ 9</span> · ออกแบบ test case</span>
-  <h2>จบบทที่ 2 — ออกแบบ test case</h2>
-  <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li><strong>equivalence</strong> — แบ่งกลุ่มที่ระบบควรทำแบบเดียวกัน ทดสอบตัวแทนกลุ่มละ 1 ค่า</li><li><strong>boundary</strong> — กฎ "อย่างน้อย N" ทดสอบ N−1 · N · N+1 (รายละเอียด: 9 · 10 · 11 · ชื่อ: 1 · 2)</li><li>เริ่มจากข้อมูลถูกทุกช่อง แล้วเปลี่ยน<strong>ทีละช่อง</strong> — จะรู้ว่าผลที่ได้มาจากช่องไหน</li><li>เขียนลง <code>TEST_CASES.md</code> <strong>ก่อน</strong>เขียนโค้ด test</li></ul></div>
-    <div class="nextup"><b>ต่อไป →</b> บทที่ 3 — test แต่ละระดับมองเห็นคนละส่วน (แล้วลงมือ CP44)</div>
-    <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
-  </div>
-</section>
-
-<section class="slide divider" data-title="บทที่ 3 · ระดับของ test">
-  <span class="grp">กลุ่ม 1 · ทำไมต้องทดสอบ</span>
-  <p class="bignum">03</p>
-  <h2>ระดับของ test — unit · integration · e2e</h2>
-  <p class="whatfor">test แต่ละระดับมองเห็นคนละส่วนของระบบ และจับ bug ได้คนละแบบ</p>
-  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 8 นาที</span><span class="chip a">CP44</span></div>
-  <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
-</section>
-
-<section class="slide" data-title="Test pyramid">
-  <span class="chapbadge">บทที่ 3 <span class="of">/ 9</span> · ระดับของ test</span>
-  <span class="eyebrow cyan">เห็นภาพ</span>
-  <h2>Test pyramid — ฐานกว้าง ยอดแคบ</h2>
-  <div class="body">
-    <div class="fig"><svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Test pyramid">
-      <polygon points="240,20 303.6,90 176.4,90" fill="rgba(192,132,252,.18)" stroke="#C084FC" stroke-width="1.6"/>
-      <polygon points="176.4,90 303.6,90 371.8,165 108.2,165" fill="rgba(56,215,237,.16)" stroke="#38D7ED" stroke-width="1.6"/>
-      <polygon points="108.2,165 371.8,165 440,240 40,240" fill="rgba(74,222,128,.16)" stroke="#4ADE80" stroke-width="1.6"/>
-      <text x="240" y="76" text-anchor="middle" class="svg-t">e2e</text>
-      <text x="240" y="134" text-anchor="middle" class="svg-t">integration</text>
-      <text x="240" y="200" text-anchor="middle" class="svg-t">unit</text>
-      <text x="240" y="222" text-anchor="middle" class="svg-s">มากที่สุด</text>
-      <line x1="285" y1="55" x2="470" y2="55" stroke="#6E8F7C" stroke-width="1.2" stroke-dasharray="4 4"/>
-      <line x1="350" y1="128" x2="470" y2="128" stroke="#6E8F7C" stroke-width="1.2" stroke-dasharray="4 4"/>
-      <line x1="418" y1="203" x2="470" y2="203" stroke="#6E8F7C" stroke-width="1.2" stroke-dasharray="4 4"/>
-      <text x="480" y="50" class="svg-t" style="fill:#C084FC">e2e · ช้า แพง ใกล้ผู้ใช้ที่สุด</text>
-      <text x="480" y="72" class="svg-s">เปิดเบราว์เซอร์จริงกดตามผู้ใช้ — ไม่ทำในคาบนี้</text>
-      <text x="480" y="123" class="svg-t" style="fill:#38D7ED">integration · supertest</text>
-      <text x="480" y="145" class="svg-s">ยิง HTTP ผ่านทุกชั้นถึง SQLite → BUG #1 · #3</text>
-      <text x="480" y="198" class="svg-t" style="fill:#4ADE80">unit · Vitest</text>
-      <text x="480" y="220" class="svg-s">ฟังก์ชันเดียว ไม่แตะ server/DB → BUG #0 · #2</text>
-    </svg></div>
-    <div class="iact" data-quiz="q3">
-      <p style="margin:0 0 .3rem"><strong>BUG #1 (ลบรายการกลางแล้วเพิ่มใหม่ → 500) ควรจับด้วย test ระดับไหน</strong></p>
-      <div class="opts"><button class="opt" data-a="0">unit — เพราะเป็นฟังก์ชันเดียว</button><button class="opt" data-a="1">integration — DELETE แล้ว POST ผ่านทุกชั้นถึงฐานข้อมูล</button><button class="opt" data-a="0">e2e — ต้องเปิดเบราว์เซอร์กดเท่านั้น</button></div>
-      <p class="fb"></p>
-    </div>
-    <div class="reveal" data-reveal><button type="button">ดูเหตุผล ▾</button>
-      <div class="ans"><code>nextId()</code> ไม่ได้ export และต้องมีฐานข้อมูลจริง + <strong>ลำดับ ลบ → เพิ่ม</strong> · integration test เห็นทั้งเส้นทาง route → controller → service → SQLite</div></div>
-  </div>
-</section>
-
-<section class="slide" data-title="✓ สรุปบทที่ 3">
-  <span class="chapbadge">บทที่ 3 <span class="of">/ 9</span> · ระดับของ test</span>
-  <h2>จบบทที่ 3 — ระดับของ test</h2>
-  <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li><strong>unit</strong> — ฟังก์ชันเดียว ไม่แตะ server/DB · เร็ว จำนวนมาก (จับ BUG #0 · #2)</li><li><strong>integration</strong> — ยิง HTTP ผ่าน route → controller → service → SQLite (จับ BUG #1 · #3)</li><li><strong>e2e</strong> — เปิดเบราว์เซอร์จริง ช้าและแพง · ยอดพีระมิด ไม่ทำในคาบนี้</li><li>คอลัมน์ "ระดับ test" ใน <code>TEST_CASES.md</code> บอกว่าแต่ละกรณีควรจับที่ระดับไหน</li></ul></div>
-    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือ CP44</strong> — แล้วเข้ากลุ่ม 2 ลงมือทดสอบ</div>
-    <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
-  </div>
-</section>
-
-<section class="slide" data-title="🏫 ลงมือ CP44">
-  <span class="chapbadge">🏫 ลงมือทำ · CP44</span>
-  <span class="eyebrow amber">09:15–09:40 · ใช้ความรู้บท 2–3</span>
-  <h2>CP44 · ออกแบบ test case → TEST_CASES.md</h2>
-  <div class="body center">
-    <pre style="margin:0;font-size:.98rem"><code style="font-size:.98rem">cd labs/week-12/source &amp;&amp; npm install --prefix api &amp;&amp; npm install --prefix frontend
-npm test     <span class="c"># api 11/11 · frontend 1/1 ผ่านหมด (แต่มี 4 bug) · อ่านกฎใน requestValidator.js</span></code></pre>
-    <table style="font-size:.96rem">
-      <tr><th>รหัส</th><th>กลุ่ม</th><th>ข้อมูลที่เปลี่ยน</th><th>ผลที่คาดหวัง</th><th>ระดับ test</th></tr>
-      <tr><td>TC-01</td><td>ถูกต้อง</td><td>— (ถูกทุกช่อง)</td><td>ไม่มี error · API ตอบ 201</td><td>unit + integration</td></tr>
-      <tr><td>TC-02</td><td>ค่าขอบ รายละเอียด</td><td>9 ตัวอักษร</td><td>error 1 ข้อ</td><td>unit</td></tr>
-      <tr><td>TC-03</td><td>ค่าขอบ รายละเอียด</td><td>10 ตัวอักษรพอดี</td><td style="color:var(--amber)">? ← คิดเอง</td><td>unit</td></tr>
-      <tr><td>TC-04…</td><td colspan="4" class="muted">เติมเอง — ค่าขอบชื่อ · ค่านอกรายการ · input ผิดรูปแบบ · ลำดับ ลบ → เพิ่ม</td></tr>
-    </table>
-    <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — <code>TEST_CASES.md</code> มี<strong>อย่างน้อย 8 ข้อ</strong> · มีกรณี<strong>ค่าขอบ</strong> · ทุกข้อมีผลที่คาดหวังและระดับ test · checker ข้อ CP44 ครบ <strong>4/4</strong></p></div>
-    <div class="panel labstop tmrow"><span class="bigtime" id="t44">25:00</span>
-      <div class="timerbtns"><button data-timer="t44" data-act="start" data-min="25">▶ เริ่ม</button><button data-timer="t44" data-act="pause" data-min="25">⏸ พัก</button><button data-timer="t44" data-act="reset" data-min="25">↺</button></div>
-      <p>CP44 · 25 นาที</p></div>
-  </div>
-</section>
-
-<section class="slide divider" data-title="บทที่ 4 · Unit test">
-  <span class="grp">กลุ่ม 2 · ลงมือทดสอบ</span>
-  <p class="bignum">04</p>
-  <h2>Unit test ด้วย Vitest</h2>
-  <p class="whatfor">ทดสอบกฎตรวจข้อมูลโดยตรง ไม่ต้องเปิด server ไม่ต้องมีฐานข้อมูล — แล้วเจอ bug ที่ยังไม่มีใครแจ้ง</p>
-  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 14 นาที</span><span class="chip a">CP45</span></div>
-  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
-</section>
-
-<section class="slide" data-title="pure function + Vitest">
-  <span class="chapbadge">บทที่ 4 <span class="of">/ 9</span> · Unit test</span>
-  <span class="eyebrow">แยกกฎออกจาก middleware</span>
-  <h2>pure function — ทดสอบได้ทันที</h2>
-  <div class="body center">
-    <div class="g21">
-      <pre style="margin:0;font-size:.88rem"><code style="font-size:.88rem"><span class="c">// api/src/validators/requestValidator.js</span>
-<span class="k">export</span> <span class="k">const</span> MIN_NAME = 2;
-<span class="k">export</span> <span class="k">const</span> MIN_DETAILS = 10;
-<span class="k">export</span> <span class="k">function</span> validateRequestInput(input) {…} <span class="c">// [] หรือ [error…]</span>
-<span class="k">export</span> <span class="k">function</span> isValidStatus(status) {…}       <span class="c">// true / false</span>
-
-<span class="c">// middleware/validateRequest.js — เหลือแค่เรียกแล้วตอบ 400</span>
-<span class="k">const</span> errors = validateRequestInput(req.body);
-<span class="k">if</span> (errors.length &gt; 0) <span class="k">return</span> res.status(400).json({ … });</code></pre>
-      <div class="term"><p class="w">pure function</p><p>รับข้อมูลเข้า คืนผลลัพธ์ <strong>ไม่แตะอะไรภายนอก</strong> (req/res · DB · ไฟล์) → ใส่ค่าแล้วเทียบผลได้ทันที</p>
-      <p style="margin-top:.45rem;font-size:1.02rem" class="muted">middleware ผูกกับ req/res/next → ต้องเปิด server หรือจำลอง req/res</p></div>
-    </div>
-    <table style="font-size:.98rem">
-      <tr><th>node:test (W07 · W10)</th><th>Vitest 5 (W12)</th></tr>
-      <tr><td><code>assert.equal(a, b)</code></td><td><code>expect(a).toBe(b)</code></td></tr>
-      <tr><td><code>assert.ok(x)</code></td><td><code>expect(x).toBe(true)</code></td></tr>
-      <tr><td><code>before(...)</code></td><td><code>beforeEach(...)</code> — starter แปลง 8 test มาให้แล้ว</td></tr>
-    </table>
-    <p class="muted" style="margin:0;font-size:1.02rem"><code>npm test</code> (root = api + frontend) · <code>npm run test:watch --prefix api</code> รันใหม่ทุกครั้งที่บันทึก</p>
-  </div>
-</section>
-
 <section class="slide" data-title="เขียน test ค่าขอบ → เจอ BUG #0">
-  <span class="chapbadge">บทที่ 4 <span class="of">/ 9</span> · Unit test</span>
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
   <span class="eyebrow red">test fail = หลักฐาน</span>
   <h2>เขียน test ค่าขอบ → เจอ BUG #0</h2>
   <div class="body center">
@@ -630,19 +691,9 @@ AssertionError: expected [ Array(1) ]
   </div>
 </section>
 
-<section class="slide" data-title="✓ สรุปบทที่ 4">
-  <span class="chapbadge">บทที่ 4 <span class="of">/ 9</span> · Unit test</span>
-  <h2>จบบทที่ 4 — Unit test</h2>
-  <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>pure function — รับเข้า คืนผล ไม่แตะอะไรภายนอก → unit test ได้ทันที</li><li>middleware เหลือแค่เรียก <code>validateRequestInput</code> แล้วตอบ 400</li><li><code>valid</code> + <code>withField()</code> เปลี่ยนทีละช่อง · <code>test.each([...])</code> สำหรับหลายค่า</li><li>test fail = หลักฐาน — <strong>อ่านโค้ดก่อนแก้ test</strong> · BUG #0 คือ <code>&lt;=</code> ที่ควรเป็น <code>&lt;</code></li><li>เกร็ด: ใช้ Vitest 5 เพราะรุ่นเก่า (Vite 5) ตัด <code>node:</code> ออกจาก <code>node:sqlite</code> → "Failed to load url sqlite"</li></ul></div>
-    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือ CP45</strong> — unit test ให้ครบตามตาราง</div>
-    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
-  </div>
-</section>
-
 <section class="slide" data-title="🏫 ลงมือ CP45">
   <span class="chapbadge">🏫 ลงมือทำ · CP45</span>
-  <span class="eyebrow amber">09:40–10:20 · ใช้ความรู้บท 4</span>
+  <span class="eyebrow amber">09:40–10:10 · ใช้ความรู้บทที่ 2</span>
   <h2>CP45 · unit test ≥ 10 ข้อ + แก้ BUG #0</h2>
   <div class="body center">
     <pre style="margin:0;font-size:1rem"><code style="font-size:1rem">npm run test:watch --prefix api       <span class="c"># เปิดค้างไว้ บันทึกไฟล์แล้วรันใหม่เอง</span>
@@ -653,23 +704,143 @@ AssertionError: expected [ Array(1) ]
 <span class="c">#   isValidStatus('pending') / isValidStatus('done')</span></code></pre>
     <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — unit test <strong>≥ 10 ข้อ</strong> ผ่านหมด · details <strong>10 ตัวพอดีผ่าน</strong> แต่ 9 ตัวยังถูกปฏิเสธ (ไม่แก้เกิน) · checker ข้อ CP45 ครบ <strong>3/3</strong></p></div>
     <div class="note"><p style="margin:0">แก้ที่ <code>requestValidator.js</code> บรรทัดเดียว <code>&lt;=</code> → <code>&lt;</code> · แล้วเขียน BUG #0 ลง <code>DEBUG_LOG.md</code> (อาการ · ทำซ้ำ · เครื่องมือ · สาเหตุ · วิธีแก้ · test ที่กัน)</p></div>
-    <div class="panel labstop tmrow"><span class="bigtime" id="t45">40:00</span>
-      <div class="timerbtns"><button data-timer="t45" data-act="start" data-min="40">▶ เริ่ม</button><button data-timer="t45" data-act="pause" data-min="40">⏸ พัก</button><button data-timer="t45" data-act="reset" data-min="40">↺</button></div>
-      <p>CP45 · 40 นาที · แล้วพัก 10 นาที</p></div>
+    <div class="panel labstop tmrow"><span class="bigtime" id="t45">30:00</span>
+      <div class="timerbtns"><button data-timer="t45" data-act="start" data-min="30">▶ เริ่ม</button><button data-timer="t45" data-act="pause" data-min="30">⏸ พัก</button><button data-timer="t45" data-act="reset" data-min="30">↺</button></div>
+      <p>CP45 · 30 นาที · แล้วพัก 10 นาที</p></div>
   </div>
 </section>
 
-<section class="slide divider" data-title="บทที่ 5 · Integration test">
-  <span class="grp">กลุ่ม 2 · ลงมือทดสอบ</span>
-  <p class="bignum">05</p>
+<section class="slide" data-title="✓ สรุปบทที่ 2">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
+  <h2>จบบทที่ 2 — Unit test · Vitest</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>unit test = เรียก<strong>ฟังก์ชันเดียว</strong>แล้วเทียบผล · ดีที่สุดกับ pure function · โครง AAA</li><li>Vitest: ไฟล์ <code>*.test.js</code> · <code>describe</code> · <code>test</code> · <code>expect(...).matcher()</code> · <code>npm test</code> / <code>test:watch</code></li><li>matcher หลัก: <code>toBe</code> ค่าเดี่ยว · <code>toEqual</code> object/array · <code>toHaveLength</code> · <code>toThrow</code> (ห่อ <code>() =&gt;</code>)</li><li>เลือกค่า: ตัวแทนกลุ่ม + ค่าขอบ N−1 · N · N+1 · จดตารางก่อนเขียน · <code>test.each</code> สำหรับหลายค่า</li><li>test fail = หลักฐาน — <strong>อ่านโค้ดก่อนแก้ test</strong> · BUG #0 คือ <code>&lt;=</code> ที่ควรเป็น <code>&lt;</code></li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>บทที่ 3</strong> — unit test ผ่านหมด แต่ API ยังพังได้ · ต้องทดสอบระดับที่ใหญ่ขึ้น</div>
+    <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 3 · Integration test · supertest">
+  <span class="grp">ระดับที่ 2</span>
+  <p class="bignum">03</p>
   <h2>Integration test ด้วย supertest</h2>
-  <p class="whatfor">ยิง HTTP จริงผ่านทุกชั้น route → controller → service → SQLite บนฐานข้อมูลในหน่วยความจำ</p>
-  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 12 นาที</span><span class="chip a">CP46</span></div>
-  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
+  <p class="whatfor">ทำไม unit test ไม่พอ → หลักการ → supertest ทำงานอย่างไร → ตัวอย่าง → แลป</p>
+  <div class="mins"><span class="chip">🏫 เรียนในห้อง</span><span class="chip c">≈ 12 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span></div>
+</section>
+
+<section class="slide" data-title="ทำไม unit test ไม่พอ">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
+  <span class="eyebrow ">สิ่งที่ unit test มองไม่เห็น</span>
+  <h2><code>gradeOf</code> ถูกทุกข้อ — แต่ API ยังพังได้</h2>
+  <div class="body center">
+    <div class="g2">
+<pre style="margin:0;font-size:.92rem;"><code style="font-size:.92rem"><span class="c">// src/app.js</span>
+<span class="k">export</span> <span class="k">function</span> createApp() {
+  <span class="k">const</span> app = express();
+  <span class="c">// ลืม app.use(express.json())  ← req.body = undefined</span>
+  app.post(<span class="s">'/api/grades'</span>, (req, res) =&gt; {
+    <span class="k">const</span> { score } = req.body;        <span class="c">// TypeError → 500</span>
+    res.status(200).json({ score, grade: gradeOf(score) });
+  });                                  <span class="c">// ควรตอบ 201</span>
+  <span class="k">return</span> app;
+}</code></pre>
+      <table style="font-size:.98rem">
+        <tr><th>ปัญหา</th><th>unit เห็นไหม</th></tr>
+        <tr><td>ลืม <code>express.json()</code> / ลำดับ middleware ผิด</td><td class="bad">✕</td></tr>
+        <tr><td>status code ผิด (200 แทน 201 · 500 แทน 404)</td><td class="bad">✕</td></tr>
+        <tr><td>path ของ route ผิด · ลืมผูก route</td><td class="bad">✕</td></tr>
+        <tr><td>ลำดับการทำงานกับ DB (ลบ → เพิ่ม → รหัสซ้ำ)</td><td class="bad">✕</td></tr>
+        <tr><td>รูปแบบ JSON ที่ส่งกลับ</td><td class="bad">✕</td></tr>
+      </table>
+    </div>
+    <div class="win"><p style="margin:0;font-size:1.12rem">ปัญหาเหล่านี้อยู่ที่<strong>รอยต่อระหว่างส่วน</strong> — ต้องทดสอบโดย<strong>ยิง HTTP เข้า API จริง</strong> แล้วตรวจคำตอบ = integration test</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="หลักการ integration test">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
+  <span class="eyebrow ">หลักการ</span>
+  <h2>ทดสอบเหมือน client เรียก API จริง</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="card"><div class="ic">📨</div><h3>1 · ยิง HTTP</h3><p>ส่ง request (method · path · body) แบบเดียวกับที่หน้าเว็บส่ง — ผ่าน<strong>ทุกชั้น</strong> route → controller → service → DB</p></div>
+      <div class="card"><div class="ic">🧼</div><h3>2 · DB แยกสำหรับ test</h3><p>ใช้ฐานข้อมูลทดสอบ <strong>รีเซ็ตก่อนทุก test</strong> (<code>beforeEach</code>) · ไม่แตะข้อมูลจริง · test ไม่พึ่งลำดับกัน</p></div>
+      <div class="card"><div class="ic">🔍</div><h3>3 · ตรวจ 3 อย่าง</h3><p><strong>status code</strong> · <strong>body</strong> ที่ส่งกลับ · <strong>ผลข้างเคียง</strong> (GET ซ้ำแล้วข้อมูลเปลี่ยนจริงไหม)</p></div>
+    </div>
+    <div class="note"><p style="margin:0;font-size:1.08rem">เงื่อนไขของโค้ด: แยก <code>createApp()</code> (สร้าง app) ออกจาก <code>server.js</code> (<code>listen</code> พอร์ต) → test import <code>app</code> ไปใช้ได้โดยไม่ต้องเปิดพอร์ต</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="supertest ทำงานอย่างไร">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
+  <span class="eyebrow ">เครื่องมือ</span>
+  <h2>supertest — ยิง HTTP เข้า app โดยไม่ต้องเปิด server เอง</h2>
+  <div class="body center">
+    <div class="fig"><svg viewBox="0 0 900 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="supertest ส่ง request เข้า app แล้วรับ response กลับมาตรวจ">
+      <defs><marker id="stA" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#38D7ED" stroke-width="1.5"/></marker></defs>
+      <rect x="20" y="40" width="190" height="90" rx="12" fill="rgba(74,222,128,.10)" stroke="#4ADE80" stroke-width="1.6"/>
+      <text x="115" y="78" text-anchor="middle" class="svg-t">ไฟล์ test</text>
+      <text x="115" y="104" text-anchor="middle" class="svg-m" fill="#86EFAC" style="font-size:14px">request(app).post(…)</text>
+      <path d="M212 70 L318 70" stroke="#38D7ED" stroke-width="2" marker-end="url(#stA)"/>
+      <text x="265" y="60" text-anchor="middle" class="svg-s">HTTP request</text>
+      <path d="M318 104 L212 104" stroke="#38D7ED" stroke-width="2" marker-end="url(#stA)"/>
+      <text x="265" y="126" text-anchor="middle" class="svg-s">response</text>
+      <rect x="320" y="20" width="560" height="130" rx="12" fill="rgba(56,215,237,.07)" stroke="#38D7ED" stroke-width="1.6"/>
+      <text x="600" y="44" text-anchor="middle" class="svg-t" style="fill:#38D7ED">app = createApp() · supertest เปิดพอร์ตชั่วคราวให้เอง</text>
+      <rect x="340" y="62" width="110" height="60" rx="9" fill="none" stroke="#A9C7B8"/><text x="395" y="97" text-anchor="middle" class="svg-s">route</text>
+      <rect x="470" y="62" width="120" height="60" rx="9" fill="none" stroke="#A9C7B8"/><text x="530" y="97" text-anchor="middle" class="svg-s">controller</text>
+      <rect x="610" y="62" width="110" height="60" rx="9" fill="none" stroke="#A9C7B8"/><text x="665" y="97" text-anchor="middle" class="svg-s">service</text>
+      <rect x="740" y="62" width="120" height="60" rx="9" fill="none" stroke="#A9C7B8"/><text x="800" y="90" text-anchor="middle" class="svg-s">DB ทดสอบ</text><text x="800" y="110" text-anchor="middle" class="svg-m" fill="#A9C7B8" style="font-size:12px">:memory:</text>
+    </svg></div>
+    <table style="font-size:1rem">
+      <tr><th>คำสั่ง</th><th>ทำอะไร</th></tr>
+      <tr><td><code>request(app)</code></td><td>เริ่ม request ไปที่ app (ไม่ต้อง <code>listen</code>)</td></tr>
+      <tr><td><code>.get(url)</code> · <code>.post(url)</code> · <code>.put(url)</code> · <code>.delete(url)</code></td><td>เลือก method และ path</td></tr>
+      <tr><td><code>.send({ … })</code> · <code>.set('Authorization', 'Bearer …')</code></td><td>ใส่ body (JSON) · ใส่ header</td></tr>
+      <tr><td><code>const res = await …</code> → <code>res.status</code> · <code>res.body</code></td><td>รอคำตอบ แล้วตรวจด้วย <code>expect</code> เหมือนบทที่ 2</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="slide" data-title="ตัวอย่าง integration test">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
+  <span class="eyebrow ">ตัวอย่างง่าย</span>
+  <h2>integration test ของ POST /api/grades</h2>
+  <div class="body center">
+    <div class="g2">
+<pre style="margin:0;font-size:.92rem;"><code style="font-size:.92rem"><span class="c">// tests/integration/grades.api.test.js</span>
+<span class="k">import</span> { test, expect } <span class="k">from</span> <span class="s">'vitest'</span>;
+<span class="k">import</span> request <span class="k">from</span> <span class="s">'supertest'</span>;
+<span class="k">import</span> { createApp } <span class="k">from</span> <span class="s">'../../src/app.js'</span>;
+
+<span class="k">const</span> app = createApp();
+
+test(<span class="s">'POST 80 → 201 และได้เกรด A'</span>, <span class="k">async</span> () =&gt; {
+  <span class="k">const</span> res = <span class="k">await</span> request(app)
+    .post(<span class="s">'/api/grades'</span>)
+    .send({ score: 80 });
+  expect(res.status).toBe(201);
+  expect(res.body.grade).toBe(<span class="s">'A'</span>);
+});
+
+test(<span class="s">'score ไม่ใช่ตัวเลข → 400'</span>, <span class="k">async</span> () =&gt; {
+  <span class="k">const</span> res = <span class="k">await</span> request(app)
+    .post(<span class="s">'/api/grades'</span>).send({ score: <span class="s">'abc'</span> });
+  expect(res.status).toBe(400);
+  expect(res.body).toHaveProperty(<span class="s">'error'</span>);
+});</code></pre>
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <div class="term"><p class="w">ต่างจาก unit test ตรงไหน</p><p>ไม่ได้เรียก <code>gradeOf</code> ตรง ๆ — <strong>ยิง HTTP</strong> แล้วตรวจ <code>status</code> + <code>body</code> ที่ client จะได้จริง</p></div>
+        <div class="term"><p class="w"><code>async</code> / <code>await</code></p><p>HTTP ต้องรอคำตอบ → ฟังก์ชัน test ต้องเป็น <code>async</code> และ <code>await</code> ทุก request</p></div>
+        <div class="wrong"><p style="margin:0;font-size:1.02rem">ลืม <code>await</code> → test จบก่อนคำตอบมา และ<strong>ผ่านทั้งที่ไม่ได้ตรวจอะไร</strong></p></div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="slide" data-title="supertest + :memory:">
-  <span class="chapbadge">บทที่ 5 <span class="of">/ 9</span> · Integration test</span>
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
   <span class="eyebrow">ต่อยอดจาก W07 · W10</span>
   <h2>supertest ยิง HTTP โดยไม่ต้องเปิดพอร์ต</h2>
   <div class="body center">
@@ -702,72 +873,36 @@ test: {
   </div>
 </section>
 
-<section class="slide" data-title="isolation ต่อ test">
-  <span class="chapbadge">บทที่ 5 <span class="of">/ 9</span> · Integration test</span>
-  <span class="eyebrow cyan">เห็นภาพ</span>
-  <h2>beforeEach = ทุก test เริ่มจากสภาพเดียวกัน</h2>
-  <div class="body">
-    <div class="fig"><svg viewBox="0 0 900 262" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="isolation ต่อ test">
-      <defs><marker id="isoA" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#FBBF24" stroke-width="1.5"/></marker><marker id="isoG" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#6E8F7C" stroke-width="1.5"/></marker></defs>
-      <rect x="30" y="16" width="260" height="56" rx="10" fill="rgba(56,215,237,.12)" stroke="#38D7ED" stroke-width="1.5"/>
-      <text x="160" y="40" text-anchor="middle" class="svg-t">beforeEach → loadSeed()</text>
-      <text x="160" y="60" text-anchor="middle" class="svg-m" fill="#38D7ED">:memory: · 5 รายการใหม่</text>
-      <path d="M160 74 L160 100" stroke="#FBBF24" stroke-width="2" marker-end="url(#isoA)"/>
-      <rect x="30" y="104" width="260" height="62" rx="10" fill="rgba(251,191,36,.12)" stroke="#FBBF24" stroke-width="1.5"/>
-      <text x="160" y="130" text-anchor="middle" class="svg-t">test A · ลบ</text>
-      <text x="160" y="152" text-anchor="middle" class="svg-m" fill="#FBBF24">DELETE REQ-003 → 204</text>
-      <path d="M160 168 L160 192" stroke="#6E8F7C" stroke-width="2" marker-end="url(#isoG)"/>
-      <rect x="30" y="196" width="260" height="34" rx="9" fill="rgba(169,199,184,.07)" stroke="#6E8F7C" stroke-width="1.2" stroke-dasharray="5 4"/>
-      <text x="160" y="218" text-anchor="middle" class="svg-s">จบ test → ฐานข้อมูลก้อนนี้ถูกทิ้ง</text><rect x="320" y="16" width="260" height="56" rx="10" fill="rgba(56,215,237,.12)" stroke="#38D7ED" stroke-width="1.5"/>
-      <text x="450" y="40" text-anchor="middle" class="svg-t">beforeEach → loadSeed()</text>
-      <text x="450" y="60" text-anchor="middle" class="svg-m" fill="#38D7ED">:memory: · 5 รายการใหม่</text>
-      <path d="M450 74 L450 100" stroke="#FBBF24" stroke-width="2" marker-end="url(#isoA)"/>
-      <rect x="320" y="104" width="260" height="62" rx="10" fill="rgba(251,191,36,.12)" stroke="#FBBF24" stroke-width="1.5"/>
-      <text x="450" y="130" text-anchor="middle" class="svg-t">test B · อ่านทั้งหมด</text>
-      <text x="450" y="152" text-anchor="middle" class="svg-m" fill="#FBBF24">GET → 5 รายการ ✓</text>
-      <path d="M450 168 L450 192" stroke="#6E8F7C" stroke-width="2" marker-end="url(#isoG)"/>
-      <rect x="320" y="196" width="260" height="34" rx="9" fill="rgba(169,199,184,.07)" stroke="#6E8F7C" stroke-width="1.2" stroke-dasharray="5 4"/>
-      <text x="450" y="218" text-anchor="middle" class="svg-s">จบ test → ฐานข้อมูลก้อนนี้ถูกทิ้ง</text><rect x="610" y="16" width="260" height="56" rx="10" fill="rgba(56,215,237,.12)" stroke="#38D7ED" stroke-width="1.5"/>
-      <text x="740" y="40" text-anchor="middle" class="svg-t">beforeEach → loadSeed()</text>
-      <text x="740" y="60" text-anchor="middle" class="svg-m" fill="#38D7ED">:memory: · 5 รายการใหม่</text>
-      <path d="M740 74 L740 100" stroke="#FBBF24" stroke-width="2" marker-end="url(#isoA)"/>
-      <rect x="610" y="104" width="260" height="62" rx="10" fill="rgba(251,191,36,.12)" stroke="#FBBF24" stroke-width="1.5"/>
-      <text x="740" y="130" text-anchor="middle" class="svg-t">test C · เพิ่ม</text>
-      <text x="740" y="152" text-anchor="middle" class="svg-m" fill="#FBBF24">POST → REQ-006 ✓</text>
-      <path d="M740 168 L740 192" stroke="#6E8F7C" stroke-width="2" marker-end="url(#isoG)"/>
-      <rect x="610" y="196" width="260" height="34" rx="9" fill="rgba(169,199,184,.07)" stroke="#6E8F7C" stroke-width="1.2" stroke-dasharray="5 4"/>
-      <text x="740" y="218" text-anchor="middle" class="svg-s">จบ test → ฐานข้อมูลก้อนนี้ถูกทิ้ง</text>
-      <text x="450" y="254" text-anchor="middle" class="svg-s">ลำดับการรันไม่มีผล — test B ได้ 5 รายการเสมอ แม้ test A จะลบไปแล้ว · ไม่แตะ campus.db</text>
-    </svg></div>
-    <div class="iact" data-quiz="q4">
-      <p style="margin:0 0 .3rem"><strong>ถ้าใช้ beforeAll (ครั้งเดียว) แทน beforeEach — test B ที่รันหลัง test A จะเป็นอย่างไร</strong></p>
-      <div class="opts"><button class="opt" data-a="0">ผ่านเหมือนเดิม</button><button class="opt" data-a="1">fail — เห็นแค่ 4 รายการ เพราะ test A ลบไปแล้ว</button><button class="opt" data-a="0">error เพราะไม่มีฐานข้อมูล</button></div>
-      <p class="fb"></p>
+<section class="slide" data-title="beforeEach + ตรวจผลข้างเคียง">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
+  <span class="eyebrow ">ทุก test เริ่มจากสภาพเดียวกัน</span>
+  <h2>beforeEach รีเซ็ต DB · แล้วตรวจผลข้างเคียงด้วย GET</h2>
+  <div class="body center">
+    <div class="g2">
+<pre style="margin:0;font-size:.92rem;"><code style="font-size:.92rem">beforeEach(<span class="k">async</span> () =&gt; { <span class="k">await</span> loadSeed(); });   <span class="c">// 5 รายการใหม่ทุกข้อ</span>
+
+test(<span class="s">'DELETE แล้ว GET ซ้ำ → 404'</span>, <span class="k">async</span> () =&gt; {
+  <span class="k">const</span> del = <span class="k">await</span> request(app).delete(<span class="s">'/api/requests/REQ-003'</span>);
+  expect(del.status).toBe(204);
+
+  <span class="k">const</span> get = <span class="k">await</span> request(app).get(<span class="s">'/api/requests/REQ-003'</span>);
+  expect(get.status).toBe(404);      <span class="c">// ตรวจว่าลบจริงใน DB</span>
+});
+
+test(<span class="s">'GET ทั้งหมด → ยังมี 5 รายการ'</span>, <span class="k">async</span> () =&gt; {
+  <span class="k">const</span> r = <span class="k">await</span> request(app).get(<span class="s">'/api/requests'</span>);
+  expect(r.body).toHaveLength(5);    <span class="c">// ไม่โดนผลของ test ก่อนหน้า</span>
+});</code></pre>
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <div class="term"><p class="w">ไม่มี beforeEach จะเกิดอะไร</p><p>test แรกลบ REQ-003 ไปแล้ว → test ที่สองได้ 4 รายการ → <strong>fail เพราะลำดับการรัน</strong> ไม่ใช่เพราะโค้ดผิด</p></div>
+        <div class="term"><p class="w">ตรวจผลข้างเคียง</p><p>status 204 บอกแค่ว่า API ตอบ — <strong>GET ซ้ำ</strong>ถึงยืนยันว่าข้อมูลใน DB เปลี่ยนจริง</p></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="slide" data-title="✓ สรุปบทที่ 5">
-  <span class="chapbadge">บทที่ 5 <span class="of">/ 9</span> · Integration test</span>
-  <h2>จบบทที่ 5 — Integration test</h2>
-  <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>integration test ยิง HTTP ผ่านทุกชั้น — จับ bug จาก<strong>ลำดับการทำงาน</strong> (BUG #1) และ <strong>status code</strong> (BUG #3)</li><li>supertest รับ <code>app</code> ตรง ๆ — ไม่ต้องเปิดพอร์ต</li><li><code>DB_FILE: ':memory:'</code> + <code>beforeEach(loadSeed)</code> = <strong>isolation</strong> · ไม่แตะ campus.db</li><li>ต้องครอบคลุม <strong>PUT และ DELETE</strong> ไม่ใช่แค่ GET/POST</li></ul></div>
-    <div class="nextup"><b>ต่อไป →</b> บทที่ 6 — coverage: test วิ่งผ่านโค้ดตรงไหนบ้าง</div>
-    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span><span class=""></span></div>
-  </div>
-</section>
-
-<section class="slide divider" data-title="บทที่ 6 · Coverage">
-  <span class="grp">กลุ่ม 2 · ลงมือทดสอบ</span>
-  <p class="bignum">06</p>
-  <h2>Coverage</h2>
-  <p class="whatfor">วัดว่า test วิ่งผ่านโค้ดบรรทัดไหน — หาจุดมืดที่ยังไม่มี test ส่องถึง</p>
-  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 9 นาที</span><span class="chip a">CP46</span></div>
-  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span></div>
-</section>
-
 <section class="slide" data-title="npm run coverage">
-  <span class="chapbadge">บทที่ 6 <span class="of">/ 9</span> · Coverage</span>
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
   <span class="eyebrow">ผลจริงของ starter</span>
   <h2>npm run coverage → เห็นจุดมืด</h2>
   <div class="body center">
@@ -794,19 +929,9 @@ All files         |   <span class="hl">60.13</span> |
   </div>
 </section>
 
-<section class="slide" data-title="✓ สรุปบทที่ 6">
-  <span class="chapbadge">บทที่ 6 <span class="of">/ 9</span> · Coverage</span>
-  <h2>จบบทที่ 6 — Coverage</h2>
-  <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li><code>npm run coverage</code> → ตารางใน terminal + <code>api/coverage/index.html</code></li><li>Statements · Branches · Functions · Lines — และดู <strong>Uncovered Line #s</strong> เพื่อหาจุดมืด</li><li>0% มี 2 แบบ: <strong>dead code</strong> (logger.js → ลบ) · <strong>ยังไม่มี test</strong> (errorHandler → เพิ่ม test)</li><li>starter ≈ 60% → เฉลย ≈ 87% · coverage สูง ≠ test ดี — ต้องมี <code>expect</code> ที่มีความหมาย</li></ul></div>
-    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือ CP46</strong> — แล้วเข้ากลุ่ม 3 debug</div>
-    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span></div>
-  </div>
-</section>
-
 <section class="slide" data-title="🏫 ลงมือ CP46">
   <span class="chapbadge">🏫 ลงมือทำ · CP46</span>
-  <span class="eyebrow amber">10:30–11:05 · ใช้ความรู้บท 5–6</span>
+  <span class="eyebrow amber">10:35–11:00 · ใช้ความรู้บทที่ 3</span>
   <h2>CP46 · integration test ≥ 12 + coverage</h2>
   <div class="body center">
     <pre style="margin:0;font-size:1rem"><code style="font-size:1rem"><span class="c"># api/tests/integration/requests.api.test.js — TODO W12-INTEG</span>
@@ -817,23 +942,110 @@ npm test --prefix api
 npm run coverage             <span class="c"># เปิด api/coverage/index.html หาไฟล์/บรรทัดที่ยังมืด</span></code></pre>
     <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — integration <strong>≥ 12 ข้อ</strong> ครอบคลุม <strong>PUT และ DELETE</strong> · api test รวม <strong>≥ 22 ข้อผ่านหมด</strong> · มี script <code>coverage</code> + <code>@vitest/coverage-v8</code> · checker ข้อ CP46 ครบ <strong>4/4</strong></p></div>
     <div class="note"><p style="margin:0">test fail ระหว่างเขียน? อาจเป็น bug จากผู้ใช้ — จดไว้ แล้วไล่ใน CP47 · ⭐ Challenge: coverage ≥ 85% · CI รัน <code>npm test</code> ทุกครั้งที่ push</p></div>
-    <div class="panel labstop tmrow"><span class="bigtime" id="t46">35:00</span>
-      <div class="timerbtns"><button data-timer="t46" data-act="start" data-min="35">▶ เริ่ม</button><button data-timer="t46" data-act="pause" data-min="35">⏸ พัก</button><button data-timer="t46" data-act="reset" data-min="35">↺</button></div>
-      <p>CP46 · 35 นาที</p></div>
+    <div class="panel labstop tmrow"><span class="bigtime" id="t46">25:00</span>
+      <div class="timerbtns"><button data-timer="t46" data-act="start" data-min="25">▶ เริ่ม</button><button data-timer="t46" data-act="pause" data-min="25">⏸ พัก</button><button data-timer="t46" data-act="reset" data-min="25">↺</button></div>
+      <p>CP46 · 25 นาที</p></div>
   </div>
 </section>
 
-<section class="slide divider" data-title="บทที่ 7 · กระบวนการ debug">
-  <span class="grp">กลุ่ม 3 · Debug อย่างเป็นขั้นตอน</span>
-  <p class="bignum">07</p>
-  <h2>กระบวนการ debug 6 ขั้น</h2>
-  <p class="whatfor">ตั้งสมมติฐานแล้วพิสูจน์ด้วยหลักฐาน — ไม่ใช่ลองเปลี่ยนโค้ดจนอาการหาย</p>
-  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 10 นาที</span><span class="chip a">CP47</span></div>
-  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span></div>
+<section class="slide" data-title="✓ สรุปบทที่ 3">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
+  <h2>จบบทที่ 3 — Integration test · supertest</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>unit test มองไม่เห็น<strong>รอยต่อ</strong> — middleware · route · status code · ลำดับการทำงานกับ DB</li><li>integration test = <strong>ยิง HTTP</strong> ผ่านทุกชั้น · DB ทดสอบรีเซ็ตด้วย <code>beforeEach</code> · ตรวจ status + body + ผลข้างเคียง</li><li>supertest: <code>await request(app).post(url).send(body)</code> → <code>res.status</code> · <code>res.body</code> · ไม่ต้องเปิดพอร์ต</li><li>แยก <code>createApp()</code> ออกจาก <code>listen</code> · <code>DB_FILE=:memory:</code> ไม่แตะ <code>campus.db</code></li><li><code>npm run coverage</code> → หาบรรทัดที่ยังไม่มี test ส่องถึง</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>บทที่ 4</strong> — test ของ dev ผ่านหมด · แล้วผู้ใช้ล่ะ</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 4 · UAT · ผู้ใช้ยอมรับ">
+  <span class="grp">ระดับของผู้ใช้</span>
+  <p class="bignum">04</p>
+  <h2>UAT — User Acceptance Testing</h2>
+  <p class="whatfor">ผู้ใช้จริงตรวจว่าระบบตรงความต้องการ ก่อนรับมอบ — ไม่ใช่ test ที่ dev เขียน</p>
+  <div class="mins"><span class="chip">🏫 เรียนในห้อง</span><span class="chip c">≈ 7 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span></div>
+</section>
+
+<section class="slide" data-title="UAT คืออะไร">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 5</span> · UAT · ผู้ใช้ยอมรับ</span>
+  <span class="eyebrow ">มุมของผู้ใช้</span>
+  <h2>UAT — ผู้ใช้ตรวจตามเกณฑ์ยอมรับ</h2>
+  <div class="body center">
+    <div class="g21">
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <div class="term"><p class="w">ใคร · เมื่อไร · ที่ไหน</p><p><strong>ผู้ใช้จริง</strong> (เจ้าหน้าที่ · ลูกค้า) · <strong>ก่อนรับมอบ</strong> · บนระบบที่ deploy แล้ว (เหมือน production)</p></div>
+        <div class="term"><p class="w">ตรวจอะไร</p><p>ทำงานตาม<strong>สถานการณ์จริง</strong>แล้วได้ผลตรงความต้องการไหม — ไม่ดูโค้ด</p></div>
+        <div class="term"><p class="w">ผลที่ได้</p><p>ผ่าน → รับมอบ · ไม่ผ่าน → <strong>bug report</strong> (อาการ ไม่ใช่สาเหตุ) กลับมาให้ dev</p></div>
+      </div>
+      <div class="panel">
+        <h3 style="margin-top:0">เกณฑ์ยอมรับ · Given / When / Then</h3>
+        <p style="font-size:1.08rem;margin:.3rem 0"><strong>Given</strong> คำร้อง REQ-004 ถูกเจ้าหน้าที่อีกคนลบไปแล้ว</p>
+        <p style="font-size:1.08rem;margin:.3rem 0"><strong>When</strong> ผมกดเปลี่ยนสถานะ REQ-004 เป็น "เสร็จสิ้น"</p>
+        <p style="font-size:1.08rem;margin:.3rem 0"><strong>Then</strong> เห็นข้อความ "ไม่พบคำร้อง" — ไม่ใช่ error 500</p>
+        <p class="muted" style="margin:.6rem 0 0;font-size:1rem">เขียนด้วยภาษาผู้ใช้ · ทดสอบด้วยมือ · จดผลผ่าน/ไม่ผ่าน</p>
+      </div>
+    </div>
+    <div class="note"><p style="margin:0;font-size:1.08rem">dev แปลงเกณฑ์ยอมรับแต่ละข้อเป็น integration test ได้ → <code>PUT /api/requests/REQ-999</code> ต้องได้ <strong>404</strong></p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="ผู้ใช้แจ้งมา 3 เรื่อง">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 5</span> · UAT · ผู้ใช้ยอมรับ</span>
+  <span class="eyebrow red">ผล UAT ที่ไม่ผ่าน · BUG_REPORTS.md · มีแต่อาการ ยังไม่มีใครรู้สาเหตุ</span>
+  <h2>ผู้ใช้แจ้งมา 3 เรื่อง</h2>
+  <div class="body center">
+    <div class="three">
+      <div class="card"><div class="ic">🏢</div><h3>#1 · เจ้าหน้าที่ฝ่ายอาคาร</h3><p>ลบคำร้องที่ซ้ำไป 1 รายการ พอนักศึกษาส่งคำร้องใหม่ ขึ้น "เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์" — เมื่อวานยังส่งได้</p></div>
+      <div class="card"><div class="ic">📊</div><h3>#2 · หัวหน้าฝ่ายบริการ</h3><p>การ์ด "กำลังดำเนินการ" บน Dashboard บอก 0 แต่ในรายการด้านล่างเห็นคำร้อง in-progress อยู่</p></div>
+      <div class="card"><div class="ic">🖥️</div><h3>#3 · เจ้าหน้าที่ IT</h3><p>เปลี่ยนสถานะคำร้องที่เพื่อนเพิ่งลบ ได้ error 500 — น่าจะบอกว่า "ไม่พบคำร้อง" มากกว่า</p></div>
+    </div>
+    <pre style="margin:0;font-size:1.02rem"><code style="font-size:1.02rem">npm install --prefix api &amp;&amp; npm install --prefix frontend
+npm test
+<span class="c"># api       →  Tests  <span class="okc">11 passed (11)</span></span>
+<span class="c"># frontend  →  Tests  <span class="okc">1 passed (1)</span></span></code></pre>
+    <div class="whybox"><p class="q">unit + integration ผ่านหมด — แต่ UAT ไม่ผ่าน 3 เรื่อง</p><p>เพราะ test ส่องเฉพาะกรณีที่เขียนไว้ · <strong>ไม่มี test ไหนลอง "ลบแล้วเพิ่ม" หรือ "เปลี่ยนสถานะของที่ถูกลบ"</strong></p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="เทียบ 3 ระดับที่ใช้วันนี้">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 5</span> · UAT · ผู้ใช้ยอมรับ</span>
+  <span class="eyebrow ">สรุปเทียบ</span>
+  <h2>Unit · Integration · UAT ในโปรเจกต์เดียวกัน</h2>
+  <div class="body center">
+    <table style="font-size:1.02rem">
+      <tr><th></th><th style="color:#4ADE80">Unit</th><th style="color:#38D7ED">Integration</th><th style="color:#FBBF24">UAT</th></tr>
+      <tr><td>คำถาม</td><td>ฟังก์ชันนี้คิดถูกไหม</td><td>API ทั้งเส้นทำงานถูกไหม</td><td>ตรงกับที่ผู้ใช้ต้องการไหม</td></tr>
+      <tr><td>ใคร</td><td>dev</td><td>dev</td><td>ผู้ใช้จริง</td></tr>
+      <tr><td>เครื่องมือ</td><td>Vitest</td><td>Vitest + supertest</td><td>เกณฑ์ยอมรับ + checklist</td></tr>
+      <tr><td>ตัวอย่างในแลป</td><td>details 10 ตัว → <code>[]</code></td><td><code>PUT REQ-999</code> → 404</td><td>"เปลี่ยนสถานะของที่ถูกลบ ต้องบอกไม่พบ"</td></tr>
+      <tr><td>bug ที่จับได้</td><td>BUG #0 (ค่าขอบ)</td><td>BUG #1 · #3</td><td>ผู้ใช้แจ้ง #1 · #2 · #3</td></tr>
+    </table>
+    <div class="win"><p style="margin:0;font-size:1.12rem">UAT บอก<strong>อาการ</strong> → dev <strong>debug หาสาเหตุ</strong> → แก้ → เขียน <strong>unit / integration test</strong> กันไม่ให้กลับมา</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="✓ สรุปบทที่ 4">
+  <span class="chapbadge">บทที่ 4 <span class="of">/ 5</span> · UAT · ผู้ใช้ยอมรับ</span>
+  <h2>จบบทที่ 4 — UAT · ผู้ใช้ยอมรับ</h2>
+  <div class="body center">
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>UAT = <strong>ผู้ใช้จริง</strong>ทดสอบตามสถานการณ์จริงก่อนรับมอบ · ไม่ดูโค้ด · ทำด้วยมือ</li><li>เกณฑ์ยอมรับเขียนแบบ <strong>Given / When / Then</strong> ด้วยภาษาผู้ใช้</li><li>UAT ไม่ผ่าน → bug report ที่มีแต่<strong>อาการ</strong> (BUG_REPORTS.md 3 เรื่อง)</li><li>test ผ่าน ≠ ไม่มี bug — แปลว่า<strong>ยังไม่มี test สำหรับกรณีนั้น</strong></li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> <strong>บทที่ 5</strong> — จากอาการ → หาสาเหตุอย่างเป็นขั้นตอน</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-title="บทที่ 5 · Debug + regression">
+  <span class="grp">จากอาการสู่สาเหตุ</span>
+  <p class="bignum">05</p>
+  <h2>Debug อย่างเป็นขั้นตอน + regression test</h2>
+  <p class="whatfor">ตั้งสมมติฐานแล้วพิสูจน์ด้วยเครื่องมือ — แล้วเขียน test กันไม่ให้กลับมา</p>
+  <div class="mins"><span class="chip">🏫 เรียนในห้อง</span><span class="chip c">≈ 8 นาที</span></div>
+  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span></div>
 </section>
 
 <section class="slide" data-title="debug 6 ขั้น">
-  <span class="chapbadge">บทที่ 7 <span class="of">/ 9</span> · กระบวนการ debug</span>
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 5</span> · Debug + regression</span>
   <span class="eyebrow cyan">เห็นภาพ</span>
   <h2>อาการ → ทำซ้ำ → แยกชั้น → สมมติฐาน → แก้ → กัน</h2>
   <div class="body">
@@ -873,7 +1085,7 @@ npm run coverage             <span class="c"># เปิด api/coverage/index.h
 </section>
 
 <section class="slide" data-title="🎮 แยกชั้นหา bug">
-  <span class="chapbadge">บทที่ 7 <span class="of">/ 9</span> · กระบวนการ debug</span>
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 5</span> · Debug + regression</span>
   <span class="eyebrow amber">ลองเล่น — เลือก bug แล้วไล่ทีละขั้น</span>
   <h2>ตัดครึ่งด้วยคำถามเดียว: API ส่งข้อมูลถูกไหม</h2>
   <div class="body">
@@ -894,27 +1106,8 @@ npm run coverage             <span class="c"># เปิด api/coverage/index.h
   </div>
 </section>
 
-<section class="slide" data-title="✓ สรุปบทที่ 7">
-  <span class="chapbadge">บทที่ 7 <span class="of">/ 9</span> · กระบวนการ debug</span>
-  <h2>จบบทที่ 7 — กระบวนการ debug</h2>
-  <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>debug 6 ขั้น: <strong>อาการ → ทำซ้ำ → แยกชั้น → สมมติฐาน+หลักฐาน → แก้ → regression test</strong></li><li>ทำซ้ำให้ได้ก่อนแก้ — ทำซ้ำไม่ได้ก็พิสูจน์ไม่ได้ว่าแก้หาย</li><li>แยกชั้นด้วย DevTools → Network: API ส่งถูกไหม → ตัดครึ่งปัญหาได้ทันที</li><li>หลักฐานไม่ตรงสมมติฐาน → ย้อนกลับไปแยกชั้นใหม่</li></ul></div>
-    <div class="nextup"><b>ต่อไป →</b> บทที่ 8 — เครื่องมือหาหลักฐาน 3 ชิ้น</div>
-    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span></div>
-  </div>
-</section>
-
-<section class="slide divider" data-title="บทที่ 8 · เครื่องมือ debug">
-  <span class="grp">กลุ่ม 3 · Debug อย่างเป็นขั้นตอน</span>
-  <p class="bignum">08</p>
-  <h2>เครื่องมือ debug</h2>
-  <p class="whatfor">stack trace · breakpoint · DevTools — เครื่องมือละ 1 bug จากผู้ใช้</p>
-  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 15 นาที</span><span class="chip a">CP47</span></div>
-  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span></div>
-</section>
-
 <section class="slide" data-title="BUG #3 · stack trace">
-  <span class="chapbadge">บทที่ 8 <span class="of">/ 9</span> · เครื่องมือ debug</span>
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 5</span> · Debug + regression</span>
   <span class="eyebrow red">BUG #3 · เจ้าหน้าที่ IT</span>
   <h2>อ่าน stack trace จากบนลงล่าง</h2>
   <div class="body center">
@@ -937,7 +1130,7 @@ npm run coverage             <span class="c"># เปิด api/coverage/index.h
 </section>
 
 <section class="slide" data-title="BUG #1 · breakpoint">
-  <span class="chapbadge">บทที่ 8 <span class="of">/ 9</span> · เครื่องมือ debug</span>
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 5</span> · Debug + regression</span>
   <span class="eyebrow red">BUG #1 · เจ้าหน้าที่ฝ่ายอาคาร</span>
   <h2>log บอก "อะไร" — breakpoint บอก "ทำไม"</h2>
   <div class="body">
@@ -975,7 +1168,7 @@ npm run coverage             <span class="c"># เปิด api/coverage/index.h
 </section>
 
 <section class="slide" data-title="BUG #2 · DevTools Network">
-  <span class="chapbadge">บทที่ 8 <span class="of">/ 9</span> · เครื่องมือ debug</span>
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 5</span> · Debug + regression</span>
   <span class="eyebrow red">BUG #2 · หัวหน้าฝ่ายบริการ</span>
   <h2>Network บอกว่า API ส่งถูก → ปัญหาอยู่ frontend</h2>
   <div class="body center">
@@ -1006,45 +1199,8 @@ npm run coverage             <span class="c"># เปิด api/coverage/index.h
   </div>
 </section>
 
-<section class="slide" data-title="✓ สรุปบทที่ 8">
-  <span class="chapbadge">บทที่ 8 <span class="of">/ 9</span> · เครื่องมือ debug</span>
-  <h2>จบบทที่ 8 — เครื่องมือ debug</h2>
-  <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li><strong>stack trace</strong> — บรรทัดแรกบอก "อะไร" · บรรทัดแรกที่เป็นไฟล์ของเราบอก "ที่ไหน" (BUG #3)</li><li><strong>JavaScript Debug Terminal + breakpoint</strong> — หยุดดูค่าตัวแปรจริง ไม่ต้องเดา ไม่ต้องแทรก console.log (BUG #1)</li><li><strong>DevTools Network</strong> — ดู request/response จริง ตัดสินว่า bug อยู่ชั้นไหน (BUG #2)</li><li>dev mode: errorHandler ส่ง <code>stack</code> 3 บรรทัดใน response และ log เต็มใน terminal · production ไม่ส่ง</li></ul></div>
-    <div class="nextup"><b>ต่อไป →</b> <strong>ลงมือ CP47</strong> — debug 3 bug จากผู้ใช้</div>
-    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span></div>
-  </div>
-</section>
-
-<section class="slide" data-title="🏫 ลงมือ CP47">
-  <span class="chapbadge">🏫 ลงมือทำ · CP47</span>
-  <span class="eyebrow amber">11:05–11:55 · ใช้ความรู้บท 7–8</span>
-  <h2>CP47 · debug 3 bug + regression test + DEBUG_LOG.md</h2>
-  <div class="body center">
-    <table style="font-size:1.04rem">
-      <tr><th>BUG</th><th>ทำซ้ำ</th><th>เครื่องมือหลัก</th><th>regression test</th></tr>
-      <tr><td><strong>#1</strong></td><td>DELETE REQ-002 → POST</td><td>log → breakpoint ใน <code>nextId()</code></td><td>DELETE REQ-002 แล้ว POST → 201 รหัสไม่ซ้ำ</td></tr>
-      <tr><td><strong>#2</strong></td><td>เปิด Dashboard</td><td>DevTools Network → Sources</td><td>frontend "นับครบทุกสถานะ"</td></tr>
-      <tr><td><strong>#3</strong></td><td>PUT REQ-999</td><td>อ่าน stack trace</td><td>PUT REQ-999 → 404</td></tr>
-    </table>
-    <div class="win"><p style="margin:0;font-size:1.12rem">ทุก bug: <strong>test ทำซ้ำอาการ → fail → แก้ → ผ่าน</strong> → จด DEBUG_LOG.md<br><strong>✓ ผ่านเมื่อ</strong> — 3 bug หาย · มี regression test ครบ 3 · frontend test ≥ 2 ผ่านหมด · <code>DEBUG_LOG.md</code> ระบุสาเหตุครบ <strong>4 bug</strong> (รวม #0) · <code>/api/health</code> ยังผ่าน · checker ข้อ CP47 ครบ <strong>9/9</strong></p></div>
-    <div class="panel labstop tmrow"><span class="bigtime" id="t47">50:00</span>
-      <div class="timerbtns"><button data-timer="t47" data-act="start" data-min="50">▶ เริ่ม</button><button data-timer="t47" data-act="pause" data-min="50">⏸ พัก</button><button data-timer="t47" data-act="reset" data-min="50">↺</button></div>
-      <p>CP47 · 50 นาที</p></div>
-  </div>
-</section>
-
-<section class="slide divider" data-title="บทที่ 9 · Regression &amp; สรุป">
-  <span class="grp">กลุ่ม 3 · Debug อย่างเป็นขั้นตอน</span>
-  <p class="bignum">09</p>
-  <h2>Regression test, DEBUG_LOG และสรุป</h2>
-  <p class="whatfor">กันไม่ให้ bug เดิมกลับมา · บันทึกหลักฐาน · ตรวจด้วย checker แล้วเชื่อมไปช่วงบ่าย</p>
-  <div class="mins"><span class="chip">🏫 เรียนและลงมือในห้อง</span><span class="chip c">≈ 10 นาที</span><span class="chip a">CP47</span></div>
-  <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span></div>
-</section>
-
 <section class="slide" data-title="regression test + DEBUG_LOG">
-  <span class="chapbadge">บทที่ 9 <span class="of">/ 9</span> · Regression &amp; สรุป</span>
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 5</span> · Debug + regression</span>
   <span class="eyebrow">red → green</span>
   <h2>test ที่ fail ก่อนแก้ = หลักฐานว่าแก้ถูกจุด</h2>
   <div class="body center">
@@ -1079,8 +1235,26 @@ test(<span class="s">'ลบรายการกลาง แล้วเพิ
   </div>
 </section>
 
+<section class="slide" data-title="🏫 ลงมือ CP47">
+  <span class="chapbadge">🏫 ลงมือทำ · CP47</span>
+  <span class="eyebrow amber">11:15–11:55 · ใช้ความรู้บทที่ 5</span>
+  <h2>CP47 · debug 3 bug + regression test + DEBUG_LOG.md</h2>
+  <div class="body center">
+    <table style="font-size:1.04rem">
+      <tr><th>BUG</th><th>ทำซ้ำ</th><th>เครื่องมือหลัก</th><th>regression test</th></tr>
+      <tr><td><strong>#1</strong></td><td>DELETE REQ-002 → POST</td><td>log → breakpoint ใน <code>nextId()</code></td><td>DELETE REQ-002 แล้ว POST → 201 รหัสไม่ซ้ำ</td></tr>
+      <tr><td><strong>#2</strong></td><td>เปิด Dashboard</td><td>DevTools Network → Sources</td><td>frontend "นับครบทุกสถานะ"</td></tr>
+      <tr><td><strong>#3</strong></td><td>PUT REQ-999</td><td>อ่าน stack trace</td><td>PUT REQ-999 → 404</td></tr>
+    </table>
+    <div class="win"><p style="margin:0;font-size:1.12rem">ทุก bug: <strong>test ทำซ้ำอาการ → fail → แก้ → ผ่าน</strong> → จด DEBUG_LOG.md<br><strong>✓ ผ่านเมื่อ</strong> — 3 bug หาย · มี regression test ครบ 3 · frontend test ≥ 2 ผ่านหมด · <code>DEBUG_LOG.md</code> ระบุสาเหตุครบ <strong>4 bug</strong> (รวม #0) · <code>/api/health</code> ยังผ่าน · checker ข้อ CP47 ครบ <strong>9/9</strong></p></div>
+    <div class="panel labstop tmrow"><span class="bigtime" id="t47">40:00</span>
+      <div class="timerbtns"><button data-timer="t47" data-act="start" data-min="40">▶ เริ่ม</button><button data-timer="t47" data-act="pause" data-min="40">⏸ พัก</button><button data-timer="t47" data-act="reset" data-min="40">↺</button></div>
+      <p>CP47 · 40 นาที</p></div>
+  </div>
+</section>
+
 <section class="slide" data-title="✅ check-week12">
-  <span class="chapbadge">บทที่ 9 <span class="of">/ 9</span> · Regression &amp; สรุป</span>
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 5</span> · Debug + regression</span>
   <span class="eyebrow amber">11:55–12:00 · ตรวจก่อนพักเที่ยง</span>
   <h2>check-week12 --inclass · 20 ข้อ</h2>
   <div class="body center">
@@ -1099,13 +1273,13 @@ node --disable-warning=ExperimentalWarning check-week12.mjs --inclass</code></pr
   </div>
 </section>
 
-<section class="slide" data-title="✓ สรุปบทที่ 9">
-  <span class="chapbadge">บทที่ 9 <span class="of">/ 9</span> · Regression &amp; สรุป</span>
-  <h2>จบบทที่ 9 — Regression &amp; สรุป</h2>
+<section class="slide" data-title="✓ สรุปบทที่ 5">
+  <span class="chapbadge">บทที่ 5 <span class="of">/ 5</span> · Debug + regression</span>
+  <h2>จบบทที่ 5 — Debug + regression</h2>
   <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li><strong>regression test</strong> — เขียนให้ fail ก่อนแก้ → ผ่านหลังแก้ = หลักฐานว่าแก้ถูกจุด และกันไม่ให้กลับมา</li><li><code>DEBUG_LOG.md</code> 6 ข้อต่อ bug — อาการ · วิธีทำซ้ำ · เครื่องมือ · สาเหตุ (ไฟล์:บรรทัด) · วิธีแก้ · test ที่กัน</li><li>เช้านี้: test case → unit → integration + coverage → debug 4 bug ด้วยเครื่องมือที่ถูกตัว</li><li>ไฟล์ส่ง: TEST_CASES.md ≥ 8 · unit ≥ 10 · integration ≥ 12 · api รวม ≥ 22 ผ่านหมด · frontend ≥ 2 · DEBUG_LOG ครบ 4</li></ul></div>
-    <div class="nextup"><b>ต่อไป →</b> ช่วงบ่าย Week 13 — พัฒนาอย่างปลอดภัยและพร้อมส่งมอบ</div>
-    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span></div>
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>debug 6 ขั้น: อาการ → ทำซ้ำ → แยกชั้น → สมมติฐาน + หลักฐาน → แก้ → regression test</li><li>เครื่องมือ: <strong>stack trace</strong> (BUG #3) · <strong>breakpoint</strong> (BUG #1) · <strong>DevTools Network → Sources</strong> (BUG #2)</li><li>regression test: เขียนให้ <strong>fail ก่อนแก้</strong> → ผ่านหลังแก้ = หลักฐานว่าแก้ถูกจุด</li><li><code>DEBUG_LOG.md</code> ต่อ bug: อาการ · วิธีทำซ้ำ · เครื่องมือ · สาเหตุ · วิธีแก้ · test ที่กัน</li><li>ภาพรวมเช้านี้: <strong>Unit → Integration → UAT</strong> แล้ว debug สิ่งที่ UAT เจอ</li></ul></div>
+    <div class="nextup"><b>ต่อไป →</b> บ่ายนี้ Week 13 — test เช้านี้คือตาข่ายนิรภัยตอนเพิ่ม login</div>
+    <div class="track"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="now"></span></div>
   </div>
 </section>
 
@@ -1141,7 +1315,7 @@ node --disable-warning=ExperimentalWarning check-week12.mjs --inclass</code></pr
 </div></div>
 <div class="bar"><i id="progress"></i></div>
 <div class="hud">
-  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 42</span><button id="btnNext">→</button>
+  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 46</span><button id="btnNext">→</button>
   <button id="btnToc">สารบัญ</button><button id="btnMinus">A−</button><button id="btnPlus">A+</button><button id="btnFull">เต็มจอ</button>
 </div>
 <div class="toc" id="toc" role="dialog"><h3>สารบัญ — กด T หรือ Esc ปิด</h3><ol id="tocList"></ol></div>
