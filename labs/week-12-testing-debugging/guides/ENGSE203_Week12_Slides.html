@@ -324,11 +324,11 @@ pre .okc{color:#4ADE80;font-weight:600}
   <div class="body center">
     <table style="font-size:1rem">
       <tr><th>เวลา</th><th>บท / CP</th><th>ทำอะไร</th></tr>
-      <tr><td><code>09:00–09:20</code></td><td>บท 1–2</td><td>ระดับของ test · หลักการ unit test · Vitest · เลือก test case</td></tr>
-      <tr><td><code>09:20–09:35</code></td><td><strong>CP44</strong></td><td>ออกแบบ test case → <code>TEST_CASES.md</code></td></tr>
-      <tr><td><code>09:35–10:10</code></td><td>บท 2 → <strong>CP45</strong></td><td>ใช้แบบเดียวกันกับ <code>requestValidator.js</code> · unit test ≥ 10 ข้อ</td></tr>
-      <tr><td><code>10:10–10:20</code></td><td>☕</td><td class="muted">พัก</td></tr>
-      <tr><td><code>10:20–11:00</code></td><td>บท 3 → <strong>CP46</strong></td><td>integration test ด้วย supertest · coverage</td></tr>
+      <tr><td><code>09:00–09:25</code></td><td>บท 1–2</td><td>ระดับของ test · unit test · Vitest · หา test case จากโครงสร้างหลังบ้าน</td></tr>
+      <tr><td><code>09:25–09:40</code></td><td><strong>CP44</strong></td><td>ออกแบบ test case → <code>TEST_CASES.md</code></td></tr>
+      <tr><td><code>09:40–10:15</code></td><td>บท 2 → <strong>CP45</strong></td><td>แพทเทิร์นเขียนไฟล์ test → ใช้กับ <code>requestValidator.js</code> · unit test ≥ 10 ข้อ</td></tr>
+      <tr><td><code>10:15–10:25</code></td><td>☕</td><td class="muted">พัก</td></tr>
+      <tr><td><code>10:25–11:00</code></td><td>บท 3 → <strong>CP46</strong></td><td>integration test ด้วย supertest · coverage</td></tr>
       <tr><td><code>11:00–11:15</code></td><td>บท 4–5</td><td>UAT · ผู้ใช้แจ้ง 3 เรื่อง · กระบวนการ debug</td></tr>
       <tr><td><code>11:15–11:55</code></td><td><strong>CP47</strong></td><td>debug 3 bug + regression test + <code>DEBUG_LOG.md</code></td></tr>
       <tr><td><code>11:55–12:00</code></td><td>✅</td><td><code>check-week12 --inclass</code></td></tr>
@@ -428,8 +428,8 @@ pre .okc{color:#4ADE80;font-weight:600}
   <span class="grp">ระดับที่ 1</span>
   <p class="bignum">02</p>
   <h2>Unit test ด้วย Vitest</h2>
-  <p class="whatfor">หลักการ → เครื่องมือ → ตัวอย่างง่าย → ตัวอย่างเดียวกับในแลป</p>
-  <div class="mins"><span class="chip">🏫 เรียนในห้อง</span><span class="chip c">≈ 25 นาที</span></div>
+  <p class="whatfor">หลักการ → เครื่องมือ → ตัวอย่างง่าย → หา test case จากหลังบ้าน → แพทเทิร์นไฟล์ test → แลป</p>
+  <div class="mins"><span class="chip">🏫 เรียนในห้อง</span><span class="chip c">≈ 30 นาที</span></div>
   <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span></div>
 </section>
 
@@ -593,9 +593,75 @@ describe(<span class="s">'gradeOf'</span>, () =&gt; {          <span class="c">/
   </div>
 </section>
 
+<section class="slide" data-title="หลังบ้านแบ่งชั้น → test อะไรที่ไหน">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
+  <span class="eyebrow ">หา test case จากไหน ①</span>
+  <h2>เริ่มจากโครงสร้างหลังบ้าน — แต่ละชั้นทำหน้าที่เดียว</h2>
+  <div class="body center">
+    <div class="fig" style="flex:0 0 auto"><svg viewBox="0 0 900 92" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="เส้นทางของคำขอ POST ผ่านแต่ละชั้น">
+      <defs><marker id="lyA" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#A9C7B8" stroke-width="1.5"/></marker></defs>
+      <text x="8" y="20" class="svg-s" style="fill:#FBBF24">POST /api/requests</text>
+      <g class="svg-s">
+      <rect x="0" y="34" width="150" height="50" rx="9" fill="rgba(56,215,237,.08)" stroke="#38D7ED"/><text x="75" y="64" text-anchor="middle">routes</text>
+      <rect x="180" y="34" width="150" height="50" rx="9" fill="rgba(56,215,237,.08)" stroke="#38D7ED"/><text x="255" y="64" text-anchor="middle">middleware</text>
+      <rect x="360" y="34" width="150" height="50" rx="9" fill="rgba(56,215,237,.08)" stroke="#38D7ED"/><text x="435" y="64" text-anchor="middle">controllers</text>
+      <rect x="540" y="34" width="150" height="50" rx="9" fill="rgba(56,215,237,.08)" stroke="#38D7ED"/><text x="615" y="64" text-anchor="middle">services</text>
+      <rect x="720" y="34" width="180" height="50" rx="9" fill="rgba(74,222,128,.16)" stroke="#4ADE80" stroke-width="2"/><text x="810" y="64" text-anchor="middle" style="fill:#86EFAC">validators (กฎ)</text>
+      </g>
+      <g stroke="#A9C7B8" stroke-width="1.6"><path d="M151 59 L177 59" marker-end="url(#lyA)"/><path d="M331 59 L357 59" marker-end="url(#lyA)"/><path d="M511 59 L537 59" marker-end="url(#lyA)"/></g>
+      <path d="M255 86 C 255 92, 810 92, 810 86" fill="none" stroke="#4ADE80" stroke-dasharray="4 4"/>
+    </svg></div>
+    <table style="font-size:.98rem">
+      <tr><th>ชั้น · ไฟล์ในแลป</th><th>ทำหน้าที่</th><th>test ระดับ</th></tr>
+      <tr><td><code>routes/requestRoutes.js</code></td><td>จับคู่ method + path → middleware → controller</td><td>integration</td></tr>
+      <tr><td><code>middleware/validateRequest.js</code></td><td>เรียกกฎตรวจข้อมูล ถ้าผิดตอบ <strong>400</strong></td><td>integration</td></tr>
+      <tr><td><code>controllers/requestController.js</code></td><td>อ่าน <code>req</code> → เรียก service → เลือก status code</td><td>integration</td></tr>
+      <tr><td><code>services/requestService.js</code></td><td>ทำงานกับข้อมูล + DB (<code>create</code> · <code>remove</code> · <code>loadSeed</code>)</td><td>integration (ผ่าน DB)</td></tr>
+      <tr><td><code>validators/requestValidator.js</code></td><td><strong>กฎของระบบ</strong> — pure function ไม่แตะ req/res/DB</td><td><strong style="color:#4ADE80">unit</strong></td></tr>
+    </table>
+    <div class="three">
+      <div class="card"><h3>หา test ง่าย</h3><p>อยากรู้กฎตรวจข้อมูล → เปิดไฟล์เดียว (<code>validators</code>)</p></div>
+      <div class="card"><h3>test ได้ตรงจุด</h3><p>กฎแยกเป็น pure function → unit test ได้โดยไม่เปิด server</p></div>
+      <div class="card"><h3>fail แล้วรู้ชั้น</h3><p>unit fail = กฎผิด · unit ผ่านแต่ integration fail = รอยต่อผิด</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="อ่านกฎจากโค้ด → ได้ test case">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
+  <span class="eyebrow ">หา test case จากไหน ②</span>
+  <h2>อ่านกฎในชั้น validator → แปลงเป็น test case</h2>
+  <div class="body center">
+    <div class="g2">
+<pre style="margin:0;font-size:.88rem;"><code style="font-size:.88rem"><span class="c">// api/src/validators/requestValidator.js (บางส่วน)</span>
+<span class="k">export</span> <span class="k">const</span> REQUEST_TYPES = [<span class="s">'แจ้งซ่อม'</span>, <span class="s">'บริการบัญชีผู้ใช้'</span>,
+                              <span class="s">'ขอใช้อุปกรณ์'</span>, <span class="s">'อื่น ๆ'</span>];
+<span class="k">export</span> <span class="k">const</span> PRIORITIES = [<span class="s">'normal'</span>, <span class="s">'urgent'</span>];
+<span class="k">export</span> <span class="k">const</span> MIN_NAME = 2;
+<span class="k">export</span> <span class="k">const</span> MIN_DETAILS = 10;
+
+<span class="k">if</span> (readText(input.requesterName).length &lt; MIN_NAME) …
+<span class="k">if</span> (!REQUEST_TYPES.includes(input.requestType)) …
+<span class="k">if</span> (!readText(input.location)) …</code></pre>
+      <div style="display:flex;flex-direction:column;gap:.55rem">
+        <div class="term"><p class="w">① หาค่าคงที่ และ <code>if</code></p><p>1 เงื่อนไข = 1 กฎ → ได้กลุ่ม "ผ่าน" กับ "ไม่ผ่าน"</p></div>
+        <div class="term"><p class="w">② กฎแบบไหน → ค่าแบบไหน</p><p>ตัวเลข "อย่างน้อย N" → <strong>N−1 · N · N+1</strong> · รายการ → <strong>ในรายการ / นอกรายการ</strong> · ต้องมีค่า → <strong>ว่าง / ช่องว่างล้วน</strong></p></div>
+        <div class="term"><p class="w">③ ผลที่คาดหวังมาจาก "กฎ"</p><p>"อย่างน้อย 10" → 10 ตัวต้องผ่าน · <strong>ไม่ใช่ลองรันแล้วจดตามที่โค้ดตอบ</strong></p></div>
+      </div>
+    </div>
+    <table style="font-size:.96rem">
+      <tr><th>กฎ</th><th>test case ที่ได้</th></tr>
+      <tr><td>ชื่อ อย่างน้อย 2</td><td>1 ตัว → error · 2 ตัว → ผ่าน</td></tr>
+      <tr><td>รายละเอียด อย่างน้อย 10</td><td>9 → error · <strong>10 → ผ่าน</strong> · 11 → ผ่าน · ช่องว่างล้วน → error</td></tr>
+      <tr><td>ประเภทต้องอยู่ใน 4 แบบ</td><td><code>'แจ้งซ่อม'</code> → ผ่าน · <code>'ซ่อมแอร์'</code> → error</td></tr>
+    </table>
+    <div class="note"><p style="margin:0;font-size:1.02rem">แหล่ง test case อื่น: <code>API_CONTRACT.md</code> (status code ที่ต้องได้ → integration) · <code>BUG_REPORTS.md</code> (สถานการณ์ที่ผู้ใช้เจอ → บทที่ 4–5)</p></div>
+  </div>
+</section>
+
 <section class="slide" data-title="🏫 ลงมือ CP44">
   <span class="chapbadge">🏫 ลงมือทำ · CP44</span>
-  <span class="eyebrow amber">09:20–09:35 · ใช้ความรู้บทที่ 2 · ทำแบบเดียวกับตาราง gradeOf</span>
+  <span class="eyebrow amber">09:25–09:40 · อ่านกฎจาก validator แล้วจดแบบตาราง gradeOf</span>
   <h2>CP44 · ออกแบบ test case → TEST_CASES.md</h2>
   <div class="body center">
     <pre style="margin:0;font-size:.98rem"><code style="font-size:.98rem">npm install --prefix api &amp;&amp; npm install --prefix frontend
@@ -611,6 +677,69 @@ npm test     <span class="c"># api 11/11 · frontend 1/1 ผ่านหมด (
     <div class="panel labstop tmrow"><span class="bigtime" id="t44">15:00</span>
       <div class="timerbtns"><button data-timer="t44" data-act="start" data-min="15">▶ เริ่ม</button><button data-timer="t44" data-act="pause" data-min="15">⏸ พัก</button><button data-timer="t44" data-act="reset" data-min="15">↺</button></div>
       <p>CP44 · 15 นาที</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="โฟลเดอร์ tests/unit กับ tests/integration">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
+  <span class="eyebrow ">จากตาราง → ไฟล์ test ①</span>
+  <h2>วางไฟล์ test ไว้ที่ไหน — แยก unit กับ integration</h2>
+  <div class="body center">
+    <div class="g2">
+<pre style="margin:0;font-size:.9rem;"><code style="font-size:.9rem">api/
+├── src/
+│   ├── validators/requestValidator.js
+│   ├── routes/ · controllers/ · services/
+│   └── app.js                 <span class="c"> # createApp()</span>
+├── tests/
+│   ├── unit/
+│   │   └── requestValidator.test.js  <span class="c"> # ทดสอบ 1 ไฟล์ใน src</span>
+│   └── integration/
+│       └── requests.api.test.js      <span class="c"> # ทดสอบ /api/requests</span>
+└── vitest.config.js
+     <span class="c"> # include: ['tests/**/*.test.js']  ← รันทั้ง 2 โฟลเดอร์</span></code></pre>
+      <table style="font-size:.96rem">
+        <tr><th></th><th>tests/unit/</th><th>tests/integration/</th></tr>
+        <tr><td>ทดสอบ</td><td>ฟังก์ชันใน 1 ไฟล์</td><td>1 กลุ่ม endpoint</td></tr>
+        <tr><td>ชื่อไฟล์</td><td>ชื่อไฟล์ที่ทดสอบ + <code>.test.js</code></td><td>ชื่อ resource + <code>.api.test.js</code></td></tr>
+        <tr><td>import</td><td>Vitest + ฟังก์ชันนั้น</td><td>Vitest + supertest + <code>createApp</code> + <code>loadSeed</code></td></tr>
+        <tr><td>ต้องเตรียม</td><td>ไม่มี</td><td>app + DB ใหม่ทุก test</td></tr>
+        <tr><td>ความเร็ว</td><td>มิลลิวินาที</td><td>ช้ากว่า (ผ่าน HTTP + DB)</td></tr>
+      </table>
+    </div>
+    <div class="note"><p style="margin:0;font-size:1.06rem">แยกโฟลเดอร์เพราะ<strong>การเตรียมต่างกัน</strong> · หาไฟล์ง่าย · รันแยกได้ <code>npx vitest run tests/unit</code> · <code>npm test</code> รันทั้งคู่</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="แพทเทิร์นเขียน test 6 ขั้น">
+  <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
+  <span class="eyebrow ">จากตาราง → ไฟล์ test ②</span>
+  <h2>แพทเทิร์นเขียน test — ใช้ได้ทุกไฟล์</h2>
+  <div class="body center">
+    <div class="g21">
+<pre style="margin:0;font-size:.9rem;"><code style="font-size:.9rem"><span class="c">// ① สร้างไฟล์   tests/unit/grade.test.js</span>
+
+<span class="c">// ② import — ฟังก์ชันของ Vitest + สิ่งที่จะทดสอบ</span>
+<span class="k">import</span> { describe, test, expect } <span class="k">from</span> <span class="s">'vitest'</span>;
+<span class="k">import</span> { gradeOf } <span class="k">from</span> <span class="s">'../../src/utils/grade.js'</span>;
+
+<span class="c">// ③ เตรียมข้อมูลกลางที่ใช้ซ้ำ (ถ้ามี)</span>
+
+<span class="c">// ④ describe ต่อ 1 ฟังก์ชัน · test ต่อ 1 แถวในตาราง</span>
+describe(<span class="s">'gradeOf'</span>, () =&gt; {
+  test(<span class="s">'TC-01 79 คะแนน → B'</span>, () =&gt; {
+    expect(gradeOf(79)).toBe(<span class="s">'B'</span>);
+  });
+  test(<span class="s">'TC-02 80 คะแนน → A'</span>, () =&gt; {
+    expect(gradeOf(80)).toBe(<span class="s">'A'</span>);
+  });
+});</code></pre>
+      <div style="display:flex;flex-direction:column;gap:.55rem">
+        <div class="term"><p class="w">⑤ รัน แล้วอ่านผล</p><p><code>npm run test:watch</code> · ✓ ผ่าน · ✕ ดู <strong>Expected / Received</strong></p></div>
+        <div class="term"><p class="w">⑥ บันทึกผล</p><p>ใส่ ✓/✕ ในตาราง test case (ชื่อ test มีรหัส <code>TC-xx</code> → จับคู่กันได้ทันที)</p></div>
+        <div class="wrong"><p style="margin:0;font-size:1rem"><strong>✕ แล้วทำอะไร</strong> — อ่านกฎอีกครั้ง · test ผิด → แก้ test · <strong>โค้ดผิด → เป็น bug</strong> จดลง <code>DEBUG_LOG.md</code> แล้วแก้โค้ด</p></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -693,7 +822,7 @@ AssertionError: expected [ Array(1) ]
 
 <section class="slide" data-title="🏫 ลงมือ CP45">
   <span class="chapbadge">🏫 ลงมือทำ · CP45</span>
-  <span class="eyebrow amber">09:40–10:10 · ใช้ความรู้บทที่ 2</span>
+  <span class="eyebrow amber">09:45–10:15 · ใช้แพทเทิร์น 6 ขั้น</span>
   <h2>CP45 · unit test ≥ 10 ข้อ + แก้ BUG #0</h2>
   <div class="body center">
     <pre style="margin:0;font-size:1rem"><code style="font-size:1rem">npm run test:watch --prefix api       <span class="c"># เปิดค้างไว้ บันทึกไฟล์แล้วรันใหม่เอง</span>
@@ -714,7 +843,7 @@ AssertionError: expected [ Array(1) ]
   <span class="chapbadge">บทที่ 2 <span class="of">/ 5</span> · Unit test · Vitest</span>
   <h2>จบบทที่ 2 — Unit test · Vitest</h2>
   <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>unit test = เรียก<strong>ฟังก์ชันเดียว</strong>แล้วเทียบผล · ดีที่สุดกับ pure function · โครง AAA</li><li>Vitest: ไฟล์ <code>*.test.js</code> · <code>describe</code> · <code>test</code> · <code>expect(...).matcher()</code> · <code>npm test</code> / <code>test:watch</code></li><li>matcher หลัก: <code>toBe</code> ค่าเดี่ยว · <code>toEqual</code> object/array · <code>toHaveLength</code> · <code>toThrow</code> (ห่อ <code>() =&gt;</code>)</li><li>เลือกค่า: ตัวแทนกลุ่ม + ค่าขอบ N−1 · N · N+1 · จดตารางก่อนเขียน · <code>test.each</code> สำหรับหลายค่า</li><li>test fail = หลักฐาน — <strong>อ่านโค้ดก่อนแก้ test</strong> · BUG #0 คือ <code>&lt;=</code> ที่ควรเป็น <code>&lt;</code></li></ul></div>
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>unit test = เรียก<strong>ฟังก์ชันเดียว</strong>แล้วเทียบผล · ดีที่สุดกับ pure function · โครง AAA</li><li>หา test case: หลังบ้านแบ่งชั้น → <strong>กฎอยู่ใน validator / service</strong> → อ่าน <code>if</code> + ค่าคงที่ → ได้กลุ่มและค่าขอบ</li><li>แพทเทิร์น 6 ขั้น: สร้างไฟล์ใน <code>tests/unit/</code> → import → ข้อมูลกลาง → <code>describe</code>/<code>test</code> (มีรหัส TC) → รัน → บันทึก ✓/✕</li><li>Vitest: ไฟล์ <code>*.test.js</code> · <code>describe</code> · <code>test</code> · <code>expect(...).matcher()</code> · <code>npm test</code> / <code>test:watch</code></li><li>matcher หลัก: <code>toBe</code> ค่าเดี่ยว · <code>toEqual</code> object/array · <code>toHaveLength</code> · <code>toThrow</code> (ห่อ <code>() =&gt;</code>)</li><li>เลือกค่า: ตัวแทนกลุ่ม + ค่าขอบ N−1 · N · N+1 · จดตารางก่อนเขียน · <code>test.each</code> สำหรับหลายค่า</li><li>test fail = หลักฐาน — <strong>อ่านโค้ดก่อนแก้ test</strong> · BUG #0 คือ <code>&lt;=</code> ที่ควรเป็น <code>&lt;</code></li></ul></div>
     <div class="nextup"><b>ต่อไป →</b> <strong>บทที่ 3</strong> — unit test ผ่านหมด แต่ API ยังพังได้ · ต้องทดสอบระดับที่ใหญ่ขึ้น</div>
     <div class="track"><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span><span class=""></span></div>
   </div>
@@ -724,8 +853,8 @@ AssertionError: expected [ Array(1) ]
   <span class="grp">ระดับที่ 2</span>
   <p class="bignum">03</p>
   <h2>Integration test ด้วย supertest</h2>
-  <p class="whatfor">ทำไม unit test ไม่พอ → หลักการ → supertest ทำงานอย่างไร → ตัวอย่าง → แลป</p>
-  <div class="mins"><span class="chip">🏫 เรียนในห้อง</span><span class="chip c">≈ 12 นาที</span></div>
+  <p class="whatfor">ทำไม unit test ไม่พอ → หลักการ → supertest ทำงานอย่างไร → ตัวอย่าง → อ่านไฟล์ของแลป</p>
+  <div class="mins"><span class="chip">🏫 เรียนในห้อง</span><span class="chip c">≈ 15 นาที</span></div>
   <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span></div>
 </section>
 
@@ -839,6 +968,35 @@ test(<span class="s">'score ไม่ใช่ตัวเลข → 400'</span>
   </div>
 </section>
 
+<section class="slide" data-title="อ่าน import ของ integration test">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
+  <span class="eyebrow ">ก่อนดูไฟล์จริง</span>
+  <h2>requests.api.test.js — อ่าน import ทีละบรรทัด</h2>
+  <div class="body center">
+    <div class="g21">
+<pre style="margin:0;font-size:.86rem;"><code style="font-size:.86rem"><span class="c">// tests/integration/requests.api.test.js</span>
+<span class="k">import</span> { describe, test, expect, beforeEach } <span class="k">from</span> <span class="s">'vitest'</span>;      <span class="c">// ①</span>
+<span class="k">import</span> request <span class="k">from</span> <span class="s">'supertest'</span>;                                  <span class="c">// ②</span>
+<span class="k">import</span> { createApp } <span class="k">from</span> <span class="s">'../../src/app.js'</span>;                     <span class="c">// ③</span>
+<span class="k">import</span> { loadSeed } <span class="k">from</span> <span class="s">'../../src/services/requestService.js'</span>;  <span class="c">// ④</span>
+
+<span class="k">const</span> app = createApp();                          <span class="c">// ⑤ สร้าง app ครั้งเดียว</span>
+beforeEach(<span class="k">async</span> () =&gt; { <span class="k">await</span> loadSeed(); });    <span class="c">// ⑥ DB ใหม่ก่อนทุก test</span></code></pre>
+      <table style="font-size:.94rem">
+        <tr><th></th><th>เอามาทำอะไร</th></tr>
+        <tr><td>①</td><td>ฟังก์ชันของ Vitest เหมือน unit + <code>beforeEach</code></td></tr>
+        <tr><td>②</td><td>ตัวยิง HTTP</td></tr>
+        <tr><td>③</td><td>app ทั้งตัว (ทุก route) — ไม่ <code>listen</code></td></tr>
+        <tr><td>④</td><td>ล้าง DB แล้วใส่ข้อมูลตั้งต้น 5 รายการ — อยู่ชั้น <strong>service</strong> เพราะ service ดูแล DB</td></tr>
+      </table>
+    </div>
+    <div class="g2">
+      <div class="term"><p class="w"><code>../../</code> มาจากไหน</p><p><code>tests/integration/</code> → <code>../</code> = <code>tests/</code> → <code>../</code> = <code>api/</code> → <code>src/app.js</code> · ไฟล์ unit อยู่ลึกเท่ากัน จึงใช้ <code>../../</code> เหมือนกัน</p></div>
+      <div class="term"><p class="w">ต่างจากไฟล์ unit</p><p>unit import แค่ ① + ฟังก์ชันที่ทดสอบ · integration เพิ่ม ②③④ เพราะต้อง<strong>ผ่าน HTTP และ DB</strong></p></div>
+    </div>
+  </div>
+</section>
+
 <section class="slide" data-title="supertest + :memory:">
   <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
   <span class="eyebrow">ต่อยอดจาก W07 · W10</span>
@@ -931,7 +1089,7 @@ All files         |   <span class="hl">60.13</span> |
 
 <section class="slide" data-title="🏫 ลงมือ CP46">
   <span class="chapbadge">🏫 ลงมือทำ · CP46</span>
-  <span class="eyebrow amber">10:35–11:00 · ใช้ความรู้บทที่ 3</span>
+  <span class="eyebrow amber">10:40–11:00 · ใช้แพทเทิร์นเดิม + supertest</span>
   <h2>CP46 · integration test ≥ 12 + coverage</h2>
   <div class="body center">
     <pre style="margin:0;font-size:1rem"><code style="font-size:1rem"><span class="c"># api/tests/integration/requests.api.test.js — TODO W12-INTEG</span>
@@ -942,9 +1100,9 @@ npm test --prefix api
 npm run coverage             <span class="c"># เปิด api/coverage/index.html หาไฟล์/บรรทัดที่ยังมืด</span></code></pre>
     <div class="win"><p style="margin:0"><strong>✓ ผ่านเมื่อ</strong> — integration <strong>≥ 12 ข้อ</strong> ครอบคลุม <strong>PUT และ DELETE</strong> · api test รวม <strong>≥ 22 ข้อผ่านหมด</strong> · มี script <code>coverage</code> + <code>@vitest/coverage-v8</code> · checker ข้อ CP46 ครบ <strong>4/4</strong></p></div>
     <div class="note"><p style="margin:0">test fail ระหว่างเขียน? อาจเป็น bug จากผู้ใช้ — จดไว้ แล้วไล่ใน CP47 · ⭐ Challenge: coverage ≥ 85% · CI รัน <code>npm test</code> ทุกครั้งที่ push</p></div>
-    <div class="panel labstop tmrow"><span class="bigtime" id="t46">25:00</span>
-      <div class="timerbtns"><button data-timer="t46" data-act="start" data-min="25">▶ เริ่ม</button><button data-timer="t46" data-act="pause" data-min="25">⏸ พัก</button><button data-timer="t46" data-act="reset" data-min="25">↺</button></div>
-      <p>CP46 · 25 นาที</p></div>
+    <div class="panel labstop tmrow"><span class="bigtime" id="t46">20:00</span>
+      <div class="timerbtns"><button data-timer="t46" data-act="start" data-min="20">▶ เริ่ม</button><button data-timer="t46" data-act="pause" data-min="20">⏸ พัก</button><button data-timer="t46" data-act="reset" data-min="20">↺</button></div>
+      <p>CP46 · 20 นาที</p></div>
   </div>
 </section>
 
@@ -952,7 +1110,7 @@ npm run coverage             <span class="c"># เปิด api/coverage/index.h
   <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
   <h2>จบบทที่ 3 — Integration test · supertest</h2>
   <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>unit test มองไม่เห็น<strong>รอยต่อ</strong> — middleware · route · status code · ลำดับการทำงานกับ DB</li><li>integration test = <strong>ยิง HTTP</strong> ผ่านทุกชั้น · DB ทดสอบรีเซ็ตด้วย <code>beforeEach</code> · ตรวจ status + body + ผลข้างเคียง</li><li>supertest: <code>await request(app).post(url).send(body)</code> → <code>res.status</code> · <code>res.body</code> · ไม่ต้องเปิดพอร์ต</li><li>แยก <code>createApp()</code> ออกจาก <code>listen</code> · <code>DB_FILE=:memory:</code> ไม่แตะ <code>campus.db</code></li><li><code>npm run coverage</code> → หาบรรทัดที่ยังไม่มี test ส่องถึง</li></ul></div>
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>unit test มองไม่เห็น<strong>รอยต่อ</strong> — middleware · route · status code · ลำดับการทำงานกับ DB</li><li>integration test = <strong>ยิง HTTP</strong> ผ่านทุกชั้น · DB ทดสอบรีเซ็ตด้วย <code>beforeEach</code> · ตรวจ status + body + ผลข้างเคียง</li><li>supertest: <code>await request(app).post(url).send(body)</code> → <code>res.status</code> · <code>res.body</code> · ไม่ต้องเปิดพอร์ต</li><li>ไฟล์ integration import เพิ่ม supertest · <code>createApp</code> (app ทั้งตัว) · <code>loadSeed</code> (ชั้น service) · path <code>../../</code> ออกจาก <code>tests/integration/</code> ไป <code>src/</code></li><li>แยก <code>createApp()</code> ออกจาก <code>listen</code> · <code>DB_FILE=:memory:</code> ไม่แตะ <code>campus.db</code></li><li><code>npm run coverage</code> → หาบรรทัดที่ยังไม่มี test ส่องถึง</li></ul></div>
     <div class="nextup"><b>ต่อไป →</b> <strong>บทที่ 4</strong> — test ของ dev ผ่านหมด · แล้วผู้ใช้ล่ะ</div>
     <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span></div>
   </div>
@@ -1315,7 +1473,7 @@ node --disable-warning=ExperimentalWarning check-week12.mjs --inclass</code></pr
 </div></div>
 <div class="bar"><i id="progress"></i></div>
 <div class="hud">
-  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 46</span><button id="btnNext">→</button>
+  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 51</span><button id="btnNext">→</button>
   <button id="btnToc">สารบัญ</button><button id="btnMinus">A−</button><button id="btnPlus">A+</button><button id="btnFull">เต็มจอ</button>
 </div>
 <div class="toc" id="toc" role="dialog"><h3>สารบัญ — กด T หรือ Esc ปิด</h3><ol id="tocList"></ol></div>
