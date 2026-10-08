@@ -220,7 +220,28 @@ test.each([null, undefined, 'text', 42, []])('input = %j → error เดีย�
 
 **🏫 20 นาที · We do → You do** · สไลด์บทที่ 3
 
-## ① อ่าน import ของ `requests.api.test.js` ก่อนเขียน
+## ① supertest คืออะไร — Postman / curl ที่เขียนเป็นโค้ด
+
+| | curl / Postman (W06–07) | supertest |
+|---|---|---|
+| ส่ง request | `curl -X POST localhost:3001/api/requests -d '{…}'` | `await request(app).post('/api/requests').send({…})` |
+| เปิด server ก่อน | ต้อง `npm run dev` ค้างไว้ | ไม่ต้อง — รับ `app` แล้วเปิดพอร์ตสุ่มชั่วคราวเอง |
+| ตรวจผล | อ่านเอง | `expect(res.status).toBe(201)` |
+| ฐานข้อมูล | `campus.db` ตัวจริง | `:memory:` รีเซ็ตทุก test |
+
+อ่าน 1 test ทีละท่อน
+
+```js
+const res = await request(app)      // await รอคำตอบ · app ที่จะยิง
+  .post('/api/requests')            // method + path
+  .send(valid);                     // body (JSON ให้อัตโนมัติ) · header ใช้ .set('ชื่อ', 'ค่า')
+expect(res.status).toBe(201);       // res.status · res.body · res.headers
+expect(res.body.id).toMatch(/^REQ-/);
+```
+
+> ⚠ **expect มี 2 ตัว** — `.expect(204)` ต่อท้าย chain เป็นของ supertest (ตรวจ status สั้น ๆ) · `expect(res.status).toBe(204)` เป็นของ Vitest (ตรวจได้หลายอย่าง — ใช้เป็นหลัก) · **ลืม `await`** = test จบก่อนคำตอบมา แล้วผ่านทั้งที่ไม่ได้ตรวจอะไร
+
+### อ่าน import ของ `requests.api.test.js` ก่อนเขียน
 
 ```js
 import { describe, test, expect, beforeEach } from 'vitest';      // ① เหมือน unit + beforeEach
@@ -234,7 +255,18 @@ beforeEach(async () => { await loadSeed(); });    // ⑥ DB ใหม่ก่�
 
 > แพทเทิร์นเดียวกับ unit — ต่างแค่ต้อง**ผ่าน HTTP และ DB** จึง import ② ③ ④ เพิ่ม · ไฟล์ unit ไม่ต้องมี
 
-## ② ฐานข้อมูลของ test แยกจากของจริง
+## ② หา integration test case จาก `API_CONTRACT.md`
+
+unit อ่านกฎจาก validator · integration อ่าน**สัญญา** — 1 แถว (method + path + status) = test อย่างน้อย 1 ข้อ · เพิ่มลง `TEST_CASES.md` ได้ (ระดับ = integration)
+
+| สัญญา | test case | starter มีไหม |
+|---|---|---|
+| `GET /api/requests` · `GET /:id` → 200 · 404 | 5 รายการ · `REQ-999` → 404 | ✓ |
+| `POST` → 201 · 400 | ข้อมูลถูก → 201 · ไม่ครบ → 400 | ✓ |
+| `PUT /:id` → 200 · 400 · 404 | `completed` → 200 · `'done'` → 400 · `REQ-999` → 404 | ✕ **CP46** (REQ-999 ได้ 500 = BUG #3 → CP47) |
+| `DELETE /:id` → 204 · 404 | ลบแล้ว GET ซ้ำ → 404 · ลบ `REQ-999` → 404 | ✕ **CP46** |
+
+## ③ ฐานข้อมูลของ test แยกจากของจริง
 
 `api/vitest.config.js` ตั้ง `DB_FILE: ':memory:'` ไว้แล้ว
 
@@ -244,7 +276,7 @@ beforeEach(async () => { await loadSeed(); });   // ทุก test ได้ฐ�
 
 > test ข้อหนึ่งลบข้อมูล ไม่กระทบข้ออื่น · และไม่แตะ `campus.db` ที่ต้อง commit
 
-## ③ เพิ่ม integration test ของ PUT และ DELETE
+## ④ เพิ่ม integration test ของ PUT และ DELETE
 
 ใน `api/tests/integration/requests.api.test.js`
 
@@ -266,7 +298,7 @@ describe('DELETE /api/requests/:id', () => {
 });
 ```
 
-## ④ อ่าน coverage
+## ⑤ อ่าน coverage
 
 ```bash
 npm run coverage

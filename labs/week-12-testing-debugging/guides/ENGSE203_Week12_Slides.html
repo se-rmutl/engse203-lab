@@ -853,8 +853,8 @@ AssertionError: expected [ Array(1) ]
   <span class="grp">ระดับที่ 2</span>
   <p class="bignum">03</p>
   <h2>Integration test ด้วย supertest</h2>
-  <p class="whatfor">ทำไม unit test ไม่พอ → หลักการ → supertest ทำงานอย่างไร → ตัวอย่าง → อ่านไฟล์ของแลป</p>
-  <div class="mins"><span class="chip">🏫 เรียนในห้อง</span><span class="chip c">≈ 15 นาที</span></div>
+  <p class="whatfor">ทำไม unit test ไม่พอ → หลักการ → supertest คืออะไร → อ่าน 1 test ทีละท่อน → อ่านไฟล์ของแลป → API_CONTRACT สู่ test case</p>
+  <div class="mins"><span class="chip">🏫 เรียนในห้อง</span><span class="chip c">≈ 18 นาที</span></div>
   <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span></div>
 </section>
 
@@ -901,6 +901,33 @@ AssertionError: expected [ Array(1) ]
   </div>
 </section>
 
+<section class="slide" data-title="supertest = Postman ที่เขียนเป็นโค้ด">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
+  <span class="eyebrow ">supertest คืออะไร</span>
+  <h2>supertest = Postman / curl ที่เขียนเป็นโค้ด</h2>
+  <div class="body center">
+    <table style="font-size:1rem">
+      <tr><th></th><th>curl / Postman (W06–07)</th><th>supertest (วันนี้)</th></tr>
+      <tr><td>ส่ง request</td><td><code>curl -X POST localhost:3001/api/requests -d '{…}'</code></td><td><code>await request(app).post('/api/requests').send({…})</code></td></tr>
+      <tr><td>ต้องเปิด server ก่อน</td><td>ต้อง <code>npm run dev</code> ค้างไว้</td><td><strong>ไม่ต้อง</strong> — รับ <code>app</code> แล้วเปิดพอร์ตชั่วคราวเอง</td></tr>
+      <tr><td>ตรวจผล</td><td>ใช้ตาอ่านเอง</td><td><code>expect(res.status).toBe(201)</code> — โปรแกรมตัดสิน</td></tr>
+      <tr><td>ฐานข้อมูล</td><td><code>campus.db</code> ตัวจริง</td><td><code>:memory:</code> รีเซ็ตทุก test</td></tr>
+      <tr><td>ทำซ้ำ</td><td>กดใหม่ทีละอัน</td><td><code>npm test</code> รันทั้งหมดในไม่กี่วินาที</td></tr>
+    </table>
+    <div class="fig" style="flex:0 0 auto"><svg viewBox="0 0 900 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ลำดับการทำงานของ supertest">
+      <defs><marker id="st1A" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#38D7ED" stroke-width="1.5"/></marker></defs>
+      <g class="svg-s">
+      <rect x="0" y="20" width="200" height="70" rx="10" fill="rgba(56,215,237,.08)" stroke="#38D7ED"/><text x="100" y="50" text-anchor="middle">① request(app)</text><text x="100" y="74" text-anchor="middle" style="fill:#A9C7B8;font-size:13px">เปิด app บนพอร์ตสุ่ม</text>
+      <rect x="235" y="20" width="200" height="70" rx="10" fill="rgba(56,215,237,.08)" stroke="#38D7ED"/><text x="335" y="50" text-anchor="middle">② ส่ง HTTP จริง</text><text x="335" y="74" text-anchor="middle" style="fill:#A9C7B8;font-size:13px">ผ่าน route → … → DB</text>
+      <rect x="470" y="20" width="200" height="70" rx="10" fill="rgba(56,215,237,.08)" stroke="#38D7ED"/><text x="570" y="50" text-anchor="middle">③ ได้ res กลับมา</text><text x="570" y="74" text-anchor="middle" style="fill:#A9C7B8;font-size:13px">status · body · headers</text>
+      <rect x="705" y="20" width="195" height="70" rx="10" fill="rgba(74,222,128,.12)" stroke="#4ADE80"/><text x="802" y="50" text-anchor="middle">④ ปิดพอร์ต</text><text x="802" y="74" text-anchor="middle" style="fill:#A9C7B8;font-size:13px">แล้วเรา expect ผล</text>
+      </g>
+      <g stroke="#38D7ED" stroke-width="2"><path d="M201 55 L232 55" marker-end="url(#st1A)"/><path d="M436 55 L467 55" marker-end="url(#st1A)"/><path d="M671 55 L702 55" marker-end="url(#st1A)"/></g>
+    </svg></div>
+    <div class="note"><p style="margin:0;font-size:1.06rem">สิ่งที่เคยลองด้วย curl/Postman แล้วอ่านผลเอง → เขียนเป็น test ครั้งเดียว <strong>ตรวจซ้ำได้ทุกครั้งที่แก้โค้ด</strong></p></div>
+  </div>
+</section>
+
 <section class="slide" data-title="supertest ทำงานอย่างไร">
   <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
   <span class="eyebrow ">เครื่องมือ</span>
@@ -929,6 +956,45 @@ AssertionError: expected [ Array(1) ]
       <tr><td><code>.send({ … })</code> · <code>.set('Authorization', 'Bearer …')</code></td><td>ใส่ body (JSON) · ใส่ header</td></tr>
       <tr><td><code>const res = await …</code> → <code>res.status</code> · <code>res.body</code></td><td>รอคำตอบ แล้วตรวจด้วย <code>expect</code> เหมือนบทที่ 2</td></tr>
     </table>
+  </div>
+</section>
+
+<section class="slide" data-title="อ่าน 1 integration test ทีละท่อน">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
+  <span class="eyebrow ">กายวิภาคของ 1 test</span>
+  <h2>อ่าน 1 integration test ทีละท่อน</h2>
+  <div class="body center">
+    <div class="g21">
+<pre style="margin:0;font-size:.86rem;"><code style="font-size:.86rem">test(<span class="s">'POST ข้อมูลถูก → 201 และได้รหัสใหม่'</span>, <span class="k">async</span> () =&gt; {
+  <span class="c">// Arrange — DB 5 รายการจาก beforeEach + body ที่จะส่ง</span>
+  <span class="k">const</span> body = { ...valid };
+
+  <span class="c">// Act — ①      ②                      ③</span>
+  <span class="k">const</span> res = <span class="k">await</span> request(app).post(<span class="s">'/api/requests'</span>)
+                                 .set(<span class="s">'Accept'</span>, <span class="s">'application/json'</span>)
+                                 .send(body);           <span class="c">// ④</span>
+
+  <span class="c">// Assert — status · body · ผลข้างเคียง</span>
+  expect(res.status).toBe(201);
+  expect(res.body.id).toMatch(/^REQ-/);
+  <span class="k">const</span> list = <span class="k">await</span> request(app).get(<span class="s">'/api/requests'</span>);
+  expect(list.body).toHaveLength(6);                   <span class="c">// ถูกบันทึกจริง</span>
+});</code></pre>
+      <table style="font-size:.92rem">
+        <tr><th></th><th>คืออะไร</th></tr>
+        <tr><td>①</td><td><code>await</code> รอคำตอบ — ลืม = test จบก่อน</td></tr>
+        <tr><td>②</td><td><code>request(app)</code> app ที่จะยิง</td></tr>
+        <tr><td>③</td><td>method + path <code>.get</code> <code>.post</code> <code>.put</code> <code>.delete</code></td></tr>
+        <tr><td>④</td><td><code>.set()</code> header · <code>.send()</code> body (ตั้ง JSON ให้เอง)</td></tr>
+        <tr><td><code>res.status</code></td><td>status code เช่น 201</td></tr>
+        <tr><td><code>res.body</code></td><td>JSON ที่แปลงเป็น object แล้ว</td></tr>
+        <tr><td><code>res.headers</code></td><td>header ที่ตอบกลับ</td></tr>
+      </table>
+    </div>
+    <div class="g2">
+      <div class="term"><p class="w"><code>.expect(204)</code> — ของ supertest</p><p>ต่อท้าย chain · ตรวจ status สั้น ๆ ในบรรทัดเดียว<br><code>await request(app).delete('/api/requests/REQ-003').expect(204);</code></p></div>
+      <div class="term"><p class="w"><code>expect(res.status).toBe(204)</code> — ของ Vitest</p><p>เก็บ <code>res</code> ไว้ก่อน แล้วตรวจได้หลายอย่าง (status + body) · <strong>ใช้แบบนี้เป็นหลัก</strong></p></div>
+    </div>
   </div>
 </section>
 
@@ -994,6 +1060,24 @@ beforeEach(<span class="k">async</span> () =&gt; { <span class="k">await</span> 
       <div class="term"><p class="w"><code>../../</code> มาจากไหน</p><p><code>tests/integration/</code> → <code>../</code> = <code>tests/</code> → <code>../</code> = <code>api/</code> → <code>src/app.js</code> · ไฟล์ unit อยู่ลึกเท่ากัน จึงใช้ <code>../../</code> เหมือนกัน</p></div>
       <div class="term"><p class="w">ต่างจากไฟล์ unit</p><p>unit import แค่ ① + ฟังก์ชันที่ทดสอบ · integration เพิ่ม ②③④ เพราะต้อง<strong>ผ่าน HTTP และ DB</strong></p></div>
     </div>
+  </div>
+</section>
+
+<section class="slide" data-title="จาก API_CONTRACT.md → integration test case">
+  <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
+  <span class="eyebrow ">หา test case ระดับ integration</span>
+  <h2>อ่าน API_CONTRACT.md → ได้ integration test case</h2>
+  <div class="body center">
+    <p class="muted" style="margin:0;font-size:1.04rem">unit อ่านกฎจาก validator · <strong>integration อ่านสัญญาจาก <code>API_CONTRACT.md</code></strong> — 1 แถว (method + path + status) = test อย่างน้อย 1 ข้อ</p>
+    <table style="font-size:.96rem">
+      <tr><th>สัญญา (API_CONTRACT.md)</th><th>test case</th><th>starter มีไหม</th></tr>
+      <tr><td><code>GET /api/requests</code> → 200 + array</td><td>ได้ 5 รายการ</td><td>✓</td></tr>
+      <tr><td><code>POST</code> → 201 · 400 ข้อมูลผิด</td><td>ข้อมูลถูก → 201 · <code>{}</code> → 400</td><td>✓</td></tr>
+      <tr><td><code>PUT /:id</code> → 200 · 400 สถานะผิด · 404 ไม่พบ</td><td><code>REQ-001</code> completed → 200 · <code>'done'</code> → 400 · <code>REQ-999</code> → 404</td><td class="bad">✕ CP46 · REQ-999 ได้ 500 = BUG #3</td></tr>
+      <tr><td><code>DELETE /:id</code> → 204 · 404 ไม่พบ</td><td>ลบแล้ว GET ซ้ำ → 404 · ลบ <code>REQ-999</code> → 404</td><td class="bad">✕ CP46</td></tr>
+      <tr><td>ลำดับการทำงาน</td><td>ลบ <code>REQ-002</code> → POST → 201 รหัสไม่ซ้ำ</td><td class="bad">✕ = BUG #1 (CP47)</td></tr>
+    </table>
+    <div class="win"><p style="margin:0;font-size:1.06rem">ใส่ลง <code>TEST_CASES.md</code> ได้เหมือนกัน (ระดับ test = integration) · ผลที่คาดหวังมาจาก<strong>สัญญา</strong> ไม่ใช่จากที่ API ตอบตอนนี้</p></div>
   </div>
 </section>
 
@@ -1110,7 +1194,7 @@ npm run coverage             <span class="c"># เปิด api/coverage/index.h
   <span class="chapbadge">บทที่ 3 <span class="of">/ 5</span> · Integration test · supertest</span>
   <h2>จบบทที่ 3 — Integration test · supertest</h2>
   <div class="body center">
-    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>unit test มองไม่เห็น<strong>รอยต่อ</strong> — middleware · route · status code · ลำดับการทำงานกับ DB</li><li>integration test = <strong>ยิง HTTP</strong> ผ่านทุกชั้น · DB ทดสอบรีเซ็ตด้วย <code>beforeEach</code> · ตรวจ status + body + ผลข้างเคียง</li><li>supertest: <code>await request(app).post(url).send(body)</code> → <code>res.status</code> · <code>res.body</code> · ไม่ต้องเปิดพอร์ต</li><li>ไฟล์ integration import เพิ่ม supertest · <code>createApp</code> (app ทั้งตัว) · <code>loadSeed</code> (ชั้น service) · path <code>../../</code> ออกจาก <code>tests/integration/</code> ไป <code>src/</code></li><li>แยก <code>createApp()</code> ออกจาก <code>listen</code> · <code>DB_FILE=:memory:</code> ไม่แตะ <code>campus.db</code></li><li><code>npm run coverage</code> → หาบรรทัดที่ยังไม่มี test ส่องถึง</li></ul></div>
+    <div class="recap"><h3>✓ สิ่งที่ต้องจำจากบทนี้</h3><ul><li>unit test มองไม่เห็น<strong>รอยต่อ</strong> — middleware · route · status code · ลำดับการทำงานกับ DB</li><li>integration test = <strong>ยิง HTTP</strong> ผ่านทุกชั้น · DB ทดสอบรีเซ็ตด้วย <code>beforeEach</code> · ตรวจ status + body + ผลข้างเคียง</li><li>supertest: <code>await request(app).post(url).send(body)</code> → <code>res.status</code> · <code>res.body</code> · ไม่ต้องเปิดพอร์ต</li><li>supertest = Postman/curl ที่เขียนเป็นโค้ด · <code>.expect(204)</code> ของ supertest ≠ <code>expect()</code> ของ Vitest · หา test case จาก <code>API_CONTRACT.md</code></li><li>ไฟล์ integration import เพิ่ม supertest · <code>createApp</code> (app ทั้งตัว) · <code>loadSeed</code> (ชั้น service) · path <code>../../</code> ออกจาก <code>tests/integration/</code> ไป <code>src/</code></li><li>แยก <code>createApp()</code> ออกจาก <code>listen</code> · <code>DB_FILE=:memory:</code> ไม่แตะ <code>campus.db</code></li><li><code>npm run coverage</code> → หาบรรทัดที่ยังไม่มี test ส่องถึง</li></ul></div>
     <div class="nextup"><b>ต่อไป →</b> <strong>บทที่ 4</strong> — test ของ dev ผ่านหมด · แล้วผู้ใช้ล่ะ</div>
     <div class="track"><span class="done"></span><span class="done"></span><span class="now"></span><span class=""></span><span class=""></span></div>
   </div>
@@ -1473,7 +1557,7 @@ node --disable-warning=ExperimentalWarning check-week12.mjs --inclass</code></pr
 </div></div>
 <div class="bar"><i id="progress"></i></div>
 <div class="hud">
-  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 51</span><button id="btnNext">→</button>
+  <button id="btnPrev">←</button><span class="counter" id="counter">1 / 54</span><button id="btnNext">→</button>
   <button id="btnToc">สารบัญ</button><button id="btnMinus">A−</button><button id="btnPlus">A+</button><button id="btnFull">เต็มจอ</button>
 </div>
 <div class="toc" id="toc" role="dialog"><h3>สารบัญ — กด T หรือ Esc ปิด</h3><ol id="tocList"></ol></div>

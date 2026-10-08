@@ -140,10 +140,28 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
   <div class="pills"><span class="pill a">TODO W12-INTEG</span><span class="pill ">supertest</span><span class="pill c">:memory:</span><span class="pill v">coverage</span></div>
 </header>
 
-<nav class="jump"><a href="#s0">① อ่าน import</a><a href="#s1">② ฐานข้อมูลแยก</a><a href="#s2">③ PUT + DELETE</a><a href="#s3">④ coverage</a><a href="#s4">⑤ ครอบ errorHandler</a><a href="#done">ผ่าน CP</a></nav>
+<nav class="jump"><a href="#sA">① supertest คืออะไร</a><a href="#s0">② อ่าน import</a><a href="#sB">③ API_CONTRACT → test case</a><a href="#s1">④ ฐานข้อมูลแยก</a><a href="#s2">⑤ PUT + DELETE</a><a href="#s3">⑥ coverage</a><a href="#s4">⑦ ครอบ errorHandler</a><a href="#done">ผ่าน CP</a></nav>
 
+<div class="step" id="sA">
+  <div class="step-head"><span class="num">①</span><h2>supertest = Postman / curl ที่เขียนเป็นโค้ด</h2></div>
+  <div class="step-body">
+  <p class="say">ที่เคยยิงด้วย curl/Postman แล้วอ่านผลเอง → เขียนเป็นโค้ด ให้โปรแกรมตัดสิน และรันซ้ำได้ทุกครั้ง</p>
+  <table>
+    <tr><th></th><th>curl (W06–07)</th><th>supertest</th></tr>
+    <tr><td>ส่ง</td><td><code>curl -X POST localhost:3001/api/requests -d '{…}'</code></td><td><code>await request(app).post('/api/requests').send({…})</code></td></tr>
+    <tr><td>server</td><td>ต้อง <code>npm run dev</code> ค้าง</td><td>ไม่ต้อง — เปิดพอร์ตสุ่มชั่วคราวเอง แล้วปิด</td></tr>
+    <tr><td>ตรวจผล</td><td>อ่านเอง</td><td><code>expect(res.status).toBe(201)</code></td></tr>
+  </table>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">const</span> res = <span class="k">await</span> <span class="f">request</span>(app)     <span class="c">// await รอคำตอบ · app ที่จะยิง</span>
+  .<span class="f">post</span>(<span class="s">'/api/requests'</span>)              <span class="c">// method + path</span>
+  .<span class="f">send</span>(valid);                        <span class="c">// body (JSON ให้เอง) · header ใช้ .set('ชื่อ', 'ค่า')</span>
+<span class="f">expect</span>(res.status).<span class="f">toBe</span>(201);          <span class="c">// res.status · res.body · res.headers</span>
+<span class="f">expect</span>(res.body.id).<span class="f">toMatch</span>(/^REQ-/);</code></pre></div>
+  <div class="warn"><b>⚠ expect มี 2 ตัว</b><code>.expect(204)</code> ต่อท้าย chain = ของ <strong>supertest</strong> (ตรวจ status สั้น ๆ) · <code>expect(res.status).toBe(204)</code> = ของ <strong>Vitest</strong> (ตรวจได้หลายอย่าง — ใช้เป็นหลัก) · ลืม <code>await</code> = test จบก่อนคำตอบมา แล้วผ่านทั้งที่ไม่ได้ตรวจอะไร</div>
+  </div>
+</div>
 <div class="step" id="s0">
-  <div class="step-head"><span class="num">①</span><h2>อ่าน import ของไฟล์ integration ก่อนเขียน</h2><span class="file">api/tests/integration/requests.api.test.js</span></div>
+  <div class="step-head"><span class="num">②</span><h2>อ่าน import ของไฟล์ integration ก่อนเขียน</h2><span class="file">api/tests/integration/requests.api.test.js</span></div>
   <div class="step-body">
   <p class="say">แพทเทิร์นเดียวกับ unit (สร้างไฟล์ → import → เตรียม → describe/test → รัน → บันทึก) แต่ต้อง<strong>ผ่าน HTTP และ DB</strong> จึง import เพิ่ม 3 อย่าง</p>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">import</span> { describe, test, expect, beforeEach } <span class="k">from</span> <span class="s">'vitest'</span>;      <span class="c">// ① เหมือน unit + beforeEach</span>
@@ -161,8 +179,21 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
   <div class="vio"><b>💡 ../../</b><code>tests/integration/</code> → <code>../</code> = <code>tests/</code> → <code>../</code> = <code>api/</code> → <code>src/app.js</code> · ไฟล์ unit อยู่ลึกเท่ากันจึงใช้ <code>../../</code> เหมือนกัน</div>
   </div>
 </div>
+<div class="step" id="sB">
+  <div class="step-head"><span class="num">③</span><h2>หา integration test case จาก API_CONTRACT.md</h2><span class="file">API_CONTRACT.md</span></div>
+  <div class="step-body">
+  <p class="say">unit อ่านกฎจาก validator · integration อ่าน<strong>สัญญา</strong> — 1 แถว (method + path + status) = test อย่างน้อย 1 ข้อ · ผลที่คาดหวังมาจากสัญญา ไม่ใช่จากที่ API ตอบตอนนี้</p>
+  <table>
+    <tr><th>สัญญา</th><th>test case</th><th>starter</th></tr>
+    <tr><td><code>GET</code> · <code>GET /:id</code> → 200 · 404</td><td>5 รายการ · <code>REQ-999</code> → 404</td><td>✓</td></tr>
+    <tr><td><code>POST</code> → 201 · 400</td><td>ข้อมูลถูก → 201 · ไม่ครบ → 400</td><td>✓</td></tr>
+    <tr><td><code>PUT /:id</code> → 200 · 400 · 404</td><td><code>completed</code> → 200 · <code>'done'</code> → 400 · <code>REQ-999</code> → 404</td><td>✕ <strong>วันนี้</strong> (REQ-999 = BUG #3 → CP47)</td></tr>
+    <tr><td><code>DELETE /:id</code> → 204 · 404</td><td>ลบแล้ว GET ซ้ำ → 404 · ลบ <code>REQ-999</code> → 404</td><td>✕ <strong>วันนี้</strong></td></tr>
+  </table>
+  </div>
+</div>
 <div class="step" id="s1">
-  <div class="step-head"><span class="num">②</span><h2>:memory: + beforeEach(loadSeed) = test ไม่รบกวนกัน</h2><span class="file">api/vitest.config.js</span></div>
+  <div class="step-head"><span class="num">④</span><h2>:memory: + beforeEach(loadSeed) = test ไม่รบกวนกัน</h2><span class="file">api/vitest.config.js</span></div>
   <div class="step-body">
   <p class="say">integration test ยิง HTTP จริงผ่านทุกชั้น: route → controller → service → SQLite · คำถามคือ "ใช้ฐานข้อมูลตัวไหน?"</p>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="c">// api/vitest.config.js (starter ตั้งไว้แล้ว)</span>
@@ -186,7 +217,7 @@ test: {
   </div>
 </div>
 <div class="step" id="s2">
-  <div class="step-head"><span class="num">③</span><h2>เพิ่ม test ของ PUT และ DELETE</h2><span class="file">api/tests/integration/requests.api.test.js</span></div>
+  <div class="step-head"><span class="num">⑤</span><h2>เพิ่ม test ของ PUT และ DELETE</h2><span class="file">api/tests/integration/requests.api.test.js</span></div>
   <div class="step-body">
   <p class="say">starter มี integration test 8 ข้อ แต่<strong>ไม่มี PUT/DELETE เลย</strong> — ตรงที่ TODO W12-INTEG เพิ่ม 2 describe นี้</p>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="f">describe</span>(<span class="s">'PUT /api/requests/:id'</span>, () =&gt; {
@@ -215,7 +246,7 @@ test: {
   </div>
 </div>
 <div class="step" id="s3">
-  <div class="step-head"><span class="num">④</span><h2>npm run coverage แล้วอ่านรายงาน</h2><span class="file">api/coverage/index.html</span></div>
+  <div class="step-head"><span class="num">⑥</span><h2>npm run coverage แล้วอ่านรายงาน</h2><span class="file">api/coverage/index.html</span></div>
   <div class="step-body">
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>npm run coverage                  <span class="c"># = npm run coverage --prefix api</span>
 <span class="c"># แล้วเปิด api/coverage/index.html ในเบราว์เซอร์ → คลิกชื่อไฟล์ดูบรรทัดสีแดง</span></code></pre></div>
@@ -236,7 +267,7 @@ All files          |   72.97 |    62.35 |   54.28 |   74.82 |
   </div>
 </div>
 <div class="step" id="s4">
-  <div class="step-head"><span class="num">⑤</span><h2>เพิ่ม test /api/nope และ JSON เสีย</h2><span class="file">api/tests/integration/requests.api.test.js</span></div>
+  <div class="step-head"><span class="num">⑦</span><h2>เพิ่ม test /api/nope และ JSON เสีย</h2><span class="file">api/tests/integration/requests.api.test.js</span></div>
   <div class="step-body">
   <p class="say">ทำให้ errorHandler ถูกวิ่งผ่านด้วย<strong>คำขอที่ผู้ใช้ส่งมาได้จริง</strong> — path ที่ไม่มี และ JSON ที่พิมพ์ไม่ครบ</p>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="f">describe</span>(<span class="s">'เส้นทางที่ไม่มีอยู่'</span>, () =&gt; {
