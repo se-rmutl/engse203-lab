@@ -14,18 +14,24 @@
 | CP46 | integration test + coverage | [เปิด](https://se-rmutl.github.io/engse203/week12/guides/ENGSE203_Week12_CP46_LiveCoding.html) |
 | CP47 | debug 3 bug จากผู้ใช้ + regression test | [เปิด](https://se-rmutl.github.io/engse203/week12/guides/ENGSE203_Week12_CP47_LiveCoding.html) |
 
-[สไลด์](https://se-rmutl.github.io/engse203/week12) · [เอกสารประกอบการสอน Week 12](https://se-rmutl.github.io/engse203/week12/week12-teaching-doc.html) (อ่านบทที่ 1–3 ก่อนเข้าคาบ)
+[สไลด์](https://se-rmutl.github.io/engse203/week12) · [เอกสารประกอบการสอน Week 12](https://se-rmutl.github.io/engse203/week12/week12-teaching-doc.html) (อ่านบทที่ 1–2 ก่อนเข้าคาบ · ลำดับเดียวกับสไลด์)
 
 ---
 
 ## อ่านก่อนเริ่ม
 
-เช้านี้เราได้รับ codebase ของระบบ Campus Service ที่เปิดให้ทดลองใช้แล้ว พร้อม**รายงานปัญหาจากผู้ใช้ 3 เรื่อง** (`BUG_REPORTS.md`)
+เช้านี้เราเป็น **dev ที่ต้องทดสอบงานของตัวเองก่อนส่ง** — codebase ของระบบ Campus Service ที่เปิดให้ทดลองใช้แล้ว · ทำตามลำดับเดียวกับสไลด์
 
-ลองรัน test ที่มีอยู่ก่อน — **ผ่านทั้งหมด** ทั้งที่ระบบมี bug อย่างน้อย 4 ตัว
+| บท | เรื่อง | ลงมือ |
+|---|---|---|
+| 1 | ระดับของ test — Unit · Integration · E2E · UAT | — |
+| 2 | Unit test ด้วย Vitest → **หา test case จากโครงสร้างหลังบ้าน** → แพทเทิร์นไฟล์ test | CP44 · CP45 |
+| 3 | Integration test ด้วย supertest → อ่าน import ของไฟล์ → coverage | CP46 |
+| 4 | UAT — ผู้ใช้แจ้งปัญหามา 3 เรื่อง (`BUG_REPORTS.md`) | — |
+| 5 | Debug อย่างเป็นขั้นตอน + regression test | CP47 |
 
 > **ประโยคแกนกลางของเช้านี้**
-> **"test ผ่าน" ไม่ได้แปลว่า "ไม่มี bug" — แปลว่า "ยังไม่มี test สำหรับกรณีนั้น"**
+> **"test ผ่าน" ไม่ได้แปลว่า "ไม่มี bug" — แปลว่า "ยังไม่มี test สำหรับกรณีนั้น"** — starter มี test ผ่านทั้งหมด ทั้งที่มี bug อย่างน้อย 4 ตัว
 
 ### สิ่งที่จะได้ทำ
 
@@ -82,9 +88,23 @@ labs/week-12/source/
 
 # CP44 · ออกแบบ test case ก่อนเขียนโค้ด
 
-**🏫 25 นาที · We do**
+**🏫 15 นาที · We do** · สไลด์บทที่ 2 "หา test case จากไหน"
 
-## ① อ่านกฎจากโค้ด
+## ① กฎอยู่ไฟล์ไหน — ดูชั้นของ `api/src`
+
+หลังบ้านแบ่งเป็นชั้น แต่ละชั้นทำหน้าที่เดียว — **กฎของระบบอยู่ชั้น validator** จึงเป็นที่แรกที่ต้องเปิด
+
+| ชั้น · ไฟล์ | ทำหน้าที่ | test ระดับ |
+|---|---|---|
+| `routes/requestRoutes.js` | จับคู่ method + path | integration (CP46) |
+| `middleware/validateRequest.js` | เรียกกฎ ถ้าผิดตอบ 400 | integration |
+| `controllers/requestController.js` | อ่าน req → เรียก service → เลือก status code | integration |
+| `services/requestService.js` | ทำงานกับข้อมูล + DB | integration (ผ่าน DB) |
+| `validators/requestValidator.js` | **กฎของระบบ** (pure function) | **unit (CP45)** |
+
+> ประโยชน์ของการแบ่งชั้น: หา test ง่าย (กฎอยู่ไฟล์เดียว) · test ได้ตรงจุด (unit ไม่ต้องเปิด server) · fail แล้วรู้ชั้น
+
+## ② อ่านกฎจากโค้ด
 
 เปิด `api/src/validators/requestValidator.js` แล้วจดกฎ
 
@@ -96,16 +116,18 @@ labs/week-12/source/
 | รายละเอียด | อย่างน้อย 10 ตัวอักษร |
 | ความเร่งด่วน | `normal` · `urgent` |
 
-## ② สองเทคนิคที่ใช้
+## ③ สองเทคนิคที่ใช้
 
 | เทคนิค | แนวคิด | ตัวอย่าง |
 |---|---|---|
 | **แบ่งกลุ่มข้อมูล** (equivalence) | ข้อมูลในกลุ่มเดียวกันให้ผลแบบเดียวกัน — ทดสอบกลุ่มละ 1 ค่าพอ | priority: `normal` (ถูก) · `high` (นอกรายการ) |
 | **ค่าขอบ** (boundary) | bug ชอบซ่อนตรงขอบ — ถ้ากฎคือ "อย่างน้อย N" ทดสอบ **N−1 · N · N+1** | รายละเอียด 9 · 10 · 11 ตัว |
 
-## ③ เติม `TEST_CASES.md` ให้ครบอย่างน้อย 8 ข้อ
+## ④ เติม `TEST_CASES.md` ให้ครบอย่างน้อย 8 ข้อ
 
 ตัวอย่างให้มาแล้ว 3 ข้อ — แต่ละข้อเปลี่ยนข้อมูล**ทีละช่อง** จะได้รู้ว่าผลมาจากช่องไหน
+
+> **ผลที่คาดหวังมาจากกฎ** ("อย่างน้อย 10" → 10 ตัวต้องผ่าน) ไม่ใช่ลองรันแล้วจดตามที่โค้ดตอบ · เพิ่มคอลัมน์ `| ผลรัน |` ท้ายตารางไว้กรอก ✓/✕ ตอน CP45–CP46 (checker ไม่นับคอลัมน์นี้)
 
 ### ✓ ผ่าน CP44 เมื่อ
 
@@ -121,16 +143,33 @@ labs/week-12/source/
 
 # CP45 · unit test ด้วย Vitest
 
-**🏫 40 นาที · I do → We do**
+**🏫 30 นาที · I do → We do** · สไลด์บทที่ 2 "แพทเทิร์นเขียน test 6 ขั้น"
 
-## ① รัน test ที่มีอยู่
+## ① แพทเทิร์นไฟล์ test — ดูไฟล์ที่ starter ให้มา
+
+```
+api/tests/
+├── unit/requestValidator.test.js      ← CP45 · ทดสอบ 1 ไฟล์ใน src (ชื่อไฟล์ + .test.js)
+└── integration/requests.api.test.js   ← CP46 · ทดสอบ /api/requests ผ่าน HTTP + DB
+```
+
+| ขั้น | ใน `requestValidator.test.js` |
+|---|---|
+| ① สร้างไฟล์ | อยู่ใน `tests/unit/` แล้ว |
+| ② import | `describe · test · expect` จาก `vitest` + `validateRequestInput` จาก `../../src/validators/requestValidator.js` (`../../` = ออกจาก `tests/unit/` ไปที่ `api/`) |
+| ③ ข้อมูลกลาง | `valid` (ถูกทุกช่อง) + `withField()` เปลี่ยนทีละช่อง |
+| ④ describe / test | `describe` ต่อกลุ่มกฎ · `test` ต่อ 1 แถวใน `TEST_CASES.md` — ใส่รหัส เช่น `'TC-03 10 ตัวอักษร → ผ่าน'` |
+| ⑤ รัน | `npm run test:watch --prefix api` · ✕ อ่าน Expected / Received |
+| ⑥ บันทึกผล | ✓/✕ ในคอลัมน์ "ผลรัน" ของ `TEST_CASES.md` · ✕ เพราะโค้ดผิดกฎ → bug → `DEBUG_LOG.md` |
+
+## ② รัน test ที่มีอยู่
 
 ```bash
 npm test --prefix api          # ผ่านทั้งหมด 11 ข้อ — ทั้งที่มี bug!
 npm run test:watch --prefix api   # (แนะนำ) รันใหม่ทุกครั้งที่บันทึกไฟล์
 ```
 
-## ② ทำไม validator ต้องเป็น pure function
+## ③ ทำไม validator ต้องเป็น pure function
 
 | middleware เดิม | pure function |
 |---|---|
@@ -139,7 +178,7 @@ npm run test:watch --prefix api   # (แนะนำ) รันใหม่ท�
 
 `validateRequest` (middleware) เหลือแค่เรียก `validateRequestInput(req.body)` แล้วตัดสินว่าจะตอบ 400 ไหม
 
-## ③ เพิ่ม unit test จากตาราง (`api/tests/unit/requestValidator.test.js`)
+## ④ เพิ่ม unit test จากตาราง (`api/tests/unit/requestValidator.test.js`)
 
 ```js
 test('10 ตัวอักษร → ผ่าน (ตรงขอบพอดี)', () => {
@@ -159,7 +198,7 @@ test.each([null, undefined, 'text', 42, []])('input = %j → error เดีย�
 | `toHaveLength(n)` | นับจำนวน error |
 | `toContain('…')` | มีข้อความนี้อยู่ใน array |
 
-## ④ test ค่าขอบ 10 ตัวอักษร **fail** → นี่คือ BUG #0
+## ⑤ test ค่าขอบ 10 ตัวอักษร **fail** → นี่คือ BUG #0
 
 > ⚠ **อย่าแก้ test ให้ผ่าน** — test ตรงกับกฎ ("อย่างน้อย 10") · ให้ไปอ่านเงื่อนไขใน validator
 
@@ -179,9 +218,23 @@ test.each([null, undefined, 'text', 42, []])('input = %j → error เดีย�
 
 # CP46 · integration test + coverage
 
-**🏫 35 นาที · We do → You do**
+**🏫 20 นาที · We do → You do** · สไลด์บทที่ 3
 
-## ① ฐานข้อมูลของ test แยกจากของจริง
+## ① อ่าน import ของ `requests.api.test.js` ก่อนเขียน
+
+```js
+import { describe, test, expect, beforeEach } from 'vitest';      // ① เหมือน unit + beforeEach
+import request from 'supertest';                                  // ② ตัวยิง HTTP
+import { createApp } from '../../src/app.js';                     // ③ app ทั้งตัว ไม่ listen
+import { loadSeed } from '../../src/services/requestService.js';  // ④ ชั้น service ดูแล DB
+
+const app = createApp();                          // ⑤ สร้าง app ครั้งเดียว
+beforeEach(async () => { await loadSeed(); });    // ⑥ DB ใหม่ก่อนทุก test
+```
+
+> แพทเทิร์นเดียวกับ unit — ต่างแค่ต้อง**ผ่าน HTTP และ DB** จึง import ② ③ ④ เพิ่ม · ไฟล์ unit ไม่ต้องมี
+
+## ② ฐานข้อมูลของ test แยกจากของจริง
 
 `api/vitest.config.js` ตั้ง `DB_FILE: ':memory:'` ไว้แล้ว
 
@@ -191,7 +244,7 @@ beforeEach(async () => { await loadSeed(); });   // ทุก test ได้ฐ�
 
 > test ข้อหนึ่งลบข้อมูล ไม่กระทบข้ออื่น · และไม่แตะ `campus.db` ที่ต้อง commit
 
-## ② เพิ่ม integration test ของ PUT และ DELETE
+## ③ เพิ่ม integration test ของ PUT และ DELETE
 
 ใน `api/tests/integration/requests.api.test.js`
 
@@ -213,7 +266,7 @@ describe('DELETE /api/requests/:id', () => {
 });
 ```
 
-## ③ อ่าน coverage
+## ④ อ่าน coverage
 
 ```bash
 npm run coverage
@@ -242,7 +295,9 @@ npm run coverage
 
 # CP47 · debug 3 bug จากผู้ใช้
 
-**🏫 50 นาที · I do (BUG #3) → We do (BUG #1) → You do (BUG #2)**
+**🏫 40 นาที · I do (BUG #3) → We do (BUG #1) → You do (BUG #2)** · สไลด์บทที่ 4–5
+
+> `BUG_REPORTS.md` = **ผล UAT ที่ไม่ผ่าน** — ผู้ใช้บอกได้แค่อาการ งานของเราคือหาสาเหตุด้วยหลักฐาน แล้วเขียน test กันไม่ให้กลับมา
 
 ## กระบวนการ 6 ขั้น — ใช้กับทุก bug
 

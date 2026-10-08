@@ -136,16 +136,16 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
 <header class="top">
   <p class="eyebrow">ENGSE203 · Week 12 · Checkpoint 44</p>
   <h1>ออกแบบ test case <span class="where">🏫 ทำในห้อง</span></h1>
-  <p class="sub">09:15–09:40 · 25 นาที · I do → We do → You do · ผลงาน: TEST_CASES.md</p>
+  <p class="sub">09:25–09:40 · 15 นาที · I do → We do → You do · ผลงาน: TEST_CASES.md</p>
   <div class="pills"><span class="pill a">TODO W12-CASES</span><span class="pill ">TEST_CASES.md</span><span class="pill v">equivalence + boundary</span></div>
 </header>
 
-<nav class="jump"><a href="#s1">① เตรียมโปรเจกต์</a><a href="#s2">② อ่านกฎ</a><a href="#s3">③ แบ่งกลุ่ม + ค่าขอบ</a><a href="#s4">④ เติม TEST_CASES.md</a><a href="#done">ผ่าน CP</a></nav>
+<nav class="jump"><a href="#s1">① เตรียมโปรเจกต์</a><a href="#s1b">② กฎอยู่ไฟล์ไหน</a><a href="#s2">③ อ่านกฎ</a><a href="#s3">④ แบ่งกลุ่ม + ค่าขอบ</a><a href="#s4">⑤ เติม TEST_CASES.md</a><a href="#done">ผ่าน CP</a></nav>
 
 <div class="step" id="s1">
   <div class="step-head"><span class="num">①</span><h2>คัดลอก starter → labs/week-12/source แล้วติดตั้ง</h2><span class="file">Student Repository</span></div>
   <div class="step-body">
-  <p class="say">เช้านี้เราเป็น<strong>ทีมดูแลระบบ</strong> Campus Service ที่เปิดให้ทดลองใช้แล้ว · มีผู้ใช้แจ้งปัญหามา 3 เรื่องใน <code>BUG_REPORTS.md</code> — แต่ก่อนไล่ bug ต้องมี test ก่อน</p>
+  <p class="say">เช้านี้เราเป็น <strong>dev ที่ต้องทดสอบงานของตัวเองก่อนส่ง</strong> · เตรียมโปรเจกต์ให้พร้อม แล้วเริ่มจากคำถามแรก: <strong>กฎของระบบอยู่ที่ไหน</strong> (<code>BUG_REPORTS.md</code> ยังไม่ต้องเปิด — ใช้ในบทที่ 4–5)</p>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="c"># รันที่ root ของ Student Repository</span>
 <span class="c"># (สมมติว่า clone Course Repository ไว้ข้าง ๆ ที่ ../engse203-lab)</span>
 mkdir -p labs/week-12
@@ -165,8 +165,24 @@ node --disable-warning=ExperimentalWarning check-week12.mjs --inclass</code></pr
   <div class="warn"><b>⚠ กับดัก</b><strong>ต้อง <code>npm install</code> ทั้งใน <code>api/</code> และ <code>frontend/</code></strong> — checker เรียก Vitest ของโปรเจกต์เอง ถ้าลืมจะขึ้น "ยังไม่ได้ npm install ใน api/" · และ<strong>อย่าแก้ไฟล์ใน Course Repository</strong> ทำงานใน <code>labs/week-12/source</code> เท่านั้น</div>
   </div>
 </div>
+<div class="step" id="s1b">
+  <div class="step-head"><span class="num">②</span><h2>กฎอยู่ไฟล์ไหน — ดูชั้นของ api/src</h2><span class="file">api/src/</span></div>
+  <div class="step-body">
+  <p class="say">หลังบ้านแบ่งเป็นชั้น แต่ละชั้นทำหน้าที่เดียว → <strong>กฎของระบบอยู่ชั้น validator</strong> (pure function) · ชั้นอื่นทดสอบผ่าน HTTP</p>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>ls api/src/*            <span class="c"># Windows: dir api\src</span></code></pre></div>
+  <table>
+    <tr><th>ชั้น · ไฟล์</th><th>ทำหน้าที่</th><th>test ระดับ</th></tr>
+    <tr><td><code>routes/requestRoutes.js</code></td><td>จับคู่ method + path</td><td>integration (CP46)</td></tr>
+    <tr><td><code>middleware/validateRequest.js</code></td><td>เรียกกฎ ถ้าผิดตอบ 400</td><td>integration</td></tr>
+    <tr><td><code>controllers/requestController.js</code></td><td>อ่าน req → เรียก service → เลือก status code</td><td>integration</td></tr>
+    <tr><td><code>services/requestService.js</code></td><td>ทำงานกับข้อมูล + DB</td><td>integration (ผ่าน DB)</td></tr>
+    <tr><td><code>validators/requestValidator.js</code></td><td><strong>กฎของระบบ</strong></td><td><strong>unit (CP45)</strong></td></tr>
+  </table>
+  <div class="ok"><b>✓ ประโยชน์ของการแบ่งชั้น</b>หา test ง่าย (กฎอยู่ไฟล์เดียว) · test ได้ตรงจุด (unit ไม่ต้องเปิด server) · fail แล้วรู้ชั้น (unit fail = กฎผิด · integration fail = รอยต่อผิด)</div>
+  </div>
+</div>
 <div class="step" id="s2">
-  <div class="step-head"><span class="num">②</span><h2>อ่านกฎจาก requestValidator.js</h2><span class="file">api/src/validators/requestValidator.js</span></div>
+  <div class="step-head"><span class="num">③</span><h2>อ่านกฎจาก requestValidator.js</h2><span class="file">api/src/validators/requestValidator.js</span></div>
   <div class="step-body">
   <p class="say">test case มาจาก<strong>กฎของระบบ</strong> — เปิดไฟล์นี้แล้วจดกฎออกมาเป็นข้อ ๆ</p>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">export</span> <span class="k">const</span> REQUEST_TYPES = [<span class="s">'แจ้งซ่อม'</span>, <span class="s">'บริการบัญชีผู้ใช้'</span>, <span class="s">'ขอใช้อุปกรณ์'</span>, <span class="s">'อื่น ๆ'</span>];
@@ -191,7 +207,7 @@ node --disable-warning=ExperimentalWarning check-week12.mjs --inclass</code></pr
   </div>
 </div>
 <div class="step" id="s3">
-  <div class="step-head"><span class="num">③</span><h2>equivalence partitioning กับ boundary value</h2></div>
+  <div class="step-head"><span class="num">④</span><h2>equivalence partitioning กับ boundary value</h2></div>
   <div class="step-body">
   <p class="say">ทดสอบทุกค่าที่เป็นไปได้ไม่ไหว → <strong>แบ่งกลุ่ม</strong> ค่าที่ระบบควรทำเหมือนกัน แล้วเลือกตัวแทนกลุ่มละ 1 ค่า · จากนั้น<strong>เฝ้าที่ขอบ</strong>ระหว่างกลุ่ม</p>
   <table>
@@ -208,7 +224,7 @@ node --disable-warning=ExperimentalWarning check-week12.mjs --inclass</code></pr
   </div>
 </div>
 <div class="step" id="s4">
-  <div class="step-head"><span class="num">④</span><h2>เติมตาราง TEST_CASES.md ให้ครบ ≥ 8 ข้อ</h2><span class="file">TEST_CASES.md</span></div>
+  <div class="step-head"><span class="num">⑤</span><h2>เติมตาราง TEST_CASES.md ให้ครบ ≥ 8 ข้อ</h2><span class="file">TEST_CASES.md</span></div>
   <div class="step-body">
   <p class="say"><strong>We do</strong> TC-03 ถึง TC-05 ด้วยกัน → <strong>You do</strong> ที่เหลือ · แต่ละข้อเปลี่ยนข้อมูล<strong>ทีละช่อง</strong>จากข้อมูลตั้งต้นที่ถูกต้อง จะได้รู้ว่าผลมาจากช่องไหน</p>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>| รหัส | กลุ่ม | ข้อมูลที่เปลี่ยน | ผลที่คาดหวัง | ระดับ test |
@@ -226,6 +242,7 @@ node --disable-warning=ExperimentalWarning check-week12.mjs --inclass</code></pr
 | TC-11 | ผิดหลายช่อง | <span class="s">`{}`</span> | error ครบ 5 ช่อง · API ตอบ 400 | unit + integration |
 | TC-12 | ลำดับการทำงาน | ลบ REQ-002 แล้วเพิ่มใหม่ | 201 · รหัสไม่ซ้ำ | integration |</code></pre></div>
   <div class="warn"><b>⚠ กับดัก</b>checker นับเฉพาะแถว <code>| TC-xx |</code> ที่<strong>ช่อง "กลุ่ม" ไม่ว่าง</strong> — แถวโครงเปล่า <code>| TC-04 | | | | |</code> ที่ starter ให้มาไม่นับ · starter จึงได้แค่ "มี 3 ข้อ"</div>
+  <div class="say"><b>💡 เตรียมบันทึกผล</b>เพิ่มคอลัมน์ท้ายตาราง <code>| ผลรัน |</code> ไว้กรอก ✓/✕ ตอนรัน test ใน CP45–CP46 (checker ไม่นับคอลัมน์นี้ · นับเฉพาะแถว TC ที่ช่องกลุ่มไม่ว่าง)</div>
   <div class="vio"><b>💡 เกร็ด</b>คอลัมน์ "ระดับ test" บอกล่วงหน้าว่าข้อไหนไปอยู่ไฟล์ไหน — <code>unit</code> → <code>tests/unit/</code> (CP45) · <code>integration</code> → <code>tests/integration/</code> (CP46) · TC-12 คืออาการของ BUG #1 ที่จะไล่ใน CP47</div>
   </div>
 </div>

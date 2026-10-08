@@ -136,14 +136,38 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
 <header class="top">
   <p class="eyebrow">ENGSE203 · Week 12 · Checkpoint 45</p>
   <h1>unit test + BUG #0 <span class="where">🏫 ทำในห้อง</span></h1>
-  <p class="sub">09:40–10:20 · 40 นาที · We do → You do · Vitest + pure function</p>
+  <p class="sub">09:45–10:15 · 30 นาที · We do → You do · Vitest + pure function</p>
   <div class="pills"><span class="pill a">TODO W12-UNIT</span><span class="pill ">Vitest</span><span class="pill r">🐞 BUG #0</span><span class="pill v">pure function</span></div>
 </header>
 
-<nav class="jump"><a href="#s1">① pure function</a><a href="#s2">② npm test</a><a href="#s3">③ ค่าขอบ + test.each</a><a href="#s4">④ เจอ BUG #0 → แก้</a><a href="#s5">⑤ DEBUG_LOG + watch</a><a href="#done">ผ่าน CP</a></nav>
+<nav class="jump"><a href="#s0">① แพทเทิร์นไฟล์ test</a><a href="#s1">② pure function</a><a href="#s2">③ npm test</a><a href="#s3">④ ค่าขอบ + test.each</a><a href="#s4">⑤ เจอ BUG #0 → แก้</a><a href="#s5">⑥ DEBUG_LOG + watch</a><a href="#done">ผ่าน CP</a></nav>
 
+<div class="step" id="s0">
+  <div class="step-head"><span class="num">①</span><h2>เปิดไฟล์ test ตามแพทเทิร์น 6 ขั้น</h2><span class="file">api/tests/unit/requestValidator.test.js</span></div>
+  <div class="step-body">
+  <p class="say">starter สร้างไฟล์ไว้ให้แล้ว — ดูว่ามีครบตามแพทเทิร์นที่เรียนในสไลด์ แล้วเพิ่ม test ตรง <code>TODO W12-UNIT</code></p>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="c">// ① ไฟล์อยู่ tests/unit/ · ชื่อ = ไฟล์ที่ทดสอบ + .test.js</span>
+<span class="c">// ② import — ฟังก์ชันของ Vitest + สิ่งที่จะทดสอบ (../../ = ออกจาก tests/unit/ ไปที่ api/)</span>
+<span class="k">import</span> { describe, test, expect } <span class="k">from</span> <span class="s">'vitest'</span>;
+<span class="k">import</span> { validateRequestInput, isValidStatus } <span class="k">from</span> <span class="s">'../../src/validators/requestValidator.js'</span>;
+
+<span class="c">// ③ ข้อมูลกลาง — ถูกทุกช่อง แล้วเปลี่ยนทีละช่อง</span>
+<span class="k">const</span> valid = { requesterName: <span class="s">'สมชาย ใจดี'</span>, … };
+<span class="k">const</span> <span class="f">withField</span> = (patch) =&gt; ({ ...valid, ...patch });
+
+<span class="c">// ④ describe ต่อ 1 ฟังก์ชัน/กลุ่มกฎ · test ต่อ 1 แถวใน TEST_CASES.md</span>
+<span class="f">describe</span>(<span class="s">'validateRequestInput — รายละเอียด (ค่าขอบ 10 ตัวอักษร)'</span>, () =&gt; {
+  <span class="f">test</span>(<span class="s">'TC-03 10 ตัวอักษร → ผ่าน'</span>, () =&gt; { … });   <span class="c">← ใส่รหัส TC ในชื่อ</span>
+});</code></pre></div>
+  <table>
+    <tr><th>ขั้น</th><th>ทำอะไร</th></tr>
+    <tr><td>⑤ รัน</td><td><code>npm run test:watch --prefix api</code> เปิดค้าง · ✓ ผ่าน · ✕ อ่าน Expected / Received</td></tr>
+    <tr><td>⑥ บันทึกผล</td><td>กรอก ✓/✕ ในคอลัมน์ "ผลรัน" ของ <code>TEST_CASES.md</code> · ✕ เพราะโค้ดผิดกฎ → bug → <code>DEBUG_LOG.md</code></td></tr>
+  </table>
+  </div>
+</div>
 <div class="step" id="s1">
-  <div class="step-head"><span class="num">①</span><h2>ทำไมต้องแยกกฎออกเป็น pure function</h2><span class="file">api/src/validators/</span></div>
+  <div class="step-head"><span class="num">②</span><h2>ทำไมต้องแยกกฎออกเป็น pure function</h2><span class="file">api/src/validators/</span></div>
   <div class="step-body">
   <p class="say">middleware ผูกกับ <code>req/res/next</code> → จะทดสอบต้องเปิด server · <strong>pure function</strong> รับข้อมูลเข้า คืนผลลัพธ์ ไม่แตะอะไรภายนอก → เรียกใน test ได้ทันที</p>
   <span class="tag b">middleware — บางลงเหลือแค่ตัดสิน 400</span>
@@ -172,7 +196,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </div>
 <div class="step" id="s2">
-  <div class="step-head"><span class="num">②</span><h2>รัน npm test — ผ่านหมด ทั้งที่มี 4 bug</h2><span class="file">labs/week-12/source</span></div>
+  <div class="step-head"><span class="num">③</span><h2>รัน npm test — ผ่านหมด ทั้งที่มี 4 bug</h2><span class="file">labs/week-12/source</span></div>
   <div class="step-body">
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>npm test          <span class="c"># = api (Vitest) แล้วต่อด้วย frontend (Vitest)</span></code></pre></div>
   <span class="tag a">ผลที่ควรเห็น</span><pre><code>&gt; engse203-campus-api@3.1.0 test
@@ -188,7 +212,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </div>
 <div class="step" id="s3">
-  <div class="step-head"><span class="num">③</span><h2>เพิ่ม test ค่าขอบ และ test.each สำหรับ input ผิดรูปแบบ</h2><span class="file">api/tests/unit/requestValidator.test.js</span></div>
+  <div class="step-head"><span class="num">④</span><h2>เพิ่ม test ค่าขอบ และ test.each สำหรับ input ผิดรูปแบบ</h2><span class="file">api/tests/unit/requestValidator.test.js</span></div>
   <div class="step-body">
   <p class="say">แปลงตาราง TEST_CASES.md เป็นโค้ด · ใช้ <code>withField()</code> เปลี่ยนทีละช่องจาก <code>valid</code> ที่ starter เตรียมไว้</p>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="f">describe</span>(<span class="s">'validateRequestInput — รายละเอียด (ค่าขอบ 10 ตัวอักษร)'</span>, () =&gt; {
@@ -236,7 +260,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </div>
 <div class="step" id="s4">
-  <div class="step-head"><span class="num">④</span><h2>test 10 ตัวอักษร FAIL → อ่าน validator → แก้ &lt;= เป็น &lt;</h2><span class="file">api/src/validators/requestValidator.js</span></div>
+  <div class="step-head"><span class="num">⑤</span><h2>test 10 ตัวอักษร FAIL → อ่าน validator → แก้ &lt;= เป็น &lt;</h2><span class="file">api/src/validators/requestValidator.js</span></div>
   <div class="step-body">
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>npm test --prefix api -- tests/unit       <span class="c"># รันเฉพาะ unit test</span></code></pre></div>
   <span class="tag a">ผลจริงจาก starter · โค้ดบนจอ 20 ข้อ + You do 4 ข้อ</span><pre><code><span class="d">❯ tests/unit/requestValidator.test.js (24 tests | 1 failed)</span>
@@ -261,7 +285,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 </div>
 <div class="step" id="s5">
-  <div class="step-head"><span class="num">⑤</span><h2>บันทึก BUG #0 ใน DEBUG_LOG.md · ใช้ test:watch</h2><span class="file">DEBUG_LOG.md</span></div>
+  <div class="step-head"><span class="num">⑥</span><h2>บันทึก BUG #0 ใน DEBUG_LOG.md · ใช้ test:watch</h2><span class="file">DEBUG_LOG.md</span></div>
   <div class="step-body">
   <p class="say">bug ทุกตัวตอบ <strong>6 ข้อ</strong> — สั้นแต่ต้องชัด · BUG #0 ไม่มีผู้ใช้แจ้ง เราตั้งชื่อเอง</p>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">## BUG #0 · ค่าขอบรายละเอียด 10 ตัวอักษร (test เจอ — ไม่มีผู้ใช้แจ้ง)</span>

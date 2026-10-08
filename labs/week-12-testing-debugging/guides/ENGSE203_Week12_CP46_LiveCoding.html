@@ -136,14 +136,33 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
 <header class="top">
   <p class="eyebrow">ENGSE203 · Week 12 · Checkpoint 46</p>
   <h1>integration test + coverage <span class="where">🏫 ทำในห้อง</span></h1>
-  <p class="sub">10:30–11:05 · 35 นาที · We do → You do · supertest + :memory:</p>
+  <p class="sub">10:40–11:00 · 20 นาที · We do → You do · supertest + :memory:</p>
   <div class="pills"><span class="pill a">TODO W12-INTEG</span><span class="pill ">supertest</span><span class="pill c">:memory:</span><span class="pill v">coverage</span></div>
 </header>
 
-<nav class="jump"><a href="#s1">① ฐานข้อมูลแยก</a><a href="#s2">② PUT + DELETE</a><a href="#s3">③ coverage</a><a href="#s4">④ ครอบ errorHandler</a><a href="#done">ผ่าน CP</a></nav>
+<nav class="jump"><a href="#s0">① อ่าน import</a><a href="#s1">② ฐานข้อมูลแยก</a><a href="#s2">③ PUT + DELETE</a><a href="#s3">④ coverage</a><a href="#s4">⑤ ครอบ errorHandler</a><a href="#done">ผ่าน CP</a></nav>
 
+<div class="step" id="s0">
+  <div class="step-head"><span class="num">①</span><h2>อ่าน import ของไฟล์ integration ก่อนเขียน</h2><span class="file">api/tests/integration/requests.api.test.js</span></div>
+  <div class="step-body">
+  <p class="say">แพทเทิร์นเดียวกับ unit (สร้างไฟล์ → import → เตรียม → describe/test → รัน → บันทึก) แต่ต้อง<strong>ผ่าน HTTP และ DB</strong> จึง import เพิ่ม 3 อย่าง</p>
+  <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="k">import</span> { describe, test, expect, beforeEach } <span class="k">from</span> <span class="s">'vitest'</span>;      <span class="c">// ① เหมือน unit + beforeEach</span>
+<span class="k">import</span> request <span class="k">from</span> <span class="s">'supertest'</span>;                                  <span class="c">// ② ตัวยิง HTTP</span>
+<span class="k">import</span> { createApp } <span class="k">from</span> <span class="s">'../../src/app.js'</span>;                     <span class="c">// ③ app ทั้งตัว ไม่ listen</span>
+<span class="k">import</span> { loadSeed } <span class="k">from</span> <span class="s">'../../src/services/requestService.js'</span>;  <span class="c">// ④ ชั้น service ดูแล DB</span>
+
+<span class="k">const</span> app = <span class="f">createApp</span>();                          <span class="c">// ⑤ สร้าง app ครั้งเดียว</span>
+<span class="f">beforeEach</span>(<span class="k">async</span> () =&gt; { <span class="k">await</span> <span class="f">loadSeed</span>(); });    <span class="c">// ⑥ DB ใหม่ก่อนทุก test</span></code></pre></div>
+  <table>
+    <tr><th>ไฟล์</th><th>import</th><th>เหตุผล</th></tr>
+    <tr><td><code>tests/unit/</code></td><td>①</td><td>เรียกฟังก์ชันตรง ๆ</td></tr>
+    <tr><td><code>tests/integration/</code></td><td>① ② ③ ④</td><td>ยิง HTTP เข้า app · รีเซ็ต DB ทุก test</td></tr>
+  </table>
+  <div class="vio"><b>💡 ../../</b><code>tests/integration/</code> → <code>../</code> = <code>tests/</code> → <code>../</code> = <code>api/</code> → <code>src/app.js</code> · ไฟล์ unit อยู่ลึกเท่ากันจึงใช้ <code>../../</code> เหมือนกัน</div>
+  </div>
+</div>
 <div class="step" id="s1">
-  <div class="step-head"><span class="num">①</span><h2>:memory: + beforeEach(loadSeed) = test ไม่รบกวนกัน</h2><span class="file">api/vitest.config.js</span></div>
+  <div class="step-head"><span class="num">②</span><h2>:memory: + beforeEach(loadSeed) = test ไม่รบกวนกัน</h2><span class="file">api/vitest.config.js</span></div>
   <div class="step-body">
   <p class="say">integration test ยิง HTTP จริงผ่านทุกชั้น: route → controller → service → SQLite · คำถามคือ "ใช้ฐานข้อมูลตัวไหน?"</p>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="c">// api/vitest.config.js (starter ตั้งไว้แล้ว)</span>
@@ -167,7 +186,7 @@ test: {
   </div>
 </div>
 <div class="step" id="s2">
-  <div class="step-head"><span class="num">②</span><h2>เพิ่ม test ของ PUT และ DELETE</h2><span class="file">api/tests/integration/requests.api.test.js</span></div>
+  <div class="step-head"><span class="num">③</span><h2>เพิ่ม test ของ PUT และ DELETE</h2><span class="file">api/tests/integration/requests.api.test.js</span></div>
   <div class="step-body">
   <p class="say">starter มี integration test 8 ข้อ แต่<strong>ไม่มี PUT/DELETE เลย</strong> — ตรงที่ TODO W12-INTEG เพิ่ม 2 describe นี้</p>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="f">describe</span>(<span class="s">'PUT /api/requests/:id'</span>, () =&gt; {
@@ -196,7 +215,7 @@ test: {
   </div>
 </div>
 <div class="step" id="s3">
-  <div class="step-head"><span class="num">③</span><h2>npm run coverage แล้วอ่านรายงาน</h2><span class="file">api/coverage/index.html</span></div>
+  <div class="step-head"><span class="num">④</span><h2>npm run coverage แล้วอ่านรายงาน</h2><span class="file">api/coverage/index.html</span></div>
   <div class="step-body">
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code>npm run coverage                  <span class="c"># = npm run coverage --prefix api</span>
 <span class="c"># แล้วเปิด api/coverage/index.html ในเบราว์เซอร์ → คลิกชื่อไฟล์ดูบรรทัดสีแดง</span></code></pre></div>
@@ -217,7 +236,7 @@ All files          |   72.97 |    62.35 |   54.28 |   74.82 |
   </div>
 </div>
 <div class="step" id="s4">
-  <div class="step-head"><span class="num">④</span><h2>เพิ่ม test /api/nope และ JSON เสีย</h2><span class="file">api/tests/integration/requests.api.test.js</span></div>
+  <div class="step-head"><span class="num">⑤</span><h2>เพิ่ม test /api/nope และ JSON เสีย</h2><span class="file">api/tests/integration/requests.api.test.js</span></div>
   <div class="step-body">
   <p class="say">ทำให้ errorHandler ถูกวิ่งผ่านด้วย<strong>คำขอที่ผู้ใช้ส่งมาได้จริง</strong> — path ที่ไม่มี และ JSON ที่พิมพ์ไม่ครบ</p>
   <div class="codewrap"><button class="copy" data-copy>คัดลอก</button><pre><code><span class="f">describe</span>(<span class="s">'เส้นทางที่ไม่มีอยู่'</span>, () =&gt; {
