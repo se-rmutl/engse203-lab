@@ -243,7 +243,7 @@ footer .m{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:
   <ol>
     <li><a href="#c1">ระดับของการทดสอบ — dev ทดสอบอะไร ที่ระดับไหน</a><span class="t">10 นาที</span></li>
     <li><a href="#c2">Unit test ด้วย Vitest — หา test case จากหลังบ้าน · แพทเทิร์นไฟล์ test (CP44 · CP45)</a><span class="t">30 นาที</span></li>
-    <li><a href="#c3">Integration test ด้วย supertest + coverage (CP46)</a><span class="t">15 นาที</span></li>
+    <li><a href="#c3">Integration test ด้วย supertest + coverage (CP46)</a><span class="t">20 นาที</span></li>
     <li><a href="#c4">UAT — ผู้ใช้ยอมรับ และ bug report</a><span class="t">7 นาที</span></li>
     <li><a href="#c5">Debug อย่างเป็นขั้นตอน + regression test (CP47)</a><span class="t">25 นาที</span></li>
   </ol>
@@ -922,7 +922,7 @@ AssertionError: expected [ Array(1) ] to deeply equal []
 <section class="ch" id="c3">
   <p class="ch-num">บทที่ 3 <span class="wheretag room">🏫 10:25 · CP46 10:40</span></p>
   <h2>Integration test ด้วย supertest + coverage</h2>
-  <p class="readtime">เวลาอ่าน ≈ 15 นาที</p>
+  <p class="readtime">เวลาอ่าน ≈ 20 นาที</p>
 
 
   <div class="term">
@@ -930,7 +930,55 @@ AssertionError: expected [ Array(1) ] to deeply equal []
     <p>ไลบรารีที่<strong>ยิง HTTP request เข้า Express app โดยตรง</strong> โดยไม่ต้อง <code>listen</code> พอร์ตจริง · request วิ่งผ่านทุกชั้น route → middleware → controller → service → SQLite เหมือนผู้ใช้จริงเรียก</p>
   </div>
 
-  <h3>3.1 อ่าน import ของ requests.api.test.js ก่อนเขียน</h3>
+  <h3>3.1 supertest คืออะไร — Postman / curl ที่เขียนเป็นโค้ด</h3>
+
+  <p>ใน W06–07 เราทดสอบ API ด้วย curl หรือ Postman — เปิด server ค้างไว้ ยิง request แล้ว<strong>ใช้ตาอ่านผล</strong> · supertest ทำสิ่งเดียวกัน<strong>แต่เขียนเป็นโค้ด</strong> จึงรันซ้ำได้ทุกครั้งที่แก้โค้ด และให้โปรแกรมตัดสินว่าผ่านหรือไม่</p>
+
+  <table class="d">
+    <tr><th></th><th>curl / Postman</th><th>supertest</th></tr>
+    <tr><td>ส่ง request</td><td><code>curl -X POST localhost:3001/api/requests -d '{…}'</code></td><td><code>await request(app).post('/api/requests').send({…})</code></td></tr>
+    <tr><td>เปิด server ก่อน</td><td>ต้อง <code>npm run dev</code> ค้างไว้</td><td>ไม่ต้อง — รับ <code>app</code> แล้วเปิดพอร์ตชั่วคราวเอง</td></tr>
+    <tr><td>ตรวจผล</td><td>อ่านเอง</td><td><code>expect(res.status).toBe(201)</code></td></tr>
+    <tr><td>ฐานข้อมูล</td><td><code>campus.db</code> ตัวจริง</td><td><code>:memory:</code> รีเซ็ตทุก test</td></tr>
+  </table>
+
+  <div class="term">
+    <div class="w">supertest ทำงานอย่างไร</div>
+    <p>① <code>request(app)</code> — เปิด app บน<strong>พอร์ตสุ่ม</strong>ชั่วคราว → ② ส่ง HTTP request จริง ผ่าน route → middleware → controller → service → DB → ③ ได้ <code>res</code> กลับมา (status · body · headers) → ④ ปิดพอร์ต แล้วเราตรวจผลด้วย <code>expect</code> · จึงต้องแยก <code>createApp()</code> ออกจาก <code>server.js</code> ที่ <code>listen</code> พอร์ต 3001 จริง</p>
+  </div>
+
+
+  <h3>3.2 อ่าน 1 integration test ทีละท่อน — request · res · expect 2 ตัว</h3>
+
+<pre><code><span class="c-fn">test</span>(<span class="c-str">'POST ข้อมูลถูก → 201 และได้รหัสใหม่'</span>, <span class="c-key">async</span> () =&gt; {
+  <span class="c-com">// Arrange — DB 5 รายการจาก beforeEach + body ที่จะส่ง</span>
+  <span class="c-key">const</span> body = { ...valid };
+  <span class="c-com">// Act</span>
+  <span class="c-key">const</span> res = <span class="c-key">await</span> <span class="c-fn">request</span>(app)          <span class="c-com">// ① await รอคำตอบ · ② app ที่จะยิง</span>
+    .<span class="c-fn">post</span>(<span class="c-str">'/api/requests'</span>)                       <span class="c-com">// ③ method + path</span>
+    .<span class="c-fn">send</span>(body);                                   <span class="c-com">// ④ body — ตั้ง Content-Type เป็น JSON ให้เอง</span>
+  <span class="c-com">// Assert — status · body · ผลข้างเคียง</span>
+  <span class="c-fn">expect</span>(res.status).<span class="c-fn">toBe</span>(<span class="c-num">201</span>);
+  <span class="c-fn">expect</span>(res.body.id).<span class="c-fn">toMatch</span>(<span class="c-str">/^REQ-/</span>);
+  <span class="c-key">const</span> list = <span class="c-key">await</span> <span class="c-fn">request</span>(app).<span class="c-fn">get</span>(<span class="c-str">'/api/requests'</span>);
+  <span class="c-fn">expect</span>(list.body).<span class="c-fn">toHaveLength</span>(<span class="c-num">6</span>);      <span class="c-com">// บันทึกลง DB จริง</span>
+});</code></pre>
+
+  <table class="d">
+    <tr><th style="width:190px">ส่วน</th><th>ความหมาย</th></tr>
+    <tr><td><code>.get</code> <code>.post</code> <code>.put</code> <code>.delete</code></td><td>method + path เหมือนบรรทัดแรกของ HTTP request</td></tr>
+    <tr><td><code>.set(ชื่อ, ค่า)</code></td><td>ใส่ header เช่น <code>.set('Authorization', 'Bearer …')</code> (บ่ายนี้ Week 13 ใช้)</td></tr>
+    <tr><td><code>.send(object)</code></td><td>ใส่ body เป็น JSON</td></tr>
+    <tr><td><code>res.status</code> · <code>res.body</code> · <code>res.headers</code></td><td>status code · JSON ที่แปลงเป็น object แล้ว · header ที่ตอบกลับ (DELETE 204 ไม่มี body)</td></tr>
+  </table>
+
+  <div class="box pitfall">
+    <span class="h">🟥 expect มี 2 ตัว — อย่าสับสน</span>
+    <p style="margin:0"><code>.expect(204)</code> ต่อท้าย chain เป็นของ <strong>supertest</strong> — ตรวจ status สั้น ๆ ในบรรทัดเดียว · <code>expect(res.status).toBe(204)</code> เป็นของ <strong>Vitest</strong> — เก็บ <code>res</code> ไว้แล้วตรวจได้หลายอย่าง · ใช้แบบหลังเป็นหลัก · และ<strong>ลืม <code>await</code></strong> = test จบก่อนคำตอบมา แล้ว "ผ่าน" ทั้งที่ไม่ได้ตรวจอะไร</p>
+  </div>
+
+
+  <h3>3.3 อ่าน import ของ requests.api.test.js ก่อนเขียน</h3>
 
   <p>เปิด <code>api/tests/integration/requests.api.test.js</code> แล้วอ่าน 6 บรรทัดแรกก่อน — ทุกบรรทัดมีเหตุผล</p>
 
@@ -951,7 +999,23 @@ AssertionError: expected [ Array(1) ] to deeply equal []
   </table>
 
 
-  <h3>3.2 รูปแบบการเรียก</h3>
+  <h3>3.4 จาก API_CONTRACT.md สู่ integration test case</h3>
+
+  <p>unit test อ่านกฎจาก validator (บทที่ 2) · integration test อ่าน<strong>สัญญาจาก <code>API_CONTRACT.md</code></strong> — ทุกแถว (method + path + status ที่ต้องได้) คือ test อย่างน้อย 1 ข้อ</p>
+
+  <table class="d">
+    <tr><th>สัญญา</th><th>test case</th><th style="width:170px">starter มีไหม</th></tr>
+    <tr><td><code>GET /api/requests</code> → 200 + array</td><td>ได้ 5 รายการ · กรอง <code>?status=</code></td><td>✓</td></tr>
+    <tr><td><code>GET /:id</code> → 200 · 404</td><td><code>REQ-001</code> → 200 · <code>REQ-999</code> → 404</td><td>✓</td></tr>
+    <tr><td><code>POST</code> → 201 · 400</td><td>ข้อมูลถูก → 201 · ไม่ครบ → 400</td><td>✓</td></tr>
+    <tr><td><code>PUT /:id</code> → 200 · 400 · 404</td><td><code>completed</code> → 200 · <code>'done'</code> → 400 · <code>REQ-999</code> → 404</td><td>✕ CP46 · REQ-999 ได้ 500 = BUG #3</td></tr>
+    <tr><td><code>DELETE /:id</code> → 204 · 404</td><td>ลบแล้ว GET ซ้ำ → 404 · ลบ <code>REQ-999</code> → 404</td><td>✕ CP46</td></tr>
+    <tr><td>ลำดับการทำงาน</td><td>ลบ <code>REQ-002</code> → POST → 201 รหัสไม่ซ้ำ</td><td>✕ BUG #1 (CP47)</td></tr>
+  </table>
+  <p>ผลที่คาดหวังมาจาก<strong>สัญญา</strong> ไม่ใช่จากที่ API ตอบตอนนี้ — แถวที่ starter ยังไม่มีคืองานของ CP46 และแถวที่ fail คือ bug ที่จะไล่ใน CP47</p>
+
+
+  <h3>3.5 รูปแบบการเรียก</h3>
 
 
 <pre><code><span class="c-key">import</span> request <span class="c-key">from</span> <span class="c-str">'supertest'</span>;
@@ -987,7 +1051,7 @@ AssertionError: expected [ Array(1) ] to deeply equal []
   });
 });</code></pre>
 
-  <h3>3.3 Isolation — ทุก test เริ่มจากฐานข้อมูลชุดใหม่</h3>
+  <h3>3.6 Isolation — ทุก test เริ่มจากฐานข้อมูลชุดใหม่</h3>
 
 
   <div class="box predict">
@@ -1071,7 +1135,7 @@ AssertionError: expected [ Array(1) ] to deeply equal []
     <p style="margin:0">ทุกการทดลองเริ่มจาก<strong>อุปกรณ์ที่ล้างสะอาดและสารตั้งต้นชุดใหม่</strong> — ถ้าใช้บีกเกอร์ที่ยังมีสารจากการทดลองก่อนค้างอยู่ ผลที่ได้จะเชื่อไม่ได้ · <code>beforeEach(loadSeed)</code> คือการล้างบีกเกอร์ก่อนทุก test</p>
   </div>
 
-  <h3>3.4 ทำไม test ห้ามแตะ <code>campus.db</code></h3>
+  <h3>3.7 ทำไม test ห้ามแตะ <code>campus.db</code></h3>
 
 
   <table class="d">
@@ -1081,7 +1145,7 @@ AssertionError: expected [ Array(1) ] to deeply equal []
     <tr><td>CI ไม่มีไฟล์ campus.db</td><td>รันบน GitHub Actions ไม่ได้ (Challenge ⭐)</td></tr>
   </table>
 
-  <h3>3.5 ทำไม <code>userRoutes</code> ต้องเรียกผ่าน service</h3>
+  <h3>3.8 ทำไม <code>userRoutes</code> ต้องเรียกผ่าน service</h3>
 
 
 <pre><code><span class="c-com">// api/src/routes/userRoutes.js</span>
@@ -1115,7 +1179,7 @@ router.<span class="c-fn">get</span>(<span class="c-str">'/'</span>, (req, res) 
   </div>
 
 
-  <h3>3.6 Coverage — test วิ่งผ่านโค้ดตรงไหนบ้าง</h3>
+  <h3>3.9 Coverage — test วิ่งผ่านโค้ดตรงไหนบ้าง</h3>
 
 
   <div class="term">
@@ -1134,7 +1198,7 @@ All files          |   <span class="c-hl">60.13</span> |    50.58 |   42.85 |   
   ...tValidator.js |   95.23 |    94.11 |     100 |   95.23 | 24
 <span class="c-com">  … (ตัดมาบางไฟล์ — ผลจริงของ starter)</span></code></pre>
 
-  <h3>3.7 อ่านตัวเลข 4 คอลัมน์</h3>
+  <h3>3.10 อ่านตัวเลข 4 คอลัมน์</h3>
 
 
   <table class="d">
@@ -1211,7 +1275,7 @@ All files          |   <span class="c-hl">60.13</span> |    50.58 |   42.85 |   
     <figcaption><b>ภาพที่ 6</b>Statement coverage ต่อไฟล์ — starter (ส้ม) เทียบเฉลย (น้ำเงิน) · ไฟล์ที่ 0% คือที่ที่ test ไม่เคยเดินผ่าน</figcaption>
   </figure>
 
-  <h3>3.8 coverage บอกอะไรเรา — 2 ไฟล์ที่ 0%</h3>
+  <h3>3.11 coverage บอกอะไรเรา — 2 ไฟล์ที่ 0%</h3>
 
 
   <table class="d">
