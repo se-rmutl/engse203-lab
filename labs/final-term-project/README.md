@@ -233,6 +233,8 @@ checker เปิด API ของทีมจริงด้วยฐานข�
 > ผู้สอนตรวจ M1 และ M2 จาก GitHub (ไม่มีคาบเรียน) · ทีมที่ไม่มี tag ตามกำหนดจะถูกเรียกคุยก่อนวันสอบ
 > commit หลัง tag `v1.0.0` **ไม่นำมาคิดคะแนน**
 
+> 🚀 **deploy ครั้งแรกต้องได้ ✅ Approved ก่อน** — ติ๊ก Ready to Deploy ใน Google Sheet ของ Section แล้วรอผู้สอนตรวจ (12:00 · 20:00) · ขั้นตอนทั้งหมดอยู่ใน [DEPLOY_APPROVAL.md](DEPLOY_APPROVAL.md) · **ห้ามเปิด repo เป็น public หรือ deploy ก่อนได้ Approved**
+
 ---
 
 ## 7. วันสอบปลายภาค
