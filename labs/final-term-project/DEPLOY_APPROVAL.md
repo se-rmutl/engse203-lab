@@ -21,25 +21,25 @@
 
 ## ① เตรียม repo (Back-end + DevOps นำ · ทุกคนช่วยตรวจ)
 
-รันที่ root ของ repo ทีม — ทุกข้อต้องเป็นอย่างที่เขียนไว้
+ผู้สอนตรวจ **6 ชั้น** — ข้อใดข้อหนึ่งไม่ผ่าน = ⛔ ยังไม่อนุมัติ · **ตรวจเองให้ผ่านก่อนติ๊ก Ready to Deploy**
 
 ```bash
-git pull
-git ls-files | grep -E '(^|/)\.env$|\.env\.(local|production)$'   # ต้องไม่มีผลลัพธ์ (ยกเว้น frontend/.env.production ที่มีแค่ VITE_…)
-git check-ignore -v api/.env                                      # ต้องเห็นบรรทัดจาก .gitignore
-git log --all --oneline -- '*.env' 'api/.env'                     # เคย commit .env ไหม — ถ้ามี ดูข้อ "เคยเผลอ commit" ด้านล่าง
-grep -n "JWT_SECRET" api/.env.example                             # ต้องเป็น JWT_SECRET= (ค่าว่าง)
-node --disable-warning=ExperimentalWarning check-project.mjs --skip-build   # ส่วน DEVOPS ข้อ D3 และ secret ต้อง ✅
+git switch main && git pull                          # ตรวจ branch main — Render deploy จาก branch นี้ (งานใน branch อื่นต้อง merge ก่อน)
+cp ../engse203-lab/labs/final-term-project/kit/check-project.mjs .   # checker ตัวล่าสุดของวิชา (git pull ใน Course Repository ก่อน)
+npm install --prefix api && npm install --prefix frontend
+node --disable-warning=ExperimentalWarning check-project.mjs        # ไม่ใส่ --skip-build — Render build จริง
 ```
 
-| ต้องมี | ตรวจที่ |
+| ชั้น | ต้องเป็นแบบนี้ |
 |---|---|
-| `.gitignore` มี `.env` · `node_modules/` · `api/data/*.db` | `git check-ignore -v api/.env` |
-| `api/.env.example` มีตัวแปรครบ **ค่าว่าง** | เปิดไฟล์ดู |
-| `render.yaml` — `JWT_SECRET` ใช้ `generateValue: true` · `STAFF_EMAIL` `STAFF_PASSWORD` ใช้ `sync: false` (**ห้ามเขียนค่าจริง**) | [kit/render.yaml](kit/render.yaml) |
-| ระบบ start ไม่ได้ถ้าไม่มี `JWT_SECRET` · รหัสเจ้าหน้าที่ production มาจาก `STAFF_EMAIL`/`STAFF_PASSWORD` | checker ส่วน DEVOPS |
-| `npm test` ผ่าน · `npm run build` ผ่าน (Render สั่งคำสั่งเดียวกัน) | `npm test` · `npm run build` |
-| tag `v0.5.0` อยู่บน GitHub | `git push origin v0.5.0` |
+| **1 · repo** | `main` มีระบบของหัวข้อครบ (`package.json` ที่ root มี script `build` + `start` · `api/` · `frontend/`) · `project.config.json` มี `topic` = รหัสหัวข้อของทีม · **README เป็นของระบบทีม** ตาม [แม่แบบ](kit/PROJECT_README_TEMPLATE.md) (ไม่ใช่ README ของ LAB / Campus Service · ยังไม่มี URL ได้) |
+| **2 · `render.yaml`** | ใช้ [kit/render.yaml](kit/render.yaml) — `buildCommand: npm install && npm run build` (**build frontend ด้วย**) · `startCommand: npm start` · `healthCheckPath: /api/health` · `NODE_ENV: production` · `JWT_SECRET` `generateValue: true` · `STAFF_EMAIL` `STAFF_PASSWORD` `sync: false` · **ห้ามเขียนค่าลับในไฟล์** |
+| **3 · ความปลอดภัย** | ไม่มี `.env` / token / รหัสผ่านจริงใน git **ทุก commit ทุก branch** · `api/.env.example` ค่าว่าง · secret ในโค้ดได้เฉพาะค่า dev แบบ LAB 13 (production ไม่มี `JWT_SECRET` → throw) |
+| **4 · checker** | ข้อต่อไปนี้ต้อง ✅ — **T1** project.config · **T3** README (ยกเว้น URL) · **T4** API_CONTRACT · **B1** ตาราง · **B2** health · list · one · post · noauth · forbidden · login · staff · **B3** test api · **F1** หน้า login · **F2** แนบ token · **F5** เรียก resource ของหัวข้อ · **F7** build · **D2** render.yaml · **D3** .env · **D4** fail fast · **D5** ไม่ส่ง stack · **D8** รหัสเจ้าหน้าที่จาก env |
+| **5 · จำลอง Render** | `NODE_ENV=production JWT_SECRET=x STAFF_EMAIL=a@b.c STAFF_PASSWORD=x npm start` (หลัง `npm run build`) → `http://localhost:3001/api/health` ได้ 200 **และ** `http://localhost:3001/` เปิดหน้าเว็บได้ |
+| **6 · CI** | commit ล่าสุดบน `main` มี ✓ สีเขียว (ไม่ใช่ ✗ สีแดง) |
+
+> ข้ออื่นของ checker (T2 · T5 · T6 · B4 · B5 · F3 · F4 · F6 · D1 · D6 · D7) ไม่ขวาง deploy แต่**ต้องครบก่อนติด tag `v1.0.0`**
 
 ### เคยเผลอ commit `.env` หรือรหัสผ่านจริง
 

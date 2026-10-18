@@ -33,7 +33,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const CHECKER_VERSION = '2026-10-05';
+const CHECKER_VERSION = '2026-10-18';
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const API = path.join(ROOT, 'api');
 const FE = path.join(ROOT, 'frontend');
@@ -415,6 +415,7 @@ if (RUN.has('BE')) {
   }
 
   if (!up || !resource) {
+    srv?.stop();   // เปิดได้แต่ยังไม่มี api.resource — ต้องปิดเอง ไม่งั้น checker ค้างไม่จบ
     const why = !srv ? 'ไม่พบ api/src/server.js' : !resource ? 'ยังไม่ได้กรอก api.resource' : `เปิด API ไม่ได้ — ${srv.log().split('\n').filter(Boolean).slice(-3).join(' | ') || 'ไม่ตอบภายใน 20 วินาที'}`;
     for (const [k, n] of Object.entries(names)) rec('BE', `B2.${k}`, n, false, why);
   } else {
@@ -842,3 +843,4 @@ console.log('\nหมายเหตุ: checker ตรวจว่า "มี�
 console.log('');
 if (JSON_OUT) writeFileSync(path.resolve(JSON_OUT), JSON.stringify({ checker: CHECKER_VERSION, team: cfg?.team, section: cfg?.section, topic: cfg?.topic, checkedAt: new Date().toISOString(), passed: pass, total: counted.length, skipped: skippedN, results }, null, 2));
 process.exitCode = pass === counted.length ? 0 : 1;
+cleanup();   // ปิด API ที่ยังค้าง (ถ้ามี) — ให้ checker จบเองเสมอ
